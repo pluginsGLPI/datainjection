@@ -35,6 +35,13 @@
 
 
 // ----------------------------------------------------------------------
+// ----------------------------------------------------------------------
+//MAPPING
+// ----------------------------------------------------------------------
+// ----------------------------------------------------------------------
+
+
+// ----------------------------------------------------------------------
 //COMPUTER MAPPING
 // ----------------------------------------------------------------------
 $DATA_INJECTION_MAPPING[COMPUTER_TYPE]['name']['table']='glpi_computers';
@@ -77,6 +84,15 @@ $DATA_INJECTION_MAPPING[COMPUTER_TYPE]['domain']['field']='name';
 $DATA_INJECTION_MAPPING[COMPUTER_TYPE]['domain']['name']=$LANG["common"][15];
 $DATA_INJECTION_MAPPING[COMPUTER_TYPE]['domain']['linkfield']='domain';
 
+$DATA_INJECTION_MAPPING[COMPUTER_TYPE]['contact']['table']='glpi_users';
+$DATA_INJECTION_MAPPING[COMPUTER_TYPE]['contact']['field']='name';
+$DATA_INJECTION_MAPPING[COMPUTER_TYPE]['contact']['name']=$LANG["common"][18];
+$DATA_INJECTION_MAPPING[COMPUTER_TYPE]['contact']['linkfield']='contact';
+
+$DATA_INJECTION_MAPPING[COMPUTER_TYPE]['contactnum']['table']='glpi_computers';
+$DATA_INJECTION_MAPPING[COMPUTER_TYPE]['contactnum']['field']='name';
+$DATA_INJECTION_MAPPING[COMPUTER_TYPE]['contactnum']['name']=$LANG["common"][21];
+
 // ----------------------------------------------------------------------
 //MONITOR MAPPING
 // ----------------------------------------------------------------------
@@ -85,12 +101,5 @@ $DATA_INJECTION_MAPPING[COMPUTER_TYPE]['domain']['linkfield']='domain';
 // ----------------------------------------------------------------------
 //USER MAPPING
 // ----------------------------------------------------------------------
-
-
-$DATA_INJECTION_INFOS[FINANCIAL]['inventory']['table']='glpi_dropdown_domain';
-$DATA_INJECTION_INFOS[COMPUTER_TYPE]['domain']['field']='name';
-$DATA_INJECTION_INFOS[COMPUTER_TYPE]['domain']['name']=$LANG["common"][15];
-$DATA_INJECTION_INFOS[COMPUTER_TYPE]['domain']['linkfield']='domain';
-$DATA_INJECTION_INFOS[COMPUTER_TYPE]['domain']['type']='dropdown';
 
 ?>

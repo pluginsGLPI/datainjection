@@ -42,7 +42,7 @@ function plugin_data_injection_Install() {
 	$query="CREATE TABLE `glpi_plugin_data_injection_config` (
   		 `ID` int(11) NOT NULL,
   		 PRIMARY KEY  (`ID`)
-	) ENGINE=MyISAM  DEFAULT CHARSET=latin1;";
+	) ENGINE=MyISAM;";
 			
 	$DB->query($query) or die($DB->error());
 	
@@ -56,11 +56,20 @@ function plugin_data_injection_Install() {
 	
 	$DB->query($query) or die($DB->error());
 	
-	$query="CREATE TABLE `glpi_plugin_data_injection_models_datas` (
+	$query="CREATE TABLE `glpi_plugin_data_injection_models_mappings` (
 		`ID` INT( 11 ) NOT NULL AUTO_INCREMENT PRIMARY KEY ,
 		`model_id` INT( 11 ) NOT NULL ,
 		`param` VARCHAR( 255 ) NOT NULL ,
-		`value` VARCHAR( 255 ) NOT NULL
+		`value` VARCHAR( 255 ) NOT NULL ,
+		`mandatory` INT( 1 ) NOT NULL DEFAULT '0'		
+		) ENGINE = MYISAM ;";
+	$DB->query($query) or die($DB->error());
+
+	$query="CREATE TABLE `glpi_plugin_data_injection_models_infos` (
+		`ID` INT( 11 ) NOT NULL AUTO_INCREMENT PRIMARY KEY ,
+		`model_id` INT( 11 ) NOT NULL ,
+		`value` VARCHAR( 255 ) NOT NULL ,
+		`mandatory` INT( 1 ) NOT NULL DEFAULT '0'		
 		) ENGINE = MYISAM ;";
 	$DB->query($query) or die($DB->error());
 	
@@ -76,7 +85,10 @@ function plugin_data_injection_uninstall() {
 	$query = "DROP TABLE `glpi_plugin_data_injection_models`;";
 	$DB->query($query) or die($DB->error());
 
-	$query = "DROP TABLE `glpi_plugin_data_injection_models_datas`;";
+	$query = "DROP TABLE `glpi_plugin_data_injection_models_mappings`;";
+	$DB->query($query) or die($DB->error());
+
+	$query = "DROP TABLE `glpi_plugin_data_injection_models_infos`;";
 	$DB->query($query) or die($DB->error());
 	
 }

@@ -30,29 +30,39 @@
 // Original Author of file: Walid Nouh (walid.nouh@atosorigin.com)
 // Purpose of file:
 // ----------------------------------------------------------------------
-class BackendCSV extends CommonDBTM{
+class BackendCSV extends Backend{
 	
-    function Backend() {
+    function BackendCSV($newfile) {
+    	$this->file = $newfile;
+    	$this->injectionDatas = new InjectionDatas;
     }
 
-	/*
-	 * 
-	 */
-	function read($file)
+
+	function read()
 	{
-		$csv = array();
-		
-		$fic = fopen($file, 'rb');
-		for ($ligne = fgetcsv($fic, 1024); !feof($fic); $ligne = fgetcsv($fic, 1024)) 
-    		$csv[]= $ligne;
- 	 	
- 	 	fclose($file);
-		return $csv;
+		$fic = fopen($this->file, 'r');
+
+		while (($data = fgetcsv($fic, 1000, ";")) !== FALSE)  
+			$this->injectionDatas->addToDatas(parseLine($fic,$data));
+
+ 	 	fclose($fic);
 	}
 	
-	
-	function getHeader($csv)
+	function readLinesFromTo($start_line, $end_line)
 	{
-		return $csv[0];
-	}  
-}?>
+		$row = 0;
+		$fic = fopen($this->file, 'r');
+
+		while ((($data = fgetcsv($fic, 1000, ";")) !== FALSE) && $row <= $end_line) { 
+			if ($row >= $start_line && $row <= $end_line)
+				$this->injectionDatas->addToDatas(parseLine($fic,$data));
+			$row++;
+		}
+
+
+ 	 	fclose($fic);
+		
+	}
+}
+
+?>
