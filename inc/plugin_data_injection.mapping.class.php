@@ -31,18 +31,18 @@ class DataInjectionMapping extends CommonDBTM {
 	
 	function DataInjectionMapping()
 	{
-		$this->table="glpi_plugin_data_injection_models_mappings";
+		$this->table="glpi_plugin_data_injection_mappings";
     	$this->type=-1;
 	}
 }
 
 class MappingCollection {
 	
-	var $mappingCollection = array();
+	var $mappingCollection;
 	
 	function MappingCollection()
 	{
-		
+		$mappingCollection = array();
 	}
 	
 	function getAllMappingsByModelID($model_id)
@@ -62,6 +62,29 @@ class MappingCollection {
 	function getAllMappings()
 	{
 		return $this->mappingCollection;
+	}
+	
+	function saveAllMappings()
+	{
+		$tmp = new DataInjectionMapping;
+		
+		foreach ($this->mappingCollection as $mapping)
+		{
+			if (isset($mapping->fields["ID"]))
+				$mapping->update($mapping->fields);
+			else
+				$mapping->fields["ID"] = $mapping->add($mapping->fields);
+		}
+	}
+	
+	function addNewMapping($mapping)
+	{
+		$this->mappingCollection[] = $mapping;
+	}
+	
+	function replaceMappings($mappings)
+	{
+		$this->mappingCollection = $mappings;
 	}
 }
 ?>

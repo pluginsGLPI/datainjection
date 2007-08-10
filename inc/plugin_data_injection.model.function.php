@@ -37,8 +37,7 @@ function getAllModels()
 	$result = $DB->query($sql);
 	while ($data = $DB->fetch_array($result))
 	{
-		$model = new DataInjectionModel;
-		$model->model_id = $data["ID"];
+		$model = new DataInjectionModel($data["ID"]);
 		$model->fields = $data;
 		$models[] = $model;
 	}

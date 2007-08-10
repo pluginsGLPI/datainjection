@@ -39,12 +39,8 @@ class DataInjectionModel extends CommonDBTM {
     	$this->model_id = $model_id;
     	$this->mappings = new MappingCollection;
 	}
-	
-	function getMappings()
-	{
-		return $this->mappings;
-	}
-	
+
+	//---- Load -----//	
 	function loadAll()
 	{
 		$this->getFromDB($this->model_id);
@@ -53,6 +49,31 @@ class DataInjectionModel extends CommonDBTM {
 	function loadMappings()
 	{
 		$this->mappings->getAllMappingsByModelID($this->model_id);
+	}
+
+	//---- Add -----//	
+	function addMappingToModel($mapping)
+	{
+		$this->mappings->addNewMapping($mapping);
+	}
+
+	//---- Save -----//	
+	function saveModel()
+	{
+		//Save or add model
+		if (!isset($this->fields["ID"]))
+			$this->fields["ID"] = $this->add($this->fields);
+		else
+			$this->update($this->fields);
+		
+		//Save or add mappings
+		$this->mappings->saveAllMappings();		
+	}
+
+	//---- Getters -----//
+	function getMappings()
+	{
+		return $this->mappings;
 	}
 	
 	function getModelInfos()
@@ -79,18 +100,8 @@ class DataInjectionModel extends CommonDBTM {
 	{
 		return $this->model_id;
 	}
-		
-	function saveModel()
-	{
-		//Save or add model
-		if (!isset($this->fields["ID"]))
-			$this->add($this->fields);
-		else
-			$this->update($this->fields);
-		
-		//Save or add mappings
-				
-	}
+
+
 }
 
 ?>
