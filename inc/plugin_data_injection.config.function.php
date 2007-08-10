@@ -100,4 +100,23 @@ function plugin_data_injection_initSession()
 	if (TableExists("glpi_plugin_data_injection_config") && TableExists("glpi_plugin_data_injection_models") && TableExists("glpi_plugin_data_injection_mappings")  && TableExists("glpi_plugin_data_injection_infos"))
 			$_SESSION["glpi_plugin_data_injection_installed"]=1;
 }
+
+function isInstall() {
+	global $DATAINJECTIONLANG;
+	
+	if(!isset($_SESSION["glpi_plugin_data_injection_installed"]) || $_SESSION["glpi_plugin_data_injection_installed"]!=1) 
+		{
+		if(!TableExists("glpi_plugin_data_injection_config")) 
+			{
+				echo "<div align='center'>";
+				echo "<table class='tab_cadre' cellpadding='5'>";
+				echo "<tr><th>".$DATAINJECTIONLANG["setup"][1];
+				echo "</th></tr>";
+				echo "<tr class='tab_bg_1'><td>";
+				echo "<a href='plugin_data_injection.install.php'>".$DATAINJECTIONLANG["setup"][3]."</a></td></tr>";
+				echo "</table></div>";
+			}
+		}
+}
+
 ?>

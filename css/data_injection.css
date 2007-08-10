@@ -1,0 +1,64 @@
+.global {
+width: 600px;
+height: 450px;
+margin: 0 auto;
+position: relative;
+}
+
+.step {
+width: 150px;
+height: 50px;
+-moz-border-radius-topright: 8px;
+-moz-border-radius-topleft: 8px;
+border-left: 2px solid #d3d3ce;
+border-right: 2px solid #d3d3ce;
+border-top: 2px solid #d3d3ce;
+margin:0;
+}
+
+.step td {
+background-color: #d3d3ce;
+font-size: 20px;
+}
+
+.wizard {
+width: 600px;
+height: 400px;
+background-color: #e6e6e6;
+-moz-border-radius-topright: 8px;
+-moz-border-radius-bottomright: 8px;
+-moz-border-radius-bottomleft: 8px;
+border: 2px solid #d3d3ce;
+text-align: left;
+}
+
+label {
+font-size: 16px;
+margin-left: 10px;
+}
+
+.step1_titre {
+text-align: center;
+font-size: 18px;
+margin-top: 20px;
+margin-bottom: 75px;
+}
+
+.step1_element {
+text-align: center;
+margin-top: 20px;
+margin-bottom: 20px;
+}
+
+.step1_cadre {
+border: 2px inset black;
+width: 50%;
+margin: 0 auto;
+}
+
+.nextprev {
+position: absolute;
+top: 420px;
+left: 530px;
+z-index:10; 
+}

@@ -36,30 +36,40 @@ if (!defined('GLPI_ROOT')){
 	die("Sorry. You can't access directly to this file");
 	}
 
-function showFormChooseOrNewModel($target)
+function step1($target)
 {
-
-}
-
-function showFormChooseModel($target)
-{
-
-}
-
-function showFormUploadFile($target)
-{
-	echo "<form action=\"plugin_data_injection_file.upload.php\"";
-	echo "enctype=\"multipart/form-data\" method=\"post\">";
-	echo "<input type=\"file\" name=\"datafile\" size=\"40\">";
-	echo "<div>";
-	echo "<input type=\"submit\" value=\"Send\">";
-	echo "</div>";
+	global $DATAINJECTIONLANG;
+	
+	echo "<div class='step1_titre'>".$DATAINJECTIONLANG["step1"][1]."</div>";
+	echo "<form action='".$target."' method='post' name='step1'";
+	echo "<div class='step1_cadre'>";
+	echo "<div class='step1_element'><input type='radio' name='modele' checked value='1' onClick='showSelect()' id='r1' />";
+	echo "<label for='r1'>".$DATAINJECTIONLANG["step1"][2]."</label></div>";
+	echo "<div class='step1_element'><input type='radio' name='modele' value='2' onClick='showSelect()' id='r2' />";
+	echo "<label for='r2'>".$DATAINJECTIONLANG["step1"][3]."</label></div>";
+	echo "<div class='step1_element'><select disabled name='load'>";
+	echo "<option value='1'>Modele1</option>";
+	echo "<option value='2'>Modele2</option>";
+	echo "<option value='3'>Modele3</option>";
+	echo "<option value='4'>Modele4</option>";
+	echo "</select></div></div>";
+	echo "<div class='nextprev'><input type='submit' name='next1' value='Suivant' class='submit' /></div>";
 	echo "</form>";
 }
 
-function showFormDisplayCsvFileHeader($target)
+function step2($target)
 {
+	echo "<form action='".$target."' method='post'";
+	echo "<input type='submit' name='preview2' value='< Precedent' class='submit' />";
+	echo "<input type='submit' name='next2' value='Suivant >' class='submit' />";
+	echo "</form>";
+}
 
+function step3($target)
+{
+	echo "<form action='".$target."' method='post'";
+	echo "<input type='submit' name='preview3' value='< Precedent' class='submit' />";
+	echo "</form>";
 }
 
 ?>

@@ -40,7 +40,7 @@ include (GLPI_ROOT."/inc/includes.php");
 commonHeader($LANG["login"][5],$_SERVER["PHP_SELF"],"plugins","data_injection");
 
 glpi_header(GLPI_ROOT .
-		"/plugins/data_injection/front/plugin_data_injection.choosemodel.php");
+		"/plugins/data_injection/front/plugin_data_injection.wizard.form.php");
 commonFooter();
 ?>
 

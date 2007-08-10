@@ -43,6 +43,12 @@ function plugin_init_data_injection() {
 		
 		// Config page
 		$PLUGIN_HOOKS['config_page']['data_injection'] = 'front/plugin_data_injection.config.form.php';
+		
+		// Css file
+		$PLUGIN_HOOKS['add_css']['data_injection']='css/data_injection.css';
+		
+		// Javascript file
+		$PLUGIN_HOOKS['add_javascript']['data_injection']='javascript/data_injection.js';
 }
 
 	
