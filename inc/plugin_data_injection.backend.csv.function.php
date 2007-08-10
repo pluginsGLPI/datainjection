@@ -30,15 +30,13 @@
 // Original Author of file: Walid Nouh (walid.nouh@atosorigin.com)
 // Purpose of file:
 // ----------------------------------------------------------------------
-
-include_once("inc/plugin_data_injection.backend.class.php");
-include_once("inc/plugin_data_injection.config.function.php");
-include_once("inc/plugin_data_injection.backend.csv.class.php");
-include_once("inc/plugin_data_injection.backend.csv.function.php");
-include_once("inc/plugin_data_injection.wizard.function.php");
-include_once("inc/plugin_data_injection.engine.class.php");
-include_once("inc/plugin_data_injection.model.class.php");
-include_once("inc/plugin_data_injection.mapping.class.php");
-
-
+function parseLine($fic,$data)
+{
+   	$csv = array();
+   	$num = count($data);
+   	for ($c=0; $c < $num; $c++)
+       	$csv[0][]=  $data[$c];
+     
+    return $csv;	
+}
 ?>

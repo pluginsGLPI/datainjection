@@ -42,7 +42,6 @@ include (GLPI_ROOT."/inc/includes.php");
 commonHeader($DATAINJECTIONLANG["config"][1], $_SERVER["PHP_SELF"],"plugins","data_injection");
 
 if(!isset($_SESSION["glpi_plugin_data_injection_installed"]) || $_SESSION["glpi_plugin_data_injection_installed"]!=1) {
-	if(!TableExists("glpi_plugin_data_injection_config")) {
 			echo "<div align='center'>";
 			echo "<table class='tab_cadre' cellpadding='5'>";
 			echo "<tr><th>".$DATAINJECTIONLANG["setup"][1];
@@ -50,7 +49,6 @@ if(!isset($_SESSION["glpi_plugin_data_injection_installed"]) || $_SESSION["glpi_
 			echo "<tr class='tab_bg_1'><td>";
 			echo "<a href='plugin_data_injection.install.php'>".$DATAINJECTIONLANG["setup"][3]."</a></td></tr>";
 			echo "</table></div>";
-	}
 }
 
 commonFooter();

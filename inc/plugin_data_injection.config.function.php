@@ -28,7 +28,7 @@
  */
 
 // ----------------------------------------------------------------------
-// Original Author of file: CAILLAUD Xavier
+// Original Author of file: Walid Nouh (walid.nouh@atosorigin.com)
 // Purpose of file:
 // ----------------------------------------------------------------------
 
@@ -40,8 +40,8 @@ function plugin_data_injection_Install() {
 	$DB = new DB;
 			
 	$query="CREATE TABLE `glpi_plugin_data_injection_config` (
-  		 `ID` int(11) NOT NULL,
-  		 PRIMARY KEY  (`ID`)
+  		`ID` int(11) NOT NULL,
+  		PRIMARY KEY  (`ID`)
 	) ENGINE=MyISAM;";
 			
 	$DB->query($query) or die($DB->error());
@@ -56,16 +56,18 @@ function plugin_data_injection_Install() {
 	
 	$DB->query($query) or die($DB->error());
 	
-	$query="CREATE TABLE `glpi_plugin_data_injection_models_mappings` (
+	$query="CREATE TABLE `glpi_plugin_data_injection_mappings` (
 		`ID` INT( 11 ) NOT NULL AUTO_INCREMENT PRIMARY KEY ,
 		`model_id` INT( 11 ) NOT NULL ,
+		`rank` INT( 11 ) NOT NULL ,
+		`type` INT( 11 ) NOT NULL DEFAULT '1',
 		`param` VARCHAR( 255 ) NOT NULL ,
 		`value` VARCHAR( 255 ) NOT NULL ,
 		`mandatory` INT( 1 ) NOT NULL DEFAULT '0'		
 		) ENGINE = MYISAM ;";
 	$DB->query($query) or die($DB->error());
 
-	$query="CREATE TABLE `glpi_plugin_data_injection_models_infos` (
+	$query="CREATE TABLE `glpi_plugin_data_injection_infos` (
 		`ID` INT( 11 ) NOT NULL AUTO_INCREMENT PRIMARY KEY ,
 		`model_id` INT( 11 ) NOT NULL ,
 		`value` VARCHAR( 255 ) NOT NULL ,
@@ -85,17 +87,17 @@ function plugin_data_injection_uninstall() {
 	$query = "DROP TABLE `glpi_plugin_data_injection_models`;";
 	$DB->query($query) or die($DB->error());
 
-	$query = "DROP TABLE `glpi_plugin_data_injection_models_mappings`;";
+	$query = "DROP TABLE `glpi_plugin_data_injection_mappings`;";
 	$DB->query($query) or die($DB->error());
 
-	$query = "DROP TABLE `glpi_plugin_data_injection_models_infos`;";
+	$query = "DROP TABLE `glpi_plugin_data_injection_infos`;";
 	$DB->query($query) or die($DB->error());
 	
 }
 
 function plugin_data_injection_initSession()
 {
-	if (TableExists("glpi_plugin_data_injection_config") && TableExists("glpi_plugin_data_injection_models") && TableExists("glpi_plugin_data_injection_models_datas"))
+	if (TableExists("glpi_plugin_data_injection_config") && TableExists("glpi_plugin_data_injection_models") && TableExists("glpi_plugin_data_injection_mappings")  && TableExists("glpi_plugin_data_injection_infos"))
 			$_SESSION["glpi_plugin_data_injection_installed"]=1;
 }
 ?>

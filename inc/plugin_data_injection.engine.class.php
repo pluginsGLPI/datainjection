@@ -31,14 +31,5 @@
 // Purpose of file:
 // ----------------------------------------------------------------------
 
-include_once("inc/plugin_data_injection.backend.class.php");
-include_once("inc/plugin_data_injection.config.function.php");
-include_once("inc/plugin_data_injection.backend.csv.class.php");
-include_once("inc/plugin_data_injection.backend.csv.function.php");
-include_once("inc/plugin_data_injection.wizard.function.php");
-include_once("inc/plugin_data_injection.engine.class.php");
-include_once("inc/plugin_data_injection.model.class.php");
-include_once("inc/plugin_data_injection.mapping.class.php");
-
 
 ?>
