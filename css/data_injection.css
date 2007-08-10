@@ -32,27 +32,18 @@ border: 2px solid #d3d3ce;
 text-align: left;
 }
 
-label {
-font-size: 16px;
-margin-left: 10px;
-}
-
-.step1_titre {
+.wizard_titre {
 text-align: center;
 font-size: 18px;
-margin-top: 20px;
-margin-bottom: 75px;
+margin-top: 30px;
+margin-bottom: 65px;
 }
 
-.step1_element {
-text-align: center;
-margin-top: 20px;
-margin-bottom: 20px;
-}
-
-.step1_cadre {
+.wizard_cadre {
 border: 2px inset black;
 width: 50%;
+height: 140px;
+text-align: center;
 margin: 0 auto;
 }
 
@@ -61,4 +52,29 @@ position: absolute;
 top: 420px;
 left: 530px;
 z-index:10; 
+}
+
+.nextprev2 {
+position: absolute;
+top: 420px;
+left: 15px;
+z-index:10; 
+}
+
+.step1_table {
+margin-top: 20px;
+margin-bottom: 20px;
+border-spacing: 10px;
+font-size: 14px;
+}
+
+.step2_table {
+text-align:left;
+margin-top: 50px;
+margin-bottom: 20px;
+font-size: 12px;
+}
+
+.rouge {
+color: red;
 }

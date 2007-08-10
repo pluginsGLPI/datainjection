@@ -41,14 +41,50 @@ include (GLPI_ROOT."/inc/includes.php");
 
 commonHeader($DATAINJECTIONLANG["config"][1], $_SERVER["PHP_SELF"],"plugins","data_injection");
 
+$error="";
+
 if(isset($_POST["next1"]))
 	$_SESSION["step"] = 2;
-if(isset($_POST["preview2"]))
+else if(isset($_POST["preview2"]))
 	$_SESSION["step"] = 1;
-if(isset($_POST["next2"]))
-	$_SESSION["step"] = 3;
-if(isset($_POST["preview3"]))
+else if(isset($_POST["next2"]))
+	{
+	$directory = "upload/";
+
+    $tmp_file = $_FILES["modelfile"]["tmp_name"];
+
+    if( !is_uploaded_file($tmp_file) )
+    	{
+        $error="Le fichier est introuvable";
+        $_SESSION["step"] = 2;
+    	}
+    else
+    	{
+    	$type_file = $_FILES["modelfile"]["type"];
+
+    	if( !strstr($type_file, 'gif') && !strstr($type_file, 'xls') && !strstr($type_file, 'xml') )
+    		{
+        	$error="Le fichier n'a pas le bon format";
+        	$_SESSION["step"] = 2;
+    		}
+    	else
+    		{
+    		$name_file = $_FILES["modelfile"]["name"];
+
+    		if( !move_uploaded_file($tmp_file, $directory . $name_file) )
+    			{
+        		$error="Impossible de copier le fichier dans $directory";
+        		$_SESSION["step"] = 2;
+    			}
+    		else
+    			$_SESSION["step"] = 3;
+    		}
+    	}
+	}
+else if(isset($_POST["preview3"]))
 	$_SESSION["step"] = 2;
+
+
 
 if(isset($_SESSION["step"]))
 	$step = $_SESSION["step"];
@@ -68,7 +104,7 @@ switch($step){
 	break;
 	case 2:
 		echo "<script type='text/javascript'>change_color_step('step2')</script>";
-		step2($_SERVER["PHP_SELF"]);
+		step2($_SERVER["PHP_SELF"],$error);
 	break;
 	case 3:
 		echo "<script type='text/javascript'>change_color_step('step3')</script>";

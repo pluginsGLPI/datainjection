@@ -46,8 +46,12 @@ $DATAINJECTIONLANG["setup"][5] = "Désinstaller le plugin $title";
 $DATAINJECTIONLANG["setup"][6] = "Attention, la mise à jour du plugin est irréversible.";
 $DATAINJECTIONLANG["setup"][7] = "Attention, la désinstallation du plugin est irréversible.<br> Vous perdrez toutes les données.";
 
-$DATAINJECTIONLANG["step1"][1] = "Bienvenue dans l'assistant d'aide à l'importation de fichier";
+$DATAINJECTIONLANG["step0"][0] = "Bienvenue dans l'assistant d'aide à l'importation de fichier";
+$DATAINJECTIONLANG["step1"][1] = "Etape1 : Sélection ou création d'un modèle";
 $DATAINJECTIONLANG["step1"][2] = "Créer un nouveau modèle";
 $DATAINJECTIONLANG["step1"][3] = "Utiliser un modèle existant";
+
+$DATAINJECTIONLANG["step2"][1] = "Etape2 : Sélection du fichier à uploader";
+$DATAINJECTIONLANG["step2"][2] = "Choix du fichier :";
 
 ?>
