@@ -60,6 +60,26 @@ class DataInjectionModel extends CommonDBTM {
 		return $this->fields;
 	}
 	
+	function getModelName()
+	{
+		return $this->fields["name"];
+	}
+	
+	function getModelType()
+	{
+		return $this->fields["type"];
+	}
+	
+	function getModelComments()
+	{
+		return $this->fields["comments"];
+	}
+	
+	function getModelID()
+	{
+		return $this->model_id;
+	}
+		
 	function saveModel()
 	{
 		//Save or add model
