@@ -31,42 +31,22 @@
 // Purpose of file:
 // ----------------------------------------------------------------------
 
-class DataInjectionEngine
+/*
+ * Check if the data to import is the good type
+ * @param the type of data waited
+ * @data the data to import
+ * @return true if the data is the correct type
+ */
+function checkType($type, $data)
 {
-	//Model informations
-	var $model;
-	
-	//Backend to read file to import
-	var $backend;
-	
-	function DataInjectionEngine($model_id,$filename)
+	switch($type)
 	{
-		//Instanciate model
-		$model = new DataInjectionModel($model_id);
-		
-		//Load model and mappings informations
-		$model->loadAll();
-		
-		$datas = new InjectionDatas;
-		
-		//TODO : do someting generic !!
-		$this->backend = new BackendCSV($filename);
-		$this->backend->read();
+		case 'text' :
+			return true;
+		break;
+		default :
+			return false;
 	}
-	
-	function processImport()
-	{
-		
-	}
-	
-	function checkLine($line)
-	{
-		$result = true;
-		for ($i = 0; $i < count($line); $i++)
-		{
-			
-		}
-	}
-	
 }
+
 ?>

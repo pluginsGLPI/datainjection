@@ -34,11 +34,17 @@
 // ----------------------------------------------------------------------
 
 
+
 // ----------------------------------------------------------------------
 // ----------------------------------------------------------------------
 //MAPPING
 // ----------------------------------------------------------------------
 // ----------------------------------------------------------------------
+
+//Type of fields :
+// - text : the data will be imported as a string
+// - int : the data must be an int
+// - date : the data must be a date
 
 
 // ----------------------------------------------------------------------
@@ -47,51 +53,63 @@
 $DATA_INJECTION_MAPPING[COMPUTER_TYPE]['name']['table']='glpi_computers';
 $DATA_INJECTION_MAPPING[COMPUTER_TYPE]['name']['field']='name';
 $DATA_INJECTION_MAPPING[COMPUTER_TYPE]['name']['name']=$LANG["common"][16];
+$DATA_INJECTION_MAPPING[COMPUTER_TYPE]['name']['type']='text';
 
 $DATA_INJECTION_MAPPING[COMPUTER_TYPE]['serial']['table']='glpi_computers';
 $DATA_INJECTION_MAPPING[COMPUTER_TYPE]['serial']['field']='serial';
 $DATA_INJECTION_MAPPING[COMPUTER_TYPE]['serial']['name']=$LANG["common"][19];
+$DATA_INJECTION_MAPPING[COMPUTER_TYPE]['serial']['type']='text';
 
 $DATA_INJECTION_MAPPING[COMPUTER_TYPE]['otherserial']['table']='glpi_computers';
 $DATA_INJECTION_MAPPING[COMPUTER_TYPE]['otherserial']['field']='otherserial';
 $DATA_INJECTION_MAPPING[COMPUTER_TYPE]['otherserial']['name']=$LANG["common"][20];
+$DATA_INJECTION_MAPPING[COMPUTER_TYPE]['otherserial']['type']='text';
 
 $DATA_INJECTION_MAPPING[COMPUTER_TYPE]['os_license_number']['table']='glpi_computers';
 $DATA_INJECTION_MAPPING[COMPUTER_TYPE]['os_license_number']['field']='os_license_number';
 $DATA_INJECTION_MAPPING[COMPUTER_TYPE]['os_license_number']['name']=$LANG["computers"][10];
+$DATA_INJECTION_MAPPING[COMPUTER_TYPE]['os_license_number']['type']='text';
 
 $DATA_INJECTION_MAPPING[COMPUTER_TYPE]['os_license_id']['table']='glpi_computers';
 $DATA_INJECTION_MAPPING[COMPUTER_TYPE]['os_license_id']['field']='os_license_number';
 $DATA_INJECTION_MAPPING[COMPUTER_TYPE]['os_license_id']['name']=$LANG["computers"][11];
+$DATA_INJECTION_MAPPING[COMPUTER_TYPE]['os_license_id']['type']='text';
 
 $DATA_INJECTION_MAPPING[COMPUTER_TYPE]['os']['table']='glpi_dropdown_os';
 $DATA_INJECTION_MAPPING[COMPUTER_TYPE]['os']['field']='name';
 $DATA_INJECTION_MAPPING[COMPUTER_TYPE]['os']['name']=$LANG["computers"][9];
 $DATA_INJECTION_MAPPING[COMPUTER_TYPE]['os']['linkfield']='os';
+$DATA_INJECTION_MAPPING[COMPUTER_TYPE]['os']['type']='text';
 
 $DATA_INJECTION_MAPPING[COMPUTER_TYPE]['os_sp']['table']='glpi_dropdown_os';
 $DATA_INJECTION_MAPPING[COMPUTER_TYPE]['os_sp']['field']='name';
 $DATA_INJECTION_MAPPING[COMPUTER_TYPE]['os_sp']['name']=$LANG["computers"][52];
 $DATA_INJECTION_MAPPING[COMPUTER_TYPE]['os_sp']['linkfield']='os_sp';
+$DATA_INJECTION_MAPPING[COMPUTER_TYPE]['os_sp']['type']='text';
 
 $DATA_INJECTION_MAPPING[COMPUTER_TYPE]['location']['table']='glpi_dropdown_location';
 $DATA_INJECTION_MAPPING[COMPUTER_TYPE]['location']['field']='name';
 $DATA_INJECTION_MAPPING[COMPUTER_TYPE]['location']['name']=$LANG["common"][15];
 $DATA_INJECTION_MAPPING[COMPUTER_TYPE]['location']['linkfield']='location';
+$DATA_INJECTION_MAPPING[COMPUTER_TYPE]['location']['type']='text';
 
 $DATA_INJECTION_MAPPING[COMPUTER_TYPE]['domain']['table']='glpi_dropdown_domain';
 $DATA_INJECTION_MAPPING[COMPUTER_TYPE]['domain']['field']='name';
 $DATA_INJECTION_MAPPING[COMPUTER_TYPE]['domain']['name']=$LANG["common"][15];
 $DATA_INJECTION_MAPPING[COMPUTER_TYPE]['domain']['linkfield']='domain';
+$DATA_INJECTION_MAPPING[COMPUTER_TYPE]['domain']['type']='text';
 
 $DATA_INJECTION_MAPPING[COMPUTER_TYPE]['contact']['table']='glpi_users';
 $DATA_INJECTION_MAPPING[COMPUTER_TYPE]['contact']['field']='name';
 $DATA_INJECTION_MAPPING[COMPUTER_TYPE]['contact']['name']=$LANG["common"][18];
 $DATA_INJECTION_MAPPING[COMPUTER_TYPE]['contact']['linkfield']='contact';
+$DATA_INJECTION_MAPPING[COMPUTER_TYPE]['contact']['type']='text';
 
 $DATA_INJECTION_MAPPING[COMPUTER_TYPE]['contactnum']['table']='glpi_computers';
 $DATA_INJECTION_MAPPING[COMPUTER_TYPE]['contactnum']['field']='name';
 $DATA_INJECTION_MAPPING[COMPUTER_TYPE]['contactnum']['name']=$LANG["common"][21];
+$DATA_INJECTION_MAPPING[COMPUTER_TYPE]['contactnum']['type']='text';
+
 
 // ----------------------------------------------------------------------
 //MONITOR MAPPING

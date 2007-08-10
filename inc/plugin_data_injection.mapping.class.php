@@ -34,6 +34,20 @@ class DataInjectionMapping extends CommonDBTM {
 		$this->table="glpi_plugin_data_injection_mappings";
     	$this->type=-1;
 	}
+	
+	/*
+	 * 
+	 */
+	function equal($field,$value)
+	{
+		if (!isset($this->fields[$field]))
+			return false;
+			
+		if ($this->fields[$field] == $value)
+			return true;
+		else
+			return false;	
+	}
 }
 
 class MappingCollection {
@@ -45,6 +59,12 @@ class MappingCollection {
 		$mappingCollection = array();
 	}
 	
+	//---- Getter ----//
+	
+	/*
+	 * Load all the mappings for a specified model
+	 * @param model_id the model ID
+	 */
 	function getAllMappingsByModelID($model_id)
 	{
 		global $DB;
@@ -59,11 +79,56 @@ class MappingCollection {
 		}
 	}
 	
+	/*
+	 * Return all the mappings for this model
+	 * @return the list of all the mappings for this model
+	 */
 	function getAllMappings()
 	{
 		return $this->mappingCollection;
 	}
 	
+	/*
+	 * Get a DataInjectionMapping by giving the mapping name
+	 * @param name
+	 * @return the DataInjectionMapping object associated or null
+	 */
+	function getMappingByName($name)
+	{
+		return $this->getMappingsByField("name",$name);
+	}
+
+	/*
+	 * Get a DataInjectionMapping by giving the mapping rank
+	 * @param rank
+	 * @return the DataInjectionMapping object associated or null
+	 */
+	function getMappingByRank($rank)
+	{
+		return $this->getMappingsByField("rank",$rank);
+	}
+	
+	/*
+	 * Find a mapping by looking for a specific field
+	 * @param field the field to look for
+	 * @param the value of the field
+	 * @return the DataInjectionMapping object associated or null
+	 */
+	function getMappingsByField($field,$value)
+	{
+		foreach ($this->mappingCollection as $mapping)
+		{
+			if ($mapping->equal($field,$value))
+				return $mapping;
+		}
+		return null;
+	}
+	
+	//---- Save ----//
+	
+	/*
+	 * Save in database the model and all his associated mappings
+	 */
 	function saveAllMappings()
 	{
 		$tmp = new DataInjectionMapping;
@@ -77,11 +142,21 @@ class MappingCollection {
 		}
 	}
 	
+	//---- Add ----//
+	
+	/*
+	 * Add a new mapping to this model (don't write in to DB)
+	 * @param mapping the new DataInjectionMapping to add
+	 */
 	function addNewMapping($mapping)
 	{
 		$this->mappingCollection[] = $mapping;
 	}
 	
+	/*
+	 * Replace all the mappings for a model
+	 * @mappins the array of DataInjectionMapping objects
+	 */
 	function replaceMappings($mappings)
 	{
 		$this->mappingCollection = $mappings;
