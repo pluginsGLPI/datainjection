@@ -32,6 +32,7 @@
 // ----------------------------------------------------------------------
 
 include_once("inc/plugin_data_injection.backend.class.php");
+include_once("inc/plugin_data_injection.backend.function.php");
 include_once("inc/plugin_data_injection.config.function.php");
 include_once("inc/plugin_data_injection.backend.csv.class.php");
 include_once("inc/plugin_data_injection.backend.csv.function.php");
