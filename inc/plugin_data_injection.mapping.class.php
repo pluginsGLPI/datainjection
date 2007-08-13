@@ -48,6 +48,38 @@ class DataInjectionMapping extends CommonDBTM {
 		else
 			return false;	
 	}
+	
+	function isMandatory()
+	{
+		return $this->fields["mandatory"];
+	}
+	
+	function getName()
+	{
+		return $this->fields["name"];
+	}
+	
+	function getRank()
+	{
+		return $this->fields["rank"];
+	}
+	
+	function getValue()
+	{
+		return $this->fields["value"];
+	}
+	
+	function getID()
+	{
+		return $this->fields["ID"];
+	}
+	
+	function getModelID()
+	{
+		return $this->fields["model_id"];
+	}
+	
+	
 }
 
 class MappingCollection {

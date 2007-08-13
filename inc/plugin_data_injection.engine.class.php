@@ -50,23 +50,36 @@ class DataInjectionEngine
 		$datas = new InjectionDatas;
 		
 		//TODO : do someting generic !!
-		$this->backend = new BackendCSV($filename);
+		$this->backend = new BackendCSV($filename,$model->getDelimiter());
 		$this->backend->read();
 	}
 	
-	function processImport()
+	/*
+	 * Check all the datas and inject them
+	 */
+	function injectDatas()
+	{
+		$tab_result = array();
+		
+		foreach ($this->model->getDatas() as $line)
+		{
+			$check_result = checkLine($this->model,$line);
+			if ($check_result["result"])
+				injectLine($line);
+			else
+				$tab_result[] = $check_result;	
+		}
+	}
+	
+	/*
+	 * Inject one line of datas
+	 * @param line one line of data to import
+	 */
+	function injectLine($line)
 	{
 		
 	}
 	
-	function checkLine($line)
-	{
-		$result = true;
-		for ($i = 0; $i < count($line); $i++)
-		{
-			
-		}
-	}
-	
+
 }
 ?>

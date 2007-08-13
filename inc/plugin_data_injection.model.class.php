@@ -111,7 +111,21 @@ class DataInjectionModel extends CommonDBTM {
 		return $this->model_id;
 	}
 
+	function getBehaviorAdd()
+	{
+		return $this->fields["behavior_add"];
+	}
+	
+	function getBehaviorUpdate()
+	{
+		return $this->fields["behavior_update"];
+	}
 
+	function getDelimiter()
+	{
+		return $this->fields["delimiter"];
+	}
+	
 }
 
 ?>

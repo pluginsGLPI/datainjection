@@ -51,6 +51,10 @@ function plugin_data_injection_Install() {
 		`name` VARCHAR( 255 ) NOT NULL ,
 		`comments` TEXT NULL ,
 		`date_mod` DATETIME NOT NULL ,
+		`type` INT( 11 ) NOT NULL DEFAULT '1',
+		`behavior_add` INT( 1 ) NOT NULL DEFAULT '1',
+		`behavior_update` INT( 1 ) NOT NULL DEFAULT '0',
+		`delimiter` VARCHAR( 1 ) NOT NULL DEFAULT ';',
 		`FK_entities` INT( 11 ) NOT NULL
 		) ENGINE = MYISAM ;";
 	
@@ -60,8 +64,7 @@ function plugin_data_injection_Install() {
 		`ID` INT( 11 ) NOT NULL AUTO_INCREMENT PRIMARY KEY ,
 		`model_id` INT( 11 ) NOT NULL ,
 		`rank` INT( 11 ) NOT NULL ,
-		`type` INT( 11 ) NOT NULL DEFAULT '1',
-		`param` VARCHAR( 255 ) NOT NULL ,
+		`name` VARCHAR( 255 ) NOT NULL ,
 		`value` VARCHAR( 255 ) NOT NULL ,
 		`mandatory` INT( 1 ) NOT NULL DEFAULT '0'		
 		) ENGINE = MYISAM ;";
@@ -75,6 +78,13 @@ function plugin_data_injection_Install() {
 		) ENGINE = MYISAM ;";
 	$DB->query($query) or die($DB->error());
 	
+	$query="CREATE TABLE `glpi_plugin_data_injection_filetype` (
+		`ID` INT( 11 ) NOT NULL AUTO_INCREMENT PRIMARY KEY ,
+		`name` VARCHAR( 255 ) NOT NULL ,
+		`value` INT( 11 ) NOT NULL
+	) ENGINE = MYISAM ;";
+	$DB->query($query) or die($DB->error());
+
 }
 
 
@@ -91,6 +101,9 @@ function plugin_data_injection_uninstall() {
 	$DB->query($query) or die($DB->error());
 
 	$query = "DROP TABLE `glpi_plugin_data_injection_infos`;";
+	$DB->query($query) or die($DB->error());
+	
+	$query = "DROP TABLE `glpi_plugin_data_injection_filetype`;";
 	$DB->query($query) or die($DB->error());
 	
 }

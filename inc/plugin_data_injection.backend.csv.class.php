@@ -32,9 +32,10 @@
 // ----------------------------------------------------------------------
 class BackendCSV extends Backend{
 	
-    function BackendCSV($newfile) {
+    function BackendCSV($newfile,$delimiter) {
     	$this->file = $newfile;
     	$this->injectionDatas = new InjectionDatas;
+    	$this->delimiter = $delimiter;
     }
 
 
@@ -42,7 +43,7 @@ class BackendCSV extends Backend{
 	{
 		$fic = fopen($this->file, 'r');
 
-		while (($data = fgetcsv($fic, 1000, ";")) !== FALSE)  
+		while (($data = fgetcsv($fic, 1000, $this->delimiter)) !== FALSE)  
 			$this->injectionDatas->addToDatas(parseLine($fic,$data));
 
  	 	fclose($fic);
@@ -53,7 +54,7 @@ class BackendCSV extends Backend{
 		$row = 0;
 		$fic = fopen($this->file, 'r');
 
-		while ((($data = fgetcsv($fic, 1000, ";")) !== FALSE) && $row <= $end_line) { 
+		while ((($data = fgetcsv($fic, 1000, $this->delimiter)) !== FALSE) && $row <= $end_line) { 
 			if ($row >= $start_line && $row <= $end_line)
 				$this->injectionDatas->addToDatas(parseLine($fic,$data));
 			$row++;
@@ -62,6 +63,15 @@ class BackendCSV extends Backend{
 
  	 	fclose($fic);
 		
+	}
+	
+	/*
+	 * Try to parse an input file
+	 * @return true if the file is a CSV file
+	 */
+	function isFileCorrect()
+	{
+		return true;
 	}
 }
 

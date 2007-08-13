@@ -38,6 +38,7 @@ class Backend{
 	
 	var $file = "";
 	var $injectionDatas;
+	var $delimiter;
 	
 	/*
 	 * Constructor
@@ -96,6 +97,11 @@ class Backend{
 			$tmp[] = $this->injectionDatas->getDataAtLine($i);
 		return $tmp;	
 	}
+	
+	function isFileCorrect()
+	{
+		return true;
+	}
 }
 
 /*
@@ -103,7 +109,12 @@ class Backend{
  */
 class InjectionDatas
 {
-	var $injectionDatas = array();
+	var $injectionDatas;
+	
+	function InjectionDatas()
+	{
+		$injectionDatas = array();
+	}
 	
 	function setDatas($newDatas)
 	{

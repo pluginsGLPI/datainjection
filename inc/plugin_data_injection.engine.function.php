@@ -42,11 +42,54 @@ function checkType($type, $data)
 	switch($type)
 	{
 		case 'text' :
-			return true;
+			return TYPE_CHECK_OK;
 		break;
 		default :
-			return false;
+			return ERROR_IMPORT_WRONG_TYPE;
 	}
 }
+
+function checkLine($model,$line)
+	{
+		global $DATA_INJECTION_MAPPING;
+		
+		$res["result"] = true;
+		
+		//---- First, check types ----//
+		for ($i = 0; $i < count($line); $i++)
+		{
+			//Get data to check
+			$data = $line[$i];
+			
+			//Get mapping associated to the data
+			$mapping_infos = $this->model->getMappingByRank($i);
+			
+			//If field is mandatory, check if it's present in the line
+			if ($mapping_infos->isMandatory() && !isset($data[$mapping_infos->getName()]))
+			 {
+			 	$res = array ("result" => false, "message" => ERROR_IMPORT_FIELD_MANDATORY);
+			 	break;
+			 }	
+				
+			//Get mapping informations
+			if (isset($DATA_INJECTION_MAPPING[$mapping_infos->getType()][$mapping_infos->getName()]))
+			{
+				$type = $DATA_INJECTION_MAPPING[$mapping_infos->getType()][$mapping_infos->getName()];
+				
+				$res_check_type = checkType($type, $data);
+				if ($res_check_type != TYPE_CHECK_OK)
+				{
+					$res = array ("result" => false, "message" => $res_check_type);
+					break;
+				}
+			}
+		}
+		
+		//---- Second, check if line was not previously imported ----//
+		//TODO : implement checks
+		
+		return $res;
+	}
+	
 
 ?>
