@@ -30,25 +30,23 @@
 class DataInjectionModel extends CommonDBTM {
 
 	var $mappings;
-	var $model_id = -1;
 		
-	function DataInjectionModel($model_id)
+	function DataInjectionModel()
 	{
 		$this->table="glpi_plugin_data_injection_models";
     	$this->type=-1;
-    	$this->model_id = $model_id;
     	$this->mappings = new MappingCollection;
 	}
 
 	//---- Load -----//	
-	function loadAll()
+	function loadAll($model_id)
 	{
-		$this->getFromDB($this->model_id);
-		$this->loadMappings();
+		$this->getFromDB($model_id);
+		$this->loadMappings($model_id);
 	}
-	function loadMappings()
+	function loadMappings($model_id)
 	{
-		$this->mappings->getAllMappingsByModelID($this->model_id);
+		$this->mappings->getAllMappingsByModelID($model_id);
 	}
 
 	//---- Add -----//	
@@ -104,11 +102,6 @@ class DataInjectionModel extends CommonDBTM {
 	function getModelComments()
 	{
 		return $this->fields["comments"];
-	}
-	
-	function getModelID()
-	{
-		return $this->model_id;
 	}
 
 	function getBehaviorAdd()

@@ -78,13 +78,18 @@ function plugin_data_injection_Install() {
 		) ENGINE = MYISAM ;";
 	$DB->query($query) or die($DB->error());
 	
-	$query="CREATE TABLE `glpi_plugin_data_injection_filetype` (
-		`ID` INT( 11 ) NOT NULL AUTO_INCREMENT PRIMARY KEY ,
-		`name` VARCHAR( 255 ) NOT NULL ,
-		`value` INT( 11 ) NOT NULL
-	) ENGINE = MYISAM ;";
+	$query="CREATE TABLE IF NOT EXISTS `glpi_plugin_data_injection_filetype` (
+  		`ID` int(11) NOT NULL auto_increment,
+  		`name` varchar(255) NOT NULL,
+  		`value` int(11) NOT NULL,
+  		`class_name` varchar(255) NOT NULL,
+  		PRIMARY KEY  (`ID`)
+		) ENGINE=MyISAM;";
 	$DB->query($query) or die($DB->error());
-
+	
+	$query="INSERT INTO `glpi_plugin_data_injection_filetype` (`ID`, `name`, `value`, `class_name`) VALUES 
+		(1, 'CSV', 1, 'BackendCSV');";
+	$DB->query($query) or die($DB->error());
 }
 
 

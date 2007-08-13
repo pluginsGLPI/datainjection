@@ -36,8 +36,14 @@ if (!defined("PLUGIN_DATA_INJECTION_UPLOAD_DIR")){
 	define("PLUGIN_DATA_INJECTION_UPLOAD_DIR",GLPI_ROOT . "/files/_plugins/data_injection");
 }
 
+define ("CSV_TYPE",1);
+
 define ("ERROR_IMPORT_WRONG_TYPE",0);
 define ("TYPE_CHECK_OK",1);
 define ("ERROR_IMPORT_ALREADY_IMPORTED",2);
 define ("ERROR_IMPORT_FIELD_MANDATORY",3);
+
+
+
+
 ?>

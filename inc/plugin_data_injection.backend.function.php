@@ -30,51 +30,21 @@
 // Original Author of file: Walid Nouh (walid.nouh@atosorigin.com)
 // Purpose of file:
 // ----------------------------------------------------------------------
-class BackendCSV extends Backend{
-	
-    function BackendCSV() {
-    	$this->injectionDatas = new InjectionDatas;
-    }
 
-	function initBackend($newfile,$delimiter)
+/*
+ * Get the backend implementation by type
+ */
+function getBackend($type)
+{
+	global $DB;
+	$sql="SELECT class_name FROM glpi_plugin_data_injection_filetype WHERE value=".$type;
+	$res = $DB->query($sql);
+	if ($DB->numrows($res) > 0)
 	{
-    	$this->file = $newfile;
-    	$this->delimiter = $delimiter;
+		$backend_infos = $DB->fetch_array($res);
+		return new $backend_infos["class_name"];
 	}
-	function read()
-	{
-		$fic = fopen($this->file, 'r');
-
-		while (($data = fgetcsv($fic, 1000, $this->delimiter)) !== FALSE)  
-			$this->injectionDatas->addToDatas(parseLine($fic,$data));
-
- 	 	fclose($fic);
-	}
-	
-	function readLinesFromTo($start_line, $end_line)
-	{
-		$row = 0;
-		$fic = fopen($this->file, 'r');
-
-		while ((($data = fgetcsv($fic, 1000, $this->delimiter)) !== FALSE) && $row <= $end_line) { 
-			if ($row >= $start_line && $row <= $end_line)
-				$this->injectionDatas->addToDatas(parseLine($fic,$data));
-			$row++;
-		}
-
-
- 	 	fclose($fic);
-		
-	}
-	
-	/*
-	 * Try to parse an input file
-	 * @return true if the file is a CSV file
-	 */
-	function isFileCorrect()
-	{
-		return true;
-	}
+	else
+		return null;
 }
-
 ?>
