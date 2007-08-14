@@ -6,8 +6,6 @@ position: relative;
 }
 
 .step {
-width: 150px;
-height: 50px;
 -moz-border-radius-topright: 8px;
 -moz-border-radius-topleft: 8px;
 border-left: 2px solid #d3d3ce;
@@ -18,6 +16,8 @@ margin:0;
 
 .step td {
 background-color: #d3d3ce;
+width: 50px;
+height: 50px;
 font-size: 20px;
 }
 
@@ -36,13 +36,13 @@ text-align: left;
 text-align: center;
 font-size: 18px;
 margin-top: 30px;
-margin-bottom: 65px;
+margin-bottom: 50px;
 }
 
 .wizard_cadre {
 border: 2px inset black;
 width: 50%;
-height: 140px;
+height: 200px;
 text-align: center;
 margin: 0 auto;
 }
@@ -61,20 +61,51 @@ left: 15px;
 z-index:10; 
 }
 
+.rouge {
+color: red;
+}
+
 .step1_table {
-margin-top: 20px;
+margin-top: 0px;
 margin-bottom: 20px;
 border-spacing: 10px;
 font-size: 14px;
+text-align: left;
+}
+
+.step1_create {
+height: 40px;
 }
 
 .step2_table {
-text-align:left;
+font-size: 14px;
+text-align: left;
+margin-top: 20px;
+border-spacing: 10px;
+}
+
+.step2_table_width {
+width: 180px;
+}
+
+.step4_table {
+font-size: 14px;
 margin-top: 50px;
+border-spacing: 10px;
+}
+
+.step4_question {
+line-height: 20px;
+}
+
+.step5_table {
+text-align:left;
+margin-top: 60px;
 margin-bottom: 20px;
 font-size: 12px;
 }
 
-.rouge {
-color: red;
+.suppr {
+font-size: 14px;
+margin-top: 70px;
 }

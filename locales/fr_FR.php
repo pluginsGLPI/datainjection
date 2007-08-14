@@ -46,12 +46,31 @@ $DATAINJECTIONLANG["setup"][5] = "Désinstaller le plugin $title";
 $DATAINJECTIONLANG["setup"][6] = "Attention, la mise à jour du plugin est irréversible.";
 $DATAINJECTIONLANG["setup"][7] = "Attention, la désinstallation du plugin est irréversible.<br> Vous perdrez toutes les données.";
 
-$DATAINJECTIONLANG["step0"][0] = "Bienvenue dans l'assistant d'aide à l'importation de fichier";
+$DATAINJECTIONLANG["presentation"][1] = "Bienvenue dans l'assistant d'aide à l'importation de fichier";
+
 $DATAINJECTIONLANG["step1"][1] = "Etape1 : Sélection ou création d'un modèle";
 $DATAINJECTIONLANG["step1"][2] = "Créer un nouveau modèle";
-$DATAINJECTIONLANG["step1"][3] = "Utiliser un modèle existant";
+$DATAINJECTIONLANG["step1"][3] = "Modifier un modèle existant";
+$DATAINJECTIONLANG["step1"][4] = "Supprimer un modèle existant";
+$DATAINJECTIONLANG["step1"][5] = "Utiliser un modèle existant";
 
-$DATAINJECTIONLANG["step2"][1] = "Etape2 : Sélection du fichier à uploader";
-$DATAINJECTIONLANG["step2"][2] = "Choix du fichier :";
+$DATAINJECTIONLANG["step2"][1] = "Etape2 : Collecte d'information sur le fichier";
+$DATAINJECTIONLANG["step2"][2] = "Type de fichier";
+$DATAINJECTIONLANG["step2"][3] = "Délimiteur du fichier";
+$DATAINJECTIONLANG["step2"][4] = "Création des lignes";
+$DATAINJECTIONLANG["step2"][5] = "Mise à jour des lignes";
+$DATAINJECTIONLANG["step2"][6] = "Présence d'un entête";
+
+$DATAINJECTIONLANG["step4"][1] = "Etape2 : Confirmation de la suppression";
+$DATAINJECTIONLANG["step4"][2] = "Voulez-vous supprimer";
+$DATAINJECTIONLANG["step4"][3] = "définitivement?";
+$DATAINJECTIONLANG["step4"][4] = "Le modèle";
+$DATAINJECTIONLANG["step4"][5] = "a été supprimé.";
+$DATAINJECTIONLANG["step4"][6] = "Problème lors de la suppression du modèle.";
+
+$DATAINJECTIONLANG["step5"][1] = "Etape2 : Sélection du fichier à uploader";
+$DATAINJECTIONLANG["step5"][2] = "Choix du fichier :";
+
+$DATAINJECTIONLANG["step6"][1] = "Etape3 : Sélection du fichier à uploader";
 
 ?>
