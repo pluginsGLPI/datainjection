@@ -31,20 +31,32 @@
 // Purpose of file:
 // ----------------------------------------------------------------------
 
-include_once("inc/plugin_data_injection.backend.class.php");
-include_once("inc/plugin_data_injection.backend.function.php");
-include_once("inc/plugin_data_injection.config.function.php");
-include_once("inc/plugin_data_injection.backend.csv.class.php");
-include_once("inc/plugin_data_injection.backend.csv.function.php");
-include_once("inc/plugin_data_injection.wizard.function.php");
-include_once("inc/plugin_data_injection.engine.class.php");
-include_once("inc/plugin_data_injection.engine.function.php");
-include_once("inc/plugin_data_injection.model.class.php");
-include_once("inc/plugin_data_injection.model.function.php");
-include_once("inc/plugin_data_injection.mapping.class.php");
-include_once("inc/plugin_data_injection.type.class.php");
-include_once("inc/plugin_data_injection.type.function.php");
-include_once("config/plugin_data_injection.config.php");
-
-
+/*
+ * Common backend to read files to import
+ */
+class BackendType extends CommonDBTM{
+	
+	/*
+	 * Constructor
+	 * @param file input file to read
+	 */
+    function BackendType() {
+    	$this->table = "glpi_plugin_data_injection_filetype";
+    }
+    
+    function getName()
+    {
+    	return $this->fields["name"];
+    }
+    
+    function getValue()
+    {
+    	return $this->fields["value"];
+    }
+    
+    function getBackendClass()
+    {
+    	return $this->fields["class_name"];
+    }
+}
 ?>

@@ -31,20 +31,20 @@
 // Purpose of file:
 // ----------------------------------------------------------------------
 
-include_once("inc/plugin_data_injection.backend.class.php");
-include_once("inc/plugin_data_injection.backend.function.php");
-include_once("inc/plugin_data_injection.config.function.php");
-include_once("inc/plugin_data_injection.backend.csv.class.php");
-include_once("inc/plugin_data_injection.backend.csv.function.php");
-include_once("inc/plugin_data_injection.wizard.function.php");
-include_once("inc/plugin_data_injection.engine.class.php");
-include_once("inc/plugin_data_injection.engine.function.php");
-include_once("inc/plugin_data_injection.model.class.php");
-include_once("inc/plugin_data_injection.model.function.php");
-include_once("inc/plugin_data_injection.mapping.class.php");
-include_once("inc/plugin_data_injection.type.class.php");
-include_once("inc/plugin_data_injection.type.function.php");
-include_once("config/plugin_data_injection.config.php");
-
-
+function getAllTypes()
+{
+	global $DB;
+	$types = array();
+	
+	$sql = "SELECT * FROM glpi_plugin_data_injection_filetype";
+	$result = $DB->query($sql);
+	while ($data = $DB->fetch_array($result))
+	{
+		$type = new BackendType;
+		$type->fields = $data;
+		$types[] = $type;
+	}
+	
+	return $types;
+}
 ?>
