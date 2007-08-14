@@ -79,6 +79,11 @@ class DataInjectionMapping extends CommonDBTM {
 		return $this->fields["model_id"];
 	}
 	
+	function getType()
+	{
+		return $this->fields["type"];
+	}
+	
 	
 }
 

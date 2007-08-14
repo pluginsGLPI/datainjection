@@ -50,6 +50,7 @@
 // ----------------------------------------------------------------------
 //COMPUTER MAPPING
 // ----------------------------------------------------------------------
+global $LANG,$DATA_INJECTION_MAPPING;
 $DATA_INJECTION_MAPPING[COMPUTER_TYPE]['name']['table']='glpi_computers';
 $DATA_INJECTION_MAPPING[COMPUTER_TYPE]['name']['field']='name';
 $DATA_INJECTION_MAPPING[COMPUTER_TYPE]['name']['name']=$LANG["common"][16];
@@ -110,7 +111,11 @@ $DATA_INJECTION_MAPPING[COMPUTER_TYPE]['contactnum']['field']='name';
 $DATA_INJECTION_MAPPING[COMPUTER_TYPE]['contactnum']['name']=$LANG["common"][21];
 $DATA_INJECTION_MAPPING[COMPUTER_TYPE]['contactnum']['type']='text';
 
-
+$DATA_INJECTION_MAPPING[COMPUTER_TYPE]['manufacturer']['table']='glpi_enterprises';
+$DATA_INJECTION_MAPPING[COMPUTER_TYPE]['manufacturer']['field']='name';
+$DATA_INJECTION_MAPPING[COMPUTER_TYPE]['manufacturer']['name']=$LANG["common"][5];
+$DATA_INJECTION_MAPPING[COMPUTER_TYPE]['manufacturer']['type']='text';
+$DATA_INJECTION_MAPPING[COMPUTER_TYPE]['manufacturer']['linkfield']='FK_glpi_enterprise';
 // ----------------------------------------------------------------------
 //MONITOR MAPPING
 // ----------------------------------------------------------------------

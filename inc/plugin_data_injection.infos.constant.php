@@ -33,57 +33,6 @@
 // Purpose of file:
 // ----------------------------------------------------------------------
 
-
-// ----------------------------------------------------------------------
-// ----------------------------------------------------------------------
-//MAPPING
-// ----------------------------------------------------------------------
-// ----------------------------------------------------------------------
-
-
-// ----------------------------------------------------------------------
-//COMPUTER MAPPING
-// ----------------------------------------------------------------------
-$DATA_INJECTION_MAPPING[COMPUTER_TYPE]['name']['table']='glpi_computers';
-$DATA_INJECTION_MAPPING[COMPUTER_TYPE]['name']['field']='name';
-$DATA_INJECTION_MAPPING[COMPUTER_TYPE]['name']['name']=$LANG["common"][16];
-
-$DATA_INJECTION_MAPPING[COMPUTER_TYPE]['serial']['table']='glpi_computers';
-$DATA_INJECTION_MAPPING[COMPUTER_TYPE]['serial']['field']='serial';
-$DATA_INJECTION_MAPPING[COMPUTER_TYPE]['serial']['name']=$LANG["common"][19];
-
-$DATA_INJECTION_MAPPING[COMPUTER_TYPE]['otherserial']['table']='glpi_computers';
-$DATA_INJECTION_MAPPING[COMPUTER_TYPE]['otherserial']['field']='otherserial';
-$DATA_INJECTION_MAPPING[COMPUTER_TYPE]['otherserial']['name']=$LANG["common"][20];
-
-$DATA_INJECTION_MAPPING[COMPUTER_TYPE]['os_license_number']['table']='glpi_computers';
-$DATA_INJECTION_MAPPING[COMPUTER_TYPE]['os_license_number']['field']='os_license_number';
-$DATA_INJECTION_MAPPING[COMPUTER_TYPE]['os_license_number']['name']=$LANG["computers"][10];
-
-$DATA_INJECTION_MAPPING[COMPUTER_TYPE]['os_license_id']['table']='glpi_computers';
-$DATA_INJECTION_MAPPING[COMPUTER_TYPE]['os_license_id']['field']='os_license_number';
-$DATA_INJECTION_MAPPING[COMPUTER_TYPE]['os_license_id']['name']=$LANG["computers"][11];
-
-$DATA_INJECTION_MAPPING[COMPUTER_TYPE]['os']['table']='glpi_dropdown_os';
-$DATA_INJECTION_MAPPING[COMPUTER_TYPE]['os']['field']='name';
-$DATA_INJECTION_MAPPING[COMPUTER_TYPE]['os']['name']=$LANG["computers"][9];
-$DATA_INJECTION_MAPPING[COMPUTER_TYPE]['os']['linkfield']='os';
-
-$DATA_INJECTION_MAPPING[COMPUTER_TYPE]['os_sp']['table']='glpi_dropdown_os';
-$DATA_INJECTION_MAPPING[COMPUTER_TYPE]['os_sp']['field']='name';
-$DATA_INJECTION_MAPPING[COMPUTER_TYPE]['os_sp']['name']=$LANG["computers"][52];
-$DATA_INJECTION_MAPPING[COMPUTER_TYPE]['os_sp']['linkfield']='os_sp';
-
-$DATA_INJECTION_MAPPING[COMPUTER_TYPE]['location']['table']='glpi_dropdown_location';
-$DATA_INJECTION_MAPPING[COMPUTER_TYPE]['location']['field']='name';
-$DATA_INJECTION_MAPPING[COMPUTER_TYPE]['location']['name']=$LANG["common"][15];
-$DATA_INJECTION_MAPPING[COMPUTER_TYPE]['location']['linkfield']='location';
-
-$DATA_INJECTION_MAPPING[COMPUTER_TYPE]['domain']['table']='glpi_dropdown_domain';
-$DATA_INJECTION_MAPPING[COMPUTER_TYPE]['domain']['field']='name';
-$DATA_INJECTION_MAPPING[COMPUTER_TYPE]['domain']['name']=$LANG["common"][15];
-$DATA_INJECTION_MAPPING[COMPUTER_TYPE]['domain']['linkfield']='domain';
-
 // ----------------------------------------------------------------------
 //MONITOR MAPPING
 // ----------------------------------------------------------------------
@@ -99,7 +48,7 @@ $DATA_INJECTION_MAPPING[COMPUTER_TYPE]['domain']['linkfield']='domain';
 //INFORMATIONS
 // ----------------------------------------------------------------------
 // ----------------------------------------------------------------------
-
+global $LANG;
 
 $DATA_INJECTION_INFOS[INFOCOM_TYPE]['inventory']['table']='glpi_dropdown_domain';
 $DATA_INJECTION_INFOS[INFOCOM_TYPE]['domain']['field']='name';

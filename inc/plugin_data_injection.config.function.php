@@ -64,6 +64,7 @@ function plugin_data_injection_Install() {
 	$query="CREATE TABLE `glpi_plugin_data_injection_mappings` (
 		`ID` INT( 11 ) NOT NULL AUTO_INCREMENT PRIMARY KEY ,
 		`model_id` INT( 11 ) NOT NULL ,
+		`type` INT( 11 ) NOT NULL DEFAULT '1',
 		`rank` INT( 11 ) NOT NULL ,
 		`name` VARCHAR( 255 ) NOT NULL ,
 		`value` VARCHAR( 255 ) NOT NULL ,

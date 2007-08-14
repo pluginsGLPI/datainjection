@@ -86,9 +86,20 @@ class Backend {
 	 * Get header of the file
 	 * @return array with the datas from the header
 	 */
-	function getHeader()
+	function getHeader($header_present)
 	{
-		return $this->injectionDatas->getDataAtLine(0);
+		if ($header_present)
+			return $this->injectionDatas->getDataAtLine(0);
+		else
+		{
+			$nb = count($this->injectionDatas->getDataAtLine(0));
+			for ($i=0; $i < $nb;$i++)
+				$header[] = $i;
+				
+			return $header;	
+		}
+		
+			
 	}
 		
 	/*

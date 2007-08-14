@@ -44,12 +44,12 @@ class BackendType extends CommonDBTM{
     	$this->table = "glpi_plugin_data_injection_filetype";
     }
     
-    function getName()
+    function getBackendName()
     {
     	return $this->fields["name"];
     }
     
-    function getValue()
+    function getBackendValue()
     {
     	return $this->fields["value"];
     }
@@ -57,6 +57,11 @@ class BackendType extends CommonDBTM{
     function getBackendClass()
     {
     	return $this->fields["class_name"];
+    }
+
+    function getBackendID()
+    {
+    	return $this->fields["ID"];
     }
 }
 ?>

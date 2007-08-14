@@ -41,8 +41,13 @@ class DataInjectionModel extends CommonDBTM {
 	//---- Load -----//	
 	function loadAll($model_id)
 	{
-		$this->getFromDB($model_id);
-		$this->loadMappings($model_id);
+		if ($this->getFromDB($model_id))
+		{
+			$this->loadMappings($model_id);
+			return true;
+		}
+		else
+			return false;	
 	}
 	function loadMappings($model_id)
 	{
@@ -117,6 +122,16 @@ class DataInjectionModel extends CommonDBTM {
 	function getDelimiter()
 	{
 		return $this->fields["delimiter"];
+	}
+	
+	function getModelID()
+	{
+		return $this->fields["ID"];
+	}
+	
+	function isHeaderPresent()
+	{
+		return ($this->fields["header_present"]?true:false);
 	}
 	
 }

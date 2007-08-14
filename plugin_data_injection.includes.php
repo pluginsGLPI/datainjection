@@ -31,6 +31,8 @@
 // Purpose of file:
 // ----------------------------------------------------------------------
 
+include_once("inc/plugin_data_injection.mapping.constant.php");
+include_once("inc/plugin_data_injection.infos.constant.php");
 include_once("inc/plugin_data_injection.backend.class.php");
 include_once("inc/plugin_data_injection.backend.function.php");
 include_once("inc/plugin_data_injection.config.function.php");
@@ -45,6 +47,4 @@ include_once("inc/plugin_data_injection.mapping.class.php");
 include_once("inc/plugin_data_injection.type.class.php");
 include_once("inc/plugin_data_injection.type.function.php");
 include_once("config/plugin_data_injection.config.php");
-
-
 ?>

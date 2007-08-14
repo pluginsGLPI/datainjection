@@ -42,16 +42,25 @@ class DataInjectionEngine
 	function DataInjectionEngine($model_id,$filename)
 	{
 		//Instanciate model
-		$model = new DataInjectionModel($model_id);
+		$this->model = new DataInjectionModel;
 		
 		//Load model and mappings informations
-		$model->loadAll();
+		$this->model->loadAll($model_id);
 		
 		$datas = new InjectionDatas;
-		
-		//TODO : do someting generic !!
-		$this->backend = new BackendCSV($filename,$model->getDelimiter());
+
+		//Get the backend associated with the model type (CSV, etc...)
+		$this->backend = getBackend($this->model->getModelType());		
+		$this->backend->initBackend($filename,$this->model->getDelimiter());
 		$this->backend->read();
+	}
+	
+	function getDatas()
+	{
+		if (isset($this->backend))
+			return $this->backend->getDatas()->getDatas();
+		else
+			return array();	
 	}
 	
 	/*
@@ -60,15 +69,23 @@ class DataInjectionEngine
 	function injectDatas()
 	{
 		$tab_result = array();
+		$check_result = array();
 		
-		foreach ($this->model->getDatas() as $line)
+		if ($this->model->isHeaderPresent())
+			$i=1;
+		else
+			$i=0;
+					
+		for ($datas = $this->getDatas(); $i < count($datas);$i++)
 		{
-			$check_result = checkLine($this->model,$line);
-			if ($check_result["result"])
-				injectLine($line);
-			else
-				$tab_result[] = $check_result;	
+			$check_result = checkLine($this->model,$datas[$i][0]);
+			if ($check_result["result"] == true)
+				$this->injectLine($datas[$i][0]);
+
+			$tab_result[] = $check_result;
 		}
+		
+		return $tab_result;
 	}
 	
 	/*

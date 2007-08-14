@@ -37,54 +37,67 @@
  * @data the data to import
  * @return true if the data is the correct type
  */
-function checkType($type, $data)
+function checkType($type, $name, $data)
 {
-	switch($type)
+	global $DATA_INJECTION_MAPPING;
+	
+	if (isset($DATA_INJECTION_MAPPING[$type][$name]))
 	{
-		case 'text' :
-			return TYPE_CHECK_OK;
-		break;
-		default :
-			return ERROR_IMPORT_WRONG_TYPE;
+		$field_type = $DATA_INJECTION_MAPPING[$type][$name]['type'];
+		switch($field_type)
+		{
+			case 'text' :
+				return TYPE_CHECK_OK;
+			break;
+			default :
+				return ERROR_IMPORT_WRONG_TYPE;
+		}
 	}
+	else
+		return ERROR_IMPORT_WRONG_TYPE;
 }
 
+/*
+ * check one line of data to import
+ * @param model the model to use
+ * @param line the line of datas
+ * @return an array to give the result of the check ("result"=>value,"message"=>error message if any)
+ */
 function checkLine($model,$line)
 	{
-		global $DATA_INJECTION_MAPPING;
+		$res = array ("result"=>true, "message"=>TYPE_CHECK_OK);
 		
-		$res["result"] = true;
-		
-		//---- First, check types ----//
-		for ($i = 0; $i < count($line); $i++)
+		//Get all mappings for a model
+		for ($i=0, $mappings = $model->getMappings()->getAllMappings(); $i < count($mappings); $i++)
 		{
-			//Get data to check
-			$data = $line[$i];
-			
-			//Get mapping associated to the data
-			$mapping_infos = $this->model->getMappingByRank($i);
-			
-			//If field is mandatory, check if it's present in the line
-			if ($mapping_infos->isMandatory() && !isset($data[$mapping_infos->getName()]))
-			 {
-			 	$res = array ("result" => false, "message" => ERROR_IMPORT_FIELD_MANDATORY);
-			 	break;
-			 }	
-				
-			//Get mapping informations
-			if (isset($DATA_INJECTION_MAPPING[$mapping_infos->getType()][$mapping_infos->getName()]))
+			$mapping = $mappings[$i];
+			$rank = $mapping->getRank();
+
+			//If field is mandatory AND not present in the datas to inject -> error
+			if ($mapping->isMandatory() && (!isset($line[$rank]) || $line[$rank] == ""))
 			{
-				$type = $DATA_INJECTION_MAPPING[$mapping_infos->getType()][$mapping_infos->getName()];
-				
-				$res_check_type = checkType($type, $data);
-				if ($res_check_type != TYPE_CHECK_OK)
+				 	$res = array ("result" => false, "message" => ERROR_IMPORT_FIELD_MANDATORY);
+					break;				
+			}
+			else
+			{
+				//If field exists
+				if (isset($line[$rank]))
 				{
-					$res = array ("result" => false, "message" => $res_check_type);
-					break;
-				}
+					//Check type
+					$field = $line[$rank];
+					$res_check_type = checkType($model->getModelType(), $mapping->getValue(), $field);
+					
+					//If field is not the good type -> error
+					if ($res_check_type != TYPE_CHECK_OK)
+					{
+						$res = array ("result" => false, "message" => $res_check_type);
+						break;
+					}
+				}	
 			}
 		}
-		
+
 		//---- Second, check if line was not previously imported ----//
 		//TODO : implement checks
 		
