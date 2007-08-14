@@ -87,6 +87,8 @@ if ($model->loadAll(1))
 //	print_r($model->getMappings());
 }
 
+print_r(getAllMappingsTypes());
+print_r(getAllMappingsByType(1));
 
 //---------------------- //
 //-------Types---------- //

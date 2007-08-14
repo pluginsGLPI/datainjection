@@ -44,6 +44,4 @@ define ("ERROR_IMPORT_ALREADY_IMPORTED",2);
 define ("ERROR_IMPORT_FIELD_MANDATORY",3);
 
 
-
-
 ?>

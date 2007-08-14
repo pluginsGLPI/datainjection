@@ -55,8 +55,8 @@ function plugin_data_injection_Install() {
 		`behavior_add` INT( 1 ) NOT NULL DEFAULT '1',
 		`behavior_update` INT( 1 ) NOT NULL DEFAULT '0',
 		`delimiter` VARCHAR( 1 ) NOT NULL DEFAULT ';',
-		`FK_entities` INT( 11 ) NOT NULL
-		`header_present` INT( 1 ) NOT NULL DEFAULT '1',
+		`FK_entities` INT( 11 ) NOT NULL,
+		`header_present` INT( 1 ) NOT NULL DEFAULT '1'
 		) ENGINE = MYISAM ;";
 	
 	$DB->query($query) or die($DB->error());

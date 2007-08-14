@@ -44,6 +44,7 @@ include_once("inc/plugin_data_injection.engine.function.php");
 include_once("inc/plugin_data_injection.model.class.php");
 include_once("inc/plugin_data_injection.model.function.php");
 include_once("inc/plugin_data_injection.mapping.class.php");
+include_once("inc/plugin_data_injection.mapping.function.php");
 include_once("inc/plugin_data_injection.type.class.php");
 include_once("inc/plugin_data_injection.type.function.php");
 include_once("config/plugin_data_injection.config.php");

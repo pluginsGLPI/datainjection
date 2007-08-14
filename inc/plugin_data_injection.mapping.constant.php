@@ -50,7 +50,10 @@
 // ----------------------------------------------------------------------
 //COMPUTER MAPPING
 // ----------------------------------------------------------------------
-global $LANG,$DATA_INJECTION_MAPPING;
+global $LANG,$DATA_INJECTION_MAPPING,$IMPORT_TYPES;
+//Store all the type of items that could be imported
+$IMPORT_TYPES = array(COMPUTER_TYPE);
+
 $DATA_INJECTION_MAPPING[COMPUTER_TYPE]['name']['table']='glpi_computers';
 $DATA_INJECTION_MAPPING[COMPUTER_TYPE]['name']['field']='name';
 $DATA_INJECTION_MAPPING[COMPUTER_TYPE]['name']['name']=$LANG["common"][16];
