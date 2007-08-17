@@ -38,7 +38,7 @@ class BackendCSV extends Backend{
 
 	function initBackend($newfile,$delimiter)
 	{
-    	$this->file = $newfile;
+    	$this->file = PLUGIN_DATA_INJECTION_UPLOAD_DIR.$newfile;
     	$this->delimiter = $delimiter;
 	}
 	function read()
