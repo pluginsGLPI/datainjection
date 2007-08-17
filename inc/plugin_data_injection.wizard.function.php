@@ -77,7 +77,7 @@ function step1($target)
 	echo "</div>";
 	
 	echo "</div>";
-	echo "<div class='nextprev'><input type='submit' name='next1' value='Suivant >' class='submit' /></div>";
+	echo "<div class='next'><input type='submit' name='next1' value='Suivant >' class='submit' /></div>";
 	echo "</form>";
 }
 
@@ -131,11 +131,11 @@ function step2($target)
 	echo "</table>";
 	echo "</div>";
 	
-	echo "<div class='nextprev2'>";
+	echo "<div class='preview'>";
 	echo "<input type='submit' name='preview2' value='< Precedent' class='submit' />";
 	echo "</div>";
 	
-	echo "<div class='nextprev'>";
+	echo "<div class='next'>";
 	echo "<input type='submit' name='next2' value='Suivant >' class='submit' />";
 	echo "</div>";
 	
@@ -184,7 +184,7 @@ function step4($target,$suppr)
 	
 	if($suppr)
 		{
-		echo "<div class='nextprev'>";
+		echo "<div class='next'>";
 		echo "<input type='submit' name='next4_2' value='Suivant >' class='submit' />";
 		echo "</div>";
 		}
@@ -212,16 +212,69 @@ function step5($target,$error)
 	
 	echo "</div>";
 	
-	echo "<div class='nextprev2'>";
+	echo "<div class='preview'>";
 	echo "<input type='submit' name='preview5' value='< Precedent' class='submit' />";
 	echo "</div>";
 	
-	echo "<div class='nextprev'>";
+	echo "<div class='next'>";
 	echo "<input type='submit' name='next5' value='Suivant >' class='submit' />";
 	echo "</div>";
 	
 	echo "</form>";
 }
 
-
+function step9($target)
+{
+	global $DATAINJECTIONLANG,$LANG,$CFG_GLPI;
+	
+	$file=new BackendCSV();
+	$file->initBackend($_SESSION["file_name"],$_SESSION["delimiteur"]);
+	$file->read();
+	$header = $file->getHeader($_SESSION["dropdown_header"]);
+	$num = count($header);
+	
+	echo "<div class='wizard_titre' style='margin-bottom:20px'>".$DATAINJECTIONLANG["step9"][1]." ".$num." ".$DATAINJECTIONLANG["step9"][2]."</div>";
+	
+	echo "<form action='".$target."' method='post' name='step5'>";
+	
+	echo "<table>";
+	foreach($header as $key => $value)
+		{
+		echo "<tr>";
+		echo "<td>".$value." : </td>";
+		echo "<td style='text-align: center;width:75px'><img src='../pics/fleche.png' alt='fleche' /></td>";
+		echo "<td><select name='table$key' id='table$key' onchange='go($key)' style='width: 150px'>";
+		echo "<option value='-1'>-------Choisir une table-------</option>";
+		echo "<option value='1'>".$LANG["Menu"][0]."</option>";
+		echo "<option value='2'>".$LANG["Menu"][4]."</option>";
+		echo "<option value='3'>".$LANG["Menu"][14]."</option>";
+		echo "<option value='4'>".$LANG["Menu"][3]."</option>";
+		echo "<option value='5'>".$LANG["Menu"][1]."</option>";
+		echo "</select></td>";
+		echo "<td id='field$key'><select name='field$key' style='width: 150px'><option value='-1'>-------Choisir un champ-------</option></select></td>";
+		echo "</tr>";
+		}
+	echo "</table>";
+	
+	echo "<form action='plugin_data_injection.popup.php' method='post' id='popup' name='popup'>";
+	echo "<table style='margin-top: 10px'>";
+	echo "<tr><td style='text-align:center'>";
+	echo "Nbr de ligne : <input type='text' id='nbline' name='nbline' size='2' maxlength='3' value='1' onfocus=\"this.value=''\" />";
+	echo "</td></tr>";
+	echo "<tr><td style='text-align:center'>";
+	echo "<input type='button' name='valid_popup' value='Voir le fichier' onclick='popup()' class='submit' />";
+	echo "</td></tr>";
+	echo "</form>";
+	echo "</table>";
+	
+	echo "<div class='preview'>";
+	echo "<input type='submit' name='preview9' value='< Precedent' class='submit' />";
+	echo "</div>";
+	
+	echo "<div class='next'>";
+	echo "<input type='submit' name='next9' value='Suivant >' class='submit' />";
+	echo "</div>";
+	
+	echo "</form>";
+}	
 ?>

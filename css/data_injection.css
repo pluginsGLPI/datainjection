@@ -47,14 +47,14 @@ text-align: center;
 margin: 0 auto;
 }
 
-.nextprev {
+.next {
 position: absolute;
 top: 420px;
 left: 530px;
 z-index:10; 
 }
 
-.nextprev2 {
+.preview {
 position: absolute;
 top: 420px;
 left: 15px;

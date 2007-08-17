@@ -73,4 +73,7 @@ $DATAINJECTIONLANG["step5"][2] = "Choix du fichier :";
 
 $DATAINJECTIONLANG["step6"][1] = "Etape3 : Sélection du fichier à uploader";
 
+$DATAINJECTIONLANG["step9"][1] = "Etape4 :";
+$DATAINJECTIONLANG["step9"][2] = "colonnes à mapper ont été trouvées";
+
 ?>

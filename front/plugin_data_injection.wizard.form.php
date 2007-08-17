@@ -101,7 +101,12 @@ else if(isset($_POST["next4_2"]))
 	$_SESSION["wizard_step"] = 1;
 
 else if(isset($_POST["preview5"]))
-	$_SESSION["wizard_step"] = 1;
+	{
+	if(!$_SESSION["verif_file"])
+		$_SESSION["wizard_step"] = 1;
+	else
+		$_SESSION["wizard_step"] = 2;
+	}
 	
 else if(isset($_POST["next5"]))
 	{
@@ -158,13 +163,20 @@ else if(isset($_POST["next5"]))
     				$_SESSION["wizard_step"] = 8;
     			else
     				$_SESSION["wizard_step"] = 9;
+    			
     			$_SESSION["file_name"] = $name_file;
     			}
     		}
     	}
 	}
 
-
+else if(isset($_POST["preview9"]))
+	$_SESSION["wizard_step"] = 6;
+	
+else if(isset($_POST["next9"]))
+	$_SESSION["wizard_step"] = 12;
+	
+	
 
 
 if(!isset($_SESSION["wizard_step"]))
@@ -206,6 +218,10 @@ switch($_SESSION["wizard_step"]){
 	case 6:
 		echo "<script type='text/javascript'>change_color_step('step3')</script>";
 		step5($_SERVER["PHP_SELF"],$error);
+	break;
+	case 9:
+		echo "<script type='text/javascript'>change_color_step('step4')</script>";
+		step9($_SERVER["PHP_SELF"]);
 	break;
 }
 

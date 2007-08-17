@@ -75,7 +75,7 @@ echo "<form action='plugin_data_injection.wizard.form.php' method='post' >";
 
 echo "<div class='wizard_titre'>".$DATAINJECTIONLANG["presentation"][1]."</div>";
 
-echo "<div class='nextprev'>";
+echo "<div class='next'>";
 echo "<input type='submit' value='Suivant >' class='submit' />";
 echo "</div>";
 
