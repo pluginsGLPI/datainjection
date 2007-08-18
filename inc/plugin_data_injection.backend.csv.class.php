@@ -38,14 +38,14 @@ class BackendCSV extends Backend{
 
 	function initBackend($newfile,$delimiter)
 	{
-    	$this->file = PLUGIN_DATA_INJECTION_UPLOAD_DIR.$newfile;
+    	$this->file = $newfile;
     	$this->delimiter = $delimiter;
 	}
 	function read()
 	{
 		$fic = fopen($this->file, 'r');
 
-		while (($data = fgetcsv($fic, 1000, $this->delimiter)) !== FALSE)  
+		while (($data = fgetcsv($fic, 3000, $this->delimiter)) !== FALSE)  
 			$this->injectionDatas->addToDatas(parseLine($fic,$data));
 
  	 	fclose($fic);
@@ -56,7 +56,7 @@ class BackendCSV extends Backend{
 		$row = 0;
 		$fic = fopen($this->file, 'r');
 
-		while ((($data = fgetcsv($fic, 1000, $this->delimiter)) !== FALSE) && $row <= $end_line) { 
+		while ((($data = fgetcsv($fic, 3000, $this->delimiter)) !== FALSE) && $row <= $end_line) { 
 			if ($row >= $start_line && $row <= $end_line)
 				$this->injectionDatas->addToDatas(parseLine($fic,$data));
 			$row++;

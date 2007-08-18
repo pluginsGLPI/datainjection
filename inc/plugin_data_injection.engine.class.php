@@ -38,14 +38,18 @@ class DataInjectionEngine
 	
 	//Backend to read file to import
 	var $backend;
-	
-	function DataInjectionEngine($model_id,$filename)
+
+	var $entity;
+		
+	function DataInjectionEngine($model_id,$filename,$entity=0)
 	{
 		//Instanciate model
 		$this->model = new DataInjectionModel;
 		
 		//Load model and mappings informations
 		$this->model->loadAll($model_id);
+		
+		$this->entity = $entity;
 		
 		$datas = new InjectionDatas;
 
@@ -79,12 +83,13 @@ class DataInjectionEngine
 		for ($datas = $this->getDatas(); $i < count($datas);$i++)
 		{
 			$check_result = checkLine($this->model,$datas[$i][0]);
-			if ($check_result["result"] == true)
-				$this->injectLine($datas[$i][0]);
+
+			if ($check_result["result"])
+				$this->injectLine($this->model,$datas[$i][0],$this->entity);
 
 			$tab_result[] = $check_result;
 		}
-		
+			
 		return $tab_result;
 	}
 	
@@ -92,11 +97,53 @@ class DataInjectionEngine
 	 * Inject one line of datas
 	 * @param line one line of data to import
 	 */
-	function injectLine($line)
+	function injectLine($model,$line,$entity)
 	{
+		//Array to store the fields to write to db
+		$db_fields = array();
 		
-	}
+		for ($i=0; $i < count($line);$i++)
+		{
+			$mapping = $model->getMappingByRank($i);
+			
+			if ($mapping != null && $mapping->getValue() != NOT_MAPPED)
+			{
+				$mapping_definition = getMappingDefinitionByTypeAndName($mapping->getMappingType(),$mapping->getValue());
+				if (!isset($db_fields[$mapping->getMappingType()]))
+					$db_fields[$mapping->getMappingType()] = array();
+				
+				$obj = $db_fields[$mapping->getMappingType()];
+				
+				if (isset($mapping_definition["table_type"]) && $mapping_definition["table_type"] == "dropdown")
+					$obj[$mapping_definition["linkfield"]] = insertDropdownValue($mapping,$mapping_definition,$line[$i],$entity);
+				else
+					$obj[$mapping_definition["field"]] = $line[$i];
+				
+				//Add the active entity
+				$obj["FK_entities"] = $entity;
+				$db_fields[$mapping->getMappingType()] = $obj;
+			}
+		}
+		
 	
+		//Insert datas in databse
+		foreach ($db_fields as $type => $fields)
+		{
+			$obj = getInstance($type);
 
+			$ID = dataAlreadyInDB($type,$fields,$mapping_definition,$model);
+			if ($ID == -1)
+			{
+				if ($model->getBehaviorAdd())
+					echo "ADD ID=".$obj->add($fields)."\n";
+			}	
+			elseif ($model->getBehaviorupdate())
+			{
+				$fields["ID"] = $ID;
+				echo "update ID=".$obj->update($fields);
+			}	
+		}
+				
+	}
 }
 ?>

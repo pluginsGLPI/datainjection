@@ -28,7 +28,7 @@
  --------------------------------------------------------------------------
  */
 
-function getAllMappingsTypes()
+function getAllMappingsDefinitionsTypes()
 {
 	global $IMPORT_TYPES,$LANG;
 
@@ -49,7 +49,7 @@ function getAllMappingsTypes()
 	return $types;
 }
 
-function getAllMappingsByType($type)
+function getAllMappingsDefinitionsByType($type)
 {
 	global $DATA_INJECTION_MAPPING,$LANG;
 	$mapping_parameters = array();
@@ -60,5 +60,28 @@ function getAllMappingsByType($type)
 	}
 
 	return 	$mapping_parameters;
+}
+
+function getMappingDefinitionByTypeAndName($type,$name)
+{
+	global $DATA_INJECTION_MAPPING;
+	if (isset($DATA_INJECTION_MAPPING[$type][$name]))
+		return $DATA_INJECTION_MAPPING[$type][$name];
+	else
+		return null;	
+}
+
+function getAllMandatoriesMappings($type,$model)
+{
+	global $DATA_INJECTION_MAPPING;
+	$mandatories = array();
+	
+	foreach ($model->getMappings()->getAllMappings() as $mapping)
+	{
+		if ($mapping->isMandatory())
+			$mandatories[] = $mapping;
+	}
+	
+	return $mandatories;
 }
 ?>
