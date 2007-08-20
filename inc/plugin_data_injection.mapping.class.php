@@ -84,6 +84,40 @@ class DataInjectionMapping extends CommonDBTM {
 		return $this->fields["type"];
 	}
 	
+	function setMandatory($mandatory)
+	{
+		$this->fields["mandatory"] = $mandatory; 
+	}
+	
+	function setName($name)
+	{
+		$this->fields["name"] = $name;
+	}
+	
+	function setRank($rank)
+	{
+		$this->fields["rank"] = $rank;
+	}
+	
+	function setValue($value)
+	{
+		$this->fields["value"] = $value;
+	}
+	
+	function setID($ID)
+	{
+		$this->fields["ID"] = $ID;
+	}
+	
+	function setModelID($model_id)
+	{
+		$this->fields["model_id"] = $model_id;
+	}
+	
+	function setMappingType($type)
+	{
+		$this->fields["type"] = $type;
+	}	
 	
 }
 
