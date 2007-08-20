@@ -28,10 +28,14 @@ if(isset($_GET["nbline"]))
 	$nbline = $_GET["nbline"];
 
 $file=new BackendCSV();
-$file->initBackend($_SESSION["file_name"],$_SESSION["delimiteur"]);
+$file->initBackend(PLUGIN_DATA_INJECTION_UPLOAD_DIR.$_SESSION["file_name"],$_SESSION["delimiteur"]);
 $file->read();
 $header = $file->getHeader($_SESSION["dropdown_header"]);
-$data = $file->getDatasFromLineToLine(1,$nbline);
+
+if($_SESSION["dropdown_header"])
+	$data = $file->getDatasFromLineToLine(1,$nbline);
+else
+	$data = $file->getDatasFromLineToLine(0,$nbline-1);
 
 echo "</table>";	
 	

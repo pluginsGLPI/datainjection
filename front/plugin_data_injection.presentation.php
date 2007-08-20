@@ -44,6 +44,9 @@ if(isset($_SESSION["wizard_step"]))
 	
 if(isset($_SESSION["wizard_nbonglet"]))
 	unset($_SESSION["wizard_nbonglet"]);
+	
+if(isset($_SESSION["wizard_idmodel"]))
+	unset($_SESSION["wizard_idmodel"]);
 
 if(isset($_SESSION["file_name"]))
 	unset($_SESSION["file_name"]);

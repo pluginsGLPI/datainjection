@@ -66,9 +66,19 @@ function go(id)
 	xhr.send("idMapping="+idtable+" & id="+id);
 }
 
-function popup()
+function popup(totalline)
 {
 	var nbline = document.getElementById('nbline').value;
+	
+	if(nbline<1)
+		{
+		nbline=1;
+		document.getElementById('nbline').value = 1;
+		}
+	
+	if(nbline > totalline)
+		nbline = totalline;
+	
 	var x = screen.width;
 	var y = screen.height;
 	

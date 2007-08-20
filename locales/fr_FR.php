@@ -45,6 +45,7 @@ $DATAINJECTIONLANG["setup"][4] = "Mettre à jour le plugin $title vers la versio
 $DATAINJECTIONLANG["setup"][5] = "Désinstaller le plugin $title";
 $DATAINJECTIONLANG["setup"][6] = "Attention, la mise à jour du plugin est irréversible.";
 $DATAINJECTIONLANG["setup"][7] = "Attention, la désinstallation du plugin est irréversible.<br> Vous perdrez toutes les données.";
+$DATAINJECTIONLANG["setup"][8] = "Colonne";
 
 $DATAINJECTIONLANG["presentation"][1] = "Bienvenue dans l'assistant d'aide à l'importation de fichier";
 
@@ -60,6 +61,7 @@ $DATAINJECTIONLANG["step2"][3] = "Délimiteur du fichier";
 $DATAINJECTIONLANG["step2"][4] = "Création des lignes";
 $DATAINJECTIONLANG["step2"][5] = "Mise à jour des lignes";
 $DATAINJECTIONLANG["step2"][6] = "Présence d'un entête";
+$DATAINJECTIONLANG["step2"][7] = "Délimiteur non définie";
 
 $DATAINJECTIONLANG["step4"][1] = "Etape2 : Confirmation de la suppression";
 $DATAINJECTIONLANG["step4"][2] = "Voulez-vous supprimer";
@@ -75,5 +77,13 @@ $DATAINJECTIONLANG["step6"][1] = "Etape3 : Sélection du fichier à uploader";
 
 $DATAINJECTIONLANG["step9"][1] = "Etape4 :";
 $DATAINJECTIONLANG["step9"][2] = "colonnes à mapper ont été trouvées";
+$DATAINJECTIONLANG["step9"][3] = "-------Choisir une table-------";
+$DATAINJECTIONLANG["step9"][4] = "-------Choisir un champ-------";
+
+$DATAINJECTIONLANG["step12"][1] = "Etape5 : Enregistrement d'informations complémentaires";
+
+$DATAINJECTIONLANG["button"][1] = "< Précédent";
+$DATAINJECTIONLANG["button"][2] = "Suivant >";
+$DATAINJECTIONLANG["button"][3] = "Voir le fichier";
 
 ?>

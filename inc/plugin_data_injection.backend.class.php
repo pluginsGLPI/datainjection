@@ -73,6 +73,10 @@ class Backend {
 		
 	}
 	
+	function getNumberOfLine()
+	{
+		return count($this->injectionDatas->getDatas());
+	}
 	/*
 	 * Get datas read from the input file
 	 * @return array with all the datas from the file
@@ -88,13 +92,14 @@ class Backend {
 	 */
 	function getHeader($header_present)
 	{
+		global $DATAINJECTIONLANG;
 		if ($header_present)
 			return $this->injectionDatas->getDataAtLine(0);
 		else
 		{
 			$nb = count($this->injectionDatas->getDataAtLine(0));
 			for ($i=0; $i < $nb;$i++)
-				$header[] = $i;
+				$header[] = $DATAINJECTIONLANG["setup"][8]." ".($i+1);
 				
 			return $header;	
 		}
@@ -115,7 +120,7 @@ class Backend {
 	function getDatasFromLineToLine($start_line,$end_line)
 	{
 		$tmp = array();
-		for ($i=$start_line;$i <= $end_line;$i++)
+		for ($i=$start_line;$i < $this->getNumberOfLine() &&  $i <= $end_line;$i++)
 			$tmp[] = $this->injectionDatas->getDataAtLine($i);
 		return $tmp;	
 	}

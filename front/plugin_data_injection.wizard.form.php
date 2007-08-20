@@ -74,13 +74,22 @@ else if(isset($_POST["preview2"]))
 	
 else if(isset($_POST["next2"]))
 	{
-	$_SESSION["wizard_step"] = 6;
-	$_SESSION["verif_file"]=1;
-	$_SESSION["dropdown_type"] = $_POST["dropdown_type"];
-	$_SESSION["delimiteur"] = $_POST["delimiteur"];
-	$_SESSION["dropdown_create"] = $_POST["dropdown_create"];
-	$_SESSION["dropdown_update"] = $_POST["dropdown_update"];
-	$_SESSION["dropdown_header"] = $_POST["dropdown_header"];
+	if($_POST["delimiteur"]!='')
+		{
+		$_SESSION["wizard_step"] = 6;
+		$_SESSION["verif_file"]=1;
+		
+		$_SESSION["dropdown_type"] = $_POST["dropdown_type"];
+		$_SESSION["delimiteur"] = $_POST["delimiteur"];
+		$_SESSION["dropdown_create"] = $_POST["dropdown_create"];
+		$_SESSION["dropdown_update"] = $_POST["dropdown_update"];
+		$_SESSION["dropdown_header"] = $_POST["dropdown_header"];
+		}
+	else
+		{
+		$_SESSION["wizard_step"] = 2;
+		$error = $DATAINJECTIONLANG["step2"][7];
+		}
 	}
 	
 else if(isset($_POST["preview3"]))
@@ -174,9 +183,25 @@ else if(isset($_POST["preview9"]))
 	$_SESSION["wizard_step"] = 6;
 	
 else if(isset($_POST["next9"]))
+	{
+	$_SESSION["nbcol"] = $_POST["nbcol"];
+	
+	for($i=0;$i<$_SESSION["nbcol"];$i++)
+			{
+			$_SESSION["table".$i] = $_POST["table".$i];
+			$_SESSION["field".$i] = $_POST["field".$i];
+			}
 	$_SESSION["wizard_step"] = 12;
+	}
+
+else if(isset($_POST["preview12"]))
+	$_SESSION["wizard_step"] = 9;
 	
+else if(isset($_POST["next9"]))
+	$_SESSION["wizard_step"] = 15;
 	
+
+
 
 
 if(!isset($_SESSION["wizard_step"]))
@@ -201,7 +226,7 @@ switch($_SESSION["wizard_step"]){
 	break;
 	case 2:
 		echo "<script type='text/javascript'>change_color_step('step2')</script>";
-		step2($_SERVER["PHP_SELF"]);
+		step2($_SERVER["PHP_SELF"],$error);
 	break;
 	case 3:
 		echo "<script type='text/javascript'>change_color_step('step2')</script>";
@@ -222,6 +247,10 @@ switch($_SESSION["wizard_step"]){
 	case 9:
 		echo "<script type='text/javascript'>change_color_step('step4')</script>";
 		step9($_SERVER["PHP_SELF"]);
+	break;
+	case 12:
+		echo "<script type='text/javascript'>change_color_step('step5')</script>";
+		step12($_SERVER["PHP_SELF"]);
 	break;
 }
 
