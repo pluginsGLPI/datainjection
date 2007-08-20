@@ -134,6 +134,51 @@ class DataInjectionModel extends CommonDBTM {
 		return ($this->fields["header_present"]?true:false);
 	}
 	
+	//---- Save -----//
+	function setModelType($type)
+	{
+		$this->fields["model_type"] = $type;
+	}
+	
+	function setName($name)
+	{
+		$this->fields["name"] = $name;
+	}	
+	
+	function setComments($comments)
+	{
+		$this->fields["comments"] = $comments;
+	}	
+	
+	function setDelimiter($delimiter)
+	{
+		$this->fields["delimiter"] = $delimiter;
+	}	
+	
+	function setHeaderPresent($present)
+	{
+		$this->fields["header_present"] = $present;
+	}	
+
+	function setBehaviorAdd($add)
+	{
+		$this->fields["behavior_add"] = $add;
+	}
+	
+	function setBehaviorUpdate($update)
+	{
+		$this->fields["behavior_update"] = $update;
+	}
+	
+	function setModelID($ID)
+	{
+		return $this->fields["ID"] = $ID;
+	}	
+	
+	function setMappings($mappings)
+	{
+		return $this->mappings = $mappings;
+	}		
 }
 
 ?>
