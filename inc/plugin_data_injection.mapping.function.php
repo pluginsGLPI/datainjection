@@ -33,18 +33,12 @@ function getAllMappingsDefinitionsTypes()
 	global $IMPORT_TYPES,$LANG;
 
 	$types = array();
+	$commonitem = new CommonItem;
 	
 	foreach ($IMPORT_TYPES as $type)
 	{
-		switch ($type)
-		{
-			case COMPUTER_TYPE :
-				$type_name = $LANG["help"][25];
-			break;
-			default :
-				$type_name = "";	
-		}
-		$types[] = array($type,$type_name);
+		$commonitem->setType($type);
+		$types[] = array($type,$commonite->getType());
 	}
 	return $types;
 }
@@ -54,9 +48,9 @@ function getAllMappingsDefinitionsByType($type)
 	global $DATA_INJECTION_MAPPING,$LANG;
 	$mapping_parameters = array();
 	
-	foreach ($DATA_INJECTION_MAPPING[$type] as $mapping)
+	foreach ($DATA_INJECTION_MAPPING[$type] as $name => $mapping)
 	{
-		$mapping_parameters[] = $mapping["name"];
+		$mapping_parameters[$name] = $mapping["name"];
 	}
 
 	return 	$mapping_parameters;
