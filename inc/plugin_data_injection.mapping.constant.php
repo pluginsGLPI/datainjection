@@ -52,7 +52,7 @@
 // ----------------------------------------------------------------------
 global $LANG,$DATA_INJECTION_MAPPING,$IMPORT_TYPES;
 //Store all the type of items that could be imported
-$IMPORT_TYPES = array(COMPUTER_TYPE);
+$IMPORT_TYPES = array(COMPUTER_TYPE, MONITOR_TYPE, USER_TYPE);
 
 $DATA_INJECTION_MAPPING[COMPUTER_TYPE]['name']['table']='glpi_computers';
 $DATA_INJECTION_MAPPING[COMPUTER_TYPE]['name']['field']='name';
@@ -153,10 +153,140 @@ $DATA_INJECTION_MAPPING[COMPUTER_TYPE]['model']['type']='text';
 $DATA_INJECTION_MAPPING[COMPUTER_TYPE]['model']['linkfield']='model';
 $DATA_INJECTION_MAPPING[COMPUTER_TYPE]['model']['table_type']='dropdown';
 
+$DATA_INJECTION_MAPPING[COMPUTER_TYPE]['auto_update']['table']='glpi_computers';
+$DATA_INJECTION_MAPPING[COMPUTER_TYPE]['auto_update']['field']='auto_update';
+$DATA_INJECTION_MAPPING[COMPUTER_TYPE]['auto_update']['name']=$LANG["ocsng"][6];
+$DATA_INJECTION_MAPPING[COMPUTER_TYPE]['auto_update']['type']='integer';
 
+$DATA_INJECTION_MAPPING[COMPUTER_TYPE]['network']['table']='glpi_dropdown_network';
+$DATA_INJECTION_MAPPING[COMPUTER_TYPE]['network']['field']='name';
+$DATA_INJECTION_MAPPING[COMPUTER_TYPE]['network']['name']=$LANG["setup"][88];
+$DATA_INJECTION_MAPPING[COMPUTER_TYPE]['network']['type']='text';
+$DATA_INJECTION_MAPPING[COMPUTER_TYPE]['network']['linkfield']='network';
+$DATA_INJECTION_MAPPING[COMPUTER_TYPE]['network']['table_type']='dropdown';
+
+$DATA_INJECTION_MAPPING[COMPUTER_TYPE]['is_template']['table']='glpi_monitors';
+$DATA_INJECTION_MAPPING[COMPUTER_TYPE]['is_template']['field']='is_template';
+$DATA_INJECTION_MAPPING[COMPUTER_TYPE]['is_template']['name']=$LANG["common"][13];
+$DATA_INJECTION_MAPPING[COMPUTER_TYPE]['is_template']['type']='integer';
+
+$DATA_INJECTION_MAPPING[COMPUTER_TYPE]['notes']['table']='glpi_monitors';
+$DATA_INJECTION_MAPPING[COMPUTER_TYPE]['notes']['field']='notes';
+$DATA_INJECTION_MAPPING[COMPUTER_TYPE]['notes']['name']=$LANG["reminder"][2];
+$DATA_INJECTION_MAPPING[COMPUTER_TYPE]['notes']['type']='text';
 // ----------------------------------------------------------------------
 //MONITOR MAPPING
 // ----------------------------------------------------------------------
+$DATA_INJECTION_MAPPING[MONITOR_TYPE]['name']['table']='glpi_monitors';
+$DATA_INJECTION_MAPPING[MONITOR_TYPE]['name']['field']='name';
+$DATA_INJECTION_MAPPING[MONITOR_TYPE]['name']['name']=$LANG["common"][16];
+$DATA_INJECTION_MAPPING[MONITOR_TYPE]['name']['type']='text';
+
+$DATA_INJECTION_MAPPING[MONITOR_TYPE]['serial']['table']='glpi_monitors';
+$DATA_INJECTION_MAPPING[MONITOR_TYPE]['serial']['field']='serial';
+$DATA_INJECTION_MAPPING[MONITOR_TYPE]['serial']['name']=$LANG["common"][19];
+$DATA_INJECTION_MAPPING[MONITOR_TYPE]['serial']['type']='text';
+
+$DATA_INJECTION_MAPPING[MONITOR_TYPE]['otherserial']['table']='glpi_monitors';
+$DATA_INJECTION_MAPPING[MONITOR_TYPE]['otherserial']['field']='otherserial';
+$DATA_INJECTION_MAPPING[MONITOR_TYPE]['otherserial']['name']=$LANG["common"][20];
+$DATA_INJECTION_MAPPING[MONITOR_TYPE]['otherserial']['type']='text';
+
+$DATA_INJECTION_MAPPING[MONITOR_TYPE]['location']['table']='glpi_dropdown_locations';
+$DATA_INJECTION_MAPPING[MONITOR_TYPE]['location']['field']='name';
+$DATA_INJECTION_MAPPING[MONITOR_TYPE]['location']['name']=$LANG["common"][15];
+$DATA_INJECTION_MAPPING[MONITOR_TYPE]['location']['linkfield']='location';
+$DATA_INJECTION_MAPPING[MONITOR_TYPE]['location']['type']='text';
+$DATA_INJECTION_MAPPING[MONITOR_TYPE]['location']['table_type']='dropdown';
+
+
+$DATA_INJECTION_MAPPING[MONITOR_TYPE]['contact']['table']='glpi_monitors';
+$DATA_INJECTION_MAPPING[MONITOR_TYPE]['contact']['field']='contact';
+$DATA_INJECTION_MAPPING[MONITOR_TYPE]['contact']['name']=$LANG["common"][18];
+$DATA_INJECTION_MAPPING[MONITOR_TYPE]['contact']['type']='text';
+
+$DATA_INJECTION_MAPPING[MONITOR_TYPE]['contactnum']['table']='glpi_monitors';
+$DATA_INJECTION_MAPPING[MONITOR_TYPE]['contactnum']['field']='name';
+$DATA_INJECTION_MAPPING[MONITOR_TYPE]['contactnum']['name']=$LANG["common"][21];
+$DATA_INJECTION_MAPPING[MONITOR_TYPE]['contactnum']['type']='text';
+
+$DATA_INJECTION_MAPPING[MONITOR_TYPE]['comments']['table']='glpi_monitors';
+$DATA_INJECTION_MAPPING[MONITOR_TYPE]['comments']['field']='comments';
+$DATA_INJECTION_MAPPING[MONITOR_TYPE]['comments']['name']=$LANG["common"][25];
+$DATA_INJECTION_MAPPING[MONITOR_TYPE]['comments']['type']='text';
+
+$DATA_INJECTION_MAPPING[MONITOR_TYPE]['size']['table']='glpi_monitors';
+$DATA_INJECTION_MAPPING[MONITOR_TYPE]['size']['field']='size';
+$DATA_INJECTION_MAPPING[MONITOR_TYPE]['size']['name']=$LANG["monitors"][21];
+$DATA_INJECTION_MAPPING[MONITOR_TYPE]['size']['type']='text';
+
+$DATA_INJECTION_MAPPING[MONITOR_TYPE]['flags_micro']['table']='glpi_monitors';
+$DATA_INJECTION_MAPPING[MONITOR_TYPE]['flags_micro']['field']='flags_micro';
+$DATA_INJECTION_MAPPING[MONITOR_TYPE]['flags_micro']['name']=$LANG["monitors"][14];
+$DATA_INJECTION_MAPPING[MONITOR_TYPE]['flags_micro']['type']='integer';
+
+$DATA_INJECTION_MAPPING[MONITOR_TYPE]['flags_speaker']['table']='glpi_monitors';
+$DATA_INJECTION_MAPPING[MONITOR_TYPE]['flags_speaker']['field']='flags_speaker';
+$DATA_INJECTION_MAPPING[MONITOR_TYPE]['flags_speaker']['name']=$LANG["monitors"][15];
+$DATA_INJECTION_MAPPING[MONITOR_TYPE]['flags_speaker']['type']='integer';
+
+$DATA_INJECTION_MAPPING[MONITOR_TYPE]['flags_subd']['table']='glpi_monitors';
+$DATA_INJECTION_MAPPING[MONITOR_TYPE]['flags_subd']['field']='flags_subd';
+$DATA_INJECTION_MAPPING[MONITOR_TYPE]['flags_subd']['name']=$LANG["monitors"][19];
+$DATA_INJECTION_MAPPING[MONITOR_TYPE]['flags_subd']['type']='integer';
+
+$DATA_INJECTION_MAPPING[MONITOR_TYPE]['flags_bnc']['table']='glpi_monitors';
+$DATA_INJECTION_MAPPING[MONITOR_TYPE]['flags_bnc']['field']='flags_bnc';
+$DATA_INJECTION_MAPPING[MONITOR_TYPE]['flags_bnc']['name']=$LANG["monitors"][20];
+$DATA_INJECTION_MAPPING[MONITOR_TYPE]['flags_bnc']['type']='integer';
+
+$DATA_INJECTION_MAPPING[MONITOR_TYPE]['flags_dvi']['table']='glpi_monitors';
+$DATA_INJECTION_MAPPING[MONITOR_TYPE]['flags_dvi']['field']='flags_dvi';
+$DATA_INJECTION_MAPPING[MONITOR_TYPE]['flags_dvi']['name']=$LANG["monitors"][32];
+$DATA_INJECTION_MAPPING[MONITOR_TYPE]['flags_dvi']['type']='integer';
+
+$DATA_INJECTION_MAPPING[MONITOR_TYPE]['type']['table']='glpi_type_monitors';
+$DATA_INJECTION_MAPPING[MONITOR_TYPE]['type']['field']='name';
+$DATA_INJECTION_MAPPING[MONITOR_TYPE]['type']['name']=$LANG["common"][17];
+$DATA_INJECTION_MAPPING[MONITOR_TYPE]['type']['type']='text';
+$DATA_INJECTION_MAPPING[MONITOR_TYPE]['type']['linkfield']='type';
+$DATA_INJECTION_MAPPING[MONITOR_TYPE]['type']['table_type']='dropdown';
+
+$DATA_INJECTION_MAPPING[MONITOR_TYPE]['model']['table']='glpi_dropdown_model_monitors';
+$DATA_INJECTION_MAPPING[MONITOR_TYPE]['model']['field']='name';
+$DATA_INJECTION_MAPPING[MONITOR_TYPE]['model']['name']=$LANG["common"][22];
+$DATA_INJECTION_MAPPING[MONITOR_TYPE]['model']['type']='text';
+$DATA_INJECTION_MAPPING[MONITOR_TYPE]['model']['linkfield']='model';
+$DATA_INJECTION_MAPPING[MONITOR_TYPE]['model']['table_type']='dropdown';
+
+$DATA_INJECTION_MAPPING[MONITOR_TYPE]['manufacturer']['table']='glpi_dropdown_manufacturer';
+$DATA_INJECTION_MAPPING[MONITOR_TYPE]['manufacturer']['field']='name';
+$DATA_INJECTION_MAPPING[MONITOR_TYPE]['manufacturer']['name']=$LANG["common"][5];
+$DATA_INJECTION_MAPPING[MONITOR_TYPE]['manufacturer']['type']='text';
+$DATA_INJECTION_MAPPING[MONITOR_TYPE]['manufacturer']['linkfield']='FK_glpi_enterprise';
+$DATA_INJECTION_MAPPING[MONITOR_TYPE]['manufacturer']['table_type']='dropdown';
+
+$DATA_INJECTION_MAPPING[MONITOR_TYPE]['is_template']['table']='glpi_monitors';
+$DATA_INJECTION_MAPPING[MONITOR_TYPE]['is_template']['field']='is_template';
+$DATA_INJECTION_MAPPING[MONITOR_TYPE]['is_template']['name']=$LANG["common"][13];
+$DATA_INJECTION_MAPPING[MONITOR_TYPE]['is_template']['type']='integer';
+
+$DATA_INJECTION_MAPPING[MONITOR_TYPE]['tplname']['table']='glpi_monitors';
+$DATA_INJECTION_MAPPING[MONITOR_TYPE]['tplname']['field']='tplname';
+$DATA_INJECTION_MAPPING[MONITOR_TYPE]['tplname']['name']=$LANG["common"][6];
+$DATA_INJECTION_MAPPING[MONITOR_TYPE]['tplname']['type']='text';
+
+$DATA_INJECTION_MAPPING[MONITOR_TYPE]['notes']['table']='glpi_monitors';
+$DATA_INJECTION_MAPPING[MONITOR_TYPE]['notes']['field']='notes';
+$DATA_INJECTION_MAPPING[MONITOR_TYPE]['notes']['name']=$LANG["reminder"][2];
+$DATA_INJECTION_MAPPING[MONITOR_TYPE]['notes']['type']='text';
+
+$DATA_INJECTION_MAPPING[MONITOR_TYPE]['state']['table']='glpi_dropdown_state';
+$DATA_INJECTION_MAPPING[MONITOR_TYPE]['state']['field']='name';
+$DATA_INJECTION_MAPPING[MONITOR_TYPE]['state']['name']=$LANG["joblist"][0];
+$DATA_INJECTION_MAPPING[MONITOR_TYPE]['state']['linkfield']='state';
+$DATA_INJECTION_MAPPING[MONITOR_TYPE]['state']['table_type']='dropdown';
+$DATA_INJECTION_MAPPING[MONITOR_TYPE]['state']['type']='text';
 
 
 // ----------------------------------------------------------------------
@@ -215,5 +345,11 @@ $DATA_INJECTION_MAPPING[USER_TYPE]['location']['name']=$LANG["common"][15];
 $DATA_INJECTION_MAPPING[USER_TYPE]['location']['linkfield']='location';
 $DATA_INJECTION_MAPPING[USER_TYPE]['location']['type']='text';
 $DATA_INJECTION_MAPPING[USER_TYPE]['location']['table_type']='dropdown';
+
+$DATA_INJECTION_MAPPING[USER_TYPE]['FK_profile']['table']='glpi_profiles';
+$DATA_INJECTION_MAPPING[USER_TYPE]['FK_profile']['field']='name';
+$DATA_INJECTION_MAPPING[USER_TYPE]['FK_profile']['name']=$LANG["profiles"][22];
+$DATA_INJECTION_MAPPING[USER_TYPE]['FK_profile']['type']='text';
+$DATA_INJECTION_MAPPING[USER_TYPE]['FK_profile']['table_type']='single';
 
 ?>
