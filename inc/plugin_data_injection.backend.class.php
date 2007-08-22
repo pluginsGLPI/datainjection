@@ -115,7 +115,7 @@ class Backend {
 	function getDatasFromLineToLine($start_line,$end_line)
 	{
 		$tmp = array();
-		for ($i=$start_line;$i <= $end_line;$i++)
+		for ($i=$start_line;$i < getNumberOfLine() && $i <= $end_line;$i++)
 			$tmp[] = $this->injectionDatas->getDataAtLine($i);
 		return $tmp;	
 	}
@@ -123,6 +123,11 @@ class Backend {
 	function isFileCorrect()
 	{
 		return true;
+	}
+	
+	function getNumberOfLine()
+	{
+		return count ($this->injectionDatas->getDatas());
 	}
 }
 
