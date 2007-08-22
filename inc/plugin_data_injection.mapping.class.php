@@ -199,12 +199,14 @@ class MappingCollection {
 	/*
 	 * Save in database the model and all his associated mappings
 	 */
-	function saveAllMappings()
+	function saveAllMappings($model_id)
 	{
 		$tmp = new DataInjectionMapping;
 		
 		foreach ($this->mappingCollection as $mapping)
 		{
+			$mapping->setModelID($model_id);
+			
 			if (isset($mapping->fields["ID"]))
 				$mapping->update($mapping->fields);
 			else

@@ -13,7 +13,7 @@ function showSelect()
 
 function deleteOnglet(nbonglet)
 {
-	for(var i=1;i<=5;i++)
+	for(var i=1;i<=6;i++)
 		{
 		if(i>nbonglet)
 			document.getElementById('step'+i).style.display='none';
@@ -43,8 +43,8 @@ function getXhr()
 	return xhr;
 }
 			
-function go(id)
-{
+function go_mapping(id)
+{	
 	var xhr = getXhr();
 
 	xhr.onreadystatechange = function(){
@@ -56,14 +56,81 @@ function go(id)
 			}
 		}
 
-	xhr.open("POST","../inc/plugin_data_injection.ajax.tablefield.php",true);
+	xhr.open("POST","../inc/plugin_data_injection.ajax.tablefieldmapping.php",true);
 
 	xhr.setRequestHeader('Content-Type','application/x-www-form-urlencoded');
 
 	sel = document.getElementById('table'+id);
 	idtable = sel.options[sel.selectedIndex].value;
 	
-	xhr.send("idMapping="+idtable+" & id="+id);
+	if(idtable!=-1)
+		document.getElementById("check"+id).style.visibility='visible';
+	else
+		{
+		document.getElementById("check"+id).style.visibility='hidden';
+		document.getElementById("check"+id).checked=false;
+		}
+		
+	xhr.send("id="+id+"&idMapping="+idtable);
+}
+
+function go_info(id)
+{	
+	var xhr = getXhr();
+
+	xhr.onreadystatechange = function(){
+
+		if(xhr.readyState == 4 && xhr.status == 200)
+			{
+			leselect = xhr.responseText;
+			document.getElementById('field'+id).innerHTML = leselect;
+			}
+		}
+
+	xhr.open("POST","../inc/plugin_data_injection.ajax.tablefieldinfo.php",true);
+
+	xhr.setRequestHeader('Content-Type','application/x-www-form-urlencoded');
+
+	sel = document.getElementById('table'+id);
+	idtable = sel.options[sel.selectedIndex].value;
+		
+	xhr.send("id="+id+"&idMapping="+idtable);
+}
+
+function addelete_info(id)
+{	
+	sel = document.getElementById('table'+id);
+	idtable = sel.options[sel.selectedIndex].value;
+	
+	add = document.getElementById('add'+id).value;
+	
+	if(add==0)
+		{
+		document.getElementById('add'+id).value = 1;
+		
+		next = id+1;
+		
+		var xhr = getXhr();
+		
+		xhr.onreadystatechange = function(){
+	
+			if(xhr.readyState == 4 && xhr.status == 200)
+				{
+				leselect = xhr.responseText;
+				document.getElementById('select'+next).innerHTML = leselect;
+				}
+			}
+	
+		xhr.open("POST","../inc/plugin_data_injection.ajax.selectfield.php",true);
+	
+		xhr.setRequestHeader('Content-Type','application/x-www-form-urlencoded');
+		
+		xhr.send("id="+next);
+		}
+	if(add==1 && idtable==-1)
+		{
+			document.getElementById('tab'+id).style.display = 'none';
+		}
 }
 
 function popup(totalline)

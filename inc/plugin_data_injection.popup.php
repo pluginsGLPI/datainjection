@@ -28,11 +28,12 @@ if(isset($_GET["nbline"]))
 	$nbline = $_GET["nbline"];
 
 $file=new BackendCSV();
-$file->initBackend(PLUGIN_DATA_INJECTION_UPLOAD_DIR.$_SESSION["file_name"],$_SESSION["delimiteur"]);
+$model = unserialize($_SESSION["plugin_data_injection_model"]);
+$file->initBackend(PLUGIN_DATA_INJECTION_UPLOAD_DIR.$_SESSION["plugin_data_injection_file_name"],$model->getDelimiter());
 $file->read();
-$header = $file->getHeader($_SESSION["dropdown_header"]);
+$header = $file->getHeader($model->isHeaderPresent());
 
-if($_SESSION["dropdown_header"])
+if($model->isHeaderPresent())
 	$data = $file->getDatasFromLineToLine(1,$nbline);
 else
 	$data = $file->getDatasFromLineToLine(0,$nbline-1);

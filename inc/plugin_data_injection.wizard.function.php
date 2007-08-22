@@ -40,6 +40,8 @@ function step1($target)
 {
 	global $DATAINJECTIONLANG;
 	
+	deleteSession();
+	
 	echo "<div class='wizard_titre'>".$DATAINJECTIONLANG["step1"][1]."</div>";
 	
 	echo "<form action='".$target."' method='post' name='step1'>";
@@ -91,6 +93,16 @@ function step2($target,$error)
 	echo "<div class='wizard_cadre'>";
 	echo "<table class='step2_table'>";
 	
+	echo "<tr><td class='step2_table_width'>".$DATAINJECTIONLANG["step2"][7]." :</td>";
+	echo "<td><select name='dropdown_device_type'>";
+	
+	$types = getAllPrimaryTypes();
+		
+	foreach($types as $type)
+		echo "<option value='".$type[0]."'>".$type[1]."</option>";
+	
+	echo "</select></td></tr>";
+	
 	echo "<tr><td>".$DATAINJECTIONLANG["step2"][2]." :</td>";
 	echo "<td><select name='dropdown_type'>";
 	
@@ -101,10 +113,7 @@ function step2($target,$error)
 	
 	echo "</select></td></tr>";
 	
-	echo "<tr><td>".$DATAINJECTIONLANG["step2"][3]." :</td>";
-	echo "<td><input type='text' value=';' size='1' maxlength='1' name='delimiteur' onfocus=\"this.value=''\" /></td></tr>";
-	
-	echo "<tr><td class='step2_table_width'>".$DATAINJECTIONLANG["step2"][4]." :</td>";
+	echo "<tr><td>".$DATAINJECTIONLANG["step2"][4]." :</td>";
 	echo "<td>";
 	echo "<select name='dropdown_create'>";
 	echo "<option value='1'>".$LANG["choice"][1]."</option>";
@@ -112,7 +121,7 @@ function step2($target,$error)
 	echo "</select>";
 	echo "</td></tr>";
 	
-	echo "<tr><td class='step2_table_width'>".$DATAINJECTIONLANG["step2"][5]." :</td>";
+	echo "<tr><td>".$DATAINJECTIONLANG["step2"][5]." :</td>";
 	echo "<td>";
 	echo "<select name='dropdown_update'>";
 	echo "<option value='0'>".$LANG["choice"][0]."</option>";
@@ -120,13 +129,16 @@ function step2($target,$error)
 	echo "</select>";
 	echo "</td></tr>";
 	
-	echo "<tr><td class='step2_table_width'>".$DATAINJECTIONLANG["step2"][6]." :</td>";
+	echo "<tr><td>".$DATAINJECTIONLANG["step2"][6]." :</td>";
 	echo "<td>";
 	echo "<select name='dropdown_header'>";
 	echo "<option value='1'>".$LANG["choice"][1]."</option>";
 	echo "<option value='0'>".$LANG["choice"][0]."</option>";
 	echo "</select>";
 	echo "</td></tr>";
+	
+	echo "<tr><td>".$DATAINJECTIONLANG["step2"][3]." :</td>";
+	echo "<td><input type='text' value=';' size='1' maxlength='1' name='delimiteur' onfocus=\"this.value=''\" /></td></tr>";
 	
 	echo "</table>";
 	
@@ -166,13 +178,13 @@ function step4($target,$suppr)
 	
 	$model = new DataInjectionModel();
 		
-	$model->getFromDB($_SESSION["wizard_idmodel"]);
+	$model->getFromDB($_SESSION["plugin_data_injection_wizard_idmodel"]);
 	
 	$name = $model->getModelName();
 	
 	if($suppr)
 		{
-		if($model->deleteFromDB($_SESSION["wizard_idmodel"]))
+		if($model->deleteFromDB($_SESSION["plugin_data_injection_wizard_idmodel"]))
 			echo $DATAINJECTIONLANG["step4"][4]." \" ".$name." \" ".$DATAINJECTIONLANG["step4"][5];
 		else
 			echo $DATAINJECTIONLANG["step4"][6];
@@ -202,7 +214,7 @@ function step5($target,$error)
 {
 	global $DATAINJECTIONLANG;
 	
-	if(!$_SESSION["verif_file"])
+	if(!$_SESSION["plugin_data_injection_verif_file"])
 		echo "<div class='wizard_titre'>".$DATAINJECTIONLANG["step5"][1]."</div>";
 	else
 		echo "<div class='wizard_titre'>".$DATAINJECTIONLANG["step6"][1]."</div>";
@@ -233,38 +245,41 @@ function step9($target)
 {
 	global $DATAINJECTIONLANG,$LANG,$CFG_GLPI;
 	
-	$file=new BackendCSV();
-	$file->initBackend(PLUGIN_DATA_INJECTION_UPLOAD_DIR.$_SESSION["file_name"],$_SESSION["delimiteur"]);
+	$model = unserialize($_SESSION["plugin_data_injection_model"]);
+	$file=getBackend($model->getModelType());
+	$file->initBackend(PLUGIN_DATA_INJECTION_UPLOAD_DIR.$_SESSION["plugin_data_injection_file_name"],$model->getDelimiter());
 	$file->read();
 	
 	$nbline = $file->getNumberOfLine();
-	if($_SESSION["dropdown_header"])
+	
+	if($model->isHeaderPresent())
 		$nbline--;
 		
-	$header = $file->getHeader($_SESSION["dropdown_header"]);
+	$header = $file->getHeader($model->isHeaderPresent());
 	$num = count($header);
 	
 	echo "<div class='wizard_titre' style='margin-bottom:20px'>".$DATAINJECTIONLANG["step9"][1]." ".$num." ".$DATAINJECTIONLANG["step9"][2]."</div>";
 	
 	echo "<form action='".$target."' method='post' name='step9'>";
 	
-	echo "<input type='hidden' name='nbcol' value='$num' />";
+	echo "<table>";	
 	
-	echo "<table>";
 	foreach($header as $key => $value)
 		{
 		echo "<tr>";
 		echo "<td>".$value." : </td>";
-		echo "<td style='text-align: center;width:75px'><img src='../pics/fleche.png' alt='fleche' /></td>";
-		echo "<td><select name='table$key' id='table$key' onchange='go($key)' style='width: 150px'>";
-		echo "<option value='-1'>".$DATAINJECTIONLANG["step9"][3]."</option>";
-		echo "<option value='1'>".$LANG["Menu"][0]."</option>";
-		echo "<option value='2'>".$LANG["Menu"][4]."</option>";
-		echo "<option value='3'>".$LANG["Menu"][14]."</option>";
-		echo "<option value='4'>".$LANG["Menu"][3]."</option>";
-		echo "<option value='5'>".$LANG["Menu"][1]."</option>";
+		echo "<td style='text-align:center;width:75px'><img src='../pics/fleche.png' alt='fleche' /></td>";
+		echo "<td><select name='field[$key][0]' id='table$key' onchange='go_mapping($key)' style='width: 150px'>";
+		echo "<option value='-1'>".$DATAINJECTIONLANG['step9'][3]."</option>";
+		
+		$types = getAllMappingsDefinitionsTypes();
+		
+		foreach($types as $type)
+			echo "<option value='".$type[0]."'>".$type[1]."</option>";
+		
 		echo "</select></td>";
-		echo "<td id='field$key'><select name='field$key' style='width: 150px'><option value='-1'>".$DATAINJECTIONLANG["step9"][4]."</option></select></td>";
+		echo "<td id='field$key'><select name='field[$key][1]' style='width: 150px'><option value='-1'>".$DATAINJECTIONLANG["step9"][4]."</option></select></td>";
+		echo "<td><input type='checkbox' name='field[$key][2]' id='check$key' style='text-align:center;width:30px;visibility:hidden' /></td>";
 		echo "</tr>";
 		}
 	echo "</table>";
@@ -298,9 +313,29 @@ function step12($target)
 	echo "<div class='wizard_titre'>".$DATAINJECTIONLANG["step12"][1]."</div>";
 	
 	echo "<form enctype='multipart/form-data' action='".$target."' method='post' name='step12'>";
-	echo "<div class='wizard_cadre'>";
 	
+	$key = 1;
 	
+	echo "<div id='select$key'>";
+	echo "<table id='tab$key'>";
+	echo "<tr>";
+	echo "<td><input type='hidden' id='add$key' value='0'></td></td><td>$key</td><td><select name='field[$key][0]' id='table$key' onchange='go_info($key);addelete_info($key)' style='width: 150px'>";
+	echo "<option value='-1'>".$DATAINJECTIONLANG['step9'][3]."</option>";
+		
+	$types = getAllMappingsDefinitionsTypes();
+		
+	foreach($types as $type)
+		echo "<option value='".$type[0]."'>".$type[1]."</option>";
+		
+	echo "</select></td>";
+	echo "<td id='field$key'><select name='field[$key][1]' style='width: 150px'><option value='-1'>".$DATAINJECTIONLANG["step9"][4]."</option></select></td>";
+	echo "</tr>";
+	echo "</table>";
+	echo "</div>";
+	
+	$key++;
+	
+	echo "<div id='select$key'>";
 	echo "</div>";
 	
 	echo "<div class='preview'>";
@@ -312,6 +347,86 @@ function step12($target)
 	echo "</div>";
 	
 	echo "</form>";
+}
+
+function step15($target,$save)
+{
+	global $DATAINJECTIONLANG,$LANG;
+	
+	echo "<div class='wizard_titre'>".$DATAINJECTIONLANG["step15"][1]."</div>";
+	
+	echo "<form enctype='multipart/form-data' action='".$target."' method='post' name='step15'>";
+	echo "<div class='wizard_cadre'>";
+	
+	switch($save)
+	{
+		case 0:
+			echo "<table class='step15_table'>";
+			echo "<tr><td colspan='2'>".$DATAINJECTIONLANG["step15"][2]."</td><tr>";
+			echo "<tr><td><input type='submit' name='next15_1' value='".$LANG["choice"][1]."' class='submit' /></td>";
+			echo "<td><input type='submit' name='next15_2' value='".$LANG["choice"][0]."' class='submit' /></td></tr>";
+			echo "</table>";
+		break;
+		case 1:
+			echo "<table class='step15_1_table'>";
+			echo "<tr><td>".$DATAINJECTIONLANG["step15"][3]."</td></tr>";
+			echo "<tr><td><input type='text' name='model_name' size='35' /></td></tr>";
+			echo "<tr><td>".$DATAINJECTIONLANG["step15"][4]."</td></tr>";
+			echo "<tr><td><textarea name='comments' rows='4' cols='25'></textarea></td></tr>";
+			echo "</table>";
+		break;
+		case 2:
+			echo "<div class='step15_save'>".$DATAINJECTIONLANG["step15"][5]."</div>";
+		break;
+		case 3:
+			echo "<div class='step15_save'>".$DATAINJECTIONLANG["step15"][6]."</div>";
+		break;
+	}	
+	
+	echo "</div>";
+
+	switch($save)
+	{
+		case 0:
+			echo "<div class='preview'>";
+			echo "<input type='submit' name='preview15' value='".$DATAINJECTIONLANG["button"][1]."' class='submit' />";
+			echo "</div>";
+		break;
+		case 1:
+			echo "<div class='next'>";
+			echo "<input type='submit' name='next15_3' value='".$DATAINJECTIONLANG["button"][2]."' class='submit' />";
+			echo "</div>";
+		break;
+		case 2:
+		case 3:
+			echo "<div class='next'>";
+			echo "<input type='submit' name='next15' value='".$DATAINJECTIONLANG["button"][2]."' class='submit' />";
+			echo "</div>";
+		break;
+	}
+	
+	echo "</form>";
+}
+
+function deleteSession()
+{
+if(isset($_SESSION["plugin_data_injection_wizard_step"]))
+	unset($_SESSION["plugin_data_injection_wizard_step"]);
+	
+if(isset($_SESSION["plugin_data_injection_wizard_nbonglet"]))
+	unset($_SESSION["plugin_data_injection_wizard_nbonglet"]);
+	
+if(isset($_SESSION["plugin_data_injection_wizard_idmodel"]))
+	unset($_SESSION["plugin_data_injection_wizard_idmodel"]);
+
+if(isset($_SESSION["plugin_data_injection_file_name"]))
+	unset($_SESSION["plugin_data_injection_file_name"]);
+	
+if(isset($_SESSION["plugin_data_injection_verif_file"]))
+	unset($_SESSION["plugin_data_injection_verif_file"]);
+	
+if(isset($_SESSION["plugin_data_injection_model"]))
+	unset($_SESSION["plugin_data_injection_model"]);	
 }
 
 ?>

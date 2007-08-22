@@ -70,7 +70,7 @@ class DataInjectionModel extends CommonDBTM {
 			$this->update($this->fields);
 		
 		//Save or add mappings
-		$this->mappings->saveAllMappings();		
+		$this->mappings->saveAllMappings($this->fields["ID"]);		
 	}
 
 	//---- Getters -----//

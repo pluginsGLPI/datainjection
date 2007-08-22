@@ -39,36 +39,7 @@ include (GLPI_ROOT."/inc/includes.php");
 
 commonHeader($DATAINJECTIONLANG["config"][1], $_SERVER["PHP_SELF"],"plugins","data_injection");
 
-if(isset($_SESSION["wizard_step"]))
-	unset($_SESSION["wizard_step"]);
-	
-if(isset($_SESSION["wizard_nbonglet"]))
-	unset($_SESSION["wizard_nbonglet"]);
-	
-if(isset($_SESSION["wizard_idmodel"]))
-	unset($_SESSION["wizard_idmodel"]);
-
-if(isset($_SESSION["file_name"]))
-	unset($_SESSION["file_name"]);
-	
-if(isset($_SESSION["verif_file"]))
-	unset($_SESSION["verif_file"]);
-
-if(isset($_SESSION["dropdown_type"]))
-	unset($_SESSION["dropdown_type"]);
-
-if(isset($_SESSION["delimiteur"]))
-	unset($_SESSION["delimiteur"]);
-
-if(isset($_SESSION["dropdown_create"]))
-	unset($_SESSION["dropdown_create"]);
-
-if(isset($_SESSION["dropdown_update"]))
-	unset($_SESSION["dropdown_update"]);
-
-if(isset($_SESSION["dropdown_header"]))
-	unset($_SESSION["dropdown_header"]);
-
+deleteSession();
 
 echo "<div class='global'>";
 
@@ -76,7 +47,9 @@ echo "<table class='wizard' style='margin-top:56px;'><tr><td valign='top'>";
 
 echo "<form action='plugin_data_injection.wizard.form.php' method='post' >";
 
-echo "<div class='wizard_titre'>".$DATAINJECTIONLANG["presentation"][1]."</div>";
+echo "<div class='wizard_titre'>".$DATAINJECTIONLANG["presentation"][1];
+echo "<div class='presentation'>".$DATAINJECTIONLANG["presentation"][2]."</div>";
+echo "</div>";
 
 echo "<div class='next'>";
 echo "<input type='submit' value='Suivant >' class='submit' />";
