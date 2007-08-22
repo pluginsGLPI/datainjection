@@ -50,9 +50,11 @@
 // ----------------------------------------------------------------------
 //COMPUTER MAPPING
 // ----------------------------------------------------------------------
-global $LANG,$DATA_INJECTION_MAPPING,$IMPORT_TYPES;
+global $LANG,$DATA_INJECTION_MAPPING,$IMPORT_TYPES,$IMPORT_PRIMARY_TYPES;
 //Store all the type of items that could be imported
-$IMPORT_TYPES = array(COMPUTER_TYPE, MONITOR_TYPE, USER_TYPE);
+$IMPORT_TYPES = array(COMPUTER_TYPE, MONITOR_TYPE, USER_TYPE,INFOCOM_TYPE);
+
+$IMPORT_PRIMARY_TYPES = array(COMPUTER_TYPE, MONITOR_TYPE, USER_TYPE);
 
 $DATA_INJECTION_MAPPING[COMPUTER_TYPE]['name']['table']='glpi_computers';
 $DATA_INJECTION_MAPPING[COMPUTER_TYPE]['name']['field']='name';
@@ -95,11 +97,10 @@ $DATA_INJECTION_MAPPING[COMPUTER_TYPE]['os_version']['table_type']='dropdown';
 
 $DATA_INJECTION_MAPPING[COMPUTER_TYPE]['os_sp']['table']='glpi_dropdown_os';
 $DATA_INJECTION_MAPPING[COMPUTER_TYPE]['os_sp']['field']='name';
-$DATA_INJECTION_MAPPING[COMPUTER_TYPE]['os_sp']['name']=$LANG["computers"][52];
+$DATA_INJECTION_MAPPING[COMPUTER_TYPE]['os_sp']['name']=$LANG["computers"][53];
 $DATA_INJECTION_MAPPING[COMPUTER_TYPE]['os_sp']['linkfield']='os_sp';
 $DATA_INJECTION_MAPPING[COMPUTER_TYPE]['os_sp']['type']='text';
 $DATA_INJECTION_MAPPING[COMPUTER_TYPE]['os_sp']['table_type']='dropdown';
-
 
 $DATA_INJECTION_MAPPING[COMPUTER_TYPE]['location']['table']='glpi_dropdown_locations';
 $DATA_INJECTION_MAPPING[COMPUTER_TYPE]['location']['field']='name';
@@ -110,7 +111,7 @@ $DATA_INJECTION_MAPPING[COMPUTER_TYPE]['location']['table_type']='dropdown';
 
 $DATA_INJECTION_MAPPING[COMPUTER_TYPE]['domain']['table']='glpi_dropdown_domain';
 $DATA_INJECTION_MAPPING[COMPUTER_TYPE]['domain']['field']='name';
-$DATA_INJECTION_MAPPING[COMPUTER_TYPE]['domain']['name']=$LANG["common"][15];
+$DATA_INJECTION_MAPPING[COMPUTER_TYPE]['domain']['name']=$LANG["setup"][89];
 $DATA_INJECTION_MAPPING[COMPUTER_TYPE]['domain']['linkfield']='domain';
 $DATA_INJECTION_MAPPING[COMPUTER_TYPE]['domain']['type']='text';
 $DATA_INJECTION_MAPPING[COMPUTER_TYPE]['domain']['table_type']='dropdown';
@@ -165,15 +166,37 @@ $DATA_INJECTION_MAPPING[COMPUTER_TYPE]['network']['type']='text';
 $DATA_INJECTION_MAPPING[COMPUTER_TYPE]['network']['linkfield']='network';
 $DATA_INJECTION_MAPPING[COMPUTER_TYPE]['network']['table_type']='dropdown';
 
-$DATA_INJECTION_MAPPING[COMPUTER_TYPE]['is_template']['table']='glpi_monitors';
+$DATA_INJECTION_MAPPING[COMPUTER_TYPE]['is_template']['table']='glpi_computers';
 $DATA_INJECTION_MAPPING[COMPUTER_TYPE]['is_template']['field']='is_template';
 $DATA_INJECTION_MAPPING[COMPUTER_TYPE]['is_template']['name']=$LANG["common"][13];
 $DATA_INJECTION_MAPPING[COMPUTER_TYPE]['is_template']['type']='integer';
 
-$DATA_INJECTION_MAPPING[COMPUTER_TYPE]['notes']['table']='glpi_monitors';
+$DATA_INJECTION_MAPPING[COMPUTER_TYPE]['notes']['table']='glpi_computers';
 $DATA_INJECTION_MAPPING[COMPUTER_TYPE]['notes']['field']='notes';
 $DATA_INJECTION_MAPPING[COMPUTER_TYPE]['notes']['name']=$LANG["reminder"][2];
 $DATA_INJECTION_MAPPING[COMPUTER_TYPE]['notes']['type']='text';
+
+$DATA_INJECTION_MAPPING[COMPUTER_TYPE]['comments']['table']='glpi_computers';
+$DATA_INJECTION_MAPPING[COMPUTER_TYPE]['comments']['field']='comments';
+$DATA_INJECTION_MAPPING[COMPUTER_TYPE]['comments']['name']=$LANG["common"][25];
+$DATA_INJECTION_MAPPING[COMPUTER_TYPE]['comments']['type']='text';
+
+$DATA_INJECTION_MAPPING[COMPUTER_TYPE]['os_license_number']['table']='glpi_computers';
+$DATA_INJECTION_MAPPING[COMPUTER_TYPE]['os_license_number']['field']='os_license_number';
+$DATA_INJECTION_MAPPING[COMPUTER_TYPE]['os_license_number']['name']=$LANG["computers"][10];
+$DATA_INJECTION_MAPPING[COMPUTER_TYPE]['os_license_number']['type']='text';
+
+$DATA_INJECTION_MAPPING[COMPUTER_TYPE]['os_license_id']['table']='glpi_computers';
+$DATA_INJECTION_MAPPING[COMPUTER_TYPE]['os_license_id']['field']='os_license_id';
+$DATA_INJECTION_MAPPING[COMPUTER_TYPE]['os_license_id']['name']=$LANG["computers"][11];
+$DATA_INJECTION_MAPPING[COMPUTER_TYPE]['os_license_id']['type']='text';
+
+$DATA_INJECTION_MAPPING[COMPUTER_TYPE]['ticket_tco']['table']='glpi_computers';
+$DATA_INJECTION_MAPPING[COMPUTER_TYPE]['ticket_tco']['field']='ticket_tco';
+$DATA_INJECTION_MAPPING[COMPUTER_TYPE]['ticket_tco']['name']=$LANG["financial"][90];
+$DATA_INJECTION_MAPPING[COMPUTER_TYPE]['ticket_tco']['type']='text';
+
+
 // ----------------------------------------------------------------------
 //MONITOR MAPPING
 // ----------------------------------------------------------------------
@@ -288,6 +311,109 @@ $DATA_INJECTION_MAPPING[MONITOR_TYPE]['state']['linkfield']='state';
 $DATA_INJECTION_MAPPING[MONITOR_TYPE]['state']['table_type']='dropdown';
 $DATA_INJECTION_MAPPING[MONITOR_TYPE]['state']['type']='text';
 
+$DATA_INJECTION_MAPPING[MONITOR_TYPE]['ticket_tco']['table']='glpi_monitors';
+$DATA_INJECTION_MAPPING[MONITOR_TYPE]['ticket_tco']['field']='ticket_tco';
+$DATA_INJECTION_MAPPING[MONITOR_TYPE]['ticket_tco']['name']=$LANG["financial"][90];
+$DATA_INJECTION_MAPPING[MONITOR_TYPE]['ticket_tco']['type']='text';
+
+// ----------------------------------------------------------------------
+//INFOCOM MAPPING
+// ----------------------------------------------------------------------
+$DATA_INJECTION_MAPPING[INFOCOM_TYPE]['buy_date']['table']='glpi_infocoms';
+$DATA_INJECTION_MAPPING[INFOCOM_TYPE]['buy_date']['field']='buy_date';
+$DATA_INJECTION_MAPPING[INFOCOM_TYPE]['buy_date']['name']=$LANG["financial"][14];
+$DATA_INJECTION_MAPPING[INFOCOM_TYPE]['buy_date']['type']='date';
+
+$DATA_INJECTION_MAPPING[INFOCOM_TYPE]['use_date']['table']='glpi_infocoms';
+$DATA_INJECTION_MAPPING[INFOCOM_TYPE]['use_date']['field']='use_date';
+$DATA_INJECTION_MAPPING[INFOCOM_TYPE]['use_date']['name']=$LANG["financial"][76];
+$DATA_INJECTION_MAPPING[INFOCOM_TYPE]['use_date']['type']='date';
+
+$DATA_INJECTION_MAPPING[INFOCOM_TYPE]['warranty_duration']['table']='glpi_infocoms';
+$DATA_INJECTION_MAPPING[INFOCOM_TYPE]['warranty_duration']['field']='warranty_duration';
+$DATA_INJECTION_MAPPING[INFOCOM_TYPE]['warranty_duration']['name']=$LANG["financial"][15];
+$DATA_INJECTION_MAPPING[INFOCOM_TYPE]['warranty_duration']['type']='integer';
+
+$DATA_INJECTION_MAPPING[INFOCOM_TYPE]['warranty_info']['table']='glpi_infocoms';
+$DATA_INJECTION_MAPPING[INFOCOM_TYPE]['warranty_info']['field']='warranty_info';
+$DATA_INJECTION_MAPPING[INFOCOM_TYPE]['warranty_info']['name']=$LANG["financial"][16];
+$DATA_INJECTION_MAPPING[INFOCOM_TYPE]['warranty_info']['type']='text';
+
+$DATA_INJECTION_MAPPING[INFOCOM_TYPE]['warranty_value']['table']='glpi_infocoms';
+$DATA_INJECTION_MAPPING[INFOCOM_TYPE]['warranty_value']['field']='warranty_value';
+$DATA_INJECTION_MAPPING[INFOCOM_TYPE]['warranty_value']['name']=$LANG["financial"][78];
+$DATA_INJECTION_MAPPING[INFOCOM_TYPE]['warranty_value']['type']='text';
+
+$DATA_INJECTION_MAPPING[INFOCOM_TYPE]['state']['table']='glpi_dropdown_state';
+$DATA_INJECTION_MAPPING[INFOCOM_TYPE]['state']['field']='name';
+$DATA_INJECTION_MAPPING[INFOCOM_TYPE]['state']['name']=$LANG["joblist"][0];
+$DATA_INJECTION_MAPPING[INFOCOM_TYPE]['state']['linkfield']='state';
+$DATA_INJECTION_MAPPING[INFOCOM_TYPE]['state']['table_type']='dropdown';
+$DATA_INJECTION_MAPPING[INFOCOM_TYPE]['state']['type']='text';
+
+$DATA_INJECTION_MAPPING[INFOCOM_TYPE]['manufacturer']['table']='glpi_dropdown_manufacturer';
+$DATA_INJECTION_MAPPING[INFOCOM_TYPE]['manufacturer']['field']='name';
+$DATA_INJECTION_MAPPING[INFOCOM_TYPE]['manufacturer']['name']=$LANG["common"][5];
+$DATA_INJECTION_MAPPING[INFOCOM_TYPE]['manufacturer']['type']='text';
+$DATA_INJECTION_MAPPING[INFOCOM_TYPE]['manufacturer']['linkfield']='FK_enterprise';
+$DATA_INJECTION_MAPPING[INFOCOM_TYPE]['manufacturer']['table_type']='dropdown';
+
+$DATA_INJECTION_MAPPING[INFOCOM_TYPE]['num_commande']['table']='glpi_infocoms';
+$DATA_INJECTION_MAPPING[INFOCOM_TYPE]['num_commande']['field']='num_commande';
+$DATA_INJECTION_MAPPING[INFOCOM_TYPE]['num_commande']['name']=$LANG["financial"][18];
+$DATA_INJECTION_MAPPING[INFOCOM_TYPE]['num_commande']['type']='text';
+
+$DATA_INJECTION_MAPPING[INFOCOM_TYPE]['bon_livraison']['table']='glpi_infocoms';
+$DATA_INJECTION_MAPPING[INFOCOM_TYPE]['bon_livraison']['field']='bon_livraison';
+$DATA_INJECTION_MAPPING[INFOCOM_TYPE]['bon_livraison']['name']=$LANG["financial"][19];
+$DATA_INJECTION_MAPPING[INFOCOM_TYPE]['bon_livraison']['type']='text';
+
+$DATA_INJECTION_MAPPING[INFOCOM_TYPE]['num_immo']['table']='glpi_infocoms';
+$DATA_INJECTION_MAPPING[INFOCOM_TYPE]['num_immo']['field']='num_immo';
+$DATA_INJECTION_MAPPING[INFOCOM_TYPE]['num_immo']['name']=$LANG["financial"][20];
+$DATA_INJECTION_MAPPING[INFOCOM_TYPE]['num_immo']['type']='text';
+
+$DATA_INJECTION_MAPPING[INFOCOM_TYPE]['value']['table']='glpi_infocoms';
+$DATA_INJECTION_MAPPING[INFOCOM_TYPE]['value']['field']='value';
+$DATA_INJECTION_MAPPING[INFOCOM_TYPE]['value']['name']=$LANG["financial"][21];
+$DATA_INJECTION_MAPPING[INFOCOM_TYPE]['value']['type']='text';
+
+$DATA_INJECTION_MAPPING[INFOCOM_TYPE]['amort_time']['table']='glpi_infocoms';
+$DATA_INJECTION_MAPPING[INFOCOM_TYPE]['amort_time']['field']='amort_time';
+$DATA_INJECTION_MAPPING[INFOCOM_TYPE]['amort_time']['name']=$LANG["financial"][23];
+$DATA_INJECTION_MAPPING[INFOCOM_TYPE]['amort_time']['type']='integer';
+
+$DATA_INJECTION_MAPPING[INFOCOM_TYPE]['amort_type']['table']='glpi_infocoms';
+$DATA_INJECTION_MAPPING[INFOCOM_TYPE]['amort_type']['field']='amort_type';
+$DATA_INJECTION_MAPPING[INFOCOM_TYPE]['amort_type']['name']=$LANG["financial"][22];
+$DATA_INJECTION_MAPPING[INFOCOM_TYPE]['amort_type']['type']='integer';
+
+$DATA_INJECTION_MAPPING[INFOCOM_TYPE]['amort_coeff']['table']='glpi_infocoms';
+$DATA_INJECTION_MAPPING[INFOCOM_TYPE]['amort_coeff']['field']='amort_coeff';
+$DATA_INJECTION_MAPPING[INFOCOM_TYPE]['amort_coeff']['name']=$LANG["financial"][77];
+$DATA_INJECTION_MAPPING[INFOCOM_TYPE]['amort_coeff']['type']='float';
+
+$DATA_INJECTION_MAPPING[INFOCOM_TYPE]['comments']['table']='glpi_infocoms';
+$DATA_INJECTION_MAPPING[INFOCOM_TYPE]['comments']['field']='comments';
+$DATA_INJECTION_MAPPING[INFOCOM_TYPE]['comments']['name']=$LANG["common"][25];
+$DATA_INJECTION_MAPPING[INFOCOM_TYPE]['comments']['type']='text';
+
+$DATA_INJECTION_MAPPING[INFOCOM_TYPE]['facture']['table']='glpi_infocoms';
+$DATA_INJECTION_MAPPING[INFOCOM_TYPE]['facture']['field']='facture';
+$DATA_INJECTION_MAPPING[INFOCOM_TYPE]['facture']['name']=$LANG["financial"][82];
+$DATA_INJECTION_MAPPING[INFOCOM_TYPE]['facture']['type']='text';
+
+$DATA_INJECTION_MAPPING[INFOCOM_TYPE]['budget']['table']='glpi_dropdown_budget';
+$DATA_INJECTION_MAPPING[INFOCOM_TYPE]['budget']['field']='budget';
+$DATA_INJECTION_MAPPING[INFOCOM_TYPE]['budget']['name']=$LANG["financial"][87];
+$DATA_INJECTION_MAPPING[INFOCOM_TYPE]['budget']['type']='text';
+$DATA_INJECTION_MAPPING[INFOCOM_TYPE]['budget']['linkfield']='FK_enterprise';
+$DATA_INJECTION_MAPPING[INFOCOM_TYPE]['budget']['table_type']='dropdown';
+
+$DATA_INJECTION_MAPPING[INFOCOM_TYPE]['alert']['table']='glpi_infocoms';
+$DATA_INJECTION_MAPPING[INFOCOM_TYPE]['alert']['field']='alert';
+$DATA_INJECTION_MAPPING[INFOCOM_TYPE]['alert']['name']=$LANG["setup"][247];
+$DATA_INJECTION_MAPPING[INFOCOM_TYPE]['alert']['type']='integer';
 
 // ----------------------------------------------------------------------
 //USER MAPPING

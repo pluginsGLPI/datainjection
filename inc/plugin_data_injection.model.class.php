@@ -134,10 +134,14 @@ class DataInjectionModel extends CommonDBTM {
 		return ($this->fields["header_present"]?true:false);
 	}
 	
+	function getDeviceType()
+	{
+		return $this->fields["device_type"];
+	}
 	//---- Save -----//
 	function setModelType($type)
 	{
-		$this->fields["model_type"] = $type;
+		$this->fields["type"] = $type;
 	}
 	
 	function setName($name)
@@ -179,6 +183,11 @@ class DataInjectionModel extends CommonDBTM {
 	{
 		return $this->mappings = $mappings;
 	}		
+	
+	function setDeviceType($device_type)
+	{
+		$this->fields["device_type"] = $device_type; 
+	}
 }
 
 ?>

@@ -38,7 +38,7 @@ function getAllMappingsDefinitionsTypes()
 	foreach ($IMPORT_TYPES as $type)
 	{
 		$commonitem->setType($type);
-		$types[] = array($type,$commonite->getType());
+		$types[] = array($type,$commonitem->getType());
 	}
 	return $types;
 }
@@ -78,4 +78,20 @@ function getAllMandatoriesMappings($type,$model)
 	
 	return $mandatories;
 }
+
+function getAllPrimaryTypes()
+{
+	global $IMPORT_PRIMARY_TYPES,$LANG;
+
+	$types = array();
+	$commonitem = new CommonItem;
+	
+	foreach ($IMPORT_PRIMARY_TYPES as $type)
+	{
+		$commonitem->setType($type);
+		$types[] = array($type,$commonitem->getType());
+	}
+	return $types;
+}
+
 ?>

@@ -50,25 +50,27 @@ if ($argv) {
 
 define('GLPI_ROOT', '../../..');
 
-$NEEDED_ITEMS=array("computer","software");
+$NEEDED_ITEMS=array("user","infocom","profile","entity","computer","software","setup");
 include (GLPI_ROOT."/inc/includes.php");
 include ("../plugin_data_injection.includes.php");
 
 //The csv file, got from the command line
 $file = $argv[1];
+$model_id = $argv[2];
+$entity_id = $argv[3];
 
 //---------------------- //
 //------CSV File-------- //
 //---------------------- //
 
 //Get the backend to read CSV file
-$backend = getBackend(CSV_TYPE);
+//$backend = getBackend(CSV_TYPE);
 
 //Initialize the backend
-$backend->initBackend($file,";");
+//$backend->initBackend($file,";");
 
 //Read file from the CSV file
-$backend->read();
+//$backend->read();
 
 //print_r($backend->getHeader(0));
 
@@ -80,15 +82,15 @@ $backend->read();
 //--Models & Mappings--- //
 //---------------------- //
 
-$model = new DataInjectionModel;
-if ($model->loadAll(1))
-{
+//$model = new DataInjectionModel;
+//if ($model->loadAll(1))
+//{
 //	print_r($model->getModelInfos());
 //	print_r($model->getMappings());
-}
+//}
 
-print_r(getAllMappingsTypes());
-print_r(getAllMappingsByType(1));
+//print_r(getAllMappingsDefinitionsTypes());
+//print_r(getAllMappingsDefinitionsByType(1));
 
 //---------------------- //
 //-------Types---------- //
@@ -98,8 +100,6 @@ print_r(getAllMappingsByType(1));
 //---------------------- //
 //-------Engine--------- //
 //---------------------- //
-
-$engine = new DataInjectionEngine(1,$file);
+$engine = new DataInjectionEngine($model_id,$file,$entity_id);
 $results = $engine->injectDatas();
-//print_r($results);
 ?>

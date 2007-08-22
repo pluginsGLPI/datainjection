@@ -118,7 +118,6 @@ class DataInjectionMapping extends CommonDBTM {
 	{
 		$this->fields["type"] = $type;
 	}	
-	
 }
 
 class MappingCollection {

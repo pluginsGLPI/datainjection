@@ -59,6 +59,9 @@ class DataInjectionEngine
 		$this->backend->read();
 	}
 	
+	/*
+	 * Get datas imported read from the file
+	 */
 	function getDatas()
 	{
 		if (isset($this->backend))
@@ -79,11 +82,11 @@ class DataInjectionEngine
 			$i=1;
 		else
 			$i=0;
-					
+
 		for ($datas = $this->getDatas(); $i < count($datas);$i++)
 		{
 			$check_result = checkLine($this->model,$datas[$i][0]);
-
+			
 			if ($check_result["result"])
 				$this->injectLine($this->model,$datas[$i][0],$this->entity);
 
@@ -97,53 +100,65 @@ class DataInjectionEngine
 	 * Inject one line of datas
 	 * @param line one line of data to import
 	 */
-	function injectLine($model,$line,$entity)
+	function injectLine($model,$line)
 	{
 		//Array to store the fields to write to db
 		$db_fields = array();
+		$db_fields["common"] = array();
+		$db_fields[$model->getDeviceType()] = array();
 		
 		for ($i=0; $i < count($line);$i++)
 		{
 			$mapping = $model->getMappingByRank($i);
-			
 			if ($mapping != null && $mapping->getValue() != NOT_MAPPED)
 			{
 				$mapping_definition = getMappingDefinitionByTypeAndName($mapping->getMappingType(),$mapping->getValue());
 				if (!isset($db_fields[$mapping->getMappingType()]))
 					$db_fields[$mapping->getMappingType()] = array();
 				
-				$obj = $db_fields[$mapping->getMappingType()];
 				
-				if (isset($mapping_definition["table_type"]) && $mapping_definition["table_type"] == "dropdown")
-					$obj[$mapping_definition["linkfield"]] = insertDropdownValue($mapping,$mapping_definition,$line[$i],$entity);
-				else
-					$obj[$mapping_definition["field"]] = $line[$i];
+				$db_fields[$mapping->getMappingType()] = getFieldValue(
+						$mapping, 
+						$mapping_definition,$line[$i],
+						$this->entity,
+						$db_fields[$mapping->getMappingType()]
+				);
 				
-				//Add the active entity
-				$obj["FK_entities"] = $entity;
-				$db_fields[$mapping->getMappingType()] = $obj;
 			}
 		}
 		
-	
-		//Insert datas in databse
+		//Insert datas in database
 		foreach ($db_fields as $type => $fields)
 		{
-			$obj = getInstance($type);
+			if ($type != "common")
+			{
+				$obj = getInstance($type);
 
-			$ID = dataAlreadyInDB($type,$fields,$mapping_definition,$model);
-			if ($ID == -1)
-			{
-				if ($model->getBehaviorAdd())
-					echo "ADD ID=".$obj->add($fields)."\n";
-			}	
-			elseif ($model->getBehaviorupdate())
-			{
-				$fields["ID"] = $ID;
-				echo "update ID=".$obj->update($fields);
+				//If necessary, add default fields which are mandatory to create the object
+				$fields = addNecessaryFields($mapping,$mapping_definition,$this->entity,$type,$fields,$db_fields["common"]);
+
+				//Check if the line already exists in database
+				$ID = dataAlreadyInDB($type,$fields,$mapping_definition,$model);
+				if ($ID == -1)
+				{
+					if ($model->getBehaviorAdd())
+					{
+						$ID = $obj->add($fields);
+						//Add the ID to the fields, so it can be reused after
+						$db_fields["common"] = addCommonFields($db_fields["common"],$type,$fields,$this->entity,$ID);
+						echo "ADD=$ID\n"; 
+					}
+				}	
+				elseif ($model->getBehaviorupdate())
+				{
+					$db_fields["common"] = addCommonFields($db_fields["common"],$type,$fields,$this->entity,$ID);
+					$fields["ID"] = $ID;
+					echo "update ID=".$obj->update($fields);
+				}
 			}	
 		}
 				
 	}
 }
+
 ?>

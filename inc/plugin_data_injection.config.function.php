@@ -52,6 +52,7 @@ function plugin_data_injection_Install() {
 		`comments` TEXT NULL ,
 		`date_mod` DATETIME NOT NULL ,
 		`type` INT( 11 ) NOT NULL DEFAULT '1',
+		`device_type` INT( 11 ) NOT NULL DEFAULT '1',
 		`behavior_add` INT( 1 ) NOT NULL DEFAULT '1',
 		`behavior_update` INT( 1 ) NOT NULL DEFAULT '0',
 		`delimiter` VARCHAR( 1 ) NOT NULL DEFAULT ';',
