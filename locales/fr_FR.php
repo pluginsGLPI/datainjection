@@ -94,8 +94,8 @@ $DATAINJECTIONLANG["step15"][1] = "Etape 6 : Enregistrement du modèle";
 $DATAINJECTIONLANG["step15"][2] = "Voulez-vous enregistrer le modèle ?";
 $DATAINJECTIONLANG["step15"][3] = "Entrez le nom du modèle :";
 $DATAINJECTIONLANG["step15"][4] = "Ajoutez un commentaire :";
-$DATAINJECTIONLANG["step15"][5] = "Votre modèle n'a pas été enregistré mais est quand même prêt à l'emploie.";
-$DATAINJECTIONLANG["step15"][6] = "Votre modèle a été enregistré et est prêt à l'emploie.";
+$DATAINJECTIONLANG["step15"][5] = "Votre modèle n'a pas été enregistré mais est quand même prêt à l'emploi.";
+$DATAINJECTIONLANG["step15"][6] = "Votre modèle a été enregistré et est prêt à l'emploi.";
 
 $DATAINJECTIONLANG["button"][1] = "< Précédent";
 $DATAINJECTIONLANG["button"][2] = "Suivant >";
