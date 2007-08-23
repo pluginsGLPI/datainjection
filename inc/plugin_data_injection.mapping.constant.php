@@ -52,9 +52,9 @@
 // ----------------------------------------------------------------------
 global $LANG,$DATA_INJECTION_MAPPING,$IMPORT_TYPES,$IMPORT_PRIMARY_TYPES;
 //Store all the type of items that could be imported
-$IMPORT_TYPES = array(COMPUTER_TYPE, MONITOR_TYPE, PRINTER_TYPE, USER_TYPE,INFOCOM_TYPE);
+$IMPORT_TYPES = array(COMPUTER_TYPE, MONITOR_TYPE, PRINTER_TYPE,PHONE_TYPE, USER_TYPE,INFOCOM_TYPE);
 
-$IMPORT_PRIMARY_TYPES = array(COMPUTER_TYPE, MONITOR_TYPE, PRINTER_TYPE, USER_TYPE);
+$IMPORT_PRIMARY_TYPES = array(COMPUTER_TYPE, MONITOR_TYPE, PRINTER_TYPE,PHONE_TYPE, USER_TYPE);
 
 $DATA_INJECTION_MAPPING[COMPUTER_TYPE]['name']['table']='glpi_computers';
 $DATA_INJECTION_MAPPING[COMPUTER_TYPE]['name']['field']='name';
@@ -423,7 +423,7 @@ $DATA_INJECTION_MAPPING[PRINTER_TYPE]['manufacturer']['field']='name';
 $DATA_INJECTION_MAPPING[PRINTER_TYPE]['manufacturer']['name']=$LANG["common"][5];
 $DATA_INJECTION_MAPPING[PRINTER_TYPE]['manufacturer']['type']='text';
 $DATA_INJECTION_MAPPING[PRINTER_TYPE]['manufacturer']['linkfield']='FK_glpi_enterprise';
-$DATA_INJECTION_MAPPING[MONITOR_TYPE]['manufacturer']['table_type']='dropdown';
+$DATA_INJECTION_MAPPING[PRINTER_TYPE]['manufacturer']['table_type']='dropdown';
 
 $DATA_INJECTION_MAPPING[PRINTER_TYPE]['is_template']['table']='glpi_printers';
 $DATA_INJECTION_MAPPING[PRINTER_TYPE]['is_template']['field']='is_template';
@@ -439,6 +439,130 @@ $DATA_INJECTION_MAPPING[PRINTER_TYPE]['ticket_tco']['table']='glpi_printers';
 $DATA_INJECTION_MAPPING[PRINTER_TYPE]['ticket_tco']['field']='ticket_tco';
 $DATA_INJECTION_MAPPING[PRINTER_TYPE]['ticket_tco']['name']=$LANG["financial"][90];
 $DATA_INJECTION_MAPPING[PRINTER_TYPE]['ticket_tco']['type']='text';
+
+// ----------------------------------------------------------------------
+//PHONE MAPPING
+// ----------------------------------------------------------------------
+
+$DATA_INJECTION_MAPPING[PHONE_TYPE]['name']['table']='glpi_phones';
+$DATA_INJECTION_MAPPING[PHONE_TYPE]['name']['field']='name';
+$DATA_INJECTION_MAPPING[PHONE_TYPE]['name']['name']=$LANG["common"][16];
+$DATA_INJECTION_MAPPING[PHONE_TYPE]['name']['type']='text';
+
+$DATA_INJECTION_MAPPING[PHONE_TYPE]['serial']['table']='glpi_phones';
+$DATA_INJECTION_MAPPING[PHONE_TYPE]['serial']['field']='serial';
+$DATA_INJECTION_MAPPING[PHONE_TYPE]['serial']['name']=$LANG["common"][19];
+$DATA_INJECTION_MAPPING[PHONE_TYPE]['serial']['type']='text';
+
+$DATA_INJECTION_MAPPING[PHONE_TYPE]['otherserial']['table']='glpi_phones';
+$DATA_INJECTION_MAPPING[PHONE_TYPE]['otherserial']['field']='otherserial';
+$DATA_INJECTION_MAPPING[PHONE_TYPE]['otherserial']['name']=$LANG["common"][20];
+$DATA_INJECTION_MAPPING[PHONE_TYPE]['otherserial']['type']='text';
+
+$DATA_INJECTION_MAPPING[PHONE_TYPE]['location']['table']='glpi_dropdown_locations';
+$DATA_INJECTION_MAPPING[PHONE_TYPE]['location']['field']='name';
+$DATA_INJECTION_MAPPING[PHONE_TYPE]['location']['name']=$LANG["common"][15];
+$DATA_INJECTION_MAPPING[PHONE_TYPE]['location']['linkfield']='location';
+$DATA_INJECTION_MAPPING[PHONE_TYPE]['location']['type']='text';
+$DATA_INJECTION_MAPPING[PHONE_TYPE]['location']['table_type']='dropdown';
+
+
+$DATA_INJECTION_MAPPING[PHONE_TYPE]['contact']['table']='glpi_phones';
+$DATA_INJECTION_MAPPING[PHONE_TYPE]['contact']['field']='contact';
+$DATA_INJECTION_MAPPING[PHONE_TYPE]['contact']['name']=$LANG["common"][18];
+$DATA_INJECTION_MAPPING[PHONE_TYPE]['contact']['type']='text';
+
+$DATA_INJECTION_MAPPING[PHONE_TYPE]['contactnum']['table']='glpi_phones';
+$DATA_INJECTION_MAPPING[PHONE_TYPE]['contactnum']['field']='name';
+$DATA_INJECTION_MAPPING[PHONE_TYPE]['contactnum']['name']=$LANG["common"][21];
+$DATA_INJECTION_MAPPING[PHONE_TYPE]['contactnum']['type']='text';
+
+$DATA_INJECTION_MAPPING[PHONE_TYPE]['comments']['table']='glpi_phones';
+$DATA_INJECTION_MAPPING[PHONE_TYPE]['comments']['field']='comments';
+$DATA_INJECTION_MAPPING[PHONE_TYPE]['comments']['name']=$LANG["common"][25];
+$DATA_INJECTION_MAPPING[PHONE_TYPE]['comments']['type']='text';
+
+$DATA_INJECTION_MAPPING[PHONE_TYPE]['notes']['table']='glpi_phones';
+$DATA_INJECTION_MAPPING[PHONE_TYPE]['notes']['field']='notes';
+$DATA_INJECTION_MAPPING[PHONE_TYPE]['notes']['name']=$LANG["reminder"][2];
+$DATA_INJECTION_MAPPING[PHONE_TYPE]['notes']['type']='text';
+
+$DATA_INJECTION_MAPPING[PHONE_TYPE]['state']['table']='glpi_dropdown_state';
+$DATA_INJECTION_MAPPING[PHONE_TYPE]['state']['field']='name';
+$DATA_INJECTION_MAPPING[PHONE_TYPE]['state']['name']=$LANG["joblist"][0];
+$DATA_INJECTION_MAPPING[PHONE_TYPE]['state']['linkfield']='state';
+$DATA_INJECTION_MAPPING[PHONE_TYPE]['state']['table_type']='dropdown';
+$DATA_INJECTION_MAPPING[PHONE_TYPE]['state']['type']='text';
+
+$DATA_INJECTION_MAPPING[PHONE_TYPE]['type']['table']='glpi_type_phones';
+$DATA_INJECTION_MAPPING[PHONE_TYPE]['type']['field']='name';
+$DATA_INJECTION_MAPPING[PHONE_TYPE]['type']['name']=$LANG["common"][17];
+$DATA_INJECTION_MAPPING[PHONE_TYPE]['type']['type']='text';
+$DATA_INJECTION_MAPPING[PHONE_TYPE]['type']['linkfield']='type';
+$DATA_INJECTION_MAPPING[PHONE_TYPE]['type']['table_type']='dropdown';
+
+$DATA_INJECTION_MAPPING[PHONE_TYPE]['model']['table']='glpi_dropdown_model_printers';
+$DATA_INJECTION_MAPPING[PHONE_TYPE]['model']['field']='name';
+$DATA_INJECTION_MAPPING[PHONE_TYPE]['model']['name']=$LANG["common"][22];
+$DATA_INJECTION_MAPPING[PHONE_TYPE]['model']['type']='text';
+$DATA_INJECTION_MAPPING[PHONE_TYPE]['model']['linkfield']='model';
+$DATA_INJECTION_MAPPING[PHONE_TYPE]['model']['table_type']='dropdown';
+
+$DATA_INJECTION_MAPPING[PHONE_TYPE]['manufacturer']['table']='glpi_dropdown_manufacturer';
+$DATA_INJECTION_MAPPING[PHONE_TYPE]['manufacturer']['field']='name';
+$DATA_INJECTION_MAPPING[PHONE_TYPE]['manufacturer']['name']=$LANG["common"][5];
+$DATA_INJECTION_MAPPING[PHONE_TYPE]['manufacturer']['type']='text';
+$DATA_INJECTION_MAPPING[PHONE_TYPE]['manufacturer']['linkfield']='FK_glpi_enterprise';
+$DATA_INJECTION_MAPPING[PHONE_TYPE]['manufacturer']['table_type']='dropdown';
+
+$DATA_INJECTION_MAPPING[PHONE_TYPE]['is_template']['table']='glpi_phones';
+$DATA_INJECTION_MAPPING[PHONE_TYPE]['is_template']['field']='is_template';
+$DATA_INJECTION_MAPPING[PHONE_TYPE]['is_template']['name']=$LANG["common"][13];
+$DATA_INJECTION_MAPPING[PHONE_TYPE]['is_template']['type']='integer';
+
+$DATA_INJECTION_MAPPING[PHONE_TYPE]['tplname']['table']='glpi_phones';
+$DATA_INJECTION_MAPPING[PHONE_TYPE]['tplname']['field']='tplname';
+$DATA_INJECTION_MAPPING[PHONE_TYPE]['tplname']['name']=$LANG["common"][6];
+$DATA_INJECTION_MAPPING[PHONE_TYPE]['tplname']['type']='text';
+
+$DATA_INJECTION_MAPPING[PHONE_TYPE]['brand']['table']='glpi_phones';
+$DATA_INJECTION_MAPPING[PHONE_TYPE]['brand']['field']='brand';
+$DATA_INJECTION_MAPPING[PHONE_TYPE]['brand']['name']=$LANG["peripherals"][18];
+$DATA_INJECTION_MAPPING[PHONE_TYPE]['brand']['type']='text';
+
+$DATA_INJECTION_MAPPING[PHONE_TYPE]['manufacturer']['table']='glpi_phone_power';
+$DATA_INJECTION_MAPPING[PHONE_TYPE]['manufacturer']['field']='name';
+$DATA_INJECTION_MAPPING[PHONE_TYPE]['manufacturer']['name']=$LANG["devices"][23];
+$DATA_INJECTION_MAPPING[PHONE_TYPE]['manufacturer']['type']='text';
+$DATA_INJECTION_MAPPING[PHONE_TYPE]['manufacturer']['linkfield']='power';
+$DATA_INJECTION_MAPPING[PHONE_TYPE]['manufacturer']['table_type']='dropdown';
+
+$DATA_INJECTION_MAPPING[PHONE_TYPE]['number_line']['table']='glpi_phones';
+$DATA_INJECTION_MAPPING[PHONE_TYPE]['number_line']['field']='number_line';
+$DATA_INJECTION_MAPPING[PHONE_TYPE]['number_line']['name']=$LANG["phones"][40];
+$DATA_INJECTION_MAPPING[PHONE_TYPE]['number_line']['type']='text';
+
+$DATA_INJECTION_MAPPING[PHONE_TYPE]['flags_casque']['table']='glpi_phones';
+$DATA_INJECTION_MAPPING[PHONE_TYPE]['flags_casque']['field']='flags_casque';
+$DATA_INJECTION_MAPPING[PHONE_TYPE]['flags_casque']['name']=$LANG["phones"][38];
+$DATA_INJECTION_MAPPING[PHONE_TYPE]['flags_casque']['type']='integer';
+
+$DATA_INJECTION_MAPPING[PHONE_TYPE]['flags_hp']['table']='glpi_phones';
+$DATA_INJECTION_MAPPING[PHONE_TYPE]['flags_hp']['field']='flags_hp';
+$DATA_INJECTION_MAPPING[PHONE_TYPE]['flags_hp']['name']=$LANG["phones"][39];
+$DATA_INJECTION_MAPPING[PHONE_TYPE]['flags_hp']['type']='integer';
+
+$DATA_INJECTION_MAPPING[PHONE_TYPE]['firmware']['table']='glpi_phones';
+$DATA_INJECTION_MAPPING[PHONE_TYPE]['firmware']['field']='firmware';
+$DATA_INJECTION_MAPPING[PHONE_TYPE]['firmware']['name']=$LANG["phones"][35];
+$DATA_INJECTION_MAPPING[PHONE_TYPE]['firmware']['type']='text';
+
+$DATA_INJECTION_MAPPING[PHONE_TYPE]['ticket_tco']['table']='glpi_phones';
+$DATA_INJECTION_MAPPING[PHONE_TYPE]['ticket_tco']['field']='ticket_tco';
+$DATA_INJECTION_MAPPING[PHONE_TYPE]['ticket_tco']['name']=$LANG["financial"][90];
+$DATA_INJECTION_MAPPING[PHONE_TYPE]['ticket_tco']['type']='text';
+
+
 // ----------------------------------------------------------------------
 //INFOCOM MAPPING
 // ----------------------------------------------------------------------

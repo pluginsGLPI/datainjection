@@ -372,6 +372,7 @@ function addCommonFields($common_fields,$type,$fields,$entity,$id)
 		case COMPUTER_TYPE:
 		case MONITOR_TYPE:
 		case PRINTER_TYPE:
+		case PHONE_TYPE:
 			$common_fields["device_id"] = $id;
 			$common_fields["device_type"] = $type;
 			$common_fields["FK_entities"] = $entity;
@@ -393,6 +394,7 @@ function addNecessaryFields($model,$mapping,$mapping_definition,$entity,$type,$f
 		case MONITOR_TYPE:
 		case COMPUTER_TYPE:
 		case PRINTER_TYPE:
+		case PHONE_TYPE:
 			if (!isset($fields["FK_entities"]))
 				$fields["FK_entities"] = $entity;
 			break;
