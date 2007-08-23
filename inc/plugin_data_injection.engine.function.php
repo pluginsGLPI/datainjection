@@ -228,7 +228,6 @@ function dataAlreadyInDB($type,$fields,$mapping_definition,$model)
 		switch ($type)
 		{
 			case INFOCOM_TYPE :
-				print_r($fields);
 				$where.=" AND device_type=".$model->getDeviceType()." AND FK_device=".$fields["device_id"];
 			break;
 
@@ -393,6 +392,7 @@ function addNecessaryFields($model,$mapping,$mapping_definition,$entity,$type,$f
 	{
 		case MONITOR_TYPE:
 		case COMPUTER_TYPE:
+		case PRINTER_TYPE:
 			if (!isset($fields["FK_entities"]))
 				$fields["FK_entities"] = $entity;
 			break;

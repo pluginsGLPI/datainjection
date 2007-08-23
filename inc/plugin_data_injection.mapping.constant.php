@@ -52,9 +52,9 @@
 // ----------------------------------------------------------------------
 global $LANG,$DATA_INJECTION_MAPPING,$IMPORT_TYPES,$IMPORT_PRIMARY_TYPES;
 //Store all the type of items that could be imported
-$IMPORT_TYPES = array(COMPUTER_TYPE, MONITOR_TYPE, USER_TYPE,INFOCOM_TYPE);
+$IMPORT_TYPES = array(COMPUTER_TYPE, MONITOR_TYPE, PRINTER_TYPE, USER_TYPE,INFOCOM_TYPE);
 
-$IMPORT_PRIMARY_TYPES = array(COMPUTER_TYPE, MONITOR_TYPE, USER_TYPE);
+$IMPORT_PRIMARY_TYPES = array(COMPUTER_TYPE, MONITOR_TYPE, PRINTER_TYPE, USER_TYPE);
 
 $DATA_INJECTION_MAPPING[COMPUTER_TYPE]['name']['table']='glpi_computers';
 $DATA_INJECTION_MAPPING[COMPUTER_TYPE]['name']['field']='name';
@@ -316,6 +316,129 @@ $DATA_INJECTION_MAPPING[MONITOR_TYPE]['ticket_tco']['field']='ticket_tco';
 $DATA_INJECTION_MAPPING[MONITOR_TYPE]['ticket_tco']['name']=$LANG["financial"][90];
 $DATA_INJECTION_MAPPING[MONITOR_TYPE]['ticket_tco']['type']='text';
 
+// ----------------------------------------------------------------------
+//PRINTER MAPPING
+// ----------------------------------------------------------------------
+
+$DATA_INJECTION_MAPPING[PRINTER_TYPE]['name']['table']='glpi_printers';
+$DATA_INJECTION_MAPPING[PRINTER_TYPE]['name']['field']='name';
+$DATA_INJECTION_MAPPING[PRINTER_TYPE]['name']['name']=$LANG["common"][16];
+$DATA_INJECTION_MAPPING[PRINTER_TYPE]['name']['type']='text';
+
+$DATA_INJECTION_MAPPING[PRINTER_TYPE]['serial']['table']='glpi_printers';
+$DATA_INJECTION_MAPPING[PRINTER_TYPE]['serial']['field']='serial';
+$DATA_INJECTION_MAPPING[PRINTER_TYPE]['serial']['name']=$LANG["common"][19];
+$DATA_INJECTION_MAPPING[PRINTER_TYPE]['serial']['type']='text';
+
+$DATA_INJECTION_MAPPING[PRINTER_TYPE]['otherserial']['table']='glpi_printers';
+$DATA_INJECTION_MAPPING[PRINTER_TYPE]['otherserial']['field']='otherserial';
+$DATA_INJECTION_MAPPING[PRINTER_TYPE]['otherserial']['name']=$LANG["common"][20];
+$DATA_INJECTION_MAPPING[PRINTER_TYPE]['otherserial']['type']='text';
+
+$DATA_INJECTION_MAPPING[PRINTER_TYPE]['location']['table']='glpi_dropdown_locations';
+$DATA_INJECTION_MAPPING[PRINTER_TYPE]['location']['field']='name';
+$DATA_INJECTION_MAPPING[PRINTER_TYPE]['location']['name']=$LANG["common"][15];
+$DATA_INJECTION_MAPPING[PRINTER_TYPE]['location']['linkfield']='location';
+$DATA_INJECTION_MAPPING[PRINTER_TYPE]['location']['type']='text';
+$DATA_INJECTION_MAPPING[PRINTER_TYPE]['location']['table_type']='dropdown';
+
+
+$DATA_INJECTION_MAPPING[PRINTER_TYPE]['contact']['table']='glpi_printers';
+$DATA_INJECTION_MAPPING[PRINTER_TYPE]['contact']['field']='contact';
+$DATA_INJECTION_MAPPING[PRINTER_TYPE]['contact']['name']=$LANG["common"][18];
+$DATA_INJECTION_MAPPING[PRINTER_TYPE]['contact']['type']='text';
+
+$DATA_INJECTION_MAPPING[PRINTER_TYPE]['contactnum']['table']='glpi_printers';
+$DATA_INJECTION_MAPPING[PRINTER_TYPE]['contactnum']['field']='name';
+$DATA_INJECTION_MAPPING[PRINTER_TYPE]['contactnum']['name']=$LANG["common"][21];
+$DATA_INJECTION_MAPPING[PRINTER_TYPE]['contactnum']['type']='text';
+
+$DATA_INJECTION_MAPPING[PRINTER_TYPE]['comments']['table']='glpi_printers';
+$DATA_INJECTION_MAPPING[PRINTER_TYPE]['comments']['field']='comments';
+$DATA_INJECTION_MAPPING[PRINTER_TYPE]['comments']['name']=$LANG["common"][25];
+$DATA_INJECTION_MAPPING[PRINTER_TYPE]['comments']['type']='text';
+
+$DATA_INJECTION_MAPPING[PRINTER_TYPE]['notes']['table']='glpi_printers';
+$DATA_INJECTION_MAPPING[PRINTER_TYPE]['notes']['field']='notes';
+$DATA_INJECTION_MAPPING[PRINTER_TYPE]['notes']['name']=$LANG["reminder"][2];
+$DATA_INJECTION_MAPPING[PRINTER_TYPE]['notes']['type']='text';
+
+$DATA_INJECTION_MAPPING[PRINTER_TYPE]['state']['table']='glpi_dropdown_state';
+$DATA_INJECTION_MAPPING[PRINTER_TYPE]['state']['field']='name';
+$DATA_INJECTION_MAPPING[PRINTER_TYPE]['state']['name']=$LANG["joblist"][0];
+$DATA_INJECTION_MAPPING[PRINTER_TYPE]['state']['linkfield']='state';
+$DATA_INJECTION_MAPPING[PRINTER_TYPE]['state']['table_type']='dropdown';
+$DATA_INJECTION_MAPPING[PRINTER_TYPE]['state']['type']='text';
+
+$DATA_INJECTION_MAPPING[PRINTER_TYPE]['ramSize']['table']='glpi_printers';
+$DATA_INJECTION_MAPPING[PRINTER_TYPE]['ramSize']['field']='ramSize';
+$DATA_INJECTION_MAPPING[PRINTER_TYPE]['ramSize']['name']=$LANG["devices"][6];
+$DATA_INJECTION_MAPPING[PRINTER_TYPE]['ramSize']['type']='text';
+
+$DATA_INJECTION_MAPPING[PRINTER_TYPE]['flags_serial']['table']='glpi_printers';
+$DATA_INJECTION_MAPPING[PRINTER_TYPE]['flags_serial']['field']='flags_serial';
+$DATA_INJECTION_MAPPING[PRINTER_TYPE]['flags_serial']['name']=$LANG["setup"][175]." ".$LANG["printers"][14];
+$DATA_INJECTION_MAPPING[PRINTER_TYPE]['flags_serial']['type']='integer';
+
+$DATA_INJECTION_MAPPING[PRINTER_TYPE]['flags_par']['table']='glpi_printers';
+$DATA_INJECTION_MAPPING[PRINTER_TYPE]['flags_par']['field']='flags_par';
+$DATA_INJECTION_MAPPING[PRINTER_TYPE]['flags_par']['name']=$LANG["setup"][175]." ".$LANG["printers"][15];
+$DATA_INJECTION_MAPPING[PRINTER_TYPE]['flags_par']['type']='integer';
+
+$DATA_INJECTION_MAPPING[PRINTER_TYPE]['flags_usb']['table']='glpi_printers';
+$DATA_INJECTION_MAPPING[PRINTER_TYPE]['flags_usb']['field']='flags_usb';
+$DATA_INJECTION_MAPPING[PRINTER_TYPE]['flags_usb']['name']=$LANG["setup"][175]." ".$LANG["printers"][27];
+$DATA_INJECTION_MAPPING[PRINTER_TYPE]['flags_usb']['type']='integer';
+
+$DATA_INJECTION_MAPPING[PRINTER_TYPE]['domain']['table']='glpi_dropdown_domain';
+$DATA_INJECTION_MAPPING[PRINTER_TYPE]['domain']['field']='name';
+$DATA_INJECTION_MAPPING[PRINTER_TYPE]['domain']['name']=$LANG["setup"][89];
+$DATA_INJECTION_MAPPING[PRINTER_TYPE]['domain']['linkfield']='domain';
+$DATA_INJECTION_MAPPING[PRINTER_TYPE]['domain']['type']='text';
+$DATA_INJECTION_MAPPING[PRINTER_TYPE]['domain']['table_type']='dropdown';
+
+$DATA_INJECTION_MAPPING[PRINTER_TYPE]['network']['table']='glpi_dropdown_network';
+$DATA_INJECTION_MAPPING[PRINTER_TYPE]['network']['field']='name';
+$DATA_INJECTION_MAPPING[PRINTER_TYPE]['network']['name']=$LANG["setup"][88];
+$DATA_INJECTION_MAPPING[PRINTER_TYPE]['network']['type']='text';
+$DATA_INJECTION_MAPPING[PRINTER_TYPE]['network']['linkfield']='network';
+$DATA_INJECTION_MAPPING[PRINTER_TYPE]['network']['table_type']='dropdown';
+
+$DATA_INJECTION_MAPPING[PRINTER_TYPE]['type']['table']='glpi_type_printers';
+$DATA_INJECTION_MAPPING[PRINTER_TYPE]['type']['field']='name';
+$DATA_INJECTION_MAPPING[PRINTER_TYPE]['type']['name']=$LANG["common"][17];
+$DATA_INJECTION_MAPPING[PRINTER_TYPE]['type']['type']='text';
+$DATA_INJECTION_MAPPING[PRINTER_TYPE]['type']['linkfield']='type';
+$DATA_INJECTION_MAPPING[PRINTER_TYPE]['type']['table_type']='dropdown';
+
+$DATA_INJECTION_MAPPING[PRINTER_TYPE]['model']['table']='glpi_dropdown_model_printers';
+$DATA_INJECTION_MAPPING[PRINTER_TYPE]['model']['field']='name';
+$DATA_INJECTION_MAPPING[PRINTER_TYPE]['model']['name']=$LANG["common"][22];
+$DATA_INJECTION_MAPPING[PRINTER_TYPE]['model']['type']='text';
+$DATA_INJECTION_MAPPING[PRINTER_TYPE]['model']['linkfield']='model';
+$DATA_INJECTION_MAPPING[PRINTER_TYPE]['model']['table_type']='dropdown';
+
+$DATA_INJECTION_MAPPING[PRINTER_TYPE]['manufacturer']['table']='glpi_dropdown_manufacturer';
+$DATA_INJECTION_MAPPING[PRINTER_TYPE]['manufacturer']['field']='name';
+$DATA_INJECTION_MAPPING[PRINTER_TYPE]['manufacturer']['name']=$LANG["common"][5];
+$DATA_INJECTION_MAPPING[PRINTER_TYPE]['manufacturer']['type']='text';
+$DATA_INJECTION_MAPPING[PRINTER_TYPE]['manufacturer']['linkfield']='FK_glpi_enterprise';
+$DATA_INJECTION_MAPPING[MONITOR_TYPE]['manufacturer']['table_type']='dropdown';
+
+$DATA_INJECTION_MAPPING[PRINTER_TYPE]['is_template']['table']='glpi_printers';
+$DATA_INJECTION_MAPPING[PRINTER_TYPE]['is_template']['field']='is_template';
+$DATA_INJECTION_MAPPING[PRINTER_TYPE]['is_template']['name']=$LANG["common"][13];
+$DATA_INJECTION_MAPPING[PRINTER_TYPE]['is_template']['type']='integer';
+
+$DATA_INJECTION_MAPPING[PRINTER_TYPE]['tplname']['table']='glpi_printers';
+$DATA_INJECTION_MAPPING[PRINTER_TYPE]['tplname']['field']='tplname';
+$DATA_INJECTION_MAPPING[PRINTER_TYPE]['tplname']['name']=$LANG["common"][6];
+$DATA_INJECTION_MAPPING[PRINTER_TYPE]['tplname']['type']='text';
+
+$DATA_INJECTION_MAPPING[PRINTER_TYPE]['ticket_tco']['table']='glpi_printers';
+$DATA_INJECTION_MAPPING[PRINTER_TYPE]['ticket_tco']['field']='ticket_tco';
+$DATA_INJECTION_MAPPING[PRINTER_TYPE]['ticket_tco']['name']=$LANG["financial"][90];
+$DATA_INJECTION_MAPPING[PRINTER_TYPE]['ticket_tco']['type']='text';
 // ----------------------------------------------------------------------
 //INFOCOM MAPPING
 // ----------------------------------------------------------------------

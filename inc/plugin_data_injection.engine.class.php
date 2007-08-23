@@ -186,13 +186,11 @@ class DataInjectionEngine
 							$ID = $obj->add($fields);
 							//Add the ID to the fields, so it can be reused after
 							$db_fields["common"] = addCommonFields($db_fields["common"],$model->getDeviceType(),$fields,$this->entity,$ID);
-							echo "ADD=$ID\n"; 
 					}	
 					else
 					{
 						$db_fields["common"] = addCommonFields($db_fields["common"],$type,$fields,$this->entity,$ID);
-						$fields["ID"] = $ID;
-						echo "update ID=".$obj->update($fields);
+						$obj->update($fields);
 					}
 				}
 			}

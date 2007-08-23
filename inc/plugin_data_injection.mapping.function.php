@@ -40,6 +40,7 @@ function getAllMappingsDefinitionsTypes()
 		$commonitem->setType($type);
 		$types[] = array($type,$commonitem->getType());
 	}
+	asort($types);
 	return $types;
 }
 
@@ -52,7 +53,7 @@ function getAllMappingsDefinitionsByType($type)
 	{
 		$mapping_parameters[$name] = $mapping["name"];
 	}
-
+	asort($mapping_parameters);
 	return 	$mapping_parameters;
 }
 
@@ -91,6 +92,7 @@ function getAllPrimaryTypes()
 		$commonitem->setType($type);
 		$types[] = array($type,$commonitem->getType());
 	}
+	sort($types);
 	return $types;
 }
 
