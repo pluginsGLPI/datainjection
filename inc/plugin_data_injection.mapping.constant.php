@@ -530,12 +530,12 @@ $DATA_INJECTION_MAPPING[PHONE_TYPE]['brand']['field']='brand';
 $DATA_INJECTION_MAPPING[PHONE_TYPE]['brand']['name']=$LANG["peripherals"][18];
 $DATA_INJECTION_MAPPING[PHONE_TYPE]['brand']['type']='text';
 
-$DATA_INJECTION_MAPPING[PHONE_TYPE]['manufacturer']['table']='glpi_phone_power';
-$DATA_INJECTION_MAPPING[PHONE_TYPE]['manufacturer']['field']='name';
-$DATA_INJECTION_MAPPING[PHONE_TYPE]['manufacturer']['name']=$LANG["devices"][23];
-$DATA_INJECTION_MAPPING[PHONE_TYPE]['manufacturer']['type']='text';
-$DATA_INJECTION_MAPPING[PHONE_TYPE]['manufacturer']['linkfield']='power';
-$DATA_INJECTION_MAPPING[PHONE_TYPE]['manufacturer']['table_type']='dropdown';
+$DATA_INJECTION_MAPPING[PHONE_TYPE]['power']['table']='glpi_phone_power';
+$DATA_INJECTION_MAPPING[PHONE_TYPE]['power']['field']='name';
+$DATA_INJECTION_MAPPING[PHONE_TYPE]['power']['name']=$LANG["devices"][23];
+$DATA_INJECTION_MAPPING[PHONE_TYPE]['power']['type']='text';
+$DATA_INJECTION_MAPPING[PHONE_TYPE]['power']['linkfield']='power';
+$DATA_INJECTION_MAPPING[PHONE_TYPE]['power']['table_type']='dropdown';
 
 $DATA_INJECTION_MAPPING[PHONE_TYPE]['number_line']['table']='glpi_phones';
 $DATA_INJECTION_MAPPING[PHONE_TYPE]['number_line']['field']='number_line';

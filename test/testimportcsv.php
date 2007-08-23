@@ -50,7 +50,7 @@ if ($argv) {
 
 define('GLPI_ROOT', '../../..');
 
-$NEEDED_ITEMS=array("user","infocom","profile","entity","computer","software","setup");
+$NEEDED_ITEMS=array("user","monitor","phone","infocom","printer","profile","entity","computer","software","setup");
 include (GLPI_ROOT."/inc/includes.php");
 include ("../plugin_data_injection.includes.php");
 
