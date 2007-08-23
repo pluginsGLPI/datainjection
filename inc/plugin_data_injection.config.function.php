@@ -76,6 +76,7 @@ function plugin_data_injection_Install() {
 	$query="CREATE TABLE `glpi_plugin_data_injection_infos` (
 		`ID` INT( 11 ) NOT NULL AUTO_INCREMENT PRIMARY KEY ,
 		`model_id` INT( 11 ) NOT NULL ,
+		`type` int(11) NOT NULL default '9',
 		`value` VARCHAR( 255 ) NOT NULL ,
 		`mandatory` INT( 1 ) NOT NULL DEFAULT '0'		
 		) ENGINE = MYISAM ;";

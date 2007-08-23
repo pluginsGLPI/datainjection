@@ -231,6 +231,26 @@ else if(isset($_POST["next12"]))
 	{
 	$model = unserialize($_SESSION["plugin_data_injection_model"]);
 	
+	$infoscollection = new InfosCollection;
+	
+	foreach($_POST["field"] as $field)
+		{
+		if($field[0]!=-1)
+			{
+			$infos = new DataInjectionInfos;
+			$infos->setInfosType($field[0]);
+			$infos->setValue($field[1]);
+			if(isset($field[2]))
+				$infos->setMandatory(1);
+			else
+				$infos->setMandatory(0);
+		
+			$infoscollection->addNewInfos($infos);
+			}
+		}
+		
+		$model->setInfos($infoscollection);
+		
 	$_SESSION["plugin_data_injection_model"] = serialize($model);
 	$_SESSION["plugin_data_injection_wizard_step"] = 15;
 	}
