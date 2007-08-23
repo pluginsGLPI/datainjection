@@ -205,10 +205,11 @@ else if(isset($_POST["next9"]))
 	foreach($_POST["field"] as $field)
 		{
 		$mapping = new DataInjectionMapping;
-		$mapping->setMappingType($field[0]);
-		$mapping->setValue($field[1]);
+		$mapping->setName($field[0]);
+		$mapping->setMappingType($field[1]);
+		$mapping->setValue($field[2]);
 		$mapping->setRank($index);
-		if(isset($field[2]))
+		if(isset($field[3]))
 			$mapping->setMandatory(1);
 		else
 			$mapping->setMandatory(0);

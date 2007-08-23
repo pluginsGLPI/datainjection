@@ -30,12 +30,14 @@
 class DataInjectionModel extends CommonDBTM {
 
 	var $mappings;
+	var $infos;
 		
 	function DataInjectionModel()
 	{
 		$this->table="glpi_plugin_data_injection_models";
     	$this->type=-1;
     	$this->mappings = new MappingCollection;
+    	$this->infos = new InfosCollection;
 	}
 
 	//---- Load -----//	
@@ -44,6 +46,7 @@ class DataInjectionModel extends CommonDBTM {
 		if ($this->getFromDB($model_id))
 		{
 			$this->loadMappings($model_id);
+			$this->loadInfos($model_id);
 			return true;
 		}
 		else
@@ -53,11 +56,21 @@ class DataInjectionModel extends CommonDBTM {
 	{
 		$this->mappings->getAllMappingsByModelID($model_id);
 	}
+	
+	function loadInfos($model_id)
+	{
+		$this->infos->getAllInfosByModelID($model_id);
+	}
 
 	//---- Add -----//	
 	function addMappingToModel($mapping)
 	{
 		$this->mappings->addNewMapping($mapping);
+	}
+	
+	function addInfosToModel($infos)
+	{
+		$this->infos->addNewInfos($infos);
 	}
 
 	//---- Save -----//	
@@ -70,13 +83,19 @@ class DataInjectionModel extends CommonDBTM {
 			$this->update($this->fields);
 		
 		//Save or add mappings
-		$this->mappings->saveAllMappings($this->fields["ID"]);		
+		$this->mappings->saveAllMappings($this->fields["ID"]);
+		$this->infos->saveAllInfos($this->fields["ID"]);		
 	}
 
 	//---- Getters -----//
 	function getMappings()
 	{
 		return $this->mappings;
+	}
+	
+	function getInfos()
+	{
+		return $this->infos;
 	}
 	
 	function getMappingByName($name)
@@ -182,6 +201,11 @@ class DataInjectionModel extends CommonDBTM {
 	function setMappings($mappings)
 	{
 		return $this->mappings = $mappings;
+	}
+	
+	function setInfos($infos)
+	{
+		return $this->infos = $infos;
 	}		
 	
 	function setDeviceType($device_type)

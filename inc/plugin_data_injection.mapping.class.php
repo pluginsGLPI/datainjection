@@ -201,8 +201,6 @@ class MappingCollection {
 	 */
 	function saveAllMappings($model_id)
 	{
-		$tmp = new DataInjectionMapping;
-		
 		foreach ($this->mappingCollection as $mapping)
 		{
 			$mapping->setModelID($model_id);

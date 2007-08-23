@@ -93,6 +93,14 @@ function go_info(id)
 
 	sel = document.getElementById('table'+id);
 	idtable = sel.options[sel.selectedIndex].value;
+	
+	if(idtable!=-1)
+		document.getElementById("check"+id).style.visibility='visible';
+	else
+		{
+		document.getElementById("check"+id).style.visibility='hidden';
+		document.getElementById("check"+id).checked=false;
+		}
 		
 	xhr.send("id="+id+"&idMapping="+idtable);
 }

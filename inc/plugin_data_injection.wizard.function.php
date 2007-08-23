@@ -267,19 +267,19 @@ function step9($target)
 	foreach($header as $key => $value)
 		{
 		echo "<tr>";
-		echo "<td>".$value." : </td>";
+		echo "<td><input type='hidden' name='field[$key][0]' value='$value' />".$value." : </td>";
 		echo "<td style='text-align:center;width:75px'><img src='../pics/fleche.png' alt='fleche' /></td>";
-		echo "<td><select name='field[$key][0]' id='table$key' onchange='go_mapping($key)' style='width: 150px'>";
+		echo "<td><select name='field[$key][1]' id='table$key' onchange='go_mapping($key)' style='width: 150px'>";
 		echo "<option value='-1'>".$DATAINJECTIONLANG['step9'][3]."</option>";
 		
 		$types = getAllMappingsDefinitionsTypes();
 		
 		foreach($types as $type)
 			echo "<option value='".$type[0]."'>".$type[1]."</option>";
-		
+			
 		echo "</select></td>";
-		echo "<td id='field$key'><select name='field[$key][1]' style='width: 150px'><option value='-1'>".$DATAINJECTIONLANG["step9"][4]."</option></select></td>";
-		echo "<td><input type='checkbox' name='field[$key][2]' id='check$key' style='text-align:center;width:30px;visibility:hidden' /></td>";
+		echo "<td id='field$key'><select name='field[$key][2]' style='width: 150px'><option value='-1'>".$DATAINJECTIONLANG["step9"][4]."</option></select></td>";
+		echo "<td><input type='checkbox' name='field[$key][3]' id='check$key' style='text-align:center;width:30px;visibility:hidden' /></td>";
 		echo "</tr>";
 		}
 	echo "</table>";
@@ -329,6 +329,7 @@ function step12($target)
 		
 	echo "</select></td>";
 	echo "<td id='field$key'><select name='field[$key][1]' style='width: 150px'><option value='-1'>".$DATAINJECTIONLANG["step9"][4]."</option></select></td>";
+	echo "<td><input type='checkbox' name='field[$key][2]' id='check$key' style='text-align:center;width:30px;visibility:hidden' /></td>";
 	echo "</tr>";
 	echo "</table>";
 	echo "</div>";
