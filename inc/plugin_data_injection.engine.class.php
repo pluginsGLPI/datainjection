@@ -125,15 +125,21 @@ class DataInjectionEngine
 			}
 		}
 
+		$process = true;
+		//----------------------------------------------------//
+		//-------------Process primary type------------------//
+		//--------------------------------------------------//
+		
 		//First, try to insert or update primary object
 		$fields = $db_fields[$model->getDeviceType()];
 
 		$obj = getInstance($model->getDeviceType());
 		//If necessary, add default fields which are mandatory to create the object
 		$fields = addNecessaryFields($model,$mapping,$mapping_definition,$this->entity,$model->getDeviceType(),$fields,$db_fields["common"]);
-		
+
 		//Check if the line already exists in database
 		$ID = dataAlreadyInDB($model->getDeviceType(),$fields,$mapping_definition,$model);
+
 		if ($ID == -1)
 		{
 			if ($model->getBehaviorAdd())
@@ -143,6 +149,9 @@ class DataInjectionEngine
 				$db_fields["common"] = addCommonFields($db_fields["common"],$model->getDeviceType(),$fields,$this->entity,$ID);
 				echo "ADD=$ID\n"; 
 			}
+			else
+			//Object doesn't exists, but add in not allowed by the model
+				$process = false;
 		}	
 		elseif ($model->getBehaviorUpdate())
 		{
@@ -151,36 +160,43 @@ class DataInjectionEngine
 			$obj->update($fields);
 			echo "update ID=$ID\n";
 		}
+		else
+			//Object exists but update is not allowed by the model
+			$process = false;
 
-
-
-		//Insert others objects in database
-		foreach ($db_fields as $type => $fields)
+		if ($process)
 		{
-			if ($type != "common" && $type != $model->getDeviceType())
+			//----------------------------------------------------//
+			//-------------Process other types-------------------//
+			//--------------------------------------------------//
+	
+			//Insert others objects in database
+			foreach ($db_fields as $type => $fields)
 			{
-				$obj = getInstance($type);
-				//If necessary, add default fields which are mandatory to create the object
-				$fields = addNecessaryFields($model,$mapping,$mapping_definition,$this->entity,$type,$fields,$db_fields["common"]);
-				
-				//Check if the line already exists in database
-				$ID = dataAlreadyInDB($type,$fields,$mapping_definition,$model);
-				if ($ID == -1)
+				if ($type != "common" && $type != $model->getDeviceType())
 				{
-						$ID = $obj->add($fields);
-						//Add the ID to the fields, so it can be reused after
-						$db_fields["common"] = addCommonFields($db_fields["common"],$model->getDeviceType(),$fields,$this->entity,$ID);
-						echo "ADD=$ID\n"; 
-				}	
-				else
-				{
-					$db_fields["common"] = addCommonFields($db_fields["common"],$type,$fields,$this->entity,$ID);
-					$fields["ID"] = $ID;
-					echo "update ID=".$obj->update($fields);
+					$obj = getInstance($type);
+					//If necessary, add default fields which are mandatory to create the object
+					$fields = addNecessaryFields($model,$mapping,$mapping_definition,$this->entity,$type,$fields,$db_fields["common"]);
+					
+					//Check if the line already exists in database
+					$ID = dataAlreadyInDB($type,$fields,$mapping_definition,$model);
+					if ($ID == -1)
+					{
+							$ID = $obj->add($fields);
+							//Add the ID to the fields, so it can be reused after
+							$db_fields["common"] = addCommonFields($db_fields["common"],$model->getDeviceType(),$fields,$this->entity,$ID);
+							echo "ADD=$ID\n"; 
+					}	
+					else
+					{
+						$db_fields["common"] = addCommonFields($db_fields["common"],$type,$fields,$this->entity,$ID);
+						$fields["ID"] = $ID;
+						echo "update ID=".$obj->update($fields);
+					}
 				}
 			}
-		}
-				
+		}			
 	}
 }
 

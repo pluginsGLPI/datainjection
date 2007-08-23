@@ -228,7 +228,8 @@ function dataAlreadyInDB($type,$fields,$mapping_definition,$model)
 		switch ($type)
 		{
 			case INFOCOM_TYPE :
-				$where.=" AND device_type=".$model->getDeviceType()." AND FK_device=".$fields["FK_device"];
+				print_r($fields);
+				$where.=" AND device_type=".$model->getDeviceType()." AND FK_device=".$fields["device_id"];
 			break;
 
 			default:
@@ -390,6 +391,7 @@ function addNecessaryFields($model,$mapping,$mapping_definition,$entity,$type,$f
 	global $DB;
 	switch ($type)
 	{
+		case MONITOR_TYPE:
 		case COMPUTER_TYPE:
 			if (!isset($fields["FK_entities"]))
 				$fields["FK_entities"] = $entity;
@@ -414,8 +416,8 @@ function addNecessaryFields($model,$mapping,$mapping_definition,$entity,$type,$f
 			break;
 		case INFOCOM_TYPE:
 			//Set the device_id
-			if (!isset($fields["FK_device"]))
-				$fields["FK_device"] = $common_fields["device_id"];
+			if (!isset($fields["device_id"]))
+				$fields["device_id"] = $common_fields["device_id"];
 			
 			//Set the device type
 			if (!isset($fields["device_type"]))
