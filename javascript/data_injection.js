@@ -166,3 +166,20 @@ function popup(totalline)
 	
 	document.getElementById('popup').submit();
 }
+
+function verif_mandatory(cpt)
+{	
+	var ok=0;
+	
+	for(var i=0;i<cpt;i++)
+		if(document.getElementById("check"+i).checked == true)
+			ok=1;
+			
+	if(ok)
+		return true;
+	else
+		{
+		document.getElementById('mandatory').style.visibility='visible';
+		return false;
+		}
+}

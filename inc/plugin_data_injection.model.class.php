@@ -86,6 +86,19 @@ class DataInjectionModel extends CommonDBTM {
 		$this->mappings->saveAllMappings($this->fields["ID"]);
 		$this->infos->saveAllInfos($this->fields["ID"]);		
 	}
+	
+	function deleteModel()
+	{
+		if($this->mappings->deleteMappingsFromDB($this->fields["ID"]) && $this->infos->deleteInfosFromDB($this->fields["ID"]))
+			{
+			if($this->deleteFromDB($this->fields["ID"]))
+				return true;
+			else
+				return false;
+			}
+		else
+			return false;
+	}
 
 	//---- Getters -----//
 	function getMappings()

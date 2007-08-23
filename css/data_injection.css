@@ -74,6 +74,15 @@ margin-top: 70px;
 line-height: 20px;
 }
 
+.save_delete {
+font-size: 14px;
+margin-top: 70px;
+margin-left: auto;
+margin-right: auto;
+width: 180px;
+line-height: 20px;
+}
+
 .presentation {
 margin-left: auto;
 margin-right: auto;
@@ -128,13 +137,4 @@ border-spacing: 10px;
 font-size: 14px;
 margin-top: 10px;
 border-spacing: 10px;
-}
-
-.step15_save {
-font-size: 14px;
-margin-top: 70px;
-margin-left: auto;
-margin-right: auto;
-width: 180px;
-line-height: 20px;
 }

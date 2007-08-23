@@ -86,6 +86,7 @@ $DATAINJECTIONLANG["step9"][1] = "Etape 4 :";
 $DATAINJECTIONLANG["step9"][2] = "colonnes à mapper ont été trouvées";
 $DATAINJECTIONLANG["step9"][3] = "-------Choisir une table-------";
 $DATAINJECTIONLANG["step9"][4] = "-------Choisir un champ-------";
+$DATAINJECTIONLANG["step9"][5] = "Au moins un mapping doit être obligatoire";
 
 $DATAINJECTIONLANG["step12"][1] = "Etape 5 : Informations complémentaires";
 

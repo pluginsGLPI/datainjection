@@ -184,10 +184,12 @@ function step4($target,$suppr)
 	
 	if($suppr)
 		{
-		if($model->deleteFromDB($_SESSION["plugin_data_injection_wizard_idmodel"]))
-			echo $DATAINJECTIONLANG["step4"][4]." \" ".$name." \" ".$DATAINJECTIONLANG["step4"][5];
+		if($model->deleteModel())
+			{
+			echo "<div class='save_delete'>".$DATAINJECTIONLANG["step4"][4]." \" ".$name." \" ".$DATAINJECTIONLANG["step4"][5]."</div>";
+			}
 		else
-			echo $DATAINJECTIONLANG["step4"][6];
+			echo "<div class='save_delete'>".$DATAINJECTIONLANG["step4"][6]."</div>";
 		}
 	else
 		{
@@ -260,7 +262,7 @@ function step9($target)
 	
 	echo "<div class='wizard_titre' style='margin-bottom:20px'>".$DATAINJECTIONLANG["step9"][1]." ".$num." ".$DATAINJECTIONLANG["step9"][2]."</div>";
 	
-	echo "<form action='".$target."' method='post' name='step9'>";
+	echo "<form action='".$target."' method='post' name='step9' onSubmit='return verif_mandatory($num)'>";
 	
 	echo "<table>";	
 	
@@ -293,14 +295,19 @@ function step9($target)
 	echo "<input type='button' name='valid_popup' value='".$DATAINJECTIONLANG["button"][3]."' onclick='popup($nbline)' class='submit' />";
 	echo "</td></tr>";
 	echo "</form>";
+	echo "<tr><td class='rouge' style='visibility:hidden' id='mandatory' colspan='5'>".$DATAINJECTIONLANG["step9"][5]."</td></tr>";
 	echo "</table>";
-	
-	echo "<div class='preview'>";
-	echo "<input type='submit' name='preview9' value='".$DATAINJECTIONLANG["button"][1]."' class='submit' />";
-	echo "</div>";
 	
 	echo "<div class='next'>";
 	echo "<input type='submit' name='next9' value='".$DATAINJECTIONLANG["button"][2]."' class='submit' />";
+	echo "</div>";
+	
+	echo "</form>";
+	
+	echo "<form action='".$target."' method='post'>";
+	
+	echo "<div class='preview'>";
+	echo "<input type='submit' name='preview9' value='".$DATAINJECTIONLANG["button"][1]."' class='submit' />";
 	echo "</div>";
 	
 	echo "</form>";
@@ -377,10 +384,10 @@ function step15($target,$save)
 			echo "</table>";
 		break;
 		case 2:
-			echo "<div class='step15_save'>".$DATAINJECTIONLANG["step15"][5]."</div>";
+			echo "<div class='save_delete'>".$DATAINJECTIONLANG["step15"][5]."</div>";
 		break;
 		case 3:
-			echo "<div class='step15_save'>".$DATAINJECTIONLANG["step15"][6]."</div>";
+			echo "<div class='save_delete'>".$DATAINJECTIONLANG["step15"][6]."</div>";
 		break;
 	}	
 	
@@ -407,6 +414,8 @@ function step15($target,$save)
 	}
 	
 	echo "</form>";
+	
+	echo "<script type='text/javascript'>document.forms['step15'].model_name.focus()</script>";
 }
 
 function deleteSession()

@@ -198,10 +198,10 @@ else if(isset($_POST["preview9"]))
 else if(isset($_POST["next9"]))
 	{
 	$model = unserialize($_SESSION["plugin_data_injection_model"]);
-	
+		
 	$index= 0;
 	$mappingcollection = new MappingCollection;
-	
+		
 	foreach($_POST["field"] as $field)
 		{
 		$mapping = new DataInjectionMapping;
@@ -213,13 +213,13 @@ else if(isset($_POST["next9"]))
 			$mapping->setMandatory(1);
 		else
 			$mapping->setMandatory(0);
-		
+			
 		$mappingcollection->addNewMapping($mapping);
 		$index++;
 		}
-		
+			
 		$model->setMappings($mappingcollection);
-		
+			
 	$_SESSION["plugin_data_injection_model"] = serialize($model);
 	$_SESSION["plugin_data_injection_wizard_step"] = 12;
 	}
@@ -249,7 +249,7 @@ else if(isset($_POST["next12"]))
 			}
 		}
 		
-		$model->setInfos($infoscollection);
+	$model->setInfos($infoscollection);
 		
 	$_SESSION["plugin_data_injection_model"] = serialize($model);
 	$_SESSION["plugin_data_injection_wizard_step"] = 15;

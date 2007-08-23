@@ -105,7 +105,7 @@ class InfosCollection {
 	
 	function InfosCollection()
 	{
-		$infosCollection = array();
+		$this->infosCollection = array();
 	}
 	
 	//---- Getter ----//
@@ -153,6 +153,19 @@ class InfosCollection {
 			else
 				$infos->fields["ID"] = $infos->add($infos->fields);
 		}
+	}
+	
+	//---- Delete ----//
+	
+	function deleteInfosFromDB($model_id)
+	{
+		global $DB;
+		
+		$sql = "DELETE from glpi_plugin_data_injection_infos WHERE model_id =".$model_id;
+		if ($result = $DB->query($sql)) 
+			return true;
+		else
+			return false;
 	}
 	
 	//---- Add ----//

@@ -126,7 +126,7 @@ class MappingCollection {
 	
 	function MappingCollection()
 	{
-		$mappingCollection = array();
+		$this->mappingCollection = array();
 	}
 	
 	//---- Getter ----//
@@ -210,6 +210,19 @@ class MappingCollection {
 			else
 				$mapping->fields["ID"] = $mapping->add($mapping->fields);
 		}
+	}
+	
+	//---- Delete ----//
+	
+	function deleteMappingsFromDB($model_id)
+	{
+		global $DB;
+		
+		$sql = "DELETE from glpi_plugin_data_injection_mappings WHERE model_id =".$model_id;
+		if ($result = $DB->query($sql)) 
+			return true;
+		else
+			return false;
 	}
 	
 	//---- Add ----//
