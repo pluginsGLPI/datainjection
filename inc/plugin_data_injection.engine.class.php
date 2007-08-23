@@ -86,7 +86,6 @@ class DataInjectionEngine
 		for ($datas = $this->getDatas(); $i < count($datas);$i++)
 		{
 			$check_result = checkLine($this->model,$datas[$i][0]);
-			
 			if ($check_result["result"])
 				$this->injectLine($this->model,$datas[$i][0],$this->entity);
 
@@ -116,7 +115,6 @@ class DataInjectionEngine
 				if (!isset($db_fields[$mapping->getMappingType()]))
 					$db_fields[$mapping->getMappingType()] = array();
 				
-				
 				$db_fields[$mapping->getMappingType()] = getFieldValue(
 						$mapping, 
 						$mapping_definition,$line[$i],
@@ -126,36 +124,61 @@ class DataInjectionEngine
 				
 			}
 		}
+
+		//First, try to insert or update primary object
+		$fields = $db_fields[$model->getDeviceType()];
+
+		$obj = getInstance($model->getDeviceType());
+		//If necessary, add default fields which are mandatory to create the object
+		$fields = addNecessaryFields($model,$mapping,$mapping_definition,$this->entity,$model->getDeviceType(),$fields,$db_fields["common"]);
 		
-		//Insert datas in database
+		//Check if the line already exists in database
+		$ID = dataAlreadyInDB($model->getDeviceType(),$fields,$mapping_definition,$model);
+		if ($ID == -1)
+		{
+			if ($model->getBehaviorAdd())
+			{
+				$ID = $obj->add($fields);
+				//Add the ID to the fields, so it can be reused after
+				$db_fields["common"] = addCommonFields($db_fields["common"],$model->getDeviceType(),$fields,$this->entity,$ID);
+				echo "ADD=$ID\n"; 
+			}
+		}	
+		elseif ($model->getBehaviorUpdate())
+		{
+			$fields["ID"] = $ID;
+			$db_fields["common"] = addCommonFields($db_fields["common"],$model->getDeviceType(),$fields,$this->entity,$ID);
+			$obj->update($fields);
+			echo "update ID=$ID\n";
+		}
+
+
+
+		//Insert others objects in database
 		foreach ($db_fields as $type => $fields)
 		{
-			if ($type != "common")
+			if ($type != "common" && $type != $model->getDeviceType())
 			{
 				$obj = getInstance($type);
-
 				//If necessary, add default fields which are mandatory to create the object
-				$fields = addNecessaryFields($mapping,$mapping_definition,$this->entity,$type,$fields,$db_fields["common"]);
-
+				$fields = addNecessaryFields($model,$mapping,$mapping_definition,$this->entity,$type,$fields,$db_fields["common"]);
+				
 				//Check if the line already exists in database
 				$ID = dataAlreadyInDB($type,$fields,$mapping_definition,$model);
 				if ($ID == -1)
 				{
-					if ($model->getBehaviorAdd())
-					{
 						$ID = $obj->add($fields);
 						//Add the ID to the fields, so it can be reused after
-						$db_fields["common"] = addCommonFields($db_fields["common"],$type,$fields,$this->entity,$ID);
+						$db_fields["common"] = addCommonFields($db_fields["common"],$model->getDeviceType(),$fields,$this->entity,$ID);
 						echo "ADD=$ID\n"; 
-					}
 				}	
-				elseif ($model->getBehaviorupdate())
+				else
 				{
 					$db_fields["common"] = addCommonFields($db_fields["common"],$type,$fields,$this->entity,$ID);
 					$fields["ID"] = $ID;
 					echo "update ID=".$obj->update($fields);
 				}
-			}	
+			}
 		}
 				
 	}

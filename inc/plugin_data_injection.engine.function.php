@@ -225,10 +225,10 @@ function dataAlreadyInDB($type,$fields,$mapping_definition,$model)
 	else
 	{
 		$where_entity = " 1";
-		switch ($mapping_definition["table"])
+		switch ($type)
 		{
 			case INFOCOM_TYPE :
-				$where.=" AND device_type=".$model->getDeviceType()." AND FK_device=".$fields["ID"];
+				$where.=" AND device_type=".$model->getDeviceType()." AND FK_device=".$fields["FK_device"];
 			break;
 
 			default:
@@ -385,7 +385,7 @@ function addCommonFields($common_fields,$type,$fields,$entity,$id)
 /*
  * Add necessary fields
  */
-function addNecessaryFields($mapping,$mapping_definition,$entity,$type,$fields,$common_fields)
+function addNecessaryFields($model,$mapping,$mapping_definition,$entity,$type,$fields,$common_fields)
 {
 	global $DB;
 	switch ($type)
@@ -413,12 +413,13 @@ function addNecessaryFields($mapping,$mapping_definition,$entity,$type,$fields,$
 				$fields["FK_profiles"] = getFieldIDByName($mapping,$mapping_definition,$fields["FK_profiles"],$entity);
 			break;
 		case INFOCOM_TYPE:
-			if (!isset($fields["FK_device"]) && isset($common_fields["device_id"]))
+			//Set the device_id
+			if (!isset($fields["FK_device"]))
 				$fields["FK_device"] = $common_fields["device_id"];
 			
+			//Set the device type
 			if (!isset($fields["device_type"]))
-				$fields["device_type"] = $type;
-			
+				$fields["device_type"] = $model->getDeviceType();			
 			break;		
 		default:
 			break;	
@@ -465,9 +466,4 @@ function getFieldValue($mapping, $mapping_definition,$field_value,$entity,$obj)
 	return $obj;
 }
 
-function sortArrayOfTypes($model,$db_fields)
-{
-	$device_type = $model->getDeviceType();
-	
-}
 ?>
