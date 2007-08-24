@@ -43,21 +43,23 @@ deleteSession();
 
 echo "<div class='global'>";
 
-echo "<table class='wizard' style='margin-top:56px;'><tr><td valign='top'>";
-
-echo "<form action='plugin_data_injection.wizard.form.php' method='post' >";
-
-echo "<div class='wizard_titre'>".$DATAINJECTIONLANG["presentation"][1];
-echo "<div class='presentation'>".$DATAINJECTIONLANG["presentation"][2]."</div>";
-echo "</div>";
-
+echo "<form action='plugin_data_injection.wizard.form.php' method='post' name='step0'>";
+echo "<table class='wizard' style='margin-top:56px;'>";
+echo "<tr><td class='wizard_title' valign='bottom'>".$DATAINJECTIONLANG["presentation"][1]."</td></tr>";
+	
+echo "<tr><td class='wizard_body'>";
+	
+echo "<div class='presentation'>".$DATAINJECTIONLANG["presentation"][2]."</div>";	
+	
+echo "</td></tr>";
+	
+echo "<tr><td class='wizard_button'>";
 echo "<div class='next'>";
-echo "<input type='submit' value='Suivant >' class='submit' />";
+echo "<input type='submit' name='presentation' value='".$DATAINJECTIONLANG["button"][2]."' class='submit' />";
 echo "</div>";
-
+echo "</td></tr></table>";
 echo "</form>";
 
-echo "</td></tr></table>";
 echo "</div>";
 
 commonFooter();

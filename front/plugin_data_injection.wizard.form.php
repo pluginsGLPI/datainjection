@@ -296,13 +296,12 @@ if(!isset($_SESSION["plugin_data_injection_wizard_nbonglet"]))
 	$_SESSION["plugin_data_injection_wizard_nbonglet"] = 0;
 	
 else if($_SESSION["plugin_data_injection_wizard_step"]==1)
-	$_SESSION["plugin_data_injection_wizard_nbonglet"] = 5;
+	$_SESSION["plugin_data_injection_wizard_nbonglet"] = 6;
 
 
 echo "<div class='global'>";
 
 echo "<table class='step'><tr><td id='step1'>1</td><td id='step2'>2</td><td id='step3'>3</td><td id='step4'>4</td><td id='step5'>5</td><td id='step6'>6</td></tr></table>";
-echo "<table class='wizard'><tr><td valign='top'>";
 
 if($_SESSION["plugin_data_injection_wizard_nbonglet"]!=0)
 	echo "<script type='text/javascript'>deleteOnglet(".$_SESSION["plugin_data_injection_wizard_nbonglet"].")</script>";
@@ -346,7 +345,6 @@ switch($_SESSION["plugin_data_injection_wizard_step"]){
 	break;
 }
 
-echo "</td></tr></table>";
 echo "</div>";
 
 commonFooter();

@@ -3,22 +3,27 @@ function change_color_step(id)
 	document.getElementById(id).style.backgroundColor='#e6e6e6';
 }
 
-function showSelect()
+function showSelect(form)
 {	
-	if (document.forms['step1'].modele[0].checked)
-		document.forms['step1'].dropdown.disabled=true;
+	if (document.getElementById('checkbox').checked)
+		form.dropdown.disabled=true;
 	else
-		document.forms['step1'].dropdown.disabled=false;
+		form.dropdown.disabled=false;
 }
 
 function deleteOnglet(nbonglet)
-{
+{	
 	for(var i=1;i<=6;i++)
 		{
 		if(i>nbonglet)
 			document.getElementById('step'+i).style.display='none';
 		else
-			document.getElementById('step'+i).style.display='table-cell';
+			{
+			if(navigator.appName == "Netscape")
+				document.getElementById('step'+i).style.display='table-cell';
+			else
+				document.getElementById('step'+i).style.display='block';
+			}
 		}
 }
 
