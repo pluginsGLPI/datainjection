@@ -385,6 +385,7 @@ function addCommonFields($common_fields,$type,$fields,$entity,$id)
 			$common_fields["FK_entities"] = $entity;
 			break;
 		case GROUP_TYPE:
+		case CONTRACT_TYPE:
 			$common_fields["FK_entities"] = $entity;
 			
 			break;
@@ -413,6 +414,7 @@ function addNecessaryFields($model,$mapping,$mapping_definition,$entity,$type,$f
 		case PHONE_TYPE:
 		case NETWORKING_TYPE:
 		case GROUP_TYPE:
+		case CONTRACT_TYPE:
 			if (!isset($fields["FK_entities"]))
 				$fields["FK_entities"] = $entity;
 			break;

@@ -50,9 +50,9 @@
 
 global $LANG,$DATA_INJECTION_MAPPING,$IMPORT_TYPES,$IMPORT_PRIMARY_TYPES;
 //Store all the type of items that could be imported
-$IMPORT_TYPES = array(COMPUTER_TYPE, MONITOR_TYPE, PRINTER_TYPE,PHONE_TYPE, USER_TYPE,INFOCOM_TYPE, NETWORKING_TYPE, GROUP_TYPE);
-
-$IMPORT_PRIMARY_TYPES = array(COMPUTER_TYPE, MONITOR_TYPE, PRINTER_TYPE,PHONE_TYPE, USER_TYPE, NETWORKING_TYPE, GROUP_TYPE);
+$IMPORT_TYPES = array(COMPUTER_TYPE, MONITOR_TYPE, PRINTER_TYPE,PHONE_TYPE, USER_TYPE, INFOCOM_TYPE, NETWORKING_TYPE, GROUP_TYPE, CONTRACT_TYPE);
+ 
+$IMPORT_PRIMARY_TYPES = array(COMPUTER_TYPE, MONITOR_TYPE, PRINTER_TYPE, PHONE_TYPE, USER_TYPE, NETWORKING_TYPE, GROUP_TYPE, CONTRACT_TYPE);
 
 // ----------------------------------------------------------------------
 //COMPUTER MAPPING
@@ -871,7 +871,7 @@ $DATA_INJECTION_MAPPING[USER_TYPE]['FK_group']['table_type']='single';
 $DATA_INJECTION_MAPPING[USER_TYPE]['FK_group']['linkfield']='FK_group';
 
 // ----------------------------------------------------------------------
-//USER MAPPING
+//GROUP MAPPING
 // ----------------------------------------------------------------------
 $DATA_INJECTION_MAPPING[GROUP_TYPE]['name']['table']='glpi_groups';
 $DATA_INJECTION_MAPPING[GROUP_TYPE]['name']['field']='name';
@@ -898,4 +898,123 @@ $DATA_INJECTION_MAPPING[GROUP_TYPE]['ldap_group_dn']['field']='ldap_group_dn';
 $DATA_INJECTION_MAPPING[GROUP_TYPE]['ldap_group_dn']['name']=$LANG["setup"][261];
 $DATA_INJECTION_MAPPING[GROUP_TYPE]['ldap_group_dn']['type']='text';
 
+// ----------------------------------------------------------------------
+//GROUP MAPPING
+// ----------------------------------------------------------------------
+$DATA_INJECTION_MAPPING[CONTRACT_TYPE]['name']['table']='glpi_contracts';
+$DATA_INJECTION_MAPPING[CONTRACT_TYPE]['name']['field']='name';
+$DATA_INJECTION_MAPPING[CONTRACT_TYPE]['name']['name']=$LANG["common"][16];
+$DATA_INJECTION_MAPPING[CONTRACT_TYPE]['name']['type']='text';
+
+$DATA_INJECTION_MAPPING[CONTRACT_TYPE]['num']['table']='glpi_contracts';
+$DATA_INJECTION_MAPPING[CONTRACT_TYPE]['num']['field']='num';
+$DATA_INJECTION_MAPPING[CONTRACT_TYPE]['num']['name']=$LANG["financial"][4];
+$DATA_INJECTION_MAPPING[CONTRACT_TYPE]['num']['type']='text';
+
+$DATA_INJECTION_MAPPING[CONTRACT_TYPE]['cost']['table']='glpi_contracts';
+$DATA_INJECTION_MAPPING[CONTRACT_TYPE]['cost']['field']='cost';
+$DATA_INJECTION_MAPPING[CONTRACT_TYPE]['cost']['name']=$LANG["financial"][5];
+$DATA_INJECTION_MAPPING[CONTRACT_TYPE]['cost']['type']='float';
+
+$DATA_INJECTION_MAPPING[CONTRACT_TYPE]['contract_type']['table']='glpi_dropdown_contract_type';
+$DATA_INJECTION_MAPPING[CONTRACT_TYPE]['contract_type']['field']='name';
+$DATA_INJECTION_MAPPING[CONTRACT_TYPE]['contract_type']['name']=$LANG["financial"][6];
+$DATA_INJECTION_MAPPING[CONTRACT_TYPE]['contract_type']['linkfield']='contract_type';
+$DATA_INJECTION_MAPPING[CONTRACT_TYPE]['contract_type']['type']='text';
+$DATA_INJECTION_MAPPING[CONTRACT_TYPE]['contract_type']['table_type']='dropdown';
+
+$DATA_INJECTION_MAPPING[CONTRACT_TYPE]['begin_date']['table']='glpi_contracts';
+$DATA_INJECTION_MAPPING[CONTRACT_TYPE]['begin_date']['field']='begin_date';
+$DATA_INJECTION_MAPPING[CONTRACT_TYPE]['begin_date']['name']=$LANG["search"][8];
+$DATA_INJECTION_MAPPING[CONTRACT_TYPE]['begin_date']['type']='date';
+
+$DATA_INJECTION_MAPPING[CONTRACT_TYPE]['duration']['table']='glpi_contracts';
+$DATA_INJECTION_MAPPING[CONTRACT_TYPE]['duration']['field']='duration';
+$DATA_INJECTION_MAPPING[CONTRACT_TYPE]['duration']['name']=$LANG["financial"][8];
+$DATA_INJECTION_MAPPING[CONTRACT_TYPE]['duration']['type']='integer';
+
+$DATA_INJECTION_MAPPING[CONTRACT_TYPE]['notice']['table']='glpi_contracts';
+$DATA_INJECTION_MAPPING[CONTRACT_TYPE]['notice']['field']='notice';
+$DATA_INJECTION_MAPPING[CONTRACT_TYPE]['notice']['name']=$LANG["financial"][10];
+$DATA_INJECTION_MAPPING[CONTRACT_TYPE]['notice']['type']='integer';
+
+$DATA_INJECTION_MAPPING[CONTRACT_TYPE]['bill_type']['table']='glpi_contracts';
+$DATA_INJECTION_MAPPING[CONTRACT_TYPE]['bill_type']['field']='bill_type';
+$DATA_INJECTION_MAPPING[CONTRACT_TYPE]['bill_type']['name']=$LANG["financial"][98];
+$DATA_INJECTION_MAPPING[CONTRACT_TYPE]['bill_type']['type']='integer';
+
+$DATA_INJECTION_MAPPING[CONTRACT_TYPE]['periodicity']['table']='glpi_contracts';
+$DATA_INJECTION_MAPPING[CONTRACT_TYPE]['periodicity']['field']='periodicity';
+$DATA_INJECTION_MAPPING[CONTRACT_TYPE]['periodicity']['name']=$LANG["financial"][69];
+$DATA_INJECTION_MAPPING[CONTRACT_TYPE]['periodicity']['type']='integer';
+
+$DATA_INJECTION_MAPPING[CONTRACT_TYPE]['facturation']['table']='glpi_contracts';
+$DATA_INJECTION_MAPPING[CONTRACT_TYPE]['facturation']['field']='facturation';
+$DATA_INJECTION_MAPPING[CONTRACT_TYPE]['facturation']['name']=$LANG["financial"][11];
+$DATA_INJECTION_MAPPING[CONTRACT_TYPE]['facturation']['type']='integer';
+
+$DATA_INJECTION_MAPPING[CONTRACT_TYPE]['compta_num']['table']='glpi_contracts';
+$DATA_INJECTION_MAPPING[CONTRACT_TYPE]['compta_num']['field']='compta_num';
+$DATA_INJECTION_MAPPING[CONTRACT_TYPE]['compta_num']['name']=$LANG["financial"][13];
+$DATA_INJECTION_MAPPING[CONTRACT_TYPE]['compta_num']['type']='integer';
+
+$DATA_INJECTION_MAPPING[CONTRACT_TYPE]['week_begin_hour']['table']='glpi_contracts';
+$DATA_INJECTION_MAPPING[CONTRACT_TYPE]['week_begin_hour']['field']='week_begin_hour';
+$DATA_INJECTION_MAPPING[CONTRACT_TYPE]['week_begin_hour']['name']=$LANG["financial"][59]." ".$LANG["financial"][60]." : ".$LANG["reservation"][12];
+$DATA_INJECTION_MAPPING[CONTRACT_TYPE]['week_begin_hour']['type']='date';
+
+$DATA_INJECTION_MAPPING[CONTRACT_TYPE]['week_end_hour']['table']='glpi_contracts';
+$DATA_INJECTION_MAPPING[CONTRACT_TYPE]['week_end_hour']['field']='week_end_hour';
+$DATA_INJECTION_MAPPING[CONTRACT_TYPE]['week_end_hour']['name']=$LANG["financial"][59]." ".$LANG["financial"][60]." : ".$LANG["reservation"][13];
+$DATA_INJECTION_MAPPING[CONTRACT_TYPE]['week_end_hour']['type']='date';
+
+$DATA_INJECTION_MAPPING[CONTRACT_TYPE]['saturday']['table']='glpi_contracts';
+$DATA_INJECTION_MAPPING[CONTRACT_TYPE]['saturday']['field']='saturday';
+$DATA_INJECTION_MAPPING[CONTRACT_TYPE]['saturday']['name']=$LANG["financial"][59]." ".$LANG["financial"][61];
+$DATA_INJECTION_MAPPING[CONTRACT_TYPE]['saturday']['type']='integer';
+
+$DATA_INJECTION_MAPPING[CONTRACT_TYPE]['saturday_begin_hour']['table']='glpi_contracts';
+$DATA_INJECTION_MAPPING[CONTRACT_TYPE]['saturday_begin_hour']['field']='saturday_begin_hour';
+$DATA_INJECTION_MAPPING[CONTRACT_TYPE]['saturday_begin_hour']['name']=$LANG["financial"][59]." ".$LANG["financial"][61]." : ".$LANG["reservation"][12];
+$DATA_INJECTION_MAPPING[CONTRACT_TYPE]['saturday_begin_hour']['type']='date';
+
+$DATA_INJECTION_MAPPING[CONTRACT_TYPE]['saturday_end_hour']['table']='glpi_contracts';
+$DATA_INJECTION_MAPPING[CONTRACT_TYPE]['saturday_end_hour']['field']='week_end_hour';
+$DATA_INJECTION_MAPPING[CONTRACT_TYPE]['saturday_end_hour']['name']=$LANG["financial"][59]." ".$LANG["financial"][61]." : ".$LANG["reservation"][13];
+$DATA_INJECTION_MAPPING[CONTRACT_TYPE]['saturday_end_hour']['type']='date';
+
+$DATA_INJECTION_MAPPING[CONTRACT_TYPE]['monday']['table']='glpi_contracts';
+$DATA_INJECTION_MAPPING[CONTRACT_TYPE]['monday']['field']='monday';
+$DATA_INJECTION_MAPPING[CONTRACT_TYPE]['monday']['name']=$LANG["financial"][59]." ".$LANG["financial"][62];
+$DATA_INJECTION_MAPPING[CONTRACT_TYPE]['monday']['type']='integer';
+
+$DATA_INJECTION_MAPPING[CONTRACT_TYPE]['monday_begin_hour']['table']='glpi_contracts';
+$DATA_INJECTION_MAPPING[CONTRACT_TYPE]['monday_begin_hour']['field']='monday_begin_hour';
+$DATA_INJECTION_MAPPING[CONTRACT_TYPE]['monday_begin_hour']['name']=$LANG["financial"][59]." ".$LANG["financial"][62]." : ".$LANG["reservation"][12];
+$DATA_INJECTION_MAPPING[CONTRACT_TYPE]['monday_begin_hour']['type']='date';
+
+$DATA_INJECTION_MAPPING[CONTRACT_TYPE]['monday_end_hour']['table']='glpi_contracts';
+$DATA_INJECTION_MAPPING[CONTRACT_TYPE]['monday_end_hour']['field']='monday_end_hour';
+$DATA_INJECTION_MAPPING[CONTRACT_TYPE]['monday_end_hour']['name']=$LANG["financial"][59]." ".$LANG["financial"][62]." : ".$LANG["reservation"][13];
+$DATA_INJECTION_MAPPING[CONTRACT_TYPE]['monday_end_hour']['type']='date';
+
+$DATA_INJECTION_MAPPING[CONTRACT_TYPE]['device_countmax']['table']='glpi_contracts';
+$DATA_INJECTION_MAPPING[CONTRACT_TYPE]['device_countmax']['field']='device_countmax';
+$DATA_INJECTION_MAPPING[CONTRACT_TYPE]['device_countmax']['name']=$LANG["financial"][83];
+$DATA_INJECTION_MAPPING[CONTRACT_TYPE]['device_countmax']['type']='integer';
+
+$DATA_INJECTION_MAPPING[CONTRACT_TYPE]['notes']['table']='glpi_contracts';
+$DATA_INJECTION_MAPPING[CONTRACT_TYPE]['notes']['field']='notes';
+$DATA_INJECTION_MAPPING[CONTRACT_TYPE]['notes']['name']=$LANG["reminder"][2];
+$DATA_INJECTION_MAPPING[CONTRACT_TYPE]['notes']['type']='text';
+
+$DATA_INJECTION_MAPPING[CONTRACT_TYPE]['alert']['table']='glpi_contracts';
+$DATA_INJECTION_MAPPING[CONTRACT_TYPE]['alert']['field']='alert';
+$DATA_INJECTION_MAPPING[CONTRACT_TYPE]['alert']['name']=$LANG["common"][41];
+$DATA_INJECTION_MAPPING[CONTRACT_TYPE]['alert']['type']='integer';
+
+$DATA_INJECTION_MAPPING[CONTRACT_TYPE]['renewal']['table']='glpi_contracts';
+$DATA_INJECTION_MAPPING[CONTRACT_TYPE]['renewal']['field']='renewal';
+$DATA_INJECTION_MAPPING[CONTRACT_TYPE]['renewal']['name']=$LANG["financial"][107];
+$DATA_INJECTION_MAPPING[CONTRACT_TYPE]['renewal']['type']='integer';
 ?>

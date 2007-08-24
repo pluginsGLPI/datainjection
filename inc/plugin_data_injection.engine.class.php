@@ -139,7 +139,7 @@ class DataInjectionEngine
 
 		//Check if the line already exists in database
 		$ID = dataAlreadyInDB($model->getDeviceType(),$fields,$mapping_definition,$model);
-		
+	
 		if ($ID == -1)
 		{
 			if ($model->getBehaviorAdd())
