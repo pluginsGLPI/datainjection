@@ -303,9 +303,9 @@ function step9($target)
 	echo "<table class='wizard'>";
 	echo "<tr><td class='wizard_title' valign='bottom'>".$DATAINJECTIONLANG["step9"][1]." ".$num." ".$DATAINJECTIONLANG["step9"][2]."</td></tr>";
 	
-	echo "<tr><td class='wizard_body'>";
+	echo "<tr><td class='wizard_body' valign='top'>";
 	
-	echo "<table>";	
+	echo "<table style='margin-top:30px'>";	
 	
 	echo "<tr style='text-align:center'><th>".$DATAINJECTIONLANG["step9"][6]."</th><th></th><th>".$DATAINJECTIONLANG["step9"][7]."</th><th>".$DATAINJECTIONLANG["step9"][8]."</th><th>".$DATAINJECTIONLANG["step9"][9]."</th></tr>";
 	
@@ -337,7 +337,7 @@ function step9($target)
 	echo "Nbr de ligne : <input type='text' id='nbline' name='nbline' size='2' maxlength='3' value='1' onfocus=\"this.value=''\" />";
 	echo "</td></tr>";
 	echo "<tr><td style='text-align:center'>";
-	echo "<input type='submit' name='valid_popup' value='".$DATAINJECTIONLANG["button"][3]."' onclick='popup($nbline)' class='submit' />";
+	echo "<input type='button' name='valid_popup' value='".$DATAINJECTIONLANG["button"][3]."' onclick='popup($nbline)' class='submit' />";
 	echo "</td></tr>";
 	echo "</table>";
 	echo "</form>";
@@ -370,11 +370,11 @@ function step12($target)
 	echo "<table class='wizard'>";
 	echo "<tr><td class='wizard_title' valign='bottom'>".$DATAINJECTIONLANG["step12"][1]."</td></tr>";
 	
-	echo "<tr><td class='wizard_body'>";
+	echo "<tr><td class='wizard_body' valign='top'>";
 
 	$key = 1;
 	
-	echo "<table>";
+	echo "<table style='margin-top:30px'>";
 	echo "<tr style='text-align:center'><th style='width:150px;'>".$DATAINJECTIONLANG["step9"][7]."</th><th style='width:150px;'>".$DATAINJECTIONLANG["step9"][8]."</th><th>".$DATAINJECTIONLANG["step9"][9]."</th></tr>";
 	echo "</table>";
 	
