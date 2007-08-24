@@ -28,12 +28,12 @@
  --------------------------------------------------------------------------
  */
 
-function getAllModels()
+function getAllModels($entity)
 {
 	global $DB;
 	
 	$models = array();
-	$sql = "SELECT * FROM glpi_plugin_data_injection_models ORDER BY name";
+	$sql = "SELECT * FROM glpi_plugin_data_injection_models WHERE FK_entities=$entity ORDER BY name";
 	$result = $DB->query($sql);
 	while ($data = $DB->fetch_array($result))
 	{

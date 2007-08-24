@@ -170,6 +170,12 @@ class DataInjectionModel extends CommonDBTM {
 	{
 		return $this->fields["device_type"];
 	}
+	
+	function getEntity()
+	{
+		return $this->fields["FK_entities"];
+	}
+	
 	//---- Save -----//
 	function setModelType($type)
 	{
@@ -225,6 +231,11 @@ class DataInjectionModel extends CommonDBTM {
 	{
 		$this->fields["device_type"] = $device_type; 
 	}
+	function setEntity($entity)
+	{
+		$this->fields["FK_entities"] = $entity; 
+	}
+
 }
 
 ?>
