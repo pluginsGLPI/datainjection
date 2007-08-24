@@ -66,6 +66,12 @@ function checkType($type, $name, $data)
 				//TODO : check date
 				return TYPE_CHECK_OK;			
 			break;	
+			case 'ip':
+				if (ereg($data,"(\[0-9]{1,3})\.(\[0-9]{1,3})\.(\[0-9]{1,3})\.(\[0-9]{1,3})") != FALSE)
+					return true;
+				else
+					return false;	
+			break;
 			default :
 				return ERROR_IMPORT_WRONG_TYPE;
 		}
@@ -373,6 +379,7 @@ function addCommonFields($common_fields,$type,$fields,$entity,$id)
 		case MONITOR_TYPE:
 		case PRINTER_TYPE:
 		case PHONE_TYPE:
+		case NETWORKING_TYPE:
 			$common_fields["device_id"] = $id;
 			$common_fields["device_type"] = $type;
 			$common_fields["FK_entities"] = $entity;
@@ -395,6 +402,7 @@ function addNecessaryFields($model,$mapping,$mapping_definition,$entity,$type,$f
 		case COMPUTER_TYPE:
 		case PRINTER_TYPE:
 		case PHONE_TYPE:
+		case NETWORKING_TYPE:
 			if (!isset($fields["FK_entities"]))
 				$fields["FK_entities"] = $entity;
 			break;

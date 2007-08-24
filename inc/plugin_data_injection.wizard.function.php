@@ -70,7 +70,7 @@ function step1($target)
 	echo "<div>";
 	echo "<select disabled name='dropdown'>";
 	
-	$models = getAllModels();
+	$models = getAllModels($_SESSION["glpiactive_entity"]);
 
 	foreach($models as $model)
 		echo "<option value='".$model->getModelID()."'>".$model->getModelName()." / ".getDropdownName('glpi_plugin_data_injection_filetype',$model->getModelType())."</option>";
