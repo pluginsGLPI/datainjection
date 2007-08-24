@@ -384,8 +384,17 @@ function addCommonFields($common_fields,$type,$fields,$entity,$id)
 			$common_fields["device_type"] = $type;
 			$common_fields["FK_entities"] = $entity;
 			break;
+		case GROUP_TYPE:
+			$common_fields["FK_entities"] = $entity;
+			
+			break;
+		case USER_TYPE:
+			$common_fields["FK_user"] = $id;
+			if (isset($fields["FK_group"]))
+				$common_fields["FK_group"] = $fields["FK_group"];
+			break;		
 		default:
-		break;	
+			break;	
 	}	
 	return $common_fields;
 }
@@ -403,6 +412,7 @@ function addNecessaryFields($model,$mapping,$mapping_definition,$entity,$type,$f
 		case PRINTER_TYPE:
 		case PHONE_TYPE:
 		case NETWORKING_TYPE:
+		case GROUP_TYPE:
 			if (!isset($fields["FK_entities"]))
 				$fields["FK_entities"] = $entity;
 			break;
@@ -423,6 +433,7 @@ function addNecessaryFields($model,$mapping,$mapping_definition,$entity,$type,$f
 				
 			if (isset($fields["FK_profiles"]))
 				$fields["FK_profiles"] = getFieldIDByName($mapping,$mapping_definition,$fields["FK_profiles"],$entity);
+
 			break;
 		case INFOCOM_TYPE:
 			//Set the device_id
@@ -432,7 +443,7 @@ function addNecessaryFields($model,$mapping,$mapping_definition,$entity,$type,$f
 			//Set the device type
 			if (!isset($fields["device_type"]))
 				$fields["device_type"] = $model->getDeviceType();			
-			break;		
+			break;
 		default:
 			break;	
 	}
@@ -456,15 +467,15 @@ function getFieldValue($mapping, $mapping_definition,$field_value,$entity,$obj)
 			case "single":
 				switch ($mapping_definition["table"].".".$mapping_definition["field"])
 				{
-					//Case of the profiles : get the index of a profile by his name
-					case "glpi_profiles.name" :
-						$sql = "SELECT ID FROM glpi_profiles WHERE name=".$field_value;
+					case "glpi_groups.name" :
+						$sql = "SELECT ID FROM ".$mapping_definition["table"]." WHERE ".$mapping_definition["field"]."='".$field_value."' AND FK_entities=".$entity;
 						$result = $DB->query($sql);
 						if ($DB->numrows($result))
-							$obj[$mapping_definition["field"]] = $DB->result($result,0, "ID");
+							$obj[$mapping_definition["linkfield"]] = $DB->result($result,0, "ID");
 						break;
 					default:
-						break;		
+						break;
+								
 				}
 				break;
 			default :
@@ -478,4 +489,18 @@ function getFieldValue($mapping, $mapping_definition,$field_value,$entity,$obj)
 	return $obj;
 }
 
+function processBeforeEnd($model,$type,$fields,$common_fields)
+{
+	switch ($type)
+	{
+		case USER_TYPE:
+			//If user ID is given, add the user in this group
+			if (isset($common_fields["FK_user"]) && isset($common_fields["FK_group"]))
+				addUserGroup($common_fields["FK_user"],$common_fields["FK_group"]);
+				
+		break;
+		default:
+		break;
+	}
+}
 ?>

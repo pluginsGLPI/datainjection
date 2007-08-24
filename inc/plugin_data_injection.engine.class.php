@@ -139,7 +139,7 @@ class DataInjectionEngine
 
 		//Check if the line already exists in database
 		$ID = dataAlreadyInDB($model->getDeviceType(),$fields,$mapping_definition,$model);
-
+		
 		if ($ID == -1)
 		{
 			if ($model->getBehaviorAdd())
@@ -166,6 +166,10 @@ class DataInjectionEngine
 
 		if ($process)
 		{
+			//Post processing, if some actions need to be done
+			processBeforeEnd($model,$model->getDeviceType(),$fields,$db_fields["common"]);
+
+
 			//----------------------------------------------------//
 			//-------------Process other types-------------------//
 			//--------------------------------------------------//
@@ -192,7 +196,12 @@ class DataInjectionEngine
 						$db_fields["common"] = addCommonFields($db_fields["common"],$type,$fields,$this->entity,$ID);
 						$obj->update($fields);
 					}
+
+					//Post processing, if some actions need to be done
+					processBeforeEnd($model,$type,$fields,$db_fields["common"]);
+
 				}
+				
 			}
 		}			
 	}
