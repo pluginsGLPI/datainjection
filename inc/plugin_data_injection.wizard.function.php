@@ -54,6 +54,8 @@ function step1($target)
 	echo "<td>".$DATAINJECTIONLANG["step1"][2]."</td>";
 	echo "</tr>";
 	
+	$models = getAllModels($_SESSION["glpiactive_entity"]);
+	if (count($models)>0) {
 	echo "<tr>";
 	echo "<td><input type='radio' name='modele' value='2' onClick='showSelect(this.form); deleteOnglet(4);' /></td>";
 	echo "<td>".$DATAINJECTIONLANG["step1"][3]."</td>";
@@ -72,7 +74,6 @@ function step1($target)
 	echo "<div>";
 	echo "<select disabled name='dropdown'>";
 	
-	$models = getAllModels($_SESSION["glpiactive_entity"]);
 
 	foreach($models as $model)
 		echo "<option value='".$model->getModelID()."'>".$model->getModelName()." / ".getDropdownName('glpi_plugin_data_injection_filetype',$model->getModelType())."</option>";
@@ -80,7 +81,9 @@ function step1($target)
 	echo "</select>";
 	echo "</div>";
 	echo "</td></tr>";
-	
+	}
+	else echo"</table></td></tr>";
+
 	echo "<tr><td class='wizard_button'>";
 	echo "<div class='next'>";
 	echo "<input type='submit' name='next1' value='".$DATAINJECTIONLANG["button"][2]."' class='submit' />";
