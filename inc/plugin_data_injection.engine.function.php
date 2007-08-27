@@ -51,7 +51,7 @@ function checkType($type, $name, $data)
 				return TYPE_CHECK_OK;
 			break;
 			case 'integer' :
-				if (is_int($data))
+				if (is_numeric($data))
 					return TYPE_CHECK_OK;
 				else
 					return ERROR_IMPORT_WRONG_TYPE;
@@ -154,37 +154,6 @@ function insertDropdownValue($mapping, $mapping_definition,$value,$entity)
 }
 
 /*
- * Function to get the ID of a field by giving his name
- * @param type the type of datas to inject
- * @param fields the datas to inject
- * @param mapping_definition the definition of the mapping
- * @param value the value to look for
- * @param entity the current entity
- * @return the ID if it exists, "" if not
- */
-function getFieldIDByName($mapping,$mapping_definition,$value,$entity)
-{
-	global $DB;
-	$sql = "SELECT ID FROM ".$mapping_definition["table"]." WHERE";
-	
-	switch ($mapping_definition["table"]." ".$mapping_definition["field"])
-	{
-		case "glpi_profiles.name":
-			$where = $mapping_definition["table"]."=".$value;
-			break;
-		default:
-			$where = "";
-			break;	
-	}
-	
-	$result = $DB->query($sql);
-	if ($DB->numrows($result))
-		return $DB->result($result,0,"ID");
-	else
-		return "";	
-	
-}
-/*
  * Function to check if the datas to inject already exists in DB
  * @param type the type of datas to inject
  * @param fields the datas to inject
@@ -234,7 +203,7 @@ function dataAlreadyInDB($type,$fields,$mapping_definition,$model)
 		switch ($type)
 		{
 			case INFOCOM_TYPE :
-				$where.=" AND device_type=".$model->getDeviceType()." AND FK_device=".$fields["device_id"];
+				$where.=" AND device_type=".$model->getDeviceType()." AND FK_device=".$fields["FK_device"];
 			break;
 
 			default:
@@ -387,7 +356,6 @@ function addCommonFields($common_fields,$type,$fields,$entity,$id)
 		case GROUP_TYPE:
 		case CONTRACT_TYPE:
 			$common_fields["FK_entities"] = $entity;
-			
 			break;
 		case USER_TYPE:
 			$common_fields["FK_user"] = $id;
@@ -440,7 +408,7 @@ function addNecessaryFields($model,$mapping,$mapping_definition,$entity,$type,$f
 		case INFOCOM_TYPE:
 			//Set the device_id
 			if (!isset($fields["device_id"]))
-				$fields["device_id"] = $common_fields["device_id"];
+				$fields["FK_device"] = $common_fields["device_id"];
 			
 			//Set the device type
 			if (!isset($fields["device_type"]))

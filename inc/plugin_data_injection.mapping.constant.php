@@ -194,7 +194,7 @@ $DATA_INJECTION_MAPPING[COMPUTER_TYPE]['os_license_id']['type']='text';
 
 $DATA_INJECTION_MAPPING[COMPUTER_TYPE]['FK_groups']['table']='glpi_groups';
 $DATA_INJECTION_MAPPING[COMPUTER_TYPE]['FK_groups']['field']='name';
-$DATA_INJECTION_MAPPING[COMPUTER_TYPE]['FK_groups']['name']=$LANG["common"][15];
+$DATA_INJECTION_MAPPING[COMPUTER_TYPE]['FK_groups']['name']=$LANG["common"][35];
 $DATA_INJECTION_MAPPING[COMPUTER_TYPE]['FK_groups']['linkfield']='FK_groups';
 $DATA_INJECTION_MAPPING[COMPUTER_TYPE]['FK_groups']['type']='text';
 $DATA_INJECTION_MAPPING[COMPUTER_TYPE]['FK_groups']['table_type']='single';
