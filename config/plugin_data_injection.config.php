@@ -43,6 +43,9 @@ define ("ERROR_IMPORT_WRONG_TYPE",0);
 define ("TYPE_CHECK_OK",1);
 define ("ERROR_IMPORT_ALREADY_IMPORTED",2);
 define ("ERROR_IMPORT_FIELD_MANDATORY",3);
+define ("ERROR_CANNOT_IMPORT",4);
+define ("ERROR_CANNOT_UPDATE",5);
+define ("IMPORT_OK",6);
 
 
 

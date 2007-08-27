@@ -77,6 +77,8 @@ class DataInjectionEngine
 	{
 		$tab_result = array();
 		$check_result = array();
+		$global_result = new DataInjectionResults;
+		
 		
 		if ($this->model->isHeaderPresent())
 			$i=1;
@@ -85,11 +87,11 @@ class DataInjectionEngine
 
 		for ($datas = $this->getDatas(); $i < count($datas);$i++)
 		{
-			$check_result = checkLine($this->model,$datas[$i][0]);
-			if ($check_result["result"])
-				$this->injectLine($this->model,$datas[$i][0],$this->entity);
+			$check_result = checkLine($this->model,$datas[$i][0],$global_result);
+			if ($global_result->getStatus())
+				$global_result = $this->injectLine($this->model,$datas[$i][0],$global_result);
 
-			$tab_result[] = $check_result;
+			$tab_result[] = $global_result;
 		}
 			
 		return $tab_result;
@@ -99,7 +101,7 @@ class DataInjectionEngine
 	 * Inject one line of datas
 	 * @param line one line of data to import
 	 */
-	function injectLine($model,$line)
+	function injectLine($model,$line,$result)
 	{
 		//Array to store the fields to write to db
 		$db_fields = array();
@@ -147,28 +149,38 @@ class DataInjectionEngine
 				$ID = $obj->add($fields);
 				//Add the ID to the fields, so it can be reused after
 				$db_fields["common"] = addCommonFields($db_fields["common"],$model->getDeviceType(),$fields,$this->entity,$ID);
-				echo "ADD=$ID\n"; 
+				//echo "ADD=$ID\n"; 
+				$result->setInjectionType("add");
+				$result->setInjectionType(IMPORT_OK);
 			}
 			else
-			//Object doesn't exists, but add in not allowed by the model
+			{
+				//Object doesn't exists, but add in not allowed by the model
 				$process = false;
+				$result->setStatus(false);
+				$result->setInjectionMessage(ERROR_CANNOT_IMPORT);
+			}
 		}	
 		elseif ($model->getBehaviorUpdate())
 		{
 			$fields["ID"] = $ID;
 			$db_fields["common"] = addCommonFields($db_fields["common"],$model->getDeviceType(),$fields,$this->entity,$ID);
 			$obj->update($fields);
-			echo "update ID=$ID\n";
+			//echo "update ID=$ID\n";
+			$result->setInjectionType("update");
+			$result->setInjectionMessage(IMPORT_OK);
 		}
 		else
+		{	
 			//Object exists but update is not allowed by the model
 			$process = false;
-
+			$result->setStatus(false);
+			$result->setInjectionMessage(ERROR_CANNOT_IMPORT);
+		}
 		if ($process)
 		{
 			//Post processing, if some actions need to be done
 			processBeforeEnd($model,$model->getDeviceType(),$fields,$db_fields["common"]);
-
 
 			//----------------------------------------------------//
 			//-------------Process other types-------------------//
@@ -203,7 +215,10 @@ class DataInjectionEngine
 				}
 				
 			}
-		}			
+			$result->setStatus(true);
+			
+		}
+		return $result;			
 	}
 }
 

@@ -86,9 +86,9 @@ function checkType($type, $name, $data)
  * @param line the line of datas
  * @return an array to give the result of the check ("result"=>value,"message"=>error message if any)
  */
-function checkLine($model,$line)
+function checkLine($model,$line,$res)
 	{
-		$res = array ("result"=>true, "message"=>TYPE_CHECK_OK);
+		//array ("result"=>true, "check_message"=>TYPE_CHECK_OK);
 		
 		//Get all mappings for a model
 		for ($i=0, $mappings = $model->getMappings()->getAllMappings(); $i < count($mappings); $i++)
@@ -98,7 +98,8 @@ function checkLine($model,$line)
 			//If field is mandatory AND not mapped -> error
 			if ($mapping->isMandatory() && (!isset($line[$rank]) || $line[$rank] == "" || $line[$rank] == -1))
 			{
-				 	$res = array ("result" => false, "message" => ERROR_IMPORT_FIELD_MANDATORY);
+				$res->setStatus(false);
+				$res->setCheckMessage(ERROR_IMPORT_FIELD_MANDATORY);
 					break;				
 			}
 			else
@@ -113,7 +114,8 @@ function checkLine($model,$line)
 					//If field is not the good type -> error
 					if ($res_check_type != TYPE_CHECK_OK)
 					{
-						$res = array ("result" => false, "message" => $res_check_type);
+						$res->setStatus(false);
+						$res->setCheckMessage($res_check_type);
 						break;
 					}
 				}	
@@ -328,7 +330,6 @@ function getInstance($device_type)
 			}
 			break;
 		}
-	
 }
 
 /*

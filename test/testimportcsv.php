@@ -102,4 +102,5 @@ $entity_id = $argv[3];
 //---------------------- //
 $engine = new DataInjectionEngine($model_id,$file,$entity_id);
 $results = $engine->injectDatas();
+print_r($results);
 ?>
