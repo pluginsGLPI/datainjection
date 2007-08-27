@@ -94,6 +94,10 @@ function plugin_data_injection_Install() {
 	$query="INSERT INTO `glpi_plugin_data_injection_filetype` (`ID`, `name`, `value`, `class_name`) VALUES 
 		(1, 'CSV', 1, 'BackendCSV');";
 	$DB->query($query) or die($DB->error());
+
+	if (!is_dir(PLUGIN_DATA_INJECTION_UPLOAD_DIR)) {
+		mkdir(PLUGIN_DATA_INJECTION_UPLOAD_DIR);
+	}
 }
 
 
