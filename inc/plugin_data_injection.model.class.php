@@ -99,6 +99,15 @@ class DataInjectionModel extends CommonDBTM {
 		else
 			return false;
 	}
+	
+	function updateModel()
+	{
+		$this->update($this->fields);
+		$this->mappings->deleteMappingsFromDB($this->fields["ID"]);
+		$this->mappings->saveAllMappings($this->fields["ID"]);
+		$this->infos->deleteInfosFromDB($this->fields["ID"]);
+		$this->infos->saveAllInfos($this->fields["ID"]);
+	}
 
 	//---- Getters -----//
 	function getMappings()

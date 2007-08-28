@@ -172,7 +172,18 @@ function popup(totalline)
 	document.getElementById('popup').submit();
 }
 
-function verif_mandatory(cpt)
+function verif_step2()
+{	
+	if(document.forms['step2'].delimiter.value == "")
+		{
+		document.getElementById('verif_delimiter').style.visibility='visible';
+		return false;
+		}
+	else
+		return true;
+}
+
+function verif_step9(cpt)
 {	
 	var ok=0;
 	

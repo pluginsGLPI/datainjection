@@ -48,13 +48,17 @@ if(isset($_POST["next1"]))
 	switch($_POST["modele"])
 		{
 		case 1:
+			$_SESSION["plugin_data_injection_modif_model"] = 0;
 			$_SESSION["plugin_data_injection_wizard_step"] = 2;
 			$_SESSION["plugin_data_injection_wizard_nbonglet"] = 6;
 		break;
 		case 2:
+			$_SESSION["plugin_data_injection_modif_model"] = 1;
 			$_SESSION["plugin_data_injection_wizard_step"] = 3;
-			$_SESSION["plugin_data_injection_wizard_idmodel"] = $_POST["dropdown"];
-			$_SESSION["plugin_data_injection_wizard_nbonglet"] = 4;
+			$_SESSION["plugin_data_injection_wizard_nbonglet"] = 5;
+			$model = new DataInjectionModel();
+			$model->loadAll($_POST["dropdown"]);
+			$_SESSION["plugin_data_injection_model"] = serialize($model);
 		break;
 		case 3:
 			$_SESSION["plugin_data_injection_wizard_step"] = 4;
@@ -63,9 +67,11 @@ if(isset($_POST["next1"]))
 		break;
 		case 4:
 			$_SESSION["plugin_data_injection_wizard_step"] = 5;
-			$_SESSION["plugin_data_injection_wizard_idmodel"] = $_POST["dropdown"];
 			$_SESSION["plugin_data_injection_wizard_nbonglet"] = 3;
 			$_SESSION["plugin_data_injection_verif_file"]=0;
+			$model = new DataInjectionModel();
+			$model->loadAll($_POST["dropdown"]);
+			$_SESSION["plugin_data_injection_model"] = serialize($model);
 		break;
 		}
 	}
@@ -75,41 +81,39 @@ else if(isset($_POST["preview2"]))
 	
 else if(isset($_POST["next2"]))
 	{
-	if($_POST["delimiteur"]!='')
-		{
-		$_SESSION["plugin_data_injection_wizard_step"] = 6;
-		$_SESSION["plugin_data_injection_verif_file"]=1;
+	$_SESSION["plugin_data_injection_wizard_step"] = 6;
+	$_SESSION["plugin_data_injection_verif_file"]=1;
 		
-		$model = new DataInjectionModel();
-		$model->setEntity($_SESSION["glpiactive_entity"]);		
+	$model = new DataInjectionModel();		
 		
-		if(isset($_POST["dropdown_device_type"]))
-			$model->setDeviceType($_POST["dropdown_device_type"]);
-		if(isset($_POST["dropdown_type"]))
-			$model->setModelType($_POST["dropdown_type"]);
-		if(isset($_POST["delimiteur"]))
-			$model->setDelimiter($_POST["delimiteur"]);
-		if(isset($_POST["dropdown_header"]))
-			$model->setHeaderPresent($_POST["dropdown_header"]);
-		if(isset($_POST["dropdown_create"]))
-			$model->setBehaviorAdd($_POST["dropdown_create"]);
-		if(isset($_POST["dropdown_update"]))
-			$model->setBehaviorUpdate($_POST["dropdown_update"]);
+	if(isset($_POST["dropdown_device_type"]))
+		$model->setDeviceType($_POST["dropdown_device_type"]);
+	if(isset($_POST["dropdown_type"]))
+		$model->setModelType($_POST["dropdown_type"]);
+	if(isset($_POST["delimiter"]))
+		$model->setDelimiter(stripslashes($_POST["delimiter"]));
+	if(isset($_POST["dropdown_header"]))
+		$model->setHeaderPresent($_POST["dropdown_header"]);
+	if(isset($_POST["dropdown_create"]))
+		$model->setBehaviorAdd($_POST["dropdown_create"]);
+	if(isset($_POST["dropdown_update"]))
+		$model->setBehaviorUpdate($_POST["dropdown_update"]);
 			
-		$_SESSION["plugin_data_injection_model"] = serialize($model);
-		}
-	else
-		{
-		$_SESSION["plugin_data_injection_wizard_step"] = 2;
-		$error = $DATAINJECTIONLANG["step2"][8];
-		}
+	$_SESSION["plugin_data_injection_model"] = serialize($model);
 	}
 	
-else if(isset($_POST["preview3"]))
-	$_SESSION["plugin_data_injection_wizard_step"] = 1;
-	
 else if(isset($_POST["next3"]))
+	{
+	$model = unserialize($_SESSION["plugin_data_injection_model"]);
+	
+	if(isset($_POST["dropdown_create"]))
+		$model->setBehaviorAdd($_POST["dropdown_create"]);
+	if(isset($_POST["dropdown_update"]))
+		$model->setBehaviorUpdate($_POST["dropdown_update"]);
+	
+	$_SESSION["plugin_data_injection_model"] = serialize($model);
 	$_SESSION["plugin_data_injection_wizard_step"] = 7;
+	}
 	
 else if(isset($_POST["preview4"]))
 	$_SESSION["plugin_data_injection_wizard_step"] = 1;
@@ -194,7 +198,15 @@ else if(isset($_POST["next5"]))
 	}
 
 else if(isset($_POST["preview9"]))
-	$_SESSION["plugin_data_injection_wizard_step"] = 6;
+	{
+	if($_SESSION["plugin_data_injection_modif_model"] == 1)
+		$_SESSION["plugin_data_injection_wizard_step"] = 2;
+	else
+		{
+		$_SESSION["plugin_data_injection_wizard_step"] = 6;
+		$_SESSION["plugin_data_injection_modif_model"] = 0;
+		}
+	}
 	
 else if(isset($_POST["next9"]))
 	{
@@ -222,11 +234,18 @@ else if(isset($_POST["next9"]))
 		$model->setMappings($mappingcollection);
 			
 	$_SESSION["plugin_data_injection_model"] = serialize($model);
-	$_SESSION["plugin_data_injection_wizard_step"] = 12;
+	
+	if($_SESSION["plugin_data_injection_modif_model"] == 1)
+		$_SESSION["plugin_data_injection_wizard_step"] = 10;
+	else
+		{
+		$_SESSION["plugin_data_injection_wizard_step"] = 12;
+		$_SESSION["plugin_data_injection_modif_model"] = 2;
+		}
 	}
 
 else if(isset($_POST["preview12"]))
-	$_SESSION["plugin_data_injection_wizard_step"] = 9;
+	$_SESSION["plugin_data_injection_wizard_step"] = 9;	
 	
 else if(isset($_POST["next12"]))
 	{
@@ -253,7 +272,14 @@ else if(isset($_POST["next12"]))
 	$model->setInfos($infoscollection);
 		
 	$_SESSION["plugin_data_injection_model"] = serialize($model);
-	$_SESSION["plugin_data_injection_wizard_step"] = 15;
+	
+	if($_SESSION["plugin_data_injection_modif_model"] == 1)
+		$_SESSION["plugin_data_injection_wizard_step"] = 13;
+	else
+		{
+		$_SESSION["plugin_data_injection_wizard_step"] = 15;
+		$_SESSION["plugin_data_injection_modif_model"] = 3;
+		}
 	}
 
 else if(isset($_POST["preview15"]))
@@ -262,12 +288,18 @@ else if(isset($_POST["next15"]))
 	$_SESSION["plugin_data_injection_wizard_step"] = 18;
 else if(isset($_POST["next15_1"]))
 	{
-	$_SESSION["plugin_data_injection_wizard_step"] = 15;
+	if($_SESSION["plugin_data_injection_modif_model"] == 1)
+		$_SESSION["plugin_data_injection_wizard_step"] = 13;
+	else
+		$_SESSION["plugin_data_injection_wizard_step"] = 15;
 	$save=1;
 	}
 else if(isset($_POST["next15_2"]))
 	{
-	$_SESSION["plugin_data_injection_wizard_step"] = 15;
+	if($_SESSION["plugin_data_injection_modif_model"] == 1)
+		$_SESSION["plugin_data_injection_wizard_step"] = 13;
+	else
+		$_SESSION["plugin_data_injection_wizard_step"] = 15;
 	$save=2;		
 	}
 else if(isset($_POST["next15_3"]))
@@ -279,15 +311,19 @@ else if(isset($_POST["next15_3"]))
 	if(isset($_POST["comments"]))
 		$model->setComments($_POST["comments"]);
 	
-	$model->saveModel();
+	if($_SESSION["plugin_data_injection_modif_model"] == 1)
+		$model->updateModel();
+	else
+		$model->saveModel();
 		
 	$_SESSION["plugin_data_injection_model"] = serialize($model);
 	
-	$_SESSION["plugin_data_injection_wizard_step"] = 15;
+	if($_SESSION["plugin_data_injection_modif_model"] == 1)
+		$_SESSION["plugin_data_injection_wizard_step"] = 13;
+	else
+		$_SESSION["plugin_data_injection_wizard_step"] = 15;
 	$save=3;		
 	}
-
-
 
 if(!isset($_SESSION["plugin_data_injection_wizard_step"]))
 	$_SESSION["plugin_data_injection_wizard_step"] = 1;
@@ -313,11 +349,11 @@ switch($_SESSION["plugin_data_injection_wizard_step"]){
 	break;
 	case 2:
 		echo "<script type='text/javascript'>change_color_step('step2')</script>";
-		step2($_SERVER["PHP_SELF"],$error);
+		step2($_SERVER["PHP_SELF"]);
 	break;
 	case 3:
 		echo "<script type='text/javascript'>change_color_step('step2')</script>";
-		step3($_SERVER["PHP_SELF"]);
+		step2($_SERVER["PHP_SELF"]);
 	break;
 	case 4:
 		echo "<script type='text/javascript'>change_color_step('step2')</script>";
@@ -331,13 +367,25 @@ switch($_SESSION["plugin_data_injection_wizard_step"]){
 		echo "<script type='text/javascript'>change_color_step('step3')</script>";
 		step5($_SERVER["PHP_SELF"],$error);
 	break;
+	case 7:
+		echo "<script type='text/javascript'>change_color_step('step3')</script>";
+		step9($_SERVER["PHP_SELF"]);
+	break;
 	case 9:
 		echo "<script type='text/javascript'>change_color_step('step4')</script>";
 		step9($_SERVER["PHP_SELF"]);
 	break;
+	case 10:
+		echo "<script type='text/javascript'>change_color_step('step4')</script>";
+		step12($_SERVER["PHP_SELF"]);
+	break;
 	case 12:
 		echo "<script type='text/javascript'>change_color_step('step5')</script>";
 		step12($_SERVER["PHP_SELF"]);
+	break;
+	case 13:
+		echo "<script type='text/javascript'>change_color_step('step5')</script>";
+		step15($_SERVER["PHP_SELF"],$save);
 	break;
 	case 15:
 		echo "<script type='text/javascript'>change_color_step('step6')</script>";

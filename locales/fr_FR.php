@@ -65,6 +65,8 @@ $DATAINJECTIONLANG["step2"][6] = "Présence d'un entête";
 $DATAINJECTIONLANG["step2"][7] = "Type de données à insérer";
 $DATAINJECTIONLANG["step2"][8] = "Délimiteur non définie";
 
+$DATAINJECTIONLANG["step3"][1] = "Etape 2 : Modification du model";
+
 $DATAINJECTIONLANG["step4"][1] = "Etape 2 : Confirmation de la suppression";
 $DATAINJECTIONLANG["step4"][2] = "Voulez-vous supprimer";
 $DATAINJECTIONLANG["step4"][3] = "définitivement ?";
@@ -82,6 +84,8 @@ $DATAINJECTIONLANG["step5"][7] = "Impossible de copier le fichier dans";
 
 $DATAINJECTIONLANG["step6"][1] = "Etape 3 : Sélection du fichier à uploader";
 
+$DATAINJECTIONLANG["step7"][1] = "Etape 3 : Modification des mappings";
+
 $DATAINJECTIONLANG["step9"][1] = "Etape 4 :";
 $DATAINJECTIONLANG["step9"][2] = "colonnes à mapper ont été trouvées";
 $DATAINJECTIONLANG["step9"][3] = "-------Choisir une table-------";
@@ -92,7 +96,14 @@ $DATAINJECTIONLANG["step9"][7] = "Tables";
 $DATAINJECTIONLANG["step9"][8] = "Champs";
 $DATAINJECTIONLANG["step9"][9] = "Obligatoire";
 
+$DATAINJECTIONLANG["step10"][1] = "Etape 4 : Modification des informations complémentaires";
+
 $DATAINJECTIONLANG["step12"][1] = "Etape 5 : Informations complémentaires";
+
+$DATAINJECTIONLANG["step13"][1] = "Etape 5 : Enregistrement du modèle";
+$DATAINJECTIONLANG["step13"][2] = "Voulez-vous mettre le modèle à jour ?";
+$DATAINJECTIONLANG["step13"][3] = "Votre modèle n'a pas été mis à jour mais est quand même prêt à l'emploi.";
+$DATAINJECTIONLANG["step13"][4] = "Votre modèle a été mis à jour et est prêt à l'emploi.";
 
 $DATAINJECTIONLANG["step15"][1] = "Etape 6 : Enregistrement du modèle";
 $DATAINJECTIONLANG["step15"][2] = "Voulez-vous enregistrer le modèle ?";
