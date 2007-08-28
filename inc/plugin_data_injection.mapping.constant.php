@@ -796,6 +796,16 @@ $DATA_INJECTION_MAPPING[NETWORKING_TYPE]['firmware']['field']='firmware';
 $DATA_INJECTION_MAPPING[NETWORKING_TYPE]['firmware']['name']=$LANG["phones"][35];
 $DATA_INJECTION_MAPPING[NETWORKING_TYPE]['firmware']['type']='text';
 
+$DATA_INJECTION_MAPPING[NETWORKING_TYPE]['ifmac']['table']='glpi_networking';
+$DATA_INJECTION_MAPPING[NETWORKING_TYPE]['ifmac']['field']='ifmac';
+$DATA_INJECTION_MAPPING[NETWORKING_TYPE]['ifmac']['name']=$LANG["networking"][13];
+$DATA_INJECTION_MAPPING[NETWORKING_TYPE]['ifmac']['type']='text';
+
+$DATA_INJECTION_MAPPING[NETWORKING_TYPE]['ifaddr']['table']='glpi_networking';
+$DATA_INJECTION_MAPPING[NETWORKING_TYPE]['ifaddr']['field']='ifaddr';
+$DATA_INJECTION_MAPPING[NETWORKING_TYPE]['ifaddr']['name']=$LANG["networking"][14];
+$DATA_INJECTION_MAPPING[NETWORKING_TYPE]['ifaddr']['type']='text';
+
 $DATA_INJECTION_MAPPING[NETWORKING_TYPE]['FK_groups']['table']='glpi_groups';
 $DATA_INJECTION_MAPPING[NETWORKING_TYPE]['FK_groups']['field']='name';
 $DATA_INJECTION_MAPPING[NETWORKING_TYPE]['FK_groups']['name']=$LANG["common"][35];
