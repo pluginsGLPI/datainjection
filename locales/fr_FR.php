@@ -48,7 +48,7 @@ $DATAINJECTIONLANG["setup"][7] = "Attention, la désinstallation du plugin est i
 $DATAINJECTIONLANG["setup"][8] = "Colonne";
 
 $DATAINJECTIONLANG["presentation"][1] = "Bienvenue dans l'assistant d'aide à l'importation de fichier";
-$DATAINJECTIONLANG["presentation"][2] = "L'assistant n'est pas encore fonctionnel, il est en cours de création. Il permettra bientôt d'importer des fichiers de type CSV (dans un premier temps), puis XML, XLS, etc...";
+$DATAINJECTIONLANG["presentation"][2] = "L'assistant n'est pas encore fonctionnel.";
 
 $DATAINJECTIONLANG["step1"][1] = "Etape 1 : Sélection ou création d'un modèle";
 $DATAINJECTIONLANG["step1"][2] = "Créer un nouveau modèle";
@@ -65,7 +65,7 @@ $DATAINJECTIONLANG["step2"][6] = "Présence d'un entête";
 $DATAINJECTIONLANG["step2"][7] = "Type de données à insérer";
 $DATAINJECTIONLANG["step2"][8] = "Délimiteur non définie";
 
-$DATAINJECTIONLANG["step3"][1] = "Etape 2 : Modification du model";
+$DATAINJECTIONLANG["step3"][1] = "Etape 2 : Modification du modèle";
 
 $DATAINJECTIONLANG["step4"][1] = "Etape 2 : Confirmation de la suppression";
 $DATAINJECTIONLANG["step4"][2] = "Voulez-vous supprimer";
