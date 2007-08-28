@@ -86,8 +86,8 @@ else if(isset($_POST["next2"]))
 		
 	$model = new DataInjectionModel();		
 	
-	if(isset($_POST["glpiactive_entity"]))
-		$model->setEntity($_POST["glpiactive_entity"]);
+	if(isset($_SESSION["glpiactive_entity"]))
+		$model->setEntity($_SESSION["glpiactive_entity"]);
 	if(isset($_POST["dropdown_device_type"]))
 		$model->setDeviceType($_POST["dropdown_device_type"]);
 	if(isset($_POST["dropdown_type"]))
