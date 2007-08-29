@@ -37,14 +37,18 @@
  * @data the data to import
  * @return true if the data is the correct type
  */
-function checkType($type, $name, $data)
+function checkType($type, $name, $data,$mandatory)
 {
 	global $DATA_INJECTION_MAPPING;
 
 	if (isset($DATA_INJECTION_MAPPING[$type][$name]))
 	{
 		$field_type = $DATA_INJECTION_MAPPING[$type][$name]['type'];
-		
+
+		//If no data provided AND this mapping is not mandatory
+		if (!$mandatory && ($data == null || $data == "NULL" || $data == ''))
+			return TYPE_CHECK_OK;
+			
 		switch($field_type)
 		{
 			case 'text' :
@@ -67,10 +71,18 @@ function checkType($type, $name, $data)
 				return TYPE_CHECK_OK;			
 			break;	
 			case 'ip':
-				if (ereg($data,"(\[0-9]{1,3})\.(\[0-9]{1,3})\.(\[0-9]{1,3})\.(\[0-9]{1,3})") != FALSE)
-					return true;
+				ereg("([0-9]{1,3})\.([0-9]{1,3})\.([0-9]{1,3})\.([0-9]{1,3})",$data,$regs);
+				if (count($regs) > 0)
+					return TYPE_CHECK_OK;
 				else
-					return false;	
+					return ERROR_IMPORT_WRONG_TYPE;
+			break;
+			case 'mac':
+				ereg("([0-9a-fA-F]{2}([:-]|$)){6}$",$data,$regs);
+				if (count($regs) > 0)
+					return TYPE_CHECK_OK;
+				else
+					return ERROR_IMPORT_WRONG_TYPE;
 			break;
 			default :
 				return ERROR_IMPORT_WRONG_TYPE;
@@ -78,6 +90,7 @@ function checkType($type, $name, $data)
 	}
 	else
 		return ERROR_IMPORT_WRONG_TYPE;
+
 }
 
 /*
@@ -88,15 +101,14 @@ function checkType($type, $name, $data)
  */
 function checkLine($model,$line,$res)
 	{
-		//array ("result"=>true, "check_message"=>TYPE_CHECK_OK);
-		
 		//Get all mappings for a model
 		for ($i=0, $mappings = $model->getMappings()->getAllMappings(); $i < count($mappings); $i++)
 		{
 			$mapping = $mappings[$i];
 			$rank = $mapping->getRank();
 			//If field is mandatory AND not mapped -> error
-			if ($mapping->isMandatory() && (!isset($line[$rank]) || $line[$rank] == "" || $line[$rank] == -1))
+			
+			if ($mapping->isMandatory() && (!isset($line[$rank]) || $line[$rank] == NULL || $line[$rank] == "" || $line[$rank] == -1))
 			{
 				$res->setStatus(false);
 				$res->setCheckMessage(ERROR_IMPORT_FIELD_MANDATORY);
@@ -109,8 +121,8 @@ function checkLine($model,$line,$res)
 				{
 					//Check type
 					$field = $line[$rank];
-					$res_check_type = checkType($mapping->getMappingType(), $mapping->getValue(), $field);
-					
+					$res_check_type = checkType($mapping->getMappingType(), $mapping->getValue(), $field,$mapping->isMandatory());
+
 					//If field is not the good type -> error
 					if ($res_check_type != TYPE_CHECK_OK)
 					{
@@ -222,114 +234,11 @@ function dataAlreadyInDB($type,$fields,$mapping_definition,$model)
 		return -1;
 }
 
-//TODO : this function should be in GLPI's core (maybe in commonitem??)
 function getInstance($device_type)
 {
-	switch ($device_type){
-		case COMPUTER_TYPE :
-			return new Computer;
-			break;
-		case NETWORKING_TYPE :
-			return new Netdevice;
-			break;
-		case PRINTER_TYPE :
-			return new Printer;
-			break;
-		case MONITOR_TYPE : 
-			return new Monitor;	
-			break;
-		case PERIPHERAL_TYPE : 
-			return new Peripheral;	
-			break;				
-		case SOFTWARE_TYPE : 
-			return new Software;	
-		break;				
-		case CONTACT_TYPE : 
-			return new Contact;	
-			break;	
-		case ENTERPRISE_TYPE : 
-			return new Enterprise;	
-			break;	
-			case CONTRACT_TYPE : 
-		return new Contract;	
-			break;				
-		case CARTRIDGE_TYPE : 
-			return new CartridgeType;	
-			break;					
-		case TYPEDOC_TYPE : 
-			return new TypeDoc;	
-			break;		
-		case DOCUMENT_TYPE : 
-			return new Document;	
-			break;					
-		case KNOWBASE_TYPE : 
-			return new kbitem;	
-			break;					
-		case USER_TYPE : 
-			return new User;	
-			break;					
-		case TRACKING_TYPE : 
-			return new Job;	
-			break;
-		case CONSUMABLE_TYPE : 
-			return new ConsumableType;	
-			break;					
-		case CARTRIDGE_ITEM_TYPE : 
-			return new Cartridge;	
-			break;					
-		case CONSUMABLE_ITEM_TYPE : 
-			return new Consumable;	
-			break;					
-		case LICENSE_TYPE : 
-			return new License;	
-			break;					
-		case LINK_TYPE : 
-			return new Link;	
-			break;	
-		case PHONE_TYPE : 
-			return new Phone;	
-			break;		
-		case REMINDER_TYPE : 
-			return new Reminder;	
-			break;			
-		case GROUP_TYPE : 
-			return new Group;	
-			break;			
-		case ENTITY_TYPE : 
-			return new Entity;	
-			break;			
-		case AUTH_MAIL_TYPE:
-			return new AuthMail;
-			break;
-		case AUTH_LDAP_TYPE:
-			return new AuthLDAP;
-			break;
-		case OCSNG_TYPE:
-			return new Ocsng;
-			break;					
-		case REGISTRY_TYPE:
-			return new Registry;
-			break;					
-		case PROFILE_TYPE:
-			return new Profile;
-			break;					
-		case MAILGATE_TYPE:
-			return new Mailgate;
-			break;		
-		case INFOCOM_TYPE:
-			return new InfoCom;
-			break;				
-		default :
-			if ($device_type>1000){
-				if (isset($PLUGIN_HOOKS['plugin_classes'][$device_type])){
-				$class=$PLUGIN_HOOKS['plugin_classes'][$device_type];
-					if (class_exists($class)){
-						return new $class();
-					} 
-				} 
-			}
-			break;
-		}
+		$commonitem = new CommonItem;
+		$commonitem->setType($device_type);
+		return $commonitem->obj;
 }
 
 /*
@@ -360,6 +269,7 @@ function addCommonFields($common_fields,$type,$fields,$entity,$id)
 			break;
 		case USER_TYPE:
 			$common_fields["FK_user"] = $id;
+				
 			if (isset($fields["FK_group"]))
 				$common_fields["FK_group"] = $fields["FK_group"];
 			break;		

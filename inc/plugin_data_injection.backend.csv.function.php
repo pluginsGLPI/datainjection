@@ -35,7 +35,7 @@ function parseLine($fic,$data)
    	$csv = array();
    	$num = count($data);
    	for ($c=0; $c < $num; $c++)
-       	$csv[0][]=  $data[$c];
+       	$csv[0][]=  addslashes($data[$c]);
      
     return $csv;	
 }

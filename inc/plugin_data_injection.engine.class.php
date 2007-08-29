@@ -87,7 +87,7 @@ class DataInjectionEngine
 
 		for ($datas = $this->getDatas(); $i < count($datas);$i++)
 		{
-			$check_result = checkLine($this->model,$datas[$i][0],$global_result);
+			$global_result = checkLine($this->model,$datas[$i][0],$global_result);
 			if ($global_result->getStatus())
 				$global_result = $this->injectLine($this->model,$datas[$i][0],$global_result);
 
