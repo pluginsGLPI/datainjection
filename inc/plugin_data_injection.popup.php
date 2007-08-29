@@ -28,8 +28,8 @@ if(isset($_GET["nbline"]))
 	$nbline = $_GET["nbline"];
 
 $file=new BackendCSV();
-$model = unserialize($_SESSION["plugin_data_injection_model"]);
-$file->initBackend(PLUGIN_DATA_INJECTION_UPLOAD_DIR.$_SESSION["plugin_data_injection_file_name"],$model->getDelimiter());
+$model = unserialize($_SESSION["plugin_data_injection"]["model"]);
+$file->initBackend(PLUGIN_DATA_INJECTION_UPLOAD_DIR.$_SESSION["plugin_data_injection"]["file"],$model->getDelimiter());
 $file->read();
 $header = $file->getHeader($model->isHeaderPresent());
 

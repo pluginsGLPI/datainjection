@@ -50,67 +50,67 @@ $DATAINJECTIONLANG["setup"][8] = "Colonne";
 $DATAINJECTIONLANG["presentation"][1] = "Bienvenue dans l'assistant d'aide à l'importation de fichier";
 $DATAINJECTIONLANG["presentation"][2] = "L'assistant n'est pas encore fonctionnel.";
 
-$DATAINJECTIONLANG["step1"][1] = "Etape 1 : Sélection ou création d'un modèle";
-$DATAINJECTIONLANG["step1"][2] = "Créer un nouveau modèle";
-$DATAINJECTIONLANG["step1"][3] = "Modifier un modèle existant";
-$DATAINJECTIONLANG["step1"][4] = "Supprimer un modèle existant";
-$DATAINJECTIONLANG["step1"][5] = "Utiliser un modèle existant";
+$DATAINJECTIONLANG["step"][1] = "Etape 1 : ";
+$DATAINJECTIONLANG["step"][2] = "Etape 2 : ";
+$DATAINJECTIONLANG["step"][3] = "Etape 3 : ";
+$DATAINJECTIONLANG["step"][4] = "Etape 4 : ";
+$DATAINJECTIONLANG["step"][5] = "Etape 5 : ";
+$DATAINJECTIONLANG["step"][6] = "Etape 6 : ";
+$DATAINJECTIONLANG["step"][7] = "Etape 7 : ";
 
-$DATAINJECTIONLANG["step2"][1] = "Etape 2 : Collecte d'information sur le fichier";
-$DATAINJECTIONLANG["step2"][2] = "Type de fichier";
-$DATAINJECTIONLANG["step2"][3] = "Délimiteur du fichier";
-$DATAINJECTIONLANG["step2"][4] = "Création des lignes";
-$DATAINJECTIONLANG["step2"][5] = "Mise à jour des lignes";
-$DATAINJECTIONLANG["step2"][6] = "Présence d'un entête";
-$DATAINJECTIONLANG["step2"][7] = "Type de données à insérer";
-$DATAINJECTIONLANG["step2"][8] = "Délimiteur non définie";
+$DATAINJECTIONLANG["choiceStep"][1] = "Sélection ou création d'un modèle";
+$DATAINJECTIONLANG["choiceStep"][2] = "Créer un nouveau modèle";
+$DATAINJECTIONLANG["choiceStep"][3] = "Modifier un modèle existant";
+$DATAINJECTIONLANG["choiceStep"][4] = "Supprimer un modèle existant";
+$DATAINJECTIONLANG["choiceStep"][5] = "Utiliser un modèle existant";
 
-$DATAINJECTIONLANG["step3"][1] = "Etape 2 : Modification du modèle";
+$DATAINJECTIONLANG["modelStep"][1] = "Collecte d'information sur le fichier";
+$DATAINJECTIONLANG["modelStep"][2] = "Modification du modèle";
+$DATAINJECTIONLANG["modelStep"][3] = "Type de données à insérer :";
+$DATAINJECTIONLANG["modelStep"][4] = "Type de fichier :";
+$DATAINJECTIONLANG["modelStep"][5] = "Création des lignes :";
+$DATAINJECTIONLANG["modelStep"][6] = "Mise à jour des lignes :";
+$DATAINJECTIONLANG["modelStep"][7] = "Présence d'un entête :";
+$DATAINJECTIONLANG["modelStep"][8] = "Délimiteur du fichier :";
+$DATAINJECTIONLANG["modelStep"][9] = "Délimiteur non définie";
 
-$DATAINJECTIONLANG["step4"][1] = "Etape 2 : Confirmation de la suppression";
-$DATAINJECTIONLANG["step4"][2] = "Voulez-vous supprimer";
-$DATAINJECTIONLANG["step4"][3] = "définitivement ?";
-$DATAINJECTIONLANG["step4"][4] = "Le modèle";
-$DATAINJECTIONLANG["step4"][5] = "a été supprimé.";
-$DATAINJECTIONLANG["step4"][6] = "Problème lors de la suppression du modèle.";
+$DATAINJECTIONLANG["deleteStep"][1] = "Confirmation de la suppression";
+$DATAINJECTIONLANG["deleteStep"][2] = "Voulez-vous supprimer";
+$DATAINJECTIONLANG["deleteStep"][3] = "définitivement ?";
+$DATAINJECTIONLANG["deleteStep"][4] = "Le modèle";
+$DATAINJECTIONLANG["deleteStep"][5] = "a été supprimé.";
+$DATAINJECTIONLANG["deleteStep"][6] = "Problème lors de la suppression du modèle.";
 
-$DATAINJECTIONLANG["step5"][1] = "Etape 2 : Sélection du fichier à uploader";
-$DATAINJECTIONLANG["step5"][2] = "Choix du fichier :";
-$DATAINJECTIONLANG["step5"][3] = "Le fichier est introuvable";
-$DATAINJECTIONLANG["step5"][4] = "Le fichier n'a pas le bon format";
-$DATAINJECTIONLANG["step5"][5] = "Extension";
-$DATAINJECTIONLANG["step5"][6] = "requise";
-$DATAINJECTIONLANG["step5"][7] = "Impossible de copier le fichier dans";
+$DATAINJECTIONLANG["fileStep"][1] = "Sélection du fichier à uploader";
+$DATAINJECTIONLANG["fileStep"][2] = "Choix du fichier :";
+$DATAINJECTIONLANG["fileStep"][3] = "Le fichier est introuvable";
+$DATAINJECTIONLANG["fileStep"][4] = "Le fichier n'a pas le bon format";
+$DATAINJECTIONLANG["fileStep"][5] = "Extension";
+$DATAINJECTIONLANG["fileStep"][6] = "requise";
+$DATAINJECTIONLANG["fileStep"][7] = "Impossible de copier le fichier dans";
 
-$DATAINJECTIONLANG["step6"][1] = "Etape 3 : Sélection du fichier à uploader";
+$DATAINJECTIONLANG["mappingStep"][1] = "colonnes à mapper ont été trouvées";
+$DATAINJECTIONLANG["mappingStep"][2] = "Entête du fichier";
+$DATAINJECTIONLANG["mappingStep"][3] = "Tables";
+$DATAINJECTIONLANG["mappingStep"][4] = "Champs";
+$DATAINJECTIONLANG["mappingStep"][5] = "Obligatoire";
+$DATAINJECTIONLANG["mappingStep"][6] = "-------Choisir une table-------";
+$DATAINJECTIONLANG["mappingStep"][7] = "-------Choisir un champ-------";
+$DATAINJECTIONLANG["mappingStep"][8] = "Au moins un mapping doit être obligatoire";
 
-$DATAINJECTIONLANG["step7"][1] = "Etape 3 : Modification des mappings";
+$DATAINJECTIONLANG["infoStep"][1] = "Informations complémentaires";
+$DATAINJECTIONLANG["infoStep"][2] = "Modification des informations complémentaires";
 
-$DATAINJECTIONLANG["step9"][1] = "Etape 4 :";
-$DATAINJECTIONLANG["step9"][2] = "colonnes à mapper ont été trouvées";
-$DATAINJECTIONLANG["step9"][3] = "-------Choisir une table-------";
-$DATAINJECTIONLANG["step9"][4] = "-------Choisir un champ-------";
-$DATAINJECTIONLANG["step9"][5] = "Au moins un mapping doit être obligatoire";
-$DATAINJECTIONLANG["step9"][6] = "Entête du fichier";
-$DATAINJECTIONLANG["step9"][7] = "Tables";
-$DATAINJECTIONLANG["step9"][8] = "Champs";
-$DATAINJECTIONLANG["step9"][9] = "Obligatoire";
-
-$DATAINJECTIONLANG["step10"][1] = "Etape 4 : Modification des informations complémentaires";
-
-$DATAINJECTIONLANG["step12"][1] = "Etape 5 : Informations complémentaires";
-
-$DATAINJECTIONLANG["step13"][1] = "Etape 5 : Enregistrement du modèle";
-$DATAINJECTIONLANG["step13"][2] = "Voulez-vous mettre le modèle à jour ?";
-$DATAINJECTIONLANG["step13"][3] = "Votre modèle n'a pas été mis à jour mais est quand même prêt à l'emploi.";
-$DATAINJECTIONLANG["step13"][4] = "Votre modèle a été mis à jour et est prêt à l'emploi.";
-
-$DATAINJECTIONLANG["step15"][1] = "Etape 6 : Enregistrement du modèle";
-$DATAINJECTIONLANG["step15"][2] = "Voulez-vous enregistrer le modèle ?";
-$DATAINJECTIONLANG["step15"][3] = "Entrez le nom du modèle :";
-$DATAINJECTIONLANG["step15"][4] = "Ajoutez un commentaire :";
-$DATAINJECTIONLANG["step15"][5] = "Votre modèle n'a pas été enregistré mais est quand même prêt à l'emploi.";
-$DATAINJECTIONLANG["step15"][6] = "Votre modèle a été enregistré et est prêt à l'emploi.";
+$DATAINJECTIONLANG["saveStep"][1] = "Enregistrement du modèle";
+$DATAINJECTIONLANG["saveStep"][2] = "Voulez-vous enregistrer le modèle ?";
+$DATAINJECTIONLANG["saveStep"][3] = "Voulez-vous mettre le modèle à jour ?";
+$DATAINJECTIONLANG["saveStep"][4] = "Entrez le nom du modèle :";
+$DATAINJECTIONLANG["saveStep"][5] = "Ajoutez un commentaire :";
+$DATAINJECTIONLANG["saveStep"][6] = "Votre modèle n'a pas été enregistré mais est quand même prêt à l'emploi.";
+$DATAINJECTIONLANG["saveStep"][7] = "Votre modèle n'a pas été mis à jour mais est quand même prêt à l'emploi.";
+$DATAINJECTIONLANG["saveStep"][8] = "Votre modèle a été enregistré et est prêt à l'emploi.";
+$DATAINJECTIONLANG["saveStep"][9] = "Votre modèle a été mis à jour et est prêt à l'emploi.";
+$DATAINJECTIONLANG["saveStep"][10] = "Voulez-vous utiliser le modèle maintenant ?";
 
 $DATAINJECTIONLANG["button"][1] = "< Précédent";
 $DATAINJECTIONLANG["button"][2] = "Suivant >";

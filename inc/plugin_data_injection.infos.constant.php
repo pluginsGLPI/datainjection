@@ -53,10 +53,10 @@ global $LANG,$DATA_INJECTION_INFOS;
 // ----------------------------------------------------------------------
 //INFOCOM MAPPING
 // ----------------------------------------------------------------------
-$DATA_INJECTION_MAPPING[INFOCOM_TYPE]['buy_date']['table']='glpi_infocoms';
-$DATA_INJECTION_MAPPING[INFOCOM_TYPE]['buy_date']['field']='buy_date';
-$DATA_INJECTION_MAPPING[INFOCOM_TYPE]['buy_date']['name']=$LANG["financial"][14];
-$DATA_INJECTION_MAPPING[INFOCOM_TYPE]['buy_date']['type']='date';
+$DATA_INJECTION_INFOS[INFOCOM_TYPE]['buy_date']['table']='glpi_infocoms';
+$DATA_INJECTION_INFOS[INFOCOM_TYPE]['buy_date']['field']='buy_date';
+$DATA_INJECTION_INFOS[INFOCOM_TYPE]['buy_date']['name']=$LANG["financial"][14];
+$DATA_INJECTION_INFOS[INFOCOM_TYPE]['buy_date']['type']='date';
 
 $DATA_INJECTION_INFOS[INFOCOM_TYPE]['use_date']['table']='glpi_infocoms';
 $DATA_INJECTION_INFOS[INFOCOM_TYPE]['use_date']['field']='use_date';
@@ -71,46 +71,38 @@ $DATA_INJECTION_INFOS[INFOCOM_TYPE]['warranty_duration']['type']='integer';
 $DATA_INJECTION_INFOS[INFOCOM_TYPE]['warranty_info']['table']='glpi_infocoms';
 $DATA_INJECTION_INFOS[INFOCOM_TYPE]['warranty_info']['field']='warranty_info';
 $DATA_INJECTION_INFOS[INFOCOM_TYPE]['warranty_info']['name']=$LANG["financial"][16];
-$DATA_INJECTION_INFOS[INFOCOM_TYPE]['warranty_info']['type']='text';
 
 $DATA_INJECTION_INFOS[INFOCOM_TYPE]['warranty_value']['table']='glpi_infocoms';
 $DATA_INJECTION_INFOS[INFOCOM_TYPE]['warranty_value']['field']='warranty_value';
 $DATA_INJECTION_INFOS[INFOCOM_TYPE]['warranty_value']['name']=$LANG["financial"][78];
-$DATA_INJECTION_INFOS[INFOCOM_TYPE]['warranty_value']['type']='text';
 
 $DATA_INJECTION_INFOS[INFOCOM_TYPE]['state']['table']='glpi_dropdown_state';
 $DATA_INJECTION_INFOS[INFOCOM_TYPE]['state']['field']='name';
 $DATA_INJECTION_INFOS[INFOCOM_TYPE]['state']['name']=$LANG["joblist"][0];
 $DATA_INJECTION_INFOS[INFOCOM_TYPE]['state']['linkfield']='state';
-$DATA_INJECTION_INFOS[INFOCOM_TYPE]['state']['table_type']='dropdown';
-$DATA_INJECTION_INFOS[INFOCOM_TYPE]['state']['type']='text';
+$DATA_INJECTION_INFOS[INFOCOM_TYPE]['state']['input_type']='dropdown';
 
 $DATA_INJECTION_INFOS[INFOCOM_TYPE]['manufacturer']['table']='glpi_dropdown_manufacturer';
 $DATA_INJECTION_INFOS[INFOCOM_TYPE]['manufacturer']['field']='name';
 $DATA_INJECTION_INFOS[INFOCOM_TYPE]['manufacturer']['name']=$LANG["common"][5];
-$DATA_INJECTION_INFOS[INFOCOM_TYPE]['manufacturer']['type']='text';
 $DATA_INJECTION_INFOS[INFOCOM_TYPE]['manufacturer']['linkfield']='FK_enterprise';
-$DATA_INJECTION_INFOS[INFOCOM_TYPE]['manufacturer']['table_type']='dropdown';
+$DATA_INJECTION_INFOS[INFOCOM_TYPE]['manufacturer']['input_type']='dropdown';
 
 $DATA_INJECTION_INFOS[INFOCOM_TYPE]['num_commande']['table']='glpi_infocoms';
 $DATA_INJECTION_INFOS[INFOCOM_TYPE]['num_commande']['field']='num_commande';
 $DATA_INJECTION_INFOS[INFOCOM_TYPE]['num_commande']['name']=$LANG["financial"][18];
-$DATA_INJECTION_INFOS[INFOCOM_TYPE]['num_commande']['type']='text';
 
 $DATA_INJECTION_INFOS[INFOCOM_TYPE]['bon_livraison']['table']='glpi_infocoms';
 $DATA_INJECTION_INFOS[INFOCOM_TYPE]['bon_livraison']['field']='bon_livraison';
 $DATA_INJECTION_INFOS[INFOCOM_TYPE]['bon_livraison']['name']=$LANG["financial"][19];
-$DATA_INJECTION_INFOS[INFOCOM_TYPE]['bon_livraison']['type']='text';
 
 $DATA_INJECTION_INFOS[INFOCOM_TYPE]['num_immo']['table']='glpi_infocoms';
 $DATA_INJECTION_INFOS[INFOCOM_TYPE]['num_immo']['field']='num_immo';
 $DATA_INJECTION_INFOS[INFOCOM_TYPE]['num_immo']['name']=$LANG["financial"][20];
-$DATA_INJECTION_INFOS[INFOCOM_TYPE]['num_immo']['type']='text';
 
 $DATA_INJECTION_INFOS[INFOCOM_TYPE]['value']['table']='glpi_infocoms';
 $DATA_INJECTION_INFOS[INFOCOM_TYPE]['value']['field']='value';
 $DATA_INJECTION_INFOS[INFOCOM_TYPE]['value']['name']=$LANG["financial"][21];
-$DATA_INJECTION_INFOS[INFOCOM_TYPE]['value']['type']='text';
 
 $DATA_INJECTION_INFOS[INFOCOM_TYPE]['amort_time']['table']='glpi_infocoms';
 $DATA_INJECTION_INFOS[INFOCOM_TYPE]['amort_time']['field']='amort_time';
@@ -130,19 +122,16 @@ $DATA_INJECTION_INFOS[INFOCOM_TYPE]['amort_coeff']['type']='float';
 $DATA_INJECTION_INFOS[INFOCOM_TYPE]['comments']['table']='glpi_infocoms';
 $DATA_INJECTION_INFOS[INFOCOM_TYPE]['comments']['field']='comments';
 $DATA_INJECTION_INFOS[INFOCOM_TYPE]['comments']['name']=$LANG["common"][25];
-$DATA_INJECTION_INFOS[INFOCOM_TYPE]['comments']['type']='text';
 
 $DATA_INJECTION_INFOS[INFOCOM_TYPE]['facture']['table']='glpi_infocoms';
 $DATA_INJECTION_INFOS[INFOCOM_TYPE]['facture']['field']='facture';
 $DATA_INJECTION_INFOS[INFOCOM_TYPE]['facture']['name']=$LANG["financial"][82];
-$DATA_INJECTION_INFOS[INFOCOM_TYPE]['facture']['type']='text';
 
 $DATA_INJECTION_INFOS[INFOCOM_TYPE]['budget']['table']='glpi_dropdown_budget';
 $DATA_INJECTION_INFOS[INFOCOM_TYPE]['budget']['field']='budget';
 $DATA_INJECTION_INFOS[INFOCOM_TYPE]['budget']['name']=$LANG["financial"][87];
-$DATA_INJECTION_INFOS[INFOCOM_TYPE]['budget']['type']='text';
 $DATA_INJECTION_INFOS[INFOCOM_TYPE]['budget']['linkfield']='FK_enterprise';
-$DATA_INJECTION_INFOS[INFOCOM_TYPE]['budget']['table_type']='dropdown';
+$DATA_INJECTION_INFOS[INFOCOM_TYPE]['budget']['input_type']='dropdown';
 
 $DATA_INJECTION_INFOS[INFOCOM_TYPE]['alert']['table']='glpi_infocoms';
 $DATA_INJECTION_INFOS[INFOCOM_TYPE]['alert']['field']='alert';

@@ -66,7 +66,7 @@ float: left;
 margin-left: 10px; 
 }
 
-.rouge {
+.red {
 color: red;
 }
 
@@ -96,7 +96,7 @@ font-size: 16px;
 line-height: 20px;
 }
 
-.step1_table {
+.choiceStep_table {
 margin-top: 0px;
 margin-bottom: 20px;
 border-spacing: 10px;
@@ -104,27 +104,37 @@ font-size: 14px;
 text-align: left;
 }
 
-.step1_create {
-height: 40px;
-}
-
-.step2_table {
+.modelStep_table {
 font-size: 14px;
 text-align: left;
 margin-top: 5px;
 }
 
-.step2_table td {
+.modelStep_table td {
 height: 30px;
 }
 
-.step4_table {
+.delimiter {
+text-align: center;
+margin-top: 10px;
+font-size: 14px;
+visibility: hidden;
+color: red;
+}
+
+.mandatory {
+text-align: center;
+visibility: hidden;
+color: red;
+}
+
+.deleteStep_table {
 font-size: 14px;
 margin-top: 40px;
 border-spacing: 10px;
 }
 
-.step5_table {
+.fileStep_table {
 text-align:left;
 margin-top: 60px;
 margin-bottom: 20px;

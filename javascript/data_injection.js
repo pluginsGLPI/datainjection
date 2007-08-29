@@ -172,18 +172,18 @@ function popup(totalline)
 	document.getElementById('popup').submit();
 }
 
-function verif_step2()
+function verif_delimiter()
 {	
-	if(document.forms['step2'].delimiter.value == "")
+	if(document.getElementById('delimiter').value == "")
 		{
-		document.getElementById('verif_delimiter').style.visibility='visible';
+		document.getElementById('delimiter_error').style.visibility='visible';
 		return false;
 		}
 	else
 		return true;
 }
 
-function verif_step9(cpt)
+function verif_mandatory(cpt)
 {	
 	var ok=0;
 	
@@ -195,7 +195,7 @@ function verif_step9(cpt)
 		return true;
 	else
 		{
-		document.getElementById('mandatory').style.visibility='visible';
+		document.getElementById('mandatory_error').style.visibility='visible';
 		return false;
 		}
 }
