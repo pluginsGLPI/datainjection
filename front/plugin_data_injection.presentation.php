@@ -40,20 +40,28 @@ include (GLPI_ROOT."/inc/includes.php");
 commonHeader($DATAINJECTIONLANG["config"][1], $_SERVER["PHP_SELF"],"plugins","data_injection");
 
 initSession();
+$_SESSION["plugin_data_injection"]["load"]="presentation";
 
 echo "<div class='global'>";
 
-echo "<form action='plugin_data_injection.wizard.form.php' method='post' name='step0'>";
+echo "<form action='plugin_data_injection.wizard.form.php' method='post'>";
 echo "<table class='wizard' style='margin-top:56px;'>";
-echo "<tr><td class='wizard_title' valign='bottom'>".$DATAINJECTIONLANG["presentation"][1]."</td></tr>";
+
+echo "<tr>";
+echo "<td class='wizard_left_area' valign='top'>";
+echo "<div class='presentation_logo'><img src='../pics/logo.png' alt='logo' /></div>";
+echo "</td>";
+
+echo "<td class='wizard_right_area' valign='top'>";
+
+echo "<div class='presentation_title'>".$DATAINJECTIONLANG["presentation"][1]."</div>";
+
+echo "<div class='presentation_text'>".$DATAINJECTIONLANG["presentation"][2]."<br /><br /><br />".$DATAINJECTIONLANG["presentation"][3]."</div>";
+
+echo "</td>";
+echo "</tr>";	
 	
-echo "<tr><td class='wizard_body'>";
-	
-echo "<div class='presentation'>".$DATAINJECTIONLANG["presentation"][2]."</div>";	
-	
-echo "</td></tr>";
-	
-echo "<tr><td class='wizard_button'>";
+echo "<tr><td class='wizard_button' colspan='2'>";
 echo "<div class='next'>";
 echo "<input type='submit' name='presentation' value='".$DATAINJECTIONLANG["button"][2]."' class='submit' />";
 echo "</div>";

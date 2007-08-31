@@ -39,248 +39,288 @@ include (GLPI_ROOT."/inc/includes.php");
 
 commonHeader($DATAINJECTIONLANG["config"][1],$_SERVER["PHP_SELF"],"plugins","data_injection");
 
+$load=1;
 $error="";
 $save=0;
+$suppr=0;
 
-/***********************Global Step****************************/
-if(isset($_POST["next_choiceStep"]))
-	{
-	switch($_POST["choice"])
+/********************(re)Load or Not***************************/
+foreach($_POST as $key => $val)
+	if($_SESSION["plugin_data_injection"]["load"]==$key)
+		$load=0;
+/**************************************************************/
+
+
+if($load)
+	{		
+	/***********************Global Step****************************/
+	if(isset($_POST["next_choiceStep"]))
 		{
-		case 1:
-			$_SESSION["plugin_data_injection"]["nbonglet"] = 6;
-			$_SESSION["plugin_data_injection"]["choice"] = 1;
-		break;
-		case 2:
-			$model = new DataInjectionModel();
-			$model->loadAll($_POST["dropdown"]);
-			
-			$_SESSION["plugin_data_injection"]["nbonglet"] = 5;
-			$_SESSION["plugin_data_injection"]["choice"] = 2;
-			$_SESSION["plugin_data_injection"]["model"] = serialize($model);
-		break;
-		case 3:
-			$_SESSION["plugin_data_injection"]["nbonglet"] = 2;
-			$_SESSION["plugin_data_injection"]["choice"] = 3;
-			$_SESSION["plugin_data_injection"]["idmodel"] = $_POST["dropdown"];
-			$suppr=0;
-		break;
-		case 4:
-			$model = new DataInjectionModel();
-			$model->loadAll($_POST["dropdown"]);
-			
-			$_SESSION["plugin_data_injection"]["nbonglet"] = 4;
-			$_SESSION["plugin_data_injection"]["choice"] = 4;
-			$_SESSION["plugin_data_injection"]["model"] = serialize($model);
-		break;
-		}
-	$_SESSION["plugin_data_injection"]["step"]++;
-	}
-/**************************************************************/
-
-
-/************************Model Step****************************/
-else if(isset($_POST["preview_modelStep"]))
-	$_SESSION["plugin_data_injection"]["step"]--;
-	
-else if(isset($_POST["next_modelStep"]))
-	{	
-	if(isset($_SESSION["plugin_data_injection"]["model"]))
-		$model = unserialize($_SESSION["plugin_data_injection"]["model"]);
-	else
-		$model = new DataInjectionModel();		
-	
-	if(isset($_SESSION["glpiactive_entity"]))
-		$model->setEntity($_SESSION["glpiactive_entity"]);
-	
-	if(isset($_POST["dropdown_device_type"]))
-		$model->setDeviceType($_POST["dropdown_device_type"]);
-	
-	if(isset($_POST["dropdown_type"]))
-		$model->setModelType($_POST["dropdown_type"]);
-	
-	if(isset($_POST["dropdown_create"]))
-		$model->setBehaviorAdd($_POST["dropdown_create"]);
-	
-	if(isset($_POST["dropdown_update"]))
-		$model->setBehaviorUpdate($_POST["dropdown_update"]);
-		
-	if(isset($_POST["dropdown_header"]))
-		$model->setHeaderPresent($_POST["dropdown_header"]);
-		
-	if(isset($_POST["delimiter"]))
-		$model->setDelimiter(stripslashes($_POST["delimiter"]));
-			
-	$_SESSION["plugin_data_injection"]["model"] = serialize($model);
-	
-	$_SESSION["plugin_data_injection"]["step"]++;
-	}
-/**************************************************************/	
-
-
-/************************Delete Step***************************/
-else if(isset($_POST["no_deleteStep"]) || isset($_POST["next_deleteStep"]))
-	$_SESSION["plugin_data_injection"]["step"]--;
-	
-else if(isset($_POST["next_deleteStep"]))
-	$suppr=1;
-/**************************************************************/
-
-
-/**************************File Step***************************/
-else if(isset($_POST["preview_fileStep"]))
-	$_SESSION["plugin_data_injection"]["step"]--;
-	
-else if(isset($_POST["next_fileStep"]))
-	{
-	$directory = PLUGIN_DATA_INJECTION_UPLOAD_DIR;
-
-    $tmp_file = $_FILES["file"]["tmp_name"];
-
-    if( !is_uploaded_file($tmp_file) )
-        $error = $DATAINJECTIONLANG["fileStep"][3];
-    else
-    	{
-		$model = unserialize($_SESSION["plugin_data_injection"]["model"]);
-		$type = new BackendType();
-		$type->getFromDB($model->getModelType());
-		$extension = $type->getBackendName();
-		
-		$name_file = $_FILES["file"]["name"];
-		
-    	if( !strstr(substr($name_file,strlen($name_file)-4), strtolower($extension)) )
-        	$error = $DATAINJECTIONLANG["fileStep"][4]."<br />".$DATAINJECTIONLANG["fileStep"][5]." ".$extension." ".$DATAINJECTIONLANG["fileStep"][6];
-    	else
-    		{
-    		if( !move_uploaded_file($tmp_file, $directory . $name_file) )
-        		$error = $DATAINJECTIONLANG["fileStep"][7]." ".$directory;
-    		else
-    			{
-    			$_SESSION["plugin_data_injection"]["step"]++;
-    			$_SESSION["plugin_data_injection"]["file"] = $name_file;
-    			if($_SESSION["plugin_data_injection"]["choice"]==1)
-    				$_SESSION["plugin_data_injection"]["remember"] = 0;
-    			}
-    		}
-    	}
-	}
-/**************************************************************/
-	
-	
-/*************************Mapping Step*************************/	
-else if(isset($_POST["preview_mappingStep"]))
-	$_SESSION["plugin_data_injection"]["step"]--;
-	
-else if(isset($_POST["next_mappingStep"]))
-	{
-	$model = unserialize($_SESSION["plugin_data_injection"]["model"]);
-		
-	$index= 0;
-	$mappingcollection = new MappingCollection;
-		
-	foreach($_POST["field"] as $field)
-		{
-		$mapping = new DataInjectionMapping;
-		$mapping->setName($field[0]);
-		$mapping->setMappingType($field[1]);
-		$mapping->setValue($field[2]);
-		$mapping->setRank($index);
-		if(isset($field[3]))
-			$mapping->setMandatory(1);
-		else
-			$mapping->setMandatory(0);
-			
-		$mappingcollection->addNewMapping($mapping);
-		$index++;
-		}
-			
-		$model->setMappings($mappingcollection);
-			
-	$_SESSION["plugin_data_injection"]["model"] = serialize($model);
-	
-	$_SESSION["plugin_data_injection"]["step"]++;
-	
-	if($_SESSION["plugin_data_injection"]["choice"]==1)
-    				$_SESSION["plugin_data_injection"]["remember"] = 1;
-	}	
-/**************************************************************/
-
-
-/***************************Info Step**************************/
-else if(isset($_POST["preview_infoStep"]))
-	$_SESSION["plugin_data_injection"]["step"]--;	
-	
-else if(isset($_POST["next_infoStep"]))
-	{
-	$model = unserialize($_SESSION["plugin_data_injection"]["model"]);
-	
-	$infoscollection = new InfosCollection;
-	
-	foreach($_POST["field"] as $field)
-		if($field[0]!=-1)
+		switch($_POST["choice"])
 			{
-			$infos = new DataInjectionInfos;
-			$infos->setInfosType($field[0]);
-			$infos->setValue($field[1]);
-			if(isset($field[2]))
-				$infos->setMandatory(1);
-			else
-				$infos->setMandatory(0);
-		
-			$infoscollection->addNewInfos($infos);
+			case 1:
+				$_SESSION["plugin_data_injection"]["nbonglet"] = 6;
+				$_SESSION["plugin_data_injection"]["choice"] = 1;
+			break;
+			case 2:
+				$model = new DataInjectionModel();
+				$model->loadAll($_POST["dropdown"]);
+				
+				$_SESSION["plugin_data_injection"]["nbonglet"] = 5;
+				$_SESSION["plugin_data_injection"]["choice"] = 2;
+				$_SESSION["plugin_data_injection"]["model"] = serialize($model);
+			break;
+			case 3:
+				$_SESSION["plugin_data_injection"]["nbonglet"] = 2;
+				$_SESSION["plugin_data_injection"]["choice"] = 3;
+				$_SESSION["plugin_data_injection"]["idmodel"] = $_POST["dropdown"];
+			break;
+			case 4:
+				$model = new DataInjectionModel();
+				$model->loadAll($_POST["dropdown"]);
+				
+				$_SESSION["plugin_data_injection"]["nbonglet"] = 4;
+				$_SESSION["plugin_data_injection"]["choice"] = 4;
+				$_SESSION["plugin_data_injection"]["model"] = serialize($model);
+			break;
 			}
+		$_SESSION["plugin_data_injection"]["step"]++;
+		$_SESSION["plugin_data_injection"]["load"] = "next_choiceStep";
+		}
+	/**************************************************************/
+	
+	
+	/************************Model Step****************************/
+	else if(isset($_POST["preview_modelStep"]))
+		{
+		$_SESSION["plugin_data_injection"]["step"]--;
+		$_SESSION["plugin_data_injection"]["load"] = "preview_modelStep";
+		}
 		
-	$model->setInfos($infoscollection);
+	else if(isset($_POST["next_modelStep"]))
+		{	
+		if(isset($_SESSION["plugin_data_injection"]["model"]))
+			$model = unserialize($_SESSION["plugin_data_injection"]["model"]);
+		else
+			$model = new DataInjectionModel();		
 		
-	$_SESSION["plugin_data_injection"]["model"] = serialize($model);
-	
-	$_SESSION["plugin_data_injection"]["step"]++;
-	
-	if($_SESSION["plugin_data_injection"]["choice"]==1)
-    				$_SESSION["plugin_data_injection"]["remember"] = 2;
-	}
-/**************************************************************/
-
-
-/***************************Save Step**************************/
-else if(isset($_POST["preview_saveStep"]))
-	$_SESSION["plugin_data_injection"]["step"]--;
-
-else if(isset($_POST["next_saveStep"]))
-	{
-	$model = unserialize($_SESSION["plugin_data_injection"]["model"]);
-	
-	if(isset($_POST["model_name"]))
-		$model->setName($_POST["model_name"]);
-	if(isset($_POST["comments"]))
-		$model->setComments($_POST["comments"]);
-	
-	if($_SESSION["plugin_data_injection"]["choice"]==1)
-		$model->saveModel();
-	else
-		$model->updateModel();
+		if(isset($_SESSION["glpiactive_entity"]))
+			$model->setEntity($_SESSION["glpiactive_entity"]);
 		
-	$_SESSION["plugin_data_injection"]["model"] = serialize($model);
+		if(isset($_POST["dropdown_device_type"]))
+			$model->setDeviceType($_POST["dropdown_device_type"]);
+		
+		if(isset($_POST["dropdown_type"]))
+			$model->setModelType($_POST["dropdown_type"]);
+		
+		if(isset($_POST["dropdown_create"]))
+			$model->setBehaviorAdd($_POST["dropdown_create"]);
+		
+		if(isset($_POST["dropdown_update"]))
+			$model->setBehaviorUpdate($_POST["dropdown_update"]);
+			
+		if(isset($_POST["dropdown_header"]))
+			$model->setHeaderPresent($_POST["dropdown_header"]);
+			
+		if(isset($_POST["delimiter"]))
+			$model->setDelimiter(stripslashes($_POST["delimiter"]));
+				
+		$_SESSION["plugin_data_injection"]["model"] = serialize($model);
+		
+		$_SESSION["plugin_data_injection"]["step"]++;
+		$_SESSION["plugin_data_injection"]["load"] = "next_modelStep";
+		}
+	/**************************************************************/	
 	
-	$save=3;		
+	
+	/************************Delete Step***************************/
+	else if(isset($_POST["yes_deleteStep"]))
+		$suppr=1;
+	
+	else if(isset($_POST["no_deleteStep"]))
+		{
+		$_SESSION["plugin_data_injection"]["step"]--;
+		$_SESSION["plugin_data_injection"]["load"] = "no_deleteStep";
+		}
+		
+	else if(isset($_POST["next_deleteStep"]))
+		{
+		$_SESSION["plugin_data_injection"]["step"]--;
+		$_SESSION["plugin_data_injection"]["load"] = "next_deleteStep";
+		}
+	/**************************************************************/
+	
+	
+	/**************************File Step***************************/
+	else if(isset($_POST["preview_fileStep"]))
+		{
+		$_SESSION["plugin_data_injection"]["step"]--;
+		$_SESSION["plugin_data_injection"]["load"] = "preview_fileStep";
+		}
+		
+	else if(isset($_POST["next_fileStep"]))
+		{
+		$directory = PLUGIN_DATA_INJECTION_UPLOAD_DIR;
+	
+	    $tmp_file = $_FILES["file"]["tmp_name"];
+	
+	    if( !is_uploaded_file($tmp_file) )
+	        $error = $DATAINJECTIONLANG["fileStep"][4];
+	    else
+	    	{
+			$model = unserialize($_SESSION["plugin_data_injection"]["model"]);
+			$type = new BackendType();
+			$type->getFromDB($model->getModelType());
+			$extension = $type->getBackendName();
+			
+			$name_file = $_FILES["file"]["name"];
+			
+	    	if( !strstr(substr($name_file,strlen($name_file)-4), strtolower($extension)) )
+	        	$error = $DATAINJECTIONLANG["fileStep"][5]."<br />".$DATAINJECTIONLANG["fileStep"][6]." ".$extension." ".$DATAINJECTIONLANG["fileStep"][7];
+	    	else
+	    		{
+	    		if( !move_uploaded_file($tmp_file, $directory . $name_file) )
+	        		$error = $DATAINJECTIONLANG["fileStep"][8]." ".$directory;
+	    		else
+	    			{
+	    			$_SESSION["plugin_data_injection"]["step"]++;
+	    			$_SESSION["plugin_data_injection"]["load"] = "next_fileStep";
+	    			$_SESSION["plugin_data_injection"]["file"] = $name_file;
+	    			if($_SESSION["plugin_data_injection"]["choice"]==1)
+	    				$_SESSION["plugin_data_injection"]["remember"] = 0;
+	    			}
+	    		}
+	    	}
+		}
+	/**************************************************************/
+		
+		
+	/*************************Mapping Step*************************/	
+	else if(isset($_POST["preview_mappingStep"]))
+		{
+		$_SESSION["plugin_data_injection"]["step"]--;
+		$_SESSION["plugin_data_injection"]["load"] = "preview_mappingStep";
+		}
+		
+	else if(isset($_POST["next_mappingStep"]))
+		{
+		$model = unserialize($_SESSION["plugin_data_injection"]["model"]);
+			
+		$index= 0;
+		$mappingcollection = new MappingCollection;
+			
+		foreach($_POST["field"] as $field)
+			{
+			$mapping = new DataInjectionMapping;
+			$mapping->setName($field[0]);
+			$mapping->setMappingType($field[1]);
+			$mapping->setValue($field[2]);
+			$mapping->setRank($index);
+			if(isset($field[3]))
+				$mapping->setMandatory(1);
+			else
+				$mapping->setMandatory(0);
+				
+			$mappingcollection->addNewMapping($mapping);
+			$index++;
+			}
+				
+			$model->setMappings($mappingcollection);
+				
+		$_SESSION["plugin_data_injection"]["model"] = serialize($model);
+		
+		$_SESSION["plugin_data_injection"]["step"]++;
+		$_SESSION["plugin_data_injection"]["load"] = "next_mappingStep";
+		
+		if($_SESSION["plugin_data_injection"]["choice"]==1)
+	    				$_SESSION["plugin_data_injection"]["remember"] = 1;
+		}	
+	/**************************************************************/
+	
+	
+	/***************************Info Step**************************/
+	else if(isset($_POST["preview_infoStep"]))
+		{
+		$_SESSION["plugin_data_injection"]["step"]--;	
+		$_SESSION["plugin_data_injection"]["load"] = "preview_infoStep";
+		}
+		
+	else if(isset($_POST["next_infoStep"]))
+		{
+		$model = unserialize($_SESSION["plugin_data_injection"]["model"]);
+		
+		$infoscollection = new InfosCollection;
+		
+		foreach($_POST["field"] as $field)
+			if($field[0]!=-1)
+				{
+				$infos = new DataInjectionInfos;
+				$infos->setInfosType($field[0]);
+				$infos->setValue($field[1]);
+				if(isset($field[2]))
+					$infos->setMandatory(1);
+				else
+					$infos->setMandatory(0);
+			
+				$infoscollection->addNewInfos($infos);
+				}
+			
+		$model->setInfos($infoscollection);
+			
+		$_SESSION["plugin_data_injection"]["model"] = serialize($model);
+		
+		$_SESSION["plugin_data_injection"]["step"]++;
+		$_SESSION["plugin_data_injection"]["load"] = "next_infoStep";
+		
+		if($_SESSION["plugin_data_injection"]["choice"]==1)
+	    				$_SESSION["plugin_data_injection"]["remember"] = 2;
+		}
+	/**************************************************************/
+	
+	
+	/***************************Save Step**************************/
+	else if(isset($_POST["preview_saveStep"]))
+		{
+		$_SESSION["plugin_data_injection"]["step"]--;
+		$_SESSION["plugin_data_injection"]["load"] = "preview_saveStep";
+		}
+		
+	else if(isset($_POST["next_saveStep"]))
+		{
+		$model = unserialize($_SESSION["plugin_data_injection"]["model"]);
+		
+		if(isset($_POST["model_name"]))
+			$model->setName($_POST["model_name"]);
+		if(isset($_POST["comments"]))
+			$model->setComments($_POST["comments"]);
+		
+		if($_SESSION["plugin_data_injection"]["choice"]==1)
+			$model->saveModel();
+		else
+			$model->updateModel();
+			
+		$_SESSION["plugin_data_injection"]["model"] = serialize($model);
+		
+		$save=3;		
+		}
+	
+	else if(isset($_POST["yes1_saveStep"]))
+		$save=1;
+		
+	else if(isset($_POST["no1_saveStep"]))
+		$save=2;		
+	
+	else if(isset($_POST["yes2_saveStep"]))
+		{
+		$_SESSION["plugin_data_injection"]["step"] = 3;
+		$_SESSION["plugin_data_injection"]["choice"] = 4;
+		$_SESSION["plugin_data_injection"]["nbonglet"] = 4;
+		}
+		
+	else if(isset($_POST["no2_saveStep"]))
+		$_SESSION["plugin_data_injection"]["step"] = 1;
+	/**************************************************************/
 	}
-
-else if(isset($_POST["yes1_saveStep"]))
-	$save=1;
-	
-else if(isset($_POST["no1_saveStep"]))
-	$save=2;		
-
-else if(isset($_POST["yes2_saveStep"]))
-	{
-	$_SESSION["plugin_data_injection"]["step"] = 3;
-	$_SESSION["plugin_data_injection"]["choice"] = 4;
-	$_SESSION["plugin_data_injection"]["nbonglet"] = 4;
-	}
-	
-else if(isset($_POST["no2_saveStep"]))
-	$_SESSION["plugin_data_injection"]["step"] = 1;
-/**************************************************************/
 
 
 /********************Initialization****************************/

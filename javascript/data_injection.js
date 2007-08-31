@@ -3,12 +3,18 @@ function change_color_step(id)
 	document.getElementById(id).style.backgroundColor='#e6e6e6';
 }
 
-function showSelect(form)
+function showSelect(form,cpt)
 {	
 	if (document.getElementById('checkbox').checked)
+		{
 		form.dropdown.disabled=true;
+		hide_comments(cpt);
+		}
 	else
+		{
 		form.dropdown.disabled=false;
+		show_comments(cpt);
+		}
 }
 
 function deleteOnglet(nbonglet)
@@ -198,4 +204,32 @@ function verif_mandatory(cpt)
 		document.getElementById('mandatory_error').style.visibility='visible';
 		return false;
 		}
+}
+
+function show_comments(cpt)
+{
+sel = document.getElementById('dropdown');
+id = sel.options[sel.selectedIndex].value;
+
+for(i=0;i<4;i++)
+	{
+	id2 = sel.options[i].value;
+	
+	document.getElementById('comments'+id2).style.display = 'none';
+	
+	if(id2==id)
+		document.getElementById('comments'+id).style.display = 'block';
+	}
+}
+
+function hide_comments(cpt)
+{
+sel = document.getElementById('dropdown');
+id = sel.options[sel.selectedIndex].value;
+
+for(i=0;i<4;i++)
+	{
+	id2 = sel.options[i].value;
+	document.getElementById('comments'+id2).style.display = 'none';
+	}
 }

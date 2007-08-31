@@ -1,61 +1,85 @@
+/************************General Tag***************************/
+legend {
+font-size: 16px;
+font-weight: bold;
+}
+/**************************************************************/
+
+/****************Global container for wizard*******************/
 .global {
-width: 600px;
-height: 450px;
+width: 650px;
+height: 500px;
 margin: 0 auto;
 position: relative;
 text-align: left;
+font-family: "New Roman",serif;
 }
+/**************************************************************/
 
+/**********************Onglet table****************************/
 .step {
+margin:0;
+text-align: center;
 -moz-border-radius-topright: 8px;
 -moz-border-radius-topleft: 8px;
 border-left: 2px solid #d3d3ce;
 border-right: 2px solid #d3d3ce;
 border-top: 2px solid #d3d3ce;
-margin:0;
-text-align: center;
 }
 
 .step td {
-background-color: #d3d3ce;
 width: 50px;
 height: 50px;
 font-size: 20px;
+background-color: #d3d3ce;
 }
+/**************************************************************/
 
+/**********************Wizard table****************************/
 .wizard {
-width: 600px;
-height: 400px;
+width: 650px;
+height: 450px;
+text-align: left;
 background-color: #e6e6e6;
+border: 2px solid #d3d3ce;
 -moz-border-radius-topright: 8px;
 -moz-border-radius-bottomright: 8px;
 -moz-border-radius-bottomleft: 8px;
-border: 2px solid #d3d3ce;
-text-align: left;
 }
 
-.wizard_title {
-text-align: center;
-font-size: 18px;
-height: 40px;
+.wizard_left_area {
+width: 212px;
+background-color: white;
+border-right: 2px inset black;
 }
 
-.wizard_body {
-height: 310px;
-}
-
-.wizard_cadre {
-border: 2px inset black;
-width: 60%;
-height: 200px;
-text-align: center;
-margin: 0 auto;
+.wizard_right_area {
+padding: 20px;
+font-size: 14px;
 }
 
 .wizard_button {
 height: 35px;
+border-top: 2px outset black;
 }
 
+.wizard_title {
+font-size: 18px;
+text-align: center;
+margin-top: 20px;
+margin-bottom: 70px;
+}
+
+.wizard_explain {
+font-size: 14px;
+text-align: justify;
+margin-left: 10px;
+margin-right: 10px;
+margin-top: 10px;
+}
+/**************************************************************/
+
+/**************************Button******************************/
 .next {
 float: right;
 margin-right: 10px;
@@ -65,49 +89,74 @@ margin-right: 10px;
 float: left;
 margin-left: 10px; 
 }
+/**************************************************************/
 
-.red {
-color: red;
-}
-
-.suppr {
-font-size: 14px;
-margin-top: 70px;
-}
-
-.question {
-line-height: 20px;
-}
-
-.save_delete {
-font-size: 14px;
-margin-top: 70px;
-margin-left: auto;
-margin-right: auto;
+/***********************Presentation***************************/
+.presentation_logo {
+margin: auto;
 width: 180px;
-line-height: 20px;
+height: 192px;
+margin-top: 100px;
 }
 
-.presentation {
-margin-left: auto;
-margin-right: auto;
-width: 400px;
+.presentation_title {
+font-size: 22px;
+text-align: left;
+margin-top: 30px;
+}
+
+.presentation_text {
 font-size: 16px;
 line-height: 20px;
+margin-top: 80px;
+text-align: justify;
+}
+/**************************************************************/
+
+/************************Choice Step***************************/
+.choiceStep_selection {
+font-size: 14px;
+width: 350px;
+margin-left: auto;
+margin-right: auto;
+margin-top: 20px;
+padding-top: 0;
 }
 
 .choiceStep_table {
-margin-top: 0px;
 margin-bottom: 20px;
 border-spacing: 10px;
 font-size: 14px;
-text-align: left;
+}
+
+.choiceStep_dropdown {
+margin:auto;
+width: 130px;
+
+}
+
+.choiceStep_comments {
+display: none;
+font-size: 14px;
+margin-left: auto;
+margin-right: auto;
+margin-top: 20px;
+width: 350px;
+}
+/**************************************************************/
+
+/*************************Model Step***************************/
+.modelStep_selection {
+width: 350px;
+margin-left: auto;
+margin-right: auto;
+margin-top: 40px;
+padding-top: 0;
 }
 
 .modelStep_table {
 font-size: 14px;
 text-align: left;
-margin-top: 5px;
 }
 
 .modelStep_table td {
@@ -122,24 +171,80 @@ visibility: hidden;
 color: red;
 }
 
+.modelStep_option {
+width: 350px;
+margin-left: auto;
+margin-right: auto;
+margin-top: 20px;
+padding-top: 0;
+}
+/**************************************************************/
+
+/************************Delete Step***************************/
+.deleteStep_table {
+font-size: 16px;
+margin-top: 100px;
+border-spacing: 15px;
+text-align: center;
+}
+
+.save_delete {
+font-size: 14px;
+margin-top: 100px;
+margin-left: auto;
+margin-right: auto;
+width: 180px;
+line-height: 20px;
+text-align: center;
+}
+/**************************************************************/
+
+/**************************File Step***************************/
+.fileStep_table {
+text-align:left;
+margin-top: 120px;
+margin-bottom: 20px;
+font-size: 16px;
+}
+
+.fileStep_error {
+color: red;
+font-size: 14px;
+margin-left: auto;
+margin-right: auto;
+width: 250px;
+text-align: center;
+}
+/**************************************************************/
+
+
+
+
+
+
+
+.suppr {
+font-size: 14px;
+margin-top: 70px;
+}
+
+.question {
+line-height: 20px;
+}
+
+
+
+
+
 .mandatory {
 text-align: center;
 visibility: hidden;
 color: red;
 }
 
-.deleteStep_table {
-font-size: 14px;
-margin-top: 40px;
-border-spacing: 10px;
-}
 
-.fileStep_table {
-text-align:left;
-margin-top: 60px;
-margin-bottom: 20px;
-font-size: 12px;
-}
+
+
 
 .step15_table {
 font-size: 14px;

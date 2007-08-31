@@ -47,8 +47,9 @@ $DATAINJECTIONLANG["setup"][6] = "Attention, la mise à jour du plugin est irré
 $DATAINJECTIONLANG["setup"][7] = "Attention, la désinstallation du plugin est irréversible.<br> Vous perdrez toutes les données.";
 $DATAINJECTIONLANG["setup"][8] = "Colonne";
 
-$DATAINJECTIONLANG["presentation"][1] = "Bienvenue dans l'assistant d'aide à l'importation de fichier";
-$DATAINJECTIONLANG["presentation"][2] = "L'assistant n'est pas encore fonctionnel.";
+$DATAINJECTIONLANG["presentation"][1] = "Bienvenue dans l'assistant d'importation de fichier !";
+$DATAINJECTIONLANG["presentation"][2] = "Cette assistant va vous permettre en toute simplicité d'importer des fichiers au format XML, CSV, et XLS en fonction de vos droits dans GLPI.";
+$DATAINJECTIONLANG["presentation"][3] = "Pour commencer à utiliser l'assistant, cliquez sur Suivant.";
 
 $DATAINJECTIONLANG["step"][1] = "Etape 1 : ";
 $DATAINJECTIONLANG["step"][2] = "Etape 2 : ";
@@ -58,36 +59,42 @@ $DATAINJECTIONLANG["step"][5] = "Etape 5 : ";
 $DATAINJECTIONLANG["step"][6] = "Etape 6 : ";
 $DATAINJECTIONLANG["step"][7] = "Etape 7 : ";
 
-$DATAINJECTIONLANG["choiceStep"][1] = "Sélection ou création d'un modèle";
-$DATAINJECTIONLANG["choiceStep"][2] = "Créer un nouveau modèle";
-$DATAINJECTIONLANG["choiceStep"][3] = "Modifier un modèle existant";
-$DATAINJECTIONLANG["choiceStep"][4] = "Supprimer un modèle existant";
-$DATAINJECTIONLANG["choiceStep"][5] = "Utiliser un modèle existant";
+$DATAINJECTIONLANG["choiceStep"][1] = "Gestion ou utilisation d'un modèle";
+$DATAINJECTIONLANG["choiceStep"][2] = "Dans cette première étape, vous devez choisir entre créer votre propre modèle, modifier, supprimer, et utiliser un modèle existant en le choisissant dans la liste déroulante.";
+$DATAINJECTIONLANG["choiceStep"][3] = "Créer un nouveau modèle";
+$DATAINJECTIONLANG["choiceStep"][4] = "Modifier un modèle existant";
+$DATAINJECTIONLANG["choiceStep"][5] = "Supprimer un modèle existant";
+$DATAINJECTIONLANG["choiceStep"][6] = "Utiliser un modèle existant";
+$DATAINJECTIONLANG["choiceStep"][7] = "Commentaire du modèle";
+$DATAINJECTIONLANG["choiceStep"][8] = "Pas de commentaire";
 
 $DATAINJECTIONLANG["modelStep"][1] = "Collecte d'information sur le fichier";
 $DATAINJECTIONLANG["modelStep"][2] = "Modification du modèle";
-$DATAINJECTIONLANG["modelStep"][3] = "Type de données à insérer :";
-$DATAINJECTIONLANG["modelStep"][4] = "Type de fichier :";
-$DATAINJECTIONLANG["modelStep"][5] = "Création des lignes :";
-$DATAINJECTIONLANG["modelStep"][6] = "Mise à jour des lignes :";
-$DATAINJECTIONLANG["modelStep"][7] = "Présence d'un entête :";
-$DATAINJECTIONLANG["modelStep"][8] = "Délimiteur du fichier :";
-$DATAINJECTIONLANG["modelStep"][9] = "Délimiteur non définie";
+$DATAINJECTIONLANG["modelStep"][3] = "Dans cette étape, vous devez selectionner le type de votre fichier, le type d'objet que vous allez insérer.";
+$DATAINJECTIONLANG["modelStep"][4] = "Type de données à insérer :";
+$DATAINJECTIONLANG["modelStep"][5] = "Type de fichier :";
+$DATAINJECTIONLANG["modelStep"][6] = "Création des lignes :";
+$DATAINJECTIONLANG["modelStep"][7] = "Mise à jour des lignes :";
+$DATAINJECTIONLANG["modelStep"][8] = "Présence d'un entête :";
+$DATAINJECTIONLANG["modelStep"][9] = "Délimiteur du fichier :";
+$DATAINJECTIONLANG["modelStep"][10] = "Délimiteur non définie";
 
 $DATAINJECTIONLANG["deleteStep"][1] = "Confirmation de la suppression";
-$DATAINJECTIONLANG["deleteStep"][2] = "Voulez-vous supprimer";
-$DATAINJECTIONLANG["deleteStep"][3] = "définitivement ?";
-$DATAINJECTIONLANG["deleteStep"][4] = "Le modèle";
-$DATAINJECTIONLANG["deleteStep"][5] = "a été supprimé.";
-$DATAINJECTIONLANG["deleteStep"][6] = "Problème lors de la suppression du modèle.";
+$DATAINJECTIONLANG["deleteStep"][2] = "Attention si vous supprimez le model, les mappings et les informations complémentaires seront supprimés également et ne seront plus récupérables.";
+$DATAINJECTIONLANG["deleteStep"][3] = "Voulez-vous supprimer";
+$DATAINJECTIONLANG["deleteStep"][4] = "définitivement ?";
+$DATAINJECTIONLANG["deleteStep"][5] = "Le modèle";
+$DATAINJECTIONLANG["deleteStep"][6] = "a été supprimé.";
+$DATAINJECTIONLANG["deleteStep"][7] = "Problème lors de la suppression du modèle.";
 
 $DATAINJECTIONLANG["fileStep"][1] = "Sélection du fichier à uploader";
-$DATAINJECTIONLANG["fileStep"][2] = "Choix du fichier :";
-$DATAINJECTIONLANG["fileStep"][3] = "Le fichier est introuvable";
-$DATAINJECTIONLANG["fileStep"][4] = "Le fichier n'a pas le bon format";
-$DATAINJECTIONLANG["fileStep"][5] = "Extension";
-$DATAINJECTIONLANG["fileStep"][6] = "requise";
-$DATAINJECTIONLANG["fileStep"][7] = "Impossible de copier le fichier dans";
+$DATAINJECTIONLANG["fileStep"][2] = "Sélectionnez le fichier sur votre disque dur afin qu'il soit uploader sur le serveur.";
+$DATAINJECTIONLANG["fileStep"][3] = "Choix du fichier :";
+$DATAINJECTIONLANG["fileStep"][4] = "Le fichier est introuvable";
+$DATAINJECTIONLANG["fileStep"][5] = "Le fichier n'a pas le bon format";
+$DATAINJECTIONLANG["fileStep"][6] = "Extension";
+$DATAINJECTIONLANG["fileStep"][7] = "requise";
+$DATAINJECTIONLANG["fileStep"][8] = "Impossible de copier le fichier dans";
 
 $DATAINJECTIONLANG["mappingStep"][1] = "colonnes à mapper ont été trouvées";
 $DATAINJECTIONLANG["mappingStep"][2] = "Entête du fichier";
