@@ -1,18 +1,20 @@
 function change_color_step(id) 
 {
 	document.getElementById(id).style.backgroundColor='#e6e6e6';
-}
+}	
 
 function showSelect(form,cpt)
 {	
 	if (document.getElementById('checkbox').checked)
 		{
 		form.dropdown.disabled=true;
+		form.dropdown.style.backgroundColor='#e6e6e6';
 		hide_comments(cpt);
 		}
 	else
 		{
 		form.dropdown.disabled=false;
+		form.dropdown.style.backgroundColor='white';
 		show_comments(cpt);
 		}
 }
@@ -75,10 +77,10 @@ function go_mapping(id)
 	idtable = sel.options[sel.selectedIndex].value;
 	
 	if(idtable!=-1)
-		document.getElementById("check"+id).style.visibility='visible';
+		document.getElementById("check"+id).disabled=false;
 	else
 		{
-		document.getElementById("check"+id).style.visibility='hidden';
+		document.getElementById("check"+id).disabled=true;
 		document.getElementById("check"+id).checked=false;
 		}
 		
@@ -106,10 +108,10 @@ function go_info(id)
 	idtable = sel.options[sel.selectedIndex].value;
 	
 	if(idtable!=-1)
-		document.getElementById("check"+id).style.visibility='visible';
+		document.getElementById("check"+id).disabled=false;
 	else
 		{
-		document.getElementById("check"+id).style.visibility='hidden';
+		document.getElementById("check"+id).disabled=true;
 		document.getElementById("check"+id).checked=false;
 		}
 		
@@ -211,7 +213,7 @@ function show_comments(cpt)
 sel = document.getElementById('dropdown');
 id = sel.options[sel.selectedIndex].value;
 
-for(i=0;i<4;i++)
+for(i=0;i<cpt;i++)
 	{
 	id2 = sel.options[i].value;
 	
@@ -227,7 +229,7 @@ function hide_comments(cpt)
 sel = document.getElementById('dropdown');
 id = sel.options[sel.selectedIndex].value;
 
-for(i=0;i<4;i++)
+for(i=0;i<cpt;i++)
 	{
 	id2 = sel.options[i].value;
 	document.getElementById('comments'+id2).style.display = 'none';

@@ -51,8 +51,9 @@ class DataInjectionModelCSV extends DataInjectionModel {
 	function updateSpecificFields()
 	{
 		global $DB;
+		
 		$sql = "UPDATE glpi_plugin_data_injection_models_csv SET delimiter='".$this->specific_fields["delimiter"]
-		."' AND header_present=".$this->specific_fields["header_present"]." WHERE model_id=".$this->fields["ID"];
+		."' , header_present=".$this->specific_fields["header_present"]." WHERE model_id=".$this->fields["ID"];
 		$DB->query($sql);
 	}
 	

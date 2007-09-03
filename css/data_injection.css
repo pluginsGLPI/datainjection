@@ -7,8 +7,6 @@ font-weight: bold;
 
 /****************Global container for wizard*******************/
 .global {
-width: 650px;
-height: 500px;
 margin: 0 auto;
 position: relative;
 text-align: left;
@@ -37,7 +35,6 @@ background-color: #d3d3ce;
 
 /**********************Wizard table****************************/
 .wizard {
-width: 650px;
 height: 450px;
 text-align: left;
 background-color: #e6e6e6;
@@ -190,12 +187,29 @@ text-align: center;
 
 .save_delete {
 font-size: 14px;
-margin-top: 100px;
+margin-top: 150px;
 margin-left: auto;
 margin-right: auto;
 width: 180px;
 line-height: 20px;
 text-align: center;
+}
+
+.suppr {
+font-size: 14px;
+margin-top: 70px;
+}
+
+.question {
+line-height: 20px;
+}
+/**************************************************************/
+
+/*********************Mapping & Infos Step*********************/
+.mandatory {
+text-align: center;
+visibility: hidden;
+color: red;
 }
 /**************************************************************/
 
@@ -217,43 +231,16 @@ text-align: center;
 }
 /**************************************************************/
 
+/**************************Save Step***************************/
+.saveStep_table {
+font-size: 14px;
+margin-top: 100px;
+border-spacing: 10px;
+}
 
-
-
-
-
-
-.suppr {
+.saveStep2_table {
 font-size: 14px;
 margin-top: 70px;
-}
-
-.question {
-line-height: 20px;
-}
-
-
-
-
-
-.mandatory {
-text-align: center;
-visibility: hidden;
-color: red;
-}
-
-
-
-
-
-.step15_table {
-font-size: 14px;
-margin-top: 60px;
 border-spacing: 10px;
 }
-
-.step15_1_table {
-font-size: 14px;
-margin-top: 10px;
-border-spacing: 10px;
-}
+/**************************************************************/

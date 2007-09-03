@@ -20,7 +20,7 @@ if(isset($_POST['id']))
 		
 	echo "</select></td>";
 	echo "<td id='field$key'><select name='field[$key][1]' style='width: 150px'><option value='-1'>".$DATAINJECTIONLANG["mappingStep"][7]."</option></select></td>";
-	echo "<td><input type='checkbox' name='field[$key][2]' id='check$key' style='text-align:center;width:60px;visibility:hidden' /></td>";
+	echo "<td style='text-align:center'><input type='checkbox' name='field[$key][2]' id='check$key' style='width:60px;' disabled /></td>";
 	echo "</tr>";
 	echo "</table>";
 	

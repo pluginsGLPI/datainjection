@@ -52,7 +52,7 @@ echo "<td class='wizard_left_area' valign='top'>";
 echo "<div class='presentation_logo'><img src='../pics/logo.png' alt='logo' /></div>";
 echo "</td>";
 
-echo "<td class='wizard_right_area' valign='top'>";
+echo "<td class='wizard_right_area' style='width: 400px' valign='top'>";
 
 echo "<div class='presentation_title'>".$DATAINJECTIONLANG["presentation"][1]."</div>";
 

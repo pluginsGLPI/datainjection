@@ -104,9 +104,13 @@ $DATAINJECTIONLANG["mappingStep"][5] = "Obligatoire";
 $DATAINJECTIONLANG["mappingStep"][6] = "-------Choisir une table-------";
 $DATAINJECTIONLANG["mappingStep"][7] = "-------Choisir un champ-------";
 $DATAINJECTIONLANG["mappingStep"][8] = "Au moins un mapping doit être obligatoire";
+$DATAINJECTIONLANG["mappingStep"][9] = "Dans cette étapes vous allez réaliser vos mappings avec le fichier.";
+$DATAINJECTIONLANG["mappingStep"][10] = "La colonne entête correspond aux entetes de votre fichier";
+$DATAINJECTIONLANG["mappingStep"][11] = "La notion obligatoire correspond à un champ qui devra absolument être connue dans le fichier, vous devez avoir au moins un mapping obligatoire avant de continuer l'assistant";
 
 $DATAINJECTIONLANG["infoStep"][1] = "Informations complémentaires";
 $DATAINJECTIONLANG["infoStep"][2] = "Modification des informations complémentaires";
+$DATAINJECTIONLANG["infoStep"][3] = "Dans cette étape vous pouvez ajouter des informations qui n'étaient pas présente dans le fichier. Vous devrez ensuite lors de l'utilisation du modèle rentrer les informations à la main.";
 
 $DATAINJECTIONLANG["saveStep"][1] = "Enregistrement du modèle";
 $DATAINJECTIONLANG["saveStep"][2] = "Voulez-vous enregistrer le modèle ?";

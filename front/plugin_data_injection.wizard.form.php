@@ -64,8 +64,8 @@ if($load)
 			break;
 			case 2:
 				$model = getModelInstanceByID($_POST["dropdown"]);
-				//$model = new DataInjectionModel();
 				$model->loadAll($_POST["dropdown"]);
+				
 				$_SESSION["plugin_data_injection"]["nbonglet"] = 5;
 				$_SESSION["plugin_data_injection"]["choice"] = 2;
 				$_SESSION["plugin_data_injection"]["model"] = serialize($model);
@@ -76,7 +76,6 @@ if($load)
 				$_SESSION["plugin_data_injection"]["idmodel"] = $_POST["dropdown"];
 			break;
 			case 4:
-				//$model = new DataInjectionModel();
 				$model = getModelInstanceByID($_POST["dropdown"]);
 				$model->loadAll($_POST["dropdown"]);
 				
@@ -102,8 +101,7 @@ if($load)
 		{	
 		if(isset($_SESSION["plugin_data_injection"]["model"]))
 			$model = unserialize($_SESSION["plugin_data_injection"]["model"]);
-		else
-			//$model = new DataInjectionModel();		
+		else		
 			$model = getModelInstanceByType($_POST["dropdown_type"]);
 
 		if(isset($_SESSION["glpiactive_entity"]))
@@ -123,7 +121,7 @@ if($load)
 			
 		if(isset($_POST["dropdown_header"]))
 			$model->setHeaderPresent($_POST["dropdown_header"]);
-			
+		
 		if(isset($_POST["delimiter"]))
 			$model->setDelimiter(stripslashes($_POST["delimiter"]));
 				
@@ -331,8 +329,7 @@ if($_SESSION["plugin_data_injection"]["step"]==1)
 /**************************************************************/
 
 
-echo "<div class='global'>";
-
+echo "<table class='global'><tr><td>";
 
 /**********************Show onglet*****************************/
 echo "<table class='step'><tr>";
@@ -419,7 +416,7 @@ else
 		}
 /**************************************************************/
 
-echo "</div>";
+echo "</td></tr></table>";
 
 commonFooter();
 ?>
