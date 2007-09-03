@@ -50,7 +50,7 @@ if ($argv) {
 
 define('GLPI_ROOT', '../../..');
 
-$NEEDED_ITEMS=array("user","contract","networking","group","monitor","phone","infocom","printer","profile","entity","computer","software","setup");
+$NEEDED_ITEMS=array("user","contract","networking","group","monitor","phone","infocom","printer","profile","entity","computer","software","setup","peripheral");
 include (GLPI_ROOT."/inc/includes.php");
 include ("../plugin_data_injection.includes.php");
 
@@ -102,5 +102,5 @@ $entity_id = $argv[3];
 //---------------------- //
 $engine = new DataInjectionEngine($model_id,$file,$entity_id);
 $results = $engine->injectDatas();
-print_r($results);
+//print_r($results);
 ?>

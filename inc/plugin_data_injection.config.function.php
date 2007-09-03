@@ -46,21 +46,33 @@ function plugin_data_injection_Install() {
 			
 	$DB->query($query) or die($DB->error());
 	
-	$query="CREATE TABLE `glpi_plugin_data_injection_models` (
-		`ID` INT( 11 ) NOT NULL AUTO_INCREMENT PRIMARY KEY ,
-		`name` VARCHAR( 255 ) NOT NULL ,
-		`comments` TEXT NULL ,
-		`date_mod` DATETIME NOT NULL ,
-		`type` INT( 11 ) NOT NULL DEFAULT '1',
-		`device_type` INT( 11 ) NOT NULL DEFAULT '1',
-		`behavior_add` INT( 1 ) NOT NULL DEFAULT '1',
-		`behavior_update` INT( 1 ) NOT NULL DEFAULT '0',
-		`delimiter` VARCHAR( 1 ) NOT NULL DEFAULT ';',
-		`FK_entities` INT( 11 ) NOT NULL,
-		`header_present` INT( 1 ) NOT NULL DEFAULT '1'
-		) ENGINE = MYISAM ;";
+	$query="CREATE TABLE IF NOT EXISTS `glpi_plugin_data_injection_models` (
+	  `ID` int(11) NOT NULL auto_increment,
+	  `name` varchar(255) NOT NULL,
+	  `comments` text,
+	  `date_mod` datetime NOT NULL,
+	  `type` int(11) NOT NULL default '1',
+	  `device_type` int(11) NOT NULL default '1',
+	  `FK_entities` int(11) NOT NULL,
+	  `behavior_add` int(1) NOT NULL default '1',
+	  `behavior_update` int(1) NOT NULL default '0',
+	  `can_add_dropdown` int(1) NOT NULL default '0',
+	  PRIMARY KEY  (`ID`)
+	) ENGINE=MyISAM;";
 	
 	$DB->query($query) or die($DB->error());
+
+	$query="CREATE TABLE IF NOT EXISTS `glpi_plugin_data_injection_models_csv` (
+	  `ID` int(11) NOT NULL auto_increment,
+	  `model_id` int(11) NOT NULL,
+	  `device_type` int(11) NOT NULL default '1',
+	  `delimiter` varchar(1) NOT NULL default ';',
+	  `header_present` int(1) NOT NULL default '1',
+	  PRIMARY KEY  (`ID`)
+	) ENGINE=MyISAM;";
+	
+	$DB->query($query) or die($DB->error());
+
 	
 	$query="CREATE TABLE `glpi_plugin_data_injection_mappings` (
 		`ID` INT( 11 ) NOT NULL AUTO_INCREMENT PRIMARY KEY ,
@@ -83,16 +95,18 @@ function plugin_data_injection_Install() {
 	$DB->query($query) or die($DB->error());
 	
 	$query="CREATE TABLE IF NOT EXISTS `glpi_plugin_data_injection_filetype` (
-  		`ID` int(11) NOT NULL auto_increment,
-  		`name` varchar(255) NOT NULL,
-  		`value` int(11) NOT NULL,
-  		`class_name` varchar(255) NOT NULL,
-  		PRIMARY KEY  (`ID`)
-		) ENGINE=MyISAM;";
+	  `ID` int(11) NOT NULL auto_increment,
+	  `name` varchar(255) NOT NULL,
+	  `value` int(11) NOT NULL,
+	  `backend_class_name` varchar(255) NOT NULL,
+	  `model_class_name` varchar(255) NOT NULL,
+	  PRIMARY KEY  (`ID`)
+	) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
+	";
 	$DB->query($query) or die($DB->error());
 	
-	$query="INSERT INTO `glpi_plugin_data_injection_filetype` (`ID`, `name`, `value`, `class_name`) VALUES 
-		(1, 'CSV', 1, 'BackendCSV');";
+	$query="INSERT INTO `glpi_plugin_data_injection_filetype` (`ID`, `name`, `value`, `backend_class_name`, `model_class_name`) VALUES 
+(1, 'CSV', 1, 'BackendCSV', 'DataInjectionModelCSV');";
 	$DB->query($query) or die($DB->error());
 
 	if (!is_dir(PLUGIN_DATA_INJECTION_UPLOAD_DIR)) {

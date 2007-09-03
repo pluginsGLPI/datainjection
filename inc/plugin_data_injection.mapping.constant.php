@@ -50,9 +50,8 @@
 
 global $LANG,$DATA_INJECTION_MAPPING,$IMPORT_TYPES,$IMPORT_PRIMARY_TYPES;
 //Store all the type of items that could be imported
-$IMPORT_TYPES = array(COMPUTER_TYPE, MONITOR_TYPE, PRINTER_TYPE,PHONE_TYPE, USER_TYPE, INFOCOM_TYPE, NETWORKING_TYPE, GROUP_TYPE, CONTRACT_TYPE);
- 
-$IMPORT_PRIMARY_TYPES = array(COMPUTER_TYPE, MONITOR_TYPE, PRINTER_TYPE, PHONE_TYPE, USER_TYPE, NETWORKING_TYPE, GROUP_TYPE, CONTRACT_TYPE);
+$IMPORT_TYPES = array(COMPUTER_TYPE, MONITOR_TYPE, PRINTER_TYPE,PHONE_TYPE, USER_TYPE, INFOCOM_TYPE, NETWORKING_TYPE, GROUP_TYPE, CONTRACT_TYPE, PERIPHERAL_TYPE);
+$IMPORT_PRIMARY_TYPES = array(COMPUTER_TYPE, MONITOR_TYPE, PRINTER_TYPE, PHONE_TYPE, USER_TYPE, NETWORKING_TYPE, GROUP_TYPE, CONTRACT_TYPE, PERIPHERAL_TYPE);
 
 // ----------------------------------------------------------------------
 //COMPUTER MAPPING
@@ -203,7 +202,6 @@ $DATA_INJECTION_MAPPING[COMPUTER_TYPE]['ticket_tco']['table']='glpi_computers';
 $DATA_INJECTION_MAPPING[COMPUTER_TYPE]['ticket_tco']['field']='ticket_tco';
 $DATA_INJECTION_MAPPING[COMPUTER_TYPE]['ticket_tco']['name']=$LANG["financial"][90];
 $DATA_INJECTION_MAPPING[COMPUTER_TYPE]['ticket_tco']['type']='text';
-
 
 // ----------------------------------------------------------------------
 //MONITOR MAPPING
@@ -1027,4 +1025,106 @@ $DATA_INJECTION_MAPPING[CONTRACT_TYPE]['renewal']['table']='glpi_contracts';
 $DATA_INJECTION_MAPPING[CONTRACT_TYPE]['renewal']['field']='renewal';
 $DATA_INJECTION_MAPPING[CONTRACT_TYPE]['renewal']['name']=$LANG["financial"][107];
 $DATA_INJECTION_MAPPING[CONTRACT_TYPE]['renewal']['type']='integer';
+
+// ----------------------------------------------------------------------
+//PERIPHERAL MAPPING
+// ----------------------------------------------------------------------
+
+$DATA_INJECTION_MAPPING[PERIPHERAL_TYPE]['name']['table']='glpi_peripherals';
+$DATA_INJECTION_MAPPING[PERIPHERAL_TYPE]['name']['field']='name';
+$DATA_INJECTION_MAPPING[PERIPHERAL_TYPE]['name']['name']=$LANG["common"][16];
+$DATA_INJECTION_MAPPING[PERIPHERAL_TYPE]['name']['type']='text';
+
+$DATA_INJECTION_MAPPING[PERIPHERAL_TYPE]['serial']['table']='glpi_peripherals';
+$DATA_INJECTION_MAPPING[PERIPHERAL_TYPE]['serial']['field']='serial';
+$DATA_INJECTION_MAPPING[PERIPHERAL_TYPE]['serial']['name']=$LANG["common"][19];
+$DATA_INJECTION_MAPPING[PERIPHERAL_TYPE]['serial']['type']='text';
+
+$DATA_INJECTION_MAPPING[PERIPHERAL_TYPE]['otherserial']['table']='glpi_peripherals';
+$DATA_INJECTION_MAPPING[PERIPHERAL_TYPE]['otherserial']['field']='otherserial';
+$DATA_INJECTION_MAPPING[PERIPHERAL_TYPE]['otherserial']['name']=$LANG["common"][20];
+$DATA_INJECTION_MAPPING[PERIPHERAL_TYPE]['otherserial']['type']='text';
+
+$DATA_INJECTION_MAPPING[PERIPHERAL_TYPE]['location']['table']='glpi_dropdown_locations';
+$DATA_INJECTION_MAPPING[PERIPHERAL_TYPE]['location']['field']='name';
+$DATA_INJECTION_MAPPING[PERIPHERAL_TYPE]['location']['name']=$LANG["common"][15];
+$DATA_INJECTION_MAPPING[PERIPHERAL_TYPE]['location']['linkfield']='location';
+$DATA_INJECTION_MAPPING[PERIPHERAL_TYPE]['location']['type']='text';
+$DATA_INJECTION_MAPPING[PERIPHERAL_TYPE]['location']['table_type']='dropdown';
+
+$DATA_INJECTION_MAPPING[PERIPHERAL_TYPE]['contact']['table']='glpi_peripherals';
+$DATA_INJECTION_MAPPING[PERIPHERAL_TYPE]['contact']['field']='contact';
+$DATA_INJECTION_MAPPING[PERIPHERAL_TYPE]['contact']['name']=$LANG["common"][18];
+$DATA_INJECTION_MAPPING[PERIPHERAL_TYPE]['contact']['type']='text';
+
+$DATA_INJECTION_MAPPING[PERIPHERAL_TYPE]['contactnum']['table']='glpi_peripherals';
+$DATA_INJECTION_MAPPING[PERIPHERAL_TYPE]['contactnum']['field']='name';
+$DATA_INJECTION_MAPPING[PERIPHERAL_TYPE]['contactnum']['name']=$LANG["common"][21];
+$DATA_INJECTION_MAPPING[PERIPHERAL_TYPE]['contactnum']['type']='text';
+
+$DATA_INJECTION_MAPPING[PERIPHERAL_TYPE]['comments']['table']='glpi_peripherals';
+$DATA_INJECTION_MAPPING[PERIPHERAL_TYPE]['comments']['field']='comments';
+$DATA_INJECTION_MAPPING[PERIPHERAL_TYPE]['comments']['name']=$LANG["common"][25];
+$DATA_INJECTION_MAPPING[PERIPHERAL_TYPE]['comments']['type']='text';
+
+$DATA_INJECTION_MAPPING[PERIPHERAL_TYPE]['notes']['table']='glpi_peripherals';
+$DATA_INJECTION_MAPPING[PERIPHERAL_TYPE]['notes']['field']='notes';
+$DATA_INJECTION_MAPPING[PERIPHERAL_TYPE]['notes']['name']=$LANG["reminder"][2];
+$DATA_INJECTION_MAPPING[PERIPHERAL_TYPE]['notes']['type']='text';
+
+$DATA_INJECTION_MAPPING[PERIPHERAL_TYPE]['state']['table']='glpi_dropdown_state';
+$DATA_INJECTION_MAPPING[PERIPHERAL_TYPE]['state']['field']='name';
+$DATA_INJECTION_MAPPING[PERIPHERAL_TYPE]['state']['name']=$LANG["joblist"][0];
+$DATA_INJECTION_MAPPING[PERIPHERAL_TYPE]['state']['linkfield']='state';
+$DATA_INJECTION_MAPPING[PERIPHERAL_TYPE]['state']['table_type']='dropdown';
+$DATA_INJECTION_MAPPING[PERIPHERAL_TYPE]['state']['type']='text';
+
+$DATA_INJECTION_MAPPING[PERIPHERAL_TYPE]['type']['table']='glpi_peripherals';
+$DATA_INJECTION_MAPPING[PERIPHERAL_TYPE]['type']['field']='name';
+$DATA_INJECTION_MAPPING[PERIPHERAL_TYPE]['type']['name']=$LANG["common"][17];
+$DATA_INJECTION_MAPPING[PERIPHERAL_TYPE]['type']['type']='text';
+$DATA_INJECTION_MAPPING[PERIPHERAL_TYPE]['type']['linkfield']='type';
+$DATA_INJECTION_MAPPING[PERIPHERAL_TYPE]['type']['table_type']='dropdown';
+
+$DATA_INJECTION_MAPPING[PERIPHERAL_TYPE]['model']['table']='glpi_dropdown_model_printers';
+$DATA_INJECTION_MAPPING[PERIPHERAL_TYPE]['model']['field']='name';
+$DATA_INJECTION_MAPPING[PERIPHERAL_TYPE]['model']['name']=$LANG["common"][22];
+$DATA_INJECTION_MAPPING[PERIPHERAL_TYPE]['model']['type']='text';
+$DATA_INJECTION_MAPPING[PERIPHERAL_TYPE]['model']['linkfield']='model';
+$DATA_INJECTION_MAPPING[PERIPHERAL_TYPE]['model']['table_type']='dropdown';
+
+$DATA_INJECTION_MAPPING[PERIPHERAL_TYPE]['manufacturer']['table']='glpi_dropdown_manufacturer';
+$DATA_INJECTION_MAPPING[PERIPHERAL_TYPE]['manufacturer']['field']='name';
+$DATA_INJECTION_MAPPING[PERIPHERAL_TYPE]['manufacturer']['name']=$LANG["common"][5];
+$DATA_INJECTION_MAPPING[PERIPHERAL_TYPE]['manufacturer']['type']='text';
+$DATA_INJECTION_MAPPING[PERIPHERAL_TYPE]['manufacturer']['linkfield']='FK_glpi_enterprise';
+$DATA_INJECTION_MAPPING[PERIPHERAL_TYPE]['manufacturer']['table_type']='dropdown';
+
+$DATA_INJECTION_MAPPING[PERIPHERAL_TYPE]['is_template']['table']='glpi_peripherals';
+$DATA_INJECTION_MAPPING[PERIPHERAL_TYPE]['is_template']['field']='is_template';
+$DATA_INJECTION_MAPPING[PERIPHERAL_TYPE]['is_template']['name']=$LANG["common"][13];
+$DATA_INJECTION_MAPPING[PERIPHERAL_TYPE]['is_template']['type']='integer';
+
+$DATA_INJECTION_MAPPING[PERIPHERAL_TYPE]['tplname']['table']='glpi_peripherals';
+$DATA_INJECTION_MAPPING[PERIPHERAL_TYPE]['tplname']['field']='tplname';
+$DATA_INJECTION_MAPPING[PERIPHERAL_TYPE]['tplname']['name']=$LANG["common"][6];
+$DATA_INJECTION_MAPPING[PERIPHERAL_TYPE]['tplname']['type']='text';
+
+$DATA_INJECTION_MAPPING[PERIPHERAL_TYPE]['brand']['table']='glpi_peripherals';
+$DATA_INJECTION_MAPPING[PERIPHERAL_TYPE]['brand']['field']='brand';
+$DATA_INJECTION_MAPPING[PERIPHERAL_TYPE]['brand']['name']=$LANG["peripherals"][18];
+$DATA_INJECTION_MAPPING[PERIPHERAL_TYPE]['brand']['type']='text';
+
+$DATA_INJECTION_MAPPING[PERIPHERAL_TYPE]['FK_groups']['table']='glpi_groups';
+$DATA_INJECTION_MAPPING[PERIPHERAL_TYPE]['FK_groups']['field']='name';
+$DATA_INJECTION_MAPPING[PERIPHERAL_TYPE]['FK_groups']['name']=$LANG["common"][35];
+$DATA_INJECTION_MAPPING[PERIPHERAL_TYPE]['FK_groups']['linkfield']='FK_groups';
+$DATA_INJECTION_MAPPING[PERIPHERAL_TYPE]['FK_groups']['type']='text';
+$DATA_INJECTION_MAPPING[PERIPHERAL_TYPE]['FK_groups']['table_type']='single';
+
+$DATA_INJECTION_MAPPING[PERIPHERAL_TYPE]['ticket_tco']['table']='glpi_peripherals';
+$DATA_INJECTION_MAPPING[PERIPHERAL_TYPE]['ticket_tco']['field']='ticket_tco';
+$DATA_INJECTION_MAPPING[PERIPHERAL_TYPE]['ticket_tco']['name']=$LANG["financial"][90];
+$DATA_INJECTION_MAPPING[PERIPHERAL_TYPE]['ticket_tco']['type']='text';
+
 ?>

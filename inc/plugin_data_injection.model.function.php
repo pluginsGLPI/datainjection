@@ -44,4 +44,27 @@ function getAllModels($entity)
 	
 	return $models;
 }
+
+function getModelInstanceByType($type)
+{
+	global $DB;
+	$sql="SELECT model_class_name FROM glpi_plugin_data_injection_filetype WHERE value=".$type;
+	$res = $DB->query($sql);
+	if ($DB->numrows($res) > 0)
+	{
+		$backend_infos = $DB->fetch_array($res);
+		return new $backend_infos["model_class_name"];
+	}
+	else
+		return null;
+}
+
+function getModelInstanceByID($model_id)
+{
+	$model = new DataInjectionModel;
+	$model->getFromDB($model_id);
+	$model = getModelInstanceByType($model->getModelType());
+	$model->getFromDB($model_id);
+	return $model;
+}
 ?>

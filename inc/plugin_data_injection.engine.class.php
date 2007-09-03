@@ -44,7 +44,7 @@ class DataInjectionEngine
 	function DataInjectionEngine($model_id,$filename,$entity=0)
 	{
 		//Instanciate model
-		$this->model = new DataInjectionModel;
+		$this->model = getModelInstanceByID($model_id);
 		
 		//Load model and mappings informations
 		$this->model->loadAll($model_id);

@@ -36,9 +36,9 @@
  */
 class Backend {
 	
-	var $file = "";
-	var $injectionDatas;
-	var $delimiter;
+	private $file = "";
+	protected $injectionDatas;
+	private $delimiter;
 	
 	/*
 	 * Constructor
@@ -136,7 +136,7 @@ class Backend {
  */
 class InjectionDatas
 {
-	var $injectionDatas;
+	private $injectionDatas;
 	
 	function InjectionDatas()
 	{

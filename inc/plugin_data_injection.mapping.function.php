@@ -34,7 +34,7 @@ function getAllMappingsDefinitionsTypes()
 
 	$types = array();
 	$commonitem = new CommonItem;
-	
+
 	foreach ($IMPORT_TYPES as $type)
 	{
 		$commonitem->setType($type);

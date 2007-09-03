@@ -189,12 +189,16 @@ function modelStep($target)
 	foreach($types as $type)
 		{
 		if(isset($model))
-			{
+			//{
+				
+			/*
 			if($model->getDeviceType() == $type[0])
 				echo "<option value='".$type[0]."' selected>".$type[1]."</option>";
 			else
 				echo "<option value='".$type[0]."'>".$type[1]."</option>";
 			}
+			*/
+			echo "<option value='".$type[0]."' ".($model->getDeviceType() == $type[0]?"selected":'').">".$type[1]."</option>";
 		else
 			echo "<option value='".$type[0]."'>".$type[1]."</option>";
 		}
@@ -362,10 +366,10 @@ function deleteStep($target,$suppr)
 {
 	global $DATAINJECTIONLANG,$LANG;
 	
-	$model = new DataInjectionModel();
+	//$model = new DataInjectionModel();
 		
-	$model->getFromDB($_SESSION["plugin_data_injection"]["idmodel"]);
-	
+	//$model->getFromDB($_SESSION["plugin_data_injection"]["idmodel"]);
+	$model = getModelInstanceByID($_SESSION["plugin_data_injection"]["idmodel"]);
 	$name = $model->getModelName();
 	
 	echo "<form action='".$target."' method='post'>";
@@ -489,7 +493,7 @@ function mappingStep($target)
 	global $DATAINJECTIONLANG;
 	
 	$model = unserialize($_SESSION["plugin_data_injection"]["model"]);
-	
+
 	/***********************Read File******************************/
 	if($_SESSION["plugin_data_injection"]["choice"]==1)
 		{
@@ -540,10 +544,9 @@ function mappingStep($target)
 	echo "<th>".$DATAINJECTIONLANG["mappingStep"][5]."</th>";
 	echo "</tr>";
 	/**************************************************************/
-	
+
 	if($_SESSION["plugin_data_injection"]["choice"]==2 || $_SESSION["plugin_data_injection"]["remember"]>=1)
-		foreach($model->mappings as $mapping)
-			foreach($mapping as $key => $value)
+			foreach($model->getMappings()->getAllMappings() as $key => $value)
 				{
 				echo "<tr>";
 				
@@ -860,7 +863,7 @@ function infoStep($target)
 				}
 			}
 				
-	if($_SESSION["plugin_data_injection"]["remember"]==1 || $nbline==0)
+	if( (isset($_SESSION["plugin_data_injection"]["remember"]) && $_SESSION["plugin_data_injection"]["remember"] ==1) || $nbline==0)
 		{
 		$key = 1;
 	
@@ -974,7 +977,7 @@ function saveStep($target,$save)
 				}
 			else
 				{
-				$model = unserialize($_SESSION["plugin_data_injection_model"]);
+				$model = unserialize($_SESSION["plugin_data_injection"]["model"]);
 				echo "<tr><td><input type='text' name='model_name' size='35' value='".$model->getModelName()."' /></td></tr>";
 				echo "<tr><td>".$DATAINJECTIONLANG["saveStep"][5]."</td></tr>";
 				echo "<tr><td><textarea name='comments' rows='4' cols='25'>".$model->getModelComments()."</textarea></td></tr>";

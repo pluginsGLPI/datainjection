@@ -37,12 +37,12 @@
 function getBackend($type)
 {
 	global $DB;
-	$sql="SELECT class_name FROM glpi_plugin_data_injection_filetype WHERE value=".$type;
+	$sql="SELECT backend_class_name FROM glpi_plugin_data_injection_filetype WHERE value=".$type;
 	$res = $DB->query($sql);
 	if ($DB->numrows($res) > 0)
 	{
 		$backend_infos = $DB->fetch_array($res);
-		return new $backend_infos["class_name"];
+		return new $backend_infos["backend_class_name"];
 	}
 	else
 		return null;

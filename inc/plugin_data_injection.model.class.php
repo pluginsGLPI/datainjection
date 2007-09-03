@@ -38,13 +38,42 @@ class DataInjectionModel extends CommonDBTM {
     	$this->type=-1;
     	$this->mappings = new MappingCollection;
     	$this->infos = new InfosCollection;
+    	$this->init();
+	}
+
+	function init()
+	{
+		
+	}
+	
+	//To be implemented
+	function saveSpecificFields()
+	{
+
+	}
+	
+	function deleteSpecificFields()
+	{
+	}
+	
+	function updateSpecificFields()
+	{
+
+	}
+
+	function loadSpecificfields()
+	{
+		
 	}
 
 	//---- Load -----//	
+
+
 	function loadAll($model_id)
 	{
 		if ($this->getFromDB($model_id))
 		{
+			$this->loadSpecificfields();
 			$this->loadMappings($model_id);
 			$this->loadInfos($model_id);
 			return true;
@@ -82,6 +111,8 @@ class DataInjectionModel extends CommonDBTM {
 		else
 			$this->update($this->fields);
 		
+		$this->saveSpecificFields();
+		
 		//Save or add mappings
 		$this->mappings->saveAllMappings($this->fields["ID"]);
 		$this->infos->saveAllInfos($this->fields["ID"]);		
@@ -91,6 +122,7 @@ class DataInjectionModel extends CommonDBTM {
 	{
 		if($this->mappings->deleteMappingsFromDB($this->fields["ID"]) && $this->infos->deleteInfosFromDB($this->fields["ID"]))
 			{
+			$this->deleteSpecificFields();
 			if($this->deleteFromDB($this->fields["ID"]))
 				return true;
 			else
@@ -103,6 +135,7 @@ class DataInjectionModel extends CommonDBTM {
 	function updateModel()
 	{
 		$this->update($this->fields);
+		$this->updateSpecificFields();
 		$this->mappings->deleteMappingsFromDB($this->fields["ID"]);
 		$this->mappings->saveAllMappings($this->fields["ID"]);
 		$this->infos->deleteInfosFromDB($this->fields["ID"]);
@@ -160,19 +193,9 @@ class DataInjectionModel extends CommonDBTM {
 		return $this->fields["behavior_update"];
 	}
 
-	function getDelimiter()
-	{
-		return $this->fields["delimiter"];
-	}
-	
 	function getModelID()
 	{
 		return $this->fields["ID"];
-	}
-	
-	function isHeaderPresent()
-	{
-		return ($this->fields["header_present"]?true:false);
 	}
 	
 	function getDeviceType()
@@ -183,6 +206,11 @@ class DataInjectionModel extends CommonDBTM {
 	function getEntity()
 	{
 		return $this->fields["FK_entities"];
+	}
+
+	function canAddDropdown()
+	{
+		return $this->fields["can_add_dropdown"];
 	}
 	
 	//---- Save -----//
@@ -201,16 +229,6 @@ class DataInjectionModel extends CommonDBTM {
 		$this->fields["comments"] = $comments;
 	}	
 	
-	function setDelimiter($delimiter)
-	{
-		$this->fields["delimiter"] = $delimiter;
-	}	
-	
-	function setHeaderPresent($present)
-	{
-		$this->fields["header_present"] = $present;
-	}	
-
 	function setBehaviorAdd($add)
 	{
 		$this->fields["behavior_add"] = $add;
@@ -240,9 +258,15 @@ class DataInjectionModel extends CommonDBTM {
 	{
 		$this->fields["device_type"] = $device_type; 
 	}
+
 	function setEntity($entity)
 	{
 		$this->fields["FK_entities"] = $entity; 
+	}
+
+	function setCanAddDropdown($canadd)
+	{
+		$this->fields["can_add_dropdown"] = $canadd; 
 	}
 
 }

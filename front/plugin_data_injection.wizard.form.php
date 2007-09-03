@@ -63,9 +63,9 @@ if($load)
 				$_SESSION["plugin_data_injection"]["choice"] = 1;
 			break;
 			case 2:
-				$model = new DataInjectionModel();
+				$model = getModelInstanceByID($_POST["dropdown"]);
+				//$model = new DataInjectionModel();
 				$model->loadAll($_POST["dropdown"]);
-				
 				$_SESSION["plugin_data_injection"]["nbonglet"] = 5;
 				$_SESSION["plugin_data_injection"]["choice"] = 2;
 				$_SESSION["plugin_data_injection"]["model"] = serialize($model);
@@ -76,7 +76,8 @@ if($load)
 				$_SESSION["plugin_data_injection"]["idmodel"] = $_POST["dropdown"];
 			break;
 			case 4:
-				$model = new DataInjectionModel();
+				//$model = new DataInjectionModel();
+				$model = getModelInstanceByID($_POST["dropdown"]);
 				$model->loadAll($_POST["dropdown"]);
 				
 				$_SESSION["plugin_data_injection"]["nbonglet"] = 4;
@@ -102,8 +103,9 @@ if($load)
 		if(isset($_SESSION["plugin_data_injection"]["model"]))
 			$model = unserialize($_SESSION["plugin_data_injection"]["model"]);
 		else
-			$model = new DataInjectionModel();		
-		
+			//$model = new DataInjectionModel();		
+			$model = getModelInstanceByType($_POST["dropdown_type"]);
+
 		if(isset($_SESSION["glpiactive_entity"]))
 			$model->setEntity($_SESSION["glpiactive_entity"]);
 		

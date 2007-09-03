@@ -122,7 +122,7 @@ class DataInjectionMapping extends CommonDBTM {
 
 class MappingCollection {
 	
-	var $mappingCollection;
+	private $mappingCollection;
 	
 	function MappingCollection()
 	{

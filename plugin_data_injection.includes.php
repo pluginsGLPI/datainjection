@@ -42,6 +42,7 @@ include_once("inc/plugin_data_injection.wizard.function.php");
 include_once("inc/plugin_data_injection.engine.class.php");
 include_once("inc/plugin_data_injection.engine.function.php");
 include_once("inc/plugin_data_injection.model.class.php");
+include_once("inc/plugin_data_injection.model.csv.class.php");
 include_once("inc/plugin_data_injection.model.function.php");
 include_once("inc/plugin_data_injection.infos.class.php");
 include_once("inc/plugin_data_injection.mapping.class.php");

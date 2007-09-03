@@ -138,20 +138,23 @@ function checkLine($model,$line,$res)
 	}
 
 /*
- * Insert a value in a dropdown table
+ * Get the ID of an element in a dropdown table, create it if the value doesn't exists and if user has the right
  * @param mapping the mapping informations
  * @param mapping_definition the definition of the mapping
  * @param value the value to add
  * @param entity the active entity
  * @return the ID of the insert value in the dropdown table
  */	
-function insertDropdownValue($mapping, $mapping_definition,$value,$entity)
+function getDropdownValue($mapping, $mapping_definition,$value,$entity,$canadd=0)
 {
 	global $DB, $CFG_GLPI;
 
 	if (empty ($value))
 		return 0;
 
+		//$rightToAdd = checkRightDropdown($mapping_definition["table"],$canadd);
+		$rightToAdd = false;
+			
 		//Value doesn't exists -> add the value in the dropdown table
 		switch ($mapping_definition["table"])
 		{
@@ -164,7 +167,15 @@ function insertDropdownValue($mapping, $mapping_definition,$value,$entity)
 			$input["FK_entities"] = $entity;
 			break;
 		}
-		return addDropdown($input);
+		
+		$ID = getDropdownID($input);
+		if ($ID != -1)
+			return $ID;
+		else
+			if ($rightToAdd)	
+				return addDropdown($input);
+			else
+				return '';	
 }
 
 /*
@@ -237,7 +248,7 @@ function dataAlreadyInDB($type,$fields,$mapping_definition,$model)
 function getInstance($device_type)
 {
 		$commonitem = new CommonItem;
-		$commonitem->setType($device_type);
+		$commonitem->setType($device_type,1);
 		return $commonitem->obj;
 }
 
@@ -259,6 +270,7 @@ function addCommonFields($common_fields,$type,$fields,$entity,$id)
 		case PRINTER_TYPE:
 		case PHONE_TYPE:
 		case NETWORKING_TYPE:
+		case PERIPHERAL_TYPE:
 			$common_fields["device_id"] = $id;
 			$common_fields["device_type"] = $type;
 			$common_fields["FK_entities"] = $entity;
@@ -294,6 +306,7 @@ function addNecessaryFields($model,$mapping,$mapping_definition,$entity,$type,$f
 		case NETWORKING_TYPE:
 		case GROUP_TYPE:
 		case CONTRACT_TYPE:
+		case PERIPHERAL_TYPE:
 			if (!isset($fields["FK_entities"]))
 				$fields["FK_entities"] = $entity;
 			break;
@@ -341,7 +354,7 @@ function getFieldValue($mapping, $mapping_definition,$field_value,$entity,$obj)
 		{
 			//Read and add in a dropdown table
 			case "dropdown":
-				$obj[$mapping_definition["linkfield"]] = insertDropdownValue($mapping,$mapping_definition,$field_value,$entity);
+				$obj[$mapping_definition["linkfield"]] = getDropdownValue($mapping,$mapping_definition,$field_value,$entity,1);
 				break;
 				
 			//Read in a single table	
@@ -349,6 +362,7 @@ function getFieldValue($mapping, $mapping_definition,$field_value,$entity,$obj)
 				switch ($mapping_definition["table"].".".$mapping_definition["field"])
 				{
 					case "glpi_groups.name" :
+					case "glpi_users.name" :
 						$sql = "SELECT ID FROM ".$mapping_definition["table"]." WHERE ".$mapping_definition["field"]."='".$field_value."' AND FK_entities=".$entity;
 						$result = $DB->query($sql);
 						if ($DB->numrows($result))
@@ -382,6 +396,23 @@ function processBeforeEnd($model,$type,$fields,$common_fields)
 		break;
 		default:
 		break;
+	}
+}
+
+/*
+ * 
+ */
+function checkRightDropdown($table,$canadd_dropdown)
+{
+	global $CFG_GLPI;
+	if (!$canadd_dropdown)
+		return false;
+	else	
+	{
+		if (in_array($table,$CFG_GLPI["specif_entities_tables"]))
+			return checkRight("entity_dropdown","w");
+		else
+			return checkRight("dropdown","w");	
 	}
 }
 ?>
