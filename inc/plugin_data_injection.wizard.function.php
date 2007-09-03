@@ -1061,35 +1061,102 @@ function saveStep($target,$save)
 
 
 
-function fillInfoStep($target)
+function fillInfoStep($target,$info)
 {
-	global $DATAINJECTIONLANG;
+	global $DATAINJECTIONLANG,$LANG;
 	
 	echo "<form action='".$target."' method='post' name='step8' enctype='multipart/form-data'>";
 	echo "<table class='wizard'>";
 	
+	echo "<tr>";
+	echo "<td class='wizard_left_area' valign='top'>";
+	
 	/************************Title Step****************************/
-	echo "<tr><td class='wizard_title' valign='bottom'>".$DATAINJECTIONLANG["infoStep"][1]."</td></tr>";
+	echo "<div class='wizard_title' valign='bottom'>".$DATAINJECTIONLANG["step"][3].$DATAINJECTIONLANG["infoStep"][1]."</div>";
 	/**************************************************************/
 	
-	echo "<tr><td class='wizard_body'>";
-	echo "<div class='wizard_cadre'>";
+	/***********************Explain Step***************************/
+	echo "<div class='wizard_explain'>".$DATAINJECTIONLANG["fillInfoStep"][2]."</div>";
+	/**************************************************************/
+	
+	echo "</td>";
+	
+	echo "<td class='wizard_right_area' style='width: 400px' valign='top'>";
+	
+	if($info)
+		{
+			echo "<div class='save_delete'>pas encore fait</div>";
+		}
+	else
+		{
+		echo "<table class='saveStep_table'>";
+		echo "<tr><td style='text-align: center' colspan='2'>".$DATAINJECTIONLANG["fillInfoStep"][1]."</td><tr>";
+		echo "<tr><td style='text-align: center'><input type='submit' name='yes_fillInfoStep' value='".$LANG["choice"][1]."' class='submit' /></td>";
+		echo "<td style='text-align: center'><input type='submit' name='no_fillInfoStep' value='".$LANG["choice"][0]."' class='submit' /></td></tr>";
+		echo "</table>";
+		}
 
-	
-	
-	echo "<div>";
 	echo "</td></tr>";
 	
-	echo "<tr><td class='wizard_button'>";
-
-	echo "<div class='preview'>";
-	echo "<input type='submit' name='preview8' value='".$DATAINJECTIONLANG["button"][1]."' class='submit' />";
-	echo "</div>";
+	/**************************Button******************************/
+	echo "<tr><td class='wizard_button' colspan='2'>";
 	
+	if($info)
+		{
+		echo "<div class='preview'>";
+		echo "<input type='submit' name='preview_fillInfoStep' value='".$DATAINJECTIONLANG["button"][1]."' class='submit' />";
+		echo "</div>";
+		
+		echo "<div class='next'>";
+		echo "<input type='submit' name='next_fillInfoStep' value='".$DATAINJECTIONLANG["button"][2]."' class='submit' />";
+		echo "</div>";
+		}
+		
+	echo "</td></tr>";
+	/**************************************************************/
+	
+	echo "</table>";
+	echo "</form>";
+}
+
+function ImportStep($target)
+{
+	global $DATAINJECTIONLANG,$LANG;
+	
+	$model = unserialize($_SESSION["plugin_data_injection"]["model"]);
+	
+	echo "<form action='".$target."' method='post' name='step8' enctype='multipart/form-data'>";
+	echo "<table class='wizard'>";
+	
+	echo "<tr>";
+	echo "<td class='wizard_left_area' valign='top'>";
+	
+	/************************Title Step****************************/
+	echo "<div class='wizard_title' valign='bottom'>".$DATAINJECTIONLANG["step"][4].$DATAINJECTIONLANG["importStep"][1]."</div>";
+	/**************************************************************/
+	
+	/***********************Explain Step***************************/
+	echo "<div class='wizard_explain'>".$DATAINJECTIONLANG["importStep"][2]."</div>";
+	/**************************************************************/
+	
+	echo "</td>";
+	
+	echo "<td class='wizard_right_area' style='width: 400px' valign='top'>";
+	
+	$engine = new DataInjectionEngine($model->getModelID(),PLUGIN_DATA_INJECTION_UPLOAD_DIR.$_SESSION["plugin_data_injection"]["file"],$_SESSION["glpiactive_entity"]);
+	$results = $engine->injectDatas();
+
+	echo "</td></tr>";
+	
+	/**************************Button******************************/
+	echo "<tr><td class='wizard_button' colspan='2'>";
 	echo "<div class='next'>";
-	echo "<input type='submit' name='next8' value='".$DATAINJECTIONLANG["button"][2]."' class='submit' />";
+	echo "<input type='submit' name='next_fillInfoStep' value='".$DATAINJECTIONLANG["button"][2]."' class='submit' />";
 	echo "</div>";
-	echo "</td></tr></table>";
+	echo "</td></tr>";
+	/**************************************************************/
+	
+	echo "</table>";
 	echo "</form>";
 }
 

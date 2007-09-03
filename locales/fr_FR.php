@@ -123,6 +123,12 @@ $DATAINJECTIONLANG["saveStep"][8] = "Votre modèle a été enregistré et est pr
 $DATAINJECTIONLANG["saveStep"][9] = "Votre modèle a été mis à jour et est prêt à l'emploi.";
 $DATAINJECTIONLANG["saveStep"][10] = "Voulez-vous utiliser le modèle maintenant ?";
 
+$DATAINJECTIONLANG["fillInfoStep"][1] = "Attention ! Vous êtes sur le point d'importer des données dans GLPI. Etes-vous sûre de vouloir importer ?";
+$DATAINJECTIONLANG["fillInfoStep"][2] = "Remplissez les champs pour que les informations soient inséré dans GLPI lors de l'importation.";
+
+$DATAINJECTIONLANG["importStep"][1] = "Importation du fichier";
+$DATAINJECTIONLANG["importStep"][2] = "L'importation du fichier peut prendre plusieurs minutes en fonction de votre configurations. Veuillez patientez et suivre la barre de progression pour voir où en est l'importation.";
+
 $DATAINJECTIONLANG["button"][1] = "< Précédent";
 $DATAINJECTIONLANG["button"][2] = "Suivant >";
 $DATAINJECTIONLANG["button"][3] = "Voir le fichier";

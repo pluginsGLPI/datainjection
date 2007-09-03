@@ -87,9 +87,9 @@ class DataInjectionEngine
 
 		for ($datas = $this->getDatas(); $i < count($datas);$i++)
 		{
-			$global_result = checkLine($this->model,$datas[$i][0],$global_result);
-			if ($global_result->getStatus())
-				$global_result = $this->injectLine($this->model,$datas[$i][0],$global_result);
+			//$global_result = checkLine($this->model,$datas[$i][0],$global_result);
+			//if ($global_result->getStatus())
+				$global_result = $this->injectLine($datas[$i][0]);
 
 			$tab_result[] = $global_result;
 		}
@@ -97,20 +97,32 @@ class DataInjectionEngine
 		return $tab_result;
 	}
 	
+	function getNumberOfLines()
+	{
+		return $this->backend->getNumberOfLine();
+	}
+	
 	/*
 	 * Inject one line of datas
 	 * @param line one line of data to import
 	 */
-	function injectLine($model,$line,$result)
+	function injectLine($line)
 	{
+		$result = new DataInjectionResults;
+
+
+		$result = checkLine($this->model,$line,$result);
+		if (!$result->getStatus())
+			return $result;
+			
 		//Array to store the fields to write to db
 		$db_fields = array();
 		$db_fields["common"] = array();
-		$db_fields[$model->getDeviceType()] = array();
+		$db_fields[$this->model->getDeviceType()] = array();
 		
 		for ($i=0; $i < count($line);$i++)
 		{
-			$mapping = $model->getMappingByRank($i);
+			$mapping = $this->model->getMappingByRank($i);
 			if ($mapping != null && $mapping->getValue() != NOT_MAPPED)
 			{
 				$mapping_definition = getMappingDefinitionByTypeAndName($mapping->getMappingType(),$mapping->getValue());
@@ -133,22 +145,22 @@ class DataInjectionEngine
 		//--------------------------------------------------//
 		
 		//First, try to insert or update primary object
-		$fields = $db_fields[$model->getDeviceType()];
+		$fields = $db_fields[$this->model->getDeviceType()];
 
-		$obj = getInstance($model->getDeviceType());
+		$obj = getInstance($this->model->getDeviceType());
 		//If necessary, add default fields which are mandatory to create the object
-		$fields = addNecessaryFields($model,$mapping,$mapping_definition,$this->entity,$model->getDeviceType(),$fields,$db_fields["common"]);
+		$fields = addNecessaryFields($this->model,$mapping,$mapping_definition,$this->entity,$this->model->getDeviceType(),$fields,$db_fields["common"]);
 
 		//Check if the line already exists in database
-		$ID = dataAlreadyInDB($model->getDeviceType(),$fields,$mapping_definition,$model);
+		$ID = dataAlreadyInDB($this->model->getDeviceType(),$fields,$mapping_definition,$this->model);
 	
 		if ($ID == -1)
 		{
-			if ($model->getBehaviorAdd())
+			if ($this->model->getBehaviorAdd())
 			{
 				$ID = $obj->add($fields);
 				//Add the ID to the fields, so it can be reused after
-				$db_fields["common"] = addCommonFields($db_fields["common"],$model->getDeviceType(),$fields,$this->entity,$ID);
+				$db_fields["common"] = addCommonFields($db_fields["common"],$this->model->getDeviceType(),$fields,$this->entity,$ID);
 				//echo "ADD=$ID\n"; 
 				$result->setInjectionType("add");
 				$result->setInjectionType(IMPORT_OK);
@@ -161,10 +173,10 @@ class DataInjectionEngine
 				$result->setInjectionMessage(ERROR_CANNOT_IMPORT);
 			}
 		}	
-		elseif ($model->getBehaviorUpdate())
+		elseif ($this->model->getBehaviorUpdate())
 		{
 			$fields["ID"] = $ID;
-			$db_fields["common"] = addCommonFields($db_fields["common"],$model->getDeviceType(),$fields,$this->entity,$ID);
+			$db_fields["common"] = addCommonFields($db_fields["common"],$this->model->getDeviceType(),$fields,$this->entity,$ID);
 			$obj->update($fields);
 			//echo "update ID=$ID\n";
 			$result->setInjectionType("update");
@@ -180,7 +192,7 @@ class DataInjectionEngine
 		if ($process)
 		{
 			//Post processing, if some actions need to be done
-			processBeforeEnd($model,$model->getDeviceType(),$fields,$db_fields["common"]);
+			processBeforeEnd($this->model,$this->model->getDeviceType(),$fields,$db_fields["common"]);
 
 			//----------------------------------------------------//
 			//-------------Process other types-------------------//
@@ -189,19 +201,19 @@ class DataInjectionEngine
 			//Insert others objects in database
 			foreach ($db_fields as $type => $fields)
 			{
-				if ($type != "common" && $type != $model->getDeviceType())
+				if ($type != "common" && $type != $this->model->getDeviceType())
 				{
 					$obj = getInstance($type);
 					//If necessary, add default fields which are mandatory to create the object
-					$fields = addNecessaryFields($model,$mapping,$mapping_definition,$this->entity,$type,$fields,$db_fields["common"]);
+					$fields = addNecessaryFields($this->model,$mapping,$mapping_definition,$this->entity,$type,$fields,$db_fields["common"]);
 					
 					//Check if the line already exists in database
-					$ID = dataAlreadyInDB($type,$fields,$mapping_definition,$model);
+					$ID = dataAlreadyInDB($type,$fields,$mapping_definition,$this->model);
 					if ($ID == -1)
 					{
 							$ID = $obj->add($fields);
 							//Add the ID to the fields, so it can be reused after
-							$db_fields["common"] = addCommonFields($db_fields["common"],$model->getDeviceType(),$fields,$this->entity,$ID);
+							$db_fields["common"] = addCommonFields($db_fields["common"],$this->model->getDeviceType(),$fields,$this->entity,$ID);
 					}	
 					else
 					{
@@ -210,7 +222,7 @@ class DataInjectionEngine
 					}
 
 					//Post processing, if some actions need to be done
-					processBeforeEnd($model,$type,$fields,$db_fields["common"]);
+					processBeforeEnd($this->model,$type,$fields,$db_fields["common"]);
 
 				}
 				
