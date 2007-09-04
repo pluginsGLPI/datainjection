@@ -34,12 +34,12 @@
 class DataInjectionEngine
 {
 	//Model informations
-	var $model;
+	private $model;
 	
 	//Backend to read file to import
-	var $backend;
+	private $backend;
 
-	var $entity;
+	private $entity;
 		
 	function DataInjectionEngine($model_id,$filename,$entity=0)
 	{
@@ -54,8 +54,8 @@ class DataInjectionEngine
 		$datas = new InjectionDatas;
 
 		//Get the backend associated with the model type (CSV, etc...)
-		$this->backend = getBackend($this->model->getModelType());		
-		$this->backend->initBackend($filename,$this->model->getDelimiter());
+		$this->backend = getBackend($this->getModel()->getModelType());		
+		$this->backend->initBackend($filename,$this->getModel()->getDelimiter());
 		$this->backend->read();
 	}
 	
@@ -80,23 +80,24 @@ class DataInjectionEngine
 		$global_result = new DataInjectionResults;
 		
 		
-		if ($this->model->isHeaderPresent())
+		if ($this->getModel()->isHeaderPresent())
 			$i=1;
 		else
 			$i=0;
 
 		for ($datas = $this->getDatas(); $i < count($datas);$i++)
 		{
-			//$global_result = checkLine($this->model,$datas[$i][0],$global_result);
-			//if ($global_result->getStatus())
-				$global_result = $this->injectLine($datas[$i][0]);
-
+			$global_result = $this->injectLine($datas[$i][0]);
 			$tab_result[] = $global_result;
 		}
 			
 		return $tab_result;
 	}
 	
+	/*
+	 * Return the number of lines of the file
+	 * @return the number of line of the file
+	 */
 	function getNumberOfLines()
 	{
 		return $this->backend->getNumberOfLine();
@@ -109,7 +110,6 @@ class DataInjectionEngine
 	function injectLine($line)
 	{
 		$result = new DataInjectionResults;
-
 
 		$result = checkLine($this->model,$line,$result);
 		if (!$result->getStatus())
@@ -132,8 +132,9 @@ class DataInjectionEngine
 				$db_fields[$mapping->getMappingType()] = getFieldValue(
 						$mapping, 
 						$mapping_definition,$line[$i],
-						$this->entity,
-						$db_fields[$mapping->getMappingType()]
+						$this->getEntity(),
+						$db_fields[$mapping->getMappingType()],
+						$this->model->getCanAddDropdown()
 				);
 				
 			}
@@ -149,7 +150,7 @@ class DataInjectionEngine
 
 		$obj = getInstance($this->model->getDeviceType());
 		//If necessary, add default fields which are mandatory to create the object
-		$fields = addNecessaryFields($this->model,$mapping,$mapping_definition,$this->entity,$this->model->getDeviceType(),$fields,$db_fields["common"]);
+		$fields = addNecessaryFields($this->model,$mapping,$mapping_definition,$this->getEntity(),$this->model->getDeviceType(),$fields,$db_fields["common"]);
 
 		//Check if the line already exists in database
 		$ID = dataAlreadyInDB($this->model->getDeviceType(),$fields,$mapping_definition,$this->model);
@@ -160,8 +161,7 @@ class DataInjectionEngine
 			{
 				$ID = $obj->add($fields);
 				//Add the ID to the fields, so it can be reused after
-				$db_fields["common"] = addCommonFields($db_fields["common"],$this->model->getDeviceType(),$fields,$this->entity,$ID);
-				//echo "ADD=$ID\n"; 
+				$db_fields["common"] = addCommonFields($db_fields["common"],$this->model->getDeviceType(),$fields,$this->getEntity(),$ID);
 				$result->setInjectionType("add");
 				$result->setInjectionType(IMPORT_OK);
 			}
@@ -176,9 +176,8 @@ class DataInjectionEngine
 		elseif ($this->model->getBehaviorUpdate())
 		{
 			$fields["ID"] = $ID;
-			$db_fields["common"] = addCommonFields($db_fields["common"],$this->model->getDeviceType(),$fields,$this->entity,$ID);
+			$db_fields["common"] = addCommonFields($db_fields["common"],$this->model->getDeviceType(),$fields,$this->getEntity(),$ID);
 			$obj->update($fields);
-			//echo "update ID=$ID\n";
 			$result->setInjectionType("update");
 			$result->setInjectionMessage(IMPORT_OK);
 		}
@@ -205,7 +204,7 @@ class DataInjectionEngine
 				{
 					$obj = getInstance($type);
 					//If necessary, add default fields which are mandatory to create the object
-					$fields = addNecessaryFields($this->model,$mapping,$mapping_definition,$this->entity,$type,$fields,$db_fields["common"]);
+					$fields = addNecessaryFields($this->model,$mapping,$mapping_definition,$this->getEntity(),$type,$fields,$db_fields["common"]);
 					
 					//Check if the line already exists in database
 					$ID = dataAlreadyInDB($type,$fields,$mapping_definition,$this->model);
@@ -213,7 +212,7 @@ class DataInjectionEngine
 					{
 							$ID = $obj->add($fields);
 							//Add the ID to the fields, so it can be reused after
-							$db_fields["common"] = addCommonFields($db_fields["common"],$this->model->getDeviceType(),$fields,$this->entity,$ID);
+							$db_fields["common"] = addCommonFields($db_fields["common"],$this->model->getDeviceType(),$fields,$this->getEntity(),$ID);
 					}	
 					else
 					{
@@ -231,6 +230,21 @@ class DataInjectionEngine
 			
 		}
 		return $result;			
+	}
+
+	function getModel()
+	{
+		return $this->model;
+	}
+
+	function getBackend()
+	{
+		return $this->backend;
+	}
+
+	function getEntity()
+	{
+		return $this->entity;
 	}
 }
 

@@ -152,8 +152,7 @@ function getDropdownValue($mapping, $mapping_definition,$value,$entity,$canadd=0
 	if (empty ($value))
 		return 0;
 
-		//$rightToAdd = checkRightDropdown($mapping_definition["table"],$canadd);
-		$rightToAdd = false;
+		$rightToAdd = checkRightDropdown($mapping_definition["table"],$canadd);
 			
 		//Value doesn't exists -> add the value in the dropdown table
 		switch ($mapping_definition["table"])
@@ -344,7 +343,7 @@ function addNecessaryFields($model,$mapping,$mapping_definition,$entity,$type,$f
 	return $fields;
 }
 
-function getFieldValue($mapping, $mapping_definition,$field_value,$entity,$obj)
+function getFieldValue($mapping, $mapping_definition,$field_value,$entity,$obj,$canadd)
 {
 	global $DB;
 
@@ -354,7 +353,7 @@ function getFieldValue($mapping, $mapping_definition,$field_value,$entity,$obj)
 		{
 			//Read and add in a dropdown table
 			case "dropdown":
-				$obj[$mapping_definition["linkfield"]] = getDropdownValue($mapping,$mapping_definition,$field_value,$entity,1);
+				$obj[$mapping_definition["linkfield"]] = getDropdownValue($mapping,$mapping_definition,$field_value,$entity,$canadd);
 				break;
 				
 			//Read in a single table	
