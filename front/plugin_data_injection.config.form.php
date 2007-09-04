@@ -50,6 +50,19 @@ if(!isset($_SESSION["glpi_plugin_data_injection_installed"]) || $_SESSION["glpi_
 			echo "<a href='plugin_data_injection.install.php'>".$DATAINJECTIONLANG["setup"][3]."</a></td></tr>";
 			echo "</table></div>";
 }
+else
+{
+		echo "<div align='center'>";
+		echo "<form name=cas action=\"".$_SERVER["PHP_SELF"]."\" method=\"post\">";
+
+		echo "<table class='tab_cadre_fixe' cellpadding='6'>";
+		echo "<tr class='tab_bg_2'><th colspan='6'>" . $DATAINJECTIONLANG["setup"][1]."</th></tr></table>";
+		echo "<br>";
+		echo "<table class='tab_cadre_fixe' cellpadding='6'>";
+		echo "<tr class='tab_bg_2'><td colspan='5' align='center'><a href=\"../front/plugin_data_injection.uninstall.php\">".$DATAINJECTIONLANG["setup"][5]."</a></td/></tr>";
+		echo "</table></form></div>";
+	
+}
 
 commonFooter();
 ?>

@@ -124,6 +124,9 @@ function plugin_data_injection_uninstall() {
 	$query = "DROP TABLE `glpi_plugin_data_injection_models`;";
 	$DB->query($query) or die($DB->error());
 
+	$query = "DROP TABLE `glpi_plugin_data_injection_models_csv`;";
+	$DB->query($query) or die($DB->error());
+
 	$query = "DROP TABLE `glpi_plugin_data_injection_mappings`;";
 	$DB->query($query) or die($DB->error());
 
