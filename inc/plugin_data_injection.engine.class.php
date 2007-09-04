@@ -39,6 +39,7 @@ class DataInjectionEngine
 	//Backend to read file to import
 	private $backend;
 
+	//Current entity
 	private $entity;
 		
 	function DataInjectionEngine($model_id,$filename,$entity=0)
@@ -54,8 +55,8 @@ class DataInjectionEngine
 		$datas = new InjectionDatas;
 
 		//Get the backend associated with the model type (CSV, etc...)
-		$this->backend = getBackend($this->getModel()->getModelType());		
-		$this->backend->initBackend($filename,$this->getModel()->getDelimiter());
+		$this->backend = getBackend($this->model->getModelType());		
+		$this->backend->initBackend($filename,$this->model->getDelimiter());
 		$this->backend->read();
 	}
 	
@@ -76,9 +77,7 @@ class DataInjectionEngine
 	function injectDatas()
 	{
 		$tab_result = array();
-		$check_result = array();
 		$global_result = new DataInjectionResults;
-		
 		
 		if ($this->getModel()->isHeaderPresent())
 			$i=1;
@@ -222,9 +221,7 @@ class DataInjectionEngine
 
 					//Post processing, if some actions need to be done
 					processBeforeEnd($this->model,$type,$fields,$db_fields["common"]);
-
 				}
-				
 			}
 			$result->setStatus(true);
 			

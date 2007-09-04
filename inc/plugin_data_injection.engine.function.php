@@ -152,7 +152,7 @@ function getDropdownValue($mapping, $mapping_definition,$value,$entity,$canadd=0
 	if (empty ($value))
 		return 0;
 
-		$rightToAdd = checkRightDropdown($mapping_definition["table"],$canadd);
+		$rightToAdd = haveRightDropdown($mapping_definition["table"],$canadd);
 			
 		//Value doesn't exists -> add the value in the dropdown table
 		switch ($mapping_definition["table"])
@@ -401,7 +401,7 @@ function processBeforeEnd($model,$type,$fields,$common_fields)
 /*
  * 
  */
-function checkRightDropdown($table,$canadd_dropdown)
+function haveRightDropdown($table,$canadd_dropdown)
 {
 	global $CFG_GLPI;
 	if (!$canadd_dropdown)
@@ -409,9 +409,9 @@ function checkRightDropdown($table,$canadd_dropdown)
 	else	
 	{
 		if (in_array($table,$CFG_GLPI["specif_entities_tables"]))
-			return checkRight("entity_dropdown","w");
+			return haveRight("entity_dropdown","w");
 		else
-			return checkRight("dropdown","w");	
+			return haveRight("dropdown","w");	
 	}
 }
 ?>
