@@ -120,6 +120,9 @@ if($load)
 		if(isset($_POST["dropdown_update"]))
 			$model->setBehaviorUpdate($_POST["dropdown_update"]);
 			
+		if(isset($_POST["dropdown_canadd"]))
+			$model->setCanAddDropdown($_POST["dropdown_canadd"]);
+			
 		if(isset($_POST["dropdown_header"]))
 			$model->setHeaderPresent($_POST["dropdown_header"]);
 		

@@ -208,7 +208,7 @@ class DataInjectionModel extends CommonDBTM {
 		return $this->fields["FK_entities"];
 	}
 
-	function canAddDropdown()
+	function getCanAddDropdown()
 	{
 		return $this->fields["can_add_dropdown"];
 	}

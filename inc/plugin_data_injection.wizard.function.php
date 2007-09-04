@@ -282,6 +282,33 @@ function modelStep($target)
 	echo "</select></td></tr>";
 	/**************************************************************/
 	
+	/**********************Can add dropdown************************/
+	echo "<tr><td>".$DATAINJECTIONLANG["modelStep"][8]."</td>";
+	
+	echo "<td><select name='dropdown_canadd'>";
+	
+	if(isset($model))
+		{
+		if($model->getCanAddDropdown())
+			{
+			echo "<option value='1' selected>".$LANG["choice"][1]."</option>";
+			echo "<option value='0'>".$LANG["choice"][0]."</option>";
+			}
+		else
+			{
+			echo "<option value='1'>".$LANG["choice"][1]."</option>";
+			echo "<option value='0' selected>".$LANG["choice"][0]."</option>";	
+			}
+		}
+	else
+		{
+		echo "<option value='0'>".$LANG["choice"][0]."</option>";
+		echo "<option value='1'>".$LANG["choice"][1]."</option>";
+		}
+	
+	echo "</select></td></tr>";
+	/**************************************************************/
+	
 	echo "</table>";
 	echo "</fieldset>";
 	
@@ -290,7 +317,7 @@ function modelStep($target)
 	echo "<table class='modelStep_table'>";
 	
 	/**************************Header******************************/
-	echo "<tr><td style='width:160px'>".$DATAINJECTIONLANG["modelStep"][8]."</td>";
+	echo "<tr><td style='width:160px'>".$DATAINJECTIONLANG["modelStep"][9]."</td>";
 	
 	if($_SESSION["plugin_data_injection"]["choice"]==1)
 		echo "<td style='width:105px'><select name='dropdown_header'>";
@@ -337,7 +364,7 @@ function modelStep($target)
 	echo "</fieldset>";
 	
 	/*********************Delimiter Error**************************/
-	echo "<div id='delimiter_error' class='delimiter' >".$DATAINJECTIONLANG["modelStep"][10]."</div>";
+	echo "<div id='delimiter_error' class='delimiter' >".$DATAINJECTIONLANG["modelStep"][11]."</div>";
 	/**************************************************************/
 	
 	echo "</td></tr>";
