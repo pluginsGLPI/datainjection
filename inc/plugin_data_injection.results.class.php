@@ -29,10 +29,11 @@
  */
 class DataInjectionResults {
 	
-	var $status;
-	var $check_message;
-	var $injection_message;
-	var $injection_type;
+	private $status;
+	private $check_message;
+	private $injection_message;
+	private $injection_type;
+	private $injected_id;
 	
 	function DataInjectionResults()
 	{
@@ -40,9 +41,9 @@ class DataInjectionResults {
 		$this->check_message = "";
 		$this->injection_message = "";
 		$this->injection_type = "";
+		$this->injected_id = -1;
 	}
 
-	
 	function getStatus()
 	{
 		return $this->status;
@@ -63,6 +64,10 @@ class DataInjectionResults {
 		return $this->injection_type;
 	}
 
+	function getInjectedId()
+	{
+		return $this->injected_id;
+	}
 
 	function setStatus($status)
 	{
@@ -82,6 +87,11 @@ class DataInjectionResults {
 	function setInjectionType($type)
 	{
 		$this->injection_message = $type;
+	}
+	
+	function setInjectedId($ID)
+	{
+		$this->injected_id = $ID;
 	}
 	
 	private function getLabel($type)
