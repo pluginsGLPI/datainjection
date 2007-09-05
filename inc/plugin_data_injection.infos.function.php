@@ -33,6 +33,7 @@
  */
 function getAllInfosAsArrayByType($type,$infoscollection)
 {
+	$fields = array();
 	foreach ($infoscollection as $info)
 	{
 		if ($info->getType() == $type)

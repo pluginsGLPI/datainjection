@@ -80,7 +80,7 @@ if($load)
 				$model = getModelInstanceByID($_POST["dropdown"]);
 				$model->loadAll($_POST["dropdown"]);
 				
-				$_SESSION["plugin_data_injection"]["nbonglet"] = 4;
+				$_SESSION["plugin_data_injection"]["nbonglet"] = 5;
 				$_SESSION["plugin_data_injection"]["choice"] = 4;
 				$_SESSION["plugin_data_injection"]["model"] = serialize($model);
 			break;
@@ -320,8 +320,11 @@ if($load)
 		$save=2;		
 	
 	else if(isset($_POST["yes2_saveStep"]))
-		{
-		$_SESSION["plugin_data_injection"]["step"] = 3;
+		{	
+		if($_SESSION["plugin_data_injection"]["choice"]==1)
+			$_SESSION["plugin_data_injection"]["step"] = 3;
+		else
+			$_SESSION["plugin_data_injection"]["step"] = 2;
 		$_SESSION["plugin_data_injection"]["choice"] = 4;
 		$_SESSION["plugin_data_injection"]["nbonglet"] = 4;
 		
@@ -356,6 +359,19 @@ if($load)
 		}
 		
 	else if(isset($_POST["no_fillInfoStep"]))
+		$_SESSION["plugin_data_injection"]["step"] = 1;
+	/**************************************************************/
+	
+	/**************************Import Step*************************/
+	else if(isset($_POST["next_importStep"]))
+		{
+		$_SESSION["plugin_data_injection"]["step"]++;
+		$_SESSION["plugin_data_injection"]["load"] = "next_importStep";
+		}
+	/**************************************************************/
+	
+	/****************************Log Step**************************/
+	else if(isset($_POST["next_logStep"]))
 		$_SESSION["plugin_data_injection"]["step"] = 1;
 	/**************************************************************/
 	}
@@ -449,6 +465,9 @@ else
 				break;
 				case 4:
 					importStep($_SERVER["PHP_SELF"]);
+				break;
+				case 5:
+					logStep($_SERVER["PHP_SELF"]);
 				break;
 				}
 		break;

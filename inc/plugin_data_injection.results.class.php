@@ -55,7 +55,7 @@ class DataInjectionResults {
 	
 	function getInjectionMessage()
 	{
-		return $this->injection_message;
+		return $this->getLabel($this->injection_message);
 	}
 
 	function getInjectionType()
@@ -83,6 +83,37 @@ class DataInjectionResults {
 	{
 		$this->injection_message = $type;
 	}
-
+	
+	private function getLabel($type)
+	{
+		global $DATAINJECTIONLANG;
+		
+		$message = "";
+		switch ($type)
+		{
+			case ERROR_CANNOT_IMPORT:
+				$message = $DATAINJECTIONLANG["result"][1];
+			break;
+			case ERROR_CANNOT_UPDATE:
+				$message = $DATAINJECTIONLANG["result"][2];
+			break;
+			case ERROR_IMPORT_ALREADY_IMPORTED:
+				$message = $DATAINJECTIONLANG["result"][3];
+			break;
+			case ERROR_IMPORT_WRONG_TYPE:
+				$message = $DATAINJECTIONLANG["result"][4];
+			break;
+			case ERROR_IMPORT_FIELD_MANDATORY:
+				$message = $DATAINJECTIONLANG["result"][5];
+			break;
+			case TYPE_CHECK_OK:
+				$message = $DATAINJECTIONLANG["result"][6];
+			break;
+			case IMPORT_OK:
+				$message = $DATAINJECTIONLANG["result"][7];
+			break;
+		}
+		return $message;
+	}
 }
 ?>

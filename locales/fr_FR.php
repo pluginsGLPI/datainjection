@@ -105,7 +105,7 @@ $DATAINJECTIONLANG["mappingStep"][5] = "Obligatoire";
 $DATAINJECTIONLANG["mappingStep"][6] = "-------Choisir une table-------";
 $DATAINJECTIONLANG["mappingStep"][7] = "-------Choisir un champ-------";
 $DATAINJECTIONLANG["mappingStep"][8] = "Au moins un mapping doit être obligatoire";
-$DATAINJECTIONLANG["mappingStep"][9] = "Dans cette étapes vous allez réaliser vos mappings avec le fichier.";
+$DATAINJECTIONLANG["mappingStep"][9] = "Dans cette étape vous allez réaliser vos mappings avec le fichier.";
 $DATAINJECTIONLANG["mappingStep"][10] = "La colonne entête correspond aux entetes de votre fichier";
 $DATAINJECTIONLANG["mappingStep"][11] = "La notion obligatoire correspond à un champ qui devra absolument être connue dans le fichier, vous devez avoir au moins un mapping obligatoire avant de continuer l'assistant";
 
@@ -130,8 +130,23 @@ $DATAINJECTIONLANG["fillInfoStep"][2] = "Remplissez les champs pour que les info
 $DATAINJECTIONLANG["importStep"][1] = "Importation du fichier";
 $DATAINJECTIONLANG["importStep"][2] = "L'importation du fichier peut prendre plusieurs minutes en fonction de votre configurations. Veuillez patientez et suivre la barre de progression pour voir où en est l'importation.";
 
+$DATAINJECTIONLANG["logStep"][1] = "Résultat de l'importation";
+$DATAINJECTIONLANG["logStep"][2] = "Visualisez le déroulement de l'importation à l'aide du bouton voir les logs et exporter le compte rendu en texte à l'aide du bouton exporter les logs";
+$DATAINJECTIONLANG["logStep"][3] = "L'importation a réussi mais comporte peut être des problèmes";
+
 $DATAINJECTIONLANG["button"][1] = "< Précédent";
 $DATAINJECTIONLANG["button"][2] = "Suivant >";
 $DATAINJECTIONLANG["button"][3] = "Voir le fichier";
+$DATAINJECTIONLANG["button"][4] = "Voir les logs";
+$DATAINJECTIONLANG["button"][5] = "Exporter les logs";
+$DATAINJECTIONLANG["button"][6] = "Terminé";
+
+$DATAINJECTIONLANG["result"][1] = "Une donnée n'a pas le bon type";
+$DATAINJECTIONLANG["result"][2] = "Le type de données est correct";
+$DATAINJECTIONLANG["result"][3] = "Les données existent déjà en base";
+$DATAINJECTIONLANG["result"][4] = "Au moins un champs obligatoire n'est pas remplis";
+$DATAINJECTIONLANG["result"][5] = "Pas les droits pour importer les données";
+$DATAINJECTIONLANG["result"][6] = "Pas les droits pour mettre à jour les données";
+$DATAINJECTIONLANG["result"][7] = "L'import s'est bien passé";
 
 ?>

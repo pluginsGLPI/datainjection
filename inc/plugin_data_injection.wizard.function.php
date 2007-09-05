@@ -90,7 +90,7 @@ function choiceStep($target)
 		
 		/***************************Using******************************/
 		echo "<tr>";
-		echo "<td><input type='radio' name='choice' value='4' onClick='showSelect(this.form,$nbmodel);deleteOnglet(4)' /></td>";
+		echo "<td><input type='radio' name='choice' value='4' onClick='showSelect(this.form,$nbmodel);deleteOnglet(5)' /></td>";
 		echo "<td>".$DATAINJECTIONLANG["choiceStep"][6]."</td>";
 		echo "</tr>";
 		echo "</table>";
@@ -439,7 +439,7 @@ function deleteStep($target,$suppr)
 	if($suppr)
 		{
 		echo "<div class='next'>";
-		echo "<input type='submit' name='next_deleteStep' value='".$DATAINJECTIONLANG["button"][2]."' class='submit' />";
+		echo "<input type='submit' name='next_deleteStep' value='".$DATAINJECTIONLANG["button"][6]."' class='submit' />";
 		echo "</div>";
 		}
 	echo "</td></tr>";
@@ -692,13 +692,13 @@ function mappingStep($target)
 	if($_SESSION["plugin_data_injection"]["choice"]==1)
 		{
 		echo "<tr><td colspan='5'>";
-		echo "<form action='plugin_data_injection.popup.php' method='post' id='popup'>";
+		echo "<form action='plugin_data_injection.popup.file.php' method='post' id='popup'>";
 		echo "<table style='margin-top: 10px'>";
 		echo "<tr><td style='text-align:center'>";
 		echo "Nbr de ligne : <input type='text' id='nbline' name='nbline' size='2' maxlength='3' value='1' onfocus=\"this.value=''\" /> / ".$nbline;
 		echo "</td></tr>";
 		echo "<tr><td style='text-align:center'>";
-		echo "<input type='button' name='valid_popup' value='".$DATAINJECTIONLANG["button"][3]."' class='submit' onclick='popup($nbline)' />";
+		echo "<input type='button' name='valid_popup' value='".$DATAINJECTIONLANG["button"][3]."' class='submit' onclick='file_popup($nbline)' />";
 		echo "</td></tr>";
 		echo "</table>";
 		echo "</form>";
@@ -1072,7 +1072,7 @@ function saveStep($target,$save)
 		break;
 		case 1:
 			echo "<div class='next'>";
-			echo "<input type='submit' name='next_saveStep' value='".$DATAINJECTIONLANG["button"][2]."' class='submit' />";
+			echo "<input type='submit' name='next_saveStep' value='".$DATAINJECTIONLANG["button"][6]."' class='submit' />";
 			echo "</div>";
 		break;
 	}
@@ -1170,20 +1170,24 @@ function importStep($target)
 	
 	echo "<td class='wizard_right_area' style='width: 400px' valign='top'>";
 	
+	
+	//echo "<div id='new_import'>";
 	echo "<div class='importStep_cadre'><div class='importStep_progress' id='importStep_progress'><div class='importStep_pourcentage' id='importStep_pourcentage'>".$_SESSION["plugin_data_injection"]["import"]["progress"]." %</div></div></div>";
 	
-	echo "<div id='new_import'>";
+	
 	if($_SESSION["plugin_data_injection"]["import"]["i"]<$_SESSION["plugin_data_injection"]["import"]["i_stop"])
 		{
 		traitement();
 		if($_SESSION["plugin_data_injection"]["import"]["i"]<$_SESSION["plugin_data_injection"]["import"]["i_stop"])
 			echo "<script type='text/javascript'>location.href='".$target."'</script>";
-			//echo "<script type='text/javascript'>new_import()</script>";
+			
 			//echo "<input type='button' onClick='new_import()'";
 		else
 			$end=1;
 		}
-	echo "</div>";
+	//echo "</div>";
+	
+	//echo "<input type='button' onClick='new_import()'";
 	
 	/*while($_SESSION["plugin_data_injection"]["import"]["i"]<$_SESSION["plugin_data_injection"]["import"]["i_stop"])
 		{
@@ -1210,9 +1214,57 @@ function importStep($target)
 	/**************************************************************/
 	
 	echo "</table>";
-	echo "</form>";
+	echo "</form>";	
+}
+
+function logStep($target)
+{
+	global $DATAINJECTIONLANG,$LANG;
 	
+	$nbline = $_SESSION["plugin_data_injection"]["import"]["nbline"];
 	
+	echo "<form action='".$target."' method='post'>";
+	echo "<table class='wizard'>";
+	
+	echo "<tr>";
+	echo "<td class='wizard_left_area' valign='top'>";
+	
+	/************************Title Step****************************/
+	echo "<div class='wizard_title' valign='bottom'>".$DATAINJECTIONLANG["step"][5].$DATAINJECTIONLANG["logStep"][1]."</div>";
+	/**************************************************************/
+	
+	/***********************Explain Step***************************/
+	echo "<div class='wizard_explain'>".$DATAINJECTIONLANG["logStep"][2]."</div>";
+	/**************************************************************/
+	
+	echo "</td>";
+	
+	echo "<td class='wizard_right_area' style='width: 400px' valign='top'>";
+
+	echo "<table class='logStep_tab'>";
+	echo "<tr><td class='logStep_success' colspan='2' valign='top'>".$DATAINJECTIONLANG["logStep"][3]."</td></tr>";
+	echo "<tr>";
+	echo "<td style='text-align:center'>";
+	echo "<input type='button' name='popup' value='".$DATAINJECTIONLANG["button"][4]."' class='submit' onclick='log_popup($nbline)' />";
+	echo "</td>";
+	echo "<td style='text-align:center'>";
+	echo "<input type='submit' name='export' value='".$DATAINJECTIONLANG["button"][5]."' class='submit' />";
+	echo "</td>";
+	echo "</tr>";
+	echo "</table>";
+	
+	echo "</td></tr>";
+	
+	/**************************Button******************************/
+	echo "<tr><td class='wizard_button' colspan='2'>";
+	echo "<div class='next'>";
+	echo "<input type='submit' name='next_logStep' value='".$DATAINJECTIONLANG["button"][6]."' class='submit' />";
+	echo "</div>";
+	echo "</td></tr>";
+	/**************************************************************/
+	
+	echo "</table>";
+	echo "</form>";	
 }
 
 function traitement()
@@ -1236,8 +1288,6 @@ function traitement()
 		
 	$_SESSION["plugin_data_injection"]["import"]["tab_result"] = serialize($tab_result);
 	$_SESSION["plugin_data_injection"]["import"]["global_result"] = serialize($global_result);
-	$_SESSION["plugin_data_injection"]["import"]["engine"] = serialize($engine);
-	$_SESSION["plugin_data_injection"]["import"]["nbline"] = $nbline;
 	$_SESSION["plugin_data_injection"]["import"]["i"] = $i;
 	$_SESSION["plugin_data_injection"]["import"]["progress"] = $progress;
 	$_SESSION["plugin_data_injection"]["import"]["datas"] = $datas;
