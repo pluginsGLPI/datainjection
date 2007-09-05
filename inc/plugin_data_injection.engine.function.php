@@ -130,6 +130,11 @@ function checkLine($model,$line,$res)
 						$res->setCheckMessage($res_check_type);
 						break;
 					}
+					else
+					{
+						$res->setStatus(true);
+						$res->setCheckMessage(TYPE_CHECK_OK);
+					}
 				}	
 			}
 		}
