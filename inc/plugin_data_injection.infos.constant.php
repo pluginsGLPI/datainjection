@@ -49,6 +49,7 @@
 // ----------------------------------------------------------------------
 // ----------------------------------------------------------------------
 global $LANG,$DATA_INJECTION_INFOS;
+$INJECTION_INFOS_TYPES = array(COMPUTER_TYPE, MONITOR_TYPE, PRINTER_TYPE,PHONE_TYPE, INFOCOM_TYPE, NETWORKING_TYPE, PERIPHERAL_TYPE);
 
 // ----------------------------------------------------------------------
 //INFOCOM MAPPING
@@ -75,12 +76,6 @@ $DATA_INJECTION_INFOS[INFOCOM_TYPE]['warranty_info']['name']=$LANG["financial"][
 $DATA_INJECTION_INFOS[INFOCOM_TYPE]['warranty_value']['table']='glpi_infocoms';
 $DATA_INJECTION_INFOS[INFOCOM_TYPE]['warranty_value']['field']='warranty_value';
 $DATA_INJECTION_INFOS[INFOCOM_TYPE]['warranty_value']['name']=$LANG["financial"][78];
-
-$DATA_INJECTION_INFOS[INFOCOM_TYPE]['state']['table']='glpi_dropdown_state';
-$DATA_INJECTION_INFOS[INFOCOM_TYPE]['state']['field']='name';
-$DATA_INJECTION_INFOS[INFOCOM_TYPE]['state']['name']=$LANG["joblist"][0];
-$DATA_INJECTION_INFOS[INFOCOM_TYPE]['state']['linkfield']='state';
-$DATA_INJECTION_INFOS[INFOCOM_TYPE]['state']['input_type']='dropdown';
 
 $DATA_INJECTION_INFOS[INFOCOM_TYPE]['manufacturer']['table']='glpi_dropdown_manufacturer';
 $DATA_INJECTION_INFOS[INFOCOM_TYPE]['manufacturer']['field']='name';
@@ -137,5 +132,41 @@ $DATA_INJECTION_INFOS[INFOCOM_TYPE]['alert']['table']='glpi_infocoms';
 $DATA_INJECTION_INFOS[INFOCOM_TYPE]['alert']['field']='alert';
 $DATA_INJECTION_INFOS[INFOCOM_TYPE]['alert']['name']=$LANG["setup"][247];
 $DATA_INJECTION_INFOS[INFOCOM_TYPE]['alert']['type']='integer';
+
+$DATA_INJECTION_INFOS[COMPUTER_TYPE]['state']['table']='glpi_dropdown_state';
+$DATA_INJECTION_INFOS[COMPUTER_TYPE]['state']['field']='name';
+$DATA_INJECTION_INFOS[COMPUTER_TYPE]['state']['name']=$LANG["joblist"][0];
+$DATA_INJECTION_INFOS[COMPUTER_TYPE]['state']['linkfield']='state';
+$DATA_INJECTION_INFOS[COMPUTER_TYPE]['state']['input_type']='dropdown';
+
+$DATA_INJECTION_INFOS[MONITOR_TYPE]['state']['table']='glpi_dropdown_state';
+$DATA_INJECTION_INFOS[MONITOR_TYPE]['state']['field']='name';
+$DATA_INJECTION_INFOS[MONITOR_TYPE]['state']['name']=$LANG["joblist"][0];
+$DATA_INJECTION_INFOS[MONITOR_TYPE]['state']['linkfield']='state';
+$DATA_INJECTION_INFOS[MONITOR_TYPE]['state']['input_type']='dropdown';
+
+$DATA_INJECTION_INFOS[PRINTER_TYPE]['state']['table']='glpi_dropdown_state';
+$DATA_INJECTION_INFOS[PRINTER_TYPE]['state']['field']='name';
+$DATA_INJECTION_INFOS[PRINTER_TYPE]['state']['name']=$LANG["joblist"][0];
+$DATA_INJECTION_INFOS[PRINTER_TYPE]['state']['linkfield']='state';
+$DATA_INJECTION_INFOS[PRINTER_TYPE]['state']['input_type']='dropdown';
+
+$DATA_INJECTION_INFOS[PHONE_TYPE]['state']['table']='glpi_dropdown_state';
+$DATA_INJECTION_INFOS[PHONE_TYPE]['state']['field']='name';
+$DATA_INJECTION_INFOS[PHONE_TYPE]['state']['name']=$LANG["joblist"][0];
+$DATA_INJECTION_INFOS[PHONE_TYPE]['state']['linkfield']='state';
+$DATA_INJECTION_INFOS[PHONE_TYPE]['state']['input_type']='dropdown';
+
+$DATA_INJECTION_INFOS[PERIPHERAL_TYPE]['state']['table']='glpi_dropdown_state';
+$DATA_INJECTION_INFOS[PERIPHERAL_TYPE]['state']['field']='name';
+$DATA_INJECTION_INFOS[PERIPHERAL_TYPE]['state']['name']=$LANG["joblist"][0];
+$DATA_INJECTION_INFOS[PERIPHERAL_TYPE]['state']['linkfield']='state';
+$DATA_INJECTION_INFOS[PERIPHERAL_TYPE]['state']['input_type']='dropdown';
+
+$DATA_INJECTION_INFOS[NETWORKING_TYPE]['state']['table']='glpi_dropdown_state';
+$DATA_INJECTION_INFOS[NETWORKING_TYPE]['state']['field']='name';
+$DATA_INJECTION_INFOS[NETWORKING_TYPE]['state']['name']=$LANG["joblist"][0];
+$DATA_INJECTION_INFOS[NETWORKING_TYPE]['state']['linkfield']='state';
+$DATA_INJECTION_INFOS[NETWORKING_TYPE]['state']['input_type']='dropdown';
 
 ?>

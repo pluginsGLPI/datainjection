@@ -399,7 +399,10 @@ function processBeforeEnd($model,$type,$fields,$common_fields)
 }
 
 /*
- * 
+ * Check is the user has the right to add datas in a dropdown table
+ * @param table the dropdown table
+ * @canadd_dropdown boolean to indicate if the model allows user to add datas in a dropdown table
+ * @return true if the user can add, false if he can't 
  */
 function haveRightDropdown($table,$canadd_dropdown)
 {
@@ -414,4 +417,14 @@ function haveRightDropdown($table,$canadd_dropdown)
 			return haveRight("dropdown","w");	
 	}
 }
+	
+function addInfosFields($type,$fields,$infos)
+{
+	$infos = getAllInfosAsArrayByType($type,$infos);
+	foreach ($infos as $name => $value)
+		$fields[$name] = $value;
+		
+	return $fields;
+}
+
 ?>

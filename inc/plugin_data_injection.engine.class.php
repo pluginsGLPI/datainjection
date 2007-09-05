@@ -106,7 +106,7 @@ class DataInjectionEngine
 	 * Inject one line of datas
 	 * @param line one line of data to import
 	 */
-	function injectLine($line)
+	function injectLine($line,$infos = array())
 	{
 		$result = new DataInjectionResults;
 
@@ -151,6 +151,9 @@ class DataInjectionEngine
 		//If necessary, add default fields which are mandatory to create the object
 		$fields = addNecessaryFields($this->model,$mapping,$mapping_definition,$this->getEntity(),$this->model->getDeviceType(),$fields,$db_fields["common"]);
 
+		//Add informations filleds by the user
+		$fields = addInfosFields($this->model->getModelType(),$fields,$infos);
+		
 		//Check if the line already exists in database
 		$ID = dataAlreadyInDB($this->model->getDeviceType(),$fields,$mapping_definition,$this->model);
 	
@@ -204,6 +207,9 @@ class DataInjectionEngine
 					$obj = getInstance($type);
 					//If necessary, add default fields which are mandatory to create the object
 					$fields = addNecessaryFields($this->model,$mapping,$mapping_definition,$this->getEntity(),$type,$fields,$db_fields["common"]);
+
+					//Add informations filleds by the user
+					$fields = addInfosFields($type,$fields,$infos);
 					
 					//Check if the line already exists in database
 					$ID = dataAlreadyInDB($type,$fields,$mapping_definition,$this->model);
