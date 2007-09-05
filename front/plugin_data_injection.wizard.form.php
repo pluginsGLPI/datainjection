@@ -352,6 +352,7 @@ if($load)
 		{
 		$_SESSION["plugin_data_injection"]["step"]++;
 		$_SESSION["plugin_data_injection"]["load"] = "yes_fillInfoStep";
+		initImport();
 		}
 		
 	else if(isset($_POST["no_fillInfoStep"]))
@@ -447,7 +448,7 @@ else
 					fillInfoStep($_SERVER["PHP_SELF"],$info);
 				break;
 				case 4:
-					ImportStep($_SERVER["PHP_SELF"]);
+					importStep($_SERVER["PHP_SELF"]);
 				break;
 				}
 		break;

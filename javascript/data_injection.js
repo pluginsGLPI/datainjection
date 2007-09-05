@@ -55,7 +55,7 @@ function getXhr()
 			} 
 	return xhr;
 }
-			
+		
 function go_mapping(id)
 {	
 	var xhr = getXhr();
@@ -234,4 +234,31 @@ for(i=0;i<cpt;i++)
 	id2 = sel.options[i].value;
 	document.getElementById('comments'+id2).style.display = 'none';
 	}
+}
+
+function change_progress(pourcentage)
+{
+	document.getElementById('importStep_progress').style.width = pourcentage;
+	document.getElementById('importStep_pourcentage').innerHTML = pourcentage;
+}
+
+function new_import()
+{	
+	var xhr = getXhr();
+	
+	alert('horrible');
+	
+	xhr.onreadystatechange = function(){
+		if(xhr.readyState == 4 && xhr.status == 200)
+			{
+			leselect = xhr.responseText;
+			document.getElementById('new_import').innerHTML = leselect;
+			}
+		}
+
+	xhr.open("POST","../inc/plugin_data_injection.ajax.progress.php",true);
+
+	xhr.setRequestHeader('Content-Type','application/x-www-form-urlencoded');
+		
+	xhr.send(null);
 }

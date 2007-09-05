@@ -1092,7 +1092,7 @@ function fillInfoStep($target,$info)
 {
 	global $DATAINJECTIONLANG,$LANG;
 	
-	echo "<form action='".$target."' method='post' name='step8' enctype='multipart/form-data'>";
+	echo "<form action='".$target."' method='post'>";
 	echo "<table class='wizard'>";
 	
 	echo "<tr>";
@@ -1146,13 +1146,13 @@ function fillInfoStep($target,$info)
 	echo "</form>";
 }
 
-function ImportStep($target)
+function importStep($target)
 {
 	global $DATAINJECTIONLANG,$LANG;
 	
-	$model = unserialize($_SESSION["plugin_data_injection"]["model"]);
+	$end = 0;
 	
-	echo "<form action='".$target."' method='post' name='step8' enctype='multipart/form-data'>";
+	echo "<form action='".$target."' method='post'>";
 	echo "<table class='wizard'>";
 	
 	echo "<tr>";
@@ -1170,22 +1170,115 @@ function ImportStep($target)
 	
 	echo "<td class='wizard_right_area' style='width: 400px' valign='top'>";
 	
-	$engine = new DataInjectionEngine($model->getModelID(),PLUGIN_DATA_INJECTION_UPLOAD_DIR.$_SESSION["plugin_data_injection"]["file"],$_SESSION["glpiactive_entity"]);
-	$results = $engine->injectDatas();
-
+	echo "<div class='importStep_cadre'><div class='importStep_progress' id='importStep_progress'><div class='importStep_pourcentage' id='importStep_pourcentage'>".$_SESSION["plugin_data_injection"]["import"]["progress"]." %</div></div></div>";
+	
+	echo "<div id='new_import'>";
+	if($_SESSION["plugin_data_injection"]["import"]["i"]<$_SESSION["plugin_data_injection"]["import"]["i_stop"])
+		{
+		traitement();
+		if($_SESSION["plugin_data_injection"]["import"]["i"]<$_SESSION["plugin_data_injection"]["import"]["i_stop"])
+			echo "<script type='text/javascript'>location.href='".$target."'</script>";
+			//echo "<script type='text/javascript'>new_import()</script>";
+			//echo "<input type='button' onClick='new_import()'";
+		else
+			$end=1;
+		}
+	echo "</div>";
+	
+	/*while($_SESSION["plugin_data_injection"]["import"]["i"]<$_SESSION["plugin_data_injection"]["import"]["i_stop"])
+		{
+		traitement();
+		if($_SESSION["plugin_data_injection"]["import"]["i"]>$_SESSION["plugin_data_injection"]["import"]["i_stop"])
+			$end=1;
+		}*/
+	
+	
+	if($end)
+		echo "<div class='import_end'>Importation terminé</div>";
+	
 	echo "</td></tr>";
 	
 	/**************************Button******************************/
 	echo "<tr><td class='wizard_button' colspan='2'>";
-	echo "<div class='next'>";
-	echo "<input type='submit' name='next_fillInfoStep' value='".$DATAINJECTIONLANG["button"][2]."' class='submit' />";
-	echo "</div>";
+	if($end)
+		{
+		echo "<div class='next'>";
+		echo "<input type='submit' name='next_importStep' value='".$DATAINJECTIONLANG["button"][2]."' class='submit' />";
+		echo "</div>";
+		}
 	echo "</td></tr>";
 	/**************************************************************/
 	
 	echo "</table>";
 	echo "</form>";
+	
+	
 }
+
+function traitement()
+{
+	$model = unserialize($_SESSION["plugin_data_injection"]["model"]);
+	$tab_result = unserialize($_SESSION["plugin_data_injection"]["import"]["tab_result"]);
+	$global_result = unserialize($_SESSION["plugin_data_injection"]["import"]["global_result"]);
+	$engine = unserialize($_SESSION["plugin_data_injection"]["import"]["engine"]);
+	$nbline = $_SESSION["plugin_data_injection"]["import"]["nbline"];
+	$i = $_SESSION["plugin_data_injection"]["import"]["i"];
+	$progress = $_SESSION["plugin_data_injection"]["import"]["progress"];
+	$datas = $_SESSION["plugin_data_injection"]["import"]["datas"];
+	
+	$global_result = $engine->injectLine($datas[$i][0]);
+	$tab_result[] = $global_result;
+	$progress = number_format(($i*100)/$nbline,2);
+	$i++;
+	$datas = $engine->getDatas();
+	echo "<script type='text/javascript'>change_progress('".$progress."%')</script>";
+		
+		
+	$_SESSION["plugin_data_injection"]["import"]["tab_result"] = serialize($tab_result);
+	$_SESSION["plugin_data_injection"]["import"]["global_result"] = serialize($global_result);
+	$_SESSION["plugin_data_injection"]["import"]["engine"] = serialize($engine);
+	$_SESSION["plugin_data_injection"]["import"]["nbline"] = $nbline;
+	$_SESSION["plugin_data_injection"]["import"]["i"] = $i;
+	$_SESSION["plugin_data_injection"]["import"]["progress"] = $progress;
+	$_SESSION["plugin_data_injection"]["import"]["datas"] = $datas;
+}
+
+function initImport()
+{
+$model = unserialize($_SESSION["plugin_data_injection"]["model"]);
+
+$tab_result = array();
+
+$global_result = new DataInjectionResults;
+
+$engine = new DataInjectionEngine($model->getModelID(),PLUGIN_DATA_INJECTION_UPLOAD_DIR.$_SESSION["plugin_data_injection"]["file"],$_SESSION["glpiactive_entity"]);
+	
+if($engine->getModel()->isHeaderPresent())
+	{
+	$nbline = $engine->getNumberOfLines() - 1;
+	$i=1;
+	}
+else
+	{
+	$nbline = $engine->getNumberOfLines();
+	$i=0;
+	}
+
+$i_stop = $engine->getNumberOfLines();	
+$progress = 0;
+	
+$datas = $engine->getDatas();
+
+$_SESSION["plugin_data_injection"]["import"]["tab_result"] = serialize($tab_result);
+$_SESSION["plugin_data_injection"]["import"]["global_result"] = serialize($global_result);
+$_SESSION["plugin_data_injection"]["import"]["engine"] = serialize($engine);
+$_SESSION["plugin_data_injection"]["import"]["nbline"] = $nbline;
+$_SESSION["plugin_data_injection"]["import"]["i"] = $i;
+$_SESSION["plugin_data_injection"]["import"]["i_stop"] = $i_stop;
+$_SESSION["plugin_data_injection"]["import"]["progress"] = $progress;
+$_SESSION["plugin_data_injection"]["import"]["datas"] = $datas;
+}
+
 
 function initSession()
 {
@@ -1209,6 +1302,9 @@ if(isset($_SESSION["plugin_data_injection"]["file"]))
 
 if(isset($_SESSION["plugin_data_injection"]["remember"]))
 	unset($_SESSION["plugin_data_injection"]["remember"]);		
+	
+if(isset($_SESSION["plugin_data_injection"]["import"]))
+	unset($_SESSION["plugin_data_injection"]["import"]);
 	
 $_SESSION["plugin_data_injection"]["step"] = 1;
 $_SESSION["plugin_data_injection"]["choice"] = 1;
