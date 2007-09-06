@@ -36,23 +36,33 @@ $datas = $_SESSION["plugin_data_injection"]["import"]["datas"];
 
 echo "<table class='tab_cadre_fixe' style='text-align: center'>";
 
+echo "<tr><th>".$LANG["joblist"][0]."</th><th>".$DATAINJECTIONLANG["result"][10]."</th><th>".$DATAINJECTIONLANG["result"][11]."</th><th>".$DATAINJECTIONLANG["result"][12]."</th><th>".$DATAINJECTIONLANG["result"][13]."</th></tr>";
+
 foreach($tab_result as $key => $value)
 	{
 	if($key%2==0)
 		$num = 1;
 	else
 		$num = 2;
-	
+
 	echo "<tr class='tab_bg_$num'>";
-	
+
 	if($value->getStatus())
-		echo "<td style='height:40px;width:40px'><img src='../pics/ok.png' alt='success' /></td>";
+		echo "<td style='height:30px;width:30px'><img src='../pics/ok.png' alt='success' /></td>";
 	else
-		echo "<td style='height:40px;width:40px'><img src='../pics/notok.png' alt='failed' /></td>";
-	echo "<td style='height:40px'>".$value->getCheckMessage()."</td>";
-	echo "<td style='height:40px'>".$value->getInjectionMessage()."</td>";
-	echo "<td style='height:40px'>".$value->getInjectionType()."</td>";
-	echo "<td style='height:40px'>".$value->getInjectedId()."</td>";
+		echo "<td style='height:30px;width:30px'><img src='../pics/notok.png' alt='failed' /></td>";
+	echo "<td style='height:30px'>".$value->getCheckMessage()."</td>";
+	echo "<td style='height:30px'>".$value->getInjectionMessage()."</td>";
+	echo "<td style='height:30px'>".($value->getInjectionType()==INJECTION_ADD?$DATAINJECTIONLANG["result"][8]:$DATAINJECTIONLANG["result"][9])."</td>";
+	
+	if ($value->getInjectedId() > 0)
+	{
+		$url = GLPI_ROOT."/".$INFOFORM_PAGES[$model->getDeviceType()]."?ID=".$value->getInjectedId();
+		echo "<td style='height:30px'><a href=\"".$url."\" target=_blank>".$value->getInjectedId()."</a></td>";
+	}
+	else
+		echo "<td style='height:30px'>".$LANG["common"][49]."</td>";
+		
 	echo "</tr>";
 	}
 	

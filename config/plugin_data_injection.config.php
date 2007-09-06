@@ -46,6 +46,7 @@ define ("ERROR_IMPORT_FIELD_MANDATORY",3);
 define ("ERROR_CANNOT_IMPORT",4);
 define ("ERROR_CANNOT_UPDATE",5);
 define ("IMPORT_OK",6);
+define ("NOT_IMPORTED",7);
 
 define ("INJECTION_ADD",0);
 define ("INJECTION_UPDATE",1);

@@ -55,9 +55,9 @@ include (GLPI_ROOT."/inc/includes.php");
 include ("../plugin_data_injection.includes.php");
 
 //The csv file, got from the command line
-$file = $argv[1];
-$model_id = $argv[2];
-$entity_id = $argv[3];
+//$file = $argv[1];
+//$model_id = $argv[2];
+//$entity_id = $argv[3];
 
 //---------------------- //
 //------CSV File-------- //
@@ -100,7 +100,15 @@ $entity_id = $argv[3];
 //---------------------- //
 //-------Engine--------- //
 //---------------------- //
-$engine = new DataInjectionEngine($model_id,$file,$entity_id);
-$results = $engine->injectDatas();
+//$engine = new DataInjectionEngine($model_id,$file,$entity_id);
+//$results = $engine->injectDatas();
 //print_r($results);
+
+$fields["name"] = "test";
+$fields["ID"] = "12";
+$infos[] = new InjectionInfos(INFOCOM_TYPE,"warranty_duration",3);
+$infos[] = new InjectionInfos(INFOCOM_TYPE,"num_commande",1234322);
+$infos[] = new InjectionInfos(COMPUTER_TYPE,"state",1);
+
+print_r(addInfosFields(1,$fields,$infos));
 ?>

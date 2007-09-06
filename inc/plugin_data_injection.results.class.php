@@ -86,7 +86,7 @@ class DataInjectionResults {
 
 	function setInjectionType($type)
 	{
-		$this->injection_message = $type;
+		$this->injection_type = $type;
 	}
 	
 	function setInjectedId($ID)
@@ -102,10 +102,10 @@ class DataInjectionResults {
 		switch ($type)
 		{
 			case ERROR_CANNOT_IMPORT:
-				$message = $DATAINJECTIONLANG["result"][1];
+				$message = $DATAINJECTIONLANG["result"][5];
 			break;
 			case ERROR_CANNOT_UPDATE:
-				$message = $DATAINJECTIONLANG["result"][2];
+				$message = $DATAINJECTIONLANG["result"][6];
 			break;
 			case ERROR_IMPORT_ALREADY_IMPORTED:
 				$message = $DATAINJECTIONLANG["result"][3];
@@ -114,10 +114,10 @@ class DataInjectionResults {
 				$message = $DATAINJECTIONLANG["result"][4];
 			break;
 			case ERROR_IMPORT_FIELD_MANDATORY:
-				$message = $DATAINJECTIONLANG["result"][5];
+				$message = $DATAINJECTIONLANG["result"][1];
 			break;
 			case TYPE_CHECK_OK:
-				$message = $DATAINJECTIONLANG["result"][6];
+				$message = $DATAINJECTIONLANG["result"][2];
 			break;
 			case IMPORT_OK:
 				$message = $DATAINJECTIONLANG["result"][7];

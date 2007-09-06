@@ -72,28 +72,6 @@ class DataInjectionEngine
 	}
 	
 	/*
-	 * Check all the datas and inject them
-	 */
-	function injectDatas()
-	{
-		$tab_result = array();
-		$global_result = new DataInjectionResults;
-		
-		if ($this->getModel()->isHeaderPresent())
-			$i=1;
-		else
-			$i=0;
-
-		for ($datas = $this->getDatas(); $i < count($datas);$i++)
-		{
-			$global_result = $this->injectLine($datas[$i][0]);
-			$tab_result[] = $global_result;
-		}
-			
-		return $tab_result;
-	}
-	
-	/*
 	 * Return the number of lines of the file
 	 * @return the number of line of the file
 	 */
@@ -163,15 +141,26 @@ class DataInjectionEngine
 				$ID = $obj->add($fields);
 				//Add the ID to the fields, so it can be reused after
 				$db_fields["common"] = addCommonFields($db_fields["common"],$this->model->getDeviceType(),$fields,$this->getEntity(),$ID);
-				$result->setInjectionType(IMPORT_OK);
+
+				$result->setStatus(true);
+
 				$result->setInjectedId($ID);
 				$result->setInjectionType(INJECTION_ADD);
+
+				//$result->setCheckMessage(TYPE_CHECK_OK);
+				$result->setInjectionMessage(IMPORT_OK);
 			}
 			else
 			{
 				//Object doesn't exists, but add in not allowed by the model
 				$process = false;
+				
 				$result->setStatus(false);
+
+				$result->setInjectedId(NOT_IMPORTED);
+				$result->setInjectionType(INJECTION_ADD);
+				
+				//$result->setCheckMessage(TYPE_CHECK_OK);
 				$result->setInjectionMessage(ERROR_CANNOT_IMPORT);
 			}
 		}	
@@ -180,16 +169,27 @@ class DataInjectionEngine
 			$fields["ID"] = $ID;
 			$db_fields["common"] = addCommonFields($db_fields["common"],$this->model->getDeviceType(),$fields,$this->getEntity(),$ID);
 			$obj->update($fields);
-			$result->setInjectionMessage(IMPORT_OK);
+
+			$result->setStatus(true);
+
 			$result->setInjectedId($ID);
 			$result->setInjectionType(INJECTION_UPDATE);
+
+			//$result->setCheckMessage(TYPE_CHECK_OK);
+			$result->setInjectionMessage(IMPORT_OK);
 		}
 		else
 		{	
 			//Object exists but update is not allowed by the model
 			$process = false;
+
 			$result->setStatus(false);
-			$result->setInjectionMessage(ERROR_CANNOT_IMPORT);
+
+			$result->setInjectedId($ID);
+			$result->setInjectionType(INJECTION_UPDATE);
+			
+			//$result->setCheckMessage(TYPE_CHECK_OK);
+			$result->setInjectionMessage(ERROR_CANNOT_UPDATE);
 		}
 		if ($process)
 		{
@@ -230,8 +230,6 @@ class DataInjectionEngine
 					processBeforeEnd($this->model,$type,$fields,$db_fields["common"]);
 				}
 			}
-			$result->setStatus(true);
-			
 		}
 		return $result;			
 	}

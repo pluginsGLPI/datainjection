@@ -49,7 +49,7 @@ $DATAINJECTIONLANG["setup"][8] = "Colonne";
 $DATAINJECTIONLANG["setup"][9] = "Gestion des droits";
 
 $DATAINJECTIONLANG["presentation"][1] = "Bienvenue dans l'assistant d'importation de fichier !";
-$DATAINJECTIONLANG["presentation"][2] = "Cette assistant va vous permettre en toute simplicité d'importer des fichiers au format XML, CSV, et XLS en fonction de vos droits dans GLPI.";
+$DATAINJECTIONLANG["presentation"][2] = "Cette assistant va vous permettre en toute simplicité d'importer des fichiers au format XML.";
 $DATAINJECTIONLANG["presentation"][3] = "Pour commencer à utiliser l'assistant, cliquez sur Suivant.";
 
 $DATAINJECTIONLANG["step"][1] = "Etape 1 : ";
@@ -61,17 +61,17 @@ $DATAINJECTIONLANG["step"][6] = "Etape 6 : ";
 $DATAINJECTIONLANG["step"][7] = "Etape 7 : ";
 
 $DATAINJECTIONLANG["choiceStep"][1] = "Gestion ou utilisation d'un modèle";
-$DATAINJECTIONLANG["choiceStep"][2] = "Dans cette première étape, vous devez choisir entre créer votre propre modèle, modifier, supprimer, et utiliser un modèle existant en le choisissant dans la liste déroulante.";
+$DATAINJECTIONLANG["choiceStep"][2] = "Dans cette première étape, vous devez choisir entre créer, modifier, supprimer, ou utiliser un modèle.";
 $DATAINJECTIONLANG["choiceStep"][3] = "Créer un nouveau modèle";
 $DATAINJECTIONLANG["choiceStep"][4] = "Modifier un modèle existant";
 $DATAINJECTIONLANG["choiceStep"][5] = "Supprimer un modèle existant";
 $DATAINJECTIONLANG["choiceStep"][6] = "Utiliser un modèle existant";
 $DATAINJECTIONLANG["choiceStep"][7] = "Commentaire du modèle";
-$DATAINJECTIONLANG["choiceStep"][8] = "Pas de commentaire";
+$DATAINJECTIONLANG["choiceStep"][8] = "Pas de commentaires";
 
-$DATAINJECTIONLANG["modelStep"][1] = "Collecte d'information sur le fichier";
+$DATAINJECTIONLANG["modelStep"][1] = "Collecte d'informations sur le fichier";
 $DATAINJECTIONLANG["modelStep"][2] = "Modification du modèle";
-$DATAINJECTIONLANG["modelStep"][3] = "Dans cette étape, vous devez selectionner le type de votre fichier, le type d'objet que vous allez insérer.";
+$DATAINJECTIONLANG["modelStep"][3] = "Dans cette étape, vous devez sélectionner le type de votre fichier ainsi que le type d'objet que vous allez insérer.";
 $DATAINJECTIONLANG["modelStep"][4] = "Type de données à insérer :";
 $DATAINJECTIONLANG["modelStep"][5] = "Type de fichier :";
 $DATAINJECTIONLANG["modelStep"][6] = "Création des lignes :";
@@ -82,7 +82,7 @@ $DATAINJECTIONLANG["modelStep"][10] = "Délimiteur du fichier :";
 $DATAINJECTIONLANG["modelStep"][11] = "Délimiteur non définie";
 
 $DATAINJECTIONLANG["deleteStep"][1] = "Confirmation de la suppression";
-$DATAINJECTIONLANG["deleteStep"][2] = "Attention si vous supprimez le model, les mappings et les informations complémentaires seront supprimés également et ne seront plus récupérables.";
+$DATAINJECTIONLANG["deleteStep"][2] = "Attention si vous supprimez le modèle, les mappings et les informations complémentaires seront supprimés également.";
 $DATAINJECTIONLANG["deleteStep"][3] = "Voulez-vous supprimer";
 $DATAINJECTIONLANG["deleteStep"][4] = "définitivement ?";
 $DATAINJECTIONLANG["deleteStep"][5] = "Le modèle";
@@ -90,7 +90,7 @@ $DATAINJECTIONLANG["deleteStep"][6] = "a été supprimé.";
 $DATAINJECTIONLANG["deleteStep"][7] = "Problème lors de la suppression du modèle.";
 
 $DATAINJECTIONLANG["fileStep"][1] = "Sélection du fichier à uploader";
-$DATAINJECTIONLANG["fileStep"][2] = "Sélectionnez le fichier sur votre disque dur afin qu'il soit uploader sur le serveur.";
+$DATAINJECTIONLANG["fileStep"][2] = "Sélectionnez le fichier sur votre disque dur afin qu'il soit uploadé sur le serveur.";
 $DATAINJECTIONLANG["fileStep"][3] = "Choix du fichier :";
 $DATAINJECTIONLANG["fileStep"][4] = "Le fichier est introuvable";
 $DATAINJECTIONLANG["fileStep"][5] = "Le fichier n'a pas le bon format";
@@ -125,8 +125,8 @@ $DATAINJECTIONLANG["saveStep"][8] = "Votre modèle a été enregistré et est pr
 $DATAINJECTIONLANG["saveStep"][9] = "Votre modèle a été mis à jour et est prêt à l'emploi.";
 $DATAINJECTIONLANG["saveStep"][10] = "Voulez-vous utiliser le modèle maintenant ?";
 
-$DATAINJECTIONLANG["fillInfoStep"][1] = "Attention ! Vous êtes sur le point d'importer des données dans GLPI. Etes-vous sûre de vouloir importer ?";
-$DATAINJECTIONLANG["fillInfoStep"][2] = "Remplissez les champs pour que les informations soient inséré dans GLPI lors de l'importation.";
+$DATAINJECTIONLANG["fillInfoStep"][1] = "Attention ! Vous êtes sur le point d'importer des données dans GLPI. Etes-vous sûr de vouloir importer ?";
+$DATAINJECTIONLANG["fillInfoStep"][2] = "Remplissez les champs pour que les informations soient insérées dans GLPI lors de l'importation.";
 
 $DATAINJECTIONLANG["importStep"][1] = "Importation du fichier";
 $DATAINJECTIONLANG["importStep"][2] = "L'importation du fichier peut prendre plusieurs minutes en fonction de votre configurations. Veuillez patientez et suivre la barre de progression pour voir où en est l'importation.";
@@ -143,12 +143,19 @@ $DATAINJECTIONLANG["button"][5] = "Exporter les logs";
 $DATAINJECTIONLANG["button"][6] = "Terminé";
 
 $DATAINJECTIONLANG["result"][1] = "Une donnée n'a pas le bon type";
-$DATAINJECTIONLANG["result"][2] = "Le type de données est correct";
+$DATAINJECTIONLANG["result"][2] = "Les données à insérer sont correctes";
 $DATAINJECTIONLANG["result"][3] = "Les données existent déjà en base";
 $DATAINJECTIONLANG["result"][4] = "Au moins un champs obligatoire n'est pas remplis";
 $DATAINJECTIONLANG["result"][5] = "Pas les droits pour importer les données";
 $DATAINJECTIONLANG["result"][6] = "Pas les droits pour mettre à jour les données";
 $DATAINJECTIONLANG["result"][7] = "L'import s'est bien passé";
+$DATAINJECTIONLANG["result"][8] = "Ajout";
+$DATAINJECTIONLANG["result"][9] = "Mise à jour";
+$DATAINJECTIONLANG["result"][10] = "Vérification des données";
+$DATAINJECTIONLANG["result"][11] = "Import des données";
+$DATAINJECTIONLANG["result"][12] = "Type d'injection";
+$DATAINJECTIONLANG["result"][13] = "Identifiant de l'objet";
+
 
 $DATAINJECTIONLANG["profiles"][1] = "Créer un modèle";
 $DATAINJECTIONLANG["profiles"][2] = "Supprimer un modèle";
