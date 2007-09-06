@@ -9,7 +9,6 @@ global $DATAINJECTIONLANG;
 
 if(isset($_POST['id']))
 	{
-	
 	echo "<select name='field[".$_POST['id']."][1]' style='width: 150px'>";
 		
 	if(isset($_POST['idMapping']))
@@ -18,8 +17,8 @@ if(isset($_POST['id']))
 				echo "<option value='-1'>".$DATAINJECTIONLANG["mappingStep"][7]."</option>";
 			else
 				{
-					$values = getAllMappingsDefinitionsByType($_POST['idMapping']);
-
+					$values = getAllInfosDefinitionsByType($_POST['idMapping']);
+					
 					foreach($values as $key => $value)
 						echo "<option value='".$key."'>".$value."</option>";
 				}

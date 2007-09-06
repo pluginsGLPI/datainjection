@@ -52,6 +52,7 @@ function getAllInfosDefinitionsTypes()
 
 	foreach ($INJECTION_INFOS_TYPES as $type)
 	{
+		
 		$commonitem->setType($type);
 		$types[] = array($type,$commonitem->getType());
 	}
@@ -61,10 +62,10 @@ function getAllInfosDefinitionsTypes()
 
 function getAllInfosDefinitionsByType($type)
 {
-	global $INJECTION_INFOS_TYPES,$LANG;
+	global $DATA_INJECTION_INFOS,$LANG;
 	$mapping_parameters = array();
 	
-	foreach ($INJECTION_INFOS_TYPES[$type] as $name => $mapping)
+	foreach ($DATA_INJECTION_INFOS[$type] as $name => $mapping)
 	{
 		$mapping_parameters[$name] = $mapping["name"];
 	}

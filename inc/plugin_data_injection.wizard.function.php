@@ -789,9 +789,10 @@ function infoStep($target)
 					
 					/*************************Select table*************************/
 					echo "<td>";
-					echo "<select name='field[$key][0]' id='table$key' onchange='go_info($key);addelete_info($key)' style='width: 150px'>";
 					
-					$types = getAllMappingsDefinitionsTypes();
+					$types = getAllInfosDefinitionsTypes();
+					
+					echo "<select name='field[$key][0]' id='table$key' onchange='go_info($key);addelete_info($key)' style='width: 150px'>";
 					
 					echo "<option value='-1'>".$DATAINJECTIONLANG["mappingStep"][6]."</option>";
 						
@@ -813,7 +814,7 @@ function infoStep($target)
 						echo "<option value='-1'>".$DATAINJECTIONLANG["mappingStep"][7]."</option>";
 					else
 						{
-						$values = getAllMappingsDefinitionsByType($value->getInfosType());
+						$values = getAllInfosDefinitionsByType($value->getInfosType());
 	
 						foreach($values as $key2 => $value2)
 							if($value->getValue()==$key2)
@@ -857,9 +858,10 @@ function infoStep($target)
 				
 				/*************************Select table*************************/
 				echo "<td>";
-				echo "<select name='field[$key][0]' id='table$key' onchange='go_info($key);addelete_info($key)' style='width: 150px'>";
 				
-				$types = getAllMappingsDefinitionsTypes();
+				$types = getAllInfosDefinitionsTypes();
+				
+				echo "<select name='field[$key][0]' id='table$key' onchange='go_info($key);addelete_info($key)' style='width: 150px'>";
 				
 				echo "<option value='-1'>".$DATAINJECTIONLANG["mappingStep"][6]."</option>";
 					
@@ -909,9 +911,10 @@ function infoStep($target)
 		
 		/*************************Select table*************************/
 		echo "<td>";
+		
+		$types = getAllInfosDefinitionsTypes();
+		
 		echo "<select name='field[$key][0]' id='table$key' onchange='go_info($key);addelete_info($key)' style='width: 150px'>";
-			
-		$types = getAllMappingsDefinitionsTypes();
 			
 		echo "<option value='-1'>".$DATAINJECTIONLANG["mappingStep"][6]."</option>";
 			
@@ -919,6 +922,7 @@ function infoStep($target)
 			echo "<option value='".$type[0]."'>".$type[1]."</option>";
 			
 		echo "</select>";
+
 		echo "</td>";
 		/**************************************************************/
 		
