@@ -326,7 +326,7 @@ if($load)
 		else
 			$_SESSION["plugin_data_injection"]["step"] = 2;
 		$_SESSION["plugin_data_injection"]["choice"] = 4;
-		$_SESSION["plugin_data_injection"]["nbonglet"] = 4;
+		$_SESSION["plugin_data_injection"]["nbonglet"] = 5;
 		
 		$model = unserialize($_SESSION["plugin_data_injection"]["model"]);
 		

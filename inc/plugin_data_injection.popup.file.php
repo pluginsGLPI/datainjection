@@ -11,7 +11,7 @@ echo "<html>";
 
 echo "<head>";
 
-echo "<meta http-equiv='Content-Type' content='text/html; charset=iso-8859-1'>";
+echo "<meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8 \" >";
 
 echo "<link rel='stylesheet'  href='".$CFG_GLPI["root_doc"]."/css/styles.css' type='text/css' media='screen' >\n";
 echo "<!--[if lte IE 6]>" ;
@@ -41,21 +41,20 @@ else
 echo "<table class='tab_cadre_fixe'><tr>";
 
 	foreach($header as $key => $value)
-		echo"<th>".utf8_decode($value)."</th>";
+		echo"<th style='height:40px'>".utf8_decode($value)."</th>";
 	echo "</tr>";
 	
 	
 	foreach($data as $key => $value)
 		{
-		echo "<tr>";
+		if($key%2==0)
+			echo "<tr class='tab_bg_1'>";
+		else
+			echo "<tr class='tab_bg_2'>";	
+			
 		foreach($value as $key2 => $value2)
-			{
-			if($key2%2==0)
-				echo "<td class='tab_bg_1'>";
-			else
-				echo "<td class='tab_bg_2'>";
-			echo $value2."</td>";
-			}
+			echo "<td style='height:40px'>".$value2."</td>";
+		
 		echo "</tr>";
 		}
 	

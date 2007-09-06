@@ -133,7 +133,7 @@ $DATAINJECTIONLANG["importStep"][2] = "L'importation du fichier peut prendre plu
 
 $DATAINJECTIONLANG["logStep"][1] = "Résultat de l'importation";
 $DATAINJECTIONLANG["logStep"][2] = "Visualisez le déroulement de l'importation à l'aide du bouton voir les logs et exporter le compte rendu en texte à l'aide du bouton exporter les logs";
-$DATAINJECTIONLANG["logStep"][3] = "L'importation a réussi mais comporte peut être des problèmes";
+$DATAINJECTIONLANG["logStep"][3] = "L'importation a réussi";
 
 $DATAINJECTIONLANG["button"][1] = "< Précédent";
 $DATAINJECTIONLANG["button"][2] = "Suivant >";

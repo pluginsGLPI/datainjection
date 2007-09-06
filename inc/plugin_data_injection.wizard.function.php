@@ -1198,7 +1198,7 @@ function importStep($target)
 	
 	
 	if($end)
-		echo "<div class='import_end'>Importation terminé</div>";
+		echo "<div class='importStep_end'>Importation terminé</div>";
 	
 	echo "</td></tr>";
 	
@@ -1241,17 +1241,12 @@ function logStep($target)
 	
 	echo "<td class='wizard_right_area' style='width: 400px' valign='top'>";
 
-	echo "<table class='logStep_tab'>";
-	echo "<tr><td class='logStep_success' colspan='2' valign='top'>".$DATAINJECTIONLANG["logStep"][3]."</td></tr>";
-	echo "<tr>";
-	echo "<td style='text-align:center'>";
-	echo "<input type='button' name='popup' value='".$DATAINJECTIONLANG["button"][4]."' class='submit' onclick='log_popup($nbline)' />";
-	echo "</td>";
-	echo "<td style='text-align:center'>";
-	echo "<input type='submit' name='export' value='".$DATAINJECTIONLANG["button"][5]."' class='submit' />";
-	echo "</td>";
-	echo "</tr>";
-	echo "</table>";
+	echo "<div class='logStep_success' colspan='2' valign='top'>".$DATAINJECTIONLANG["logStep"][3]."</div>";
+
+	echo "<div><input type='button' name='popup' value='".$DATAINJECTIONLANG["button"][4]."' class='submit , logStep_button1' onclick='log_popup($nbline)' /></div>";
+
+	echo "<div><input type='submit' name='export' value='".$DATAINJECTIONLANG["button"][5]."' class='submit , logStep_button2' /></div>";
+
 	
 	echo "</td></tr>";
 	

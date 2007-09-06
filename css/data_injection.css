@@ -270,20 +270,31 @@ margin-top: 12px;
 margin-left: 135px;
 }
 
-.import_end {
+.importStep_end {
 text-align: center;
 margin-top: 20px;
 }
 /**************************************************************/
 
 /*************************Import Step**************************/
-.logStep_tab {
-margin-top: 120px;
-}
-
 .logStep_success {
-font-size: 16px;
-height: 80px;
+margin-top: 120px;
+font-size: 20px;
+width: 200px;
+margin-left: auto;
+margin-right: auto;
+text-align: center;
 }
 
+.logStep_button1 {
+margin-top: 100px;
+margin-left: 50px;
+float: left;
+}
+
+.logStep_button2 {
+margin-top: 100px;
+margin-right: 50px;
+float: right;
+}
 /**************************************************************/

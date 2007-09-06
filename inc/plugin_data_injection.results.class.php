@@ -51,7 +51,7 @@ class DataInjectionResults {
 	
 	function getCheckMessage()
 	{
-		return $this->check_message;
+		return $this->getLabel($this->check_message);
 	}	
 	
 	function getInjectionMessage()

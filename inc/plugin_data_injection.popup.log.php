@@ -11,7 +11,7 @@ echo "<html>";
 
 echo "<head>";
 
-echo "<meta http-equiv='Content-Type' content='text/html; charset=iso-8859-1'>";
+echo "<meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8 \" >";
 
 echo "<link rel='stylesheet'  href='".$CFG_GLPI["root_doc"]."/css/styles.css' type='text/css' media='screen' >\n";
 echo "<!--[if lte IE 6]>" ;
@@ -34,19 +34,27 @@ $progress = $_SESSION["plugin_data_injection"]["import"]["progress"];
 $datas = $_SESSION["plugin_data_injection"]["import"]["datas"];
 
 
-echo "<table class='tab_cadre_fixe'>";
+echo "<table class='tab_cadre_fixe' style='text-align: center'>";
 
-foreach($tab_result as $value)
+foreach($tab_result as $key => $value)
 	{
-	echo "<tr>";
-	echo "<td>".$value->getStatus()."</td>";
-	echo "<td>".$value->getCheckMessage()."</td>";
-	echo "<td>".$value->getInjectionMessage()."</td>";
-	echo "<td>".$value->getInjectionType()."</td>";
+	if($key%2==0)
+		$num = 1;
+	else
+		$num = 2;
+	
+	echo "<tr class='tab_bg_$num'>";
+	
+	if($value->getStatus())
+		echo "<td style='height:40px;width:40px'><img src='../pics/ok.png' alt='success' /></td>";
+	else
+		echo "<td style='height:40px;width:40px'><img src='../pics/notok.png' alt='failed' /></td>";
+	echo "<td style='height:40px'>".$value->getCheckMessage()."</td>";
+	echo "<td style='height:40px'>".$value->getInjectionMessage()."</td>";
+	echo "<td style='height:40px'>".$value->getInjectionType()."</td>";
+	echo "<td style='height:40px'>".$value->getInjectedId()."</td>";
 	echo "</tr>";
 	}
-
-
 	
 echo "</table>";
 
