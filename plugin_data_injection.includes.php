@@ -50,6 +50,7 @@ include_once("inc/plugin_data_injection.mapping.class.php");
 include_once("inc/plugin_data_injection.mapping.function.php");
 include_once("inc/plugin_data_injection.type.class.php");
 include_once("inc/plugin_data_injection.type.function.php");
+include_once("inc/plugin_data_injection.profiles.class.php");
 include_once("config/plugin_data_injection.config.php");
 include_once("inc/plugin_data_injection.results.class.php");
 ?>
