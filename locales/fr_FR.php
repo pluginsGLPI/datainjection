@@ -46,6 +46,7 @@ $DATAINJECTIONLANG["setup"][5] = "Désinstaller le plugin $title";
 $DATAINJECTIONLANG["setup"][6] = "Attention, la mise à jour du plugin est irréversible.";
 $DATAINJECTIONLANG["setup"][7] = "Attention, la désinstallation du plugin est irréversible.<br> Vous perdrez toutes les données.";
 $DATAINJECTIONLANG["setup"][8] = "Colonne";
+$DATAINJECTIONLANG["setup"][9] = "Gestion des droits";
 
 $DATAINJECTIONLANG["presentation"][1] = "Bienvenue dans l'assistant d'importation de fichier !";
 $DATAINJECTIONLANG["presentation"][2] = "Cette assistant va vous permettre en toute simplicité d'importer des fichiers au format XML, CSV, et XLS en fonction de vos droits dans GLPI.";
@@ -148,5 +149,9 @@ $DATAINJECTIONLANG["result"][4] = "Au moins un champs obligatoire n'est pas remp
 $DATAINJECTIONLANG["result"][5] = "Pas les droits pour importer les données";
 $DATAINJECTIONLANG["result"][6] = "Pas les droits pour mettre à jour les données";
 $DATAINJECTIONLANG["result"][7] = "L'import s'est bien passé";
+
+$DATAINJECTIONLANG["profiles"][1] = "Créer un modèle";
+$DATAINJECTIONLANG["profiles"][2] = "Supprimer un modèle";
+$DATAINJECTIONLANG["profiles"][3] = "Utiliser un modèle";
 
 ?>

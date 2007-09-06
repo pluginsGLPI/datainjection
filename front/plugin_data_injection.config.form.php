@@ -55,13 +55,13 @@ else
 		echo "<div align='center'>";
 		echo "<form name=cas action=\"".$_SERVER["PHP_SELF"]."\" method=\"post\">";
 
-		echo "<table class='tab_cadre_fixe' cellpadding='6'>";
+		echo "<table class='tab_cadre' cellpadding='6'>";
 		echo "<tr class='tab_bg_2'><th colspan='6'>" . $DATAINJECTIONLANG["setup"][1]."</th></tr></table>";
 		echo "<br>";
-		echo "<table class='tab_cadre_fixe' cellpadding='6'>";
+		echo "<table class='tab_cadre' cellpadding='6'>";
+		echo "<tr class='tab_bg_2'><td colspan='5' align='center'><a href=\"../front/plugin_data_injection.profile.php\">".$DATAINJECTIONLANG["setup"][9]."</a></td/></tr>";
 		echo "<tr class='tab_bg_2'><td colspan='5' align='center'><a href=\"../front/plugin_data_injection.uninstall.php\">".$DATAINJECTIONLANG["setup"][5]."</a></td/></tr>";
 		echo "</table></form></div>";
-	
 }
 
 commonFooter();

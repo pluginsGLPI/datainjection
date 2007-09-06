@@ -135,7 +135,6 @@ class DataInjectionEngine
 						$db_fields[$mapping->getMappingType()],
 						$this->model->getCanAddDropdown()
 				);
-				
 			}
 		}
 
@@ -164,8 +163,9 @@ class DataInjectionEngine
 				$ID = $obj->add($fields);
 				//Add the ID to the fields, so it can be reused after
 				$db_fields["common"] = addCommonFields($db_fields["common"],$this->model->getDeviceType(),$fields,$this->getEntity(),$ID);
-				$result->setInjectionType("add");
 				$result->setInjectionType(IMPORT_OK);
+				$result->setInjectedId($ID);
+				$result->setInjectionType(INJECTION_ADD);
 			}
 			else
 			{
@@ -180,8 +180,9 @@ class DataInjectionEngine
 			$fields["ID"] = $ID;
 			$db_fields["common"] = addCommonFields($db_fields["common"],$this->model->getDeviceType(),$fields,$this->getEntity(),$ID);
 			$obj->update($fields);
-			$result->setInjectionType("update");
 			$result->setInjectionMessage(IMPORT_OK);
+			$result->setInjectedId($ID);
+			$result->setInjectionType(INJECTION_UPDATE);
 		}
 		else
 		{	

@@ -101,12 +101,23 @@ function plugin_data_injection_Install() {
 	  `backend_class_name` varchar(255) NOT NULL,
 	  `model_class_name` varchar(255) NOT NULL,
 	  PRIMARY KEY  (`ID`)
-	) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
+	) ENGINE=MyISAM AUTO_INCREMENT=2 ;
 	";
 	$DB->query($query) or die($DB->error());
 	
 	$query="INSERT INTO `glpi_plugin_data_injection_filetype` (`ID`, `name`, `value`, `backend_class_name`, `model_class_name`) VALUES 
 (1, 'CSV', 1, 'BackendCSV', 'DataInjectionModelCSV');";
+	$DB->query($query) or die($DB->error());
+
+	$query="CREATE TABLE `glpi_plugin_data_injection_profiles` (
+		`ID` int(11) NOT NULL auto_increment,
+		`name` varchar(255) default NULL,
+		`is_default` int(6) NOT NULL default '0',
+		`create_model` char(1) default NULL,
+		`delete_model` char(1) default NULL,
+		`use_model` char(1) default NULL,
+		PRIMARY KEY  (`ID`)
+		) TYPE=MyISAM;";
 	$DB->query($query) or die($DB->error());
 
 	if (!is_dir(PLUGIN_DATA_INJECTION_UPLOAD_DIR)) {
@@ -162,4 +173,17 @@ function isInstall() {
 		}
 }
 
+function plugin_data_injection_createaccess($ID){
+
+	$DB = new DB;
+	$query="SELECT * FROM glpi_profiles where ID='$ID';";
+	$result=$DB->query($query);
+	$i = 0;
+	$name = $DB->result($result, $i, "glpi_profiles.name");
+
+	$query1 ="INSERT INTO `glpi_plugin_data_injection_profiles` ( `ID`, `name` , `is_default`, `create_model`, `delete_model`, `use_model`) VALUES ('$ID', '$name','0',NULL,NULL,NULL);";
+
+	$DB->query($query1);
+
+}
 ?>
