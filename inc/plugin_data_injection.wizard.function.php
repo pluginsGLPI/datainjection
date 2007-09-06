@@ -790,7 +790,7 @@ function infoStep($target)
 					/*************************Select table*************************/
 					echo "<td>";
 					
-					$types = getAllInfosDefinitionsTypes();
+					$types = getAllInfosDefinitionsTypes($model->getDeviceType());
 					
 					echo "<select name='field[$key][0]' id='table$key' onchange='go_info($key);addelete_info($key)' style='width: 150px'>";
 					
@@ -859,7 +859,7 @@ function infoStep($target)
 				/*************************Select table*************************/
 				echo "<td>";
 				
-				$types = getAllInfosDefinitionsTypes();
+				$types = getAllInfosDefinitionsTypes($model->getDeviceType());
 				
 				echo "<select name='field[$key][0]' id='table$key' onchange='go_info($key);addelete_info($key)' style='width: 150px'>";
 				
@@ -912,7 +912,7 @@ function infoStep($target)
 		/*************************Select table*************************/
 		echo "<td>";
 		
-		$types = getAllInfosDefinitionsTypes();
+		$types = getAllInfosDefinitionsTypes($model->getDeviceType());
 		
 		echo "<select name='field[$key][0]' id='table$key' onchange='go_info($key);addelete_info($key)' style='width: 150px'>";
 			
@@ -1094,7 +1094,9 @@ function saveStep($target,$save)
 
 function fillInfoStep($target,$info)
 {
-	global $DATAINJECTIONLANG,$LANG;
+	global $DATAINJECTIONLANG,$LANG,$DATA_INJECTION_INFOS;
+	
+	$model = unserialize($_SESSION["plugin_data_injection"]["model"]);
 	
 	echo "<form action='".$target."' method='post'>";
 	echo "<table class='wizard'>";
@@ -1114,9 +1116,62 @@ function fillInfoStep($target,$info)
 	
 	echo "<td class='wizard_right_area' style='width: 400px' valign='top'>";
 	
+	$info = 1;	
+	
 	if($info)
-		{
-			echo "<div class='save_delete'>pas encore fait</div>";
+		{	
+			$model->setInfos(new InfosCollection());
+			$model->getInfos()->getAllInfosByModelID($model->getModelID());
+			
+			$temp_label = -2;
+			
+			foreach($model->getInfos()->getAllInfos() as $key => $value)
+				{
+				$label = $value->getInfosType();
+					
+				if($label != $temp_label)
+					{
+					if($temp_label != -2)
+						{
+						echo "</table>";
+						echo "</fieldset>";
+						}
+					$temp_label = $label;	
+					$commonitem = new CommonItem;
+					$commonitem->setType($value->getInfosType());
+					echo "<fieldset class='fillInfoStep_fieldset'>";
+					echo "<legend>".$commonitem->getType()."</legend>";
+					echo "<table class='fillInfoStep_tab'>";
+					}
+				
+				if(isset($DATA_INJECTION_INFOS[$value->getInfosType()][$value->getValue()]["type"]))
+					$data = $DATA_INJECTION_INFOS[$value->getInfosType()][$value->getValue()]["type"];
+				else
+					$data = "text";
+				
+				if(isset($DATA_INJECTION_INFOS[$value->getInfosType()][$value->getValue()]["input_type"]))
+					$input =  $DATA_INJECTION_INFOS[$value->getInfosType()][$value->getValue()]["input_type"];
+				else
+					$input = "text";
+				
+				switch ($input)
+					{
+					case "text":
+						echo "<tr><td><input type='hidden' name='field[$key][0]' value='".$value->getID()."' /></td></tr>";
+						echo "<tr><td style='width: 200px'>".$DATA_INJECTION_INFOS[$value->getInfosType()][$value->getValue()]["name"]." : </td><td>";
+						autocompletionTextField("field[$key][1]",$DATA_INJECTION_INFOS[$value->getInfosType()][$value->getValue()]["table"], $DATA_INJECTION_INFOS[$value->getInfosType()][$value->getValue()]["field"]);
+						echo "<td></tr>";
+					break;
+					case "dropdown";
+						echo "<tr><td><input type='hidden' name='field[$key][0]' value='".$value->getID()."' /></td></tr>";
+						echo "<tr><td style='width: 200px'>".$DATA_INJECTION_INFOS[$value->getInfosType()][$value->getValue()]["name"]." : </td><td>";
+						dropdownValue($DATA_INJECTION_INFOS[$value->getInfosType()][$value->getValue()]["table"], "field[$key][1]", 0, 0);
+						echo "<td></tr>";
+					break;
+					}
+				}
+				echo "</table>";
+				echo "</fieldset>";
 		}
 	else
 		{

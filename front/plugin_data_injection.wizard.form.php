@@ -347,6 +347,12 @@ if($load)
 	
 	else if(isset($_POST["next_fillInfoStep"]))
 		{
+		$model = unserialize($_SESSION["plugin_data_injection"]["model"]);
+		
+		
+		
+		
+		
 		$_SESSION["plugin_data_injection"]["load"] = "next_fillInfoStep";
 		$info = 0;
 		}

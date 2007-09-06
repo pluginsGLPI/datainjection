@@ -43,7 +43,7 @@ function getAllInfosAsArrayByType($type,$infoscollection)
 	return $fields;
 }
 
-function getAllInfosDefinitionsTypes()
+function getAllInfosDefinitionsTypes($primary_type)
 {
 	global $INJECTION_INFOS_TYPES,$LANG;
 
@@ -52,9 +52,12 @@ function getAllInfosDefinitionsTypes()
 
 	foreach ($INJECTION_INFOS_TYPES as $type)
 	{
-		
+		//TODO : revoir la selection des types pour le menu deroulant des infos complementaires
+		if($primary_type == $type || $type == 9)
+		{
 		$commonitem->setType($type);
 		$types[] = array($type,$commonitem->getType());
+		}
 	}
 	asort($types);
 	return $types;
