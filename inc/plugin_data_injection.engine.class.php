@@ -116,6 +116,9 @@ class DataInjectionEngine
 			}
 		}
 
+		//Add informations filleds by the user
+		$db_fields = addInfosFields($db_fields,$infos);
+
 		$process = true;
 		//----------------------------------------------------//
 		//-------------Process primary type------------------//
@@ -128,12 +131,9 @@ class DataInjectionEngine
 		//If necessary, add default fields which are mandatory to create the object
 		$fields = addNecessaryFields($this->model,$mapping,$mapping_definition,$this->getEntity(),$this->model->getDeviceType(),$fields,$db_fields["common"]);
 
-		//Add informations filleds by the user
-		$fields = addInfosFields($this->model->getModelType(),$fields,$infos);
-		
 		//Check if the line already exists in database
 		$ID = dataAlreadyInDB($this->model->getDeviceType(),$fields,$mapping_definition,$this->model);
-	
+
 		if ($ID == -1)
 		{
 			if ($this->model->getBehaviorAdd())
@@ -147,7 +147,6 @@ class DataInjectionEngine
 				$result->setInjectedId($ID);
 				$result->setInjectionType(INJECTION_ADD);
 
-				//$result->setCheckMessage(TYPE_CHECK_OK);
 				$result->setInjectionMessage(IMPORT_OK);
 			}
 			else
@@ -160,7 +159,6 @@ class DataInjectionEngine
 				$result->setInjectedId(NOT_IMPORTED);
 				$result->setInjectionType(INJECTION_ADD);
 				
-				//$result->setCheckMessage(TYPE_CHECK_OK);
 				$result->setInjectionMessage(ERROR_CANNOT_IMPORT);
 			}
 		}	
@@ -175,7 +173,6 @@ class DataInjectionEngine
 			$result->setInjectedId($ID);
 			$result->setInjectionType(INJECTION_UPDATE);
 
-			//$result->setCheckMessage(TYPE_CHECK_OK);
 			$result->setInjectionMessage(IMPORT_OK);
 		}
 		else
@@ -188,7 +185,6 @@ class DataInjectionEngine
 			$result->setInjectedId($ID);
 			$result->setInjectionType(INJECTION_UPDATE);
 			
-			//$result->setCheckMessage(TYPE_CHECK_OK);
 			$result->setInjectionMessage(ERROR_CANNOT_UPDATE);
 		}
 		if ($process)
@@ -199,7 +195,7 @@ class DataInjectionEngine
 			//----------------------------------------------------//
 			//-------------Process other types-------------------//
 			//--------------------------------------------------//
-	
+
 			//Insert others objects in database
 			foreach ($db_fields as $type => $fields)
 			{
@@ -209,8 +205,6 @@ class DataInjectionEngine
 					//If necessary, add default fields which are mandatory to create the object
 					$fields = addNecessaryFields($this->model,$mapping,$mapping_definition,$this->getEntity(),$type,$fields,$db_fields["common"]);
 
-					//Add informations filleds by the user
-					$fields = addInfosFields($type,$fields,$infos);
 					
 					//Check if the line already exists in database
 					$ID = dataAlreadyInDB($type,$fields,$mapping_definition,$this->model);

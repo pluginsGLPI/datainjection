@@ -423,11 +423,10 @@ function haveRightDropdown($table,$canadd_dropdown)
 	}
 }
 	
-function addInfosFields($type,$fields,$infos)
+function addInfosFields($fields,$infos)
 {
 	foreach ($infos as $info)
-		if ($info->getInfosType() == $type)
-			$fields[$info->getValue()] = $info->getInfosText();
+		$fields[$info->getInfosType()][$info->getValue()] = $info->getInfosText();
 
 	return $fields;
 }

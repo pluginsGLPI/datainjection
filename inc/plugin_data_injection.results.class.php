@@ -34,6 +34,7 @@ class DataInjectionResults {
 	private $injection_message;
 	private $injection_type;
 	private $injected_id;
+	private $line_id;
 	
 	function DataInjectionResults()
 	{
@@ -42,8 +43,14 @@ class DataInjectionResults {
 		$this->injection_message = "";
 		$this->injection_type = "";
 		$this->injected_id = -1;
+		$this->line_id=-1;
 	}
 
+	function getLineID()
+	{
+		return $this->line_id;
+	}
+	
 	function getStatus()
 	{
 		return $this->status;
@@ -92,6 +99,11 @@ class DataInjectionResults {
 	function setInjectedId($ID)
 	{
 		$this->injected_id = $ID;
+	}
+	
+	function setLineId($ID)
+	{
+		$this->line_id = $ID;
 	}
 	
 	private function getLabel($type)
