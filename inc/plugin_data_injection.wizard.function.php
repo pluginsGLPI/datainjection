@@ -28,7 +28,7 @@
  */
 
 // ----------------------------------------------------------------------
-// Original Author of file: CAILLAUD Xavier
+// Original Author of file: Dévi Balpe
 // Purpose of file:
 // ----------------------------------------------------------------------
 
@@ -62,39 +62,51 @@ function choiceStep($target)
 	
 	echo "<td class='wizard_right_area' style='width:400px' valign='top'>";
 	echo "<fieldset class='choiceStep_selection'>";
-	echo "<legend>Faites votre sélection</legend>";
+	echo "<legend>".$DATAINJECTIONLANG["choiceStep"][9]."</legend>";
 	echo "<table class='choiceStep_table'>";
 	
-	/***************************Create*****************************/
-	echo "<tr>";
-	echo "<td style='height: 40px;'><input type='radio' id='checkbox' name='choice' value='1' onClick='showSelect(this.form,$nbmodel);deleteOnglet(6)' checked /></td>";
-	echo "<td>".$DATAINJECTIONLANG["choiceStep"][3]."</td>";
-	echo "</tr>";
-	/**************************************************************/
-	
+		if (plugin_data_injection_haveRight("create_model","w"))
+		{
+			/***************************Create*****************************/
+			echo "<tr>";
+			echo "<td style='height: 40px;'><input type='radio' id='checkbox' name='choice' value='1' onClick='showSelect(this.form,$nbmodel);deleteOnglet(6)' checked /></td>";
+			echo "<td>".$DATAINJECTIONLANG["choiceStep"][3]."</td>";
+			echo "</tr>";
+			/**************************************************************/
+		}	
 	if ($nbmodel>0) 
 		{
-		/**************************Update******************************/
-		echo "<tr>";
-		echo "<td><input type='radio' name='choice' value='2' onClick='showSelect(this.form,$nbmodel);deleteOnglet(5)' /></td>";
-		echo "<td>".$DATAINJECTIONLANG["choiceStep"][4]."</td>";
-		echo "</tr>";
-		/**************************************************************/
-		
-		/**************************Delete******************************/
-		echo "<tr>";
-		echo "<td><input type='radio' name='choice' value='3' onClick='showSelect(this.form,$nbmodel);deleteOnglet(2)' /></td>";
-		echo "<td>".$DATAINJECTIONLANG["choiceStep"][5]."</td>";
-		echo "</tr>";
-		/**************************************************************/
-		
-		/***************************Using******************************/
-		echo "<tr>";
-		echo "<td><input type='radio' name='choice' value='4' onClick='showSelect(this.form,$nbmodel);deleteOnglet(5)' /></td>";
-		echo "<td>".$DATAINJECTIONLANG["choiceStep"][6]."</td>";
-		echo "</tr>";
-		echo "</table>";
-		/**************************************************************/
+
+		if (plugin_data_injection_haveRight("create_model","w"))
+		{
+			/**************************Update******************************/
+			echo "<tr>";
+			echo "<td><input type='radio' name='choice' value='2' onClick='showSelect(this.form,$nbmodel);deleteOnglet(5)' /></td>";
+			echo "<td>".$DATAINJECTIONLANG["choiceStep"][4]."</td>";
+			echo "</tr>";
+			/**************************************************************/
+		}		
+
+		if (plugin_data_injection_haveRight("delete_model","w"))
+		{
+			/**************************Delete******************************/
+			echo "<tr>";
+			echo "<td><input type='radio' name='choice' value='3' onClick='showSelect(this.form,$nbmodel);deleteOnglet(2)' /></td>";
+			echo "<td>".$DATAINJECTIONLANG["choiceStep"][5]."</td>";
+			echo "</tr>";
+			/**************************************************************/
+		}
+
+		if (plugin_data_injection_haveRight("use_model","r"))
+		{
+			/**************************Using******************************/
+			echo "<tr>";
+			echo "<td><input type='radio' name='choice' value='4' onClick='showSelect(this.form,$nbmodel);deleteOnglet(5)' /></td>";
+			echo "<td>".$DATAINJECTIONLANG["choiceStep"][6]."</td>";
+			echo "</tr>";
+			echo "</table>";
+			/**************************************************************/
+		}
 		
 		/************************Select Model**************************/
 		echo "<div class='choiceStep_dropdown'>";
@@ -584,8 +596,8 @@ function mappingStep($target)
 				echo "<td>";
 				echo "<select name='field[$key][1]' id='table$key' onchange='go_mapping($key)' style='width: 150px'>";
 		
-				$types = getAllMappingsDefinitionsTypes();
-		
+				$types = getAllMappingsDefinitionsTypes($model->getDeviceType());
+
 				echo "<option value='-1'>".$DATAINJECTIONLANG["mappingStep"][6]."</option>";
 		
 				foreach($types as $type)
@@ -654,7 +666,7 @@ function mappingStep($target)
 			echo "<td>";
 			echo "<select name='field[$key][1]' id='table$key' onchange='go_mapping($key)' style='width: 150px'>";
 			
-			$types = getAllMappingsDefinitionsTypes();
+			$types = getAllMappingsDefinitionsTypes($model->getDeviceType());
 			
 			echo "<option value='-1'>".$DATAINJECTIONLANG["mappingStep"][6]."</option>";
 			

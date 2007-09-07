@@ -28,7 +28,7 @@
  --------------------------------------------------------------------------
  */
 
-function getAllMappingsDefinitionsTypes()
+function getAllMappingsDefinitionsTypes($primary_type)
 {
 	global $IMPORT_TYPES,$LANG;
 
@@ -37,8 +37,11 @@ function getAllMappingsDefinitionsTypes()
 
 	foreach ($IMPORT_TYPES as $type)
 	{
+		if ($type == $primary_type || $type == INFOCOM_TYPE)
+		{
 		$commonitem->setType($type);
 		$types[] = array($type,$commonitem->getType());
+		}
 	}
 	asort($types);
 	return $types;

@@ -28,7 +28,7 @@
  */
 
 // ----------------------------------------------------------------------
-// Original Author of file: CAILLAUD Xavier
+// Original Author of file: Walid Nouh
 // Purpose of file:
 // ----------------------------------------------------------------------
 

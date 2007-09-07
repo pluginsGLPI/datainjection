@@ -48,9 +48,9 @@ $DATAINJECTIONLANG["setup"][7] = "Attention, la désinstallation du plugin est i
 $DATAINJECTIONLANG["setup"][8] = "Colonne";
 $DATAINJECTIONLANG["setup"][9] = "Gestion des droits";
 
-$DATAINJECTIONLANG["presentation"][1] = "Bienvenue dans l'assistant d'importation de fichier !";
-$DATAINJECTIONLANG["presentation"][2] = "Cette assistant va vous permettre en toute simplicité d'importer des fichiers au format CSV.";
-$DATAINJECTIONLANG["presentation"][3] = "Pour commencer à utiliser l'assistant, cliquez sur Suivant.";
+$DATAINJECTIONLANG["presentation"][1] = "Bienvenue dans l'assistant d'importation de fichiers";
+$DATAINJECTIONLANG["presentation"][2] = "Cet assistant d'importer des fichiers au format CSV.";
+$DATAINJECTIONLANG["presentation"][3] = "Pour commencer, cliquez sur Suivant.";
 
 $DATAINJECTIONLANG["step"][1] = "Etape 1 : ";
 $DATAINJECTIONLANG["step"][2] = "Etape 2 : ";
@@ -61,17 +61,19 @@ $DATAINJECTIONLANG["step"][6] = "Etape 6 : ";
 $DATAINJECTIONLANG["step"][7] = "Etape 7 : ";
 
 $DATAINJECTIONLANG["choiceStep"][1] = "Gestion ou utilisation d'un modèle";
-$DATAINJECTIONLANG["choiceStep"][2] = "Dans cette première étape, vous devez choisir entre créer, modifier, supprimer, ou utiliser un modèle.";
+$DATAINJECTIONLANG["choiceStep"][2] = "Cette première étape vous permet de ecréer, modifier, supprimer, ou utiliser un modèle.";
 $DATAINJECTIONLANG["choiceStep"][3] = "Créer un nouveau modèle";
 $DATAINJECTIONLANG["choiceStep"][4] = "Modifier un modèle existant";
 $DATAINJECTIONLANG["choiceStep"][5] = "Supprimer un modèle existant";
 $DATAINJECTIONLANG["choiceStep"][6] = "Utiliser un modèle existant";
 $DATAINJECTIONLANG["choiceStep"][7] = "Commentaire du modèle";
 $DATAINJECTIONLANG["choiceStep"][8] = "Pas de commentaires";
+$DATAINJECTIONLANG["choiceStep"][9] = "Faites votre sélection";
+
 
 $DATAINJECTIONLANG["modelStep"][1] = "Collecte d'informations sur le fichier";
 $DATAINJECTIONLANG["modelStep"][2] = "Modification du modèle";
-$DATAINJECTIONLANG["modelStep"][3] = "Dans cette étape, vous devez sélectionner le type de votre fichier ainsi que le type d'objet que vous allez insérer.";
+$DATAINJECTIONLANG["modelStep"][3] = "Sélectionner le type de votre fichier à importer et le type d'objet que vous allez insérer.";
 $DATAINJECTIONLANG["modelStep"][4] = "Type de données à insérer :";
 $DATAINJECTIONLANG["modelStep"][5] = "Type de fichier :";
 $DATAINJECTIONLANG["modelStep"][6] = "Création des lignes :";
@@ -79,7 +81,7 @@ $DATAINJECTIONLANG["modelStep"][7] = "Mise à jour des lignes :";
 $DATAINJECTIONLANG["modelStep"][8] = "Ajout dans un dropdown :";
 $DATAINJECTIONLANG["modelStep"][9] = "Présence d'un entête :";
 $DATAINJECTIONLANG["modelStep"][10] = "Délimiteur du fichier :";
-$DATAINJECTIONLANG["modelStep"][11] = "Délimiteur non définie";
+$DATAINJECTIONLANG["modelStep"][11] = "Délimiteur non défini";
 
 $DATAINJECTIONLANG["deleteStep"][1] = "Confirmation de la suppression";
 $DATAINJECTIONLANG["deleteStep"][2] = "Attention si vous supprimez le modèle, les mappings et les informations complémentaires seront supprimés également.";
@@ -162,5 +164,7 @@ $DATAINJECTIONLANG["result"][13] = "Identifiant de l'objet";
 $DATAINJECTIONLANG["profiles"][1] = "Créer un modèle";
 $DATAINJECTIONLANG["profiles"][2] = "Supprimer un modèle";
 $DATAINJECTIONLANG["profiles"][3] = "Utiliser un modèle";
+
+$DATAINJECTIONLANG["mappings"][1] = "Nombre de ports";
 
 ?>

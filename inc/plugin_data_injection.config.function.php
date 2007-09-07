@@ -152,7 +152,13 @@ function plugin_data_injection_uninstall() {
 function plugin_data_injection_initSession()
 {
 	if (TableExists("glpi_plugin_data_injection_config") && TableExists("glpi_plugin_data_injection_models") && TableExists("glpi_plugin_data_injection_mappings")  && TableExists("glpi_plugin_data_injection_infos"))
-			$_SESSION["glpi_plugin_data_injection_installed"]=1;
+	{
+		$_SESSION["glpi_plugin_data_injection_installed"]=1;
+		$prof=new DataInjectionProfile();
+		if($prof->getFromDBForUser($_SESSION["glpiID"])){
+			$_SESSION["glpi_plugin_data_injection_profile"]=$prof->fields;
+		}
+	}		
 }
 
 function isInstall() {
@@ -184,6 +190,32 @@ function plugin_data_injection_createaccess($ID){
 	$query1 ="INSERT INTO `glpi_plugin_data_injection_profiles` ( `ID`, `name` , `is_default`, `create_model`, `delete_model`, `use_model`) VALUES ('$ID', '$name','0',NULL,NULL,NULL);";
 
 	$DB->query($query1);
+}
 
+function plugin_data_injection_haveRight($module,$right){
+	$matches=array(
+			""  => array("","r","w"), // ne doit pas arriver normalement
+			"r" => array("r","w"),
+			"w" => array("w"),
+			"1" => array("1"),
+			"0" => array("0","1"), // ne doit pas arriver non plus
+		      );
+	if (isset($_SESSION["glpi_plugin_data_injection_profile"][$module])&&in_array($_SESSION["glpi_plugin_data_injection_profile"][$module],$matches[$right]))
+		return true;
+	else return false;
+}
+
+function plugin_data_injection_checkRight($module, $right) {
+	global $CFG_GLPI;
+
+	if (!plugin_data_injection_haveRight($module, $right)) {
+		// Gestion timeout session
+		if (!isset ($_SESSION["glpiID"])) {
+			glpi_header($CFG_GLPI["root_doc"] . "/index.php");
+			exit ();
+		}
+
+		displayRightError();
+	}
 }
 ?>
