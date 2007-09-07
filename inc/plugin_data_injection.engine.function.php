@@ -426,9 +426,30 @@ function haveRightDropdown($table,$canadd_dropdown)
 function addInfosFields($fields,$infos)
 {
 	foreach ($infos as $info)
-		$fields[$info->getInfosType()][$info->getValue()] = $info->getInfosText();
+		if (keepInfo($info))	
+			$fields[$info->getInfosType()][$info->getValue()] = $info->getInfosText();
 
 	return $fields;
 }
 
+function keepInfo($info)
+{
+	global $DATA_INJECTION_INFOS;
+	
+	if (!isset($DATA_INJECTION_INFOS[$info->getInfosType()][$info->getValue()]["input_type"]))
+		return true;
+
+	switch ($DATA_INJECTION_INFOS[$info->getInfosType()][$info->getValue()]["input_type"])
+	{
+		case "text":
+			if ($info->getInfosText() != NULL && $info->getInfosText() != '')
+				return true;
+		break;
+		case "dropdown":
+			if ($info->getInfosText() != 0)
+				return true;
+		break;		
+	}	
+	return false;
+}
 ?>

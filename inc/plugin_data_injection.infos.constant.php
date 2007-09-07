@@ -67,7 +67,7 @@ $DATA_INJECTION_INFOS[INFOCOM_TYPE]['warranty_value']['table']='glpi_infocoms';
 $DATA_INJECTION_INFOS[INFOCOM_TYPE]['warranty_value']['field']='warranty_value';
 $DATA_INJECTION_INFOS[INFOCOM_TYPE]['warranty_value']['name']=$LANG["financial"][78];
 
-$DATA_INJECTION_INFOS[INFOCOM_TYPE]['FK_enterprise']['table']='glpi_dropdown_manufacturer';
+$DATA_INJECTION_INFOS[INFOCOM_TYPE]['FK_enterprise']['table']='glpi_enterprises';
 $DATA_INJECTION_INFOS[INFOCOM_TYPE]['FK_enterprise']['field']='name';
 $DATA_INJECTION_INFOS[INFOCOM_TYPE]['FK_enterprise']['name']=$LANG["common"][5];
 $DATA_INJECTION_INFOS[INFOCOM_TYPE]['FK_enterprise']['linkfield']='FK_enterprise';
@@ -162,6 +162,12 @@ $DATA_INJECTION_INFOS[COMPUTER_TYPE]['FK_groups']['name']=$LANG["common"][35];
 $DATA_INJECTION_INFOS[COMPUTER_TYPE]['FK_groups']['linkfield']='FK_groups';
 $DATA_INJECTION_INFOS[COMPUTER_TYPE]['FK_groups']['input_type']='dropdown';
 
+$DATA_INJECTION_INFOS[COMPUTER_TYPE]['tech_num']['table']='glpi_users';
+$DATA_INJECTION_INFOS[COMPUTER_TYPE]['tech_num']['field']='name';
+$DATA_INJECTION_INFOS[COMPUTER_TYPE]['tech_num']['name']=$LANG["common"][10];
+$DATA_INJECTION_INFOS[COMPUTER_TYPE]['tech_num']['linkfield']='tech_num';
+$DATA_INJECTION_INFOS[COMPUTER_TYPE]['tech_num']['input_type']='dropdown';
+
 // ----------------------------------------------------------------------
 //MONITOR INFOS
 // ----------------------------------------------------------------------
@@ -200,6 +206,12 @@ $DATA_INJECTION_INFOS[MONITOR_TYPE]['FK_groups']['field']='name';
 $DATA_INJECTION_INFOS[MONITOR_TYPE]['FK_groups']['name']=$LANG["common"][35];
 $DATA_INJECTION_INFOS[MONITOR_TYPE]['FK_groups']['linkfield']='FK_groups';
 $DATA_INJECTION_INFOS[MONITOR_TYPE]['FK_groups']['input_type']='dropdown';
+
+$DATA_INJECTION_INFOS[MONITOR_TYPE]['tech_num']['table']='glpi_users';
+$DATA_INJECTION_INFOS[MONITOR_TYPE]['tech_num']['field']='name';
+$DATA_INJECTION_INFOS[MONITOR_TYPE]['tech_num']['name']=$LANG["common"][10];
+$DATA_INJECTION_INFOS[MONITOR_TYPE]['tech_num']['linkfield']='tech_num';
+$DATA_INJECTION_INFOS[MONITOR_TYPE]['tech_num']['input_type']='dropdown';
 
 // ----------------------------------------------------------------------
 //PRINTER INFOS
@@ -240,6 +252,12 @@ $DATA_INJECTION_INFOS[PRINTER_TYPE]['FK_groups']['name']=$LANG["common"][35];
 $DATA_INJECTION_INFOS[PRINTER_TYPE]['FK_groups']['linkfield']='FK_groups';
 $DATA_INJECTION_INFOS[PRINTER_TYPE]['FK_groups']['input_type']='dropdown';
 
+$DATA_INJECTION_INFOS[PRINTER_TYPE]['tech_num']['table']='glpi_users';
+$DATA_INJECTION_INFOS[PRINTER_TYPE]['tech_num']['field']='name';
+$DATA_INJECTION_INFOS[PRINTER_TYPE]['tech_num']['name']=$LANG["common"][10];
+$DATA_INJECTION_INFOS[PRINTER_TYPE]['tech_num']['linkfield']='tech_num';
+$DATA_INJECTION_INFOS[PRINTER_TYPE]['tech_num']['input_type']='dropdown';
+
 // ----------------------------------------------------------------------
 //PHONE INFOS
 // ----------------------------------------------------------------------
@@ -278,6 +296,12 @@ $DATA_INJECTION_INFOS[PHONE_TYPE]['FK_groups']['field']='name';
 $DATA_INJECTION_INFOS[PHONE_TYPE]['FK_groups']['name']=$LANG["common"][35];
 $DATA_INJECTION_INFOS[PHONE_TYPE]['FK_groups']['linkfield']='FK_groups';
 $DATA_INJECTION_INFOS[PHONE_TYPE]['FK_groups']['input_type']='dropdown';
+
+$DATA_INJECTION_INFOS[PHONE_TYPE]['tech_num']['table']='glpi_users';
+$DATA_INJECTION_INFOS[PHONE_TYPE]['tech_num']['field']='name';
+$DATA_INJECTION_INFOS[PHONE_TYPE]['tech_num']['name']=$LANG["common"][10];
+$DATA_INJECTION_INFOS[PHONE_TYPE]['tech_num']['linkfield']='tech_num';
+$DATA_INJECTION_INFOS[PHONE_TYPE]['tech_num']['input_type']='dropdown';
 
 // ----------------------------------------------------------------------
 //PERIPHERAL INFOS
@@ -318,6 +342,12 @@ $DATA_INJECTION_INFOS[PERIPHERAL_TYPE]['FK_groups']['name']=$LANG["common"][35];
 $DATA_INJECTION_INFOS[PERIPHERAL_TYPE]['FK_groups']['linkfield']='FK_groups';
 $DATA_INJECTION_INFOS[PERIPHERAL_TYPE]['FK_groups']['input_type']='dropdown';
 
+$DATA_INJECTION_INFOS[PERIPHERAL_TYPE]['tech_num']['table']='glpi_users';
+$DATA_INJECTION_INFOS[PERIPHERAL_TYPE]['tech_num']['field']='name';
+$DATA_INJECTION_INFOS[PERIPHERAL_TYPE]['tech_num']['name']=$LANG["common"][10];
+$DATA_INJECTION_INFOS[PERIPHERAL_TYPE]['tech_num']['linkfield']='tech_num';
+$DATA_INJECTION_INFOS[PERIPHERAL_TYPE]['tech_num']['input_type']='dropdown';
+
 // ----------------------------------------------------------------------
 //NETWORKING INFOS
 // ----------------------------------------------------------------------
@@ -356,5 +386,11 @@ $DATA_INJECTION_INFOS[NETWORKING_TYPE]['FK_groups']['field']='name';
 $DATA_INJECTION_INFOS[NETWORKING_TYPE]['FK_groups']['name']=$LANG["common"][35];
 $DATA_INJECTION_INFOS[NETWORKING_TYPE]['FK_groups']['linkfield']='FK_groups';
 $DATA_INJECTION_INFOS[NETWORKING_TYPE]['FK_groups']['input_type']='dropdown';
+
+$DATA_INJECTION_INFOS[NETWORKING_TYPE]['tech_num']['table']='glpi_users';
+$DATA_INJECTION_INFOS[NETWORKING_TYPE]['tech_num']['field']='name';
+$DATA_INJECTION_INFOS[NETWORKING_TYPE]['tech_num']['name']=$LANG["common"][10];
+$DATA_INJECTION_INFOS[NETWORKING_TYPE]['tech_num']['linkfield']='tech_num';
+$DATA_INJECTION_INFOS[NETWORKING_TYPE]['tech_num']['input_type']='dropdown';
 
 ?>
