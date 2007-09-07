@@ -674,9 +674,7 @@ function mappingStep($target)
 			/**************************************************************/
 			
 			/*********************Checkbox Mandatory***********************/
-			echo "<td style='text-align:center'>";
-			echo "<input type='checkbox' name='field[$key][3]' id='check$key' style='text-align:center' disabled />";
-			echo "</td>";
+			echo "<td style='text-align:center'><input type='checkbox' name='field[$key][3]' id='check$key' disabled /></td>";
 			/**************************************************************/
 			
 			echo "</tr>";
@@ -829,13 +827,13 @@ function infoStep($target)
 					
 					/*********************Checkbox Mandatory***********************/
 					if($value->getInfosType()==-1)
-						echo "<td style='text-align:center'><input type='checkbox' name='field[$key][2]' id='check$key' style='width:60px' disabled /></td>";
+						echo "<td style='text-align:center'><input type='checkbox' name='field[$key][2]' id='check$key' disabled /></td>";
 					else
 						{
 						if($value->isMandatory())	
-							echo "<td style='text-align:center'><input type='checkbox' name='field[$key][2]' id='check$key' style='width:60px' checked /></td>";
+							echo "<td style='text-align:center'><input type='checkbox' name='field[$key][2]' id='check$key' checked /></td>";
 						else
-							echo "<td style='text-align:center'><input type='checkbox' name='field[$key][2]' id='check$key' style='width:60px' /></td>";
+							echo "<td style='text-align:center'><input type='checkbox' name='field[$key][2]' id='check$key' /></td>";
 						}
 					/**************************************************************/
 					

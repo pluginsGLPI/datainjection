@@ -213,7 +213,7 @@ function log_popup(nbline)
 	var x = screen.width;
 	var y = screen.height;
 	
-	height = (nbline * 40) + 100;
+	height = (nbline * 30) + 200;
 	
 	x = (x - 970)/2;
 	y = (y - nbline)/2;
@@ -248,6 +248,21 @@ function verif_mandatory(cpt)
 		return false;
 		}
 }
+
+function show_log(num)
+{	
+	if(document.getElementById('log'+num+'_table').style.display == 'none')
+		{
+		document.getElementById('log'+num).src = '../pics/minus.png';
+		document.getElementById('log'+num+'_table').style.display = 'block';
+		}
+	else
+		{
+		document.getElementById('log'+num).src = '../pics/plus.png';
+		document.getElementById('log'+num+'_table').style.display = 'none';
+		}
+}
+
 
 function change_progress(pourcentage)
 {
