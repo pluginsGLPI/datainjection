@@ -116,7 +116,7 @@ function choiceStep($target)
 			
 			echo "<fieldset class='choiceStep_comments' id='comments".$model->getModelID()."'>";
 			echo "<legend>".$DATAINJECTIONLANG["choiceStep"][7]."</legend>";
-			if($comment!="")
+			if(!empty($comment))
 				echo $comment;
 			else
 				echo $DATAINJECTIONLANG["choiceStep"][8];
@@ -486,7 +486,7 @@ function fileStep($target,$error)
 	/**************************************************************/
 	
 	/*************************File Error***************************/
-	if($error!="")
+	if(!empty($error))
 		echo "<div class='fileStep_error'>".$error."</div>";
 	/**************************************************************/
 	
@@ -1090,9 +1090,7 @@ function saveStep($target,$save)
 	echo "<script type='text/javascript'>document.getElementById('model_name').focus()</script>";
 }
 
-
-
-function fillInfoStep($target)
+function fillInfoStep($target,$error)
 {
 	global $DATAINJECTIONLANG,$LANG,$DATA_INJECTION_INFOS;
 	
@@ -1124,9 +1122,6 @@ function fillInfoStep($target)
 	/************************Infos view****************************/
 	if($info)
 		{	
-			$model->setInfos(new InfosCollection());
-			$model->getInfos()->getAllInfosByModelID($model->getModelID());
-			
 			$temp_label = -2;
 			
 			foreach($model->getInfos()->getAllInfos() as $key => $value)
@@ -1169,7 +1164,7 @@ function fillInfoStep($target)
 							case "text":							
 								echo "<tr><td colspan='3'><input type='hidden' name='field[$key][0]' value='".$value->getID()."' /></td></tr>";
 								echo "<tr><td style='width: 200px'>".$DATA_INJECTION_INFOS[$value->getInfosType()][$value->getValue()]["name"]." : </td><td style='width: 130px'>";
-								autocompletionTextField("field[$key][1]",$DATA_INJECTION_INFOS[$value->getInfosType()][$value->getValue()]["table"], $DATA_INJECTION_INFOS[$value->getInfosType()][$value->getValue()]["field"],'',20,$_SESSION["glpiactive_entity"]);
+								autocompletionTextField("field[$key][1]",$DATA_INJECTION_INFOS[$value->getInfosType()][$value->getValue()]["table"], $DATA_INJECTION_INFOS[$value->getInfosType()][$value->getValue()]["field"],$value->getInfosText(),20,$_SESSION["glpiactive_entity"]);
 								if($value->isMandatory())
 									echo "</td><td class='fillInfoStep_mandatory'>*</td></tr>";
 								else
@@ -1178,7 +1173,7 @@ function fillInfoStep($target)
 							case "date":
 								echo "<tr><td colspan='3'><input type='hidden' name='field[$key][0]' value='".$value->getID()."' /></td></tr>";
 								echo "<tr><td style='width: 200px'>".$DATA_INJECTION_INFOS[$value->getInfosType()][$value->getValue()]["name"]." : </td><td style='width: 130px'>";
-								showCalendarForm("form_ic","field[$key][1]");
+								showCalendarForm("form_ic","field[$key][1]",$value->getInfosText());
 								if($value->isMandatory())
 									echo "</td><td class='fillInfoStep_mandatory'>*</td></tr>";
 								else
@@ -1189,7 +1184,7 @@ function fillInfoStep($target)
 					case "dropdown";
 						echo "<tr><td colspan='3'><input type='hidden' name='field[$key][0]' value='".$value->getID()."' /></td></tr>";
 						echo "<tr><td style='width: 200px'>".$DATA_INJECTION_INFOS[$value->getInfosType()][$value->getValue()]["name"]." : </td><td style='width: 130px'>";
-						dropdownValue($DATA_INJECTION_INFOS[$value->getInfosType()][$value->getValue()]["table"], "field[$key][1]", 0, 0, $_SESSION["glpiactive_entity"]);
+						dropdownValue($DATA_INJECTION_INFOS[$value->getInfosType()][$value->getValue()]["table"], "field[$key][1]", $value->getInfosText(), 0, $_SESSION["glpiactive_entity"]);
 						if($value->isMandatory())
 							echo "</td><td class='fillInfoStep_mandatory'>*</td></tr>";
 						else
@@ -1200,8 +1195,12 @@ function fillInfoStep($target)
 				echo "</table>";
 				echo "</fieldset>";
 				
-				echo "<div class='fillInfoStep_red'>* Champ obligatoire</div>";	
-				echo "<div class='fillInfoStep_error'>Un champ obligatoire n'est pas remplie'</div>";
+				echo "<div class='fillInfoStep_red'>".$DATAINJECTIONLANG["fillInfoStep"][3]."</div>";	
+				
+				/**********************Fill Info Error*************************/
+				if(!empty($error))
+					echo "<div class='fillInfoStep_error'>".$error."</div>";
+				/**************************************************************/
 		}
 	/**************************************************************/
 	
@@ -1228,7 +1227,7 @@ function fillInfoStep($target)
 		echo "</div>";
 		
 		echo "<div class='next'>";
-		echo "<input type='submit' name='next_fillInfoStep' value='".$DATAINJECTIONLANG["button"][2]."' class='submit' onclick='verif_infos()' />";
+		echo "<input type='submit' name='next_fillInfoStep' value='".$DATAINJECTIONLANG["button"][2]."' class='submit' />";
 		echo "</div>";
 		}
 	else

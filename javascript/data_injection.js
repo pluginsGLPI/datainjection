@@ -249,11 +249,6 @@ function verif_mandatory(cpt)
 		}
 }
 
-function verif_infos()
-{
-
-}
-
 function change_progress(pourcentage)
 {
 	document.getElementById('importStep_progress').style.width = pourcentage;

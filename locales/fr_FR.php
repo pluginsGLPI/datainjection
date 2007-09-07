@@ -127,6 +127,8 @@ $DATAINJECTIONLANG["saveStep"][10] = "Voulez-vous utiliser le modèle maintenant
 
 $DATAINJECTIONLANG["fillInfoStep"][1] = "Attention ! Vous êtes sur le point d'importer des données dans GLPI. Etes-vous sûr de vouloir importer ?";
 $DATAINJECTIONLANG["fillInfoStep"][2] = "Remplissez les champs pour que les informations soient insérées dans GLPI lors de l'importation.";
+$DATAINJECTIONLANG["fillInfoStep"][3] = "* Champ obligatoire";
+$DATAINJECTIONLANG["fillInfoStep"][4] = "Un champ obligatoire n'est pas remplis";
 
 $DATAINJECTIONLANG["importStep"][1] = "Importation du fichier";
 $DATAINJECTIONLANG["importStep"][2] = "L'importation du fichier peut prendre plusieurs minutes en fonction de votre configurations. Veuillez patientez et suivre la barre de progression pour voir où en est l'importation.";

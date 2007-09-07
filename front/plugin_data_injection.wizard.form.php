@@ -327,6 +327,7 @@ if($load)
 		$_SESSION["plugin_data_injection"]["step"] = 1;
 	/**************************************************************/
 	
+	
 	/***********************Fill Infos Step************************/
 	else if(isset($_POST["preview1_fillInfoStep"]))
 		{
@@ -344,11 +345,20 @@ if($load)
 		foreach($_POST["field"] as $field)
 			foreach($model->getInfos()->getAllInfos() as $info)
 				if($info->getID() == $field[0])
+					{
 					$info->setInfosText($field[1]);
+					
+					if($info->isMandatory() && (empty($field[1]) || empty($field[1])))
+						{
+						$error = $DATAINJECTIONLANG["fillInfoStep"][4];
+						$_SESSION["plugin_data_injection"]["load"] = "next_fileStep";
+						}
+					}
 		
 		$_SESSION["plugin_data_injection"]["model"] = serialize($model);
 		
-		$_SESSION["plugin_data_injection"]["load"] = "next_fillInfoStep";
+		if(empty($error))
+			$_SESSION["plugin_data_injection"]["load"] = "next_fillInfoStep";
 		}
 		
 	else if(isset($_POST["yes_fillInfoStep"]))
@@ -362,6 +372,7 @@ if($load)
 		$_SESSION["plugin_data_injection"]["step"] = 1;
 	/**************************************************************/
 	
+	
 	/**************************Import Step*************************/
 	else if(isset($_POST["next_importStep"]))
 		{
@@ -369,6 +380,7 @@ if($load)
 		$_SESSION["plugin_data_injection"]["load"] = "next_importStep";
 		}
 	/**************************************************************/
+	
 	
 	/****************************Log Step**************************/
 	else if(isset($_POST["next_logStep"]))
@@ -461,7 +473,7 @@ else
 					fileStep($_SERVER["PHP_SELF"],$error);
 				break;
 				case 3:
-					fillInfoStep($_SERVER["PHP_SELF"]);
+					fillInfoStep($_SERVER["PHP_SELF"],$error);
 				break;
 				case 4:
 					importStep($_SERVER["PHP_SELF"]);
