@@ -43,7 +43,6 @@ $load=1;
 $error="";
 $save=0;
 $suppr=0;
-$info = 0;
 
 /********************(re)Load or Not***************************/
 foreach($_POST as $key => $val)
@@ -192,11 +191,6 @@ if($load)
 	    			$_SESSION["plugin_data_injection"]["file"] = $name_file;
 	    			if($_SESSION["plugin_data_injection"]["choice"]==1)
 	    				$_SESSION["plugin_data_injection"]["remember"] = 0;
-	    			else
-	    				{
-						if(count($model->getInfos()->getAllInfos())>0)
-							$info = 1;
-	    				}
 	    			}
 	    		}
 	    	}
@@ -327,11 +321,6 @@ if($load)
 			$_SESSION["plugin_data_injection"]["step"] = 2;
 		$_SESSION["plugin_data_injection"]["choice"] = 4;
 		$_SESSION["plugin_data_injection"]["nbonglet"] = 5;
-		
-		$model = unserialize($_SESSION["plugin_data_injection"]["model"]);
-		
-		if(count($model->getInfos()->getAllInfos())>0)
-			$info = 1;
 		}
 		
 	else if(isset($_POST["no2_saveStep"]))
@@ -339,11 +328,14 @@ if($load)
 	/**************************************************************/
 	
 	/***********************Fill Infos Step************************/
-	else if(isset($_POST["preview_fillInfoStep"]))
+	else if(isset($_POST["preview1_fillInfoStep"]))
 		{
 		$_SESSION["plugin_data_injection"]["step"]--;
-		$_SESSION["plugin_data_injection"]["load"] = "preview_fillInfoStep";
+		$_SESSION["plugin_data_injection"]["load"] = "preview1_fillInfoStep";
 		}
+		
+	else if(isset($_POST["preview2_fillInfoStep"]))
+		$_SESSION["plugin_data_injection"]["load"] = "preview2_fillInfoStep";
 	
 	else if(isset($_POST["next_fillInfoStep"]))
 		{
@@ -357,7 +349,6 @@ if($load)
 		$_SESSION["plugin_data_injection"]["model"] = serialize($model);
 		
 		$_SESSION["plugin_data_injection"]["load"] = "next_fillInfoStep";
-		$info = 0;
 		}
 		
 	else if(isset($_POST["yes_fillInfoStep"]))
@@ -470,7 +461,7 @@ else
 					fileStep($_SERVER["PHP_SELF"],$error);
 				break;
 				case 3:
-					fillInfoStep($_SERVER["PHP_SELF"],$info);
+					fillInfoStep($_SERVER["PHP_SELF"]);
 				break;
 				case 4:
 					importStep($_SERVER["PHP_SELF"]);

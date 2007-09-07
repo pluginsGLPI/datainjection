@@ -245,6 +245,34 @@ border-spacing: 10px;
 }
 /**************************************************************/
 
+/***********************Fill Info Step*************************/
+.fillInfoStep_fieldset {
+margin-top: 30px;
+margin-bottom: 10px;
+}
+
+.fillInfoStep_tab td {
+font-size: 14px;
+}
+
+.fillInfoStep_mandatory {
+color: red;
+text-align: center;
+}
+
+.fillInfoStep_red {
+color: red;
+font-size: 11px;
+}
+
+.fillInfoStep_error {
+color: red;
+text-align: center;
+margin-top: 50px;
+display: none;
+}
+/**************************************************************/
+
 /*************************Import Step**************************/
 .importStep_cadre {
 margin-top: 150px;
@@ -276,7 +304,7 @@ margin-top: 20px;
 }
 /**************************************************************/
 
-/*************************Import Step**************************/
+/****************************Log Step**************************/
 .logStep_success {
 margin-top: 120px;
 font-size: 20px;
@@ -296,15 +324,5 @@ float: left;
 margin-top: 100px;
 margin-right: 50px;
 float: right;
-}
-/**************************************************************/
-
-/***********************Fill Info Step*************************/
-.fillInfoStep_fieldset {
-margin-top: 30px;
-}
-
-.fillInfoStep_tab td{
-font-size: 14px;
 }
 /**************************************************************/

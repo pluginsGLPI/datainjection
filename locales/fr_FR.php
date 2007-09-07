@@ -49,7 +49,7 @@ $DATAINJECTIONLANG["setup"][8] = "Colonne";
 $DATAINJECTIONLANG["setup"][9] = "Gestion des droits";
 
 $DATAINJECTIONLANG["presentation"][1] = "Bienvenue dans l'assistant d'importation de fichier !";
-$DATAINJECTIONLANG["presentation"][2] = "Cette assistant va vous permettre en toute simplicité d'importer des fichiers au format XML.";
+$DATAINJECTIONLANG["presentation"][2] = "Cette assistant va vous permettre en toute simplicité d'importer des fichiers au format CSV.";
 $DATAINJECTIONLANG["presentation"][3] = "Pour commencer à utiliser l'assistant, cliquez sur Suivant.";
 
 $DATAINJECTIONLANG["step"][1] = "Etape 1 : ";
