@@ -850,6 +850,11 @@ $DATA_INJECTION_MAPPING[NETWORKING_TYPE]['tech_num']['linkfield']='tech_num';
 $DATA_INJECTION_MAPPING[NETWORKING_TYPE]['tech_num']['type']='text';
 $DATA_INJECTION_MAPPING[NETWORKING_TYPE]['tech_num']['table_type']='dropdown';
 
+$DATA_INJECTION_MAPPING[NETWORKING_TYPE]['ticket_tco']['table']='glpi_networking';
+$DATA_INJECTION_MAPPING[NETWORKING_TYPE]['ticket_tco']['field']='ticket_tco';
+$DATA_INJECTION_MAPPING[NETWORKING_TYPE]['ticket_tco']['name']=$LANG["financial"][90];
+$DATA_INJECTION_MAPPING[NETWORKING_TYPE]['ticket_tco']['type']='text';
+
 // ----------------------------------------------------------------------
 //USER MAPPING
 // ----------------------------------------------------------------------

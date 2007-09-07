@@ -378,12 +378,18 @@ function getFieldValue($mapping, $mapping_definition,$field_value,$entity,$obj,$
 				}
 				break;
 			default :
-				$obj[$mapping_definition["field"]] = $field_value;
+				if (!isset($obj[$mapping_definition["field"]]))
+					$obj[$mapping_definition["field"]] = $field_value;
+				else
+					$obj[$mapping_definition["field"]] .= " ".$field_value;		
 				break;		
 		}
 	}
 	else
-		$obj[$mapping_definition["field"]] = $field_value;		
+		if (!isset($obj[$mapping_definition["field"]]))
+			$obj[$mapping_definition["field"]] = $field_value;
+		else
+			$obj[$mapping_definition["field"]] .= " ".$field_value;		
 	
 	return $obj;
 }
