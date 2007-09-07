@@ -35,6 +35,34 @@ function deleteOnglet(nbonglet)
 		}
 }
 
+function show_comments(cpt)
+{
+sel = document.getElementById('dropdown');
+id = sel.options[sel.selectedIndex].value;
+
+for(i=0;i<cpt;i++)
+	{
+	id2 = sel.options[i].value;
+	
+	document.getElementById('comments'+id2).style.display = 'none';
+	
+	if(id2==id)
+		document.getElementById('comments'+id).style.display = 'block';
+	}
+}
+
+function hide_comments(cpt)
+{
+sel = document.getElementById('dropdown');
+id = sel.options[sel.selectedIndex].value;
+
+for(i=0;i<cpt;i++)
+	{
+	id2 = sel.options[i].value;
+	document.getElementById('comments'+id2).style.display = 'none';
+	}
+}
+
 function getXhr()
 {	
 	var xhr = null; 
@@ -221,32 +249,9 @@ function verif_mandatory(cpt)
 		}
 }
 
-function show_comments(cpt)
+function verif_infos()
 {
-sel = document.getElementById('dropdown');
-id = sel.options[sel.selectedIndex].value;
 
-for(i=0;i<cpt;i++)
-	{
-	id2 = sel.options[i].value;
-	
-	document.getElementById('comments'+id2).style.display = 'none';
-	
-	if(id2==id)
-		document.getElementById('comments'+id).style.display = 'block';
-	}
-}
-
-function hide_comments(cpt)
-{
-sel = document.getElementById('dropdown');
-id = sel.options[sel.selectedIndex].value;
-
-for(i=0;i<cpt;i++)
-	{
-	id2 = sel.options[i].value;
-	document.getElementById('comments'+id2).style.display = 'none';
-	}
 }
 
 function change_progress(pourcentage)

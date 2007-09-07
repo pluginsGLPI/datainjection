@@ -349,9 +349,12 @@ if($load)
 		{
 		$model = unserialize($_SESSION["plugin_data_injection"]["model"]);
 		
+		foreach($_POST["field"] as $field)
+			foreach($model->getInfos()->getAllInfos() as $info)
+				if($info->getID() == $field[0])
+					$info->setInfosText($field[1]);
 		
-		
-		
+		$_SESSION["plugin_data_injection"]["model"] = serialize($model);
 		
 		$_SESSION["plugin_data_injection"]["load"] = "next_fillInfoStep";
 		$info = 0;

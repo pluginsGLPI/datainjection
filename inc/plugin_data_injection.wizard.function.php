@@ -1116,7 +1116,7 @@ function fillInfoStep($target,$info)
 	
 	echo "<td class='wizard_right_area' style='width: 400px' valign='top'>";
 	
-	$info = 1;	
+	//$info = 1;	
 	
 	if($info)
 		{	
@@ -1154,24 +1154,38 @@ function fillInfoStep($target,$info)
 				else
 					$input = "text";
 				
+				if(isset($DATA_INJECTION_INFOS[$value->getInfosType()][$value->getValue()]["input_type"]))
+					$input =  $DATA_INJECTION_INFOS[$value->getInfosType()][$value->getValue()]["input_type"];
+				
 				switch ($input)
 					{
 					case "text":
-						echo "<tr><td><input type='hidden' name='field[$key][0]' value='".$value->getID()."' /></td></tr>";
-						echo "<tr><td style='width: 200px'>".$DATA_INJECTION_INFOS[$value->getInfosType()][$value->getValue()]["name"]." : </td><td>";
-						autocompletionTextField("field[$key][1]",$DATA_INJECTION_INFOS[$value->getInfosType()][$value->getValue()]["table"], $DATA_INJECTION_INFOS[$value->getInfosType()][$value->getValue()]["field"]);
-						echo "<td></tr>";
+						switch($data)
+							{
+							case "text":							
+								echo "<tr><td><input type='hidden' name='field[$key][0]' value='".$value->getID()."' /></td></tr>";
+								echo "<tr><td style='width: 200px'>".$DATA_INJECTION_INFOS[$value->getInfosType()][$value->getValue()]["name"]." : </td><td>";
+								autocompletionTextField("field[$key][1]",$DATA_INJECTION_INFOS[$value->getInfosType()][$value->getValue()]["table"], $DATA_INJECTION_INFOS[$value->getInfosType()][$value->getValue()]["field"],'',20,$_SESSION["glpiactive_entity"]);
+								echo "<td></tr>";
+							break;
+							case "date":
+								echo "<tr><td><input type='hidden' name='field[$key][0]' value='".$value->getID()."' /></td></tr>";
+								echo "<tr><td style='width: 200px'>".$DATA_INJECTION_INFOS[$value->getInfosType()][$value->getValue()]["name"]." : </td><td>";
+								showCalendarForm("form_ic","field[$key][1]");
+								echo "</td></tr>";
+							break;
+							}
 					break;
 					case "dropdown";
 						echo "<tr><td><input type='hidden' name='field[$key][0]' value='".$value->getID()."' /></td></tr>";
 						echo "<tr><td style='width: 200px'>".$DATA_INJECTION_INFOS[$value->getInfosType()][$value->getValue()]["name"]." : </td><td>";
-						dropdownValue($DATA_INJECTION_INFOS[$value->getInfosType()][$value->getValue()]["table"], "field[$key][1]", 0, 0);
+						dropdownValue($DATA_INJECTION_INFOS[$value->getInfosType()][$value->getValue()]["table"], "field[$key][1]", 0, 0, $_SESSION["glpiactive_entity"]);
 						echo "<td></tr>";
 					break;
 					}
 				}
 				echo "</table>";
-				echo "</fieldset>";
+				echo "</fieldset>";	
 		}
 	else
 		{
@@ -1194,7 +1208,7 @@ function fillInfoStep($target,$info)
 		echo "</div>";
 		
 		echo "<div class='next'>";
-		echo "<input type='submit' name='next_fillInfoStep' value='".$DATAINJECTIONLANG["button"][2]."' class='submit' />";
+		echo "<input type='submit' name='next_fillInfoStep' value='".$DATAINJECTIONLANG["button"][2]."' class='submit' onclick='verif_infos()' />";
 		echo "</div>";
 		}
 		
@@ -1332,7 +1346,7 @@ function traitement()
 	$progress = $_SESSION["plugin_data_injection"]["import"]["progress"];
 	$datas = $_SESSION["plugin_data_injection"]["import"]["datas"];
 	
-	$global_result = $engine->injectLine($datas[$i][0]);
+	$global_result = $engine->injectLine($datas[$i][0],$model->getInfos()->getAllInfos());
 	$tab_result[] = $global_result;
 	$progress = number_format(($i*100)/$nbline,2);
 	$i++;
