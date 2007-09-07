@@ -425,10 +425,10 @@ function haveRightDropdown($table,$canadd_dropdown)
 	
 function addInfosFields($type,$fields,$infos)
 {
-	$infos = getAllInfosAsArrayByType($type,$infos);
-	foreach ($infos as $name => $value)
-		$fields[$name] = $value;
-		
+	foreach ($infos as $info)
+		if ($info->getInfosType() == $type)
+			$fields[$info->getValue()] = $info->getInfosText();
+
 	return $fields;
 }
 

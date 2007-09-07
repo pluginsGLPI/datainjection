@@ -28,21 +28,6 @@
  --------------------------------------------------------------------------
  */
 
-/*
- * Get all infos for a specific type
- */
-function getAllInfosAsArrayByType($type,$infoscollection)
-{
-	$fields = array();
-	foreach ($infoscollection as $info)
-	{
-		if ($info->getType() == $type)
-			$fields[$info->getField()] = $info->getValue(); 
-	}
-	
-	return $fields;
-}
-
 function getAllInfosDefinitionsTypes($primary_type)
 {
 	global $INJECTION_INFOS_TYPES,$LANG;
