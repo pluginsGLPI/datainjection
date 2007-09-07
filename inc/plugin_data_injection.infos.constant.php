@@ -34,16 +34,6 @@
 // ----------------------------------------------------------------------
 
 // ----------------------------------------------------------------------
-//MONITOR MAPPING
-// ----------------------------------------------------------------------
-
-
-// ----------------------------------------------------------------------
-//USER MAPPING
-// ----------------------------------------------------------------------
-
-
-// ----------------------------------------------------------------------
 // ----------------------------------------------------------------------
 //INFORMATIONS
 // ----------------------------------------------------------------------
@@ -52,7 +42,7 @@ global $LANG,$DATA_INJECTION_INFOS,$INJECTION_INFOS_TYPES;
 $INJECTION_INFOS_TYPES = array(COMPUTER_TYPE, MONITOR_TYPE, PRINTER_TYPE,PHONE_TYPE, INFOCOM_TYPE, NETWORKING_TYPE, PERIPHERAL_TYPE);
 
 // ----------------------------------------------------------------------
-//INFOCOM MAPPING
+//INFOCOM INFOS
 // ----------------------------------------------------------------------
 $DATA_INJECTION_INFOS[INFOCOM_TYPE]['buy_date']['table']='glpi_infocoms';
 $DATA_INJECTION_INFOS[INFOCOM_TYPE]['buy_date']['field']='buy_date';
@@ -133,40 +123,94 @@ $DATA_INJECTION_INFOS[INFOCOM_TYPE]['alert']['field']='alert';
 $DATA_INJECTION_INFOS[INFOCOM_TYPE]['alert']['name']=$LANG["setup"][247];
 $DATA_INJECTION_INFOS[INFOCOM_TYPE]['alert']['type']='integer';
 
+// ----------------------------------------------------------------------
+//COMPUTER INFOS
+// ----------------------------------------------------------------------
 $DATA_INJECTION_INFOS[COMPUTER_TYPE]['state']['table']='glpi_dropdown_state';
 $DATA_INJECTION_INFOS[COMPUTER_TYPE]['state']['field']='name';
 $DATA_INJECTION_INFOS[COMPUTER_TYPE]['state']['name']=$LANG["joblist"][0];
 $DATA_INJECTION_INFOS[COMPUTER_TYPE]['state']['linkfield']='state';
 $DATA_INJECTION_INFOS[COMPUTER_TYPE]['state']['input_type']='dropdown';
 
+$DATA_INJECTION_INFOS[COMPUTER_TYPE]['location']['table']='glpi_dropdown_locations';
+$DATA_INJECTION_INFOS[COMPUTER_TYPE]['location']['field']='name';
+$DATA_INJECTION_INFOS[COMPUTER_TYPE]['location']['name']=$LANG["common"][15];
+$DATA_INJECTION_INFOS[COMPUTER_TYPE]['location']['linkfield']='location';
+$DATA_INJECTION_INFOS[COMPUTER_TYPE]['location']['input_type']='dropdown';
+
+// ----------------------------------------------------------------------
+//MONITOR INFOS
+// ----------------------------------------------------------------------
 $DATA_INJECTION_INFOS[MONITOR_TYPE]['state']['table']='glpi_dropdown_state';
 $DATA_INJECTION_INFOS[MONITOR_TYPE]['state']['field']='name';
 $DATA_INJECTION_INFOS[MONITOR_TYPE]['state']['name']=$LANG["joblist"][0];
 $DATA_INJECTION_INFOS[MONITOR_TYPE]['state']['linkfield']='state';
 $DATA_INJECTION_INFOS[MONITOR_TYPE]['state']['input_type']='dropdown';
 
+$DATA_INJECTION_INFOS[MONITOR_TYPE]['location']['table']='glpi_dropdown_locations';
+$DATA_INJECTION_INFOS[MONITOR_TYPE]['location']['field']='name';
+$DATA_INJECTION_INFOS[MONITOR_TYPE]['location']['name']=$LANG["common"][15];
+$DATA_INJECTION_INFOS[MONITOR_TYPE]['location']['linkfield']='location';
+$DATA_INJECTION_INFOS[MONITOR_TYPE]['location']['input_type']='dropdown';
+
+// ----------------------------------------------------------------------
+//PRINTER INFOS
+// ----------------------------------------------------------------------
 $DATA_INJECTION_INFOS[PRINTER_TYPE]['state']['table']='glpi_dropdown_state';
 $DATA_INJECTION_INFOS[PRINTER_TYPE]['state']['field']='name';
 $DATA_INJECTION_INFOS[PRINTER_TYPE]['state']['name']=$LANG["joblist"][0];
 $DATA_INJECTION_INFOS[PRINTER_TYPE]['state']['linkfield']='state';
 $DATA_INJECTION_INFOS[PRINTER_TYPE]['state']['input_type']='dropdown';
 
+$DATA_INJECTION_INFOS[PRINTER_TYPE]['location']['table']='glpi_dropdown_locations';
+$DATA_INJECTION_INFOS[PRINTER_TYPE]['location']['field']='name';
+$DATA_INJECTION_INFOS[PRINTER_TYPE]['location']['name']=$LANG["common"][15];
+$DATA_INJECTION_INFOS[PRINTER_TYPE]['location']['linkfield']='location';
+$DATA_INJECTION_INFOS[PRINTER_TYPE]['location']['input_type']='dropdown';
+
+// ----------------------------------------------------------------------
+//PHONE INFOS
+// ----------------------------------------------------------------------
 $DATA_INJECTION_INFOS[PHONE_TYPE]['state']['table']='glpi_dropdown_state';
 $DATA_INJECTION_INFOS[PHONE_TYPE]['state']['field']='name';
 $DATA_INJECTION_INFOS[PHONE_TYPE]['state']['name']=$LANG["joblist"][0];
 $DATA_INJECTION_INFOS[PHONE_TYPE]['state']['linkfield']='state';
 $DATA_INJECTION_INFOS[PHONE_TYPE]['state']['input_type']='dropdown';
 
+$DATA_INJECTION_INFOS[PHONE_TYPE]['location']['table']='glpi_dropdown_locations';
+$DATA_INJECTION_INFOS[PHONE_TYPE]['location']['field']='name';
+$DATA_INJECTION_INFOS[PHONE_TYPE]['location']['name']=$LANG["common"][15];
+$DATA_INJECTION_INFOS[PHONE_TYPE]['location']['linkfield']='location';
+$DATA_INJECTION_INFOS[PHONE_TYPE]['location']['input_type']='dropdown';
+
+// ----------------------------------------------------------------------
+//PERIPHERAL INFOS
+// ----------------------------------------------------------------------
 $DATA_INJECTION_INFOS[PERIPHERAL_TYPE]['state']['table']='glpi_dropdown_state';
 $DATA_INJECTION_INFOS[PERIPHERAL_TYPE]['state']['field']='name';
 $DATA_INJECTION_INFOS[PERIPHERAL_TYPE]['state']['name']=$LANG["joblist"][0];
 $DATA_INJECTION_INFOS[PERIPHERAL_TYPE]['state']['linkfield']='state';
 $DATA_INJECTION_INFOS[PERIPHERAL_TYPE]['state']['input_type']='dropdown';
 
+$DATA_INJECTION_INFOS[PERIPHERAL_TYPE]['location']['table']='glpi_dropdown_locations';
+$DATA_INJECTION_INFOS[PERIPHERAL_TYPE]['location']['field']='name';
+$DATA_INJECTION_INFOS[PERIPHERAL_TYPE]['location']['name']=$LANG["common"][15];
+$DATA_INJECTION_INFOS[PERIPHERAL_TYPE]['location']['linkfield']='location';
+$DATA_INJECTION_INFOS[PERIPHERAL_TYPE]['location']['input_type']='dropdown';
+
+// ----------------------------------------------------------------------
+//NETWORKING INFOS
+// ----------------------------------------------------------------------
 $DATA_INJECTION_INFOS[NETWORKING_TYPE]['state']['table']='glpi_dropdown_state';
 $DATA_INJECTION_INFOS[NETWORKING_TYPE]['state']['field']='name';
 $DATA_INJECTION_INFOS[NETWORKING_TYPE]['state']['name']=$LANG["joblist"][0];
 $DATA_INJECTION_INFOS[NETWORKING_TYPE]['state']['linkfield']='state';
 $DATA_INJECTION_INFOS[NETWORKING_TYPE]['state']['input_type']='dropdown';
+
+$DATA_INJECTION_INFOS[NETWORKING_TYPE]['location']['table']='glpi_dropdown_locations';
+$DATA_INJECTION_INFOS[NETWORKING_TYPE]['location']['field']='name';
+$DATA_INJECTION_INFOS[NETWORKING_TYPE]['location']['name']=$LANG["common"][15];
+$DATA_INJECTION_INFOS[NETWORKING_TYPE]['location']['linkfield']='location';
+$DATA_INJECTION_INFOS[NETWORKING_TYPE]['location']['input_type']='dropdown';
 
 ?>
