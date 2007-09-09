@@ -58,6 +58,7 @@ $DATA_INJECTION_INFOS[INFOCOM_TYPE]['warranty_duration']['table']='glpi_infocoms
 $DATA_INJECTION_INFOS[INFOCOM_TYPE]['warranty_duration']['field']='warranty_duration';
 $DATA_INJECTION_INFOS[INFOCOM_TYPE]['warranty_duration']['name']=$LANG["financial"][15];
 $DATA_INJECTION_INFOS[INFOCOM_TYPE]['warranty_duration']['type']='integer';
+$DATA_INJECTION_INFOS[INFOCOM_TYPE]['warranty_duration']['input_type']='dropdown';
 
 $DATA_INJECTION_INFOS[INFOCOM_TYPE]['warranty_info']['table']='glpi_infocoms';
 $DATA_INJECTION_INFOS[INFOCOM_TYPE]['warranty_info']['field']='warranty_info';
@@ -93,11 +94,13 @@ $DATA_INJECTION_INFOS[INFOCOM_TYPE]['amort_time']['table']='glpi_infocoms';
 $DATA_INJECTION_INFOS[INFOCOM_TYPE]['amort_time']['field']='amort_time';
 $DATA_INJECTION_INFOS[INFOCOM_TYPE]['amort_time']['name']=$LANG["financial"][23];
 $DATA_INJECTION_INFOS[INFOCOM_TYPE]['amort_time']['type']='integer';
+$DATA_INJECTION_INFOS[INFOCOM_TYPE]['amort_time']['input_type']='dropdown';
 
 $DATA_INJECTION_INFOS[INFOCOM_TYPE]['amort_type']['table']='glpi_infocoms';
 $DATA_INJECTION_INFOS[INFOCOM_TYPE]['amort_type']['field']='amort_type';
 $DATA_INJECTION_INFOS[INFOCOM_TYPE]['amort_type']['name']=$LANG["financial"][22];
 $DATA_INJECTION_INFOS[INFOCOM_TYPE]['amort_type']['type']='integer';
+$DATA_INJECTION_INFOS[INFOCOM_TYPE]['amort_type']['input_type']='dropdown';
 
 $DATA_INJECTION_INFOS[INFOCOM_TYPE]['amort_coeff']['table']='glpi_infocoms';
 $DATA_INJECTION_INFOS[INFOCOM_TYPE]['amort_coeff']['field']='amort_coeff';
@@ -117,11 +120,6 @@ $DATA_INJECTION_INFOS[INFOCOM_TYPE]['budget']['field']='budget';
 $DATA_INJECTION_INFOS[INFOCOM_TYPE]['budget']['name']=$LANG["financial"][87];
 $DATA_INJECTION_INFOS[INFOCOM_TYPE]['budget']['linkfield']='FK_enterprise';
 $DATA_INJECTION_INFOS[INFOCOM_TYPE]['budget']['input_type']='dropdown';
-
-$DATA_INJECTION_INFOS[INFOCOM_TYPE]['alert']['table']='glpi_infocoms';
-$DATA_INJECTION_INFOS[INFOCOM_TYPE]['alert']['field']='alert';
-$DATA_INJECTION_INFOS[INFOCOM_TYPE]['alert']['name']=$LANG["setup"][247];
-$DATA_INJECTION_INFOS[INFOCOM_TYPE]['alert']['type']='integer';
 
 // ----------------------------------------------------------------------
 //COMPUTER INFOS

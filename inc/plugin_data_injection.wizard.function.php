@@ -1171,7 +1171,8 @@ function fillInfoStep($target,$error)
 					case "text":
 						switch($data)
 							{
-							case "text":							
+							case "text":
+							case "integer":							
 								echo "<tr><td colspan='3'><input type='hidden' name='field[$key][0]' value='".$value->getID()."' /></td></tr>";
 								echo "<tr><td style='width: 200px'>".$DATA_INJECTION_INFOS[$value->getInfosType()][$value->getValue()]["name"]." : </td><td style='width: 130px'>";
 								autocompletionTextField("field[$key][1]",$DATA_INJECTION_INFOS[$value->getInfosType()][$value->getValue()]["table"], $DATA_INJECTION_INFOS[$value->getInfosType()][$value->getValue()]["field"],$value->getInfosText(),20,$_SESSION["glpiactive_entity"]);
@@ -1191,10 +1192,25 @@ function fillInfoStep($target,$error)
 							break;
 							}
 					break;
-					case "dropdown";
+					case "dropdown":
 						echo "<tr><td colspan='3'><input type='hidden' name='field[$key][0]' value='".$value->getID()."' /></td></tr>";
 						echo "<tr><td style='width: 200px'>".$DATA_INJECTION_INFOS[$value->getInfosType()][$value->getValue()]["name"]." : </td><td style='width: 130px'>";
-						dropdownValue($DATA_INJECTION_INFOS[$value->getInfosType()][$value->getValue()]["table"], "field[$key][1]", $value->getInfosText(), 0, $_SESSION["glpiactive_entity"]);
+
+						switch ($DATA_INJECTION_INFOS[$value->getInfosType()][$value->getValue()]["field"])
+						{
+							case "amort_time":
+								dropdownInteger("amort_time","",0,15);
+								break;
+							case "warranty_duration":
+								dropdownInteger("warranty_duration","",0,120);
+								break;
+							case "amort_type":
+								dropdownAmortType("field[$key][1]");
+								break;
+							default:
+								dropdownValue($DATA_INJECTION_INFOS[$value->getInfosType()][$value->getValue()]["table"], "field[$key][1]", $value->getInfosText(), 0, $_SESSION["glpiactive_entity"]);
+								break;						 
+						}
 						if($value->isMandatory())
 							echo "</td><td class='fillInfoStep_mandatory'>*</td></tr>";
 						else

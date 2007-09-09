@@ -67,8 +67,7 @@ function checkType($type, $name, $data,$mandatory)
 					return ERROR_IMPORT_WRONG_TYPE;
 			break;
 			case 'date' :
-				//TODO : check date
-				return TYPE_CHECK_OK;			
+					return TYPE_CHECK_OK;
 			break;	
 			case 'ip':
 				ereg("([0-9]{1,3})\.([0-9]{1,3})\.([0-9]{1,3})\.([0-9]{1,3})",$data,$regs);
@@ -308,6 +307,11 @@ function addNecessaryFields($model,$mapping,$mapping_definition,$entity,$type,$f
 		case PRINTER_TYPE:
 		case PHONE_TYPE:
 		case NETWORKING_TYPE:
+			if (isset($fields["ipaddr"]))
+				unset ($fields["ipaddr"]);
+
+			if (isset($fields["macaddr"]))
+				unset ($fields["macaddr"]);
 		case GROUP_TYPE:
 		case CONTRACT_TYPE:
 		case PERIPHERAL_TYPE:
