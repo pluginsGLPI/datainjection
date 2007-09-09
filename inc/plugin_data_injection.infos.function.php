@@ -30,20 +30,21 @@
 
 function getAllInfosDefinitionsTypes($primary_type)
 {
-	global $INJECTION_INFOS_TYPES,$LANG;
-
 	$types = array();
 	$commonitem = new CommonItem;
 
-	foreach ($INJECTION_INFOS_TYPES as $type)
+	$commonitem->setType($primary_type);
+	$types[] = array($primary_type,$commonitem->getType());
+	
+	switch ($primary_type)
 	{
-		//TODO : revoir la selection des types pour le menu deroulant des infos complementaires
-		if($primary_type == $type || $type == 9)
-		{
-		$commonitem->setType($type);
-		$types[] = array($type,$commonitem->getType());
-		}
+		//Add infocom type
+		default:
+			$commonitem->setType(INFOCOM_TYPE);
+			$types[] = array(INFOCOM_TYPE,$commonitem->getType());
+		break;	
 	}
+
 	asort($types);
 	return $types;
 }

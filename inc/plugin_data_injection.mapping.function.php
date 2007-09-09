@@ -30,19 +30,21 @@
 
 function getAllMappingsDefinitionsTypes($primary_type)
 {
-	global $IMPORT_TYPES,$LANG;
-
 	$types = array();
 	$commonitem = new CommonItem;
 
-	foreach ($IMPORT_TYPES as $type)
+	$commonitem->setType($primary_type);
+	$types[] = array($primary_type,$commonitem->getType());
+	
+	switch ($primary_type)
 	{
-		if ($type == $primary_type || $type == INFOCOM_TYPE)
-		{
-		$commonitem->setType($type);
-		$types[] = array($type,$commonitem->getType());
-		}
+		//Add infocom type
+		default:
+			$commonitem->setType(INFOCOM_TYPE);
+			$types[] = array(INFOCOM_TYPE,$commonitem->getType());
+		break;	
 	}
+
 	asort($types);
 	return $types;
 }

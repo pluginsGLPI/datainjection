@@ -159,6 +159,7 @@ $DATAINJECTIONLANG["result"][10] = "Vérification des données";
 $DATAINJECTIONLANG["result"][11] = "Import des données";
 $DATAINJECTIONLANG["result"][12] = "Type d'injection";
 $DATAINJECTIONLANG["result"][13] = "Identifiant de l'objet";
+$DATAINJECTIONLANG["result"][14] = "Ligne";
 
 
 $DATAINJECTIONLANG["profiles"][1] = "Créer un modèle";

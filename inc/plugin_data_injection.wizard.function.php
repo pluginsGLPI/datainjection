@@ -1407,6 +1407,7 @@ function traitement()
 	$datas = $_SESSION["plugin_data_injection"]["import"]["datas"];
 	
 	$global_result = $engine->injectLine($datas[$i][0],$model->getInfos()->getAllInfos());
+	$global_result->setLineId($i);
 	$tab_result[] = $global_result;
 	$progress = number_format(($i*100)/$nbline,2);
 	$i++;

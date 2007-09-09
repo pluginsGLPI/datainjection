@@ -72,7 +72,7 @@ echo "<a href=\"javascript:show_log('1')\"><img src='../pics/minus.png' alt='min
 
 echo "<table class='tab_cadre_fixe' style='text-align: center' id='log1_table'>";
 
-echo "<tr><th>".$LANG["joblist"][0]."</th><th>".$DATAINJECTIONLANG["result"][10]."</th><th>".$DATAINJECTIONLANG["result"][11]."</th><th>".$DATAINJECTIONLANG["result"][12]."</th><th>".$DATAINJECTIONLANG["result"][13]."</th></tr>";
+echo "<tr><th>".$LANG["joblist"][0]."</th><th>".$DATAINJECTIONLANG["result"][14]."</th><th>".$DATAINJECTIONLANG["result"][10]."</th><th>".$DATAINJECTIONLANG["result"][11]."</th><th>".$DATAINJECTIONLANG["result"][12]."</th><th>".$DATAINJECTIONLANG["result"][13]."</th></tr>";
 
 foreach($tab_result[1] as $key => $value)
 	{
@@ -83,9 +83,10 @@ foreach($tab_result[1] as $key => $value)
 
 	echo "<tr class='tab_bg_$num'>";
 	echo "<td style='height:30px;width:30px'><img src='../pics/ok.png' alt='success' /></td>";
+	echo "<td style='height:30px;width:50px'>".$value->getLineID()."</td>";
 	echo "<td style='height:30px;width:300px'>".$value->getCheckMessage()."</td>";
 	echo "<td style='height:30px;width:300px'>".$value->getInjectionMessage()."</td>";
-	echo "<td style='height:30px;width:200px'>".($value->getInjectionType()==INJECTION_ADD?$DATAINJECTIONLANG["result"][8]:$DATAINJECTIONLANG["result"][9])."</td>";
+	echo "<td style='height:30px;width:300px'>".($value->getInjectionType()==INJECTION_ADD?$DATAINJECTIONLANG["result"][8]:$DATAINJECTIONLANG["result"][9])."</td>";
 	
 	if ($value->getInjectedId() > 0)
 		{
@@ -104,7 +105,7 @@ echo "<a href=\"javascript:show_log('2')\" style='margin-top: 20px'><img src='..
 
 echo "<table class='tab_cadre_fixe' style='text-align: center' id='log2_table'>";
 
-echo "<tr><th>".$LANG["joblist"][0]."</th><th>".$DATAINJECTIONLANG["result"][10]."</th><th>".$DATAINJECTIONLANG["result"][11]."</th><th>".$DATAINJECTIONLANG["result"][12]."</th><th>".$DATAINJECTIONLANG["result"][13]."</th></tr>";
+echo "<tr><th>".$LANG["joblist"][0]."</th><th>".$DATAINJECTIONLANG["result"][14]."</th><th>".$DATAINJECTIONLANG["result"][10]."</th><th>".$DATAINJECTIONLANG["result"][11]."</th><th>".$DATAINJECTIONLANG["result"][12]."</th><th>".$DATAINJECTIONLANG["result"][13]."</th></tr>";
 
 foreach($tab_result[0] as $key => $value)
 	{
@@ -115,6 +116,7 @@ foreach($tab_result[0] as $key => $value)
 
 	echo "<tr class='tab_bg_$num'>";
 	echo "<td style='height:30px;width:30px'><img src='../pics/notok.png' alt='success' /></td>";
+	echo "<td style='height:30px;width:50px'>".$value->getLineID()."</td>";
 	echo "<td style='height:30px;width:300px'>".$value->getCheckMessage()."</td>";
 	echo "<td style='height:30px;width:300px'>".$value->getInjectionMessage()."</td>";
 	echo "<td style='height:30px;width:200px'>".($value->getInjectionType()==INJECTION_ADD?$DATAINJECTIONLANG["result"][8]:$DATAINJECTIONLANG["result"][9])."</td>";
