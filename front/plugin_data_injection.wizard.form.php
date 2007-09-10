@@ -316,7 +316,10 @@ if($load)
 	else if(isset($_POST["yes2_saveStep"]))
 		{	
 		if($_SESSION["plugin_data_injection"]["choice"]==1)
+			{
 			$_SESSION["plugin_data_injection"]["step"] = 3;
+			$_SESSION["plugin_data_injection"]["load"] = "yes2_saveStep";
+			}
 		else
 			$_SESSION["plugin_data_injection"]["step"] = 2;
 		$_SESSION["plugin_data_injection"]["choice"] = 4;

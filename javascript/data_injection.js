@@ -215,10 +215,10 @@ function log_popup(nbline)
 	
 	height = (nbline * 30) + 200;
 	
-	x = (x - 1000)/2;
+	x = (x - 1010)/2;
 	y = (y - nbline)/2;
 	
-	window.open('../inc/plugin_data_injection.popup.log.php', 'Popup', 'resizable=no, location=no, menubar=no, scrollbars=yes, toolbar=no, status=no, width=1000, height='+height+', left='+x+', top='+y+'');
+	window.open('../inc/plugin_data_injection.popup.log.php', 'Popup', 'resizable=no, location=no, menubar=no, scrollbars=yes, toolbar=no, status=no, width=1010, height='+height+', left='+x+', top='+y+'');
 }
 
 function verif_delimiter()
@@ -267,25 +267,4 @@ function change_progress(pourcentage)
 {
 	document.getElementById('importStep_progress').style.width = pourcentage;
 	document.getElementById('importStep_pourcentage').innerHTML = pourcentage;
-}
-
-function new_import()
-{	
-	var xhr = getXhr();
-	
-	alert('horrible');
-	
-	xhr.onreadystatechange = function(){
-		if(xhr.readyState == 4 && xhr.status == 200)
-			{
-			leselect = xhr.responseText;
-			document.getElementById('new_import').innerHTML = leselect;
-			}
-		}
-
-	xhr.open("POST","../inc/plugin_data_injection.ajax.progress.php",true);
-
-	xhr.setRequestHeader('Content-Type','application/x-www-form-urlencoded');
-		
-	xhr.send(null);
 }

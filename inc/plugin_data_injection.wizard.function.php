@@ -1115,7 +1115,7 @@ function fillInfoStep($target,$error)
 	
 	$model = unserialize($_SESSION["plugin_data_injection"]["model"]);
 	
-	if(($_SESSION["plugin_data_injection"]["load"] == "next_fileStep" || $_SESSION["plugin_data_injection"]["load"] == "preview2_fillInfoStep") && count($model->getInfos()->getAllInfos())>0)
+	if(($_SESSION["plugin_data_injection"]["load"] == "next_fileStep" || $_SESSION["plugin_data_injection"]["load"] == "preview2_fillInfoStep" || $_SESSION["plugin_data_injection"]["load"] == "yes2_saveStep") && count($model->getInfos()->getAllInfos())>0)
 		$info = 1;
 	else
 		$info = 0;
@@ -1313,32 +1313,29 @@ function importStep($target)
 	echo "<td class='wizard_right_area' style='width: 400px' valign='top'>";
 	
 	
-	//echo "<div id='new_import'>";
+	echo "<div id='new_import'>";
 	echo "<div class='importStep_cadre'><div class='importStep_progress' id='importStep_progress'><div class='importStep_pourcentage' id='importStep_pourcentage'>".$_SESSION["plugin_data_injection"]["import"]["progress"]." %</div></div></div>";
 	
-	
-	if($_SESSION["plugin_data_injection"]["import"]["i"]<$_SESSION["plugin_data_injection"]["import"]["i_stop"])
+	/*if($_SESSION["plugin_data_injection"]["import"]["i"]<$_SESSION["plugin_data_injection"]["import"]["i_stop"])
 		{
 		traitement();
 		if($_SESSION["plugin_data_injection"]["import"]["i"]<$_SESSION["plugin_data_injection"]["import"]["i_stop"])
-			echo "<script type='text/javascript'>location.href='".$target."'</script>";
+			//echo "<script type='text/javascript'>location.href='".$target."'</script>";
 			
-			//echo "<input type='button' onClick='new_import()'";
+			echo "<script type='text/javascript'>new_import()</script>";
 		else
-			$end=1;
-		}
-	//echo "</div>";
-	
-	//echo "<input type='button' onClick='new_import()'";
-	
-	/*while($_SESSION["plugin_data_injection"]["import"]["i"]<$_SESSION["plugin_data_injection"]["import"]["i_stop"])
+			$end = 1;
+		}*/
+		
+	while($_SESSION["plugin_data_injection"]["import"]["i"]<$_SESSION["plugin_data_injection"]["import"]["i_stop"])
 		{
 		traitement();
-		if($_SESSION["plugin_data_injection"]["import"]["i"]>$_SESSION["plugin_data_injection"]["import"]["i_stop"])
-			$end=1;
-		}*/
+		//for ($j=0;$j<=1000000;$j++)  {$p=1;}	
+		}
+		
+	echo "</div>";
 	
-	
+	$end = 1;
 	if($end)
 		echo "<div class='importStep_end'>Importation terminé</div>";
 	
@@ -1422,7 +1419,7 @@ function traitement()
 	$i++;
 	$datas = $engine->getDatas();
 	echo "<script type='text/javascript'>change_progress('".$progress."%')</script>";
-		
+	flush();	
 		
 	$_SESSION["plugin_data_injection"]["import"]["tab_result"] = serialize($tab_result);
 	$_SESSION["plugin_data_injection"]["import"]["global_result"] = serialize($global_result);
