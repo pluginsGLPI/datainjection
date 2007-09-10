@@ -68,8 +68,13 @@ $datas = $_SESSION["plugin_data_injection"]["import"]["datas"];
 
 $tab_result = sortAllResults($tab_result);
 
+echo "<table>";
+echo "<tr>";
+echo "<td valign='top'>";
 echo "<a href=\"javascript:show_log('1')\"><img src='../pics/minus.png' alt='minus' id='log1' /></a>";
+echo "</td>";
 
+echo "<td style='width:950px'>";
 echo "<table class='tab_cadre_fixe' style='text-align: center' id='log1_table'>";
 
 echo "<tr><th>".$LANG["joblist"][0]."</th><th>".$DATAINJECTIONLANG["result"][14]."</th><th>".$DATAINJECTIONLANG["result"][10]."</th><th>".$DATAINJECTIONLANG["result"][11]."</th><th>".$DATAINJECTIONLANG["result"][12]."</th><th>".$DATAINJECTIONLANG["result"][13]."</th></tr>";
@@ -86,7 +91,7 @@ foreach($tab_result[1] as $key => $value)
 	echo "<td style='height:30px;width:50px'>".$value->getLineID()."</td>";
 	echo "<td style='height:30px;width:300px'>".$value->getCheckMessage()."</td>";
 	echo "<td style='height:30px;width:300px'>".$value->getInjectionMessage()."</td>";
-	echo "<td style='height:30px;width:300px'>".($value->getInjectionType()==INJECTION_ADD?$DATAINJECTIONLANG["result"][8]:$DATAINJECTIONLANG["result"][9])."</td>";
+	echo "<td style='height:30px;width:200px'>".($value->getInjectionType()==INJECTION_ADD?$DATAINJECTIONLANG["result"][8]:$DATAINJECTIONLANG["result"][9])."</td>";
 	
 	if ($value->getInjectedId() > 0)
 		{
@@ -100,9 +105,17 @@ foreach($tab_result[1] as $key => $value)
 	}
 
 echo "</table>";
+echo "</td>";
+echo "</tr>";
+echo "</table>";
 
-echo "<a href=\"javascript:show_log('2')\" style='margin-top: 20px'><img src='../pics/minus.png' alt='minus' id='log2' /></a>";
+echo "<table style='margin-top: 50px;'>";
+echo "<tr>";
+echo "<td valign='top'>";
+echo "<a href=\"javascript:show_log('2')\"><img src='../pics/minus.png' alt='minus' id='log2' /></a>";
+echo "</td>";
 
+echo "<td style='width:950px'>";
 echo "<table class='tab_cadre_fixe' style='text-align: center' id='log2_table'>";
 
 echo "<tr><th>".$LANG["joblist"][0]."</th><th>".$DATAINJECTIONLANG["result"][14]."</th><th>".$DATAINJECTIONLANG["result"][10]."</th><th>".$DATAINJECTIONLANG["result"][11]."</th><th>".$DATAINJECTIONLANG["result"][12]."</th><th>".$DATAINJECTIONLANG["result"][13]."</th></tr>";
@@ -132,6 +145,9 @@ foreach($tab_result[0] as $key => $value)
 	echo "</tr>";
 	}
 
+echo "</table>";
+echo "</td>";
+echo "</tr>";
 echo "</table>";
 
 echo "<div style='margin-top:15px;text-align:center'>";

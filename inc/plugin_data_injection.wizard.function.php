@@ -64,55 +64,61 @@ function choiceStep($target)
 	echo "<fieldset class='choiceStep_selection'>";
 	echo "<legend>".$DATAINJECTIONLANG["choiceStep"][9]."</legend>";
 	echo "<table class='choiceStep_table'>";
-	
-		if (plugin_data_injection_haveRight("create_model","w"))
-		{
-			/***************************Create*****************************/
-			echo "<tr>";
-			echo "<td style='height: 40px;'><input type='radio' id='checkbox' name='choice' value='1' onClick='showSelect(this.form,$nbmodel);deleteOnglet(6)' checked /></td>";
-			echo "<td>".$DATAINJECTIONLANG["choiceStep"][3]."</td>";
-			echo "</tr>";
-			/**************************************************************/
-		}	
+
+	/***************************Create*****************************/
+	echo "<tr>";
+	if (plugin_data_injection_haveRight("create_model","w"))
+		echo "<td style='height: 40px;'><input type='radio' id='checkbox1' name='choice' value='1' onClick='showSelect(this.form,$nbmodel);deleteOnglet(6)' checked /></td>";
+	else
+		echo "<td style='height: 40px;'><input type='radio' id='checkbox1' name='choice' value='1' onClick='showSelect(this.form,$nbmodel);deleteOnglet(6)' disabled /></td>";
+	echo "<td>".$DATAINJECTIONLANG["choiceStep"][3]."</td>";
+	echo "</tr>";
+	/**************************************************************/
+			
 	if ($nbmodel>0) 
 		{
-
+		/**************************Update******************************/
+		echo "<tr>";
 		if (plugin_data_injection_haveRight("create_model","w"))
-		{
-			/**************************Update******************************/
-			echo "<tr>";
-			echo "<td><input type='radio' name='choice' value='2' onClick='showSelect(this.form,$nbmodel);deleteOnglet(5)' /></td>";
-			echo "<td>".$DATAINJECTIONLANG["choiceStep"][4]."</td>";
-			echo "</tr>";
-			/**************************************************************/
-		}		
+			echo "<td><input type='radio' name='choice' value='2' id='checkbox2' onClick='showSelect(this.form,$nbmodel);deleteOnglet(5)' /></td>";
+		else
+			echo "<td><input type='radio' name='choice' value='2' id='checkbox2' onClick='showSelect(this.form,$nbmodel);deleteOnglet(5)' disabled /></td>";
+		echo "<td>".$DATAINJECTIONLANG["choiceStep"][4]."</td>";
+		echo "</tr>";
+		/**************************************************************/		
 
-		if (plugin_data_injection_haveRight("delete_model","w"))
-		{
-			/**************************Delete******************************/
-			echo "<tr>";
-			echo "<td><input type='radio' name='choice' value='3' onClick='showSelect(this.form,$nbmodel);deleteOnglet(2)' /></td>";
-			echo "<td>".$DATAINJECTIONLANG["choiceStep"][5]."</td>";
-			echo "</tr>";
-			/**************************************************************/
-		}
+		/**************************Delete******************************/
+		echo "<tr>";
+		if (plugin_data_injection_haveRight("create_model","w"))
+			echo "<td><input type='radio' name='choice' value='3' id='checkbox3' onClick='showSelect(this.form,$nbmodel);deleteOnglet(2)' /></td>";
+		else
+			echo "<td><input type='radio' name='choice' value='3' id='checkbox3' onClick='showSelect(this.form,$nbmodel);deleteOnglet(2)' disabled /></td>";
+		echo "<td>".$DATAINJECTIONLANG["choiceStep"][5]."</td>";
+		echo "</tr>";
+		/**************************************************************/
 
+		/**************************Using*******************************/
+		echo "<tr>";
 		if (plugin_data_injection_haveRight("use_model","r"))
-		{
-			/**************************Using******************************/
-			echo "<tr>";
-			echo "<td><input type='radio' name='choice' value='4' onClick='showSelect(this.form,$nbmodel);deleteOnglet(5)' /></td>";
-			echo "<td>".$DATAINJECTIONLANG["choiceStep"][6]."</td>";
-			echo "</tr>";
-			echo "</table>";
-			/**************************************************************/
-		}
-		
+			if($_SESSION["plugin_data_injection"]["choice"] == 4)
+				echo "<td><input type='radio' name='choice' value='4' id='checkbox4' onClick='showSelect(this.form,$nbmodel);deleteOnglet(5)' checked /></td>";
+			else
+				echo "<td><input type='radio' name='choice' value='4' id='checkbox4' onClick='showSelect(this.form,$nbmodel);deleteOnglet(5)' /></td>";
+		else
+			echo "<td><input type='radio' name='choice' value='4' id='checkbox4' onClick='showSelect(this.form,$nbmodel);deleteOnglet(5)' disabled /></td>";
+		echo "<td>".$DATAINJECTIONLANG["choiceStep"][6]."</td>";
+		echo "</tr>";
+		echo "</table>";
+		/**************************************************************/
+
 		/************************Select Model**************************/
 		echo "<div class='choiceStep_dropdown'>";
+		
+		if (plugin_data_injection_haveRight("create_model","w"))	
+			echo "<select style='background-color:#e6e6e6' disabled name='dropdown' id='dropdown' onchange='show_comments($nbmodel)'>";
+		else			
+			echo "<select name='dropdown' id='dropdown' onchange='show_comments($nbmodel)'>";
 			
-		echo "<select style='background-color:#e6e6e6' disabled name='dropdown' id='dropdown' onchange='show_comments($nbmodel)'>";
-	
 		foreach($models as $model)
 			echo "<option value='".$model->getModelID()."'>".$model->getModelName()." / ".getDropdownName('glpi_plugin_data_injection_filetype',$model->getModelType())."</option>";
 	
@@ -142,6 +148,9 @@ function choiceStep($target)
 		echo"</table>";
 		echo "</fieldset>";
 		}
+	
+	if (!plugin_data_injection_haveRight("create_model","w"))
+		echo "<script type='text/javascript'>show_comments($nbmodel)</script>";
 	
 	echo "</td></tr>";
 	
@@ -1486,8 +1495,17 @@ if(isset($_SESSION["plugin_data_injection"]["import"]))
 	unset($_SESSION["plugin_data_injection"]["import"]);
 	
 $_SESSION["plugin_data_injection"]["step"] = 1;
-$_SESSION["plugin_data_injection"]["choice"] = 1;
-$_SESSION["plugin_data_injection"]["nbonglet"] = 6;
+
+if (plugin_data_injection_haveRight("create_model","w"))
+	{
+	$_SESSION["plugin_data_injection"]["choice"] = 1;
+	$_SESSION["plugin_data_injection"]["nbonglet"] = 6;
+	}
+else if (plugin_data_injection_haveRight("use_model","r"))
+	{
+	$_SESSION["plugin_data_injection"]["choice"] = 4;
+	$_SESSION["plugin_data_injection"]["nbonglet"] = 5;	
+	}
 }
 
 ?>

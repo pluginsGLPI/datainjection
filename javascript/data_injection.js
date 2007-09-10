@@ -5,7 +5,7 @@ function change_color_step(id)
 
 function showSelect(form,cpt)
 {	
-	if (document.getElementById('checkbox').checked)
+	if (document.getElementById('checkbox1').checked)
 		{
 		form.dropdown.disabled=true;
 		form.dropdown.style.backgroundColor='#e6e6e6';
@@ -215,10 +215,10 @@ function log_popup(nbline)
 	
 	height = (nbline * 30) + 200;
 	
-	x = (x - 970)/2;
+	x = (x - 1000)/2;
 	y = (y - nbline)/2;
 	
-	window.open('../inc/plugin_data_injection.popup.log.php', 'Popup', 'resizable=no, location=no, menubar=no, scrollbars=yes, toolbar=no, status=no, width=970, height='+height+', left='+x+', top='+y+'');
+	window.open('../inc/plugin_data_injection.popup.log.php', 'Popup', 'resizable=no, location=no, menubar=no, scrollbars=yes, toolbar=no, status=no, width=1000, height='+height+', left='+x+', top='+y+'');
 }
 
 function verif_delimiter()
@@ -262,7 +262,6 @@ function show_log(num)
 		document.getElementById('log'+num+'_table').style.display = 'none';
 		}
 }
-
 
 function change_progress(pourcentage)
 {
