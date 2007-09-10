@@ -132,6 +132,26 @@ function plugin_data_injection_Install() {
 	$DB->query($query) or die($DB->error());
 
 	
+	$query ="INSERT INTO `glpi_plugin_data_injection_profiles` ( `ID`, `name` , `is_default`, `create_model`, `delete_model`, `use_model`)
+		VALUES ('1', 'post-only','1',NULL,NULL,NULL);";
+
+	$DB->query($query) or die("1.1 insert 1 glpi_plugin_data_injection_profiles ".$DB->error());
+
+	$query ="INSERT INTO `glpi_plugin_data_injection_profiles` ( `ID`, `name` , `is_default`, `create_model`, `delete_model`, `use_model`)
+		VALUES ('2', 'normal','0',NULL,NULL,'r');";
+
+	$DB->query($query) or die("1.1 insert 2 glpi_plugin_data_injection_profiles ".$DB->error());
+
+	$query ="INSERT INTO `glpi_plugin_data_injection_profiles` ( `ID`, `name` , `is_default`, `create_model`, `delete_model`, `use_model`)
+		VALUES ('3', 'admin','0','w','w','r');";
+
+	$DB->query($query) or die("1.1 insert 3 glpi_plugin_data_injection_profiles ".$DB->error());
+
+	$query ="INSERT INTO `glpi_plugin_data_injection_profiles` ( `ID`, `name` , `is_default`, `create_model`, `delete_model`, `use_model`)
+		VALUES ('4', 'super-admin','0','w','w','r');";
+
+	$DB->query($query) or die("1.1 insert 3 glpi_plugin_data_injection_profiles ".$DB->error());
+	
 	if (!is_dir(PLUGIN_DATA_INJECTION_UPLOAD_DIR)) {
 		mkdir(PLUGIN_DATA_INJECTION_UPLOAD_DIR);
 	}
@@ -157,6 +177,9 @@ function plugin_data_injection_uninstall() {
 	$DB->query($query) or die($DB->error());
 	
 	$query = "DROP TABLE `glpi_plugin_data_injection_filetype`;";
+	$DB->query($query) or die($DB->error());
+
+	$query = "DROP TABLE `glpi_plugin_data_injection_profiles`;";
 	$DB->query($query) or die($DB->error());
 	
 }
