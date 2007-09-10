@@ -1377,7 +1377,7 @@ function logStep($target)
 	/**************************************************************/
 	
 	echo "</table>";
-	echo "</form>";	
+	echo "</form>";
 }
 
 function traitement()
@@ -1462,7 +1462,10 @@ if(isset($_SESSION["plugin_data_injection"]["model"]))
 	unset($_SESSION["plugin_data_injection"]["model"]);
 
 if(isset($_SESSION["plugin_data_injection"]["file"]))
+	{
+	unlink(PLUGIN_DATA_INJECTION_UPLOAD_DIR.$_SESSION["plugin_data_injection"]["file"]);
 	unset($_SESSION["plugin_data_injection"]["file"]);
+	}
 
 if(isset($_SESSION["plugin_data_injection"]["remember"]))
 	unset($_SESSION["plugin_data_injection"]["remember"]);		

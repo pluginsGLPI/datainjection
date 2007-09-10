@@ -181,6 +181,28 @@ function plugin_data_injection_uninstall() {
 	$query = "DROP TABLE `glpi_plugin_data_injection_profiles`;";
 	$DB->query($query) or die($DB->error());
 	
+	if (is_dir(PLUGIN_DATA_INJECTION_UPLOAD_DIR)) {
+		deleteDir(PLUGIN_DATA_INJECTION_UPLOAD_DIR);
+	}
+}
+
+function deleteDir($fichier) {
+	if (file_exists($fichier))
+		{
+		chmod($fichier,0777);
+		if (is_dir($fichier))
+			{
+			$id_dossier = opendir($fichier);
+			while($element = readdir($id_dossier))
+				{
+				if ($element != "." && $element != "..")
+				unlink($fichier."/".$element);
+				}
+			closedir($id_dossier);
+			rmdir($fichier);
+			}
+		else unlink($fichier);
+		}
 }
 
 function plugin_data_injection_initSession()
