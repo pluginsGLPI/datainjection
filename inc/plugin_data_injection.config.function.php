@@ -120,6 +120,18 @@ function plugin_data_injection_Install() {
 		) TYPE=MyISAM;";
 	$DB->query($query) or die($DB->error());
 
+	$query="CREATE TABLE IF NOT EXISTS `glpi_plugin_data_injection_profiles` (
+	  `ID` int(11) NOT NULL auto_increment,
+	  `name` varchar(255) default NULL,
+	  `is_default` int(6) NOT NULL default '0',
+	  `create_model` char(1) default NULL,
+	  `delete_model` char(1) default NULL,
+	  `use_model` char(1) default NULL,
+	  PRIMARY KEY  (`ID`)
+	) ENGINE=MyISAM;";
+	$DB->query($query) or die($DB->error());
+
+	
 	if (!is_dir(PLUGIN_DATA_INJECTION_UPLOAD_DIR)) {
 		mkdir(PLUGIN_DATA_INJECTION_UPLOAD_DIR);
 	}
