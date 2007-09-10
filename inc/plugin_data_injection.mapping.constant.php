@@ -175,11 +175,13 @@ $DATA_INJECTION_MAPPING[COMPUTER_TYPE]['notes']['table']='glpi_computers';
 $DATA_INJECTION_MAPPING[COMPUTER_TYPE]['notes']['field']='notes';
 $DATA_INJECTION_MAPPING[COMPUTER_TYPE]['notes']['name']=$LANG["reminder"][2];
 $DATA_INJECTION_MAPPING[COMPUTER_TYPE]['notes']['type']='text';
+$DATA_INJECTION_MAPPING[COMPUTER_TYPE]['notes']['table_type']='multitext';
 
 $DATA_INJECTION_MAPPING[COMPUTER_TYPE]['comments']['table']='glpi_computers';
 $DATA_INJECTION_MAPPING[COMPUTER_TYPE]['comments']['field']='comments';
 $DATA_INJECTION_MAPPING[COMPUTER_TYPE]['comments']['name']=$LANG["common"][25];
 $DATA_INJECTION_MAPPING[COMPUTER_TYPE]['comments']['type']='text';
+$DATA_INJECTION_MAPPING[COMPUTER_TYPE]['comments']['table_type']='multitext';
 
 $DATA_INJECTION_MAPPING[COMPUTER_TYPE]['os_license_number']['table']='glpi_computers';
 $DATA_INJECTION_MAPPING[COMPUTER_TYPE]['os_license_number']['field']='os_license_number';
@@ -249,6 +251,7 @@ $DATA_INJECTION_MAPPING[MONITOR_TYPE]['comments']['table']='glpi_monitors';
 $DATA_INJECTION_MAPPING[MONITOR_TYPE]['comments']['field']='comments';
 $DATA_INJECTION_MAPPING[MONITOR_TYPE]['comments']['name']=$LANG["common"][25];
 $DATA_INJECTION_MAPPING[MONITOR_TYPE]['comments']['type']='text';
+$DATA_INJECTION_MAPPING[MONITOR_TYPE]['comments']['table_type']='multitext';
 
 $DATA_INJECTION_MAPPING[MONITOR_TYPE]['size']['table']='glpi_monitors';
 $DATA_INJECTION_MAPPING[MONITOR_TYPE]['size']['field']='size';
@@ -315,6 +318,7 @@ $DATA_INJECTION_MAPPING[MONITOR_TYPE]['notes']['table']='glpi_monitors';
 $DATA_INJECTION_MAPPING[MONITOR_TYPE]['notes']['field']='notes';
 $DATA_INJECTION_MAPPING[MONITOR_TYPE]['notes']['name']=$LANG["reminder"][2];
 $DATA_INJECTION_MAPPING[MONITOR_TYPE]['notes']['type']='text';
+$DATA_INJECTION_MAPPING[MONITOR_TYPE]['notes']['table_type']='multitext';
 
 $DATA_INJECTION_MAPPING[MONITOR_TYPE]['state']['table']='glpi_dropdown_state';
 $DATA_INJECTION_MAPPING[MONITOR_TYPE]['state']['field']='name';
@@ -382,11 +386,13 @@ $DATA_INJECTION_MAPPING[PRINTER_TYPE]['comments']['table']='glpi_printers';
 $DATA_INJECTION_MAPPING[PRINTER_TYPE]['comments']['field']='comments';
 $DATA_INJECTION_MAPPING[PRINTER_TYPE]['comments']['name']=$LANG["common"][25];
 $DATA_INJECTION_MAPPING[PRINTER_TYPE]['comments']['type']='text';
+$DATA_INJECTION_MAPPING[PRINTER_TYPE]['comments']['table_type']='multitext';
 
 $DATA_INJECTION_MAPPING[PRINTER_TYPE]['notes']['table']='glpi_printers';
 $DATA_INJECTION_MAPPING[PRINTER_TYPE]['notes']['field']='notes';
 $DATA_INJECTION_MAPPING[PRINTER_TYPE]['notes']['name']=$LANG["reminder"][2];
 $DATA_INJECTION_MAPPING[PRINTER_TYPE]['notes']['type']='text';
+$DATA_INJECTION_MAPPING[PRINTER_TYPE]['notes']['table_type']='multitext';
 
 $DATA_INJECTION_MAPPING[PRINTER_TYPE]['state']['table']='glpi_dropdown_state';
 $DATA_INJECTION_MAPPING[PRINTER_TYPE]['state']['field']='name';
@@ -519,11 +525,13 @@ $DATA_INJECTION_MAPPING[PHONE_TYPE]['comments']['table']='glpi_phones';
 $DATA_INJECTION_MAPPING[PHONE_TYPE]['comments']['field']='comments';
 $DATA_INJECTION_MAPPING[PHONE_TYPE]['comments']['name']=$LANG["common"][25];
 $DATA_INJECTION_MAPPING[PHONE_TYPE]['comments']['type']='text';
+$DATA_INJECTION_MAPPING[PHONE_TYPE]['comments']['table_type']='multitext';
 
 $DATA_INJECTION_MAPPING[PHONE_TYPE]['notes']['table']='glpi_phones';
 $DATA_INJECTION_MAPPING[PHONE_TYPE]['notes']['field']='notes';
 $DATA_INJECTION_MAPPING[PHONE_TYPE]['notes']['name']=$LANG["reminder"][2];
 $DATA_INJECTION_MAPPING[PHONE_TYPE]['notes']['type']='text';
+$DATA_INJECTION_MAPPING[PHONE_TYPE]['notes']['table_type']='multitext';
 
 $DATA_INJECTION_MAPPING[PHONE_TYPE]['state']['table']='glpi_dropdown_state';
 $DATA_INJECTION_MAPPING[PHONE_TYPE]['state']['field']='name';
@@ -753,6 +761,7 @@ $DATA_INJECTION_MAPPING[NETWORKING_TYPE]['comments']['table']='glpi_networking';
 $DATA_INJECTION_MAPPING[NETWORKING_TYPE]['comments']['field']='comments';
 $DATA_INJECTION_MAPPING[NETWORKING_TYPE]['comments']['name']=$LANG["common"][25];
 $DATA_INJECTION_MAPPING[NETWORKING_TYPE]['comments']['type']='text';
+$DATA_INJECTION_MAPPING[NETWORKING_TYPE]['comments']['table_type']='multitext';
 
 $DATA_INJECTION_MAPPING[NETWORKING_TYPE]['ram']['table']='glpi_networking';
 $DATA_INJECTION_MAPPING[NETWORKING_TYPE]['ram']['field']='size';
@@ -808,6 +817,7 @@ $DATA_INJECTION_MAPPING[NETWORKING_TYPE]['notes']['table']='glpi_networking';
 $DATA_INJECTION_MAPPING[NETWORKING_TYPE]['notes']['field']='notes';
 $DATA_INJECTION_MAPPING[NETWORKING_TYPE]['notes']['name']=$LANG["reminder"][2];
 $DATA_INJECTION_MAPPING[NETWORKING_TYPE]['notes']['type']='text';
+$DATA_INJECTION_MAPPING[NETWORKING_TYPE]['notes']['table_type']='multitext';
 
 $DATA_INJECTION_MAPPING[NETWORKING_TYPE]['state']['table']='glpi_dropdown_state';
 $DATA_INJECTION_MAPPING[NETWORKING_TYPE]['state']['field']='name';
@@ -902,6 +912,7 @@ $DATA_INJECTION_MAPPING[USER_TYPE]['comments']['table']='glpi_users';
 $DATA_INJECTION_MAPPING[USER_TYPE]['comments']['field']='comments';
 $DATA_INJECTION_MAPPING[USER_TYPE]['comments']['name']=$LANG["common"][25];
 $DATA_INJECTION_MAPPING[USER_TYPE]['comments']['type']='text';
+$DATA_INJECTION_MAPPING[USER_TYPE]['comments']['table_type']='multitext';
 
 $DATA_INJECTION_MAPPING[USER_TYPE]['location']['table']='glpi_dropdown_locations';
 $DATA_INJECTION_MAPPING[USER_TYPE]['location']['field']='name';
@@ -1105,11 +1116,13 @@ $DATA_INJECTION_MAPPING[PERIPHERAL_TYPE]['comments']['table']='glpi_peripherals'
 $DATA_INJECTION_MAPPING[PERIPHERAL_TYPE]['comments']['field']='comments';
 $DATA_INJECTION_MAPPING[PERIPHERAL_TYPE]['comments']['name']=$LANG["common"][25];
 $DATA_INJECTION_MAPPING[PERIPHERAL_TYPE]['comments']['type']='text';
+$DATA_INJECTION_MAPPING[PERIPHERAL_TYPE]['comments']['table_type']='multitext';
 
 $DATA_INJECTION_MAPPING[PERIPHERAL_TYPE]['notes']['table']='glpi_peripherals';
 $DATA_INJECTION_MAPPING[PERIPHERAL_TYPE]['notes']['field']='notes';
 $DATA_INJECTION_MAPPING[PERIPHERAL_TYPE]['notes']['name']=$LANG["reminder"][2];
 $DATA_INJECTION_MAPPING[PERIPHERAL_TYPE]['notes']['type']='text';
+$DATA_INJECTION_MAPPING[PERIPHERAL_TYPE]['notes']['table_type']='multitext';
 
 $DATA_INJECTION_MAPPING[PERIPHERAL_TYPE]['state']['table']='glpi_dropdown_state';
 $DATA_INJECTION_MAPPING[PERIPHERAL_TYPE]['state']['field']='name';

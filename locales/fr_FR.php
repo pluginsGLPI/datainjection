@@ -170,4 +170,6 @@ $DATAINJECTIONLANG["profiles"][3] = "Utiliser un modèle";
 
 $DATAINJECTIONLANG["mappings"][1] = "Nombre de ports";
 
+$DATAINJECTIONLANG["history"][1] = "depuis un fichier CSV";
+
 ?>

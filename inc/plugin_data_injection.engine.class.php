@@ -132,8 +132,9 @@ class DataInjectionEngine
 		$fields = addNecessaryFields($this->model,$mapping,$mapping_definition,$this->getEntity(),$this->model->getDeviceType(),$fields,$db_fields["common"]);
 
 		//Check if the line already exists in database
-		$ID = dataAlreadyInDB($this->model->getDeviceType(),$fields,$mapping_definition,$this->model);
+		$fields_from_db = dataAlreadyInDB($this->model->getDeviceType(),$fields,$mapping_definition,$this->model);
 
+		$ID = $fields_from_db["ID"];
 		if ($ID == -1)
 		{
 			if ($this->model->getBehaviorAdd())
@@ -141,6 +142,7 @@ class DataInjectionEngine
 				$ID = $obj->add($fields);
 				//Add the ID to the fields, so it can be reused after
 				$db_fields["common"] = addCommonFields($db_fields["common"],$this->model->getDeviceType(),$fields,$this->getEntity(),$ID);
+				logAddOrUpdate($this->model->getDeviceType(),$ID,INJECTION_ADD);
 
 				$result->setStatus(true);
 
@@ -164,10 +166,16 @@ class DataInjectionEngine
 		}	
 		elseif ($this->model->getBehaviorUpdate())
 		{
+			$fields = filterFields($fields,$fields_from_db,$this->model->getCanOverwriteIfNotEmpty());
 			$fields["ID"] = $ID;
-			$db_fields["common"] = addCommonFields($db_fields["common"],$this->model->getDeviceType(),$fields,$this->getEntity(),$ID);
-			$obj->update($fields);
 
+			$db_fields["common"] = addCommonFields($db_fields["common"],$this->model->getDeviceType(),$fields,$this->getEntity(),$ID);
+
+			if (count($fields) > 1)
+			{
+				logAddOrUpdate($this->model->getDeviceType(),$ID,INJECTION_UPDATE);
+				$obj->update($fields);
+			}
 			$result->setStatus(true);
 
 			$result->setInjectedId($ID);
@@ -204,7 +212,6 @@ class DataInjectionEngine
 					$obj = getInstance($type);
 					//If necessary, add default fields which are mandatory to create the object
 					$fields = addNecessaryFields($this->model,$mapping,$mapping_definition,$this->getEntity(),$type,$fields,$db_fields["common"]);
-
 					
 					//Check if the line already exists in database
 					$ID = dataAlreadyInDB($type,$fields,$mapping_definition,$this->model);

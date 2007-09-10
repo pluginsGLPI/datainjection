@@ -57,6 +57,7 @@ function plugin_data_injection_Install() {
 	  `behavior_add` int(1) NOT NULL default '1',
 	  `behavior_update` int(1) NOT NULL default '0',
 	  `can_add_dropdown` int(1) NOT NULL default '0',
+	  `can_overwrite_if_not_empty` int(1) NOT NULL default '1',
 	  PRIMARY KEY  (`ID`)
 	) ENGINE=MyISAM;";
 	

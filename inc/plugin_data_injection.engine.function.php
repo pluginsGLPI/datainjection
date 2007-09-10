@@ -110,7 +110,7 @@ function checkLine($model,$line,$res)
 			if ($mapping->isMandatory() && (!isset($line[$rank]) || $line[$rank] == NULL || $line[$rank] == "" || $line[$rank] == -1))
 			{
 				$res->setStatus(false);
-				$res->setCheckMessage(ERROR_IMPORT_FIELD_MANDATORY);
+				$res->addCheckResult($mapping->getValue(),ERROR_IMPORT_FIELD_MANDATORY);
 					break;				
 			}
 			else
@@ -126,7 +126,7 @@ function checkLine($model,$line,$res)
 					if ($res_check_type != TYPE_CHECK_OK)
 					{
 						$res->setStatus(false);
-						$res->setCheckMessage($res_check_type);
+						$res->addCheckResult($mapping->getValue(),$res_check_type);
 						break;
 					}
 					else
@@ -239,13 +239,13 @@ function dataAlreadyInDB($type,$fields,$mapping_definition,$model)
 		}
 	}
 
-	$sql = "SELECT ID FROM ".$obj->table." WHERE".$where_entity." ".$where;
+	$sql = "SELECT * FROM ".$obj->table." WHERE".$where_entity." ".$where;
 	$result = $DB->query($sql);
 
 	if ($DB->numrows($result) > 0 )
-		return $DB->result($result,0,"ID");
+		return $DB->fetch_array($result);
 	else		
-		return -1;
+		return array("ID"=>-1);
 }
 
 function getInstance($device_type)
@@ -381,19 +381,19 @@ function getFieldValue($mapping, $mapping_definition,$field_value,$entity,$obj,$
 								
 				}
 				break;
-			default :
+			case "multitext":
 				if (!isset($obj[$mapping_definition["field"]]))
-					$obj[$mapping_definition["field"]] = $field_value;
-				else
-					$obj[$mapping_definition["field"]] .= " ".$field_value;		
-				break;		
+					$obj[$mapping_definition["field"]]="";
+					
+				$obj[$mapping_definition["field"]] .= $mapping->getName()."=".$field_value."\n";		
+				break;	
+			default :
+				$obj[$mapping_definition["field"]] = $field_value;
+				break;
 		}
 	}
 	else
-		if (!isset($obj[$mapping_definition["field"]]))
-			$obj[$mapping_definition["field"]] = $field_value;
-		else
-			$obj[$mapping_definition["field"]] .= " ".$field_value;		
+		$obj[$mapping_definition["field"]] = $field_value;
 	
 	return $obj;
 }
@@ -461,5 +461,33 @@ function keepInfo($info)
 		break;		
 	}	
 	return false;
+}
+
+function logAddOrUpdate($device_type,$device_id,$action_type)
+{
+	global $DATAINJECTIONLANG;
+	
+	$changes[0]=0;
+	
+	if ($action_type == INJECTION_ADD)
+		$changes[2] = $DATAINJECTIONLANG["result"][8]." ".$DATAINJECTIONLANG["history"][1];
+	else
+		$changes[2] = $DATAINJECTIONLANG["result"][9]." ".$DATAINJECTIONLANG["history"][1];
+	
+	$changes[1] = "";		
+	historyLog ($device_id,$device_type,$changes,0,HISTORY_LOG_SIMPLE_MESSAGE);
+}
+
+/*
+ * 
+ */
+function filterFields($fields,$fields_from_db,$can_overwrite)
+{
+	//If no write to overwrite existing fields in DB -> unset the field
+	foreach ($fields as $field=>$value)
+		if ($field != "ID" && !$can_overwrite && (isset($fields_from_db[$field])))
+			unset ($fields[$field]);
+
+	return $fields;
 }
 ?>

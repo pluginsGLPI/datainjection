@@ -72,23 +72,21 @@ class DataInjectionProfile extends CommonDBTM {
 		}
 
 		echo "<form name='form' method='post' action=\"$target\">";
-		echo "<table class='tab_cadre'><tr>";
+		echo "<table class='tab_cadre'>";
 
-		echo "<tr><th colspan='2' align='center'><strong>".$DATAINJECTIONLANG["setup"][9]."</strong></td></tr>";
+		echo "<tr><th colspan='2' align='center'><strong>".$DATAINJECTIONLANG["setup"][9]."</strong></th></tr>\n";
 
 		echo "<tr class='tab_bg_2'>";
 		echo "<td>".$DATAINJECTIONLANG["profiles"][1].":</td><td>";
 		dropdownNoneReadWrite("create_model",$this->fields["create_model"],1,0,1);
 		echo "</td>";
-		echo "</tr>";
+		echo "</tr>\n";
 
 		echo "<tr class='tab_bg_2'>";
 		echo "<td>".$DATAINJECTIONLANG["profiles"][3].":</td><td>";
 		dropdownNoneReadWrite("use_model",$this->fields["use_model"],1,1,0);
 		echo "</td>";
-		echo "</tr>";
-
-		echo "</tr>";
+		echo "</tr>\n";
 
 		if ($canedit){
 			echo "<tr class='tab_bg_1'>";
@@ -102,7 +100,7 @@ class DataInjectionProfile extends CommonDBTM {
 				echo "<td colspan='2' align='center'>";
 				echo "<input type='submit' name='add' value=\"".$LANG["buttons"][8]."\" class='submit'>";
 			}
-			echo "</td></tr>";
+			echo "</td></tr>\n";
 		}
 		echo "</table>";
 	echo "</form>";

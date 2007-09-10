@@ -213,6 +213,11 @@ class DataInjectionModel extends CommonDBTM {
 		return $this->fields["can_add_dropdown"];
 	}
 	
+	function getCanOverwriteIfNotEmpty()
+	{
+		return $this->fields["can_overwrite_if_not_empty"];
+	}
+	
 	//---- Save -----//
 	function setModelType($type)
 	{
@@ -267,6 +272,11 @@ class DataInjectionModel extends CommonDBTM {
 	function setCanAddDropdown($canadd)
 	{
 		$this->fields["can_add_dropdown"] = $canadd; 
+	}
+
+	function setCanOverwriteIfNotEmpty($canoverwrite)
+	{
+		$this->fields["can_overwrite_if_not_empty"] = $canoverwrite; 
 	}
 
 }
