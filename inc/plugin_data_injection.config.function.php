@@ -125,30 +125,29 @@ function plugin_data_injection_Install() {
 	  `name` varchar(255) default NULL,
 	  `is_default` int(6) NOT NULL default '0',
 	  `create_model` char(1) default NULL,
-	  `delete_model` char(1) default NULL,
 	  `use_model` char(1) default NULL,
 	  PRIMARY KEY  (`ID`)
 	) ENGINE=MyISAM;";
 	$DB->query($query) or die($DB->error());
 
 	
-	$query ="INSERT INTO `glpi_plugin_data_injection_profiles` ( `ID`, `name` , `is_default`, `create_model`, `delete_model`, `use_model`)
-		VALUES ('1', 'post-only','1',NULL,NULL,NULL);";
+	$query ="INSERT INTO `glpi_plugin_data_injection_profiles` ( `ID`, `name` , `is_default`, `create_model`, `use_model`)
+		VALUES ('1', 'post-only','1',NULL,NULL);";
 
 	$DB->query($query) or die("1.1 insert 1 glpi_plugin_data_injection_profiles ".$DB->error());
 
-	$query ="INSERT INTO `glpi_plugin_data_injection_profiles` ( `ID`, `name` , `is_default`, `create_model`, `delete_model`, `use_model`)
-		VALUES ('2', 'normal','0',NULL,NULL,'r');";
+	$query ="INSERT INTO `glpi_plugin_data_injection_profiles` ( `ID`, `name` , `is_default`, `create_model`, `use_model`)
+		VALUES ('2', 'normal','0',NULL,'r');";
 
 	$DB->query($query) or die("1.1 insert 2 glpi_plugin_data_injection_profiles ".$DB->error());
 
-	$query ="INSERT INTO `glpi_plugin_data_injection_profiles` ( `ID`, `name` , `is_default`, `create_model`, `delete_model`, `use_model`)
-		VALUES ('3', 'admin','0','w','w','r');";
+	$query ="INSERT INTO `glpi_plugin_data_injection_profiles` ( `ID`, `name` , `is_default`, `create_model`, `use_model`)
+		VALUES ('3', 'admin','0','w','r');";
 
 	$DB->query($query) or die("1.1 insert 3 glpi_plugin_data_injection_profiles ".$DB->error());
 
-	$query ="INSERT INTO `glpi_plugin_data_injection_profiles` ( `ID`, `name` , `is_default`, `create_model`, `delete_model`, `use_model`)
-		VALUES ('4', 'super-admin','0','w','w','r');";
+	$query ="INSERT INTO `glpi_plugin_data_injection_profiles` ( `ID`, `name` , `is_default`, `create_model`, `use_model`)
+		VALUES ('4', 'super-admin','0','w','r');";
 
 	$DB->query($query) or die("1.1 insert 3 glpi_plugin_data_injection_profiles ".$DB->error());
 	
