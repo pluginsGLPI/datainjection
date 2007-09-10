@@ -138,12 +138,14 @@ $DATAINJECTIONLANG["importStep"][2] = "L'importation du fichier peut prendre plu
 $DATAINJECTIONLANG["logStep"][1] = "Résultat de l'importation";
 $DATAINJECTIONLANG["logStep"][2] = "Visualisez le déroulement de l'importation à l'aide du bouton voir les logs et exporter le compte rendu en texte à l'aide du bouton exporter les logs";
 $DATAINJECTIONLANG["logStep"][3] = "L'importation a réussi";
+$DATAINJECTIONLANG["logStep"][4] = "Tableau des imports qui ont réussis";
+$DATAINJECTIONLANG["logStep"][5] = "Tableau des imports qui ont échoués";
 
 $DATAINJECTIONLANG["button"][1] = "< Précédent";
 $DATAINJECTIONLANG["button"][2] = "Suivant >";
 $DATAINJECTIONLANG["button"][3] = "Voir le fichier";
-$DATAINJECTIONLANG["button"][4] = "Voir les logs";
-$DATAINJECTIONLANG["button"][5] = "Exporter les logs";
+$DATAINJECTIONLANG["button"][4] = "Voir le rapport";
+$DATAINJECTIONLANG["button"][5] = "Exporter le rapport";
 $DATAINJECTIONLANG["button"][6] = "Terminé";
 
 $DATAINJECTIONLANG["result"][1] = "Une donnée n'a pas le bon type";

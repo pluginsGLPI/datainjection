@@ -68,87 +68,102 @@ $datas = $_SESSION["plugin_data_injection"]["import"]["datas"];
 
 $tab_result = sortAllResults($tab_result);
 
-echo "<table>";
-echo "<tr>";
-echo "<td valign='top'>";
-echo "<a href=\"javascript:show_log('1')\"><img src='../pics/minus.png' alt='minus' id='log1' /></a>";
-echo "</td>";
-
-echo "<td style='width:950px'>";
-echo "<table class='tab_cadre_fixe' style='text-align: center' id='log1_table'>";
-
-echo "<tr><th>".$LANG["joblist"][0]."</th><th>".$DATAINJECTIONLANG["result"][14]."</th><th>".$DATAINJECTIONLANG["result"][10]."</th><th>".$DATAINJECTIONLANG["result"][11]."</th><th>".$DATAINJECTIONLANG["result"][12]."</th><th>".$DATAINJECTIONLANG["result"][13]."</th></tr>";
-
-foreach($tab_result[1] as $key => $value)
+if(count($tab_result[1])>0)
 	{
-	if($key%2==0)
-		$num = 1;
-	else
-		$num = 2;
-
-	echo "<tr class='tab_bg_$num'>";
-	echo "<td style='height:30px;width:30px'><img src='../pics/ok.png' alt='success' /></td>";
-	echo "<td style='height:30px;width:50px'>".$value->getLineID()."</td>";
-	echo "<td style='height:30px;width:300px'>".$value->getCheckMessage()."</td>";
-	echo "<td style='height:30px;width:300px'>".$value->getInjectionMessage()."</td>";
-	echo "<td style='height:30px;width:200px'>".($value->getInjectionType()==INJECTION_ADD?$DATAINJECTIONLANG["result"][8]:$DATAINJECTIONLANG["result"][9])."</td>";
-	
-	if ($value->getInjectedId() > 0)
-		{
-		$url = GLPI_ROOT."/".$INFOFORM_PAGES[$model->getDeviceType()]."?ID=".$value->getInjectedId();
-		echo "<td style='height:30px'><a href=\"".$url."\" target=_blank>".$value->getInjectedId()."</a></td>";
-		}
-	else
-		echo "<td style='height:30px'>".$LANG["common"][49]."</td>";
-	
+	echo "<table>";
+	echo "<tr>";
+	echo "<td style='width:30px'>";
+	echo "<a href=\"javascript:show_log('1')\"><img src='../pics/plus.png' alt='plus' id='log1' /></a>";
+	echo "</td>";
+	echo "<td style='width: 900px;font-size: 14px;font-weight: bold;padding-left: 20px'>";
+	echo $DATAINJECTIONLANG["logStep"][4];
+	echo "</td>";
 	echo "</tr>";
+	echo "</table>";
+	
+	echo "<table class='tab_cadre_fixe' style='text-align: center' id='log1_table'>";
+	
+	echo "<tr><th>".$LANG["joblist"][0]."</th><th>".$DATAINJECTIONLANG["result"][14]."</th><th>".$DATAINJECTIONLANG["result"][10]."</th><th>".$DATAINJECTIONLANG["result"][11]."</th><th>".$DATAINJECTIONLANG["result"][12]."</th><th>".$DATAINJECTIONLANG["result"][13]."</th></tr>";
+	
+	foreach($tab_result[1] as $key => $value)
+		{
+		if($key%2==0)
+			$num = 1;
+		else
+			$num = 2;
+	
+		echo "<tr class='tab_bg_$num'>";
+		echo "<td style='height:30px;width:30px'><img src='../pics/ok.png' alt='success' /></td>";
+		echo "<td style='height:30px;width:50px'>".$value->getLineID()."</td>";
+		echo "<td style='height:30px;width:300px'>".$value->getCheckMessage()."</td>";
+		echo "<td style='height:30px;width:300px'>".$value->getInjectionMessage()."</td>";
+		echo "<td style='height:30px;width:200px'>".($value->getInjectionType()==INJECTION_ADD?$DATAINJECTIONLANG["result"][8]:$DATAINJECTIONLANG["result"][9])."</td>";
+		
+		if ($value->getInjectedId() > 0)
+			{
+			$url = GLPI_ROOT."/".$INFOFORM_PAGES[$model->getDeviceType()]."?ID=".$value->getInjectedId();
+			echo "<td style='height:30px'><a href=\"".$url."\" target=_blank>".$value->getInjectedId()."</a></td>";
+			}
+		else
+			echo "<td style='height:30px'>".$LANG["common"][49]."</td>";
+		
+		echo "</tr>";
+		}
+	
+	echo "</table>";
 	}
 
-echo "</table>";
-echo "</td>";
-echo "</tr>";
-echo "</table>";
-
-echo "<table style='margin-top: 50px;'>";
-echo "<tr>";
-echo "<td valign='top'>";
-echo "<a href=\"javascript:show_log('2')\"><img src='../pics/minus.png' alt='minus' id='log2' /></a>";
-echo "</td>";
-
-echo "<td style='width:950px'>";
-echo "<table class='tab_cadre_fixe' style='text-align: center' id='log2_table'>";
-
-echo "<tr><th>".$LANG["joblist"][0]."</th><th>".$DATAINJECTIONLANG["result"][14]."</th><th>".$DATAINJECTIONLANG["result"][10]."</th><th>".$DATAINJECTIONLANG["result"][11]."</th><th>".$DATAINJECTIONLANG["result"][12]."</th><th>".$DATAINJECTIONLANG["result"][13]."</th></tr>";
-
-foreach($tab_result[0] as $key => $value)
+if(count($tab_result[0])>0)
 	{
-	if($key%2==0)
-		$num = 1;
+	if(count($tab_result[1])>0)
+		echo "<table style='margin-top: 20px;'>";
 	else
-		$num = 2;
-
-	echo "<tr class='tab_bg_$num'>";
-	echo "<td style='height:30px;width:30px'><img src='../pics/notok.png' alt='success' /></td>";
-	echo "<td style='height:30px;width:50px'>".$value->getLineID()."</td>";
-	echo "<td style='height:30px;width:300px'>".$value->getCheckMessage()."</td>";
-	echo "<td style='height:30px;width:300px'>".$value->getInjectionMessage()."</td>";
-	echo "<td style='height:30px;width:200px'>".($value->getInjectionType()==INJECTION_ADD?$DATAINJECTIONLANG["result"][8]:$DATAINJECTIONLANG["result"][9])."</td>";
+		echo "<table>";
 	
-	if ($value->getInjectedId() > 0)
-		{
-		$url = GLPI_ROOT."/".$INFOFORM_PAGES[$model->getDeviceType()]."?ID=".$value->getInjectedId();
-		echo "<td style='height:30px'><a href=\"".$url."\" target=_blank>".$value->getInjectedId()."</a></td>";
-		}
-	else
-		echo "<td style='height:30px'>".$LANG["common"][49]."</td>";
-	
+	echo "<tr>";
+	echo "<td style='width:30px'>";
+	echo "<a href=\"javascript:show_log('2')\"><img src='../pics/minus.png' alt='minus' id='log2' /></a>";
+	echo "</td>";
+	echo "<td style='width: 900px;font-size: 14px;font-weight: bold;padding-left: 20px'>";
+	echo $DATAINJECTIONLANG["logStep"][5];
+	echo "</td>";
 	echo "</tr>";
+	echo "</table>";
+
+	echo "<table class='tab_cadre_fixe' style='text-align: center' id='log2_table'>";
+	
+	echo "<tr><th>".$LANG["joblist"][0]."</th><th>".$DATAINJECTIONLANG["result"][14]."</th><th>".$DATAINJECTIONLANG["result"][10]."</th><th>".$DATAINJECTIONLANG["result"][11]."</th><th>".$DATAINJECTIONLANG["result"][12]."</th><th>".$DATAINJECTIONLANG["result"][13]."</th></tr>";
+	
+	foreach($tab_result[0] as $key => $value)
+		{
+		if($key%2==0)
+			$num = 1;
+		else
+			$num = 2;
+	
+		echo "<tr class='tab_bg_$num'>";
+		echo "<td style='height:30px;width:30px'><img src='../pics/notok.png' alt='success' /></td>";
+		echo "<td style='height:30px;width:50px'>".$value->getLineID()."</td>";
+		echo "<td style='height:30px;width:300px'>".$value->getCheckMessage()."</td>";
+		echo "<td style='height:30px;width:300px'>".$value->getInjectionMessage()."</td>";
+		echo "<td style='height:30px;width:200px'>".($value->getInjectionType()==INJECTION_ADD?$DATAINJECTIONLANG["result"][8]:$DATAINJECTIONLANG["result"][9])."</td>";
+		
+		if ($value->getInjectedId() > 0)
+			{
+			$url = GLPI_ROOT."/".$INFOFORM_PAGES[$model->getDeviceType()]."?ID=".$value->getInjectedId();
+			echo "<td style='height:30px'><a href=\"".$url."\" target=_blank>".$value->getInjectedId()."</a></td>";
+			}
+		else
+			echo "<td style='height:30px'>".$LANG["common"][49]."</td>";
+		
+		echo "</tr>";
+		}
+	
+	echo "</table>";
 	}
 
-echo "</table>";
-echo "</td>";
-echo "</tr>";
-echo "</table>";
+if(count($tab_result[1])>0)
+	echo "<script type='text/javascript'>document.getElementById('log1_table').style.display='none'</script>";
 
 echo "<div style='margin-top:15px;text-align:center'>";
 echo "<a href='javascript:window.close()'>fermer</a>";

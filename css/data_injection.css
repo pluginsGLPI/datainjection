@@ -317,11 +317,20 @@ text-align: center;
 margin-top: 100px;
 margin-left: 50px;
 float: left;
+width: 100px;
 }
 
 .logStep_button2 {
 margin-top: 100px;
 margin-right: 50px;
 float: right;
+width: 100px;
+}
+
+.logStep_title {
+width: 920px;
+text-align: center;
+font-size: 14px;
+font-weight: bold;
 }
 /**************************************************************/

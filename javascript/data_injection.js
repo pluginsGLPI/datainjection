@@ -213,7 +213,7 @@ function log_popup(nbline)
 	var x = screen.width;
 	var y = screen.height;
 	
-	height = (nbline * 30) + 200;
+	height = (nbline * 30) + 210;
 	
 	x = (x - 1010)/2;
 	y = (y - nbline)/2;

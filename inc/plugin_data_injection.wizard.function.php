@@ -1292,8 +1292,6 @@ function importStep($target)
 {
 	global $DATAINJECTIONLANG,$LANG;
 	
-	$end = 0;
-	
 	echo "<form action='".$target."' method='post'>";
 	echo "<table class='wizard'>";
 	
@@ -1315,40 +1313,21 @@ function importStep($target)
 	
 	echo "<div id='new_import'>";
 	echo "<div class='importStep_cadre'><div class='importStep_progress' id='importStep_progress'><div class='importStep_pourcentage' id='importStep_pourcentage'>".$_SESSION["plugin_data_injection"]["import"]["progress"]." %</div></div></div>";
-	
-	/*if($_SESSION["plugin_data_injection"]["import"]["i"]<$_SESSION["plugin_data_injection"]["import"]["i_stop"])
-		{
-		traitement();
-		if($_SESSION["plugin_data_injection"]["import"]["i"]<$_SESSION["plugin_data_injection"]["import"]["i_stop"])
-			//echo "<script type='text/javascript'>location.href='".$target."'</script>";
-			
-			echo "<script type='text/javascript'>new_import()</script>";
-		else
-			$end = 1;
-		}*/
 		
 	while($_SESSION["plugin_data_injection"]["import"]["i"]<$_SESSION["plugin_data_injection"]["import"]["i_stop"])
-		{
 		traitement();
-		//for ($j=0;$j<=1000000;$j++)  {$p=1;}	
-		}
 		
 	echo "</div>";
-	
-	$end = 1;
-	if($end)
-		echo "<div class='importStep_end'>Importation terminé</div>";
+
+	echo "<div class='importStep_end'>Importation terminé</div>";
 	
 	echo "</td></tr>";
 	
 	/**************************Button******************************/
 	echo "<tr><td class='wizard_button' colspan='2'>";
-	if($end)
-		{
-		echo "<div class='next'>";
-		echo "<input type='submit' name='next_importStep' value='".$DATAINJECTIONLANG["button"][2]."' class='submit' />";
-		echo "</div>";
-		}
+	echo "<div class='next'>";
+	echo "<input type='submit' name='next_importStep' value='".$DATAINJECTIONLANG["button"][2]."' class='submit' />";
+	echo "</div>";
 	echo "</td></tr>";
 	/**************************************************************/
 	
