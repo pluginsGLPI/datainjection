@@ -39,9 +39,10 @@ if (!defined('GLPI_ROOT')) {
 $NEEDED_ITEMS=array("data_injection");
 include (GLPI_ROOT."/inc/includes.php");
 
-commonHeader($DATAINJECTIONLANG["config"][1], $_SERVER["PHP_SELF"],"plugins","data_injection");
-
 if(!isset($_SESSION["glpi_plugin_data_injection_installed"]) || $_SESSION["glpi_plugin_data_injection_installed"]!=1) {
+	
+	commonHeader($LANG["title"][2],$_SERVER['PHP_SELF'],"config","plugins");
+	
 			echo "<div align='center'>";
 			echo "<table class='tab_cadre' cellpadding='5'>";
 			echo "<tr><th>".$DATAINJECTIONLANG["setup"][1];
@@ -52,6 +53,7 @@ if(!isset($_SESSION["glpi_plugin_data_injection_installed"]) || $_SESSION["glpi_
 }
 else
 {
+	commonHeader($DATAINJECTIONLANG["config"][1], $_SERVER["PHP_SELF"],"plugins","data_injection");
 		echo "<div align='center'>";
 		echo "<form name=cas action=\"".$_SERVER["PHP_SELF"]."\" method=\"post\">";
 

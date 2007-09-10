@@ -163,15 +163,26 @@ function plugin_data_injection_uninstall() {
 
 function plugin_data_injection_initSession()
 {
-	if (TableExists("glpi_plugin_data_injection_config") && TableExists("glpi_plugin_data_injection_models") && TableExists("glpi_plugin_data_injection_mappings")  && TableExists("glpi_plugin_data_injection_infos"))
+	if (TableExists("glpi_plugin_data_injection_config"))
 	{
-		$_SESSION["glpi_plugin_data_injection_installed"]=1;
+		
 		$prof=new DataInjectionProfile();
 		if($prof->getFromDBForUser($_SESSION["glpiID"])){
 			$_SESSION["glpi_plugin_data_injection_profile"]=$prof->fields;
+			$_SESSION["glpi_plugin_data_injection_installed"]=1;
 		}
 	}		
 }
+
+function plugin_data_injection_changeprofile()
+{
+	if(isset($_SESSION["glpi_plugin_data_injection_installed"]) && $_SESSION["glpi_plugin_data_injection_installed"]==1){
+		$prof=new DataInjectionProfile();
+		if($prof->getFromDB($_SESSION['glpiactiveprofile']['ID']))
+			$_SESSION["glpi_plugin_data_injection_profile"]=$prof->fields;
+	}
+}
+
 
 function isInstall() {
 	global $DATAINJECTIONLANG;
