@@ -166,8 +166,6 @@ if($load)
 		
 	else if(isset($_POST["next_fileStep"]))
 		{
-		$directory = PLUGIN_DATA_INJECTION_UPLOAD_DIR;
-	
 	    $tmp_file = $_FILES["file"]["tmp_name"];
 	
 	    if( !is_uploaded_file($tmp_file) )
@@ -180,21 +178,20 @@ if($load)
 			$extension = $type->getBackendName();
 			
 			$name_file = $_FILES["file"]["name"];
-
-			$tmpfname = tempnam (PLUGIN_DATA_INJECTION_UPLOAD_DIR, "Dat");
-			echo $tmpfname;
+			
+			$tmpfname = tempnam (realpath(PLUGIN_DATA_INJECTION_UPLOAD_DIR), "Dat");
 			
 	    	if( !strstr(substr($name_file,strlen($name_file)-4), strtolower($extension)) )
 	        	$error = $DATAINJECTIONLANG["fileStep"][5]."<br />".$DATAINJECTIONLANG["fileStep"][6]." ".$extension." ".$DATAINJECTIONLANG["fileStep"][7];
 	    	else
 	    		{
-	    		if( !move_uploaded_file($tmp_file, $directory . $name_file) )
+	    		if( !move_uploaded_file($tmp_file, $tmpfname) )
 	        		$error = $DATAINJECTIONLANG["fileStep"][8]." ".$directory;
 	    		else
 	    			{
 	    			$_SESSION["plugin_data_injection"]["step"]++;
 	    			$_SESSION["plugin_data_injection"]["load"] = "next_fileStep";
-	    			$_SESSION["plugin_data_injection"]["file"] = $name_file;
+	    			$_SESSION["plugin_data_injection"]["file"] = basename($tmpfname);
 	    			if($_SESSION["plugin_data_injection"]["choice"]==1)
 	    				$_SESSION["plugin_data_injection"]["remember"] = 0;
 	    			}
