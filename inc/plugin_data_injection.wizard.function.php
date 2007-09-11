@@ -506,11 +506,14 @@ function mappingStep($target)
 	global $DATAINJECTIONLANG;
 	
 	$model = unserialize($_SESSION["plugin_data_injection"]["model"]);
-	$file = unserialize($_SESSION["plugin_data_injection"]["backend"]);
+	
+	
 
 	/***********************Read File******************************/
 	if($_SESSION["plugin_data_injection"]["choice"]==1)
 		{	
+		$file = unserialize($_SESSION["plugin_data_injection"]["backend"]);
+
 		$nbline = $file->getNumberOfLine();
 	
 		if($model->isHeaderPresent())
@@ -754,13 +757,11 @@ function infoStep($target)
 	$nbline = 0;
 	
 	if($_SESSION["plugin_data_injection"]["choice"]==2 || $_SESSION["plugin_data_injection"]["remember"]==2)
-		foreach($model->infos as $info)
 			{
-			$nbline = count($info);
-			
+			$nbline = count($model->getInfos());
 			if($nbline>0)
 				{
-				foreach($info as $indice => $value)
+				foreach($model->getInfos() as $indice => $value)
 					{
 					$key=$indice+1;
 					
@@ -869,7 +870,7 @@ function infoStep($target)
 				/**************************************************************/
 				
 				/*********************Checkbox Mandatory***********************/
-				echo "<td style='text-align:center'><input type='checkbox' name='field[$key][2]' id='check$key' style='width:60px;' disabled /></td>";
+				echo "<td style='text-align:center'><input type='checkbox' name='field[$key][2]' id='check$key' disabled /></td>";
 				/**************************************************************/
 				
 				echo "</tr>";
