@@ -34,7 +34,7 @@
 /*
  * Common backend to read files to import
  */
-class Backend {
+abstract class Backend {
 	
 	private $file = "";
 	protected $injectionDatas;
@@ -61,17 +61,12 @@ class Backend {
 	/*
 	 * Read datas from the input file
 	 */
-	function read()
-	{		
-	}
+	abstract protected function read();
 	
 	/*
 	 * Read n lines from the input files
 	 */
-	function readLinesFromTo($start_line, $end_line)
-	{
-		
-	}
+	abstract protected function readLinesFromTo($start_line, $end_line);
 	
 	/*
 	 * Get datas read from the input file
@@ -120,10 +115,7 @@ class Backend {
 		return $tmp;	
 	}
 	
-	function isFileCorrect()
-	{
-		return true;
-	}
+	abstract protected function isFileCorrect($model);
 	
 	function getNumberOfLine()
 	{

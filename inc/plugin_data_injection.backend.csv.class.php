@@ -75,9 +75,19 @@ class BackendCSV extends Backend{
 	 * Try to parse an input file
 	 * @return true if the file is a CSV file
 	 */
-	function isFileCorrect()
+	function isFileCorrect($model)
 	{
-		return true;
+		$header = $this->getHeader();
+		if (count($model->getMappings()->getAllMappings()) != count($header))
+			return false;
+		
+		$check = true;
+		foreach ($model->getMappings()->getAllMappings() as $mapping)
+		{
+			if (!isset($header[$mapping->getValue()]) || $header[$mapping->getRank()] != $mapping->getValue())
+				$check = false;
+		}	
+		return $check;
 	}
 }
 

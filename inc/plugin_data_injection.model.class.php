@@ -29,8 +29,8 @@
  */
 class DataInjectionModel extends CommonDBTM {
 
-	var $mappings;
-	var $infos;
+	private $mappings;
+	protected $infos;
 		
 	function DataInjectionModel()
 	{
