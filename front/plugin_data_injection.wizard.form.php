@@ -127,6 +127,9 @@ if($load)
 		
 		if(isset($_POST["delimiter"]))
 			$model->setDelimiter(stripslashes($_POST["delimiter"]));
+
+		if(isset($_POST["can_overwrite_if_not_empty"]))
+			$model->setCanOverwriteIfNotEmpty($_POST["can_overwrite_if_not_empty"]);
 				
 		$_SESSION["plugin_data_injection"]["model"] = serialize($model);
 		
@@ -177,6 +180,9 @@ if($load)
 			$extension = $type->getBackendName();
 			
 			$name_file = $_FILES["file"]["name"];
+
+			$tmpfname = tempnam (PLUGIN_DATA_INJECTION_UPLOAD_DIR, "Dat");
+			echo $tmpfname;
 			
 	    	if( !strstr(substr($name_file,strlen($name_file)-4), strtolower($extension)) )
 	        	$error = $DATAINJECTIONLANG["fileStep"][5]."<br />".$DATAINJECTIONLANG["fileStep"][6]." ".$extension." ".$DATAINJECTIONLANG["fileStep"][7];

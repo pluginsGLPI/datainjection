@@ -256,7 +256,7 @@ function modelStep($target)
 		$can_add = $model->getBehaviorAdd();
 	else
 		$can_add = 1;
-	dropdownYesNo("dropdown_update",$can_add);
+	dropdownYesNo("dropdown_create",$can_add);
 	echo "</td></tr>";	
 
 	/**************************************************************/
@@ -278,10 +278,10 @@ function modelStep($target)
 	echo "<tr><td>".$DATAINJECTIONLANG["modelStep"][8]."</td>";
 	echo "<td>";
 	if(isset($model))
-		$can_add = $model->getCanAddDropdown();
+		$can_adddropdown = $model->getCanAddDropdown();
 	else
-		$can_add = 0;
-	dropdownYesNo("dropdown_canadd",$can_add);
+		$can_adddropdown = 0;
+	dropdownYesNo("dropdown_canadd",$can_adddropdown);
 	echo "</td></tr>";
 
 	echo "<tr><td>".$DATAINJECTIONLANG["modelStep"][12]."</td><td>";
