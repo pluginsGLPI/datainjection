@@ -78,10 +78,11 @@ $DATAINJECTIONLANG["modelStep"][4] = "Type de données à insérer :";
 $DATAINJECTIONLANG["modelStep"][5] = "Type de fichier :";
 $DATAINJECTIONLANG["modelStep"][6] = "Création des lignes :";
 $DATAINJECTIONLANG["modelStep"][7] = "Mise à jour des lignes :";
-$DATAINJECTIONLANG["modelStep"][8] = "Ajout dans un dropdown :";
+$DATAINJECTIONLANG["modelStep"][8] = "Ajouter des intitulés :";
 $DATAINJECTIONLANG["modelStep"][9] = "Présence d'un entête :";
 $DATAINJECTIONLANG["modelStep"][10] = "Délimiteur du fichier :";
 $DATAINJECTIONLANG["modelStep"][11] = "Délimiteur non défini";
+$DATAINJECTIONLANG["modelStep"][12] = "Mise à jour des champs existants :";
 
 $DATAINJECTIONLANG["deleteStep"][1] = "Confirmation de la suppression";
 $DATAINJECTIONLANG["deleteStep"][2] = "Attention si vous supprimez le modèle, les mappings et les informations complémentaires seront supprimés également.";

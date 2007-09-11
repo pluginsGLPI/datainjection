@@ -251,83 +251,49 @@ function modelStep($target)
 	
 	/***********************Behavior add***************************/
 	echo "<tr><td>".$DATAINJECTIONLANG["modelStep"][6]."</td>";
-	
-	echo "<td><select name='dropdown_create'>";
-	
+	echo "<td>";
 	if(isset($model))
-		{
-		if($model->getBehaviorAdd())
-			{
-			echo "<option value='1' selected>".$LANG["choice"][1]."</option>";
-			echo "<option value='0'>".$LANG["choice"][0]."</option>";
-			}
-		else
-			{
-			echo "<option value='1'>".$LANG["choice"][1]."</option>";
-			echo "<option value='0' selected>".$LANG["choice"][0]."</option>";	
-			}
-		}
+		$can_add = $model->getBehaviorAdd();
 	else
-		{
-		echo "<option value='1'>".$LANG["choice"][1]."</option>";
-		echo "<option value='0'>".$LANG["choice"][0]."</option>";
-		}
-	
-	echo "</select></td></tr>";
+		$can_add = 1;
+	dropdownYesNo("dropdown_update",$can_add);
+	echo "</td></tr>";	
+
 	/**************************************************************/
 	
 	/**********************Behavior update*************************/
 	echo "<tr><td>".$DATAINJECTIONLANG["modelStep"][7]."</td>";
 	
-	echo "<td><select name='dropdown_update'>";
-	
+	echo "<td>";
 	if(isset($model))
-		{
-		if($model->getBehaviorUpdate())
-			{
-			echo "<option value='1' selected>".$LANG["choice"][1]."</option>";
-			echo "<option value='0'>".$LANG["choice"][0]."</option>";
-			}
-		else
-			{
-			echo "<option value='1'>".$LANG["choice"][1]."</option>";
-			echo "<option value='0' selected>".$LANG["choice"][0]."</option>";	
-			}
-		}
+		$can_update = $model->getBehaviorUpdate();
 	else
-		{
-		echo "<option value='0'>".$LANG["choice"][0]."</option>";
-		echo "<option value='1'>".$LANG["choice"][1]."</option>";
-		}
-	
-	echo "</select></td></tr>";
+		$can_update = 0;
+	dropdownYesNo("dropdown_update",$can_update);
+	echo "</td></tr>";
+
 	/**************************************************************/
 	
 	/**********************Can add dropdown************************/
 	echo "<tr><td>".$DATAINJECTIONLANG["modelStep"][8]."</td>";
-	
-	echo "<td><select name='dropdown_canadd'>";
-	
+	echo "<td>";
 	if(isset($model))
-		{
-		if($model->getCanAddDropdown())
-			{
-			echo "<option value='1' selected>".$LANG["choice"][1]."</option>";
-			echo "<option value='0'>".$LANG["choice"][0]."</option>";
-			}
-		else
-			{
-			echo "<option value='1'>".$LANG["choice"][1]."</option>";
-			echo "<option value='0' selected>".$LANG["choice"][0]."</option>";	
-			}
-		}
+		$can_add = $model->getCanAddDropdown();
 	else
-		{
-		echo "<option value='0'>".$LANG["choice"][0]."</option>";
-		echo "<option value='1'>".$LANG["choice"][1]."</option>";
-		}
-	
-	echo "</select></td></tr>";
+		$can_add = 0;
+	dropdownYesNo("dropdown_canadd",$can_add);
+	echo "</td></tr>";
+
+	echo "<tr><td>".$DATAINJECTIONLANG["modelStep"][12]."</td><td>";
+	if(isset($model))
+		$can_overwrite = $model->getCanOverwriteIfNotEmpty();
+	else
+		$can_overwrite = 1;
+	dropdownYesNo("can_overwrite_if_not_empty",$can_overwrite);
+	echo "</td></tr>";
+
+
+
 	/**************************************************************/
 	
 	echo "</table>";
