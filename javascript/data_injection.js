@@ -146,6 +146,29 @@ function go_info(id)
 	xhr.send("id="+id+"&idMapping="+idtable);
 }
 
+function show_backend()
+{	
+	var xhr = getXhr();
+
+	xhr.onreadystatechange = function(){
+
+		if(xhr.readyState == 4 && xhr.status == 200)
+			{
+			leselect = xhr.responseText;
+			document.getElementById('option_backend').innerHTML = leselect;
+			}
+		}
+	
+	xhr.open("POST","../inc/plugin_data_injection.ajax.backend.php",true);
+
+	xhr.setRequestHeader('Content-Type','application/x-www-form-urlencoded');
+
+	sel = document.getElementById('dropdown_type');
+	id = sel.options[sel.selectedIndex].value;
+		
+	xhr.send("id="+id);
+}
+
 function addelete_info(id)
 {	
 	sel = document.getElementById('table'+id);
@@ -260,6 +283,20 @@ function show_log(num)
 		{
 		document.getElementById('log'+num).src = '../pics/plus.png';
 		document.getElementById('log'+num+'_table').style.display = 'none';
+		}
+}
+
+function show_option()
+{	
+	if(document.getElementById('option').style.display == 'none')
+		{
+		document.getElementById('option_img').src = '../pics/minus.png';
+		document.getElementById('option').style.display = 'block';
+		}
+	else
+		{
+		document.getElementById('option_img').src = '../pics/plus.png';
+		document.getElementById('option').style.display = 'none';
 		}
 }
 

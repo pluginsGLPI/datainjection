@@ -29,7 +29,7 @@
  */
 class DataInjectionModelCSV extends DataInjectionModel {
 	var $specific_fields;
-
+	
 	function init()
 	{
 		$this->specific_fields = array();
@@ -110,6 +110,60 @@ class DataInjectionModelCSV extends DataInjectionModel {
 		
 		if(isset($_POST["delimiter"]))
 			$this->setDelimiter(stripslashes($fields["delimiter"]));
+	}
+	
+	function showForm()
+	{
+		global $DATAINJECTIONLANG,$LANG;
+		
+		echo "<legend>Options CSV</legend>";
+		echo "<table class='modelStep_table'>";
+		
+		/**************************Header******************************/
+		echo "<tr><td style='width:160px'>".$DATAINJECTIONLANG["modelStep"][9]."</td>";
+		
+		if($_SESSION["plugin_data_injection"]["choice"]==1)
+			echo "<td style='width:105px'><select name='dropdown_header'>";
+		else
+			echo "<td style='width:105px'><select name='dropdown_header' style='background-color:#e6e6e6' disabled>";
+		
+		if(isset($model))
+			{
+			if($model->isHeaderPresent())
+				{
+				echo "<option value='1' selected>".$LANG["choice"][1]."</option>";
+				echo "<option value='0'>".$LANG["choice"][0]."</option>";
+				}
+			else
+				{
+				echo "<option value='1'>".$LANG["choice"][1]."</option>";
+				echo "<option value='0' selected>".$LANG["choice"][0]."</option>";	
+				}
+			}
+		else
+			{
+			echo "<option value='1'>".$LANG["choice"][1]."</option>";
+			echo "<option value='0'>".$LANG["choice"][0]."</option>";
+			}
+		
+		echo "</select></td></tr>";
+		/**************************************************************/
+		
+		/************************Delimiter*****************************/
+		echo "<tr><td>".$DATAINJECTIONLANG["modelStep"][9]."</td>";
+		
+		if(isset($model))
+			{
+			if($_SESSION["plugin_data_injection"]["choice"]==1)
+				echo "<td><input type='text' value='".$model->getDelimiter()."' size='1' maxlength='1' name='delimiter' id='delimiter' onfocus=\"this.value=''\" /></td></tr>";
+			else
+				echo "<td><input type='text' value='".$model->getDelimiter()."' size='1' maxlength='1' name='delimiter' id='delimiter' onfocus=\"this.value=''\" disabled style='font-weight:bold;background-color:#e6e6e6'  /></td></tr>";
+			}
+		else
+			echo "<td><input type='text' value=';' size='1' maxlength='1' name='delimiter' id='delimiter' onfocus=\"this.value=''\" /></td></tr>";
+		/**************************************************************/
+		
+		echo "</table>";
 	}
 }
 ?>

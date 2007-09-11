@@ -227,7 +227,7 @@ function modelStep($target)
 	echo "<tr><td>".$DATAINJECTIONLANG["modelStep"][5]."</td>";
 	
 	if($_SESSION["plugin_data_injection"]["choice"]==1)
-		echo "<td><select name='dropdown_type'>";
+		echo "<td><select id='dropdown_type' name='dropdown_type' onchange='show_backend()'>";
 	else
 		echo "<td><select name='dropdown_type' style='background-color:#e6e6e6' disabled>";
 		
@@ -274,33 +274,11 @@ function modelStep($target)
 
 	/**************************************************************/
 	
-	/**********************Can add dropdown************************/
-	echo "<tr><td>".$DATAINJECTIONLANG["modelStep"][8]."</td>";
-	echo "<td>";
-	if(isset($model))
-		$can_adddropdown = $model->getCanAddDropdown();
-	else
-		$can_adddropdown = 0;
-	dropdownYesNo("dropdown_canadd",$can_adddropdown);
-	echo "</td></tr>";
-
-	echo "<tr><td>".$DATAINJECTIONLANG["modelStep"][12]."</td><td>";
-	if(isset($model))
-		$can_overwrite = $model->getCanOverwriteIfNotEmpty();
-	else
-		$can_overwrite = 1;
-	dropdownYesNo("can_overwrite_if_not_empty",$can_overwrite);
-	echo "</td></tr>";
-
-
-
-	/**************************************************************/
-	
 	echo "</table>";
 	echo "</fieldset>";
 	
-	echo "<fieldset class='modelStep_option'>";
-	echo "<legend>Options</legend>";
+	echo "<fieldset id='option_backend' class='modelStep_option'>";
+	echo "<legend>Options CSV</legend>";
 	echo "<table class='modelStep_table'>";
 	
 	/**************************Header******************************/
@@ -345,6 +323,34 @@ function modelStep($target)
 		}
 	else
 		echo "<td><input type='text' value=';' size='1' maxlength='1' name='delimiter' id='delimiter' onfocus=\"this.value=''\" /></td></tr>";
+	/**************************************************************/
+	
+	echo "</table>";
+	echo "</fieldset>";
+	
+	echo "<fieldset class='modelStep_selection'>";
+	echo "<legend><a href='javascript:show_option()'><img src='../pics/plus.png' alt='plus' id='option_img' style='width:20px;float:left' /></a>Option avancées</legend>";
+	echo "<table class='modelStep_table' id='option' style='display:none'>";
+	
+	/**********************Can add dropdown************************/
+	echo "<tr><td>".$DATAINJECTIONLANG["modelStep"][8]."</td>";
+	echo "<td>";
+	if(isset($model))
+		$can_adddropdown = $model->getCanAddDropdown();
+	else
+		$can_adddropdown = 0;
+	dropdownYesNo("dropdown_canadd",$can_adddropdown);
+	echo "</td></tr>";
+	/**************************************************************/
+	
+	/***************Can overwrite if not empty*********************/
+	echo "<tr><td>".$DATAINJECTIONLANG["modelStep"][12]."</td><td>";
+	if(isset($model))
+		$can_overwrite = $model->getCanOverwriteIfNotEmpty();
+	else
+		$can_overwrite = 1;
+	dropdownYesNo("can_overwrite_if_not_empty",$can_overwrite);
+	echo "</td></tr>";
 	/**************************************************************/
 	
 	echo "</table>";

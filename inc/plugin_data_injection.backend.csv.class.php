@@ -81,15 +81,19 @@ class BackendCSV extends Backend{
 	 */
 	function isFileCorrect($model)
 	{
-		$header = $this->getHeader();
+		$header = $this->getHeader($model->isHeaderPresent());
+
 		if (count($model->getMappings()) != count($header))
-			return false;
+			return 1;
 		
-		$check = true;
-		foreach ($model->getMappings() as $mapping)
+		if (!$model->isHeaderPresent())
+			return 0;
+			
+		$check = 0;
+		foreach ($model->getMappings() as $key => $mapping)
 		{
-			if (!isset($header[$mapping->getValue()]) || $header[$mapping->getRank()] != $mapping->getValue())
-				$check = false;
+			if (!isset($header[$key]) || $header[$mapping->getRank()] != $mapping->getName())
+				$check = 2;
 		}	
 		return $check;
 	}

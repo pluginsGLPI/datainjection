@@ -127,6 +127,10 @@ $DATAINJECTIONLANG["saveStep"][7] = "Votre modèle n'a pas été mis à jour mai
 $DATAINJECTIONLANG["saveStep"][8] = "Votre modèle a été enregistré et est prêt à l'emploi.";
 $DATAINJECTIONLANG["saveStep"][9] = "Votre modèle a été mis à jour et est prêt à l'emploi.";
 $DATAINJECTIONLANG["saveStep"][10] = "Voulez-vous utiliser le modèle maintenant ?";
+$DATAINJECTIONLANG["saveStep"][11] = "Le nombre de colonnes du fichier n'est pas correct.";
+$DATAINJECTIONLANG["saveStep"][12] = "Au moins une colonne est incorrecte";
+
+
 
 $DATAINJECTIONLANG["fillInfoStep"][1] = "Attention ! Vous êtes sur le point d'importer des données dans GLPI. Etes-vous sûr de vouloir importer ?";
 $DATAINJECTIONLANG["fillInfoStep"][2] = "Remplissez les champs pour que les informations soient insérées dans GLPI lors de l'importation.";
@@ -163,7 +167,6 @@ $DATAINJECTIONLANG["result"][11] = "Import des données";
 $DATAINJECTIONLANG["result"][12] = "Type d'injection";
 $DATAINJECTIONLANG["result"][13] = "Identifiant de l'objet";
 $DATAINJECTIONLANG["result"][14] = "Ligne";
-
 
 $DATAINJECTIONLANG["profiles"][1] = "Créer un modèle";
 $DATAINJECTIONLANG["profiles"][2] = "Supprimer un modèle";

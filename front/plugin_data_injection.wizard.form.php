@@ -164,19 +164,35 @@ if($load)
 	        		$error = $DATAINJECTIONLANG["fileStep"][8]." ".$directory;
 	    		else
 	    			{
-	    			$_SESSION["plugin_data_injection"]["step"]++;
-	    			$_SESSION["plugin_data_injection"]["load"] = "next_fileStep";
 	    			$_SESSION["plugin_data_injection"]["file"] = basename($tmpfname);
 	    			
 	    			$file=getBackend($model->getModelType());
 					$file->initBackend(PLUGIN_DATA_INJECTION_UPLOAD_DIR.$_SESSION["plugin_data_injection"]["file"],$model->getDelimiter());
 					$file->read();
 					$file->deleteFile();
-		
-					$_SESSION["plugin_data_injection"]["backend"] = serialize($file);
+					
+					if(($_SESSION["plugin_data_injection"]["choice"]!=4))
+						$ok = 0;
+					else
+					 	$ok = $file->isFileCorrect($model);
+					 
+					if (!$ok)
+						{
+						$_SESSION["plugin_data_injection"]["step"]++;
+		    			$_SESSION["plugin_data_injection"]["load"] = "next_fileStep";
+						$_SESSION["plugin_data_injection"]["backend"] = serialize($file);
 	    			
-	    			if($_SESSION["plugin_data_injection"]["choice"]==1)
-	    				$_SESSION["plugin_data_injection"]["remember"] = 0;
+	    				if($_SESSION["plugin_data_injection"]["choice"]==1)
+	    					$_SESSION["plugin_data_injection"]["remember"] = 0;
+						}
+					else
+						{
+						if ($ok==1)
+							$error=$DATAINJECTIONLANG["saveStep"][11];
+						else
+							$error=$DATAINJECTIONLANG["saveStep"][12];	
+						unset($_SESSION["plugin_data_injection"]["file"]);
+						}
 	    			}
 	    		}
 	    	}
