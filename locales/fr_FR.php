@@ -83,6 +83,11 @@ $DATAINJECTIONLANG["modelStep"][9] = "Présence d'un entête :";
 $DATAINJECTIONLANG["modelStep"][10] = "Délimiteur du fichier :";
 $DATAINJECTIONLANG["modelStep"][11] = "Délimiteur non défini";
 $DATAINJECTIONLANG["modelStep"][12] = "Mise à jour des champs existants :";
+$DATAINJECTIONLANG["modelStep"][13] = "Informations principales";
+$DATAINJECTIONLANG["modelStep"][14] = "Options CSV";
+$DATAINJECTIONLANG["modelStep"][15] = "Option avancées";
+
+
 
 $DATAINJECTIONLANG["deleteStep"][1] = "Confirmation de la suppression";
 $DATAINJECTIONLANG["deleteStep"][2] = "Attention si vous supprimez le modèle, les mappings et les informations complémentaires seront supprimés également.";
@@ -139,6 +144,7 @@ $DATAINJECTIONLANG["fillInfoStep"][4] = "Un champ obligatoire n'est pas remplis"
 
 $DATAINJECTIONLANG["importStep"][1] = "Importation du fichier";
 $DATAINJECTIONLANG["importStep"][2] = "L'importation du fichier peut prendre plusieurs minutes en fonction de votre configurations. Veuillez patientez et suivre la barre de progression pour voir où en est l'importation.";
+$DATAINJECTIONLANG["importStep"][3] = "Importation terminée";
 
 $DATAINJECTIONLANG["logStep"][1] = "Résultat de l'importation";
 $DATAINJECTIONLANG["logStep"][2] = "Visualisez le déroulement de l'importation à l'aide du bouton voir les logs et exporter le compte rendu en texte à l'aide du bouton exporter les logs";
@@ -175,5 +181,6 @@ $DATAINJECTIONLANG["profiles"][3] = "Utiliser un modèle";
 $DATAINJECTIONLANG["mappings"][1] = "Nombre de ports";
 
 $DATAINJECTIONLANG["history"][1] = "depuis un fichier CSV";
+$DATAINJECTIONLANG["logevent"][1] = "injection d'un fichier CSV.";
 
 ?>

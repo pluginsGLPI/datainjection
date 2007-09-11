@@ -116,7 +116,7 @@ class DataInjectionModelCSV extends DataInjectionModel {
 	{
 		global $DATAINJECTIONLANG,$LANG;
 		
-		echo "<legend>Options CSV</legend>";
+		echo "<legend>".$DATAINJECTIONLANG["modelStep"][14]."</legend>";
 		echo "<table class='modelStep_table'>";
 		
 		/**************************Header******************************/

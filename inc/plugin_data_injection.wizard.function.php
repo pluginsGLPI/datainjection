@@ -194,7 +194,7 @@ function modelStep($target)
 	
 	echo "<td class='wizard_right_area' style='width:400px' valign='top'>";
 	echo "<fieldset class='modelStep_selection'>";
-	echo "<legend>Informations principales</legend>";
+	echo "<legend>".$DATAINJECTIONLANG["modelStep"][13]."</legend>";
 	echo "<table class='modelStep_table'>";
 	
 	/***********************Device Type****************************/
@@ -277,8 +277,9 @@ function modelStep($target)
 	echo "</table>";
 	echo "</fieldset>";
 	
+	
 	echo "<fieldset id='option_backend' class='modelStep_option'>";
-	echo "<legend>Options CSV</legend>";
+	echo "<legend>".$DATAINJECTIONLANG["modelStep"][14]."</legend>";
 	echo "<table class='modelStep_table'>";
 	
 	/**************************Header******************************/
@@ -329,7 +330,7 @@ function modelStep($target)
 	echo "</fieldset>";
 	
 	echo "<fieldset class='modelStep_selection'>";
-	echo "<legend><a href='javascript:show_option()'><img src='../pics/plus.png' alt='plus' id='option_img' style='width:20px;float:left' /></a>Option avancées</legend>";
+	echo "<legend><a href='javascript:show_option()'><img src='../pics/plus.png' alt='plus' id='option_img' style='width:20px;float:left' /></a>".$DATAINJECTIONLANG["modelStep"][15]."</legend>";
 	echo "<table class='modelStep_table' id='option' style='display:none'>";
 	
 	/**********************Can add dropdown************************/
@@ -1286,10 +1287,13 @@ function importStep($target)
 		
 	while($_SESSION["plugin_data_injection"]["import"]["i"]<$_SESSION["plugin_data_injection"]["import"]["i_stop"])
 		traitement();
+	
+	$model = unserialize($_SESSION["plugin_data_injection"]["model"]);
+	logEvent(0, getLogItemType($model->getDeviceType()), 4, "plugin" , $_SESSION["glpiname"]." ".$DATAINJECTIONLANG["logevent"][1]);
 		
 	echo "</div>";
 
-	echo "<div class='importStep_end'>Importation terminé</div>";
+	echo "<div class='importStep_end'>".$DATAINJECTIONLANG["importStep"][3]."</div>";
 	
 	echo "</td></tr>";
 	
