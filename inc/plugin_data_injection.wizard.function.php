@@ -500,14 +500,11 @@ function mappingStep($target)
 	global $DATAINJECTIONLANG;
 	
 	$model = unserialize($_SESSION["plugin_data_injection"]["model"]);
+	$file = unserialize($_SESSION["plugin_data_injection"]["backend"]);
 
 	/***********************Read File******************************/
 	if($_SESSION["plugin_data_injection"]["choice"]==1)
-		{
-		$file=getBackend($model->getModelType());
-		$file->initBackend(PLUGIN_DATA_INJECTION_UPLOAD_DIR.$_SESSION["plugin_data_injection"]["file"],$model->getDelimiter());
-		$file->read();
-	
+		{	
 		$nbline = $file->getNumberOfLine();
 	
 		if($model->isHeaderPresent())
@@ -517,7 +514,7 @@ function mappingStep($target)
 		$num = count($header);
 		}
 	else
-		$num = count($model->getMappings()->getAllMappings());
+		$num = count($model->getMappings());
 	/**************************************************************/
 	
 	echo "<form action='".$target."' method='post'>";
@@ -555,7 +552,7 @@ function mappingStep($target)
 	/**************************************************************/
 
 	if($_SESSION["plugin_data_injection"]["choice"]==2 || $_SESSION["plugin_data_injection"]["remember"]>=1)
-			foreach($model->getMappings()->getAllMappings() as $key => $value)
+			foreach($model->getMappings() as $key => $value)
 				{
 				echo "<tr>";
 				
@@ -1081,7 +1078,7 @@ function fillInfoStep($target,$error)
 	
 	$model = unserialize($_SESSION["plugin_data_injection"]["model"]);
 	
-	if(($_SESSION["plugin_data_injection"]["load"] == "next_fileStep" || $_SESSION["plugin_data_injection"]["load"] == "preview2_fillInfoStep" || $_SESSION["plugin_data_injection"]["load"] == "yes2_saveStep") && count($model->getInfos()->getAllInfos())>0)
+	if(($_SESSION["plugin_data_injection"]["load"] == "next_fileStep" || $_SESSION["plugin_data_injection"]["load"] == "preview2_fillInfoStep" || $_SESSION["plugin_data_injection"]["load"] == "yes2_saveStep") && count($model->getInfos())>0)
 		$info = 1;
 	else
 		$info = 0;
@@ -1109,7 +1106,7 @@ function fillInfoStep($target,$error)
 		{	
 			$temp_label = -2;
 			
-			foreach($model->getInfos()->getAllInfos() as $key => $value)
+			foreach($model->getInfos() as $key => $value)
 				{
 				$label = $value->getInfosType();
 					
@@ -1233,7 +1230,7 @@ function fillInfoStep($target,$error)
 		}
 	else
 		{
-		if(count($model->getInfos()->getAllInfos())>0)
+		if(count($model->getInfos())>0)
 			{
 			echo "<div class='preview'>";
 			echo "<input type='submit' name='preview2_fillInfoStep' value='".$DATAINJECTIONLANG["button"][1]."' class='submit' />";
@@ -1357,7 +1354,7 @@ function traitement()
 	$progress = $_SESSION["plugin_data_injection"]["import"]["progress"];
 	$datas = $_SESSION["plugin_data_injection"]["import"]["datas"];
 	
-	$global_result = $engine->injectLine($datas[$i][0],$model->getInfos()->getAllInfos());
+	$global_result = $engine->injectLine($datas[$i][0],$model->getInfos());
 	$global_result->setLineId($i);
 	$tab_result[] = $global_result;
 	$progress = number_format(($i*100)/$nbline,2);
@@ -1376,12 +1373,16 @@ function traitement()
 function initImport()
 {
 $model = unserialize($_SESSION["plugin_data_injection"]["model"]);
+$file = unserialize($_SESSION["plugin_data_injection"]["backend"]);
 
 $tab_result = array();
 
 $global_result = new DataInjectionResults;
 
-$engine = new DataInjectionEngine($model->getModelID(),PLUGIN_DATA_INJECTION_UPLOAD_DIR.$_SESSION["plugin_data_injection"]["file"],$_SESSION["glpiactive_entity"]);
+$engine = new DataInjectionEngine($model,
+  PLUGIN_DATA_INJECTION_UPLOAD_DIR.$_SESSION["plugin_data_injection"]["file"],
+  $file,
+  $_SESSION["glpiactive_entity"]);
 	
 if($engine->getModel()->isHeaderPresent())
 	{
@@ -1428,16 +1429,16 @@ if(isset($_SESSION["plugin_data_injection"]["model"]))
 	unset($_SESSION["plugin_data_injection"]["model"]);
 
 if(isset($_SESSION["plugin_data_injection"]["file"]))
-	{
-	unlink(PLUGIN_DATA_INJECTION_UPLOAD_DIR.$_SESSION["plugin_data_injection"]["file"]);
 	unset($_SESSION["plugin_data_injection"]["file"]);
-	}
 
 if(isset($_SESSION["plugin_data_injection"]["remember"]))
 	unset($_SESSION["plugin_data_injection"]["remember"]);		
 	
 if(isset($_SESSION["plugin_data_injection"]["import"]))
 	unset($_SESSION["plugin_data_injection"]["import"]);
+
+if(isset($_SESSION["plugin_data_injection"]["backend"]))
+	unset($_SESSION["plugin_data_injection"]["backend"]);
 	
 $_SESSION["plugin_data_injection"]["step"] = 1;
 

@@ -30,6 +30,7 @@
 class DataInjectionModel extends CommonDBTM {
 
 	private $mappings;
+	private $backend;
 	protected $infos;
 		
 	function DataInjectionModel()
@@ -145,12 +146,17 @@ class DataInjectionModel extends CommonDBTM {
 	//---- Getters -----//
 	function getMappings()
 	{
-		return $this->mappings;
+		return $this->mappings->getAllMappings();
 	}
 	
 	function getInfos()
 	{
-		return $this->infos;
+		return $this->infos->getAllInfos();
+	}
+	
+	function getBackend()
+	{
+		return $this->backend;
 	}
 	
 	function getMappingByName($name)
@@ -246,18 +252,23 @@ class DataInjectionModel extends CommonDBTM {
 	
 	function setModelID($ID)
 	{
-		return $this->fields["ID"] = $ID;
+		$this->fields["ID"] = $ID;
 	}	
 	
 	function setMappings($mappings)
 	{
-		return $this->mappings = $mappings;
+		$this->mappings = $mappings;
 	}
 	
 	function setInfos($infos)
 	{
-		return $this->infos = $infos;
+		$this->infos = $infos;
 	}		
+	
+	function setBackend($backend)
+	{
+		$this->backend = $backend;
+	}
 	
 	function setDeviceType($device_type)
 	{
@@ -277,6 +288,30 @@ class DataInjectionModel extends CommonDBTM {
 	function setCanOverwriteIfNotEmpty($canoverwrite)
 	{
 		$this->fields["can_overwrite_if_not_empty"] = $canoverwrite; 
+	}
+
+	function setFields($fields,$entity)
+	{
+		$this->setEntity($entity);
+		
+		if(isset($fields["dropdown_device_type"]))
+			$this->setDeviceType($fields["dropdown_device_type"]);
+		
+		if(isset($fields["dropdown_type"]))
+			$this->setModelType($fields["dropdown_type"]);
+		
+		if(isset($fields["dropdown_create"]))
+			$this->setBehaviorAdd($fields["dropdown_create"]);
+		
+		if(isset($fields["dropdown_update"]))
+			$this->setBehaviorUpdate($fields["dropdown_update"]);
+			
+		if(isset($fields["dropdown_canadd"]))
+			$this->setCanAddDropdown($fields["dropdown_canadd"]);
+			
+		if(isset($fields["can_overwrite_if_not_empty"]))
+			$this->setCanOverwriteIfNotEmpty($fields["can_overwrite_if_not_empty"]);
+		
 	}
 
 }

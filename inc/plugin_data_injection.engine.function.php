@@ -101,7 +101,7 @@ function checkType($type, $name, $data,$mandatory)
 function checkLine($model,$line,$res)
 	{
 		//Get all mappings for a model
-		for ($i=0, $mappings = $model->getMappings()->getAllMappings(); $i < count($mappings); $i++)
+		for ($i=0, $mappings = $model->getMappings(); $i < count($mappings); $i++)
 		{
 			$mapping = $mappings[$i];
 			$rank = $mapping->getRank();

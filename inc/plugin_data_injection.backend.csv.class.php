@@ -55,6 +55,10 @@ class BackendCSV extends Backend{
  	 	fclose($fic);
 	}
 	
+	function deleteFile()
+	{
+		unlink($this->file);
+	}
 	function readLinesFromTo($start_line, $end_line)
 	{
 		$row = 0;
@@ -78,11 +82,11 @@ class BackendCSV extends Backend{
 	function isFileCorrect($model)
 	{
 		$header = $this->getHeader();
-		if (count($model->getMappings()->getAllMappings()) != count($header))
+		if (count($model->getMappings()) != count($header))
 			return false;
 		
 		$check = true;
-		foreach ($model->getMappings()->getAllMappings() as $mapping)
+		foreach ($model->getMappings() as $mapping)
 		{
 			if (!isset($header[$mapping->getValue()]) || $header[$mapping->getRank()] != $mapping->getValue())
 				$check = false;

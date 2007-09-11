@@ -76,7 +76,7 @@ function getAllMandatoriesMappings($type,$model)
 	global $DATA_INJECTION_MAPPING;
 	$mandatories = array();
 	
-	foreach ($model->getMappings()->getAllMappings() as $mapping)
+	foreach ($model->getMappings() as $mapping)
 	{
 		if ($mapping->isMandatory())
 			$mandatories[] = $mapping;

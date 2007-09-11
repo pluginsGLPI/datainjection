@@ -101,5 +101,15 @@ class DataInjectionModelCSV extends DataInjectionModel {
 	{
 		$this->specific_fields["header_present"] = $present;
 	}	
+	
+	function setFields($fields,$entity)
+	{
+		parent::setFields($fields,$entity);
+		if(isset($fields["dropdown_header"]))
+			$this->setHeaderPresent($fields["dropdown_header"]);
+		
+		if(isset($_POST["delimiter"]))
+			$this->setDelimiter(stripslashes($fields["delimiter"]));
+	}
 }
 ?>

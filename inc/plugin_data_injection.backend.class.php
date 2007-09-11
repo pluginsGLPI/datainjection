@@ -44,8 +44,9 @@ abstract class Backend {
 	 * Constructor
 	 * @param file input file to read
 	 */
-    function Backend($file) {
-    }
+    
+    /*function Backend($file) {
+    }*/
 
 	function getInstance($type)
 	{
@@ -74,7 +75,7 @@ abstract class Backend {
 	 */
 	function getDatas()
 	{
-		return $this->injectionDatas;
+		return $this->injectionDatas->getDatas();
 	}
 
 	/*
@@ -121,6 +122,8 @@ abstract class Backend {
 	{
 		return count ($this->injectionDatas->getDatas());
 	}
+	
+	abstract protected function deleteFile();
 }
 
 /*

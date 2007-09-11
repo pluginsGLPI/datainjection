@@ -103,33 +103,8 @@ if($load)
 			$model = unserialize($_SESSION["plugin_data_injection"]["model"]);
 		else		
 			$model = getModelInstanceByType($_POST["dropdown_type"]);
-
-		if(isset($_SESSION["glpiactive_entity"]))
-			$model->setEntity($_SESSION["glpiactive_entity"]);
-		
-		if(isset($_POST["dropdown_device_type"]))
-			$model->setDeviceType($_POST["dropdown_device_type"]);
-		
-		if(isset($_POST["dropdown_type"]))
-			$model->setModelType($_POST["dropdown_type"]);
-		
-		if(isset($_POST["dropdown_create"]))
-			$model->setBehaviorAdd($_POST["dropdown_create"]);
-		
-		if(isset($_POST["dropdown_update"]))
-			$model->setBehaviorUpdate($_POST["dropdown_update"]);
 			
-		if(isset($_POST["dropdown_canadd"]))
-			$model->setCanAddDropdown($_POST["dropdown_canadd"]);
-			
-		if(isset($_POST["dropdown_header"]))
-			$model->setHeaderPresent($_POST["dropdown_header"]);
-		
-		if(isset($_POST["delimiter"]))
-			$model->setDelimiter(stripslashes($_POST["delimiter"]));
-
-		if(isset($_POST["can_overwrite_if_not_empty"]))
-			$model->setCanOverwriteIfNotEmpty($_POST["can_overwrite_if_not_empty"]);
+		$model->setFields($_POST,$_SESSION["glpiactive_entity"]);
 				
 		$_SESSION["plugin_data_injection"]["model"] = serialize($model);
 		
@@ -179,7 +154,7 @@ if($load)
 			
 			$name_file = $_FILES["file"]["name"];
 			
-			$tmpfname = tempnam (realpath(PLUGIN_DATA_INJECTION_UPLOAD_DIR), "Dat");
+			$tmpfname = tempnam (realpath(PLUGIN_DATA_INJECTION_UPLOAD_DIR), "Tmp");
 			
 	    	if( !strstr(substr($name_file,strlen($name_file)-4), strtolower($extension)) )
 	        	$error = $DATAINJECTIONLANG["fileStep"][5]."<br />".$DATAINJECTIONLANG["fileStep"][6]." ".$extension." ".$DATAINJECTIONLANG["fileStep"][7];
@@ -192,6 +167,14 @@ if($load)
 	    			$_SESSION["plugin_data_injection"]["step"]++;
 	    			$_SESSION["plugin_data_injection"]["load"] = "next_fileStep";
 	    			$_SESSION["plugin_data_injection"]["file"] = basename($tmpfname);
+	    			
+	    			$file=getBackend($model->getModelType());
+					$file->initBackend(PLUGIN_DATA_INJECTION_UPLOAD_DIR.$_SESSION["plugin_data_injection"]["file"],$model->getDelimiter());
+					$file->read();
+					$file->deleteFile();
+		
+					$_SESSION["plugin_data_injection"]["backend"] = serialize($file);
+	    			
 	    			if($_SESSION["plugin_data_injection"]["choice"]==1)
 	    				$_SESSION["plugin_data_injection"]["remember"] = 0;
 	    			}
@@ -349,7 +332,7 @@ if($load)
 		$model = unserialize($_SESSION["plugin_data_injection"]["model"]);
 		
 		foreach($_POST["field"] as $field)
-			foreach($model->getInfos()->getAllInfos() as $info)
+			foreach($model->getInfos() as $info)
 				if($info->getID() == $field[0])
 					{
 					$info->setInfosText($field[1]);

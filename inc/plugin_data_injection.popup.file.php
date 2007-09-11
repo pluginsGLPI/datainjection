@@ -59,10 +59,9 @@ echo "<body>";
 if(isset($_GET["nbline"]))
 	$nbline = $_GET["nbline"];
 
-$file=new BackendCSV();
+$file = unserialize($_SESSION["plugin_data_injection"]["backend"]);
 $model = unserialize($_SESSION["plugin_data_injection"]["model"]);
-$file->initBackend(PLUGIN_DATA_INJECTION_UPLOAD_DIR.$_SESSION["plugin_data_injection"]["file"],$model->getDelimiter());
-$file->read();
+
 $header = $file->getHeader($model->isHeaderPresent());
 
 if($model->isHeaderPresent())
