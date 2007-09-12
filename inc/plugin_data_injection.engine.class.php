@@ -154,7 +154,7 @@ class DataInjectionEngine
 				$result->setInjectedId($ID);
 				$result->setInjectionType(INJECTION_ADD);
 
-				$result->setInjectionMessage(IMPORT_OK);
+				$result->setInjectionStatus(IMPORT_OK);
 			}
 			else
 			{
@@ -166,7 +166,8 @@ class DataInjectionEngine
 				$result->setInjectedId(NOT_IMPORTED);
 				$result->setInjectionType(INJECTION_ADD);
 				
-				$result->setInjectionMessage(ERROR_CANNOT_IMPORT);
+				$result->setInjectionStatus(NOT_IMPORTED);
+				$result->addInjectionMessage(ERROR_CANNOT_IMPORT);
 			}
 		}	
 		elseif ($this->getModel()->getBehaviorUpdate())
@@ -186,7 +187,7 @@ class DataInjectionEngine
 			$result->setInjectedId($ID);
 			$result->setInjectionType(INJECTION_UPDATE);
 
-			$result->setInjectionMessage(IMPORT_OK);
+			$result->setInjectionStatus(IMPORT_OK);
 		}
 		else
 		{	
@@ -198,7 +199,8 @@ class DataInjectionEngine
 			$result->setInjectedId($ID);
 			$result->setInjectionType(INJECTION_UPDATE);
 			
-			$result->setInjectionMessage(ERROR_CANNOT_UPDATE);
+			$result->setInjectionStatus(NOT_IMPORTED);
+			$result->addInjectionMessage(ERROR_CANNOT_UPDATE);
 		}
 		if ($process)
 		{

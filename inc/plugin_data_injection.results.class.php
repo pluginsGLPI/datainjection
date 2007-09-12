@@ -29,23 +29,38 @@
  */
 class DataInjectionResults {
 	
+	//Overall status of the process
 	private $status;
+	
+	//Status of the data check
+	private $check_status;
+	
+	//Status of the data injection
+	private $injection_status;
+	
+	//Messages of the data check
 	private $check_message;
+	
+	//Message of the data injection
 	private $injection_message;
+
+	//Type of injection (add or update)
 	private $injection_type;
+	
+	//ID of the item added or updated
 	private $injected_id;
+	
+	//ID of the line processed
 	private $line_id;
-	private $check_results;
 	
 	function DataInjectionResults()
 	{
 		$this->status = -1;
-		$this->check_message = "";
-		$this->injection_message = "";
-		$this->injection_type = "";
+		$this->check_message = array();
+		$this->injection_message = array();
+		$this->injection_type = array();
 		$this->injected_id = -1;
 		$this->line_id=-1;
-		$this->check_results = array();
 	}
 
 	//Getters
@@ -61,19 +76,26 @@ class DataInjectionResults {
 	
 	function getCheckMessage()
 	{
-		if ($this->check_message == TYPE_CHECK_OK)
-			return $this->getLabel($this->check_message);
+		if ($this->check_status == TYPE_CHECK_OK)
+			return $this->getLabel(TYPE_CHECK_OK);
 			
 		$output = "";
-		foreach ($this->check_results as $field => $res)
-			$output .= ($output=!""?"\n":"").$field." : ".$this->getLabel($res);
+		foreach ($this->check_message[0] as $field => $res)
+			$output .= ($output=!""?"\n":"").$this->getLabel($res)." : '".$field."'";
 		
 		return $output;
 	}	
 	
 	function getInjectionMessage()
 	{
-		return $this->getLabel($this->injection_message);
+		if ($this->status == IMPORT_OK)
+			return $this->getLabel(IMPORT_OK);
+			
+		$output = "";
+		foreach ($this->injection_message as $res)
+			$output .= ($output=!""?"\n":"").$this->getLabel($res);
+		
+		return $output;
 	}
 
 	function getInjectionType()
@@ -86,12 +108,6 @@ class DataInjectionResults {
 		return $this->injected_id;
 	}
 
-	function getCheckResults()
-	{
-		return $this->check_results;
-	}
-	
-	
 	//Setters
 	
 	function setStatus($status)
@@ -99,14 +115,14 @@ class DataInjectionResults {
 		$this->status = $status;
 	}
 
-	function setCheckMessage($message)
+	function setCheckStatus($message)
 	{
-		$this->check_message = $message;
+		$this->check_status = $message;
 	}
 	
-	function setInjectionMessage($message)
+	function setInjectionStatus($status)
 	{
-		$this->injection_message = $message;
+		$this->injection_status = $status;
 	}
 
 	function setInjectionType($type)
@@ -124,11 +140,16 @@ class DataInjectionResults {
 		$this->line_id = $ID;
 	}
 	
-	function addCheckResult($field,$message)
+	function addCheckMessage($field,$message)
 	{
-		$this->check_results[] = array($field=>$message);
+		$this->check_message[] = array($field=>$message);
 	}
-		
+
+	function addInjectionMessage($message)
+	{
+		$this->injection_message[] = $message;
+	}
+			
 	private function getLabel($type)
 	{
 		global $DATAINJECTIONLANG;

@@ -110,7 +110,8 @@ function checkLine($model,$line,$res)
 			if ($mapping->isMandatory() && (!isset($line[$rank]) || $line[$rank] == NULL || $line[$rank] == "" || $line[$rank] == -1))
 			{
 				$res->setStatus(false);
-				$res->addCheckResult($mapping->getValue(),ERROR_IMPORT_FIELD_MANDATORY);
+				$res->setCheckStatus(-1);
+				$res->addCheckMessage($mapping->getName(),ERROR_IMPORT_FIELD_MANDATORY);
 					break;				
 			}
 			else
@@ -126,13 +127,14 @@ function checkLine($model,$line,$res)
 					if ($res_check_type != TYPE_CHECK_OK)
 					{
 						$res->setStatus(false);
-						$res->addCheckResult($mapping->getValue(),$res_check_type);
+						$res->setCheckStatus(-1);
+						$res->addCheckMessage($mapping->getName(),$res_check_type);
 						break;
 					}
 					else
 					{
 						$res->setStatus(true);
-						$res->setCheckMessage(TYPE_CHECK_OK);
+						$res->setCheckStatus(TYPE_CHECK_OK);
 					}
 				}	
 			}

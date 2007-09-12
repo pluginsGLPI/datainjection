@@ -159,7 +159,7 @@ $DATAINJECTIONLANG["button"][4] = "Voir le rapport";
 $DATAINJECTIONLANG["button"][5] = "Exporter le rapport";
 $DATAINJECTIONLANG["button"][6] = "Terminé";
 
-$DATAINJECTIONLANG["result"][1] = "Une donnée n'a pas le bon type";
+$DATAINJECTIONLANG["result"][1] = "Mauvais type";
 $DATAINJECTIONLANG["result"][2] = "Les données à insérer sont correctes";
 $DATAINJECTIONLANG["result"][3] = "Les données existent déjà en base";
 $DATAINJECTIONLANG["result"][4] = "Au moins un champs obligatoire n'est pas remplis";
