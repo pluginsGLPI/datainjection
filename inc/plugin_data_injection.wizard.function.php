@@ -227,13 +227,19 @@ function modelStep($target)
 	echo "<tr><td>".$DATAINJECTIONLANG["modelStep"][5]."</td>";
 	
 	if($_SESSION["plugin_data_injection"]["choice"]==1)
-		echo "<td><select id='dropdown_type' name='dropdown_type' onchange='show_backend()'>";
+		{
+		$id=0;
+		echo "<td><select id='dropdown_type' name='dropdown_type' onchange='show_backend($id)'>";
+		}
 	else
+		{
 		echo "<td><select name='dropdown_type' style='background-color:#e6e6e6' disabled>";
+		$id=$model->getModelType();
+		}
 		
 	$types = getAllTypes();
-
-	foreach($types as $type)
+	
+	foreach($types as $key => $type)
 		{
 		if(isset($model))
 			{
@@ -277,57 +283,12 @@ function modelStep($target)
 	echo "</table>";
 	echo "</fieldset>";
 	
-	
 	echo "<fieldset id='option_backend' class='modelStep_option'>";
-	echo "<legend>".$DATAINJECTIONLANG["modelStep"][14]."</legend>";
-	echo "<table class='modelStep_table'>";
 	
-	/**************************Header******************************/
-	echo "<tr><td style='width:160px'>".$DATAINJECTIONLANG["modelStep"][9]."</td>";
-	
-	if($_SESSION["plugin_data_injection"]["choice"]==1)
-		echo "<td style='width:105px'><select name='dropdown_header'>";
-	else
-		echo "<td style='width:105px'><select name='dropdown_header' style='background-color:#e6e6e6' disabled>";
-	
-	if(isset($model))
-		{
-		if($model->isHeaderPresent())
-			{
-			echo "<option value='1' selected>".$LANG["choice"][1]."</option>";
-			echo "<option value='0'>".$LANG["choice"][0]."</option>";
-			}
-		else
-			{
-			echo "<option value='1'>".$LANG["choice"][1]."</option>";
-			echo "<option value='0' selected>".$LANG["choice"][0]."</option>";	
-			}
-		}
-	else
-		{
-		echo "<option value='1'>".$LANG["choice"][1]."</option>";
-		echo "<option value='0'>".$LANG["choice"][0]."</option>";
-		}
-	
-	echo "</select></td></tr>";
-	/**************************************************************/
-	
-	/************************Delimiter*****************************/
-	echo "<tr><td>".$DATAINJECTIONLANG["modelStep"][9]."</td>";
-	
-	if(isset($model))
-		{
-		if($_SESSION["plugin_data_injection"]["choice"]==1)
-			echo "<td><input type='text' value='".$model->getDelimiter()."' size='1' maxlength='1' name='delimiter' id='delimiter' onfocus=\"this.value=''\" /></td></tr>";
-		else
-			echo "<td><input type='text' value='".$model->getDelimiter()."' size='1' maxlength='1' name='delimiter' id='delimiter' onfocus=\"this.value=''\" disabled style='font-weight:bold;background-color:#e6e6e6'  /></td></tr>";
-		}
-	else
-		echo "<td><input type='text' value=';' size='1' maxlength='1' name='delimiter' id='delimiter' onfocus=\"this.value=''\" /></td></tr>";
-	/**************************************************************/
-	
-	echo "</table>";
 	echo "</fieldset>";
+	
+	echo "<script type='text/javascript'>show_backend($id)</script>";
+	
 	
 	echo "<fieldset class='modelStep_selection'>";
 	echo "<legend><a href='javascript:show_option()'><img src='../pics/plus.png' alt='plus' id='option_img' style='width:20px;float:left' /></a>".$DATAINJECTIONLANG["modelStep"][15]."</legend>";
@@ -1368,7 +1329,7 @@ function traitement()
 	$global_result = $engine->injectLine($datas[$i][0],$model->getInfos());
 	$global_result->setLineId($i);
 	$tab_result[] = $global_result;
-	$progress = number_format(($i*100)/$nbline,2);
+	$progress = round(($i*100)/$nbline,2);
 	$i++;
 	$datas = $engine->getDatas();
 	echo "<script type='text/javascript'>change_progress('".$progress."%')</script>";

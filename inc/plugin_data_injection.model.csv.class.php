@@ -116,6 +116,9 @@ class DataInjectionModelCSV extends DataInjectionModel {
 	{
 		global $DATAINJECTIONLANG,$LANG;
 		
+		if(isset($_SESSION["plugin_data_injection"]["model"]))
+			$model = unserialize($_SESSION["plugin_data_injection"]["model"]);
+		
 		echo "<legend>".$DATAINJECTIONLANG["modelStep"][14]."</legend>";
 		echo "<table class='modelStep_table'>";
 		
@@ -160,7 +163,7 @@ class DataInjectionModelCSV extends DataInjectionModel {
 				echo "<td><input type='text' value='".$model->getDelimiter()."' size='1' maxlength='1' name='delimiter' id='delimiter' onfocus=\"this.value=''\" disabled style='font-weight:bold;background-color:#e6e6e6'  /></td></tr>";
 			}
 		else
-			echo "<td><input type='text' value=';' size='1' maxlength='1' name='delimiter' id='delimiter' onfocus=\"this.value=''\" /></td></tr>";
+			echo "<td>	<input type='text' value=';' size='1' maxlength='1' name='delimiter' id='delimiter' onfocus=\"this.value=''\" /></td></tr>";
 		/**************************************************************/
 		
 		echo "</table>";

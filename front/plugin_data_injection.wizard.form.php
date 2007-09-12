@@ -100,7 +100,15 @@ if($load)
 	else if(isset($_POST["next_modelStep"]))
 		{	
 		if(isset($_SESSION["plugin_data_injection"]["model"]))
+			{
 			$model = unserialize($_SESSION["plugin_data_injection"]["model"]);
+			
+			if($_SESSION["plugin_data_injection"]["choice"] == 1)
+				{
+				if($model->getModelType()!=$_POST["dropdown_type"])
+					$model = getModelInstanceByType($_POST["dropdown_type"]);
+				}
+			}
 		else		
 			$model = getModelInstanceByType($_POST["dropdown_type"]);
 			

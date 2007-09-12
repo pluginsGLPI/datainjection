@@ -146,7 +146,7 @@ function go_info(id)
 	xhr.send("id="+id+"&idMapping="+idtable);
 }
 
-function show_backend()
+function show_backend(choice)
 {	
 	var xhr = getXhr();
 
@@ -163,10 +163,22 @@ function show_backend()
 
 	xhr.setRequestHeader('Content-Type','application/x-www-form-urlencoded');
 
-	sel = document.getElementById('dropdown_type');
-	id = sel.options[sel.selectedIndex].value;
+	if(choice==0)
+		{
+		sel = document.getElementById('dropdown_type');
+		id = sel.options[sel.selectedIndex].value;
+		}
+	else
+		id = choice;
 		
 	xhr.send("id="+id);
+}
+
+function getBackend()
+{
+	id = document.getElementById('dropdown_type').value;
+	
+	return id;
 }
 
 function addelete_info(id)
