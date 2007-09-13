@@ -59,6 +59,25 @@ class BackendCSV extends Backend{
 	{
 		unlink($this->file);
 	}
+	
+	function export($file, $model, $tab_result)
+	{	
+		$tmpfile = fopen($file, "w");
+		
+		$header = $this->getHeader($model->isHeaderPresent());
+			
+		fputcsv($tmpfile, $header, $model->getDelimiter());
+		
+		foreach($tab_result[0] as $value)
+			{
+			$list = $this->getDataAtLine($value->getLineID());
+	    		
+	    	fputcsv($tmpfile, $list, $model->getDelimiter());
+			}
+		
+		fclose($tmpfile);
+	}
+	
 	function readLinesFromTo($start_line, $end_line)
 	{
 		$row = 0;

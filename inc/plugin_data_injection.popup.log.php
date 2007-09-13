@@ -32,7 +32,9 @@
 // Purpose of file:
 // ----------------------------------------------------------------------
 
-define('GLPI_ROOT', '../../..');
+if (!defined('GLPI_ROOT')) {
+	define('GLPI_ROOT', '../../..');
+}
 include (GLPI_ROOT."/inc/includes.php");
 
 include("../plugin_data_injection.includes.php");
@@ -59,12 +61,6 @@ echo "<body>";
 
 $model = unserialize($_SESSION["plugin_data_injection"]["model"]);
 $tab_result = unserialize($_SESSION["plugin_data_injection"]["import"]["tab_result"]);
-$global_result = unserialize($_SESSION["plugin_data_injection"]["import"]["global_result"]);
-$engine = unserialize($_SESSION["plugin_data_injection"]["import"]["engine"]);
-$nbline = $_SESSION["plugin_data_injection"]["import"]["nbline"];
-$i = $_SESSION["plugin_data_injection"]["import"]["i"];
-$progress = $_SESSION["plugin_data_injection"]["import"]["progress"];
-$datas = $_SESSION["plugin_data_injection"]["import"]["datas"];
 
 $tab_result = sortAllResults($tab_result);
 
@@ -95,8 +91,17 @@ if(count($tab_result[1])>0)
 		echo "<tr class='tab_bg_$num'>";
 		echo "<td style='height:30px;width:30px'><img src='../pics/ok.png' alt='success' /></td>";
 		echo "<td style='height:30px;width:50px'>".$value->getLineID()."</td>";
-		echo "<td style='height:30px;width:300px'>".$value->getCheckMessage()."</td>";
-		echo "<td style='height:30px;width:300px'>".$value->getInjectionMessage()."</td>";
+		
+		echo "<td style='height:30px;width:300px'>";
+		if($value->getCheckStatus() != TYPE_CHECK_OK)
+			echo "<img src='../pics/danger.png' alt='danger' />";
+		echo $value->getCheckMessage()."</td>";
+		
+		echo "<td style='height:30px;width:300px'>";
+		if($value->getStatus() != IMPORT_OK)
+			echo "<img src='../pics/danger.png' alt='danger' />";
+		echo $value->getInjectionMessage()."</td>";
+		
 		echo "<td style='height:30px;width:200px'>".($value->getInjectionType()==INJECTION_ADD?$DATAINJECTIONLANG["result"][8]:$DATAINJECTIONLANG["result"][9])."</td>";
 		
 		if ($value->getInjectedId() > 0)
@@ -144,8 +149,17 @@ if(count($tab_result[0])>0)
 		echo "<tr class='tab_bg_$num'>";
 		echo "<td style='height:30px;width:30px'><img src='../pics/notok.png' alt='success' /></td>";
 		echo "<td style='height:30px;width:50px'>".$value->getLineID()."</td>";
-		echo "<td style='height:30px;width:300px'>".$value->getCheckMessage()."</td>";
-		echo "<td style='height:30px;width:300px'>".$value->getInjectionMessage()."</td>";
+		
+		echo "<td style='height:30px;width:300px'>";
+		if($value->getCheckStatus() != TYPE_CHECK_OK)
+			echo "<img src='../pics/danger.png' alt='danger' />";
+		echo $value->getCheckMessage()."</td>";
+		
+		echo "<td style='height:30px;width:300px'>";
+		if($value->getStatus() != IMPORT_OK)
+			echo "<img src='../pics/danger.png' alt='danger' />";
+		echo $value->getInjectionMessage()."</td>";
+		
 		echo "<td style='height:30px;width:200px'>".($value->getInjectionType()==INJECTION_ADD?$DATAINJECTIONLANG["result"][8]:$DATAINJECTIONLANG["result"][9])."</td>";
 		
 		if ($value->getInjectedId() > 0)

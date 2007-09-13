@@ -1275,6 +1275,7 @@ function logStep($target)
 	global $DATAINJECTIONLANG,$LANG;
 	
 	$nbline = $_SESSION["plugin_data_injection"]["import"]["nbline"];
+	$backend = unserialize($_SESSION["plugin_data_injection"]["backend"]);
 	
 	echo "<form action='".$target."' method='post'>";
 	echo "<table class='wizard'>";
@@ -1296,10 +1297,37 @@ function logStep($target)
 
 	echo "<div class='logStep_success' colspan='2' valign='top'>".$DATAINJECTIONLANG["logStep"][3]."</div>";
 
-	echo "<div><input type='button' name='popup' value='".$DATAINJECTIONLANG["button"][4]."' class='submit , logStep_button1' onclick='log_popup($nbline)' /></div>";
+	echo "<table class='logStep_tab'>";
+	echo "<tr>";
+	
+	echo "<td style='width:200px'>";
+	echo "<input type='button' name='popup' value='".$DATAINJECTIONLANG["button"][4]."' class='submit , logStep_button' onclick='log_popup($nbline)' />";
+	echo "</td>";
+	
+	echo "<td style='width:200px'>";
+	echo "<input type='button' name='pdf' value='".$DATAINJECTIONLANG["button"][7]."' class='submit , logStep_button' onclick=\"location.href='plugin_data_injection.export.pdf.php'\" />";
+	echo "</td>";
+	
+	echo "</tr>";
+	
+	echo "<tr>";
+	$tab_result = unserialize($_SESSION["plugin_data_injection"]["import"]["tab_result"]);
 
-	echo "<div><input type='submit' name='export' value='".$DATAINJECTIONLANG["button"][5]."' class='submit , logStep_button2' /></div>";
+	$tab_result = sortAllResults($tab_result);
 
+	if(count($tab_result[0])>0)
+		{
+		$model = unserialize($_SESSION["plugin_data_injection"]["model"]);
+		$file = PLUGIN_DATA_INJECTION_UPLOAD_DIR.$_SESSION["plugin_data_injection"]["file_name"];
+		
+		$backend->export($file, $model, $tab_result);
+		echo "<td colspan='2'>";
+		echo "<input type='button' name='export' value='".$DATAINJECTIONLANG["button"][5]."' class='submit , logStep_button' onclick=\"location.href='plugin_data_injection.telecharger.php'\" />";
+		echo "</td>";
+		}
+	
+	echo "</tr>";
+	echo "</table>";
 	
 	echo "</td></tr>";
 	
@@ -1367,7 +1395,7 @@ else
 	$i=0;
 	}
 
-$i_stop = $engine->getNumberOfLines();	
+$i_stop = $engine->getNumberOfLines();
 $progress = 0;
 	
 $datas = $engine->getDatas();
@@ -1381,7 +1409,6 @@ $_SESSION["plugin_data_injection"]["import"]["i_stop"] = $i_stop;
 $_SESSION["plugin_data_injection"]["import"]["progress"] = $progress;
 $_SESSION["plugin_data_injection"]["import"]["datas"] = $datas;
 }
-
 
 function initSession()
 {
@@ -1402,6 +1429,13 @@ if(isset($_SESSION["plugin_data_injection"]["model"]))
 
 if(isset($_SESSION["plugin_data_injection"]["file"]))
 	unset($_SESSION["plugin_data_injection"]["file"]);
+
+if(isset($_SESSION["plugin_data_injection"]["file_name"]))
+	{
+	if(file_exists(PLUGIN_DATA_INJECTION_UPLOAD_DIR.$_SESSION["plugin_data_injection"]["file_name"]))
+		unlink(PLUGIN_DATA_INJECTION_UPLOAD_DIR.$_SESSION["plugin_data_injection"]["file_name"]);
+	unset($_SESSION["plugin_data_injection"]["file_name"]);
+	}
 
 if(isset($_SESSION["plugin_data_injection"]["remember"]))
 	unset($_SESSION["plugin_data_injection"]["remember"]);		
@@ -1425,5 +1459,4 @@ else if (plugin_data_injection_haveRight("use_model","r"))
 	$_SESSION["plugin_data_injection"]["nbonglet"] = 5;	
 	}
 }
-
 ?>

@@ -93,9 +93,7 @@ abstract class Backend {
 				$header[] = $i;
 				
 			return $header;	
-		}
-		
-			
+		}	
 	}
 		
 	/*
@@ -124,6 +122,8 @@ abstract class Backend {
 	}
 	
 	abstract protected function deleteFile();
+	
+	abstract protected function export($file, $model, $tab_result);
 }
 
 /*

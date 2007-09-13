@@ -74,6 +74,12 @@ class DataInjectionResults {
 		return $this->status;
 	}
 	
+	function getCheckStatus()
+	{
+		return $this->check_status;
+	}
+	
+	
 	function getCheckMessage()
 	{
 		if ($this->check_status == TYPE_CHECK_OK)

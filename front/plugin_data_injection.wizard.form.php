@@ -189,7 +189,8 @@ if($load)
 						$_SESSION["plugin_data_injection"]["step"]++;
 		    			$_SESSION["plugin_data_injection"]["load"] = "next_fileStep";
 						$_SESSION["plugin_data_injection"]["backend"] = serialize($file);
-	    			
+	    				$_SESSION["plugin_data_injection"]["file_name"] = $name_file;
+	    				
 	    				if($_SESSION["plugin_data_injection"]["choice"]==1)
 	    					$_SESSION["plugin_data_injection"]["remember"] = 0;
 						}

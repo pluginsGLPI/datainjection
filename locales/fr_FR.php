@@ -156,8 +156,9 @@ $DATAINJECTIONLANG["button"][1] = "< Précédent";
 $DATAINJECTIONLANG["button"][2] = "Suivant >";
 $DATAINJECTIONLANG["button"][3] = "Voir le fichier";
 $DATAINJECTIONLANG["button"][4] = "Voir le rapport";
-$DATAINJECTIONLANG["button"][5] = "Exporter le rapport";
+$DATAINJECTIONLANG["button"][5] = "Générer le fichier à importer";
 $DATAINJECTIONLANG["button"][6] = "Terminé";
+$DATAINJECTIONLANG["button"][7] = "Exporter le rapport en PDF";
 
 $DATAINJECTIONLANG["result"][1] = "Mauvais type";
 $DATAINJECTIONLANG["result"][2] = "Les données à insérer sont correctes";

@@ -313,18 +313,17 @@ margin-right: auto;
 text-align: center;
 }
 
-.logStep_button1 {
-margin-top: 100px;
-margin-left: 50px;
-float: left;
-width: 100px;
+.logStep_button {
+width: 150px;
 }
 
-.logStep_button2 {
+.logStep_tab {
+text-align: center;
 margin-top: 100px;
-margin-right: 50px;
-float: right;
-width: 100px;
+}
+
+.logStep_tab td{
+height: 50px;
 }
 
 .logStep_title {
