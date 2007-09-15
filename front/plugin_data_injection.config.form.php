@@ -61,8 +61,12 @@ else
 		echo "<tr class='tab_bg_2'><th colspan='6'>" . $DATAINJECTIONLANG["setup"][1]."</th></tr></table>";
 		echo "<br>";
 		echo "<table class='tab_cadre' cellpadding='6'>";
-		echo "<tr class='tab_bg_2'><td colspan='5' align='center'><a href=\"../front/plugin_data_injection.profile.php\">".$DATAINJECTIONLANG["setup"][9]."</a></td/></tr>";
-		echo "<tr class='tab_bg_2'><td colspan='5' align='center'><a href=\"../front/plugin_data_injection.uninstall.php\">".$DATAINJECTIONLANG["setup"][5]."</a></td/></tr>";
+		if (haveRight("profile","w")){
+			echo "<tr class='tab_bg_2'><td colspan='5' align='center'><a href=\"../front/plugin_data_injection.profile.php\">".$DATAINJECTIONLANG["setup"][9]."</a></td/></tr>";
+		}
+		if (haveRight("config","w")){
+			echo "<tr class='tab_bg_2'><td colspan='5' align='center'><a href=\"../front/plugin_data_injection.uninstall.php\">".$DATAINJECTIONLANG["setup"][5]."</a></td/></tr>";
+		}
 		echo "</table></form></div>";
 }
 
