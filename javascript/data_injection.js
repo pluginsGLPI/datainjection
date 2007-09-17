@@ -3,18 +3,19 @@ function change_color_step(id)
 	document.getElementById(id).style.backgroundColor='#e6e6e6';
 }	
 
-function showSelect(form,cpt)
+function show_Select(cpt)
 {	
-	if (document.getElementById('checkbox1').checked)
+	if (document.getElementById('create').checked)
 		{
-		form.dropdown.disabled=true;
-		form.dropdown.style.backgroundColor='#e6e6e6';
-		hide_comments(cpt);
+		document.getElementById('dropdown').disabled=true;
+		document.getElementById('dropdown').style.backgroundColor='#e6e6e6';
+		document.getElementById('test').style.display='none';
 		}
 	else
 		{
-		form.dropdown.disabled=false;
-		form.dropdown.style.backgroundColor='white';
+		document.getElementById('dropdown').disabled=false;
+		document.getElementById('dropdown').style.backgroundColor='white';
+		document.getElementById('test').style.display='block';
 		show_comments(cpt);
 		}
 }
@@ -38,28 +39,14 @@ function deleteOnglet(nbonglet)
 function show_comments(cpt)
 {
 sel = document.getElementById('dropdown');
-id = sel.options[sel.selectedIndex].value;
+id = sel.selectedIndex;
 
 for(i=0;i<cpt;i++)
 	{
-	id2 = sel.options[i].value;
+	document.getElementById('comments'+i).style.display = 'none';
 	
-	document.getElementById('comments'+id2).style.display = 'none';
-	
-	if(id2==id)
-		document.getElementById('comments'+id).style.display = 'block';
-	}
-}
-
-function hide_comments(cpt)
-{
-sel = document.getElementById('dropdown');
-id = sel.options[sel.selectedIndex].value;
-
-for(i=0;i<cpt;i++)
-	{
-	id2 = sel.options[i].value;
-	document.getElementById('comments'+id2).style.display = 'none';
+	if(i==id)
+		document.getElementById('comments'+i).style.display = 'block';
 	}
 }
 

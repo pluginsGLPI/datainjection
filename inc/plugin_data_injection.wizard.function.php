@@ -68,9 +68,9 @@ function choiceStep($target)
 	/***************************Create*****************************/
 	echo "<tr>";
 	if (plugin_data_injection_haveRight("create_model","w"))
-		echo "<td style='height: 40px;'><input type='radio' id='checkbox1' name='choice' value='1' onClick='showSelect(this.form,$nbmodel);deleteOnglet(6)' checked /></td>";
+		echo "<td style='height: 40px;'><input type='radio' id='create' name='choice' value='1' onClick='show_Select($nbmodel);deleteOnglet(6)' checked /></td>";
 	else
-		echo "<td style='height: 40px;'><input type='radio' id='checkbox1' name='choice' value='1' onClick='showSelect(this.form,$nbmodel);deleteOnglet(6)' disabled /></td>";
+		echo "<td style='height: 40px;'><input type='radio' id='create' name='choice' value='1' onClick='show_Select($nbmodel);deleteOnglet(6)' disabled /></td>";
 	echo "<td>".$DATAINJECTIONLANG["choiceStep"][3]."</td>";
 	echo "</tr>";
 	/**************************************************************/
@@ -80,9 +80,9 @@ function choiceStep($target)
 		/**************************Update******************************/
 		echo "<tr>";
 		if (plugin_data_injection_haveRight("create_model","w"))
-			echo "<td><input type='radio' name='choice' value='2' id='checkbox2' onClick='showSelect(this.form,$nbmodel);deleteOnglet(5)' /></td>";
+			echo "<td><input type='radio' name='choice' value='2' onClick='show_Select($nbmodel);deleteOnglet(5)' /></td>";
 		else
-			echo "<td><input type='radio' name='choice' value='2' id='checkbox2' onClick='showSelect(this.form,$nbmodel);deleteOnglet(5)' disabled /></td>";
+			echo "<td><input type='radio' name='choice' value='2' onClick='show_Select($nbmodel);deleteOnglet(5)' disabled /></td>";
 		echo "<td>".$DATAINJECTIONLANG["choiceStep"][4]."</td>";
 		echo "</tr>";
 		/**************************************************************/		
@@ -90,9 +90,9 @@ function choiceStep($target)
 		/**************************Delete******************************/
 		echo "<tr>";
 		if (plugin_data_injection_haveRight("create_model","w"))
-			echo "<td><input type='radio' name='choice' value='3' id='checkbox3' onClick='showSelect(this.form,$nbmodel);deleteOnglet(2)' /></td>";
+			echo "<td><input type='radio' name='choice' value='3' onClick='show_Select($nbmodel);deleteOnglet(2)' /></td>";
 		else
-			echo "<td><input type='radio' name='choice' value='3' id='checkbox3' onClick='showSelect(this.form,$nbmodel);deleteOnglet(2)' disabled /></td>";
+			echo "<td><input type='radio' name='choice' value='3' onClick='show_Select($nbmodel);deleteOnglet(2)' disabled /></td>";
 		echo "<td>".$DATAINJECTIONLANG["choiceStep"][5]."</td>";
 		echo "</tr>";
 		/**************************************************************/
@@ -101,11 +101,11 @@ function choiceStep($target)
 		echo "<tr>";
 		if (plugin_data_injection_haveRight("use_model","r"))
 			if($_SESSION["plugin_data_injection"]["choice"] == 4)
-				echo "<td><input type='radio' name='choice' value='4' id='checkbox4' onClick='showSelect(this.form,$nbmodel);deleteOnglet(5)' checked /></td>";
+				echo "<td><input type='radio' name='choice' value='4' onClick='show_Select($nbmodel);deleteOnglet(5)' checked /></td>";
 			else
-				echo "<td><input type='radio' name='choice' value='4' id='checkbox4' onClick='showSelect(this.form,$nbmodel);deleteOnglet(5)' /></td>";
+				echo "<td><input type='radio' name='choice' value='4' onClick='show_Select($nbmodel);deleteOnglet(5)' /></td>";
 		else
-			echo "<td><input type='radio' name='choice' value='4' id='checkbox4' onClick='showSelect(this.form,$nbmodel);deleteOnglet(5)' disabled /></td>";
+			echo "<td><input type='radio' name='choice' value='4' onClick='show_Select($nbmodel);deleteOnglet(5)' disabled /></td>";
 		echo "<td>".$DATAINJECTIONLANG["choiceStep"][6]."</td>";
 		echo "</tr>";
 		echo "</table>";
@@ -128,11 +128,13 @@ function choiceStep($target)
 		/**************************************************************/
 		
 		/***********************Comments Model*************************/
-		foreach($models as $model)
+		echo "<div id='test'>";
+		
+		foreach($models as $key => $model)
 			{
 			$comment = $model->getModelComments();
 			
-			echo "<fieldset class='choiceStep_comments' id='comments".$model->getModelID()."'>";
+			echo "<fieldset class='choiceStep_comments' id='comments".$key."'>";
 			echo "<legend>".$DATAINJECTIONLANG["choiceStep"][7]."</legend>";
 			if(!empty($comment))
 				echo $comment;
@@ -140,6 +142,8 @@ function choiceStep($target)
 				echo $DATAINJECTIONLANG["choiceStep"][8];
 			echo "</fieldset>";
 			}
+			
+		echo "</div>";
 		/**************************************************************/
 		}
 		
