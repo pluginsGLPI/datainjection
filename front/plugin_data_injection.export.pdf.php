@@ -160,14 +160,44 @@ if(count($tab_result[0])>0)
 		
 		$pdf->addText(85,($start_tab-20)-(20*$i),9,utf8_decode($value->getLineID()));
 		
-		$y=($start_tab-20)-(20*$i)+4;
-		$temp=utf8_decode($value->getCheckMessage());
-		while($temp = $pdf->addTextWrap(120,$y,140,7,$temp))
-			$y-=7;
+		$x=120;
+		$length=140;
+		
+		if($value->getCheckStatus() != TYPE_CHECK_OK)
+			{
+			if($key%2==0)
+				$pdf->addJpegFromFile("../pics/danger.jpg",120,($start_tab-25)-(20*$i)+2);
+			else
+				$pdf->addJpegFromFile("../pics/danger2.jpg",120,($start_tab-25)-(20*$i)+2);
+			
+			$x=135;
+			$length=125;
+			}
 		
 		$y=($start_tab-20)-(20*$i)+4;
+		$temp=utf8_decode($value->getCheckMessage());
+		while($temp = $pdf->addTextWrap($x,$y,$length,7,$temp))
+			$y-=7;
+		
+		
+		$x=275;
+		$length=100;
+		
+		if($value->getStatus() != IMPORT_OK)
+			{
+			if($key%2==0)
+				$pdf->addJpegFromFile("../pics/danger.jpg",275,($start_tab-25)-(20*$i)+2);
+			else
+				$pdf->addJpegFromFile("../pics/danger2.jpg",275,($start_tab-25)-(20*$i)+2);
+			
+			$x=290;
+			$length=85;
+			}
+			
+			
+		$y=($start_tab-20)-(20*$i)+4;
 		$temp=utf8_decode($value->getInjectionMessage());
-		while($temp = $pdf->addTextWrap(275,$y,100,7,$temp))
+		while($temp = $pdf->addTextWrap($x,$y,$length,7,$temp))
 			$y-=7;
 		
 		
