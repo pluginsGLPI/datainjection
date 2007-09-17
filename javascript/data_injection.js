@@ -9,13 +9,13 @@ function show_Select(cpt)
 		{
 		document.getElementById('dropdown').disabled=true;
 		document.getElementById('dropdown').style.backgroundColor='#e6e6e6';
-		document.getElementById('test').style.display='none';
+		document.getElementById('comment_select').style.display='none';
 		}
 	else
 		{
 		document.getElementById('dropdown').disabled=false;
 		document.getElementById('dropdown').style.backgroundColor='white';
-		document.getElementById('test').style.display='block';
+		document.getElementById('comment_select').style.display='block';
 		show_comments(cpt);
 		}
 }

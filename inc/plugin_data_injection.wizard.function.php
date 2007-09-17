@@ -128,7 +128,7 @@ function choiceStep($target)
 		/**************************************************************/
 		
 		/***********************Comments Model*************************/
-		echo "<div id='test'>";
+		echo "<div id='comment_select'>";
 		
 		foreach($models as $key => $model)
 			{
