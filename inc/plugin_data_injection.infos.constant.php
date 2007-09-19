@@ -166,6 +166,10 @@ $DATA_INJECTION_INFOS[COMPUTER_TYPE]['tech_num']['name']=$LANG["common"][10];
 $DATA_INJECTION_INFOS[COMPUTER_TYPE]['tech_num']['linkfield']='tech_num';
 $DATA_INJECTION_INFOS[COMPUTER_TYPE]['tech_num']['input_type']='dropdown';
 
+$DATA_INJECTION_INFOS[COMPUTER_TYPE]['comments']['table']='glpi_computers';
+$DATA_INJECTION_INFOS[COMPUTER_TYPE]['comments']['field']='comments';
+$DATA_INJECTION_INFOS[COMPUTER_TYPE]['comments']['name']=$LANG["common"][25];
+
 // ----------------------------------------------------------------------
 //MONITOR INFOS
 // ----------------------------------------------------------------------
