@@ -112,7 +112,7 @@ if($load)
 		else		
 			$model = getModelInstanceByType($_POST["dropdown_type"]);
 			
-		$model->setFields($_POST,$_SESSION["glpiactive_entity"]);
+		$model->setFields($_POST,$_SESSION["glpiactive_entity"],$_SESSION["glpiID"]);
 				
 		$_SESSION["plugin_data_injection"]["model"] = serialize($model);
 		
@@ -226,7 +226,7 @@ if($load)
 		foreach($_POST["field"] as $field)
 			{
 			$mapping = new DataInjectionMapping;
-			$mapping->setName($field[0]);
+			$mapping->setName(stripslashes($field[0]));
 			$mapping->setMappingType($field[1]);
 			$mapping->setValue($field[2]);
 			$mapping->setRank($index);

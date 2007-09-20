@@ -45,6 +45,29 @@ function getAllModels($entity=0)
 	return $models;
 }
 
+function getAllModelsForChoiceStep($user_id,$entity=0)
+{
+	global $DB;
+	
+	$models = array();
+	$sql = "SELECT * FROM glpi_plugin_data_injection_models ORDER BY name";
+	$result = $DB->query($sql);
+	while ($data = $DB->fetch_array($result))
+	{	
+		if($entity == 0 || $entity == $data["FK_entities"] || ($data["public"] == 0 && $data["user_id"] == $user_id))
+			{
+			if($data["public"] == 1 || ($data["public"] == 0 && $data["user_id"] == $user_id))
+				{
+				$model = new DataInjectionModel($data["ID"]);
+				$model->fields = $data;
+				$models[] = $model;
+				}
+			}
+	}
+	
+	return $models;
+}
+
 function getModelInstanceByType($type)
 {
 	global $DB;

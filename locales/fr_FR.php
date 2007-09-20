@@ -49,7 +49,7 @@ $DATAINJECTIONLANG["setup"][8] = "Colonne";
 $DATAINJECTIONLANG["setup"][9] = "Gestion des droits";
 
 $DATAINJECTIONLANG["presentation"][1] = "Bienvenue dans l'assistant d'importation de fichiers";
-$DATAINJECTIONLANG["presentation"][2] = "Cet assistant d'importer des fichiers au format CSV.";
+$DATAINJECTIONLANG["presentation"][2] = "Cet assistant permet d'importer des fichiers au format CSV.";
 $DATAINJECTIONLANG["presentation"][3] = "Pour commencer, cliquez sur Suivant.";
 
 $DATAINJECTIONLANG["step"][1] = "Etape 1 : ";
@@ -70,7 +70,6 @@ $DATAINJECTIONLANG["choiceStep"][7] = "Commentaire du modèle";
 $DATAINJECTIONLANG["choiceStep"][8] = "Pas de commentaires";
 $DATAINJECTIONLANG["choiceStep"][9] = "Faites votre sélection";
 
-
 $DATAINJECTIONLANG["modelStep"][1] = "Collecte d'informations sur le fichier";
 $DATAINJECTIONLANG["modelStep"][2] = "Modification du modèle";
 $DATAINJECTIONLANG["modelStep"][3] = "Sélectionner le type de votre fichier à importer et le type d'objet que vous allez insérer.";
@@ -86,8 +85,9 @@ $DATAINJECTIONLANG["modelStep"][12] = "Mise à jour des champs existants :";
 $DATAINJECTIONLANG["modelStep"][13] = "Informations principales";
 $DATAINJECTIONLANG["modelStep"][14] = "Options CSV";
 $DATAINJECTIONLANG["modelStep"][15] = "Option avancées";
-
-
+$DATAINJECTIONLANG["modelStep"][16] = "Diffusion :";
+$DATAINJECTIONLANG["modelStep"][17] = "Public";
+$DATAINJECTIONLANG["modelStep"][18] = "Privée";
 
 $DATAINJECTIONLANG["deleteStep"][1] = "Confirmation de la suppression";
 $DATAINJECTIONLANG["deleteStep"][2] = "Attention si vous supprimez le modèle, les mappings et les informations complémentaires seront supprimés également.";
@@ -134,8 +134,6 @@ $DATAINJECTIONLANG["saveStep"][9] = "Votre modèle a été mis à jour et est pr
 $DATAINJECTIONLANG["saveStep"][10] = "Voulez-vous utiliser le modèle maintenant ?";
 $DATAINJECTIONLANG["saveStep"][11] = "Le nombre de colonnes du fichier n'est pas correct.";
 $DATAINJECTIONLANG["saveStep"][12] = "Au moins une colonne est incorrecte";
-
-
 
 $DATAINJECTIONLANG["fillInfoStep"][1] = "Attention ! Vous êtes sur le point d'importer des données dans GLPI. Etes-vous sûr de vouloir importer ?";
 $DATAINJECTIONLANG["fillInfoStep"][2] = "Remplissez les champs pour que les informations soient insérées dans GLPI lors de l'importation.";

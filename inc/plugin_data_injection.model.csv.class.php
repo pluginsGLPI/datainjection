@@ -102,9 +102,9 @@ class DataInjectionModelCSV extends DataInjectionModel {
 		$this->specific_fields["header_present"] = $present;
 	}	
 	
-	function setFields($fields,$entity)
+	function setFields($fields,$entity,$user_id)
 	{
-		parent::setFields($fields,$entity);
+		parent::setFields($fields,$entity,$user_id);
 		if(isset($fields["dropdown_header"]))
 			$this->setHeaderPresent($fields["dropdown_header"]);
 		

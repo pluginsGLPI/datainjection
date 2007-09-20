@@ -109,8 +109,9 @@ class BackendCSV extends Backend{
 			return 0;
 			
 		$check = 0;
+		
 		foreach ($model->getMappings() as $key => $mapping)
-		{
+		{	
 			if (!isset($header[$key]) || $header[$mapping->getRank()] != $mapping->getName())
 				$check = 2;
 		}	

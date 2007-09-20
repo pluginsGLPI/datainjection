@@ -224,6 +224,16 @@ class DataInjectionModel extends CommonDBTM {
 		return $this->fields["can_overwrite_if_not_empty"];
 	}
 	
+	function getPublic()
+	{
+		return $this->fields["public"];
+	}
+	
+	function getUserID()
+	{
+		return $this->fields["user_id"];
+	}
+	
 	//---- Save -----//
 	function setModelType($type)
 	{
@@ -289,10 +299,22 @@ class DataInjectionModel extends CommonDBTM {
 	{
 		$this->fields["can_overwrite_if_not_empty"] = $canoverwrite; 
 	}
-
-	function setFields($fields,$entity)
+	
+	function setPublic($public)
+	{
+		$this->fields["public"] = $public;
+	}
+	
+	function setUserID($user)
+	{
+		$this->fields["user_id"] = $user;
+	}
+	
+	function setFields($fields,$entity,$user_id)
 	{
 		$this->setEntity($entity);
+		
+		$this->setUserID($user_id);
 		
 		if(isset($fields["dropdown_device_type"]))
 			$this->setDeviceType($fields["dropdown_device_type"]);
@@ -312,6 +334,8 @@ class DataInjectionModel extends CommonDBTM {
 		if(isset($fields["can_overwrite_if_not_empty"]))
 			$this->setCanOverwriteIfNotEmpty($fields["can_overwrite_if_not_empty"]);
 		
+		if(isset($fields["dropdown_public"]))
+			$this->setPublic($fields["dropdown_public"]);
 	}
 
 }

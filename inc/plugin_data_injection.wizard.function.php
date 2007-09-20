@@ -40,7 +40,7 @@ function choiceStep($target)
 {
 	global $DATAINJECTIONLANG;
 	
-	$models = getAllModels($_SESSION["glpiactive_entity"]);
+	$models = getAllModelsForChoiceStep($_SESSION["glpiID"],$_SESSION["glpiactive_entity"]);
 	
 	$nbmodel = count($models);
 	
@@ -319,6 +319,34 @@ function modelStep($target)
 	echo "</td></tr>";
 	/**************************************************************/
 	
+	/***************Can overwrite if not empty*********************/
+	echo "<tr><td>".$DATAINJECTIONLANG["modelStep"][16]."</td><td>";
+	echo "<select name='dropdown_public'>";
+	
+	if(isset($model))
+		{
+		$public = $model->getPublic();
+		if($public)
+			{
+			echo "<option value='1' selected>".$DATAINJECTIONLANG["modelStep"][17]."</option>";
+			echo "<option value='0'>".$DATAINJECTIONLANG["modelStep"][18]."</option>";
+			}
+		else
+			{
+			echo "<option value='1'>".$DATAINJECTIONLANG["modelStep"][17]."</option>";
+			echo "<option value='0' selected>".$DATAINJECTIONLANG["modelStep"][18]."</option>";
+			}
+		}
+	else
+		{
+		echo "<option value='1'>".$DATAINJECTIONLANG["modelStep"][17]."</option>";
+		echo "<option value='0'>".$DATAINJECTIONLANG["modelStep"][18]."</option>";	
+		}
+		
+	echo "</select>";
+	echo "</td></tr>";
+	/**************************************************************/
+	
 	echo "</table>";
 	echo "</fieldset>";
 	
@@ -486,6 +514,7 @@ function mappingStep($target)
 			$nbline--;
 		
 		$header = $file->getHeader($model->isHeaderPresent());
+		
 		$num = count($header);
 		}
 	else
@@ -532,7 +561,7 @@ function mappingStep($target)
 				echo "<tr>";
 				
 				/************************Header File***************************/
-				echo "<td><input type='hidden' name='field[$key][0]' value='".$value->getName()."' />".$value->getName()." : </td>";
+				echo "<td><input type='hidden' name='field[$key][0]' value=\"".$value->getName()."\" />".stripslashes($value->getName())." : </td>";
 				/**************************************************************/
 				
 				/***********************Arrow Picture**************************/
@@ -602,7 +631,7 @@ function mappingStep($target)
 			echo "<tr>";
 			
 			/************************Header File***************************/
-			echo "<td><input type='hidden' name='field[$key][0]' value='$value' />".$value." : </td>";
+			echo "<td><input type='hidden' name='field[$key][0]' value=\"$value\" />".stripslashes($value)." : </td>";
 			/**************************************************************/
 			
 			/***********************Arrow Picture**************************/
