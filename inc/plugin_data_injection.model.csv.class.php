@@ -119,16 +119,16 @@ class DataInjectionModelCSV extends DataInjectionModel {
 		if(isset($_SESSION["plugin_data_injection"]["model"]))
 			$model = unserialize($_SESSION["plugin_data_injection"]["model"]);
 		
-		echo "<legend>".$DATAINJECTIONLANG["modelStep"][14]."</legend>";
+		echo "<legend>".$DATAINJECTIONLANG["modelStep"][14]."CSV</legend>";
 		echo "<table class='modelStep_table'>";
 		
 		/**************************Header******************************/
-		echo "<tr><td style='width:160px'>".$DATAINJECTIONLANG["modelStep"][9]."</td>";
+		echo "<tr><td style='width:250px'>".$DATAINJECTIONLANG["modelStep"][9]."</td>";
 		
 		if($_SESSION["plugin_data_injection"]["choice"]==1)
-			echo "<td style='width:105px'><select name='dropdown_header'>";
+			echo "<td style='width:150px'><select name='dropdown_header'>";
 		else
-			echo "<td style='width:105px'><select name='dropdown_header' style='background-color:#e6e6e6' disabled>";
+			echo "<td style='width:150px'><select name='dropdown_header' style='background-color:#e6e6e6' disabled>";
 		
 		if(isset($model))
 			{
@@ -153,17 +153,17 @@ class DataInjectionModelCSV extends DataInjectionModel {
 		/**************************************************************/
 		
 		/************************Delimiter*****************************/
-		echo "<tr><td>".$DATAINJECTIONLANG["modelStep"][9]."</td>";
+		echo "<tr><td>".$DATAINJECTIONLANG["modelStep"][10]."</td>";
 		
 		if(isset($model))
 			{
 			if($_SESSION["plugin_data_injection"]["choice"]==1)
-				echo "<td><input type='text' value='".$model->getDelimiter()."' size='1' maxlength='1' name='delimiter' id='delimiter' onfocus=\"this.value=''\" /></td></tr>";
+				echo "<td><input type='text' value='".$model->getDelimiter()."' size='1' maxlength='1' name='delimiter' id='delimiter' style='text-align:center;font-weight:bold' onfocus=\"this.value=''\" /></td></tr>";
 			else
-				echo "<td><input type='text' value='".$model->getDelimiter()."' size='1' maxlength='1' name='delimiter' id='delimiter' onfocus=\"this.value=''\" disabled style='font-weight:bold;background-color:#e6e6e6'  /></td></tr>";
+				echo "<td><input type='text' value='".$model->getDelimiter()."' size='1' maxlength='1' name='delimiter' id='delimiter' onfocus=\"this.value=''\" disabled style='text-align:center;font-weight:bold;background-color:#e6e6e6'  /></td></tr>";
 			}
 		else
-			echo "<td>	<input type='text' value=';' size='1' maxlength='1' name='delimiter' id='delimiter' onfocus=\"this.value=''\" /></td></tr>";
+			echo "<td>	<input type='text' value=';' size='1' maxlength='1' name='delimiter' id='delimiter' style='text-align:center;font-weight:bold' onfocus=\"this.value=''\" /></td></tr>";
 		/**************************************************************/
 		
 		echo "</table>";

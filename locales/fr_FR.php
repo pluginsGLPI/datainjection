@@ -61,7 +61,7 @@ $DATAINJECTIONLANG["step"][6] = "Etape 6 : ";
 $DATAINJECTIONLANG["step"][7] = "Etape 7 : ";
 
 $DATAINJECTIONLANG["choiceStep"][1] = "Gestion ou utilisation d'un modèle";
-$DATAINJECTIONLANG["choiceStep"][2] = "Cette première étape vous permet de ecréer, modifier, supprimer, ou utiliser un modèle.";
+$DATAINJECTIONLANG["choiceStep"][2] = "Cette première étape vous permet de créer, modifier, supprimer, ou utiliser un modèle.";
 $DATAINJECTIONLANG["choiceStep"][3] = "Créer un nouveau modèle";
 $DATAINJECTIONLANG["choiceStep"][4] = "Modifier un modèle existant";
 $DATAINJECTIONLANG["choiceStep"][5] = "Supprimer un modèle existant";
@@ -69,10 +69,12 @@ $DATAINJECTIONLANG["choiceStep"][6] = "Utiliser un modèle existant";
 $DATAINJECTIONLANG["choiceStep"][7] = "Commentaire du modèle";
 $DATAINJECTIONLANG["choiceStep"][8] = "Pas de commentaires";
 $DATAINJECTIONLANG["choiceStep"][9] = "Faites votre sélection";
+$DATAINJECTIONLANG["choiceStep"][10] = "En fonction de vos droits, vous ne pourrez peut être pas avoir accès à tous les choix.";
+$DATAINJECTIONLANG["choiceStep"][11] = "Pour la modification, la suppression et l'utilisation, vous devez selectionner un modèle dans le menu déroulant.";
 
-$DATAINJECTIONLANG["modelStep"][1] = "Collecte d'informations sur le fichier";
+$DATAINJECTIONLANG["modelStep"][1] = "Informations sur le type fichier";
 $DATAINJECTIONLANG["modelStep"][2] = "Modification du modèle";
-$DATAINJECTIONLANG["modelStep"][3] = "Sélectionner le type de votre fichier à importer et le type d'objet que vous allez insérer.";
+$DATAINJECTIONLANG["modelStep"][3] = "Les options de fichier dépendent du type de fichier sélectionné dans la partie informations principales.";
 $DATAINJECTIONLANG["modelStep"][4] = "Type de données à insérer :";
 $DATAINJECTIONLANG["modelStep"][5] = "Type de fichier :";
 $DATAINJECTIONLANG["modelStep"][6] = "Création des lignes :";
@@ -83,11 +85,12 @@ $DATAINJECTIONLANG["modelStep"][10] = "Délimiteur du fichier :";
 $DATAINJECTIONLANG["modelStep"][11] = "Délimiteur non défini";
 $DATAINJECTIONLANG["modelStep"][12] = "Mise à jour des champs existants :";
 $DATAINJECTIONLANG["modelStep"][13] = "Informations principales";
-$DATAINJECTIONLANG["modelStep"][14] = "Options CSV";
+$DATAINJECTIONLANG["modelStep"][14] = "Options de fichier ";
 $DATAINJECTIONLANG["modelStep"][15] = "Option avancées";
 $DATAINJECTIONLANG["modelStep"][16] = "Diffusion :";
 $DATAINJECTIONLANG["modelStep"][17] = "Public";
 $DATAINJECTIONLANG["modelStep"][18] = "Privée";
+$DATAINJECTIONLANG["modelStep"][19] = "Les options avancées sont par défaut configurées, vous pouvez tout de même les modifier si vous êtes un utilisateur confirmé.";
 
 $DATAINJECTIONLANG["deleteStep"][1] = "Confirmation de la suppression";
 $DATAINJECTIONLANG["deleteStep"][2] = "Attention si vous supprimez le modèle, les mappings et les informations complémentaires seront supprimés également.";
@@ -114,13 +117,14 @@ $DATAINJECTIONLANG["mappingStep"][5] = "Obligatoire";
 $DATAINJECTIONLANG["mappingStep"][6] = "-------Choisir une table-------";
 $DATAINJECTIONLANG["mappingStep"][7] = "-------Choisir un champ-------";
 $DATAINJECTIONLANG["mappingStep"][8] = "Au moins un mapping doit être obligatoire";
-$DATAINJECTIONLANG["mappingStep"][9] = "Dans cette étape vous allez réaliser vos mappings avec le fichier.";
+$DATAINJECTIONLANG["mappingStep"][9] = "Dans cette étape vous allez réaliser vos mappings entre le fichier et la base de données.";
 $DATAINJECTIONLANG["mappingStep"][10] = "La colonne entête correspond aux entetes de votre fichier";
 $DATAINJECTIONLANG["mappingStep"][11] = "La notion obligatoire correspond à un champ qui devra absolument être connue dans le fichier, vous devez avoir au moins un mapping obligatoire avant de continuer l'assistant";
 
 $DATAINJECTIONLANG["infoStep"][1] = "Informations complémentaires";
 $DATAINJECTIONLANG["infoStep"][2] = "Modification des informations complémentaires";
-$DATAINJECTIONLANG["infoStep"][3] = "Dans cette étape vous pouvez ajouter des informations qui n'étaient pas présente dans le fichier. Vous devrez ensuite lors de l'utilisation du modèle rentrer les informations à la main.";
+$DATAINJECTIONLANG["infoStep"][3] = "Dans cette étape vous pouvez ajouter des informations qui n'étaient pas présente dans le fichier.";
+$DATAINJECTIONLANG["infoStep"][4] = "Vous devrez ensuite lors de l'utilisation du modèle rentrer les informations à la main.";
 
 $DATAINJECTIONLANG["saveStep"][1] = "Enregistrement du modèle";
 $DATAINJECTIONLANG["saveStep"][2] = "Voulez-vous enregistrer le modèle ?";
@@ -134,6 +138,9 @@ $DATAINJECTIONLANG["saveStep"][9] = "Votre modèle a été mis à jour et est pr
 $DATAINJECTIONLANG["saveStep"][10] = "Voulez-vous utiliser le modèle maintenant ?";
 $DATAINJECTIONLANG["saveStep"][11] = "Le nombre de colonnes du fichier n'est pas correct.";
 $DATAINJECTIONLANG["saveStep"][12] = "Au moins une colonne est incorrecte";
+$DATAINJECTIONLANG["saveStep"][13] = "Enregistrer le modèle afin qu'il puisse être utilisé ultérieurement.";
+$DATAINJECTIONLANG["saveStep"][14] = "Il vous suffira de le sélectionner dans le menu déroulant de la première étape lors de la demande du choix.";
+$DATAINJECTIONLANG["saveStep"][15] = "Vous pouvez écrire un petit commentaire afin de vous souvenir plus tard à quoi correspond votre modèle.";
 
 $DATAINJECTIONLANG["fillInfoStep"][1] = "Attention ! Vous êtes sur le point d'importer des données dans GLPI. Etes-vous sûr de vouloir importer ?";
 $DATAINJECTIONLANG["fillInfoStep"][2] = "Remplissez les champs pour que les informations soient insérées dans GLPI lors de l'importation.";
@@ -145,16 +152,19 @@ $DATAINJECTIONLANG["importStep"][2] = "L'importation du fichier peut prendre plu
 $DATAINJECTIONLANG["importStep"][3] = "Importation terminée";
 
 $DATAINJECTIONLANG["logStep"][1] = "Résultat de l'importation";
-$DATAINJECTIONLANG["logStep"][2] = "Visualisez le déroulement de l'importation à l'aide du bouton voir les logs et exporter le compte rendu en texte à l'aide du bouton exporter les logs";
+$DATAINJECTIONLANG["logStep"][2] = "Le bouton 'voir le rapport' vous permet de vérifier que l'importation c'est déroulée sans problèmes.";
 $DATAINJECTIONLANG["logStep"][3] = "L'importation a réussi";
 $DATAINJECTIONLANG["logStep"][4] = "Tableau des imports qui ont réussis";
 $DATAINJECTIONLANG["logStep"][5] = "Tableau des imports qui ont échoués";
+$DATAINJECTIONLANG["logStep"][6] = "Le bouton 'exporter le rapport en PDF' vous permet d'enregistrer le rapport sur votre disque dur afin de garder une trace.";
+$DATAINJECTIONLANG["logStep"][7] = "Le bouton 'générer le fichier importer' vous permet d'enregistrer sur le disque dur le fichier que vous venez d'importer avec les lignes qui ont échouées.";
+$DATAINJECTIONLANG["logStep"][8] = "L'importation a rencontré des erreurs";
 
 $DATAINJECTIONLANG["button"][1] = "< Précédent";
 $DATAINJECTIONLANG["button"][2] = "Suivant >";
 $DATAINJECTIONLANG["button"][3] = "Voir le fichier";
 $DATAINJECTIONLANG["button"][4] = "Voir le rapport";
-$DATAINJECTIONLANG["button"][5] = "Générer le fichier à importer";
+$DATAINJECTIONLANG["button"][5] = "Générer le fichier importer";
 $DATAINJECTIONLANG["button"][6] = "Terminé";
 $DATAINJECTIONLANG["button"][7] = "Exporter le rapport en PDF";
 

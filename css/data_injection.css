@@ -64,7 +64,7 @@ border-top: 2px outset black;
 font-size: 18px;
 text-align: center;
 margin-top: 20px;
-margin-bottom: 70px;
+margin-bottom: 50px;
 }
 
 .wizard_explain {
@@ -72,7 +72,7 @@ font-size: 14px;
 text-align: justify;
 margin-left: 10px;
 margin-right: 10px;
-margin-top: 10px;
+margin-top: 20px;
 }
 /**************************************************************/
 
@@ -144,7 +144,7 @@ width: 350px;
 
 /*************************Model Step***************************/
 .modelStep_selection {
-width: 350px;
+width: 400px;
 margin-left: auto;
 margin-right: auto;
 margin-top: 10px;
@@ -166,14 +166,6 @@ margin-top: 10px;
 font-size: 14px;
 visibility: hidden;
 color: red;
-}
-
-.modelStep_option {
-width: 350px;
-margin-left: auto;
-margin-right: auto;
-margin-top: 20px;
-padding-top: 0;
 }
 /**************************************************************/
 

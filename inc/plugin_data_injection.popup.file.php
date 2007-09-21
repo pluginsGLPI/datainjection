@@ -84,7 +84,7 @@ echo "<table class='tab_cadre_fixe'><tr>";
 			echo "<tr class='tab_bg_2'>";	
 			
 		foreach($value as $key2 => $value2)
-			echo "<td style='height:40px'>".$value2."</td>";
+			echo "<td style='height:40px;text-align:center'>".$value2."</td>";
 		
 		echo "</tr>";
 		}

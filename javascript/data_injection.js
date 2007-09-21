@@ -226,8 +226,6 @@ function file_popup(totalline)
 	y = (y - nbline)/2;
 	
 	window.open('../inc/plugin_data_injection.popup.file.php?nbline='+nbline+'', 'Popup', 'resizable=no, location=no, menubar=no, scrollbars=yes, toolbar=no, status=no, width=970, height='+height+', left='+x+', top='+y+'');
-	
-	document.getElementById('popup').submit();
 }
 
 function log_popup(nbline)
@@ -289,12 +287,12 @@ function show_option()
 {	
 	if(document.getElementById('option').style.display == 'none')
 		{
-		document.getElementById('option_img').src = '../pics/minus.png';
+		document.getElementById('option_img').src = '../pics/minus2.png';
 		document.getElementById('option').style.display = 'block';
 		}
 	else
 		{
-		document.getElementById('option_img').src = '../pics/plus.png';
+		document.getElementById('option_img').src = '../pics/plus2.png';
 		document.getElementById('option').style.display = 'none';
 		}
 }

@@ -56,6 +56,8 @@ function choiceStep($target)
 	
 	/***********************Explain Step***************************/
 	echo "<div class='wizard_explain'>".$DATAINJECTIONLANG["choiceStep"][2]."</div>";
+	echo "<div class='wizard_explain'>".$DATAINJECTIONLANG["choiceStep"][10]."</div>";
+	echo "<div class='wizard_explain'>".$DATAINJECTIONLANG["choiceStep"][11]."</div>";
 	/**************************************************************/
 	
 	echo "</td>";
@@ -192,6 +194,7 @@ function modelStep($target)
 	
 	/***********************Explain Step***************************/
 	echo "<div class='wizard_explain'>".$DATAINJECTIONLANG["modelStep"][3]."</div>";
+	echo "<div class='wizard_explain'>".$DATAINJECTIONLANG["modelStep"][19]."</div>";
 	/**************************************************************/
 	
 	echo "</td>";
@@ -202,12 +205,12 @@ function modelStep($target)
 	echo "<table class='modelStep_table'>";
 	
 	/***********************Device Type****************************/
-	echo "<tr><td style='width:160px'>".$DATAINJECTIONLANG["modelStep"][4]."</td>";
+	echo "<tr><td style='width:250px'>".$DATAINJECTIONLANG["modelStep"][4]."</td>";
 	
 	if($_SESSION["plugin_data_injection"]["choice"]==1)
-		echo "<td style='width:105px'><select name='dropdown_device_type'>";
+		echo "<td style='width:150px'><select name='dropdown_device_type'>";
 	else
-		echo "<td style='width:105px'><select name='dropdown_device_type' style='background-color:#e6e6e6' disabled>";
+		echo "<td style='width:150px'><select name='dropdown_device_type' style='background-color:#e6e6e6' disabled>";
 	
 	$types = getAllPrimaryTypes();
 		
@@ -287,20 +290,19 @@ function modelStep($target)
 	echo "</table>";
 	echo "</fieldset>";
 	
-	echo "<fieldset id='option_backend' class='modelStep_option'>";
+	echo "<fieldset id='option_backend' class='modelStep_selection'>";
 	
 	echo "</fieldset>";
 	
 	echo "<script type='text/javascript'>show_backend($id)</script>";
 	
-	
 	echo "<fieldset class='modelStep_selection'>";
-	echo "<legend><a href='javascript:show_option()'><img src='../pics/plus.png' alt='plus' id='option_img' style='width:20px;float:left' /></a>".$DATAINJECTIONLANG["modelStep"][15]."</legend>";
+	echo "<legend><a href='javascript:show_option()'><img src='../pics/plus2.png' alt='plus' id='option_img' style='width:20px;float:left' /></a>".$DATAINJECTIONLANG["modelStep"][15]."</legend>";
 	echo "<table class='modelStep_table' id='option' style='display:none'>";
 	
 	/**********************Can add dropdown************************/
-	echo "<tr><td>".$DATAINJECTIONLANG["modelStep"][8]."</td>";
-	echo "<td>";
+	echo "<tr><td style='width:250px'>".$DATAINJECTIONLANG["modelStep"][8]."</td>";
+	echo "<td style='width:150px'>";
 	if(isset($model))
 		$can_adddropdown = $model->getCanAddDropdown();
 	else
@@ -500,8 +502,6 @@ function mappingStep($target)
 	global $DATAINJECTIONLANG;
 	
 	$model = unserialize($_SESSION["plugin_data_injection"]["model"]);
-	
-	
 
 	/***********************Read File******************************/
 	if($_SESSION["plugin_data_injection"]["choice"]==1)
@@ -678,16 +678,14 @@ function mappingStep($target)
 	if($_SESSION["plugin_data_injection"]["choice"]==1)
 		{
 		echo "<tr><td colspan='5'>";
-		echo "<form action='plugin_data_injection.popup.file.php' method='post' id='popup'>";
 		echo "<table style='margin-top: 10px'>";
 		echo "<tr><td style='text-align:center'>";
 		echo "Nbr de ligne : <input type='text' id='nbline' name='nbline' size='2' maxlength='3' value='1' onfocus=\"this.value=''\" /> / ".$nbline;
 		echo "</td></tr>";
 		echo "<tr><td style='text-align:center'>";
-		echo "<input type='button' name='valid_popup' value='".$DATAINJECTIONLANG["button"][3]."' class='submit' onclick='file_popup($nbline)' />";
+		echo "<input type='button' name='popup' value='".$DATAINJECTIONLANG["button"][3]."' class='submit' onclick='file_popup($nbline)' />";
 		echo "</td></tr>";
 		echo "</table>";
-		echo "</form>";
 		echo "</td></tr>";
 		}
 	/**************************************************************/
@@ -732,6 +730,7 @@ function infoStep($target)
 	
 	/***********************Explain Step***************************/
 	echo "<div class='wizard_explain'>".$DATAINJECTIONLANG["infoStep"][3]."</div>";
+	echo "<div class='wizard_explain'>".$DATAINJECTIONLANG["infoStep"][4]."</div>";
 	/**************************************************************/
 	
 	echo "</td>";
@@ -968,7 +967,9 @@ function saveStep($target,$save)
 	/**************************************************************/
 	
 	/***********************Explain Step***************************/
-	echo "<div class='wizard_explain'>".$DATAINJECTIONLANG["infoStep"][3]."</div>";
+	echo "<div class='wizard_explain'>".$DATAINJECTIONLANG["saveStep"][13]."</div>";
+	echo "<div class='wizard_explain'>".$DATAINJECTIONLANG["saveStep"][14]."</div>";
+	echo "<div class='wizard_explain'>".$DATAINJECTIONLANG["saveStep"][15]."</div>";
 	/**************************************************************/
 	
 	echo "</td>";
@@ -1309,6 +1310,9 @@ function logStep($target)
 	
 	$nbline = $_SESSION["plugin_data_injection"]["import"]["nbline"];
 	$backend = unserialize($_SESSION["plugin_data_injection"]["backend"]);
+	$tab_result = unserialize($_SESSION["plugin_data_injection"]["import"]["tab_result"]);
+
+	$tab_result = sortAllResults($tab_result);
 	
 	echo "<form action='".$target."' method='post'>";
 	echo "<table class='wizard'>";
@@ -1322,14 +1326,20 @@ function logStep($target)
 	
 	/***********************Explain Step***************************/
 	echo "<div class='wizard_explain'>".$DATAINJECTIONLANG["logStep"][2]."</div>";
+	echo "<div class='wizard_explain'>".$DATAINJECTIONLANG["logStep"][6]."</div>";
+	if(count($tab_result[0])>0)
+		echo "<div class='wizard_explain'>".$DATAINJECTIONLANG["logStep"][7]."</div>";
 	/**************************************************************/
 	
 	echo "</td>";
 	
 	echo "<td class='wizard_right_area' style='width: 400px' valign='top'>";
 
-	echo "<div class='logStep_success' colspan='2' valign='top'>".$DATAINJECTIONLANG["logStep"][3]."</div>";
-
+	if(count($tab_result[0])>0)
+		echo "<div class='logStep_success' colspan='2' valign='top'>".$DATAINJECTIONLANG["logStep"][8]."</div>";
+	else
+		echo "<div class='logStep_success' colspan='2' valign='top'>".$DATAINJECTIONLANG["logStep"][3]."</div>";
+	
 	echo "<table class='logStep_tab'>";
 	echo "<tr>";
 	
@@ -1344,9 +1354,6 @@ function logStep($target)
 	echo "</tr>";
 	
 	echo "<tr>";
-	$tab_result = unserialize($_SESSION["plugin_data_injection"]["import"]["tab_result"]);
-
-	$tab_result = sortAllResults($tab_result);
 
 	if(count($tab_result[0])>0)
 		{
@@ -1355,7 +1362,7 @@ function logStep($target)
 		
 		$backend->export($file, $model, $tab_result);
 		echo "<td colspan='2'>";
-		echo "<input type='button' name='export' value='".$DATAINJECTIONLANG["button"][5]."' class='submit , logStep_button' onclick=\"location.href='plugin_data_injection.telecharger.php'\" />";
+		echo "<input type='button' name='export' value='".$DATAINJECTIONLANG["button"][5]."' class='submit , logStep_button' onclick=\"location.href='plugin_data_injection.download.php'\" />";
 		echo "</td>";
 		}
 	
