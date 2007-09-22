@@ -321,7 +321,7 @@ function modelStep($target)
 	echo "</td></tr>";
 	/**************************************************************/
 	
-	/***************Can overwrite if not empty*********************/
+	/***************Diffusion*********************/
 	echo "<tr><td>".$DATAINJECTIONLANG["modelStep"][16]."</td><td>";
 	echo "<select name='dropdown_public'>";
 	
@@ -347,6 +347,26 @@ function modelStep($target)
 		
 	echo "</select>";
 	echo "</td></tr>";
+
+	/***************File encoding*********************/
+	echo "<tr><td>".$DATAINJECTIONLANG["modelStep"][20]."</td><td>";
+	echo "<select name='dropdown_encoding'>";
+	
+	if(isset($model))
+		{
+		$encoding = $model->getEncoding();
+		echo "<option value='1' ".($encoding?"selected":'').">".$DATAINJECTIONLANG["modelStep"][21]."</option>";
+		echo "<option value='0' ".(!$encoding?"selected":'').">".$DATAINJECTIONLANG["modelStep"][22]."</option>";
+		}
+	else
+		{
+		echo "<option value='1'>".$DATAINJECTIONLANG["modelStep"][21]."</option>";
+		echo "<option value='0'>".$DATAINJECTIONLANG["modelStep"][22]."</option>";	
+		}
+		
+	echo "</select>";
+	echo "</td></tr>";
+
 	/**************************************************************/
 	
 	echo "</table>";

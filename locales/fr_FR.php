@@ -91,6 +91,10 @@ $DATAINJECTIONLANG["modelStep"][16] = "Diffusion :";
 $DATAINJECTIONLANG["modelStep"][17] = "Public";
 $DATAINJECTIONLANG["modelStep"][18] = "Privée";
 $DATAINJECTIONLANG["modelStep"][19] = "Les options avancées sont par défaut configurées, vous pouvez tout de même les modifier si vous êtes un utilisateur confirmé.";
+$DATAINJECTIONLANG["modelStep"][20] = "Encodage :";
+$DATAINJECTIONLANG["modelStep"][21] = "UTF-8";
+$DATAINJECTIONLANG["modelStep"][22] = "ISO8859-1";
+
 
 $DATAINJECTIONLANG["deleteStep"][1] = "Confirmation de la suppression";
 $DATAINJECTIONLANG["deleteStep"][2] = "Attention si vous supprimez le modèle, les mappings et les informations complémentaires seront supprimés également.";

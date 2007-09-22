@@ -52,4 +52,7 @@ define ("NOT_IMPORTED",7);
 
 define ("INJECTION_ADD",0);
 define ("INJECTION_UPDATE",1);
+
+define ("ENCODING_UFT8",1);
+define ("ENCODING_ISO8859_1",0);
 ?>

@@ -30,13 +30,20 @@
 // Original Author of file: Walid Nouh (walid.nouh@atosorigin.com)
 // Purpose of file:
 // ----------------------------------------------------------------------
-function parseLine($fic,$data)
+function parseLine($fic,$data,$encoding=1)
 {
    	$csv = array();
    	$num = count($data);
    	for ($c=0; $c < $num; $c++)
-       	$csv[0][]=  addslashes($data[$c]);
-     
+   	{
+       	$tmp = addslashes($data[$c]);
+       	
+       	//If file is ISO8859-1 : encode the datas in utf8
+       	if ($encoding == ENCODING_ISO8859_1)
+       		$csv[0][]=utf8_encode(addslashes($data[$c]));
+       	else
+       		$csv[0][]=addslashes($data[$c]);
+   	}
     return $csv;	
 }
 ?>

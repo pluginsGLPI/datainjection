@@ -175,7 +175,7 @@ if($load)
 	    			$_SESSION["plugin_data_injection"]["file"] = basename($tmpfname);
 	    			
 	    			$file=getBackend($model->getModelType());
-					$file->initBackend(PLUGIN_DATA_INJECTION_UPLOAD_DIR.$_SESSION["plugin_data_injection"]["file"],$model->getDelimiter());
+					$file->initBackend(PLUGIN_DATA_INJECTION_UPLOAD_DIR.$_SESSION["plugin_data_injection"]["file"],$model->getDelimiter(),$model->getEncoding());
 					$file->read();
 					$file->deleteFile();
 					

@@ -36,10 +36,11 @@ class BackendCSV extends Backend{
     	$this->injectionDatas = new InjectionDatas;
     }
 
-	function initBackend($newfile,$delimiter)
+	function initBackend($newfile,$delimiter,$encoding)
 	{
     	$this->file = $newfile;
     	$this->delimiter = $delimiter;
+    	$this->encoding = $encoding;
 	}
 	function read()
 	{
@@ -47,7 +48,7 @@ class BackendCSV extends Backend{
 
 		while (($data = fgetcsv($fic, 3000, $this->delimiter)) !== FALSE)
 		{  
-			$line = parseLine($fic,$data);
+			$line = parseLine($fic,$data,$this->encoding);
 			//If line is not empty
 			if ($line[0][0] != null)
 				$this->injectionDatas->addToDatas($line);
@@ -112,7 +113,7 @@ class BackendCSV extends Backend{
 		
 		foreach ($model->getMappings() as $key => $mapping)
 		{	
-			if (!isset($header[$key]) || $header[$mapping->getRank()] != $mapping->getName())
+			if (!isset($header[$key]) || strtoupper($header[$mapping->getRank()]) != strtoupper($mapping->getName()))
 				$check = 2;
 		}	
 		return $check;

@@ -39,6 +39,7 @@ abstract class Backend {
 	private $file = "";
 	protected $injectionDatas;
 	private $delimiter;
+	private $encoding;
 	
 	/*
 	 * Constructor
