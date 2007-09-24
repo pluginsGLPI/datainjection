@@ -40,6 +40,7 @@ abstract class Backend {
 	protected $injectionDatas;
 	private $delimiter;
 	private $encoding;
+	private $errmsg;
 	
 	/*
 	 * Constructor
@@ -60,6 +61,20 @@ abstract class Backend {
 		}
 	}
 	
+	function getError($html=0)
+	{
+		return ($html ? nl2br($this->errmsg) : $this->errmsg);
+	}
+	function setError($msg)
+	{
+		if (!empty($this->errmsg))
+			$this->errmsg .= "\n";
+		$this->errmsg .= $msg;
+	}
+	function clearError()
+	{
+		$this->errmsg = "";
+	}
 	/*
 	 * Read datas from the input file
 	 */

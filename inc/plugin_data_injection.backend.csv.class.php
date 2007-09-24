@@ -34,6 +34,7 @@ class BackendCSV extends Backend{
 	
     function BackendCSV() {
     	$this->injectionDatas = new InjectionDatas;
+    	$this->errmsg = "";
     }
 
 	function initBackend($newfile,$delimiter,$encoding)
@@ -101,10 +102,13 @@ class BackendCSV extends Backend{
 	 */
 	function isFileCorrect($model)
 	{
+		$this->clearError();
 		$header = $this->getHeader($model->isHeaderPresent());
 
-		if (count($model->getMappings()) != count($header))
+		if (count($model->getMappings()) != count($header)) {
+			$this->setError($model->getMappings() ."!=" . count($header));			
 			return 1;
+		}
 		
 		if (!$model->isHeaderPresent())
 			return 0;
@@ -113,8 +117,14 @@ class BackendCSV extends Backend{
 		
 		foreach ($model->getMappings() as $key => $mapping)
 		{	
-			if (!isset($header[$key]) || strtoupper($header[$mapping->getRank()]) != strtoupper($mapping->getName()))
+			if (!isset($header[$key])) {
+				$this->setError($key);
 				$check = 2;
+			} 
+			else if (strtoupper(stripslashes($header[$mapping->getRank()])) != strtoupper($mapping->getName())) {
+				$this->setError(stripslashes($header[$mapping->getRank()]) ."!=". $mapping->getName());				
+				$check = 2;
+			}
 		}	
 		return $check;
 	}

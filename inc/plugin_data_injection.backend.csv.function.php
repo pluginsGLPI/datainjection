@@ -36,13 +36,19 @@ function parseLine($fic,$data,$encoding=1)
    	$num = count($data);
    	for ($c=0; $c < $num; $c++)
    	{
-       	$tmp = addslashes($data[$c]);
-       	
-       	//If file is ISO8859-1 : encode the datas in utf8
-       	if ($encoding == ENCODING_ISO8859_1)
-       		$csv[0][]=utf8_encode(addslashes($data[$c]));
-       	else
-       		$csv[0][]=addslashes($data[$c]);
+       	switch ($encoding)
+       	{
+	       	//If file is ISO8859-1 : encode the datas in utf8
+       		case ENCODING_ISO8859_1:
+       			$csv[0][]=utf8_encode(addslashes($data[$c]));
+       			break;
+       		case ENCODING_UFT8:
+       			$csv[0][]=addslashes($data[$c]);
+       			break;
+       		case ENCODING_AUTO:
+       			$csv[0][]=toUTF8(addslashes($data[$c]));
+       			break;				
+       	}
    	}
     return $csv;	
 }
