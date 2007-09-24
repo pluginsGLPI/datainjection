@@ -192,7 +192,7 @@ function deleteDir($fichier) {
 
 function plugin_data_injection_initSession()
 {
-	if (TableExists("glpi_plugin_data_injection_config"))
+	if (TableExists("glpi_plugin_data_injection_filetype"))
 	{
 		
 		$prof=new DataInjectionProfile();
