@@ -497,6 +497,7 @@ function filterFields($fields,$fields_from_db,$can_overwrite)
 
 function checkLocation ($location, $entity, $canadd)
 {
+	$location = trim($location);
 	$ID = getDropdownID($location);
 	if ($ID != -1)
 		return $ID;
@@ -506,24 +507,29 @@ function checkLocation ($location, $entity, $canadd)
 		$locations = explode('>',$location);
 		
 		foreach ($locations as $location)
-			$location_id = addLocation($location,$entity,$location_id);
+			$location_id = addLocation($location,$entity,$location_id,$canadd);
 			
 		return $location_id;	
 	}	
 }
 
-function addLocation($location,$entity,$parentid)
+function addLocation($location,$entity,$parentid,$canadd)
 {
 	$ID = getDropdownID($location);
 	if ($ID != -1)
 		return $ID;
 
-	$input["tablename"] = "glpi_dropdown_locations";
-	$input["value"] = trim($location);
-	$input["value2"] = $parentid;
-	$input["type"] = "under";
-	$input["comments"] = "";
-	$input["FK_entities"] = $entity;
-	return addDropdown($input);
+	if ($canadd)	
+	{
+		$input["tablename"] = "glpi_dropdown_locations";
+		$input["value"] = $location;
+		$input["value2"] = $parentid;
+		$input["type"] = "under";
+		$input["comments"] = "";
+		$input["FK_entities"] = $entity;
+		return addDropdown($input);
+	}
+	else
+		return '';	
 }
 ?>
