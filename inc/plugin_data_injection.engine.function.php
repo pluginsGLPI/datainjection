@@ -163,6 +163,8 @@ function getDropdownValue($mapping, $mapping_definition,$value,$entity,$canadd=0
 		//Value doesn't exists -> add the value in the dropdown table
 		switch ($mapping_definition["table"])
 		{
+			case "glpi_dropdown_locations":
+				return checkLocation($value,$entity,$rightToAdd);
 			default:
 			$input["tablename"] = $mapping_definition["table"];
 			$input["value"] = $value;
@@ -491,5 +493,37 @@ function filterFields($fields,$fields_from_db,$can_overwrite)
 			unset ($fields[$field]);
 
 	return $fields;
+}
+
+function checkLocation ($location, $entity, $canadd)
+{
+	$ID = getDropdownID($location);
+	if ($ID != -1)
+		return $ID;
+	else
+	{
+		$location_id = 0;
+		$locations = explode('>',$location);
+		
+		foreach ($locations as $location)
+			$location_id = addLocation($location,$entity,$location_id);
+			
+		return $location_id;	
+	}	
+}
+
+function addLocation($location,$entity,$parentid)
+{
+	$ID = getDropdownID($location);
+	if ($ID != -1)
+		return $ID;
+
+	$input["tablename"] = "glpi_dropdown_locations";
+	$input["value"] = trim($location);
+	$input["value2"] = $parentid;
+	$input["type"] = "under";
+	$input["comments"] = "";
+	$input["FK_entities"] = $entity;
+	return addDropdown($input);
 }
 ?>
