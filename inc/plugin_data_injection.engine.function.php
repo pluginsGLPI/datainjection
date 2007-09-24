@@ -507,7 +507,8 @@ function checkLocation ($location, $entity, $canadd)
 		$locations = explode('>',$location);
 		
 		foreach ($locations as $location)
-			$location_id = addLocation($location,$entity,$location_id,$canadd);
+			if ($location_id !== '')
+				$location_id = addLocation(trim($location),$entity,$location_id,$canadd);
 			
 		return $location_id;	
 	}	
