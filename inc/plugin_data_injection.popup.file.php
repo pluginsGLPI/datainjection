@@ -72,7 +72,7 @@ else
 echo "<table class='tab_cadre_fixe'><tr>";
 
 	foreach($header as $key => $value)
-		echo"<th style='height:40px'>".utf8_decode($value)."</th>";
+		echo"<th style='height:40px'>".stripslashes($value)."</th>";
 	echo "</tr>";
 	
 	

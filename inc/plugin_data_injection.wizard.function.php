@@ -458,7 +458,7 @@ function fileStep($target,$error)
 	/************************Select File***************************/
 	echo "<table class='fileStep_table'>";
 	echo "<tr>";
-	echo "<td>".$DATAINJECTIONLANG["fileStep"][3]."</td>";
+	echo "<td style='text-align: left'>".$DATAINJECTIONLANG["fileStep"][3]."</td>";
 	echo "</tr>";
 	echo "<tr>";
 	echo "<td><input type='file' name='file' /></td>";
