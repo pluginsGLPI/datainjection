@@ -60,7 +60,6 @@ function plugin_data_injection_Install() {
 	  `can_overwrite_if_not_empty` int(1) NOT NULL default '1',
 	  `public` int(1) NOT NULL default '1',
 	  `user_id` int(11) NOT NULL,
-	  `encoding` int(1) NOT NULL default '1',
 	  PRIMARY KEY  (`ID`)
 	) ENGINE=MyISAM;";
 	

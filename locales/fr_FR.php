@@ -91,10 +91,6 @@ $DATAINJECTIONLANG["modelStep"][16] = "Diffusion :";
 $DATAINJECTIONLANG["modelStep"][17] = "Public";
 $DATAINJECTIONLANG["modelStep"][18] = "Privée";
 $DATAINJECTIONLANG["modelStep"][19] = "Les options avancées sont par défaut configurées, vous pouvez tout de même les modifier si vous êtes un utilisateur confirmé.";
-$DATAINJECTIONLANG["modelStep"][20] = "Encodage :";
-$DATAINJECTIONLANG["modelStep"][21] = "UTF-8";
-$DATAINJECTIONLANG["modelStep"][22] = "ISO8859-1";
-
 
 $DATAINJECTIONLANG["deleteStep"][1] = "Confirmation de la suppression";
 $DATAINJECTIONLANG["deleteStep"][2] = "Attention si vous supprimez le modèle, les mappings et les informations complémentaires seront supprimés également.";
@@ -112,6 +108,10 @@ $DATAINJECTIONLANG["fileStep"][5] = "Le fichier n'a pas le bon format";
 $DATAINJECTIONLANG["fileStep"][6] = "Extension";
 $DATAINJECTIONLANG["fileStep"][7] = "requise";
 $DATAINJECTIONLANG["fileStep"][8] = "Impossible de copier le fichier dans";
+$DATAINJECTIONLANG["fileStep"][9] = "Encodage du fichier :";
+$DATAINJECTIONLANG["fileStep"][10] = "Détection automatique";
+$DATAINJECTIONLANG["fileStep"][11] = "UTF-8";
+$DATAINJECTIONLANG["fileStep"][12] = "ISO8859-1";
 
 $DATAINJECTIONLANG["mappingStep"][1] = "colonnes à mapper ont été trouvées";
 $DATAINJECTIONLANG["mappingStep"][2] = "Entête du fichier";

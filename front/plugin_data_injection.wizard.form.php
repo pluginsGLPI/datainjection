@@ -175,7 +175,7 @@ if($load)
 	    			$_SESSION["plugin_data_injection"]["file"] = basename($tmpfname);
 	    			
 	    			$file=getBackend($model->getModelType());
-					$file->initBackend(PLUGIN_DATA_INJECTION_UPLOAD_DIR.$_SESSION["plugin_data_injection"]["file"],$model->getDelimiter(),$model->getEncoding());
+					$file->initBackend(PLUGIN_DATA_INJECTION_UPLOAD_DIR.$_SESSION["plugin_data_injection"]["file"],$model->getDelimiter(),$_POST["dropdown_encoding"]);
 					$file->read();
 					$file->deleteFile();
 					
@@ -190,6 +190,7 @@ if($load)
 		    			$_SESSION["plugin_data_injection"]["load"] = "next_fileStep";
 						$_SESSION["plugin_data_injection"]["backend"] = serialize($file);
 	    				$_SESSION["plugin_data_injection"]["file_name"] = $name_file;
+	    				$_SESSION["plugin_data_injection"]["encoding"] = $_POST["dropdown_encoding"];
 	    				
 	    				if($_SESSION["plugin_data_injection"]["choice"]==1)
 	    					$_SESSION["plugin_data_injection"]["remember"] = 0;

@@ -40,7 +40,7 @@ function choiceStep($target)
 {
 	global $DATAINJECTIONLANG;
 	
-	$models = getAllModelsForChoiceStep($_SESSION["glpiID"],$_SESSION["glpiactive_entity"]);
+	$models = getAllModels($_SESSION["glpiID"]);
 	
 	$nbmodel = count($models);
 	
@@ -321,52 +321,24 @@ function modelStep($target)
 	echo "</td></tr>";
 	/**************************************************************/
 	
-	/***************Diffusion*********************/
+	/************************Diffusion*****************************/
 	echo "<tr><td>".$DATAINJECTIONLANG["modelStep"][16]."</td><td>";
 	echo "<select name='dropdown_public'>";
 	
 	if(isset($model))
 		{
 		$public = $model->getPublic();
-		if($public)
-			{
-			echo "<option value='1' selected>".$DATAINJECTIONLANG["modelStep"][17]."</option>";
-			echo "<option value='0'>".$DATAINJECTIONLANG["modelStep"][18]."</option>";
-			}
-		else
-			{
-			echo "<option value='1'>".$DATAINJECTIONLANG["modelStep"][17]."</option>";
-			echo "<option value='0' selected>".$DATAINJECTIONLANG["modelStep"][18]."</option>";
-			}
+		echo "<option value='".MODEL_PUBLIC."' ".($public?"selected":'').">".$DATAINJECTIONLANG["modelStep"][17]."</option>";
+		echo "<option value='".MODEL_PRIVATE."' ".(!$public?"selected":'').">".$DATAINJECTIONLANG["modelStep"][18]."</option>";
 		}
 	else
 		{
-		echo "<option value='1'>".$DATAINJECTIONLANG["modelStep"][17]."</option>";
-		echo "<option value='0'>".$DATAINJECTIONLANG["modelStep"][18]."</option>";	
+		echo "<option value='".MODEL_PUBLIC."'>".$DATAINJECTIONLANG["modelStep"][17]."</option>";
+		echo "<option value='".MODEL_PRIVATE."'>".$DATAINJECTIONLANG["modelStep"][18]."</option>";	
 		}
 		
 	echo "</select>";
 	echo "</td></tr>";
-
-	/***************File encoding*********************/
-	echo "<tr><td>".$DATAINJECTIONLANG["modelStep"][20]."</td><td>";
-	echo "<select name='dropdown_encoding'>";
-	
-	if(isset($model))
-		{
-		$encoding = $model->getEncoding();
-		echo "<option value='1' ".($encoding?"selected":'').">".$DATAINJECTIONLANG["modelStep"][21]."</option>";
-		echo "<option value='0' ".(!$encoding?"selected":'').">".$DATAINJECTIONLANG["modelStep"][22]."</option>";
-		}
-	else
-		{
-		echo "<option value='1'>".$DATAINJECTIONLANG["modelStep"][21]."</option>";
-		echo "<option value='0'>".$DATAINJECTIONLANG["modelStep"][22]."</option>";	
-		}
-		
-	echo "</select>";
-	echo "</td></tr>";
-
 	/**************************************************************/
 	
 	echo "</table>";
@@ -491,6 +463,21 @@ function fileStep($target,$error)
 	echo "<tr>";
 	echo "<td><input type='file' name='file' /></td>";
 	echo "</tr>";
+	/**************************************************************/
+	
+	/***********************File encoding**************************/
+	echo "<tr style='height:60px' valign='bottom'>";
+	echo "<td>".$DATAINJECTIONLANG["fileStep"][9]."</td>";
+	echo "</tr>";
+	echo "<tr><td>";
+	
+	echo "<select name='dropdown_encoding'>";
+	echo "<option value='".ENCODING_AUTO."'>".$DATAINJECTIONLANG["fileStep"][10]."</option>";
+	echo "<option value='".ENCODING_UFT8."'>".$DATAINJECTIONLANG["fileStep"][11]."</option>";
+	echo "<option value='".ENCODING_ISO8859_1."'>".$DATAINJECTIONLANG["fileStep"][12]."</option>";	
+	echo "</select>";
+	
+	echo "</td></tr>";
 	echo "</table>";
 	/**************************************************************/
 	

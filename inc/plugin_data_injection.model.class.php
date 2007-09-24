@@ -234,11 +234,6 @@ class DataInjectionModel extends CommonDBTM {
 		return $this->fields["user_id"];
 	}
 	
-	function getEncoding()
-	{
-		return $this->fields["encoding"];
-	}
-	
 	//---- Save -----//
 	function setModelType($type)
 	{
@@ -309,11 +304,6 @@ class DataInjectionModel extends CommonDBTM {
 	{
 		$this->fields["public"] = $public;
 	}
-
-	function setEncoding($encoding)
-	{
-		$this->fields["encoding"] = $encoding;
-	}
 		
 	function setUserID($user)
 	{
@@ -346,10 +336,6 @@ class DataInjectionModel extends CommonDBTM {
 		
 		if(isset($fields["dropdown_public"]))
 			$this->setPublic($fields["dropdown_public"]);
-
-		if(isset($fields["dropdown_encoding"]))
-			$this->setEncoding($fields["dropdown_encoding"]);
-
 	}
 
 }
