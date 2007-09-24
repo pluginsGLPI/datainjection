@@ -38,13 +38,6 @@ if (!defined('GLPI_ROOT')){
 	
 function plugin_data_injection_Install() {
 	$DB = new DB;
-			
-	$query="CREATE TABLE `glpi_plugin_data_injection_config` (
-  		`ID` int(11) NOT NULL,
-  		PRIMARY KEY  (`ID`)
-	) ENGINE=MyISAM;";
-			
-	$DB->query($query) or die($DB->error());
 	
 	$query="CREATE TABLE IF NOT EXISTS `glpi_plugin_data_injection_models` (
 	  `ID` int(11) NOT NULL auto_increment,
