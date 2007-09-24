@@ -749,7 +749,7 @@ function infoStep($target)
 	echo "<tr style='text-align:center'>";
 	echo "<th style='width:150px;'>".$DATAINJECTIONLANG["mappingStep"][3]."</th>";
 	echo "<th style='width:150px;'>".$DATAINJECTIONLANG["mappingStep"][4]."</th>";
-	echo "<th >".$DATAINJECTIONLANG["mappingStep"][5]."</th>";
+	echo "<th >".$DATAINJECTIONLANG["infoStep"][5]."</th>";
 	echo "</tr>";
 	/**************************************************************/
 	

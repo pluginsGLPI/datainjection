@@ -74,7 +74,7 @@ $DATAINJECTIONLANG["choiceStep"][11] = "Pour la modification, la suppression et 
 
 $DATAINJECTIONLANG["modelStep"][1] = "Informations sur le type fichier";
 $DATAINJECTIONLANG["modelStep"][2] = "Modification du modèle";
-$DATAINJECTIONLANG["modelStep"][3] = "Les options de fichier dépendent du type de fichier sélectionné dans la partie informations principales.";
+$DATAINJECTIONLANG["modelStep"][3] = "Les options dépendent du type de fichier sélectionné.";
 $DATAINJECTIONLANG["modelStep"][4] = "Type de données à insérer :";
 $DATAINJECTIONLANG["modelStep"][5] = "Type de fichier :";
 $DATAINJECTIONLANG["modelStep"][6] = "Création des lignes :";
@@ -90,7 +90,7 @@ $DATAINJECTIONLANG["modelStep"][15] = "Option avancées";
 $DATAINJECTIONLANG["modelStep"][16] = "Diffusion :";
 $DATAINJECTIONLANG["modelStep"][17] = "Public";
 $DATAINJECTIONLANG["modelStep"][18] = "Privée";
-$DATAINJECTIONLANG["modelStep"][19] = "Les options avancées sont par défaut configurées, vous pouvez tout de même les modifier si vous êtes un utilisateur confirmé.";
+$DATAINJECTIONLANG["modelStep"][19] = "Les options avancées permettent un contrôle plus fin de l'import. Elles ne doivent être modifiées que par des utilisateurs expérimentés.";
 
 $DATAINJECTIONLANG["deleteStep"][1] = "Confirmation de la suppression";
 $DATAINJECTIONLANG["deleteStep"][2] = "Attention si vous supprimez le modèle, les mappings et les informations complémentaires seront supprimés également.";
@@ -113,22 +113,23 @@ $DATAINJECTIONLANG["fileStep"][10] = "Détection automatique";
 $DATAINJECTIONLANG["fileStep"][11] = "UTF-8";
 $DATAINJECTIONLANG["fileStep"][12] = "ISO8859-1";
 
-$DATAINJECTIONLANG["mappingStep"][1] = "colonnes à mapper ont été trouvées";
+$DATAINJECTIONLANG["mappingStep"][1] = "colonnes trouvées";
 $DATAINJECTIONLANG["mappingStep"][2] = "Entête du fichier";
 $DATAINJECTIONLANG["mappingStep"][3] = "Tables";
 $DATAINJECTIONLANG["mappingStep"][4] = "Champs";
-$DATAINJECTIONLANG["mappingStep"][5] = "Obligatoire";
+$DATAINJECTIONLANG["mappingStep"][5] = "Champs de liaison";
 $DATAINJECTIONLANG["mappingStep"][6] = "-------Choisir une table-------";
 $DATAINJECTIONLANG["mappingStep"][7] = "-------Choisir un champ-------";
 $DATAINJECTIONLANG["mappingStep"][8] = "Au moins un mapping doit être obligatoire";
-$DATAINJECTIONLANG["mappingStep"][9] = "Dans cette étape vous allez réaliser vos mappings entre le fichier et la base de données.";
-$DATAINJECTIONLANG["mappingStep"][10] = "La colonne entête correspond aux entetes de votre fichier";
-$DATAINJECTIONLANG["mappingStep"][11] = "La notion obligatoire correspond à un champ qui devra absolument être connue dans le fichier, vous devez avoir au moins un mapping obligatoire avant de continuer l'assistant";
+$DATAINJECTIONLANG["mappingStep"][9] = "Dans cette étape vous allez mettre en relation les champs du fichier et de la base de données.";
+$DATAINJECTIONLANG["mappingStep"][10] = "La colonne entête correspond aux entêtes du fichier";
+$DATAINJECTIONLANG["mappingStep"][11] = "Au moins un champs de liaison doit être renseigné : il permet de rechercher si les données à insérer existent déjà en base";
 
 $DATAINJECTIONLANG["infoStep"][1] = "Informations complémentaires";
 $DATAINJECTIONLANG["infoStep"][2] = "Modification des informations complémentaires";
-$DATAINJECTIONLANG["infoStep"][3] = "Dans cette étape vous pouvez ajouter des informations qui n'étaient pas présente dans le fichier.";
-$DATAINJECTIONLANG["infoStep"][4] = "Vous devrez ensuite lors de l'utilisation du modèle rentrer les informations à la main.";
+$DATAINJECTIONLANG["infoStep"][3] = "Vous pouvez définir des données qui devront être saisies manuellement au moment de l'import.";
+$DATAINJECTIONLANG["infoStep"][4] = "Celles-ci seront communes à tous les objets importés.";
+$DATAINJECTIONLANG["infoStep"][5] = "Information obligatoire";
 
 $DATAINJECTIONLANG["saveStep"][1] = "Enregistrement du modèle";
 $DATAINJECTIONLANG["saveStep"][2] = "Voulez-vous enregistrer le modèle ?";
@@ -144,7 +145,7 @@ $DATAINJECTIONLANG["saveStep"][11] = "Le nombre de colonnes du fichier n'est pas
 $DATAINJECTIONLANG["saveStep"][12] = "Au moins une colonne est incorrecte";
 $DATAINJECTIONLANG["saveStep"][13] = "Enregistrer le modèle afin qu'il puisse être utilisé ultérieurement.";
 $DATAINJECTIONLANG["saveStep"][14] = "Il vous suffira de le sélectionner dans le menu déroulant de la première étape lors de la demande du choix.";
-$DATAINJECTIONLANG["saveStep"][15] = "Vous pouvez écrire un petit commentaire afin de vous souvenir plus tard à quoi correspond votre modèle.";
+$DATAINJECTIONLANG["saveStep"][15] = "Vous pouvez écrire un commentaire pour ajouter des informations sur la nature du modèle.";
 
 $DATAINJECTIONLANG["fillInfoStep"][1] = "Attention ! Vous êtes sur le point d'importer des données dans GLPI. Etes-vous sûr de vouloir importer ?";
 $DATAINJECTIONLANG["fillInfoStep"][2] = "Remplissez les champs pour que les informations soient insérées dans GLPI lors de l'importation.";
