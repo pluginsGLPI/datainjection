@@ -472,6 +472,11 @@ $DATA_INJECTION_MAPPING[PRINTER_TYPE]['tech_num']['linkfield']='tech_num';
 $DATA_INJECTION_MAPPING[PRINTER_TYPE]['tech_num']['type']='text';
 $DATA_INJECTION_MAPPING[PRINTER_TYPE]['tech_num']['table_type']='dropdown';
 
+$DATA_INJECTION_MAPPING[PRINTER_TYPE]['initial_pages']['table']='glpi_printers';
+$DATA_INJECTION_MAPPING[PRINTER_TYPE]['initial_pages']['field']='initial_pages';
+$DATA_INJECTION_MAPPING[PRINTER_TYPE]['initial_pages']['name']=$LANG["printers"][30];
+$DATA_INJECTION_MAPPING[PRINTER_TYPE]['initial_pages']['type']='integer';
+
 // ----------------------------------------------------------------------
 //PHONE MAPPING
 // ----------------------------------------------------------------------
