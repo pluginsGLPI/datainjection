@@ -632,16 +632,9 @@ $DATA_INJECTION_MAPPING[INFOCOM_TYPE]['warranty_value']['field']='warranty_value
 $DATA_INJECTION_MAPPING[INFOCOM_TYPE]['warranty_value']['name']=$LANG["financial"][78];
 $DATA_INJECTION_MAPPING[INFOCOM_TYPE]['warranty_value']['type']='text';
 
-$DATA_INJECTION_MAPPING[INFOCOM_TYPE]['state']['table']='glpi_dropdown_state';
-$DATA_INJECTION_MAPPING[INFOCOM_TYPE]['state']['field']='name';
-$DATA_INJECTION_MAPPING[INFOCOM_TYPE]['state']['name']=$LANG["joblist"][0];
-$DATA_INJECTION_MAPPING[INFOCOM_TYPE]['state']['linkfield']='state';
-$DATA_INJECTION_MAPPING[INFOCOM_TYPE]['state']['table_type']='dropdown';
-$DATA_INJECTION_MAPPING[INFOCOM_TYPE]['state']['type']='text';
-
 $DATA_INJECTION_MAPPING[INFOCOM_TYPE]['manufacturer']['table']='glpi_dropdown_manufacturer';
 $DATA_INJECTION_MAPPING[INFOCOM_TYPE]['manufacturer']['field']='name';
-$DATA_INJECTION_MAPPING[INFOCOM_TYPE]['manufacturer']['name']=$LANG["common"][5];
+$DATA_INJECTION_MAPPING[INFOCOM_TYPE]['manufacturer']['name']=$LANG["financial"][26];
 $DATA_INJECTION_MAPPING[INFOCOM_TYPE]['manufacturer']['type']='text';
 $DATA_INJECTION_MAPPING[INFOCOM_TYPE]['manufacturer']['linkfield']='FK_enterprise';
 $DATA_INJECTION_MAPPING[INFOCOM_TYPE]['manufacturer']['table_type']='dropdown';
