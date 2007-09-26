@@ -370,7 +370,7 @@ $DATA_INJECTION_MAPPING[PRINTER_TYPE]['contact']['name']=$LANG["common"][18];
 $DATA_INJECTION_MAPPING[PRINTER_TYPE]['contact']['type']='text';
 
 $DATA_INJECTION_MAPPING[PRINTER_TYPE]['contactnum']['table']='glpi_printers';
-$DATA_INJECTION_MAPPING[PRINTER_TYPE]['contactnum']['field']='name';
+$DATA_INJECTION_MAPPING[PRINTER_TYPE]['contactnum']['field']='contactnum';
 $DATA_INJECTION_MAPPING[PRINTER_TYPE]['contactnum']['name']=$LANG["common"][21];
 $DATA_INJECTION_MAPPING[PRINTER_TYPE]['contactnum']['type']='text';
 
