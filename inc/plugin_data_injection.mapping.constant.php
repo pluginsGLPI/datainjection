@@ -122,7 +122,7 @@ $DATA_INJECTION_MAPPING[COMPUTER_TYPE]['contact']['name']=$LANG["common"][18];
 $DATA_INJECTION_MAPPING[COMPUTER_TYPE]['contact']['type']='text';
 
 $DATA_INJECTION_MAPPING[COMPUTER_TYPE]['contactnum']['table']='glpi_computers';
-$DATA_INJECTION_MAPPING[COMPUTER_TYPE]['contactnum']['field']='name';
+$DATA_INJECTION_MAPPING[COMPUTER_TYPE]['contactnum']['field']='contact_num';
 $DATA_INJECTION_MAPPING[COMPUTER_TYPE]['contactnum']['name']=$LANG["common"][21];
 $DATA_INJECTION_MAPPING[COMPUTER_TYPE]['contactnum']['type']='text';
 
@@ -239,7 +239,7 @@ $DATA_INJECTION_MAPPING[MONITOR_TYPE]['contact']['name']=$LANG["common"][18];
 $DATA_INJECTION_MAPPING[MONITOR_TYPE]['contact']['type']='text';
 
 $DATA_INJECTION_MAPPING[MONITOR_TYPE]['contactnum']['table']='glpi_monitors';
-$DATA_INJECTION_MAPPING[MONITOR_TYPE]['contactnum']['field']='name';
+$DATA_INJECTION_MAPPING[MONITOR_TYPE]['contactnum']['field']='contact_num';
 $DATA_INJECTION_MAPPING[MONITOR_TYPE]['contactnum']['name']=$LANG["common"][21];
 $DATA_INJECTION_MAPPING[MONITOR_TYPE]['contactnum']['type']='text';
 
@@ -370,7 +370,7 @@ $DATA_INJECTION_MAPPING[PRINTER_TYPE]['contact']['name']=$LANG["common"][18];
 $DATA_INJECTION_MAPPING[PRINTER_TYPE]['contact']['type']='text';
 
 $DATA_INJECTION_MAPPING[PRINTER_TYPE]['contactnum']['table']='glpi_printers';
-$DATA_INJECTION_MAPPING[PRINTER_TYPE]['contactnum']['field']='contactnum';
+$DATA_INJECTION_MAPPING[PRINTER_TYPE]['contactnum']['field']='contact_num';
 $DATA_INJECTION_MAPPING[PRINTER_TYPE]['contactnum']['name']=$LANG["common"][21];
 $DATA_INJECTION_MAPPING[PRINTER_TYPE]['contactnum']['type']='text';
 
@@ -509,7 +509,7 @@ $DATA_INJECTION_MAPPING[PHONE_TYPE]['contact']['name']=$LANG["common"][18];
 $DATA_INJECTION_MAPPING[PHONE_TYPE]['contact']['type']='text';
 
 $DATA_INJECTION_MAPPING[PHONE_TYPE]['contactnum']['table']='glpi_phones';
-$DATA_INJECTION_MAPPING[PHONE_TYPE]['contactnum']['field']='name';
+$DATA_INJECTION_MAPPING[PHONE_TYPE]['contactnum']['field']='contact_num';
 $DATA_INJECTION_MAPPING[PHONE_TYPE]['contactnum']['name']=$LANG["common"][21];
 $DATA_INJECTION_MAPPING[PHONE_TYPE]['contactnum']['type']='text';
 
@@ -733,7 +733,7 @@ $DATA_INJECTION_MAPPING[NETWORKING_TYPE]['contact']['name']=$LANG["common"][18];
 $DATA_INJECTION_MAPPING[NETWORKING_TYPE]['contact']['type']='text';
 
 $DATA_INJECTION_MAPPING[NETWORKING_TYPE]['contactnum']['table']='glpi_networking';
-$DATA_INJECTION_MAPPING[NETWORKING_TYPE]['contactnum']['field']='name';
+$DATA_INJECTION_MAPPING[NETWORKING_TYPE]['contactnum']['field']='contact_num';
 $DATA_INJECTION_MAPPING[NETWORKING_TYPE]['contactnum']['name']=$LANG["common"][21];
 $DATA_INJECTION_MAPPING[NETWORKING_TYPE]['contactnum']['type']='text';
 
@@ -1078,7 +1078,7 @@ $DATA_INJECTION_MAPPING[PERIPHERAL_TYPE]['contact']['name']=$LANG["common"][18];
 $DATA_INJECTION_MAPPING[PERIPHERAL_TYPE]['contact']['type']='text';
 
 $DATA_INJECTION_MAPPING[PERIPHERAL_TYPE]['contactnum']['table']='glpi_peripherals';
-$DATA_INJECTION_MAPPING[PERIPHERAL_TYPE]['contactnum']['field']='name';
+$DATA_INJECTION_MAPPING[PERIPHERAL_TYPE]['contactnum']['field']='contact_num';
 $DATA_INJECTION_MAPPING[PERIPHERAL_TYPE]['contactnum']['name']=$LANG["common"][21];
 $DATA_INJECTION_MAPPING[PERIPHERAL_TYPE]['contactnum']['type']='text';
 

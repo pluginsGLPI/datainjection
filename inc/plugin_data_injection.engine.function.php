@@ -166,23 +166,22 @@ function getDropdownValue($mapping, $mapping_definition,$value,$entity,$canadd=0
 			case "glpi_dropdown_locations":
 				return checkLocation($value,$entity,$rightToAdd);
 			default:
-			$input["tablename"] = $mapping_definition["table"];
-			$input["value"] = $value;
-			$input["value2"] = "";
-			$input["type"] = "";
-			$input["comments"] = "";
-			$input["FK_entities"] = $entity;
-			break;
+				$input["tablename"] = $mapping_definition["table"];
+				$input["value"] = $value;
+				$input["value2"] = "";
+				$input["type"] = "";
+				$input["comments"] = "";
+				$input["FK_entities"] = $entity;
+				break;
 		}
 		
 		$ID = getDropdownID($input);
 		if ($ID != -1)
 			return $ID;
+		else if ($rightToAdd)	
+			return addDropdown($input);
 		else
-			if ($rightToAdd)	
-				return addDropdown($input);
-			else
-				return '';	
+			return '';	
 }
 
 /*
@@ -497,39 +496,32 @@ function filterFields($fields,$fields_from_db,$can_overwrite)
 
 function checkLocation ($location, $entity, $canadd)
 {
-	$location = trim($location);
-	$ID = getDropdownID($location);
-	if ($ID != -1)
-		return $ID;
-	else
-	{
-		$location_id = 0;
-		$locations = explode('>',$location);
+	$location_id = 0;
+	$locations = explode('>',$location);
+	
+	foreach ($locations as $location)
+		if ($location_id !== '')
+			$location_id = addLocation(trim($location),$entity,$location_id,$canadd);
 		
-		foreach ($locations as $location)
-			if ($location_id !== '')
-				$location_id = addLocation(trim($location),$entity,$location_id,$canadd);
-			
-		return $location_id;	
-	}	
+	return $location_id;	
 }
 
 function addLocation($location,$entity,$parentid,$canadd)
 {
-	$ID = getDropdownID($location);
+	$input["tablename"] = "glpi_dropdown_locations";
+	$input["value"] = $location;
+	$input["value2"] = $parentid;
+	$input["type"] = "under";
+	$input["comments"] = "";
+	$input["FK_entities"] = $entity;
+	
+	$ID = getDropdownID($input);
+	
 	if ($ID != -1)
 		return $ID;
 
 	if ($canadd)	
-	{
-		$input["tablename"] = "glpi_dropdown_locations";
-		$input["value"] = $location;
-		$input["value2"] = $parentid;
-		$input["type"] = "under";
-		$input["comments"] = "";
-		$input["FK_entities"] = $entity;
 		return addDropdown($input);
-	}
 	else
 		return '';	
 }
