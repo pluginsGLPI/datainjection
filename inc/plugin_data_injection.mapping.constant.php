@@ -830,11 +830,6 @@ $DATA_INJECTION_MAPPING[NETWORKING_TYPE]['tech_num']['linkfield']='tech_num';
 $DATA_INJECTION_MAPPING[NETWORKING_TYPE]['tech_num']['type']='text';
 $DATA_INJECTION_MAPPING[NETWORKING_TYPE]['tech_num']['table_type']='dropdown';
 
-$DATA_INJECTION_MAPPING[NETWORKING_TYPE]['ticket_tco']['table']='glpi_networking';
-$DATA_INJECTION_MAPPING[NETWORKING_TYPE]['ticket_tco']['field']='ticket_tco';
-$DATA_INJECTION_MAPPING[NETWORKING_TYPE]['ticket_tco']['name']=$LANG["financial"][90];
-$DATA_INJECTION_MAPPING[NETWORKING_TYPE]['ticket_tco']['type']='text';
-
 // ----------------------------------------------------------------------
 //USER MAPPING
 // ----------------------------------------------------------------------
@@ -927,7 +922,7 @@ $DATA_INJECTION_MAPPING[GROUP_TYPE]['ldap_group_dn']['name']=$LANG["setup"][261]
 $DATA_INJECTION_MAPPING[GROUP_TYPE]['ldap_group_dn']['type']='text';
 
 // ----------------------------------------------------------------------
-//GROUP MAPPING
+//CONTRACT MAPPING
 // ----------------------------------------------------------------------
 $DATA_INJECTION_MAPPING[CONTRACT_TYPE]['name']['table']='glpi_contracts';
 $DATA_INJECTION_MAPPING[CONTRACT_TYPE]['name']['field']='name';
