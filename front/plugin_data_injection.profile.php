@@ -66,8 +66,9 @@ else  if (isset($_POST["update"])){
 
 echo "<div align='center'><form method='post' action=\"".$CFG_GLPI["root_doc"]."/plugins/data_injection/front/plugin_data_injection.profile.php\">";
 echo "<table class='tab_cadre' cellpadding='5'><tr><th colspan='2'>";
-echo $LANG["profiles"][1].": </th></tr><tr class='tab_bg_1'><td>";
+echo $DATAINJECTIONLANG["setup"][1]."<br />" . $DATAINJECTIONLANG["setup"][9] . "</th></tr>\n";
 
+echo "<tr class='tab_bg_1'><td>" . $LANG["profiles"][22] . "&nbsp;: ";
 $query="SELECT ID, name FROM glpi_profiles ORDER BY name";
 $result=$DB->query($query);
 
