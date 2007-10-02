@@ -191,7 +191,7 @@ $DATA_INJECTION_INFOS[MONITOR_TYPE]['FK_glpi_enterprise']['name']=$LANG["common"
 $DATA_INJECTION_INFOS[MONITOR_TYPE]['FK_glpi_enterprise']['linkfield']='FK_enterprise';
 $DATA_INJECTION_INFOS[MONITOR_TYPE]['FK_glpi_enterprise']['input_type']='dropdown';
 
-$DATA_INJECTION_INFOS[MONITOR_TYPE]['type']['table']='glpi_type_computers';
+$DATA_INJECTION_INFOS[MONITOR_TYPE]['type']['table']='glpi_type_monitors';
 $DATA_INJECTION_INFOS[MONITOR_TYPE]['type']['field']='name';
 $DATA_INJECTION_INFOS[MONITOR_TYPE]['type']['name']=$LANG["common"][17];
 $DATA_INJECTION_INFOS[MONITOR_TYPE]['type']['linkfield']='type';
@@ -215,6 +215,10 @@ $DATA_INJECTION_INFOS[MONITOR_TYPE]['tech_num']['name']=$LANG["common"][10];
 $DATA_INJECTION_INFOS[MONITOR_TYPE]['tech_num']['linkfield']='tech_num';
 $DATA_INJECTION_INFOS[MONITOR_TYPE]['tech_num']['input_type']='dropdown';
 
+$DATA_INJECTION_INFOS[MONITOR_TYPE]['comments']['table']='glpi_monitors';
+$DATA_INJECTION_INFOS[MONITOR_TYPE]['comments']['field']='comments';
+$DATA_INJECTION_INFOS[MONITOR_TYPE]['comments']['name']=$LANG["common"][25];
+
 // ----------------------------------------------------------------------
 //PRINTER INFOS
 // ----------------------------------------------------------------------
@@ -236,7 +240,7 @@ $DATA_INJECTION_INFOS[PRINTER_TYPE]['FK_glpi_enterprise']['name']=$LANG["common"
 $DATA_INJECTION_INFOS[PRINTER_TYPE]['FK_glpi_enterprise']['linkfield']='FK_enterprise';
 $DATA_INJECTION_INFOS[PRINTER_TYPE]['FK_glpi_enterprise']['input_type']='dropdown';
 
-$DATA_INJECTION_INFOS[PRINTER_TYPE]['type']['table']='glpi_type_computers';
+$DATA_INJECTION_INFOS[PRINTER_TYPE]['type']['table']='glpi_type_printers';
 $DATA_INJECTION_INFOS[PRINTER_TYPE]['type']['field']='name';
 $DATA_INJECTION_INFOS[PRINTER_TYPE]['type']['name']=$LANG["common"][17];
 $DATA_INJECTION_INFOS[PRINTER_TYPE]['type']['linkfield']='type';
@@ -260,6 +264,10 @@ $DATA_INJECTION_INFOS[PRINTER_TYPE]['tech_num']['name']=$LANG["common"][10];
 $DATA_INJECTION_INFOS[PRINTER_TYPE]['tech_num']['linkfield']='tech_num';
 $DATA_INJECTION_INFOS[PRINTER_TYPE]['tech_num']['input_type']='dropdown';
 
+$DATA_INJECTION_INFOS[PRINTER_TYPE]['comments']['table']='glpi_printers';
+$DATA_INJECTION_INFOS[PRINTER_TYPE]['comments']['field']='comments';
+$DATA_INJECTION_INFOS[PRINTER_TYPE]['comments']['name']=$LANG["common"][25];
+
 // ----------------------------------------------------------------------
 //PHONE INFOS
 // ----------------------------------------------------------------------
@@ -281,7 +289,7 @@ $DATA_INJECTION_INFOS[PHONE_TYPE]['FK_glpi_enterprise']['name']=$LANG["common"][
 $DATA_INJECTION_INFOS[PHONE_TYPE]['FK_glpi_enterprise']['linkfield']='FK_enterprise';
 $DATA_INJECTION_INFOS[PHONE_TYPE]['FK_glpi_enterprise']['input_type']='dropdown';
 
-$DATA_INJECTION_INFOS[PHONE_TYPE]['type']['table']='glpi_type_computers';
+$DATA_INJECTION_INFOS[PHONE_TYPE]['type']['table']='glpi_type_phones';
 $DATA_INJECTION_INFOS[PHONE_TYPE]['type']['field']='name';
 $DATA_INJECTION_INFOS[PHONE_TYPE]['type']['name']=$LANG["common"][17];
 $DATA_INJECTION_INFOS[PHONE_TYPE]['type']['linkfield']='type';
@@ -305,6 +313,10 @@ $DATA_INJECTION_INFOS[PHONE_TYPE]['tech_num']['name']=$LANG["common"][10];
 $DATA_INJECTION_INFOS[PHONE_TYPE]['tech_num']['linkfield']='tech_num';
 $DATA_INJECTION_INFOS[PHONE_TYPE]['tech_num']['input_type']='dropdown';
 
+$DATA_INJECTION_INFOS[PHONE_TYPE]['comments']['table']='glpi_phones';
+$DATA_INJECTION_INFOS[PHONE_TYPE]['comments']['field']='comments';
+$DATA_INJECTION_INFOS[PHONE_TYPE]['comments']['name']=$LANG["common"][25];
+
 // ----------------------------------------------------------------------
 //PERIPHERAL INFOS
 // ----------------------------------------------------------------------
@@ -326,7 +338,7 @@ $DATA_INJECTION_INFOS[PERIPHERAL_TYPE]['FK_glpi_enterprise']['name']=$LANG["comm
 $DATA_INJECTION_INFOS[PERIPHERAL_TYPE]['FK_glpi_enterprise']['linkfield']='FK_enterprise';
 $DATA_INJECTION_INFOS[PERIPHERAL_TYPE]['FK_glpi_enterprise']['input_type']='dropdown';
 
-$DATA_INJECTION_INFOS[PERIPHERAL_TYPE]['type']['table']='glpi_type_computers';
+$DATA_INJECTION_INFOS[PERIPHERAL_TYPE]['type']['table']='glpi_type_peripherals';
 $DATA_INJECTION_INFOS[PERIPHERAL_TYPE]['type']['field']='name';
 $DATA_INJECTION_INFOS[PERIPHERAL_TYPE]['type']['name']=$LANG["common"][17];
 $DATA_INJECTION_INFOS[PERIPHERAL_TYPE]['type']['linkfield']='type';
@@ -350,6 +362,10 @@ $DATA_INJECTION_INFOS[PERIPHERAL_TYPE]['tech_num']['name']=$LANG["common"][10];
 $DATA_INJECTION_INFOS[PERIPHERAL_TYPE]['tech_num']['linkfield']='tech_num';
 $DATA_INJECTION_INFOS[PERIPHERAL_TYPE]['tech_num']['input_type']='dropdown';
 
+$DATA_INJECTION_INFOS[PERIPHERAL_TYPE]['comments']['table']='glpi_peripherals';
+$DATA_INJECTION_INFOS[PERIPHERAL_TYPE]['comments']['field']='comments';
+$DATA_INJECTION_INFOS[PERIPHERAL_TYPE]['comments']['name']=$LANG["common"][25];
+
 // ----------------------------------------------------------------------
 //NETWORKING INFOS
 // ----------------------------------------------------------------------
@@ -371,7 +387,7 @@ $DATA_INJECTION_INFOS[NETWORKING_TYPE]['FK_glpi_enterprise']['name']=$LANG["comm
 $DATA_INJECTION_INFOS[NETWORKING_TYPE]['FK_glpi_enterprise']['linkfield']='FK_enterprise';
 $DATA_INJECTION_INFOS[NETWORKING_TYPE]['FK_glpi_enterprise']['input_type']='dropdown';
 
-$DATA_INJECTION_INFOS[NETWORKING_TYPE]['type']['table']='glpi_type_computers';
+$DATA_INJECTION_INFOS[NETWORKING_TYPE]['type']['table']='glpi_type_networking';
 $DATA_INJECTION_INFOS[NETWORKING_TYPE]['type']['field']='name';
 $DATA_INJECTION_INFOS[NETWORKING_TYPE]['type']['name']=$LANG["common"][17];
 $DATA_INJECTION_INFOS[NETWORKING_TYPE]['type']['linkfield']='type';
@@ -394,5 +410,10 @@ $DATA_INJECTION_INFOS[NETWORKING_TYPE]['tech_num']['field']='name';
 $DATA_INJECTION_INFOS[NETWORKING_TYPE]['tech_num']['name']=$LANG["common"][10];
 $DATA_INJECTION_INFOS[NETWORKING_TYPE]['tech_num']['linkfield']='tech_num';
 $DATA_INJECTION_INFOS[NETWORKING_TYPE]['tech_num']['input_type']='dropdown';
+
+$DATA_INJECTION_INFOS[NETWORKING_TYPE]['comments']['table']='glpi_networking';
+$DATA_INJECTION_INFOS[NETWORKING_TYPE]['comments']['field']='comments';
+$DATA_INJECTION_INFOS[NETWORKING_TYPE]['comments']['name']=$LANG["common"][25];
+
 
 ?>

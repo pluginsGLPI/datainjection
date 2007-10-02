@@ -77,7 +77,7 @@ $DATA_INJECTION_MAPPING[COMPUTER_TYPE]['os_license_number']['name']=$LANG["compu
 $DATA_INJECTION_MAPPING[COMPUTER_TYPE]['os_license_number']['type']='text';
 
 $DATA_INJECTION_MAPPING[COMPUTER_TYPE]['os_license_id']['table']='glpi_computers';
-$DATA_INJECTION_MAPPING[COMPUTER_TYPE]['os_license_id']['field']='os_license_number';
+$DATA_INJECTION_MAPPING[COMPUTER_TYPE]['os_license_id']['field']='os_license_id';
 $DATA_INJECTION_MAPPING[COMPUTER_TYPE]['os_license_id']['name']=$LANG["computers"][11];
 $DATA_INJECTION_MAPPING[COMPUTER_TYPE]['os_license_id']['type']='text';
 
@@ -95,7 +95,7 @@ $DATA_INJECTION_MAPPING[COMPUTER_TYPE]['os_version']['linkfield']='os_version';
 $DATA_INJECTION_MAPPING[COMPUTER_TYPE]['os_version']['type']='text';
 $DATA_INJECTION_MAPPING[COMPUTER_TYPE]['os_version']['table_type']='dropdown';
 
-$DATA_INJECTION_MAPPING[COMPUTER_TYPE]['os_sp']['table']='glpi_dropdown_os';
+$DATA_INJECTION_MAPPING[COMPUTER_TYPE]['os_sp']['table']='glpi_dropdown_os_sp';
 $DATA_INJECTION_MAPPING[COMPUTER_TYPE]['os_sp']['field']='name';
 $DATA_INJECTION_MAPPING[COMPUTER_TYPE]['os_sp']['name']=$LANG["computers"][53];
 $DATA_INJECTION_MAPPING[COMPUTER_TYPE]['os_sp']['linkfield']='os_sp';
@@ -539,7 +539,7 @@ $DATA_INJECTION_MAPPING[PHONE_TYPE]['type']['type']='text';
 $DATA_INJECTION_MAPPING[PHONE_TYPE]['type']['linkfield']='type';
 $DATA_INJECTION_MAPPING[PHONE_TYPE]['type']['table_type']='dropdown';
 
-$DATA_INJECTION_MAPPING[PHONE_TYPE]['model']['table']='glpi_dropdown_model_printers';
+$DATA_INJECTION_MAPPING[PHONE_TYPE]['model']['table']='glpi_dropdown_model_phones';
 $DATA_INJECTION_MAPPING[PHONE_TYPE]['model']['field']='name';
 $DATA_INJECTION_MAPPING[PHONE_TYPE]['model']['name']=$LANG["common"][22];
 $DATA_INJECTION_MAPPING[PHONE_TYPE]['model']['type']='text';
@@ -568,7 +568,7 @@ $DATA_INJECTION_MAPPING[PHONE_TYPE]['brand']['field']='brand';
 $DATA_INJECTION_MAPPING[PHONE_TYPE]['brand']['name']=$LANG["peripherals"][18];
 $DATA_INJECTION_MAPPING[PHONE_TYPE]['brand']['type']='text';
 
-$DATA_INJECTION_MAPPING[PHONE_TYPE]['power']['table']='glpi_phone_power';
+$DATA_INJECTION_MAPPING[PHONE_TYPE]['power']['table']='glpi_dropdown_phone_power';
 $DATA_INJECTION_MAPPING[PHONE_TYPE]['power']['field']='name';
 $DATA_INJECTION_MAPPING[PHONE_TYPE]['power']['name']=$LANG["devices"][23];
 $DATA_INJECTION_MAPPING[PHONE_TYPE]['power']['type']='text';
@@ -690,10 +690,10 @@ $DATA_INJECTION_MAPPING[INFOCOM_TYPE]['facture']['name']=$LANG["financial"][82];
 $DATA_INJECTION_MAPPING[INFOCOM_TYPE]['facture']['type']='text';
 
 $DATA_INJECTION_MAPPING[INFOCOM_TYPE]['budget']['table']='glpi_dropdown_budget';
-$DATA_INJECTION_MAPPING[INFOCOM_TYPE]['budget']['field']='budget';
+$DATA_INJECTION_MAPPING[INFOCOM_TYPE]['budget']['field']='name';
 $DATA_INJECTION_MAPPING[INFOCOM_TYPE]['budget']['name']=$LANG["financial"][87];
 $DATA_INJECTION_MAPPING[INFOCOM_TYPE]['budget']['type']='text';
-$DATA_INJECTION_MAPPING[INFOCOM_TYPE]['budget']['linkfield']='FK_enterprise';
+$DATA_INJECTION_MAPPING[INFOCOM_TYPE]['budget']['linkfield']='budget';
 $DATA_INJECTION_MAPPING[INFOCOM_TYPE]['budget']['table_type']='dropdown';
 
 $DATA_INJECTION_MAPPING[INFOCOM_TYPE]['alert']['table']='glpi_infocoms';
@@ -744,7 +744,7 @@ $DATA_INJECTION_MAPPING[NETWORKING_TYPE]['comments']['type']='text';
 $DATA_INJECTION_MAPPING[NETWORKING_TYPE]['comments']['table_type']='multitext';
 
 $DATA_INJECTION_MAPPING[NETWORKING_TYPE]['ram']['table']='glpi_networking';
-$DATA_INJECTION_MAPPING[NETWORKING_TYPE]['ram']['field']='size';
+$DATA_INJECTION_MAPPING[NETWORKING_TYPE]['ram']['field']='ram';
 $DATA_INJECTION_MAPPING[NETWORKING_TYPE]['ram']['name']=$LANG["networking"][5];
 $DATA_INJECTION_MAPPING[NETWORKING_TYPE]['ram']['type']='text';
 
@@ -808,7 +808,7 @@ $DATA_INJECTION_MAPPING[NETWORKING_TYPE]['state']['type']='text';
 
 $DATA_INJECTION_MAPPING[NETWORKING_TYPE]['firmware']['table']='glpi_networking';
 $DATA_INJECTION_MAPPING[NETWORKING_TYPE]['firmware']['field']='firmware';
-$DATA_INJECTION_MAPPING[NETWORKING_TYPE]['firmware']['name']=$LANG["phones"][35];
+$DATA_INJECTION_MAPPING[NETWORKING_TYPE]['firmware']['name']=$LANG["networking"][49];
 $DATA_INJECTION_MAPPING[NETWORKING_TYPE]['firmware']['type']='text';
 
 $DATA_INJECTION_MAPPING[NETWORKING_TYPE]['ifmac']['table']='glpi_networking';
@@ -1101,14 +1101,14 @@ $DATA_INJECTION_MAPPING[PERIPHERAL_TYPE]['state']['linkfield']='state';
 $DATA_INJECTION_MAPPING[PERIPHERAL_TYPE]['state']['table_type']='dropdown';
 $DATA_INJECTION_MAPPING[PERIPHERAL_TYPE]['state']['type']='text';
 
-$DATA_INJECTION_MAPPING[PERIPHERAL_TYPE]['type']['table']='glpi_peripherals';
+$DATA_INJECTION_MAPPING[PERIPHERAL_TYPE]['type']['table']='glpi_type_peripherals';
 $DATA_INJECTION_MAPPING[PERIPHERAL_TYPE]['type']['field']='name';
 $DATA_INJECTION_MAPPING[PERIPHERAL_TYPE]['type']['name']=$LANG["common"][17];
 $DATA_INJECTION_MAPPING[PERIPHERAL_TYPE]['type']['type']='text';
 $DATA_INJECTION_MAPPING[PERIPHERAL_TYPE]['type']['linkfield']='type';
 $DATA_INJECTION_MAPPING[PERIPHERAL_TYPE]['type']['table_type']='dropdown';
 
-$DATA_INJECTION_MAPPING[PERIPHERAL_TYPE]['model']['table']='glpi_dropdown_model_printers';
+$DATA_INJECTION_MAPPING[PERIPHERAL_TYPE]['model']['table']='glpi_dropdown_model_peripherals';
 $DATA_INJECTION_MAPPING[PERIPHERAL_TYPE]['model']['field']='name';
 $DATA_INJECTION_MAPPING[PERIPHERAL_TYPE]['model']['name']=$LANG["common"][22];
 $DATA_INJECTION_MAPPING[PERIPHERAL_TYPE]['model']['type']='text';
