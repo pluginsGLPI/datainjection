@@ -24,6 +24,7 @@ $pdf->setStrokeColor(0,0,0);
 $pdf->setLineStyle(1,'round','round');
 $pdf->rectangle(20,20,$width-40,$height-40);
 $pdf->addJpegFromFile("../pics/fd_logo.jpg",25,$height-50);
+
 $pdf->selectFont("../fonts/Times-Roman.afm");
 $pdf->setFontFamily('Times-Roman.afm',array('b'=>'Times-Bold.afm','i'=>'Times-Italic.afm','bi'=>'Times-BoldItalic.afm'));
 
@@ -79,10 +80,10 @@ if(count($tab_result[1])>0)
 		
 		$pdf->restoreState();
 		
-		if($key%2==0)
-			$pdf->addJpegFromFile("../pics/notok.jpg",40,($start_tab-25)-(20*$i)+2);
-		else
-			$pdf->addJpegFromFile("../pics/notok2.jpg",40,($start_tab-25)-(20*$i)+2);
+		//if($key%2==0)
+			$pdf->addJpegFromFile("../pics/ok.jpg",40,($start_tab-25)-(20*$i)+2);
+		//else
+		//	$pdf->addJpegFromFile("../pics/ok2.jpg",40,($start_tab-25)-(20*$i)+2);
 		
 		$pdf->addText(85,($start_tab-20)-(20*$i),9,utf8_decode($value->getLineID()));
 		
@@ -103,8 +104,11 @@ if(count($tab_result[1])>0)
 		
 		if(($start_tab-20)-(20*$i)<50)
 			{
+			/*
 			$pdf->ezText("",1000);
 			$pdf->ezText("",9);
+			*/
+			$pdf->ezNewPage();
 			$i=0;
 			$start_tab = 750;
 			}
@@ -153,10 +157,13 @@ if(count($tab_result[0])>0)
 		
 		$pdf->restoreState();
 		
-		if($key%2==0)
+		if ($value->getCheckStatus() == TYPE_CHECK_OK && $value->getStatus() != IMPORT_OK)
+			$pdf->addJpegFromFile("../pics/ok2.jpg",40,($start_tab-25)-(20*$i)+2);
+		else	
+		//if($key%2==0)
 			$pdf->addJpegFromFile("../pics/notok.jpg",40,($start_tab-25)-(20*$i)+2);
-		else
-			$pdf->addJpegFromFile("../pics/notok2.jpg",40,($start_tab-25)-(20*$i)+2);
+		//else
+		//	$pdf->addJpegFromFile("../pics/notok2.jpg",40,($start_tab-25)-(20*$i)+2);
 		
 		$pdf->addText(85,($start_tab-20)-(20*$i),9,utf8_decode($value->getLineID()));
 		
@@ -165,10 +172,10 @@ if(count($tab_result[0])>0)
 		
 		if($value->getCheckStatus() != TYPE_CHECK_OK)
 			{
-			if($key%2==0)
+			//if($key%2==0)
 				$pdf->addJpegFromFile("../pics/danger.jpg",120,($start_tab-25)-(20*$i)+2);
-			else
-				$pdf->addJpegFromFile("../pics/danger2.jpg",120,($start_tab-25)-(20*$i)+2);
+			//else
+			//	$pdf->addJpegFromFile("../pics/danger2.jpg",120,($start_tab-25)-(20*$i)+2);
 			
 			$x=135;
 			$length=125;
@@ -183,12 +190,12 @@ if(count($tab_result[0])>0)
 		$x=275;
 		$length=100;
 		
-		if($value->getStatus() != IMPORT_OK)
+		if($value->getCheckStatus() == TYPE_CHECK_OK && $value->getStatus() != IMPORT_OK)
 			{
-			if($key%2==0)
+			//if($key%2==0)
 				$pdf->addJpegFromFile("../pics/danger.jpg",275,($start_tab-25)-(20*$i)+2);
-			else
-				$pdf->addJpegFromFile("../pics/danger2.jpg",275,($start_tab-25)-(20*$i)+2);
+			//else
+			//	$pdf->addJpegFromFile("../pics/danger2.jpg",275,($start_tab-25)-(20*$i)+2);
 			
 			$x=290;
 			$length=85;
@@ -208,8 +215,11 @@ if(count($tab_result[0])>0)
 		
 		if(($start_tab-20)-(20*$i)<50)
 			{
+			/*
 			$pdf->ezText("",1000);
 			$pdf->ezText("",9);
+			*/
+			$pdf->ezNewPage();
 			$i=0;
 			$start_tab = 750;
 			}
