@@ -217,6 +217,18 @@ $DATA_INJECTION_MAPPING[COMPUTER_TYPE]['FK_users']['linkfield']='FK_users';
 $DATA_INJECTION_MAPPING[COMPUTER_TYPE]['FK_users']['type']='text';
 $DATA_INJECTION_MAPPING[COMPUTER_TYPE]['FK_users']['table_type']='user';
 
+$DATA_INJECTION_MAPPING[COMPUTER_TYPE]['ifmac']['table']='glpi_networking';
+$DATA_INJECTION_MAPPING[COMPUTER_TYPE]['ifmac']['field']='ifmac';
+$DATA_INJECTION_MAPPING[COMPUTER_TYPE]['ifmac']['name']=$LANG["device_iface"][2];
+$DATA_INJECTION_MAPPING[COMPUTER_TYPE]['ifmac']['type']='mac';
+$DATA_INJECTION_MAPPING[COMPUTER_TYPE]['ifmac']['table_type']='virtual';
+
+$DATA_INJECTION_MAPPING[COMPUTER_TYPE]['ifaddr']['table']='glpi_networking';
+$DATA_INJECTION_MAPPING[COMPUTER_TYPE]['ifaddr']['field']='ifaddr';
+$DATA_INJECTION_MAPPING[COMPUTER_TYPE]['ifaddr']['name']=$LANG["networking"][14];
+$DATA_INJECTION_MAPPING[COMPUTER_TYPE]['ifaddr']['type']='ip';
+$DATA_INJECTION_MAPPING[COMPUTER_TYPE]['ifaddr']['table_type']='virtual';
+
 // ----------------------------------------------------------------------
 //MONITOR MAPPING
 // ----------------------------------------------------------------------
@@ -501,6 +513,24 @@ $DATA_INJECTION_MAPPING[PRINTER_TYPE]['FK_users']['linkfield']='FK_users';
 $DATA_INJECTION_MAPPING[PRINTER_TYPE]['FK_users']['type']='text';
 $DATA_INJECTION_MAPPING[PRINTER_TYPE]['FK_users']['table_type']='user';
 
+$DATA_INJECTION_MAPPING[PRINTER_TYPE]['ifmac']['table']='glpi_networking';
+$DATA_INJECTION_MAPPING[PRINTER_TYPE]['ifmac']['field']='ifmac';
+$DATA_INJECTION_MAPPING[PRINTER_TYPE]['ifmac']['name']=$LANG["device_iface"][2];
+$DATA_INJECTION_MAPPING[PRINTER_TYPE]['ifmac']['type']='mac';
+$DATA_INJECTION_MAPPING[PRINTER_TYPE]['ifmac']['table_type']='virtual';
+
+$DATA_INJECTION_MAPPING[PRINTER_TYPE]['ifaddr']['table']='glpi_networking';
+$DATA_INJECTION_MAPPING[PRINTER_TYPE]['ifaddr']['field']='ifaddr';
+$DATA_INJECTION_MAPPING[PRINTER_TYPE]['ifaddr']['name']=$LANG["networking"][14];
+$DATA_INJECTION_MAPPING[PRINTER_TYPE]['ifaddr']['type']='ip';
+$DATA_INJECTION_MAPPING[PRINTER_TYPE]['ifaddr']['table_type']='virtual';
+
+$DATA_INJECTION_MAPPING[PRINTER_TYPE]['nb_ports']['table']='glpi_networking';
+$DATA_INJECTION_MAPPING[PRINTER_TYPE]['nb_ports']['field']='nb_ports';
+$DATA_INJECTION_MAPPING[PRINTER_TYPE]['nb_ports']['name']=$DATAINJECTIONLANG["mappings"][1];
+$DATA_INJECTION_MAPPING[PRINTER_TYPE]['nb_ports']['type']='integer';
+$DATA_INJECTION_MAPPING[PRINTER_TYPE]['nb_ports']['table_type']='virtual';
+
 // ----------------------------------------------------------------------
 //PHONE MAPPING
 // ----------------------------------------------------------------------
@@ -639,6 +669,18 @@ $DATA_INJECTION_MAPPING[PHONE_TYPE]['FK_users']['name']=$LANG["common"][34];
 $DATA_INJECTION_MAPPING[PHONE_TYPE]['FK_users']['linkfield']='FK_users';
 $DATA_INJECTION_MAPPING[PHONE_TYPE]['FK_users']['type']='text';
 $DATA_INJECTION_MAPPING[PHONE_TYPE]['FK_users']['table_type']='user';
+
+$DATA_INJECTION_MAPPING[PHONE_TYPE]['ifmac']['table']='glpi_networking';
+$DATA_INJECTION_MAPPING[PHONE_TYPE]['ifmac']['field']='ifmac';
+$DATA_INJECTION_MAPPING[PHONE_TYPE]['ifmac']['name']=$LANG["device_iface"][2];
+$DATA_INJECTION_MAPPING[PHONE_TYPE]['ifmac']['type']='mac';
+$DATA_INJECTION_MAPPING[PHONE_TYPE]['ifmac']['table_type']='virtual';
+
+$DATA_INJECTION_MAPPING[PHONE_TYPE]['ifaddr']['table']='glpi_networking';
+$DATA_INJECTION_MAPPING[PHONE_TYPE]['ifaddr']['field']='ifaddr';
+$DATA_INJECTION_MAPPING[PHONE_TYPE]['ifaddr']['name']=$LANG["networking"][14];
+$DATA_INJECTION_MAPPING[PHONE_TYPE]['ifaddr']['type']='ip';
+$DATA_INJECTION_MAPPING[PHONE_TYPE]['ifaddr']['table_type']='virtual';
 
 // ----------------------------------------------------------------------
 //INFOCOM MAPPING
@@ -872,6 +914,12 @@ $DATA_INJECTION_MAPPING[NETWORKING_TYPE]['FK_users']['name']=$LANG["common"][34]
 $DATA_INJECTION_MAPPING[NETWORKING_TYPE]['FK_users']['linkfield']='FK_users';
 $DATA_INJECTION_MAPPING[NETWORKING_TYPE]['FK_users']['type']='text';
 $DATA_INJECTION_MAPPING[NETWORKING_TYPE]['FK_users']['table_type']='user';
+
+$DATA_INJECTION_MAPPING[NETWORKING_TYPE]['nb_ports']['table']='glpi_networking';
+$DATA_INJECTION_MAPPING[NETWORKING_TYPE]['nb_ports']['field']='nb_ports';
+$DATA_INJECTION_MAPPING[NETWORKING_TYPE]['nb_ports']['name']=$DATAINJECTIONLANG["mappings"][1];
+$DATA_INJECTION_MAPPING[NETWORKING_TYPE]['nb_ports']['type']='integer';
+$DATA_INJECTION_MAPPING[NETWORKING_TYPE]['nb_ports']['table_type']='virtual';
 
 // ----------------------------------------------------------------------
 //USER MAPPING

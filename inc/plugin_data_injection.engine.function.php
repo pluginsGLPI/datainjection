@@ -276,6 +276,27 @@ function getInstance($device_type)
 		return $commonitem->obj;
 }
 
+function preAddCommonFields($common_fields,$type,$fields,$entity)
+{
+	switch ($type)
+	{
+		case NETWORKING_TYPE:
+			if (isset($fields["nb_ports"]))
+				$common_fields["nb_ports"] = $fields["nb_ports"];
+		break;
+		case PRINTER_TYPE:
+		case COMPUTER_TYPE:
+			if (isset($fields["nb_ports"]))
+				$common_fields["nb_ports"] = $fields["nb_ports"];
+			if (isset($fields["ifmac"]))
+				$common_fields["ifmac"] = $fields["ifmac"];
+			if (isset($fields["ifaddr"]))
+				$common_fields["ifaddr"] = $fields["ifaddr"];
+		default:
+		break;
+	}
+	return $common_fields;
+}
 /*
  * Add new values to the array of common values
  * @param common_fields the array of common values
@@ -292,8 +313,8 @@ function addCommonFields($common_fields,$type,$fields,$entity,$id)
 		case COMPUTER_TYPE:
 		case MONITOR_TYPE:
 		case PRINTER_TYPE:
-		case PHONE_TYPE:
 		case NETWORKING_TYPE:
+		case PHONE_TYPE:
 		case PERIPHERAL_TYPE:
 			$common_fields["device_id"] = $id;
 			$common_fields["device_type"] = $type;
@@ -326,6 +347,10 @@ function addNecessaryFields($model,$mapping,$mapping_definition,$entity,$type,$f
 		case MONITOR_TYPE:
 		case COMPUTER_TYPE:
 		case PRINTER_TYPE:
+			if (isset($fields["ifmac"]))
+				unset($fields["ifmac"]);
+			if (isset($fields["ifaddr"]))
+				unset($fields["ifaddr"]);
 		case PHONE_TYPE:
 		case NETWORKING_TYPE:
 			if (isset($fields["ipaddr"]))
@@ -333,6 +358,9 @@ function addNecessaryFields($model,$mapping,$mapping_definition,$entity,$type,$f
 
 			if (isset($fields["macaddr"]))
 				unset ($fields["macaddr"]);
+				
+			if (isset($fields["nb_ports"]))
+				unset ($fields["nb_ports"]);
 		case GROUP_TYPE:
 		case CONTRACT_TYPE:
 		case PERIPHERAL_TYPE:
@@ -416,6 +444,7 @@ function getFieldValue($mapping, $mapping_definition,$field_value,$entity,$obj,$
 					
 				$obj[$mapping_definition["field"]] .= $mapping->getName()."=".$field_value."\n";		
 				break;	
+			case "virtual":
 			default :
 				$obj[$mapping_definition["field"]] = $field_value;
 				break;
@@ -437,11 +466,65 @@ function processBeforeEnd($model,$type,$fields,$common_fields)
 				addUserGroup($common_fields["FK_user"],$common_fields["FK_group"]);
 				
 		break;
+		case NETWORKING_TYPE:
+			//Add ports if the mapping exists
+			if (isset($common_fields["nb_ports"]))
+				addNetworPorts($common_fields);
+		break;	
+		case PRINTER_TYPE:
+		case COMPUTER_TYPE:
+		case PHONE_TYPE:
+			if (isset($common_fields["ifaddr"]) || isset($common_fields["ifmac"]))
+				addNetworkCard($common_fields);
+		break;	
 		default:
 		break;
 	}
 }
 
+function addNetworkCard($common_fields)
+{
+	if (isset($common_fields["ifmac"]) || isset($common_fields["ifaddr"]))
+	{
+		if (!isset($common_fields["nb_ports"]))
+			$common_fields["nb_ports"]=1;
+			
+		$input=array();
+		if (isset($common_fields["ifaddr"]))
+			$input[0]["ifaddr"]=$common_fields["ifaddr"];
+		if (isset($common_fields["ifmac"]))
+			$input[0]["ifmac"]=$common_fields["ifmac"];
+		
+		addNetworPorts($common_fields,$input);
+	}
+}
+function addNetworPorts($common_fields,$network_cards_infos=array())
+{
+	if (isset($common_fields["nb_ports"]))
+	{
+		$netport = new Netport;
+		for ($i=0;$i<$common_fields["nb_ports"];$i++)
+		{
+			$add="";
+			if ($i<10)	$add="0";
+			$input["logical_number"]=$i;
+			$input["name"]=$add.$i;
+			$input["on_device"]=$common_fields["device_id"];
+			$input["device_type"]=$common_fields["device_type"];
+			
+			if (count($network_cards_infos)>0 && isset($network_cards_infos[$i]))
+			{
+				if (isset($network_cards_infos[$i]["ifaddr"]))
+					$input["ifaddr"]=$network_cards_infos[$i]["ifaddr"];
+				if (isset($network_cards_infos[$i]["ifmac"]))
+					$input["ifmac"]=$network_cards_infos[$i]["ifmac"];
+			}	
+
+			unset($netport->fields["ID"]);
+			$netport->add($input);	
+		}
+	}
+}
 /*
  * Check is the user has the right to add datas in a dropdown table
  * @param table the dropdown table

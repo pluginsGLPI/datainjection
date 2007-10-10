@@ -133,6 +133,10 @@ class DataInjectionEngine
 		$fields = $db_fields[$this->getModel()->getDeviceType()];
 
 		$obj = getInstance($this->getModel()->getDeviceType());
+
+		//Add some fields to the common fields BEFORE inserting the primary type (in order to save some fields)
+		$db_fields["common"] = preAddCommonFields($db_fields["common"],$this->getModel()->getDeviceType(),$fields,$this->getEntity());
+				
 		//If necessary, add default fields which are mandatory to create the object
 		$fields = addNecessaryFields($this->getModel(),$mapping,$mapping_definition,$this->getEntity(),$this->getModel()->getDeviceType(),$fields,$db_fields["common"]);
 
@@ -148,7 +152,6 @@ class DataInjectionEngine
 				//Add the ID to the fields, so it can be reused after
 				$db_fields["common"] = addCommonFields($db_fields["common"],$this->getModel()->getDeviceType(),$fields,$this->getEntity(),$ID);
 				logAddOrUpdate($this->getModel()->getDeviceType(),$ID,INJECTION_ADD);
-
 				$result->setStatus(true);
 
 				$result->setInjectedId($ID);
