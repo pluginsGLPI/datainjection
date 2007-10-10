@@ -358,7 +358,11 @@ function addNecessaryFields($model,$mapping,$mapping_definition,$entity,$type,$f
 function getFieldValue($mapping, $mapping_definition,$field_value,$entity,$obj,$canadd)
 {
 	global $DB;
-
+	
+	//If the value is a date, try to reformat it if it's not the good type (dd-mm-yyyy instead of yyyy-mm-dd)
+	if (isset($mapping_definition["type"]) && $mapping_definition["type"]=="date")
+		$field_value = reformatDate($field_value);
+		
 	if (isset($mapping_definition["table_type"]))
 	{
 		switch ($mapping_definition["table_type"])
