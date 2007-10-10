@@ -184,6 +184,24 @@ function getDropdownValue($mapping, $mapping_definition,$value,$entity,$canadd=0
 			return '';	
 }
 
+function findUser($value,$entity)
+{
+	global $DB;
+	$sql = "SELECT ID FROM glpi_users WHERE name=\"".$value."\" OR (CONCAT(realname,' ',firstname)=\"$value\" OR CONCAT(firstname,' ',realname)=\"$value\")";
+	$result = $DB->query($sql);
+	if ($DB->numrows($result)>0)
+	{
+		//check if user has right on the current entity
+		$ID = $DB->result($result,0,"ID");
+		$entities = getUserEntities($ID,true);
+		if (in_array($entity,$entities))
+			return $ID;
+		else
+			return '';	
+	}
+	else
+		return '';		
+}
 /*
  * Function to check if the datas to inject already exists in DB
  * @param type the type of datas to inject
@@ -370,6 +388,10 @@ function getFieldValue($mapping, $mapping_definition,$field_value,$entity,$obj,$
 			//Read and add in a dropdown table
 			case "dropdown":
 				$obj[$mapping_definition["linkfield"]] = getDropdownValue($mapping,$mapping_definition,$field_value,$entity,$canadd);
+				break;
+			
+			case "user":
+				$obj[$mapping_definition["linkfield"]] = findUser($field_value,$entity);
 				break;
 				
 			//Read in a single table	

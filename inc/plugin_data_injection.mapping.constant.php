@@ -207,7 +207,7 @@ $DATA_INJECTION_MAPPING[COMPUTER_TYPE]['tech_num']['field']='name';
 $DATA_INJECTION_MAPPING[COMPUTER_TYPE]['tech_num']['name']=$LANG["common"][10];
 $DATA_INJECTION_MAPPING[COMPUTER_TYPE]['tech_num']['linkfield']='tech_num';
 $DATA_INJECTION_MAPPING[COMPUTER_TYPE]['tech_num']['type']='text';
-$DATA_INJECTION_MAPPING[COMPUTER_TYPE]['tech_num']['table_type']='dropdown';
+$DATA_INJECTION_MAPPING[COMPUTER_TYPE]['tech_num']['table_type']='user';
 
 
 $DATA_INJECTION_MAPPING[COMPUTER_TYPE]['FK_users']['table']='glpi_users';
@@ -215,7 +215,7 @@ $DATA_INJECTION_MAPPING[COMPUTER_TYPE]['FK_users']['field']='name';
 $DATA_INJECTION_MAPPING[COMPUTER_TYPE]['FK_users']['name']=$LANG["common"][34];
 $DATA_INJECTION_MAPPING[COMPUTER_TYPE]['FK_users']['linkfield']='FK_users';
 $DATA_INJECTION_MAPPING[COMPUTER_TYPE]['FK_users']['type']='text';
-$DATA_INJECTION_MAPPING[COMPUTER_TYPE]['FK_users']['table_type']='dropdown';
+$DATA_INJECTION_MAPPING[COMPUTER_TYPE]['FK_users']['table_type']='user';
 
 // ----------------------------------------------------------------------
 //MONITOR MAPPING
@@ -345,7 +345,7 @@ $DATA_INJECTION_MAPPING[MONITOR_TYPE]['tech_num']['field']='name';
 $DATA_INJECTION_MAPPING[MONITOR_TYPE]['tech_num']['name']=$LANG["common"][10];
 $DATA_INJECTION_MAPPING[MONITOR_TYPE]['tech_num']['linkfield']='tech_num';
 $DATA_INJECTION_MAPPING[MONITOR_TYPE]['tech_num']['type']='text';
-$DATA_INJECTION_MAPPING[MONITOR_TYPE]['tech_num']['table_type']='dropdown';
+$DATA_INJECTION_MAPPING[MONITOR_TYPE]['tech_num']['table_type']='user';
 
 
 $DATA_INJECTION_MAPPING[MONITOR_TYPE]['FK_users']['table']='glpi_users';
@@ -353,7 +353,7 @@ $DATA_INJECTION_MAPPING[MONITOR_TYPE]['FK_users']['field']='name';
 $DATA_INJECTION_MAPPING[MONITOR_TYPE]['FK_users']['name']=$LANG["common"][34];
 $DATA_INJECTION_MAPPING[MONITOR_TYPE]['FK_users']['linkfield']='FK_users';
 $DATA_INJECTION_MAPPING[MONITOR_TYPE]['FK_users']['type']='text';
-$DATA_INJECTION_MAPPING[MONITOR_TYPE]['FK_users']['table_type']='dropdown';
+$DATA_INJECTION_MAPPING[MONITOR_TYPE]['FK_users']['table_type']='user';
 
 // ----------------------------------------------------------------------
 //PRINTER MAPPING
@@ -487,7 +487,7 @@ $DATA_INJECTION_MAPPING[PRINTER_TYPE]['tech_num']['field']='name';
 $DATA_INJECTION_MAPPING[PRINTER_TYPE]['tech_num']['name']=$LANG["common"][10];
 $DATA_INJECTION_MAPPING[PRINTER_TYPE]['tech_num']['linkfield']='tech_num';
 $DATA_INJECTION_MAPPING[PRINTER_TYPE]['tech_num']['type']='text';
-$DATA_INJECTION_MAPPING[PRINTER_TYPE]['tech_num']['table_type']='dropdown';
+$DATA_INJECTION_MAPPING[PRINTER_TYPE]['tech_num']['table_type']='user';
 
 $DATA_INJECTION_MAPPING[PRINTER_TYPE]['initial_pages']['table']='glpi_printers';
 $DATA_INJECTION_MAPPING[PRINTER_TYPE]['initial_pages']['field']='initial_pages';
@@ -499,7 +499,7 @@ $DATA_INJECTION_MAPPING[PRINTER_TYPE]['FK_users']['field']='name';
 $DATA_INJECTION_MAPPING[PRINTER_TYPE]['FK_users']['name']=$LANG["common"][34];
 $DATA_INJECTION_MAPPING[PRINTER_TYPE]['FK_users']['linkfield']='FK_users';
 $DATA_INJECTION_MAPPING[PRINTER_TYPE]['FK_users']['type']='text';
-$DATA_INJECTION_MAPPING[PRINTER_TYPE]['FK_users']['table_type']='dropdown';
+$DATA_INJECTION_MAPPING[PRINTER_TYPE]['FK_users']['table_type']='user';
 
 // ----------------------------------------------------------------------
 //PHONE MAPPING
@@ -631,14 +631,14 @@ $DATA_INJECTION_MAPPING[PHONE_TYPE]['tech_num']['field']='name';
 $DATA_INJECTION_MAPPING[PHONE_TYPE]['tech_num']['name']=$LANG["common"][10];
 $DATA_INJECTION_MAPPING[PHONE_TYPE]['tech_num']['linkfield']='tech_num';
 $DATA_INJECTION_MAPPING[PHONE_TYPE]['tech_num']['type']='text';
-$DATA_INJECTION_MAPPING[PHONE_TYPE]['tech_num']['table_type']='single';
+$DATA_INJECTION_MAPPING[PHONE_TYPE]['tech_num']['table_type']='user';
 
 $DATA_INJECTION_MAPPING[PHONE_TYPE]['FK_users']['table']='glpi_users';
 $DATA_INJECTION_MAPPING[PHONE_TYPE]['FK_users']['field']='name';
 $DATA_INJECTION_MAPPING[PHONE_TYPE]['FK_users']['name']=$LANG["common"][34];
 $DATA_INJECTION_MAPPING[PHONE_TYPE]['FK_users']['linkfield']='FK_users';
 $DATA_INJECTION_MAPPING[PHONE_TYPE]['FK_users']['type']='text';
-$DATA_INJECTION_MAPPING[PHONE_TYPE]['FK_users']['table_type']='dropdown';
+$DATA_INJECTION_MAPPING[PHONE_TYPE]['FK_users']['table_type']='user';
 
 // ----------------------------------------------------------------------
 //INFOCOM MAPPING
@@ -864,14 +864,14 @@ $DATA_INJECTION_MAPPING[NETWORKING_TYPE]['tech_num']['field']='name';
 $DATA_INJECTION_MAPPING[NETWORKING_TYPE]['tech_num']['name']=$LANG["common"][10];
 $DATA_INJECTION_MAPPING[NETWORKING_TYPE]['tech_num']['linkfield']='tech_num';
 $DATA_INJECTION_MAPPING[NETWORKING_TYPE]['tech_num']['type']='text';
-$DATA_INJECTION_MAPPING[NETWORKING_TYPE]['tech_num']['table_type']='dropdown';
+$DATA_INJECTION_MAPPING[NETWORKING_TYPE]['tech_num']['table_type']='user';
 
 $DATA_INJECTION_MAPPING[NETWORKING_TYPE]['FK_users']['table']='glpi_users';
 $DATA_INJECTION_MAPPING[NETWORKING_TYPE]['FK_users']['field']='name';
 $DATA_INJECTION_MAPPING[NETWORKING_TYPE]['FK_users']['name']=$LANG["common"][34];
 $DATA_INJECTION_MAPPING[NETWORKING_TYPE]['FK_users']['linkfield']='FK_users';
 $DATA_INJECTION_MAPPING[NETWORKING_TYPE]['FK_users']['type']='text';
-$DATA_INJECTION_MAPPING[NETWORKING_TYPE]['FK_users']['table_type']='dropdown';
+$DATA_INJECTION_MAPPING[NETWORKING_TYPE]['FK_users']['table_type']='user';
 
 // ----------------------------------------------------------------------
 //USER MAPPING
@@ -1188,6 +1188,6 @@ $DATA_INJECTION_MAPPING[PERIPHERAL_TYPE]['FK_users']['field']='name';
 $DATA_INJECTION_MAPPING[PERIPHERAL_TYPE]['FK_users']['name']=$LANG["common"][34];
 $DATA_INJECTION_MAPPING[PERIPHERAL_TYPE]['FK_users']['linkfield']='FK_users';
 $DATA_INJECTION_MAPPING[PERIPHERAL_TYPE]['FK_users']['type']='text';
-$DATA_INJECTION_MAPPING[PERIPHERAL_TYPE]['FK_users']['table_type']='dropdown';
+$DATA_INJECTION_MAPPING[PERIPHERAL_TYPE]['FK_users']['table_type']='user';
 
 ?>
