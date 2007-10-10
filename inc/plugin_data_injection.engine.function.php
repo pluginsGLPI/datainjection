@@ -187,7 +187,7 @@ function getDropdownValue($mapping, $mapping_definition,$value,$entity,$canadd=0
 function findUser($value,$entity)
 {
 	global $DB;
-	$sql = "SELECT ID FROM glpi_users WHERE name=\"".$value."\" OR (CONCAT(realname,' ',firstname)=\"$value\" OR CONCAT(firstname,' ',realname)=\"$value\")";
+	$sql = "SELECT ID FROM glpi_users WHERE LOWER(name)=\"".strtolower($value)."\" OR (CONCAT(LOWER(realname),' ',LOWER(firstname))=\"".strtolower($value)."\" OR CONCAT(LOWER(firstname),' ',LOWER(realname))=\"".strtolower($value)."\")";
 	$result = $DB->query($sql);
 	if ($DB->numrows($result)>0)
 	{
