@@ -226,6 +226,12 @@ function dataAlreadyInDB($type,$fields,$mapping_definition,$model)
 	//TODO : determine when to put ' or not
 	$delimiter = "'";
 		
+	if (FieldExists($obj->table, "deleted"))
+		$where .= " AND deleted=0 ";
+
+	if (FieldExists($obj->table, "is_template"))
+		$where .= " AND is_template=0 ";
+
 	if ($primary)
 	{
 		foreach ($mandatories as $mapping)
