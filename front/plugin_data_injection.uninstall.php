@@ -41,11 +41,11 @@ include (GLPI_ROOT."/inc/includes.php");
 if (haveRight("config","w") && haveRight("profile","w")){
 
 
-	if(TableExists("glpi_plugin_data_injection_config")){
-	cleanCache("GLPI_HEADER_".$_SESSION["glpiID"]);
-	plugin_data_injection_uninstall();
-	$_SESSION["glpi_plugin_data_injection_installed"]=0;
-}
+	if(TableExists("glpi_plugin_data_injection_filetype")){
+		cleanCache("GLPI_HEADER_".$_SESSION["glpiID"]);
+		plugin_data_injection_uninstall();
+		unset($_SESSION["glpi_plugin_data_injection_installed"]);
+	}
 	glpi_header($_SERVER['HTTP_REFERER']);
 
 }else{

@@ -145,9 +145,6 @@ function plugin_data_injection_Install() {
 function plugin_data_injection_uninstall() {
 	$DB = new DB;
 		
-	$query = "DROP TABLE `glpi_plugin_data_injection_config`;";
-	$DB->query($query) or die($DB->error());
-	
 	$query = "DROP TABLE `glpi_plugin_data_injection_models`;";
 	$DB->query($query) or die($DB->error());
 
@@ -194,12 +191,11 @@ function plugin_data_injection_initSession()
 {
 	if (TableExists("glpi_plugin_data_injection_filetype"))
 	{
-		
 		$prof=new DataInjectionProfile();
 		if($prof->getFromDBForUser($_SESSION["glpiID"])){
 			$_SESSION["glpi_plugin_data_injection_profile"]=$prof->fields;
-			$_SESSION["glpi_plugin_data_injection_installed"]=1;
 		}
+		$_SESSION["glpi_plugin_data_injection_installed"]=1;
 	}		
 }
 

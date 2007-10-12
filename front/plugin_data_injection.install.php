@@ -44,7 +44,7 @@ include (GLPI_ROOT . "/inc/includes.php");
 
 commonHeader($DATAINJECTIONLANG["config"][1], $_SERVER["PHP_SELF"],"plugins","data_injection");
 if (haveRight("config","w")){
-	if(!TableExists("glpi_plugin_data_injection_config")){
+	if(!TableExists("glpi_plugin_data_injection_filetype")){
 		cleanCache("GLPI_HEADER_".$_SESSION["glpiID"]);
 		plugin_data_injection_Install();
 		plugin_data_injection_initSession();
