@@ -448,7 +448,8 @@ function getFieldValue($mapping, $mapping_definition,$field_value,$entity,$obj,$
 				if (!isset($obj[$mapping_definition["field"]]))
 					$obj[$mapping_definition["field"]]="";
 					
-				$obj[$mapping_definition["field"]] .= $mapping->getName()."=".$field_value."\n";		
+				if (!empty($field_value))
+					$obj[$mapping_definition["field"]] .= $mapping->getName()."=".$field_value."\n";		
 				break;	
 			case "virtual":
 			default :
