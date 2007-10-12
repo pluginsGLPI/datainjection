@@ -143,6 +143,9 @@ class MappingCollection {
 		$result = $DB->query($sql);
 		while  ($data = $DB->fetch_array($result))
 		{
+			// Addslashes to conform to value return by parseLine
+			$data["name"] = addslashes($data["name"]);
+			
 			$mapping = new DataInjectionMapping;
 			$mapping->fields = $data;
 			$this->mappingCollection[] = $mapping;

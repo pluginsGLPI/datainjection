@@ -106,7 +106,7 @@ class BackendCSV extends Backend{
 		$header = $this->getHeader($model->isHeaderPresent());
 
 		if (count($model->getMappings()) != count($header)) {
-			$this->setError($model->getMappings() ."!=" . count($header));			
+			$this->setError(count($model->getMappings()) ." != " . count($header));			
 			return 1;
 		}
 		
@@ -122,7 +122,7 @@ class BackendCSV extends Backend{
 				$check = 2;
 			} 
 			else if (strtoupper(stripslashes($header[$mapping->getRank()])) != strtoupper($mapping->getName())) {
-				$this->setError(stripslashes($header[$mapping->getRank()]) ."!=". $mapping->getName());				
+				$this->setError(stripslashes($header[$mapping->getRank()]) ." != ". $mapping->getName());				
 				$check = 2;
 			}
 		}	
