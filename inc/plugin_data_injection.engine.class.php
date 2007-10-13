@@ -93,6 +93,8 @@ class DataInjectionEngine
 	{
 		$result = new DataInjectionResults;
 	
+		$line = reformatDatasBeforeCheck($this->getModel(),$line);
+		
 		$result = checkLine($this->getModel(),$line,$result);
 		if (!$result->getStatus())
 			return $result;
@@ -208,7 +210,7 @@ class DataInjectionEngine
 		if ($process)
 		{
 			//Post processing, if some actions need to be done
-			processBeforeEnd($this->getModel(),$this->getModel()->getDeviceType(),$fields,$db_fields["common"]);
+			$db_fields["common"] = processBeforeEnd($this->getModel(),$this->getModel()->getDeviceType(),$fields,$db_fields["common"]);
 
 			//----------------------------------------------------//
 			//-------------Process other types-------------------//
@@ -238,7 +240,7 @@ class DataInjectionEngine
 					}
 
 					//Post processing, if some actions need to be done
-					processBeforeEnd($this->getModel(),$type,$fields,$db_fields["common"]);
+					$db_fields["common"] = processBeforeEnd($this->getModel(),$type,$fields,$db_fields["common"]);
 				}
 			}
 		}

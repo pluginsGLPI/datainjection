@@ -32,6 +32,42 @@
 // ----------------------------------------------------------------------
 
 /*
+ * Reformat datas if needed
+ * @param model the model
+ * @param line the line of data to inject
+ * @return the line modified
+ */
+function reformatDatasBeforeCheck($model,$line)
+{
+	global $DATA_INJECTION_MAPPING;
+	
+	for ($i=0, $mappings = $model->getMappings(); $i < count($mappings); $i++)
+	{
+		$mapping = $mappings[$i];
+		$rank = $mapping->getRank();
+
+		if ($mapping->getValue() != NOT_MAPPED)
+		{
+			$mapping_definition = $DATA_INJECTION_MAPPING[$mapping->getMappingType()][$mapping->getValue()];
+			switch ($mapping_definition["type"])
+			{
+				case "date":
+					//If the value is a date, try to reformat it if it's not the good type (dd-mm-yyyy instead of yyyy-mm-dd)
+					if (isset($mapping_definition["type"]) && $mapping_definition["type"]=="date")
+						$line[$rank] = reformatDate($line[$rank]);
+				break;
+				case "mac":
+					$line[$rank]=reformatMacAddress($line[$rank]);
+				break;
+				default:
+				break;
+			}
+		}
+	}
+	return $line;
+}
+
+/*
  * Check if the data to import is the good type
  * @param the type of data waited
  * @data the data to import
@@ -99,14 +135,14 @@ function checkType($type, $name, $data,$mandatory)
  * @return an array to give the result of the check ("result"=>value,"message"=>error message if any)
  */
 function checkLine($model,$line,$res)
-	{
+{
 		//Get all mappings for a model
 		for ($i=0, $mappings = $model->getMappings(); $i < count($mappings); $i++)
 		{
 			$mapping = $mappings[$i];
 			$rank = $mapping->getRank();
+
 			//If field is mandatory AND not mapped -> error
-			
 			if ($mapping->isMandatory() && (!isset($line[$rank]) || $line[$rank] == NULL || $line[$rank] == "" || $line[$rank] == -1))
 			{
 				$res->setStatus(false);
@@ -151,7 +187,7 @@ function checkLine($model,$line,$res)
  * @param entity the active entity
  * @return the ID of the insert value in the dropdown table
  */	
-function getDropdownValue($mapping, $mapping_definition,$value,$entity,$canadd=0)
+function getDropdownValue($mapping, $mapping_definition,$value,$entity,$canadd=0,$location='')
 {
 	global $DB, $CFG_GLPI;
 
@@ -165,15 +201,19 @@ function getDropdownValue($mapping, $mapping_definition,$value,$entity,$canadd=0
 		{
 			case "glpi_dropdown_locations":
 				return checkLocation($value,$entity,$rightToAdd);
+			case "glpi_dropdown_netpoint":
+				$input["value2"] = $location;
+			break;
 			default:
-				$input["tablename"] = $mapping_definition["table"];
-				$input["value"] = $value;
 				$input["value2"] = "";
-				$input["type"] = "";
-				$input["comments"] = "";
-				$input["FK_entities"] = $entity;
 				break;
 		}
+
+		$input["tablename"] = $mapping_definition["table"];
+		$input["value"] = $value;
+		$input["FK_entities"] = $entity;
+		$input["type"] = "";
+		$input["comments"] = "";
 		
 		$ID = getDropdownID($input);
 		if ($ID != -1)
@@ -226,19 +266,16 @@ function dataAlreadyInDB($type,$fields,$mapping_definition,$model)
 	//TODO : determine when to put ' or not
 	$delimiter = "'";
 		
-	if (FieldExists($obj->table, "deleted"))
-		$where .= " AND deleted=0 ";
-
-	if (FieldExists($obj->table, "is_template"))
-		$where .= " AND is_template=0 ";
-
+	if (FieldExists($obj->table, "deleted")) 
+		$where .= " AND deleted=0 "; 
+    if (FieldExists($obj->table, "is_template")) 
+		$where .= " AND is_template=0 "; 
+                	
 	if ($primary)
 	{
 		foreach ($mandatories as $mapping)
 		{
 				$mapping_definition = getMappingDefinitionByTypeAndName($type,$mapping->getValue());
-				
-					
 				$where.=" AND ".$mapping->getValue()."=".$delimiter.$fields[$mapping->getValue()].$delimiter;
 		}	
 
@@ -282,6 +319,9 @@ function getInstance($device_type)
 		return $commonitem->obj;
 }
 
+/*
+ * Add fields to the common_fields array BEFORE add/update of the primary type
+ */
 function preAddCommonFields($common_fields,$type,$fields,$entity)
 {
 	switch ($type)
@@ -298,6 +338,8 @@ function preAddCommonFields($common_fields,$type,$fields,$entity)
 				$common_fields["ifmac"] = $fields["ifmac"];
 			if (isset($fields["ifaddr"]))
 				$common_fields["ifaddr"] = $fields["ifaddr"];
+			if (isset($fields["plug"]))
+				$common_fields["plug"] = $fields["plug"];
 		default:
 		break;
 	}
@@ -325,6 +367,8 @@ function addCommonFields($common_fields,$type,$fields,$entity,$id)
 			$common_fields["device_id"] = $id;
 			$common_fields["device_type"] = $type;
 			$common_fields["FK_entities"] = $entity;
+			if (isset($fields["location"]))
+			$common_fields["location"] = $fields["location"];
 			break;
 		case GROUP_TYPE:
 		case CONTRACT_TYPE:
@@ -352,6 +396,8 @@ function addNecessaryFields($model,$mapping,$mapping_definition,$entity,$type,$f
 	{
 		case MONITOR_TYPE:
 		case COMPUTER_TYPE:
+			if (isset($fields["plug"]))
+				unset($fields["plug"]);
 		case PRINTER_TYPE:
 			if (isset($fields["ifmac"]))
 				unset($fields["ifmac"]);
@@ -411,10 +457,11 @@ function getFieldValue($mapping, $mapping_definition,$field_value,$entity,$obj,$
 {
 	global $DB;
 	
+	
 	//If the value is a date, try to reformat it if it's not the good type (dd-mm-yyyy instead of yyyy-mm-dd)
-	if (isset($mapping_definition["type"]) && $mapping_definition["type"]=="date")
-		$field_value = reformatDate($field_value);
-		
+	//if (isset($mapping_definition["type"]) && $mapping_definition["type"]=="date")
+	//	$field_value = reformatDate($field_value);
+	
 	if (isset($mapping_definition["table_type"]))
 	{
 		switch ($mapping_definition["table_type"])
@@ -476,62 +523,20 @@ function processBeforeEnd($model,$type,$fields,$common_fields)
 		case NETWORKING_TYPE:
 			//Add ports if the mapping exists
 			if (isset($common_fields["nb_ports"]))
-				addNetworPorts($common_fields);
+				$common_fields = addNetworPorts($common_fields,$model->getCanAddDropdown());
 		break;	
 		case PRINTER_TYPE:
 		case COMPUTER_TYPE:
 		case PHONE_TYPE:
 			if (isset($common_fields["ifaddr"]) || isset($common_fields["ifmac"]))
-				addNetworkCard($common_fields);
+				$common_fields = addNetworkCard($common_fields,$model->getCanAddDropdown());
 		break;	
 		default:
 		break;
 	}
+	return $common_fields;
 }
 
-function addNetworkCard($common_fields)
-{
-	if (isset($common_fields["ifmac"]) || isset($common_fields["ifaddr"]))
-	{
-		if (!isset($common_fields["nb_ports"]))
-			$common_fields["nb_ports"]=1;
-			
-		$input=array();
-		if (isset($common_fields["ifaddr"]))
-			$input[0]["ifaddr"]=$common_fields["ifaddr"];
-		if (isset($common_fields["ifmac"]))
-			$input[0]["ifmac"]=$common_fields["ifmac"];
-		
-		addNetworPorts($common_fields,$input);
-	}
-}
-function addNetworPorts($common_fields,$network_cards_infos=array())
-{
-	if (isset($common_fields["nb_ports"]))
-	{
-		$netport = new Netport;
-		for ($i=0;$i<$common_fields["nb_ports"];$i++)
-		{
-			$add="";
-			if ($i<10)	$add="0";
-			$input["logical_number"]=$i;
-			$input["name"]=$add.$i;
-			$input["on_device"]=$common_fields["device_id"];
-			$input["device_type"]=$common_fields["device_type"];
-			
-			if (count($network_cards_infos)>0 && isset($network_cards_infos[$i]))
-			{
-				if (isset($network_cards_infos[$i]["ifaddr"]))
-					$input["ifaddr"]=$network_cards_infos[$i]["ifaddr"];
-				if (isset($network_cards_infos[$i]["ifmac"]))
-					$input["ifmac"]=$network_cards_infos[$i]["ifmac"];
-			}	
-
-			unset($netport->fields["ID"]);
-			$netport->add($input);	
-		}
-	}
-}
 /*
  * Check is the user has the right to add datas in a dropdown table
  * @param table the dropdown table
@@ -640,5 +645,31 @@ function addLocation($location,$entity,$parentid,$canadd)
 		return addDropdown($input);
 	else
 		return '';	
+}
+
+function reformatDate($original_date)
+{
+	$new_date=preg_replace('/(\d{1,2})-(\d{1,2})-(\d{4})/','\3-\2-\1',$original_date);
+	if (ereg('[0-9]{2,4}-[0-9]{1,2}-[0-9]{1,2}',$new_date))
+		return $new_date;
+	else
+		return $original_date;	
+}
+
+function reformatMacAddress($mac)
+{
+	preg_match("/^([0-9a-fA-F]{2})([0-9a-fA-F]{2})([0-9a-fA-F]{2})([0-9a-fA-F]{2})([0-9a-fA-F]{2})([0-9a-fA-F]{2})/",$mac,$results);
+	if (count($results) > 0)
+	{
+		$mac="";
+		$first=true;
+		unset($results[0]);
+		foreach($results as $result)
+		{
+			$mac.=(!$first?":":"").$result;
+			$first=false;
+		}
+	}
+	return $mac;
 }
 ?>

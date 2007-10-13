@@ -233,7 +233,7 @@ class DataInjectionModel extends CommonDBTM {
 	{
 		return $this->fields["user_id"];
 	}
-	
+
 	//---- Save -----//
 	function setModelType($type)
 	{
@@ -337,7 +337,7 @@ class DataInjectionModel extends CommonDBTM {
 		if(isset($fields["dropdown_public"]))
 			$this->setPublic($fields["dropdown_public"]);
 	}
-
+	
 }
 
 ?>

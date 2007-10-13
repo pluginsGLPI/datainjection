@@ -193,7 +193,6 @@ $DATA_INJECTION_MAPPING[COMPUTER_TYPE]['os_license_id']['field']='os_license_id'
 $DATA_INJECTION_MAPPING[COMPUTER_TYPE]['os_license_id']['name']=$LANG["computers"][11];
 $DATA_INJECTION_MAPPING[COMPUTER_TYPE]['os_license_id']['type']='text';
 
-
 $DATA_INJECTION_MAPPING[COMPUTER_TYPE]['FK_groups']['table']='glpi_groups';
 $DATA_INJECTION_MAPPING[COMPUTER_TYPE]['FK_groups']['field']='name';
 $DATA_INJECTION_MAPPING[COMPUTER_TYPE]['FK_groups']['name']=$LANG["common"][35];
@@ -201,14 +200,12 @@ $DATA_INJECTION_MAPPING[COMPUTER_TYPE]['FK_groups']['linkfield']='FK_groups';
 $DATA_INJECTION_MAPPING[COMPUTER_TYPE]['FK_groups']['type']='text';
 $DATA_INJECTION_MAPPING[COMPUTER_TYPE]['FK_groups']['table_type']='single';
 
-
 $DATA_INJECTION_MAPPING[COMPUTER_TYPE]['tech_num']['table']='glpi_users';
 $DATA_INJECTION_MAPPING[COMPUTER_TYPE]['tech_num']['field']='name';
 $DATA_INJECTION_MAPPING[COMPUTER_TYPE]['tech_num']['name']=$LANG["common"][10];
 $DATA_INJECTION_MAPPING[COMPUTER_TYPE]['tech_num']['linkfield']='tech_num';
 $DATA_INJECTION_MAPPING[COMPUTER_TYPE]['tech_num']['type']='text';
 $DATA_INJECTION_MAPPING[COMPUTER_TYPE]['tech_num']['table_type']='user';
-
 
 $DATA_INJECTION_MAPPING[COMPUTER_TYPE]['FK_users']['table']='glpi_users';
 $DATA_INJECTION_MAPPING[COMPUTER_TYPE]['FK_users']['field']='name';
@@ -228,6 +225,12 @@ $DATA_INJECTION_MAPPING[COMPUTER_TYPE]['ifaddr']['field']='ifaddr';
 $DATA_INJECTION_MAPPING[COMPUTER_TYPE]['ifaddr']['name']=$LANG["networking"][14];
 $DATA_INJECTION_MAPPING[COMPUTER_TYPE]['ifaddr']['type']='ip';
 $DATA_INJECTION_MAPPING[COMPUTER_TYPE]['ifaddr']['table_type']='virtual';
+
+$DATA_INJECTION_MAPPING[COMPUTER_TYPE]['plug']['table']='';
+$DATA_INJECTION_MAPPING[COMPUTER_TYPE]['plug']['field']='plug';
+$DATA_INJECTION_MAPPING[COMPUTER_TYPE]['plug']['name']=$LANG["networking"][51];
+$DATA_INJECTION_MAPPING[COMPUTER_TYPE]['plug']['type']='text';
+$DATA_INJECTION_MAPPING[COMPUTER_TYPE]['plug']['table_type']='virtual';
 
 // ----------------------------------------------------------------------
 //MONITOR MAPPING
@@ -531,6 +534,12 @@ $DATA_INJECTION_MAPPING[PRINTER_TYPE]['nb_ports']['name']=$DATAINJECTIONLANG["ma
 $DATA_INJECTION_MAPPING[PRINTER_TYPE]['nb_ports']['type']='integer';
 $DATA_INJECTION_MAPPING[PRINTER_TYPE]['nb_ports']['table_type']='virtual';
 
+$DATA_INJECTION_MAPPING[PRINTER_TYPE]['plug']['table']='';
+$DATA_INJECTION_MAPPING[PRINTER_TYPE]['plug']['field']='plug';
+$DATA_INJECTION_MAPPING[PRINTER_TYPE]['plug']['name']=$LANG["networking"][51];
+$DATA_INJECTION_MAPPING[PRINTER_TYPE]['plug']['type']='text';
+$DATA_INJECTION_MAPPING[PRINTER_TYPE]['plug']['table_type']='virtual';
+
 // ----------------------------------------------------------------------
 //PHONE MAPPING
 // ----------------------------------------------------------------------
@@ -681,6 +690,7 @@ $DATA_INJECTION_MAPPING[PHONE_TYPE]['ifaddr']['field']='ifaddr';
 $DATA_INJECTION_MAPPING[PHONE_TYPE]['ifaddr']['name']=$LANG["networking"][14];
 $DATA_INJECTION_MAPPING[PHONE_TYPE]['ifaddr']['type']='ip';
 $DATA_INJECTION_MAPPING[PHONE_TYPE]['ifaddr']['table_type']='virtual';
+
 
 // ----------------------------------------------------------------------
 //INFOCOM MAPPING
