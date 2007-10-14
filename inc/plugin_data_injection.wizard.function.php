@@ -1189,6 +1189,9 @@ function fillInfoStep($target,$error)
 							case "amort_type":
 								dropdownAmortType("field[$key][1]");
 								break;
+							case "contract":	
+							dropdownContracts("field[$key][1]",$_SESSION["glpiactive_entity"]);
+								break;
 							default:
 								dropdownValue($DATA_INJECTION_INFOS[$value->getInfosType()][$value->getValue()]["table"], "field[$key][1]", $value->getInfosText(), 0, $_SESSION["glpiactive_entity"]);
 								break;						 
