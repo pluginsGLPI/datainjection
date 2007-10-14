@@ -326,6 +326,10 @@ function preAddCommonFields($common_fields,$type,$fields,$entity)
 {
 	switch ($type)
 	{
+		case MONITOR_TYPE:
+			if (isset($fields["contract"]))
+				$common_fields["contract"] = $fields["contract"];
+		break;		
 		case NETWORKING_TYPE:
 			if (isset($fields["nb_ports"]))
 				$common_fields["nb_ports"] = $fields["nb_ports"];
@@ -340,6 +344,8 @@ function preAddCommonFields($common_fields,$type,$fields,$entity)
 				$common_fields["ifaddr"] = $fields["ifaddr"];
 			if (isset($fields["plug"]))
 				$common_fields["plug"] = $fields["plug"];
+			if (isset($fields["contract"]))
+				$common_fields["contract"] = $fields["contract"];
 		default:
 		break;
 	}
@@ -398,12 +404,18 @@ function addNecessaryFields($model,$mapping,$mapping_definition,$entity,$type,$f
 		case COMPUTER_TYPE:
 			if (isset($fields["plug"]))
 				unset($fields["plug"]);
+			if (isset($fields["contract"]))
+				unset($fields["contract"]);
 		case PRINTER_TYPE:
 			if (isset($fields["ifmac"]))
 				unset($fields["ifmac"]);
 			if (isset($fields["ifaddr"]))
 				unset($fields["ifaddr"]);
+			if (isset($fields["contract"]))
+				unset($fields["contract"]);
 		case PHONE_TYPE:
+			if (isset($fields["contract"]))
+				unset($fields["contract"]);
 		case NETWORKING_TYPE:
 			if (isset($fields["ipaddr"]))
 				unset ($fields["ipaddr"]);
@@ -413,11 +425,15 @@ function addNecessaryFields($model,$mapping,$mapping_definition,$entity,$type,$f
 				
 			if (isset($fields["nb_ports"]))
 				unset ($fields["nb_ports"]);
+			if (isset($fields["contract"]))
+				unset($fields["contract"]);
 		case GROUP_TYPE:
 		case CONTRACT_TYPE:
 		case PERIPHERAL_TYPE:
 			if (!isset($fields["FK_entities"]))
 				$fields["FK_entities"] = $entity;
+			if (isset($fields["contract"]))
+				unset($fields["contract"]);
 			break;
 		case USER_TYPE:
 			if (isset ($fields["password"])) 
@@ -481,6 +497,7 @@ function getFieldValue($mapping, $mapping_definition,$field_value,$entity,$obj,$
 				{
 					case "glpi_groups.name" :
 					case "glpi_users.name" :
+					case "glpi_contracts.name" :
 						$sql = "SELECT ID FROM ".$mapping_definition["table"]." WHERE ".$mapping_definition["field"]."='".$field_value."' AND FK_entities=".$entity;
 						$result = $DB->query($sql);
 						if ($DB->numrows($result))
@@ -530,6 +547,9 @@ function processBeforeEnd($model,$type,$fields,$common_fields)
 		case PHONE_TYPE:
 			if (isset($common_fields["ifaddr"]) || isset($common_fields["ifmac"]))
 				$common_fields = addNetworkCard($common_fields,$model->getCanAddDropdown());
+			if (isset($common_fields["contract"]))
+				addContract($common_fields);
+					
 		break;	
 		default:
 		break;
@@ -559,10 +579,16 @@ function haveRightDropdown($table,$canadd_dropdown)
 	
 function addInfosFields($fields,$infos)
 {
+	global $DATA_INJECTION_INFOS;
+	
 	foreach ($infos as $info)
-		if (keepInfo($info))	
-			$fields[$info->getInfosType()][$info->getValue()] = $info->getInfosText();
-
+		if (keepInfo($info))
+		{	
+			if (isset($DATA_INJECTION_INFOS[$info->getInfosType()][$info->getValue()]['table_type']) && $DATA_INJECTION_INFOS[$info->getInfosType()][$info->getValue()]['table_type'] == "multitext")
+				$fields[$info->getInfosType()][$info->getValue()] .= $info->getInfosText();
+			else
+				$fields[$info->getInfosType()][$info->getValue()] = $info->getInfosText();
+		}
 	return $fields;
 }
 

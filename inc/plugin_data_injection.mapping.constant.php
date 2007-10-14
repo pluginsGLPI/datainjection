@@ -232,6 +232,12 @@ $DATA_INJECTION_MAPPING[COMPUTER_TYPE]['plug']['name']=$LANG["networking"][51];
 $DATA_INJECTION_MAPPING[COMPUTER_TYPE]['plug']['type']='text';
 $DATA_INJECTION_MAPPING[COMPUTER_TYPE]['plug']['table_type']='virtual';
 
+$DATA_INJECTION_MAPPING[COMPUTER_TYPE]['contract']['table']='glpi_contracts';
+$DATA_INJECTION_MAPPING[COMPUTER_TYPE]['contract']['field']='name';
+$DATA_INJECTION_MAPPING[COMPUTER_TYPE]['contract']['name']=$LANG["financial"][1];
+$DATA_INJECTION_MAPPING[COMPUTER_TYPE]['contract']['type']='text';
+$DATA_INJECTION_MAPPING[COMPUTER_TYPE]['contract']['linkfield']='contract';
+$DATA_INJECTION_MAPPING[COMPUTER_TYPE]['contract']['table_type']='single';
 // ----------------------------------------------------------------------
 //MONITOR MAPPING
 // ----------------------------------------------------------------------
@@ -369,6 +375,13 @@ $DATA_INJECTION_MAPPING[MONITOR_TYPE]['FK_users']['name']=$LANG["common"][34];
 $DATA_INJECTION_MAPPING[MONITOR_TYPE]['FK_users']['linkfield']='FK_users';
 $DATA_INJECTION_MAPPING[MONITOR_TYPE]['FK_users']['type']='text';
 $DATA_INJECTION_MAPPING[MONITOR_TYPE]['FK_users']['table_type']='user';
+
+$DATA_INJECTION_MAPPING[MONITOR_TYPE]['contract']['table']='glpi_contracts';
+$DATA_INJECTION_MAPPING[MONITOR_TYPE]['contract']['field']='name';
+$DATA_INJECTION_MAPPING[MONITOR_TYPE]['contract']['name']=$LANG["financial"][1];
+$DATA_INJECTION_MAPPING[MONITOR_TYPE]['contract']['type']='text';
+$DATA_INJECTION_MAPPING[MONITOR_TYPE]['contract']['linkfield']='contract';
+$DATA_INJECTION_MAPPING[MONITOR_TYPE]['contract']['table_type']='single';
 
 // ----------------------------------------------------------------------
 //PRINTER MAPPING
@@ -540,6 +553,13 @@ $DATA_INJECTION_MAPPING[PRINTER_TYPE]['plug']['name']=$LANG["networking"][51];
 $DATA_INJECTION_MAPPING[PRINTER_TYPE]['plug']['type']='text';
 $DATA_INJECTION_MAPPING[PRINTER_TYPE]['plug']['table_type']='virtual';
 
+$DATA_INJECTION_MAPPING[PRINTER_TYPE]['contract']['table']='glpi_contracts';
+$DATA_INJECTION_MAPPING[PRINTER_TYPE]['contract']['field']='name';
+$DATA_INJECTION_MAPPING[PRINTER_TYPE]['contract']['name']=$LANG["financial"][1];
+$DATA_INJECTION_MAPPING[PRINTER_TYPE]['contract']['type']='text';
+$DATA_INJECTION_MAPPING[PRINTER_TYPE]['contract']['linkfield']='contract';
+$DATA_INJECTION_MAPPING[PRINTER_TYPE]['contract']['table_type']='single';
+
 // ----------------------------------------------------------------------
 //PHONE MAPPING
 // ----------------------------------------------------------------------
@@ -690,6 +710,14 @@ $DATA_INJECTION_MAPPING[PHONE_TYPE]['ifaddr']['field']='ifaddr';
 $DATA_INJECTION_MAPPING[PHONE_TYPE]['ifaddr']['name']=$LANG["networking"][14];
 $DATA_INJECTION_MAPPING[PHONE_TYPE]['ifaddr']['type']='ip';
 $DATA_INJECTION_MAPPING[PHONE_TYPE]['ifaddr']['table_type']='virtual';
+
+$DATA_INJECTION_MAPPING[PHONE_TYPE]['contract']['table']='glpi_contracts';
+$DATA_INJECTION_MAPPING[PHONE_TYPE]['contract']['field']='name';
+$DATA_INJECTION_MAPPING[PHONE_TYPE]['contract']['name']=$LANG["financial"][1];
+$DATA_INJECTION_MAPPING[PHONE_TYPE]['contract']['type']='text';
+$DATA_INJECTION_MAPPING[PHONE_TYPE]['contract']['linkfield']='contract';
+$DATA_INJECTION_MAPPING[PHONE_TYPE]['contract']['table_type']='single';
+
 
 
 // ----------------------------------------------------------------------
@@ -930,6 +958,14 @@ $DATA_INJECTION_MAPPING[NETWORKING_TYPE]['nb_ports']['field']='nb_ports';
 $DATA_INJECTION_MAPPING[NETWORKING_TYPE]['nb_ports']['name']=$DATAINJECTIONLANG["mappings"][1];
 $DATA_INJECTION_MAPPING[NETWORKING_TYPE]['nb_ports']['type']='integer';
 $DATA_INJECTION_MAPPING[NETWORKING_TYPE]['nb_ports']['table_type']='virtual';
+
+$DATA_INJECTION_MAPPING[NETWORKING_TYPE]['contract']['table']='glpi_contracts';
+$DATA_INJECTION_MAPPING[NETWORKING_TYPE]['contract']['field']='name';
+$DATA_INJECTION_MAPPING[NETWORKING_TYPE]['contract']['name']=$LANG["financial"][1];
+$DATA_INJECTION_MAPPING[NETWORKING_TYPE]['contract']['type']='text';
+$DATA_INJECTION_MAPPING[NETWORKING_TYPE]['contract']['linkfield']='contract';
+$DATA_INJECTION_MAPPING[NETWORKING_TYPE]['contract']['table_type']='single';
+
 
 // ----------------------------------------------------------------------
 //USER MAPPING
@@ -1247,5 +1283,13 @@ $DATA_INJECTION_MAPPING[PERIPHERAL_TYPE]['FK_users']['name']=$LANG["common"][34]
 $DATA_INJECTION_MAPPING[PERIPHERAL_TYPE]['FK_users']['linkfield']='FK_users';
 $DATA_INJECTION_MAPPING[PERIPHERAL_TYPE]['FK_users']['type']='text';
 $DATA_INJECTION_MAPPING[PERIPHERAL_TYPE]['FK_users']['table_type']='user';
+
+$DATA_INJECTION_MAPPING[PERIPHERAL_TYPE]['contract']['table']='glpi_contracts';
+$DATA_INJECTION_MAPPING[PERIPHERAL_TYPE]['contract']['field']='name';
+$DATA_INJECTION_MAPPING[PERIPHERAL_TYPE]['contract']['name']=$LANG["financial"][1];
+$DATA_INJECTION_MAPPING[PERIPHERAL_TYPE]['contract']['type']='text';
+$DATA_INJECTION_MAPPING[PERIPHERAL_TYPE]['contract']['linkfield']='contract';
+$DATA_INJECTION_MAPPING[PERIPHERAL_TYPE]['contract']['table_type']='single';
+
 
 ?>

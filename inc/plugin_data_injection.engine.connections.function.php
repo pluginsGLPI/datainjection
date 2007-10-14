@@ -105,10 +105,15 @@ function connectWire($common_fields)
 	
 	if (isset($common_fields["netpoint"]) && isset($common_fields["network_port_id"]))
 	{
-		$sql = "SELECT ID FROM glpi_networking_ports WHERE netpoint=".$common_fields["netpoint"]." AND device_type!=".$common_fields["device_type"];
+		$sql = "SELECT ID FROM glpi_networking_ports WHERE netpoint=".$common_fields["netpoint"]." AND device_type=".NETWORKING_TYPE;
 		$result=$DB->query($sql);
 		if($DB->numrows($result)>0)
 			$DB->query("INSERT INTO glpi_networking_wire (end1,end2) VALUES (".$common_fields["network_port_id"].",".$DB->result($result,0,"ID").")");
 	}
+}
+
+function addContract($common_fields)
+{
+	addDeviceContract($common_fields["contract"],$common_fields['device_type'],$common_fields['device_id']);	
 }
 ?>
