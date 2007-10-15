@@ -30,7 +30,7 @@
 // Original Author of file: Walid Nouh (walid.nouh@atosorigin.com)
 // Purpose of file:
 // ----------------------------------------------------------------------
-function addNetworkCard($common_fields,$canadd)
+function addNetworkCard($common_fields,$canadd,$just_add_port=false)
 {
 	if (isset($common_fields["ifmac"]) || isset($common_fields["ifaddr"]))
 	{
@@ -43,12 +43,12 @@ function addNetworkCard($common_fields,$canadd)
 		if (isset($common_fields["ifmac"]))
 			$input[0]["ifmac"]=$common_fields["ifmac"];
 		
-		addNetworPorts($common_fields,$input,$canadd);
+		addNetworPorts($common_fields,$input,$canadd,$just_add_port);
 	}
 	return $common_fields;
 }
 
-function addNetworPorts($common_fields,$network_cards_infos=array(),$canadd)
+function addNetworPorts($common_fields,$network_cards_infos=array(),$canadd,$just_add_port=false)
 {
 	global $DB;
 	$network_ports_ids=array();
@@ -59,9 +59,9 @@ function addNetworPorts($common_fields,$network_cards_infos=array(),$canadd)
 		for ($i=0;$i<$common_fields["nb_ports"];$i++)
 		{
 			$add="";
-			if ($i<10)	$add="0";
-			$input["logical_number"]=$i;
-			$input["name"]=$add.$i;
+			if ($i<9)	$add="0";
+			$input["logical_number"]=($i+1);
+			$input["name"]=$add.($i+1);
 			$input["on_device"]=$common_fields["device_id"];
 			$input["device_type"]=$common_fields["device_type"];
 			
@@ -74,19 +74,29 @@ function addNetworPorts($common_fields,$network_cards_infos=array(),$canadd)
 			}	
 
 			unset($netport->fields["ID"]);
-			//If the network card still exists, don't add it
-			$result = $DB->query("SELECT ID FROM glpi_networking_ports WHERE 1 ".(isset($input["ifaddr"])?" AND '".$input["ifaddr"]."'":'')." ".(isset($input["ifmac"])?" AND '".$input["ifmac"]."'":''));
-			if ($DB->numrows($result) > 0)
-				$common_fields["network_port_id"] = $DB->result($result,0,"ID");
-			else	
-				$common_fields["network_port_id"] = $netport->add($input);
 
-			$common_fields["netpoint"]=addNetworkPlug($common_fields,$canadd);
-			$input["ID"]=$common_fields["network_port_id"];
-			$input["netpoint"]=$common_fields["netpoint"];
-			$netport->update($input);
-			
-			connectWire($common_fields);	
+			if ($just_add_port)
+				$common_fields["network_port_id"] = $netport->add($input);
+			else
+			{	
+				//Try to find a port with this mac and/or ip already connected to this item
+				$result = $DB->query("SELECT ID FROM glpi_networking_ports WHERE on_device=".$common_fields["device_id"].(isset($input["ifaddr"])?" AND ifaddr='".$input["ifaddr"]."'":'')." ".(isset($input["ifmac"])?" AND ifmac='".$input["ifmac"]."'":''));
+				if ($DB->numrows($result) > 0)
+					$common_fields["network_port_id"] = $DB->result($result,0,"ID");
+				else
+					//	If the network card still exists, don't add it
+					$common_fields["network_port_id"] = $netport->add($input);
+	
+				
+				if ($common_fields["network_port_id"] != '')
+				{
+					$common_fields["netpoint"]=addNetworkPlug($common_fields,$canadd);
+					$input["ID"]=$common_fields["network_port_id"];
+					$input["netpoint"]=$common_fields["netpoint"];
+					$netport->update($input);
+					connectWire($common_fields);
+				}
+			}	
 		}
 	}
 }
@@ -94,7 +104,7 @@ function addNetworPorts($common_fields,$network_cards_infos=array(),$canadd)
 function addNetworkPlug($common_fields,$canadd)
 {
 	if (isset($common_fields["network_port_id"]) && isset($common_fields["plug"]))
-		return getDropdownValue(array(), array("table"=>"glpi_dropdown_netpoint"),$common_fields["plug"],$common_fields["FK_entities"],$canadd,$common_fields["location"]);	  
+		return getDropdownValue(array(), array("table"=>"glpi_dropdown_netpoint"),$common_fields["plug"],$common_fields["FK_entities"],$canadd,(isset($common_fields["location"])?$common_fields["location"]:0));	  
 	else
 		return 0;
 }
@@ -114,6 +124,7 @@ function connectWire($common_fields)
 
 function addContract($common_fields)
 {
-	addDeviceContract($common_fields["contract"],$common_fields['device_type'],$common_fields['device_id']);	
+	if (isset($common_fields["contract"]))
+		addDeviceContract($common_fields["contract"],$common_fields['device_type'],$common_fields['device_id']);	
 }
 ?>

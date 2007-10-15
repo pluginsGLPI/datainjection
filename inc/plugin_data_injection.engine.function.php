@@ -46,7 +46,10 @@ function reformatDatasBeforeCheck($model,$line)
 		$mapping = $mappings[$i];
 		$rank = $mapping->getRank();
 
-		if ($mapping->getValue() != NOT_MAPPED)
+		//If a value is set to NULL -> ignore the value during injection
+		if ($line[$rank] == 'NULL')
+			$line[$rank]=="";
+		elseif ($mapping->getValue() != NOT_MAPPED)
 		{
 			$mapping_definition = $DATA_INJECTION_MAPPING[$mapping->getMappingType()][$mapping->getValue()];
 			switch ($mapping_definition["type"])
@@ -319,6 +322,27 @@ function getInstance($device_type)
 		return $commonitem->obj;
 }
 
+function setFields($fields,&$common_fields,$fields_to_unset)
+{
+	foreach ($fields_to_unset as $field)
+		if (isset($fields[$field]))
+			$common_fields[$field]=$fields[$field];
+}
+
+function unsetFields(&$fields,$fields_to_unset)
+{
+	foreach ($fields_to_unset as $field)
+		if (isset($fields[$field]))
+			unset($fields[$field]);
+}
+
+function addField(&$array,$field,$value,$check_exists=true)
+{
+	if ($check_exists && !isset($array[$field]))
+		$array[$field]=$value;
+	elseif (!$check_exists)
+		$array[$field]=$value;	
+}
 /*
  * Add fields to the common_fields array BEFORE add/update of the primary type
  */
@@ -326,29 +350,25 @@ function preAddCommonFields($common_fields,$type,$fields,$entity)
 {
 	switch ($type)
 	{
+		case PHONE_TYPE:
+			$setFields = array("contract");
+		break;	
 		case MONITOR_TYPE:
-			if (isset($fields["contract"]))
-				$common_fields["contract"] = $fields["contract"];
+			$setFields = array("contract");
 		break;		
 		case NETWORKING_TYPE:
-			if (isset($fields["nb_ports"]))
-				$common_fields["nb_ports"] = $fields["nb_ports"];
+			$setFields = array("nb_ports","ifmac","ifaddr","plug","contract");
 		break;
 		case PRINTER_TYPE:
+			$setFields = array("nb_ports","ifmac","ifaddr","plug","contract");
+		break;	
 		case COMPUTER_TYPE:
-			if (isset($fields["nb_ports"]))
-				$common_fields["nb_ports"] = $fields["nb_ports"];
-			if (isset($fields["ifmac"]))
-				$common_fields["ifmac"] = $fields["ifmac"];
-			if (isset($fields["ifaddr"]))
-				$common_fields["ifaddr"] = $fields["ifaddr"];
-			if (isset($fields["plug"]))
-				$common_fields["plug"] = $fields["plug"];
-			if (isset($fields["contract"]))
-				$common_fields["contract"] = $fields["contract"];
+			$setFields = array("nb_ports","ifmac","ifaddr","plug","contract");
+		break;	
 		default:
 		break;
 	}
+	setFields($fields,$common_fields,$setFields);
 	return $common_fields;
 }
 /*
@@ -362,33 +382,40 @@ function preAddCommonFields($common_fields,$type,$fields,$entity)
  */
 function addCommonFields($common_fields,$type,$fields,$entity,$id)
 {
+	$setFields=array();
 	switch ($type)
 	{
 		case COMPUTER_TYPE:
+		//nobreak
 		case MONITOR_TYPE:
+		//nobreak
 		case PRINTER_TYPE:
+		//nobreak
 		case NETWORKING_TYPE:
+		//nobreak
 		case PHONE_TYPE:
+		//nobreak		
 		case PERIPHERAL_TYPE:
-			$common_fields["device_id"] = $id;
-			$common_fields["device_type"] = $type;
-			$common_fields["FK_entities"] = $entity;
-			if (isset($fields["location"]))
-			$common_fields["location"] = $fields["location"];
+			$setFields = array("location");
+			addField($common_fields,"device_id",$id,false);
+			addField($common_fields,"device_type",$type,false);
+			addField($common_fields,"FK_entities",$entity,false);
 			break;
 		case GROUP_TYPE:
+			addField($common_fields,"FK_entities",$entity,false);
+			break;
 		case CONTRACT_TYPE:
-			$common_fields["FK_entities"] = $entity;
+			addField($common_fields,"FK_entities",$entity,false);
 			break;
 		case USER_TYPE:
-			$common_fields["FK_user"] = $id;
-				
-			if (isset($fields["FK_group"]))
-				$common_fields["FK_group"] = $fields["FK_group"];
+			addField($common_fields,"FK_user",$id,false);
+			$setFields = array("FK_group");	
 			break;		
 		default:
 			break;	
 	}	
+
+	setFields($fields,$common_fields,$setFields);
 	return $common_fields;
 }
 
@@ -398,43 +425,39 @@ function addCommonFields($common_fields,$type,$fields,$entity,$id)
 function addNecessaryFields($model,$mapping,$mapping_definition,$entity,$type,$fields,$common_fields)
 {
 	global $DB;
+	$unsetFields = array();
 	switch ($type)
 	{
 		case MONITOR_TYPE:
-		case COMPUTER_TYPE:
-			if (isset($fields["plug"]))
-				unset($fields["plug"]);
-			if (isset($fields["contract"]))
-				unset($fields["contract"]);
-		case PRINTER_TYPE:
-			if (isset($fields["ifmac"]))
-				unset($fields["ifmac"]);
-			if (isset($fields["ifaddr"]))
-				unset($fields["ifaddr"]);
-			if (isset($fields["contract"]))
-				unset($fields["contract"]);
-		case PHONE_TYPE:
-			if (isset($fields["contract"]))
-				unset($fields["contract"]);
-		case NETWORKING_TYPE:
-			if (isset($fields["ipaddr"]))
-				unset ($fields["ipaddr"]);
-
-			if (isset($fields["macaddr"]))
-				unset ($fields["macaddr"]);
-				
-			if (isset($fields["nb_ports"]))
-				unset ($fields["nb_ports"]);
-			if (isset($fields["contract"]))
-				unset($fields["contract"]);
-		case GROUP_TYPE:
-		case CONTRACT_TYPE:
-		case PERIPHERAL_TYPE:
-			if (!isset($fields["FK_entities"]))
-				$fields["FK_entities"] = $entity;
-			if (isset($fields["contract"]))
-				unset($fields["contract"]);
+			$unsetFields = array("contract");
+			addField($fields,"FK_entities",$entity);
 			break;
+		case COMPUTER_TYPE:
+			$unsetFields = array("plug","contract");
+			addField($fields,"FK_entities",$entity);
+			break;
+		case PRINTER_TYPE:
+			$unsetFields = array("ifmac","ifaddr","contract");
+			addField($fields,"FK_entities",$entity);
+			break;
+		case PHONE_TYPE:
+			$unsetFields = array("plug","contract");
+			addField($fields,"FK_entities",$entity);
+			break;
+		case NETWORKING_TYPE:
+			$unsetFields = array("ifmac","ifaddr","contract");
+			addField($fields,"FK_entities",$entity);
+			break;
+		case PERIPHERAL_TYPE:
+			$unsetFields = array("contract");
+			addField($fields,"FK_entities",$entity);
+			break;
+
+
+		case GROUP_TYPE:
+		//nobreak
+		case CONTRACT_TYPE:
+		//nobreak;
 		case USER_TYPE:
 			if (isset ($fields["password"])) 
 			{
@@ -447,12 +470,9 @@ function addNecessaryFields($model,$mapping,$mapping_definition,$entity,$type,$f
 			}
 			
 			//Add auth and profiles fields	
-			if (!isset($fields["auth_method"]))
-				$fields["auth_method"] = AUTH_DB_GLPI;
-				
-			if (isset($fields["FK_profiles"]))
-				$fields["FK_profiles"] = getFieldIDByName($mapping,$mapping_definition,$fields["FK_profiles"],$entity);
+			addField($fields,"auth_method",AUTH_DB_GLPI);	
 
+			addField($fields,"FK_profiles",getFieldIDByName($mapping,$mapping_definition,$fields["FK_profiles"],$entity));	
 			break;
 		case INFOCOM_TYPE:
 			//Set the device_id
@@ -460,23 +480,18 @@ function addNecessaryFields($model,$mapping,$mapping_definition,$entity,$type,$f
 				$fields["FK_device"] = $common_fields["device_id"];
 			
 			//Set the device type
-			if (!isset($fields["device_type"]))
-				$fields["device_type"] = $model->getDeviceType();			
+			addField($fields,"device_type",$model->getDeviceType());
 			break;
 		default:
 			break;	
 	}
+	unsetFields($fields,$unsetFields);
 	return $fields;
 }
 
 function getFieldValue($mapping, $mapping_definition,$field_value,$entity,$obj,$canadd)
 {
 	global $DB;
-	
-	
-	//If the value is a date, try to reformat it if it's not the good type (dd-mm-yyyy instead of yyyy-mm-dd)
-	//if (isset($mapping_definition["type"]) && $mapping_definition["type"]=="date")
-	//	$field_value = reformatDate($field_value);
 	
 	if (isset($mapping_definition["table_type"]))
 	{
@@ -488,27 +503,32 @@ function getFieldValue($mapping, $mapping_definition,$field_value,$entity,$obj,$
 				break;
 			
 			case "user":
+				//find a user by looking into login field OR firstname + lastname OR lastname + firstname
 				$obj[$mapping_definition["linkfield"]] = findUser($field_value,$entity);
 				break;
 				
 			//Read in a single table	
 			case "single":
+				/*
 				switch ($mapping_definition["table"].".".$mapping_definition["field"])
 				{
 					case "glpi_groups.name" :
 					case "glpi_users.name" :
 					case "glpi_contracts.name" :
-						$sql = "SELECT ID FROM ".$mapping_definition["table"]." WHERE ".$mapping_definition["field"]."='".$field_value."' AND FK_entities=".$entity;
-						$result = $DB->query($sql);
-						if ($DB->numrows($result))
-							$obj[$mapping_definition["linkfield"]] = $DB->result($result,0, "ID");
-						break;
-					default:
-						break;
-								
-				}
+				
+						*/
+				$sql = "SELECT ID FROM ".$mapping_definition["table"]." WHERE ".$mapping_definition["field"]."='".$field_value."' AND FK_entities=".$entity;
+				$result = $DB->query($sql);
+				if ($DB->numrows($result))
+					$obj[$mapping_definition["linkfield"]] = $DB->result($result,0, "ID");
+				break;
+				//	default:
+				//		break;
+				//}
 				break;
 			case "multitext":
+				//Multitext means that the several input fields can be mapped into one field in DB. all the informations
+				//are appended at the end of the field
 				if (!isset($obj[$mapping_definition["field"]]))
 					$obj[$mapping_definition["field"]]="";
 					
@@ -516,6 +536,7 @@ function getFieldValue($mapping, $mapping_definition,$field_value,$entity,$obj,$
 					$obj[$mapping_definition["field"]] .= $mapping->getName()."=".$field_value."\n";		
 				break;	
 			case "virtual":
+			//nobreak
 			default :
 				$obj[$mapping_definition["field"]] = $field_value;
 				break;
@@ -535,21 +556,19 @@ function processBeforeEnd($model,$type,$fields,$common_fields)
 			//If user ID is given, add the user in this group
 			if (isset($common_fields["FK_user"]) && isset($common_fields["FK_group"]))
 				addUserGroup($common_fields["FK_user"],$common_fields["FK_group"]);
-				
 		break;
 		case NETWORKING_TYPE:
 			//Add ports if the mapping exists
-			if (isset($common_fields["nb_ports"]))
-				$common_fields = addNetworPorts($common_fields,$model->getCanAddDropdown());
+			$common_fields = addNetworPorts($common_fields,array(),$model->getCanAddDropdown(),true);
+			addContract($common_fields);
 		break;	
 		case PRINTER_TYPE:
+		//nobreak
 		case COMPUTER_TYPE:
+		//nobreak
 		case PHONE_TYPE:
-			if (isset($common_fields["ifaddr"]) || isset($common_fields["ifmac"]))
-				$common_fields = addNetworkCard($common_fields,$model->getCanAddDropdown());
-			if (isset($common_fields["contract"]))
-				addContract($common_fields);
-					
+			$common_fields = addNetworkCard($common_fields,$model->getCanAddDropdown());
+			addContract($common_fields);					
 		break;	
 		default:
 		break;
