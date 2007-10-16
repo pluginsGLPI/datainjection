@@ -67,4 +67,41 @@ function getModelInstanceByID($model_id)
 	$model->getFromDB($model_id);
 	return $model;
 }
+
+function exportModelAsCsv()
+{
+	$ficname = tempnam(PLUGIN_DATA_INJECTION_UPLOAD_DIR, "CSV");
+	$fic = fopen($ficname, "wb");
+	if (!$fic) return false;
+	
+	$sql ="SHOW COLUMNS FROM ".$this->table;
+	
+	if ($data=$DB->fetch_assoc($sql)){
+		$str="";
+		foreach ($data as $nom=>$val) {
+			if (!empty($str)) $str.=";";
+			$str .= '"' . $nom . '"';
+		}
+		
+		fwrite($fic, $str . "\r\n");
+	}
+
+	$sql ="SELECT * FROM ".$this->table." WHERE ID=".$this->fields["ID"];
+	$result = $DB->query($sql);	
+	while ($data=$DB->fetch_assoc($result)) {
+			$str="";
+			foreach ($data as $nom=>$val) {
+				if (!empty($str)) $str.=";";
+				
+				if (!empty($val))
+					if (is_numeric($val))
+						$str .= $val;
+					else
+						$str .= '"' . mysql_escape_string($val) . '"';
+			}	
+			fwrite($fic, $str . "\r\n");
+		} 
+	fclose($fic);
+	return $ficname;
+}
 ?>

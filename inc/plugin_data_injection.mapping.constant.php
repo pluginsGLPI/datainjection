@@ -45,6 +45,8 @@
 // - text : the data will be imported as a string
 // - int : the data must be an int
 // - date : the data must be a date
+// - ip : an ip address
+// - mac : a mac address
 
 
 
@@ -718,8 +720,6 @@ $DATA_INJECTION_MAPPING[PHONE_TYPE]['contract']['type']='text';
 $DATA_INJECTION_MAPPING[PHONE_TYPE]['contract']['linkfield']='contract';
 $DATA_INJECTION_MAPPING[PHONE_TYPE]['contract']['table_type']='single';
 
-
-
 // ----------------------------------------------------------------------
 //INFOCOM MAPPING
 // ----------------------------------------------------------------------
@@ -924,7 +924,7 @@ $DATA_INJECTION_MAPPING[NETWORKING_TYPE]['firmware']['type']='text';
 
 $DATA_INJECTION_MAPPING[NETWORKING_TYPE]['ifmac']['table']='glpi_networking';
 $DATA_INJECTION_MAPPING[NETWORKING_TYPE]['ifmac']['field']='ifmac';
-$DATA_INJECTION_MAPPING[NETWORKING_TYPE]['ifmac']['name']=$LANG["networking"][13];
+$DATA_INJECTION_MAPPING[NETWORKING_TYPE]['ifmac']['name']=$LANG["device_iface"][2];
 $DATA_INJECTION_MAPPING[NETWORKING_TYPE]['ifmac']['type']='mac';
 
 $DATA_INJECTION_MAPPING[NETWORKING_TYPE]['ifaddr']['table']='glpi_networking';
@@ -966,6 +966,17 @@ $DATA_INJECTION_MAPPING[NETWORKING_TYPE]['contract']['type']='text';
 $DATA_INJECTION_MAPPING[NETWORKING_TYPE]['contract']['linkfield']='contract';
 $DATA_INJECTION_MAPPING[NETWORKING_TYPE]['contract']['table_type']='single';
 
+$DATA_INJECTION_MAPPING[NETWORKING_TYPE]['port']['table']='';
+$DATA_INJECTION_MAPPING[NETWORKING_TYPE]['port']['field']='port';
+$DATA_INJECTION_MAPPING[NETWORKING_TYPE]['port']['name']=$DATAINJECTIONLANG["mappings"][2];
+$DATA_INJECTION_MAPPING[NETWORKING_TYPE]['port']['type']='text';
+$DATA_INJECTION_MAPPING[NETWORKING_TYPE]['port']['table_type']='virtual';
+
+$DATA_INJECTION_MAPPING[NETWORKING_TYPE]['plug']['table']='';
+$DATA_INJECTION_MAPPING[NETWORKING_TYPE]['plug']['field']='plug';
+$DATA_INJECTION_MAPPING[NETWORKING_TYPE]['plug']['name']=$LANG["networking"][51];
+$DATA_INJECTION_MAPPING[NETWORKING_TYPE]['plug']['type']='text';
+$DATA_INJECTION_MAPPING[NETWORKING_TYPE]['plug']['table_type']='virtual';
 
 // ----------------------------------------------------------------------
 //USER MAPPING

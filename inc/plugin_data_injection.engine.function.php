@@ -47,8 +47,9 @@ function reformatDatasBeforeCheck($model,$line)
 		$rank = $mapping->getRank();
 
 		//If a value is set to NULL -> ignore the value during injection
-		if ($line[$rank] == 'NULL')
-			$line[$rank]=="";
+		if ($line[$rank] == "NULL")
+			$line[$rank]=EMPTY_VALUE;
+			
 		elseif ($mapping->getValue() != NOT_MAPPED)
 		{
 			$mapping_definition = $DATA_INJECTION_MAPPING[$mapping->getMappingType()][$mapping->getValue()];
@@ -85,7 +86,7 @@ function checkType($type, $name, $data,$mandatory)
 		$field_type = $DATA_INJECTION_MAPPING[$type][$name]['type'];
 
 		//If no data provided AND this mapping is not mandatory
-		if (!$mandatory && ($data == null || $data == "NULL" || $data == ''))
+		if (!$mandatory && ($data == null || $data == "NULL" || $data == EMPTY_VALUE))
 			return TYPE_CHECK_OK;
 			
 		switch($field_type)
@@ -106,7 +107,11 @@ function checkType($type, $name, $data,$mandatory)
 					return ERROR_IMPORT_WRONG_TYPE;
 			break;
 			case 'date' :
+				ereg("([0-9]{4})[\-]([0-9]{2})[\-]([0-9]{2})",$data,$regs);
+				if (count($regs) > 0)
 					return TYPE_CHECK_OK;
+				else
+					return ERROR_IMPORT_WRONG_TYPE;
 			break;	
 			case 'ip':
 				ereg("([0-9]{1,3})\.([0-9]{1,3})\.([0-9]{1,3})\.([0-9]{1,3})",$data,$regs);
@@ -146,7 +151,7 @@ function checkLine($model,$line,$res)
 			$rank = $mapping->getRank();
 
 			//If field is mandatory AND not mapped -> error
-			if ($mapping->isMandatory() && (!isset($line[$rank]) || $line[$rank] == NULL || $line[$rank] == "" || $line[$rank] == -1))
+			if ($mapping->isMandatory() && (!isset($line[$rank]) || $line[$rank] == NULL || $line[$rank] == EMPTY_VALUE || $line[$rank] == -1))
 			{
 				$res->setStatus(false);
 				$res->setCheckStatus(-1);
@@ -190,7 +195,7 @@ function checkLine($model,$line,$res)
  * @param entity the active entity
  * @return the ID of the insert value in the dropdown table
  */	
-function getDropdownValue($mapping, $mapping_definition,$value,$entity,$canadd=0,$location='')
+function getDropdownValue($mapping, $mapping_definition,$value,$entity,$canadd=0,$location=EMPTY_VALUE)
 {
 	global $DB, $CFG_GLPI;
 
@@ -198,7 +203,7 @@ function getDropdownValue($mapping, $mapping_definition,$value,$entity,$canadd=0
 		return 0;
 
 		$rightToAdd = haveRightDropdown($mapping_definition["table"],$canadd);
-			
+
 		//Value doesn't exists -> add the value in the dropdown table
 		switch ($mapping_definition["table"])
 		{
@@ -208,15 +213,15 @@ function getDropdownValue($mapping, $mapping_definition,$value,$entity,$canadd=0
 				$input["value2"] = $location;
 			break;
 			default:
-				$input["value2"] = "";
+				$input["value2"] = EMPTY_VALUE;
 				break;
 		}
 
 		$input["tablename"] = $mapping_definition["table"];
 		$input["value"] = $value;
 		$input["FK_entities"] = $entity;
-		$input["type"] = "";
-		$input["comments"] = "";
+		$input["type"] = EMPTY_VALUE;
+		$input["comments"] = EMPTY_VALUE;
 		
 		$ID = getDropdownID($input);
 		if ($ID != -1)
@@ -224,9 +229,15 @@ function getDropdownValue($mapping, $mapping_definition,$value,$entity,$canadd=0
 		else if ($rightToAdd)	
 			return addDropdown($input);
 		else
-			return '';	
+			return EMPTY_VALUE;	
 }
 
+/*
+ * Find a user. Look for login OR firstname + lastname OR lastname + firstname
+ * @param value the user to look for
+ * @param entity the entity where the user should have right
+ * @return the user ID if found or ''
+ */
 function findUser($value,$entity)
 {
 	global $DB;
@@ -240,10 +251,10 @@ function findUser($value,$entity)
 		if (in_array($entity,$entities))
 			return $ID;
 		else
-			return '';	
+			return EMPTY_VALUE;	
 	}
 	else
-		return '';		
+		return EMPTY_VALUE;		
 }
 /*
  * Function to check if the datas to inject already exists in DB
@@ -258,7 +269,7 @@ function dataAlreadyInDB($type,$fields,$mapping_definition,$model)
 	global $DB;
 	$where = "";
 	$mandatories = getAllMandatoriesMappings($type,$model);
-	
+
 	if ($model->getDeviceType() == $type)
 		$primary = true;
 	else
@@ -315,6 +326,11 @@ function dataAlreadyInDB($type,$fields,$mapping_definition,$model)
 		return array("ID"=>-1);
 }
 
+/*
+ * Get an instance of the primary type
+ * @param device_type the type of the primary item
+ * @return an instance of the primary item
+ */
 function getInstance($device_type)
 {
 		$commonitem = new CommonItem;
@@ -322,13 +338,24 @@ function getInstance($device_type)
 		return $commonitem->obj;
 }
 
-function setFields($fields,&$common_fields,$fields_to_unset)
+/*
+ * Set fields in the common_fields array
+ * @param fields the fields to write in DB
+ * @param common_fields the array of all the common_fields
+ * @param fields_to_set the list of fields to add to the common_fields
+ */
+function setFields($fields,&$common_fields,$fields_to_set)
 {
-	foreach ($fields_to_unset as $field)
+	foreach ($fields_to_set as $field)
 		if (isset($fields[$field]))
 			$common_fields[$field]=$fields[$field];
 }
 
+/*
+ * Set unfields in an array
+ * @param fields the fields to write in DB
+ * @param fields_to_unset the list of fields to unset from the fields arrary
+ */
 function unsetFields(&$fields,$fields_to_unset)
 {
 	foreach ($fields_to_unset as $field)
@@ -357,7 +384,11 @@ function preAddCommonFields($common_fields,$type,$fields,$entity)
 			$setFields = array("contract");
 		break;		
 		case NETWORKING_TYPE:
-			$setFields = array("nb_ports","ifmac","ifaddr","plug","contract");
+			$setFields = array("nb_ports","ifmac","ifaddr","plug","contract","port");		
+			
+			//If a number of ports is provided, then a specific port cannot be modified
+			if (isset($fields["nb_ports"]) && isset($fields["port"]))
+				unset($setFields["port"]);
 		break;
 		case PRINTER_TYPE:
 			$setFields = array("nb_ports","ifmac","ifaddr","plug","contract");
@@ -385,16 +416,37 @@ function addCommonFields($common_fields,$type,$fields,$entity,$id)
 	$setFields=array();
 	switch ($type)
 	{
+		//Copy/paste is voluntary in order to know exactly which fields are included or not
 		case COMPUTER_TYPE:
-		//nobreak
+			$setFields = array("location");
+			addField($common_fields,"device_id",$id,false);
+			addField($common_fields,"device_type",$type,false);
+			addField($common_fields,"FK_entities",$entity,false);
+			break;
 		case MONITOR_TYPE:
-		//nobreak
+			$setFields = array("location");
+			addField($common_fields,"device_id",$id,false);
+			addField($common_fields,"device_type",$type,false);
+			addField($common_fields,"FK_entities",$entity,false);
+			break;
 		case PRINTER_TYPE:
-		//nobreak
+			$setFields = array("location");
+			addField($common_fields,"device_id",$id,false);
+			addField($common_fields,"device_type",$type,false);
+			addField($common_fields,"FK_entities",$entity,false);
+			break;
 		case NETWORKING_TYPE:
-		//nobreak
+			$setFields = array("location");
+			addField($common_fields,"device_id",$id,false);
+			addField($common_fields,"device_type",$type,false);
+			addField($common_fields,"FK_entities",$entity,false);
+			break;
 		case PHONE_TYPE:
-		//nobreak		
+			$setFields = array("location");
+			addField($common_fields,"device_id",$id,false);
+			addField($common_fields,"device_type",$type,false);
+			addField($common_fields,"FK_entities",$entity,false);
+			break;
 		case PERIPHERAL_TYPE:
 			$setFields = array("location");
 			addField($common_fields,"device_id",$id,false);
@@ -421,6 +473,14 @@ function addCommonFields($common_fields,$type,$fields,$entity,$id)
 
 /*
  * Add necessary fields
+ * @param model the current model
+ * @param mapping the current mapping
+ * @param mapping_definition the mapping definition associated to the mapping
+ * @param entity the current entity
+ * @param type the device type
+ * @param fields the fields to insert into DB
+ * @param common_fields the array of common fields
+ * @return the fields modified
  */
 function addNecessaryFields($model,$mapping,$mapping_definition,$entity,$type,$fields,$common_fields)
 {
@@ -445,14 +505,13 @@ function addNecessaryFields($model,$mapping,$mapping_definition,$entity,$type,$f
 			addField($fields,"FK_entities",$entity);
 			break;
 		case NETWORKING_TYPE:
-			$unsetFields = array("ifmac","ifaddr","contract");
+			$unsetFields = array("ifmac","ifaddr","contract","ports");
 			addField($fields,"FK_entities",$entity);
 			break;
 		case PERIPHERAL_TYPE:
 			$unsetFields = array("contract");
 			addField($fields,"FK_entities",$entity);
 			break;
-
 
 		case GROUP_TYPE:
 		//nobreak
@@ -509,22 +568,19 @@ function getFieldValue($mapping, $mapping_definition,$field_value,$entity,$obj,$
 				
 			//Read in a single table	
 			case "single":
-				/*
-				switch ($mapping_definition["table"].".".$mapping_definition["field"])
+				switch ($mapping_definition["table"])
 				{
-					case "glpi_groups.name" :
-					case "glpi_users.name" :
-					case "glpi_contracts.name" :
-				
-						*/
-				$sql = "SELECT ID FROM ".$mapping_definition["table"]." WHERE ".$mapping_definition["field"]."='".$field_value."' AND FK_entities=".$entity;
+					case "glpi_networking_ports":
+						$where=" WHERE ".$mapping_definition["field"]."='".$field_value."'";
+					break;
+					default:
+						$where=" WHERE ".$mapping_definition["field"]."='".$field_value."' AND FK_entities=".$entity;
+					break;
+				}
+				$sql = "SELECT ID FROM ".$mapping_definition["table"].$where;
 				$result = $DB->query($sql);
 				if ($DB->numrows($result))
 					$obj[$mapping_definition["linkfield"]] = $DB->result($result,0, "ID");
-				break;
-				//	default:
-				//		break;
-				//}
 				break;
 			case "multitext":
 				//Multitext means that the several input fields can be mapped into one field in DB. all the informations
@@ -548,6 +604,14 @@ function getFieldValue($mapping, $mapping_definition,$field_value,$entity,$obj,$
 	return $obj;
 }
 
+/*
+ * Process actions after item was imported in DB (mainly create connections)
+ * @param model the model
+ * @param type the type of the item inserted
+ * @param fields the fields of the item inserted
+ * @param common_fields the array of common fields
+ * @return the common_fields
+ */
 function processBeforeEnd($model,$type,$fields,$common_fields)
 {
 	switch ($type)
@@ -559,7 +623,7 @@ function processBeforeEnd($model,$type,$fields,$common_fields)
 		break;
 		case NETWORKING_TYPE:
 			//Add ports if the mapping exists
-			$common_fields = addNetworPorts($common_fields,array(),$model->getCanAddDropdown(),true);
+			$common_fields = addNetworkCard($common_fields,$model->getCanAddDropdown());
 			addContract($common_fields);
 		break;	
 		case PRINTER_TYPE:
@@ -595,7 +659,13 @@ function haveRightDropdown($table,$canadd_dropdown)
 			return haveRight("dropdown","w");	
 	}
 }
-	
+
+/*
+ * Add the complementary informations into the list of fields to insert in DB
+ * @param fields the fields to insert into DB
+ * @param infos the informations filled by the user when injecting his file
+ * @return the fields modified
+ */	
 function addInfosFields($fields,$infos)
 {
 	global $DATA_INJECTION_INFOS;
@@ -621,7 +691,7 @@ function keepInfo($info)
 	switch ($DATA_INJECTION_INFOS[$info->getInfosType()][$info->getValue()]["input_type"])
 	{
 		case "text":
-			if ($info->getInfosText() != NULL && $info->getInfosText() != '')
+			if ($info->getInfosText() != NULL && $info->getInfosText() != EMPTY_VALUE)
 				return true;
 		break;
 		case "dropdown":
@@ -632,6 +702,12 @@ function keepInfo($info)
 	return false;
 }
 
+/*
+ * Log event into the history
+ * @param device_type the type of the item to inject
+ * @param device_id the id of the inserted item
+ * @param the action_type the type of action(add or update)
+ */
 function logAddOrUpdate($device_type,$device_id,$action_type)
 {
 	global $DATAINJECTIONLANG;
@@ -648,7 +724,11 @@ function logAddOrUpdate($device_type,$device_id,$action_type)
 }
 
 /*
- * 
+ * Unset the fields when user have no rights to add or modify
+ * @param fields the fields to insert into DB
+ * @param fields_from_db fields already in DB
+ * @param can_overwrite indicates if the model allows datas already in DB to be overwrited
+ * @return the fields modified
  */
 function filterFields($fields,$fields_from_db,$can_overwrite)
 {
@@ -660,25 +740,40 @@ function filterFields($fields,$fields_from_db,$can_overwrite)
 	return $fields;
 }
 
+/*
+ * Create a tree of locations
+ * @param location the full tree of locations
+ * @param entity the current entity
+ * @param canadd indicates if the user has the right to add locations
+ * @return the location ID
+ */
 function checkLocation ($location, $entity, $canadd)
 {
 	$location_id = 0;
 	$locations = explode('>',$location);
 	
 	foreach ($locations as $location)
-		if ($location_id !== '')
+		if ($location_id !== EMPTY_VALUE)
 			$location_id = addLocation(trim($location),$entity,$location_id,$canadd);
 		
 	return $location_id;	
 }
 
+/*
+ * Add a location at a specified level
+ * @param location the full tree of locations
+ * @param entity the current entity
+ * @param the parentid ID of the parent location
+ * @param canadd indicates if the user has the right to add locations
+ * @return the location ID
+ */
 function addLocation($location,$entity,$parentid,$canadd)
 {
 	$input["tablename"] = "glpi_dropdown_locations";
 	$input["value"] = $location;
 	$input["value2"] = $parentid;
 	$input["type"] = "under";
-	$input["comments"] = "";
+	$input["comments"] = EMPTY_VALUE;
 	$input["FK_entities"] = $entity;
 	
 	$ID = getDropdownID($input);
@@ -689,9 +784,14 @@ function addLocation($location,$entity,$parentid,$canadd)
 	if ($canadd)	
 		return addDropdown($input);
 	else
-		return '';	
+		return EMPTY_VALUE;	
 }
 
+/*
+ * Reformat date from dd-mm-yyyy to yyyy-mm-dd
+ * @param original_date the original date
+ * @return the date reformated, if needed
+ */
 function reformatDate($original_date)
 {
 	$new_date=preg_replace('/(\d{1,2})-(\d{1,2})-(\d{4})/','\3-\2-\1',$original_date);
@@ -701,6 +801,11 @@ function reformatDate($original_date)
 		return $original_date;	
 }
 
+/*
+ * Reformat mac adress if mac doesn't contains : or - as seperator
+ * @param mac the original mac address
+ * @return the mac address modified, if needed
+ */
 function reformatMacAddress($mac)
 {
 	preg_match("/^([0-9a-fA-F]{2})([0-9a-fA-F]{2})([0-9a-fA-F]{2})([0-9a-fA-F]{2})([0-9a-fA-F]{2})([0-9a-fA-F]{2})/",$mac,$results);

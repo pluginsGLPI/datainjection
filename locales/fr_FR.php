@@ -71,6 +71,7 @@ $DATAINJECTIONLANG["choiceStep"][8] = "Pas de commentaires";
 $DATAINJECTIONLANG["choiceStep"][9] = "Faites votre sélection";
 $DATAINJECTIONLANG["choiceStep"][10] = "En fonction de vos droits, vous ne pourrez peut être pas avoir accès à tous les choix.";
 $DATAINJECTIONLANG["choiceStep"][11] = "Pour la modification, la suppression et l'utilisation, vous devez selectionner un modèle dans le menu déroulant.";
+$DATAINJECTIONLANG["choiceStep"][12] = "Exporter un modèle existant";
 
 $DATAINJECTIONLANG["modelStep"][1] = "Informations sur le type fichier";
 $DATAINJECTIONLANG["modelStep"][2] = "Modification du modèle";
@@ -193,8 +194,7 @@ $DATAINJECTIONLANG["profiles"][2] = "Supprimer un modèle";
 $DATAINJECTIONLANG["profiles"][3] = "Utiliser un modèle";
 
 $DATAINJECTIONLANG["mappings"][1] = "Nombre de ports";
-$DATAINJECTIONLANG["mappings"][2] = "matériel réseau connecté";
-$DATAINJECTIONLANG["mappings"][3] = "Nom matériel réseau connecté";
+$DATAINJECTIONLANG["mappings"][2] = "Port réseau";
 
 $DATAINJECTIONLANG["history"][1] = "depuis un fichier CSV";
 $DATAINJECTIONLANG["logevent"][1] = "injection d'un fichier CSV.";
