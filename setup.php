@@ -41,7 +41,7 @@ function plugin_init_data_injection() {
 
 		if (isset($_SESSION["glpi_plugin_data_injection_installed"]) && $_SESSION["glpi_plugin_data_injection_installed"]==1) {
 		
-			if (plugin_data_injection_haveRight("create_model","w") || plugin_data_injection_haveRight("use_model","r"))
+			if (plugin_data_injection_haveRight("create_model","w") || plugin_data_injection_haveRight("use_model","r")  && (isset($_SESSION["glpi_plugin_data_injection_profile"])))
 				$PLUGIN_HOOKS['menu_entry']['data_injection'] = true;
 			
 			if (haveRight("config","w") || haveRight("profile","w")){
