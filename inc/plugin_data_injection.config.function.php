@@ -114,27 +114,6 @@ function plugin_data_injection_Install() {
 	  PRIMARY KEY  (`ID`)
 	) ENGINE=MyISAM;";
 	$DB->query($query) or die($DB->error());
-
-	
-	$query ="INSERT INTO `glpi_plugin_data_injection_profiles` ( `ID`, `name` , `is_default`, `create_model`, `use_model`)
-		VALUES ('1', 'post-only','1',NULL,NULL);";
-
-	$DB->query($query) or die("1.1 insert 1 glpi_plugin_data_injection_profiles ".$DB->error());
-
-	$query ="INSERT INTO `glpi_plugin_data_injection_profiles` ( `ID`, `name` , `is_default`, `create_model`, `use_model`)
-		VALUES ('2', 'normal','0',NULL,'r');";
-
-	$DB->query($query) or die("1.1 insert 2 glpi_plugin_data_injection_profiles ".$DB->error());
-
-	$query ="INSERT INTO `glpi_plugin_data_injection_profiles` ( `ID`, `name` , `is_default`, `create_model`, `use_model`)
-		VALUES ('3', 'admin','0','w','r');";
-
-	$DB->query($query) or die("1.1 insert 3 glpi_plugin_data_injection_profiles ".$DB->error());
-
-	$query ="INSERT INTO `glpi_plugin_data_injection_profiles` ( `ID`, `name` , `is_default`, `create_model`, `use_model`)
-		VALUES ('4', 'super-admin','0','w','r');";
-
-	$DB->query($query) or die("1.1 insert 3 glpi_plugin_data_injection_profiles ".$DB->error());
 	
 	if (!is_dir(PLUGIN_DATA_INJECTION_UPLOAD_DIR)) {
 		mkdir(PLUGIN_DATA_INJECTION_UPLOAD_DIR);
@@ -189,14 +168,32 @@ function deleteDir($fichier) {
 
 function plugin_data_injection_initSession()
 {
-	if (TableExists("glpi_plugin_data_injection_filetype"))
-	{
+	global $CFG_GLPI,$DB;
+	
+	if(TableExists("glpi_plugin_data_injection_filetype")){
+
 		$prof=new DataInjectionProfile();
-		if($prof->getFromDBForUser($_SESSION["glpiID"])){
-			$_SESSION["glpi_plugin_data_injection_profile"]=$prof->fields;
-		}
-		$_SESSION["glpi_plugin_data_injection_installed"]=1;
-	}		
+		$_SESSION['glpi_plugin_data_injection_profile'] = array ();
+		
+		$query0 = "SELECT DISTINCT glpi_profiles.name FROM glpi_users_profiles INNER JOIN glpi_profiles ON (glpi_users_profiles.FK_profiles = glpi_profiles.ID)
+					WHERE glpi_users_profiles.FK_users='".$_SESSION["glpiID"]."'";
+		$result0 = $DB->query($query0);
+		if ($DB->numrows($result0)) {
+			while ($data0 = $DB->fetch_assoc($result0)) {
+				$query = "SELECT * FROM glpi_plugin_data_injection_profiles WHERE (name = '".$data0["name"]."')";
+				$result = $DB->query($query);
+					
+				if ($DB->numrows($result)) {
+					while ($data = $DB->fetch_assoc($result)) {
+						$prof->fields = array ();
+						$prof->getFromDB($data['ID']);
+						$_SESSION['glpi_plugin_data_injection_profile'] = $prof->fields;
+						$_SESSION["glpi_plugin_data_injection_installed"]=1;
+					}		
+				}	
+			}		
+		}			
+	}
 }
 
 function plugin_data_injection_changeprofile()
@@ -207,6 +204,22 @@ function plugin_data_injection_changeprofile()
 			$_SESSION["glpi_plugin_data_injection_profile"]=$prof->fields;
 		else
 			unset($_SESSION["glpi_plugin_data_injection_profile"]);
+	}
+}
+
+function plugin_data_injection_createfirstaccess($ID){
+
+	GLOBAL $DB;
+	
+	$query0 ="SELECT * FROM glpi_plugin_data_injection_profiles where ID='".$ID."';";
+	$result0=$DB->query($query0);
+	if ($DB->numrows($result0)==0){
+		$query="SELECT * FROM glpi_profiles where ID='$ID';";
+		$result=$DB->query($query);
+		$name = $DB->result($result, 0, "glpi_profiles.name");
+		
+		$query1 ="INSERT INTO `glpi_plugin_data_injection_profiles` ( `ID`, `name` , `is_default`, `create_model`, `use_model`) VALUES ('$ID', '$name','0','w','r');";
+		$DB->query($query1);
 	}
 }
 

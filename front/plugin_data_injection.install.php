@@ -47,6 +47,7 @@ if (haveRight("config","w")){
 	if(!TableExists("glpi_plugin_data_injection_filetype")){
 		cleanCache("GLPI_HEADER_".$_SESSION["glpiID"]);
 		plugin_data_injection_Install();
+		plugin_data_injection_createfirstaccess($_SESSION['glpiactiveprofile']['ID']);
 		plugin_data_injection_initSession();
 		glpi_header($_SERVER['HTTP_REFERER']);
 	}

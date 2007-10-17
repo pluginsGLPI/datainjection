@@ -34,16 +34,17 @@
 include_once ("plugin_data_injection.includes.php");
 
 function plugin_init_data_injection() {
-	global $PLUGIN_HOOKS;
+	global $PLUGIN_HOOKS,$CFG_GLPI,$DATAINJECTIONLANG;
 
 		$PLUGIN_HOOKS['init_session']['data_injection'] = 'plugin_data_injection_initSession';
 		$PLUGIN_HOOKS['change_profile']['data_injection'] = 'plugin_data_injection_changeprofile';
 
 		if (isset($_SESSION["glpi_plugin_data_injection_installed"]) && $_SESSION["glpi_plugin_data_injection_installed"]==1) {
 		
-			if (plugin_data_injection_haveRight("create_model","w") || plugin_data_injection_haveRight("use_model","r")  && (isset($_SESSION["glpi_plugin_data_injection_profile"])))
+			if (plugin_data_injection_haveRight("create_model","w") || plugin_data_injection_haveRight("use_model","r")  && isset($_SESSION["glpi_plugin_data_injection_profile"])){
 				$PLUGIN_HOOKS['menu_entry']['data_injection'] = true;
-			
+				 $PLUGIN_HOOKS['submenu_entry']['data_injection']["<img  src='".$CFG_GLPI["root_doc"]."/pics/addresa.png' title='".$DATAINJECTIONLANG["config"][1]."' alt='".$DATAINJECTIONLANG["config"][1]."'>"] = 'front/plugin_data_injection.config.form.php';
+			}	 
 			if (haveRight("config","w") || haveRight("profile","w")){
 			// Config page
 				$PLUGIN_HOOKS['config_page']['data_injection'] = 'front/plugin_data_injection.config.form.php';

@@ -57,12 +57,62 @@ if (isset($_POST["add"])){
 
 	$prof->delete($_POST);
 	$ID=0;
+}elseif (isset($_POST["delete_profile"])){
+	
+	foreach ($_POST["item"] as $key => $val){
+		if ($val==1) {
+
+			echo $query="DELETE FROM glpi_plugin_data_injection_profiles WHERE ID='".$key."'";
+			$DB->query($query);
+		}
+	}
+			
+	glpi_header($_SERVER['HTTP_REFERER']);
+		
 }
 else  if (isset($_POST["update"])){
 	checkRight("profile","w");
 
 	$prof->update($_POST);
 }
+
+echo "<div align='center'><form method='post' name='massiveaction_form' id='massiveaction_form'  action=\"./plugin_data_injection.profile.php\">";
+
+echo "<table class='tab_cadre' cellpadding='5'><tr><th colspan='5'>";
+echo $DATAINJECTIONLANG["profile"][4]." : </th></tr>";
+
+$query0="SELECT * FROM glpi_plugin_data_injection_profiles ORDER BY name";
+$result0=$DB->query($query0);
+
+while ($data0=$DB->fetch_assoc($result0)){
+$ID0=$data0['ID'];
+echo "<tr class='tab_bg_1'>";
+echo "<td align='center'>";
+echo "<input type='hidden' name='ID' value='$ID0'>";
+echo "<input type='checkbox' name='item[$ID0]' value='1'>";
+echo "</td>";
+echo "<td>".$data0['ID']."</td><td>".$data0['name']."</td>";
+if ($data0['create_model']=='r')
+echo "<td>".$LANG["profiles"][10]."</td>";
+elseif ($data0['create_model']=='w')
+echo "<td>".$LANG["profiles"][11]."</td>";
+else
+echo "<td>".$LANG["profiles"][12]."</td>";
+
+if ($data0['use_model']=='r')
+echo "<td>".$LANG["profiles"][10]."</td>";
+elseif ($data0['use_model']=='w')
+echo "<td>".$LANG["profiles"][11]."</td>";
+else
+echo "<td>".$LANG["profiles"][12]."</td>";
+}
+
+echo "<tr class='tab_bg_1'><td colspan='5'>";
+			echo "<div align='center'><a onclick= \"if ( markAllRows('massiveaction_form') ) return false;\" href='".$_SERVER['PHP_SELF']."?select=all'>".$LANG["buttons"][18]."</a>";
+			echo " - <a onclick= \"if ( unMarkAllRows('massiveaction_form') ) return false;\" href='".$_SERVER['PHP_SELF']."?select=none'>".$LANG["buttons"][19]."</a> ";
+			echo "<input type='submit' name='delete_profile' value=\"".$LANG["buttons"][6]."\" class='submit' ></div></td></tr>";
+			
+echo "</table></form></div>";
 
 echo "<div align='center'><form method='post' action=\"".$CFG_GLPI["root_doc"]."/plugins/data_injection/front/plugin_data_injection.profile.php\">";
 echo "<table class='tab_cadre' cellpadding='5'><tr><th colspan='2'>";

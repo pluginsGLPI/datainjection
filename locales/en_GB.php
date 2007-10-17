@@ -177,6 +177,7 @@ $DATAINJECTIONLANG["result"][14] = "Line";
 $DATAINJECTIONLANG["profiles"][1] = "Create a model";
 $DATAINJECTIONLANG["profiles"][2] = "Delete model";
 $DATAINJECTIONLANG["profiles"][3] = "Use a model";
+$DATAINJECTIONLANG["profile"][4] = "List of profiles already configured";
 
 $DATAINJECTIONLANG["mappings"][1] = "Number of ports";
 
