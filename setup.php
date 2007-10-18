@@ -59,6 +59,8 @@ function plugin_init_data_injection() {
 		
 		// Javascript file
 		$PLUGIN_HOOKS['add_javascript']['data_injection']='javascript/data_injection.js';
+		
+		$PLUGIN_HOOKS['pre_item_delete']['data_injection'] = 'plugin_pre_item_delete_data_injection';
 }
 
 	
@@ -67,5 +69,19 @@ function plugin_version_data_injection() {
 
 		return array ('name' => $DATAINJECTIONLANG["name"][1], 'version' => '1.0');
 	}
+
+// Hook done on delete item case
+
+function plugin_pre_item_delete_data_injection($input){
+	if (isset($input["_item_type_"]))
+		switch ($input["_item_type_"]){
+			case PROFILE_TYPE :
+				// Manipulate data if needed 
+				$DataInjectionProfile=new DataInjectionProfile;
+				$DataInjectionProfile->cleanProfiles($input["ID"]);
+				break;
+		}
+	return $input;
+}
 
 ?>
