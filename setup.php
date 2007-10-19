@@ -49,6 +49,7 @@ function plugin_init_data_injection() {
 			// Config page
 				$PLUGIN_HOOKS['config_page']['data_injection'] = 'front/plugin_data_injection.config.form.php';
 			}
+			$PLUGIN_HOOKS['pre_item_delete']['data_injection'] = 'plugin_pre_item_delete_data_injection';
 		}
 		else if (haveRight("config","w")) {
 				$PLUGIN_HOOKS['config_page']['data_injection'] = 'front/plugin_data_injection.config.form.php';		
@@ -60,7 +61,7 @@ function plugin_init_data_injection() {
 		// Javascript file
 		$PLUGIN_HOOKS['add_javascript']['data_injection']='javascript/data_injection.js';
 		
-		$PLUGIN_HOOKS['pre_item_delete']['data_injection'] = 'plugin_pre_item_delete_data_injection';
+		
 }
 
 	

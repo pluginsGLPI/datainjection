@@ -45,7 +45,7 @@ class DataInjectionProfile extends CommonDBTM {
 	function cleanProfiles($ID) {
 	
 		global $DB;
-		$query = "DELETE FROM glpi_plugin_data_injection_profiles WHERE name='$ID' ";
+		$query = "DELETE FROM glpi_plugin_data_injection_profiles WHERE ID='$ID' ";
 		$DB->query($query);
 	}
 
