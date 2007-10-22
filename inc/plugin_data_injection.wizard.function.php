@@ -101,6 +101,7 @@ function choiceStep($target)
 		/**************************************************************/
 
 		/**************************Export******************************/
+		/*
 		echo "<tr>";
 		if (plugin_data_injection_haveRight("create_model","w"))
 			echo "<td><input type='radio' name='choice' value='5' onClick='show_Select($nbmodel);deleteOnglet(2)' /></td>";
@@ -108,6 +109,7 @@ function choiceStep($target)
 			echo "<td><input type='radio' name='choice' value='5' onClick='show_Select($nbmodel);deleteOnglet(2)' disabled /></td>";
 		echo "<td>".$DATAINJECTIONLANG["choiceStep"][12]."</td>";
 		echo "</tr>";
+		*/
 		/**************************************************************/
 
 		/**************************Using*******************************/

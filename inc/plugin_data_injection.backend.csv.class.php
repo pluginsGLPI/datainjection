@@ -51,7 +51,8 @@ class BackendCSV extends Backend{
 		{  
 			$line = parseLine($fic,$data,$this->encoding);
 			//If line is not empty
-			if ($line[0][0] != null)
+			//if ($line[0][0] != null)
+			if (count($line[0]) > 0)
 				$this->injectionDatas->addToDatas($line);
 		}
  	 	fclose($fic);
@@ -121,8 +122,8 @@ class BackendCSV extends Backend{
 				$this->setError($key);
 				$check = 2;
 			} 
-			else if (strtoupper(stripslashes($header[$mapping->getRank()])) != strtoupper($mapping->getName())) {
-				$this->setError(stripslashes($header[$mapping->getRank()]) ." != ". $mapping->getName());				
+			else if (strtoupper(stripslashes($header[$mapping->getRank()])) != strtoupper(stripslashes($mapping->getName()))) {
+				$this->setError(stripslashes($header[$mapping->getRank()]) ." != ". stripslashes($mapping->getName()));				
 				$check = 2;
 			}
 		}	

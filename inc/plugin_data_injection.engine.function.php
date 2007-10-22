@@ -40,14 +40,14 @@
 function reformatDatasBeforeCheck($model,$line)
 {
 	global $DATA_INJECTION_MAPPING;
-	
+
 	for ($i=0, $mappings = $model->getMappings(); $i < count($mappings); $i++)
 	{
 		$mapping = $mappings[$i];
 		$rank = $mapping->getRank();
 
 		//If a value is set to NULL -> ignore the value during injection
-		if ($line[$rank] == "NULL")
+		if (isset($line[$rank]) && $line[$rank] == "NULL")
 			$line[$rank]=EMPTY_VALUE;
 			
 		elseif ($mapping->getValue() != NOT_MAPPED)
