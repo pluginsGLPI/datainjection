@@ -43,7 +43,7 @@ function plugin_init_data_injection() {
 		
 			if (plugin_data_injection_haveRight("create_model","w") || plugin_data_injection_haveRight("use_model","r")  && isset($_SESSION["glpi_plugin_data_injection_profile"])){
 				$PLUGIN_HOOKS['menu_entry']['data_injection'] = true;
-				 $PLUGIN_HOOKS['submenu_entry']['data_injection']["<img  src='".$CFG_GLPI["root_doc"]."/pics/addresa.png' title='".$DATAINJECTIONLANG["config"][1]."' alt='".$DATAINJECTIONLANG["config"][1]."'>"] = 'front/plugin_data_injection.config.form.php';
+				 $PLUGIN_HOOKS['submenu_entry']['data_injection']['config'] = 'front/plugin_data_injection.config.form.php';
 			}	 
 			if (haveRight("config","w") || haveRight("profile","w")){
 			// Config page
