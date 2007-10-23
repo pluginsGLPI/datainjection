@@ -323,7 +323,7 @@ function dataAlreadyInDB($type,$fields,$mapping_definition,$model)
 	if ($DB->numrows($result) > 0 )
 		return $DB->fetch_array($result);
 	else		
-		return array("ID"=>-1);
+		return array("ID"=>ITEM_NOT_FOUND);
 }
 
 /*
@@ -411,7 +411,7 @@ function preAddCommonFields($common_fields,$type,$fields,$entity)
  * @param id the ID of the main object
  * @return the update common values array
  */
-function addCommonFields($common_fields,$type,$fields,$entity,$id)
+function addCommonFields(&$common_fields,$type,$fields,$entity,$ID)
 {
 	$setFields=array();
 	switch ($type)
@@ -419,37 +419,37 @@ function addCommonFields($common_fields,$type,$fields,$entity,$id)
 		//Copy/paste is voluntary in order to know exactly which fields are included or not
 		case COMPUTER_TYPE:
 			$setFields = array("location");
-			addField($common_fields,"device_id",$id,false);
+			addField($common_fields,"device_id",$ID,true);
 			addField($common_fields,"device_type",$type,false);
 			addField($common_fields,"FK_entities",$entity,false);
 			break;
 		case MONITOR_TYPE:
 			$setFields = array("location");
-			addField($common_fields,"device_id",$id,false);
+			addField($common_fields,"device_id",$ID,true);
 			addField($common_fields,"device_type",$type,false);
 			addField($common_fields,"FK_entities",$entity,false);
 			break;
 		case PRINTER_TYPE:
 			$setFields = array("location");
-			addField($common_fields,"device_id",$id,false);
+			addField($common_fields,"device_id",$ID,true);
 			addField($common_fields,"device_type",$type,false);
 			addField($common_fields,"FK_entities",$entity,false);
 			break;
 		case NETWORKING_TYPE:
 			$setFields = array("location");
-			addField($common_fields,"device_id",$id,false);
+			addField($common_fields,"device_id",$ID,true);
 			addField($common_fields,"device_type",$type,false);
 			addField($common_fields,"FK_entities",$entity,false);
 			break;
 		case PHONE_TYPE:
 			$setFields = array("location");
-			addField($common_fields,"device_id",$id,false);
+			addField($common_fields,"device_id",$ID,true);
 			addField($common_fields,"device_type",$type,false);
 			addField($common_fields,"FK_entities",$entity,false);
 			break;
 		case PERIPHERAL_TYPE:
 			$setFields = array("location");
-			addField($common_fields,"device_id",$id,false);
+			addField($common_fields,"device_id",$ID,true);
 			addField($common_fields,"device_type",$type,false);
 			addField($common_fields,"FK_entities",$entity,false);
 			break;
@@ -460,7 +460,7 @@ function addCommonFields($common_fields,$type,$fields,$entity,$id)
 			addField($common_fields,"FK_entities",$entity,false);
 			break;
 		case USER_TYPE:
-			addField($common_fields,"FK_user",$id,false);
+			addField($common_fields,"FK_user",$ID,false);
 			$setFields = array("FK_group");	
 			break;		
 		default:
@@ -468,7 +468,6 @@ function addCommonFields($common_fields,$type,$fields,$entity,$id)
 	}	
 
 	setFields($fields,$common_fields,$setFields);
-	return $common_fields;
 }
 
 /*
@@ -482,18 +481,18 @@ function addCommonFields($common_fields,$type,$fields,$entity,$id)
  * @param common_fields the array of common fields
  * @return the fields modified
  */
-function addNecessaryFields($model,$mapping,$mapping_definition,$entity,$type,$fields,$common_fields)
+function addNecessaryFields($model,$mapping,$mapping_definition,$entity,$type,&$fields,$common_fields)
 {
 	global $DB;
 	$unsetFields = array();
 	switch ($type)
 	{
-		case MONITOR_TYPE:
-			$unsetFields = array("contract");
-			addField($fields,"FK_entities",$entity);
-			break;
 		case COMPUTER_TYPE:
 			$unsetFields = array("plug","contract");
+			addField($fields,"FK_entities",$entity);
+			break;
+		case MONITOR_TYPE:
+			$unsetFields = array("contract");
 			addField($fields,"FK_entities",$entity);
 			break;
 		case PRINTER_TYPE:
@@ -535,9 +534,10 @@ function addNecessaryFields($model,$mapping,$mapping_definition,$entity,$type,$f
 			break;
 		case INFOCOM_TYPE:
 			//Set the device_id
-			if (!isset($fields["device_id"]))
-				$fields["FK_device"] = $common_fields["device_id"];
-			
+			//if (!isset($fields["FK_device"]))
+			//$fields["FK_device"] = $common_fields["device_id"];
+			addField($fields,"FK_device",$common_fields["device_id"]);
+					
 			//Set the device type
 			addField($fields,"device_type",$model->getDeviceType());
 			break;
@@ -545,7 +545,6 @@ function addNecessaryFields($model,$mapping,$mapping_definition,$entity,$type,$f
 			break;	
 	}
 	unsetFields($fields,$unsetFields);
-	return $fields;
 }
 
 function getFieldValue($mapping, $mapping_definition,$field_value,$entity,$obj,$canadd)
@@ -612,7 +611,7 @@ function getFieldValue($mapping, $mapping_definition,$field_value,$entity,$obj,$
  * @param common_fields the array of common fields
  * @return the common_fields
  */
-function processBeforeEnd($model,$type,$fields,$common_fields)
+function processBeforeEnd($model,$type,$fields,&$common_fields)
 {
 	switch ($type)
 	{
@@ -623,7 +622,7 @@ function processBeforeEnd($model,$type,$fields,$common_fields)
 		break;
 		case NETWORKING_TYPE:
 			//Add ports if the mapping exists
-			$common_fields = addNetworkCard($common_fields,$model->getCanAddDropdown());
+			addNetworkCard($common_fields,$model->getCanAddDropdown(),$model->getPerformNetworkConnection());
 			addContract($common_fields);
 		break;	
 		case PRINTER_TYPE:
@@ -631,13 +630,12 @@ function processBeforeEnd($model,$type,$fields,$common_fields)
 		case COMPUTER_TYPE:
 		//nobreak
 		case PHONE_TYPE:
-			$common_fields = addNetworkCard($common_fields,$model->getCanAddDropdown());
+			addNetworkCard($common_fields,$model->getCanAddDropdown(),$model->getPerformNetworkConnection());
 			addContract($common_fields);					
 		break;	
 		default:
 		break;
 	}
-	return $common_fields;
 }
 
 /*
@@ -728,16 +726,14 @@ function logAddOrUpdate($device_type,$device_id,$action_type)
  * @param fields the fields to insert into DB
  * @param fields_from_db fields already in DB
  * @param can_overwrite indicates if the model allows datas already in DB to be overwrited
- * @return the fields modified
  */
-function filterFields($fields,$fields_from_db,$can_overwrite)
+function filterFields(&$fields,$fields_from_db,$can_overwrite)
 {
-	//If no write to overwrite existing fields in DB -> unset the field
+	//If no right to overwrite existing fields in DB -> unset the field
 	foreach ($fields as $field=>$value)
 		if ($field != "ID" && !$can_overwrite && (isset($fields_from_db[$field])))
 			unset ($fields[$field]);
 
-	return $fields;
 }
 
 /*

@@ -55,14 +55,6 @@ class DataInjectionEngine
 		$datas = new InjectionDatas;
 		
 		$this->backend = $backend;
-		/*
-		//Get the backend associated with the model type (CSV, etc...)
-		$this->backend = getBackend($this->getModel()->getModelType());		
-		$this->backend->initBackend($filename,$this->getModel()->getDelimiter());
-		$this->backend->read();
-		*/
-		
-		
 	}
 	
 	/*
@@ -101,7 +93,7 @@ class DataInjectionEngine
 			
 		//Array to store the fields to write to db
 		$db_fields = array();
-		$db_fields["common"] = array();
+		$db_fields[COMMON_FIELDS] = array();
 		$db_fields[$this->getModel()->getDeviceType()] = array();
 		
 		for ($i=0; $i < count($line);$i++)
@@ -137,23 +129,27 @@ class DataInjectionEngine
 		$obj = getInstance($this->getModel()->getDeviceType());
 
 		//Add some fields to the common fields BEFORE inserting the primary type (in order to save some fields)
-		$db_fields["common"] = preAddCommonFields($db_fields["common"],$this->getModel()->getDeviceType(),$fields,$this->getEntity());
+		$db_fields[COMMON_FIELDS] = preAddCommonFields($db_fields[COMMON_FIELDS],$this->getModel()->getDeviceType(),$fields,$this->getEntity());
 				
 		//If necessary, add default fields which are mandatory to create the object
-		$fields = addNecessaryFields($this->getModel(),$mapping,$mapping_definition,$this->getEntity(),$this->getModel()->getDeviceType(),$fields,$db_fields["common"]);
+		addNecessaryFields($this->getModel(),$mapping,$mapping_definition,$this->getEntity(),$this->getModel()->getDeviceType(),$fields,$db_fields[COMMON_FIELDS]);
 
 		//Check if the line already exists in database
 		$fields_from_db = dataAlreadyInDB($this->getModel()->getDeviceType(),$fields,$mapping_definition,$this->getModel());
 
 		$ID = $fields_from_db["ID"];
-		if ($ID == -1)
+		if ($ID == ITEM_NOT_FOUND)
 		{
 			if ($this->getModel()->getBehaviorAdd())
 			{
 				$ID = $obj->add($fields);
 				//Add the ID to the fields, so it can be reused after
-				$db_fields["common"] = addCommonFields($db_fields["common"],$this->getModel()->getDeviceType(),$fields,$this->getEntity(),$ID);
+				addCommonFields($db_fields[COMMON_FIELDS],$this->getModel()->getDeviceType(),$fields,$this->getEntity(),$ID);
+				
+				//Log in history
 				logAddOrUpdate($this->getModel()->getDeviceType(),$ID,INJECTION_ADD);
+				
+				//Set status and messages
 				$result->setStatus(true);
 
 				$result->setInjectedId($ID);
@@ -163,7 +159,7 @@ class DataInjectionEngine
 			}
 			else
 			{
-				//Object doesn't exists, but add in not allowed by the model
+				//Object doesn't exists, but adding is not allowed by the model
 				$process = false;
 				
 				$result->setStatus(false);
@@ -177,10 +173,10 @@ class DataInjectionEngine
 		}	
 		elseif ($this->getModel()->getBehaviorUpdate())
 		{
-			$fields = filterFields($fields,$fields_from_db,$this->getModel()->getCanOverwriteIfNotEmpty());
+			filterFields($fields,$fields_from_db,$this->getModel()->getCanOverwriteIfNotEmpty());
 			$fields["ID"] = $ID;
 
-			$db_fields["common"] = addCommonFields($db_fields["common"],$this->getModel()->getDeviceType(),$fields,$this->getEntity(),$ID);
+			addCommonFields($db_fields[COMMON_FIELDS],$this->getModel()->getDeviceType(),$fields,$this->getEntity(),$ID);
 
 			if (count($fields) > 1)
 			{
@@ -210,7 +206,7 @@ class DataInjectionEngine
 		if ($process)
 		{
 			//Post processing, if some actions need to be done
-			$db_fields["common"] = processBeforeEnd($this->getModel(),$this->getModel()->getDeviceType(),$fields,$db_fields["common"]);
+			processBeforeEnd($this->getModel(),$this->getModel()->getDeviceType(),$fields,$db_fields[COMMON_FIELDS]);
 
 			//----------------------------------------------------//
 			//-------------Process other types-------------------//
@@ -219,28 +215,34 @@ class DataInjectionEngine
 			//Insert others objects in database
 			foreach ($db_fields as $type => $fields)
 			{
-				if ($type != "common" && $type != $this->getModel()->getDeviceType())
+				//Browse the db_fields array : inject all the types execpt COMMON_FIELDS and the primary type
+				if ($type != COMMON_FIELDS && $type != $this->getModel()->getDeviceType())
 				{
 					$obj = getInstance($type);
 					//If necessary, add default fields which are mandatory to create the object
-					$fields = addNecessaryFields($this->getModel(),$mapping,$mapping_definition,$this->getEntity(),$type,$fields,$db_fields["common"]);
+					addNecessaryFields($this->getModel(),$mapping,$mapping_definition,$this->getEntity(),$type,$fields,$db_fields[COMMON_FIELDS]);
 					
 					//Check if the line already exists in database
-					$ID = dataAlreadyInDB($type,$fields,$mapping_definition,$this->getModel());
-					if ($ID == -1)
+					$fields_from_db = dataAlreadyInDB($type,$fields,$mapping_definition,$this->getModel());
+
+					$ID = $fields_from_db["ID"];
+					if ($ID == ITEM_NOT_FOUND)
 					{
-							$ID = $obj->add($fields);
-							//Add the ID to the fields, so it can be reused after
-							$db_fields["common"] = addCommonFields($db_fields["common"],$this->getModel()->getDeviceType(),$fields,$this->getEntity(),$ID);
+						//Not in DB -> add
+						$ID = $obj->add($fields);
+						//Add the ID to the fields, so it can be reused after
+						addCommonFields($db_fields[COMMON_FIELDS],$this->getModel()->getDeviceType(),$fields,$this->getEntity(),$ID);
 					}	
 					else
 					{
-						$db_fields["common"] = addCommonFields($db_fields["common"],$type,$fields,$this->entity,$ID);
+						filterFields($fields,$fields_from_db,$this->getModel()->getCanOverwriteIfNotEmpty());
+						//Item aleady in DB -> update
+						addCommonFields($db_fields[COMMON_FIELDS],$type,$fields,$this->entity,$ID);
 						$obj->update($fields);
 					}
 
 					//Post processing, if some actions need to be done
-					$db_fields["common"] = processBeforeEnd($this->getModel(),$type,$fields,$db_fields["common"]);
+					processBeforeEnd($this->getModel(),$type,$fields,$db_fields[COMMON_FIELDS]);
 				}
 			}
 		}

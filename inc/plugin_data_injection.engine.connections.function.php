@@ -36,43 +36,50 @@
  * @param common_fields the common_fields
  * @param canadd indicates if user has right to add values
  */
-function addNetworkCard(&$common_fields,$canadd)
+function addNetworkCard(&$common_fields,$canadd,$canconnect)
 {
 	$just_add_port=false;
 	$add_card_informations = false;
 	$input=array();
-
-		
-	if (!isset($common_fields["nb_ports"]))
-		$common_fields["nb_ports"]=1;
-	else
-	{	
-		if (isset($common_fields["ifmac"]))
-			unset($common_fields["ifmac"]);
-		if (isset($common_fields["ifaddr"]))	
-			unset($common_fields["ifaddr"]);
-			
-		$just_add_port=true;	
-	}		
-
-	if (isset($common_fields["ifmac"]) || isset($common_fields["ifaddr"]))
-		$add_card_informations = true;
-
-	if ($add_card_informations)
-	{
-		if (isset($common_fields["ifaddr"]))
-			$input[0]["ifaddr"]=$common_fields["ifaddr"];
-		if (isset($common_fields["ifmac"]))
-			$input[0]["ifmac"]=$common_fields["ifmac"];
-		if (isset($common_fields["port"]))
-			$input[0]["port"]=$common_fields["port"];
-	}			
 	
-	addNetworPorts($common_fields,$input,$canadd,$just_add_port,$add_card_informations);
-	//return $common_fields;
+	//Unset fields is mac or ip is empty
+	if ((isset($common_fields["ifmac"]) && $common_fields["ifmac"] == EMPTY_VALUE))
+		unset($common_fields["ifmac"]);
+	if ((isset($common_fields["ifaddr"]) && $common_fields["ifaddr"] == EMPTY_VALUE))
+		unset($common_fields["ifaddr"]);
+
+	//Must add port ONLY if ip or mac or number of port is provided
+	if (isset($common_fields["ifmac"]) || isset($common_fields["ifaddr"]) || isset($common_fields["nb_ports"]))
+	{	
+		//If no number of port is provided, set it to 1
+		if (!isset($common_fields["nb_ports"]))
+			$common_fields["nb_ports"]=1;
+		else
+		{	
+			//Number of port is provided : only a port, do not connect
+			if (isset($common_fields["ifmac"]))
+				unset($common_fields["ifmac"]);
+			if (isset($common_fields["ifaddr"]))	
+				unset($common_fields["ifaddr"]);
+			$just_add_port=true;	
+		}		
+	
+		if (isset($common_fields["ifmac"]) || isset($common_fields["ifaddr"]))
+		{
+			$add_card_informations=true;
+			if (isset($common_fields["ifaddr"]))
+				$input[0]["ifaddr"]=$common_fields["ifaddr"];
+			if (isset($common_fields["ifmac"]))
+				$input[0]["ifmac"]=$common_fields["ifmac"];
+			if (isset($common_fields["port"]))
+				$input[0]["port"]=$common_fields["port"];
+		}			
+	
+		addNetworPorts($common_fields,$input,$canadd,$just_add_port,$add_card_informations,$canconnect);
+	}
 }
 
-function addNetworPorts($common_fields,$network_cards_infos=array(),$canadd,$just_add_port=false,$add_card_informations=false)
+function addNetworPorts($common_fields,$network_cards_infos=array(),$canadd,$just_add_port=false,$add_card_informations=false,$canconnect=false)
 {
 	global $DB;
 	$network_ports_ids=array();
@@ -83,7 +90,10 @@ function addNetworPorts($common_fields,$network_cards_infos=array(),$canadd,$jus
 		for ($i=0;$i<$common_fields["nb_ports"];$i++)
 		{
 			addPort($common_fields,$i,$network_cards_infos,$just_add_port,$add_card_informations);
-			updatePort($common_fields,$canadd);
+			
+			//Only try to create network plug and perform network connection is the option was set in the injection model
+			if ($canconnect)
+				updatePort($common_fields,$canadd,$canconnect);
 		}
 }
 

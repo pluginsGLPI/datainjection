@@ -333,6 +333,17 @@ function modelStep($target)
 	dropdownYesNo("can_overwrite_if_not_empty",$can_overwrite);
 	echo "</td></tr>";
 	/**************************************************************/
+
+	/***************Can add network connections*********************/
+	echo "<tr><td>".$DATAINJECTIONLANG["modelStep"][20]."</td><td>";
+	if(isset($model))
+		$perform_network_connection = $model->getPerformNetworkConnection();
+	else
+		$perform_network_connection = 0;
+	dropdownYesNo("perform_network_connection",$perform_network_connection);
+	echo "</td></tr>";
+	
+	/**************************************************************/
 	
 	/************************Diffusion*****************************/
 	echo "<tr><td>".$DATAINJECTIONLANG["modelStep"][16]."</td><td>";

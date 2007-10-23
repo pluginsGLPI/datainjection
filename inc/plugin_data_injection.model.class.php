@@ -234,6 +234,11 @@ class DataInjectionModel extends CommonDBTM {
 		return $this->fields["user_id"];
 	}
 
+	function getPerformNetworkConnection()
+	{
+		return $this->fields["perform_network_connection"];
+	}
+
 	//---- Save -----//
 	function setModelType($type)
 	{
@@ -308,6 +313,11 @@ class DataInjectionModel extends CommonDBTM {
 	function setUserID($user)
 	{
 		$this->fields["user_id"] = $user;
+	}
+
+	function setPerformNetworkConnection($perform)
+	{
+		$this->fields["perform_network_connection"] = $perform;
 	}
 	
 	function setFields($fields,$entity,$user_id)

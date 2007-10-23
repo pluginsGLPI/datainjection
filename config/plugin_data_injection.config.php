@@ -39,7 +39,10 @@ if (!defined("PLUGIN_DATA_INJECTION_UPLOAD_DIR")){
 define ("CSV_TYPE",1);
 
 define ("NOT_MAPPED",-1);
+define ("ITEM_NOT_FOUND",-1);
+
 define ("EMPTY_VALUE",'');
+define ("COMMON_FIELDS","common");
 
 define ("ERROR_IMPORT_WRONG_TYPE",0);
 define ("TYPE_CHECK_OK",1);
@@ -59,4 +62,6 @@ define ("ENCODING_AUTO",2);
 
 define ("MODEL_PRIVATE",0);
 define ("MODEL_PUBLIC",1);
+
+
 ?>
