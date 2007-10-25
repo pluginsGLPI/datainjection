@@ -671,7 +671,7 @@ function addInfosFields($fields,$infos)
 	foreach ($infos as $info)
 		if (keepInfo($info))
 		{	
-			if (isset($DATA_INJECTION_INFOS[$info->getInfosType()][$info->getValue()]['table_type']) && $DATA_INJECTION_INFOS[$info->getInfosType()][$info->getValue()]['table_type'] == "multitext")
+			if (isset($fields[$info->getInfosType()][$info->getValue()]) && isset($DATA_INJECTION_INFOS[$info->getInfosType()][$info->getValue()]['table_type']) && $DATA_INJECTION_INFOS[$info->getInfosType()][$info->getValue()]['table_type'] == "multitext")
 				$fields[$info->getInfosType()][$info->getValue()] .= $info->getInfosText();
 			else
 				$fields[$info->getInfosType()][$info->getValue()] = $info->getInfosText();
