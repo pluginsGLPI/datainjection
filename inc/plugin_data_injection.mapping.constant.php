@@ -983,7 +983,7 @@ $DATA_INJECTION_MAPPING[NETWORKING_TYPE]['plug']['table_type']='virtual';
 // ----------------------------------------------------------------------
 $DATA_INJECTION_MAPPING[USER_TYPE]['name']['table']='glpi_users';
 $DATA_INJECTION_MAPPING[USER_TYPE]['name']['field']='name';
-$DATA_INJECTION_MAPPING[USER_TYPE]['name']['name']=$LANG["common"][16];
+$DATA_INJECTION_MAPPING[USER_TYPE]['name']['name']=$LANG["login"][6];
 $DATA_INJECTION_MAPPING[USER_TYPE]['name']['type']='text';
 
 $DATA_INJECTION_MAPPING[USER_TYPE]['password']['table']='glpi_users';

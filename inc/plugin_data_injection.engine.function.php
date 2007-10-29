@@ -531,12 +531,9 @@ function addNecessaryFields($model,$mapping,$mapping_definition,$entity,$type,&$
 			//Add auth and profiles fields	
 			addField($fields,"auth_method",AUTH_DB_GLPI);	
 
-			addField($fields,"FK_profiles",getFieldIDByName($mapping,$mapping_definition,$fields["FK_profiles"],$entity));	
 			break;
 		case INFOCOM_TYPE:
 			//Set the device_id
-			//if (!isset($fields["FK_device"]))
-			//$fields["FK_device"] = $common_fields["device_id"];
 			addField($fields,"FK_device",$common_fields["device_id"]);
 					
 			//Set the device type
