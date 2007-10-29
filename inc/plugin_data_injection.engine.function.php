@@ -295,6 +295,7 @@ function dataAlreadyInDB($type,$fields,$mapping_definition,$model)
 		switch ($obj->table)
 		{
 			case "glpi_users":
+			case "glpi_groups":
 				$where_entity = " 1";
 				break;	
 			default:
@@ -455,7 +456,7 @@ function addCommonFields(&$common_fields,$type,$fields,$entity,$ID)
 			addField($common_fields,"FK_entities",$entity,false);
 			break;
 		case GROUP_TYPE:
-			addField($common_fields,"FK_entities",$entity,false);
+			//addField($common_fields,"FK_entities",$entity,false);
 			break;
 		case CONTRACT_TYPE:
 			addField($common_fields,"FK_entities",$entity,false);
@@ -514,9 +515,10 @@ function addNecessaryFields($model,$mapping,$mapping_definition,$entity,$type,&$
 			break;
 
 		case GROUP_TYPE:
-		//nobreak
+		break;
 		case CONTRACT_TYPE:
-		//nobreak;
+		addField($fields,"FK_entities",$entity);
+		break;
 		case USER_TYPE:
 			if (isset ($fields["password"])) 
 			{

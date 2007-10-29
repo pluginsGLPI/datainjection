@@ -49,11 +49,13 @@ class BackendCSV extends Backend{
 
 		while (($data = fgetcsv($fic, 3000, $this->delimiter)) !== FALSE)
 		{  
-			$line = parseLine($fic,$data,$this->encoding);
 			//If line is not empty
-			//if ($line[0][0] != null)
-			if (count($line[0]) > 0)
-				$this->injectionDatas->addToDatas($line);
+			if (count($data) > 1 || $data[0] != EMPTY_VALUE)
+			{
+				$line = parseLine($fic,$data,$this->encoding);
+				if (count($line[0]) > 0)
+					$this->injectionDatas->addToDatas($line);
+			}
 		}
  	 	fclose($fic);
 	}

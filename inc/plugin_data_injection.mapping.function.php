@@ -38,6 +38,13 @@ function getAllMappingsDefinitionsTypes($primary_type)
 	
 	switch ($primary_type)
 	{
+		case CONTRACT_TYPE:
+		//nobreak
+		case USER_TYPE:
+		//nobreak
+		case GROUP_TYPE:
+		break;
+		
 		//Add infocom type
 		default:
 			$commonitem->setType(INFOCOM_TYPE);
@@ -55,9 +62,8 @@ function getAllMappingsDefinitionsByType($type)
 	$mapping_parameters = array();
 	
 	foreach ($DATA_INJECTION_MAPPING[$type] as $name => $mapping)
-	{
 		$mapping_parameters[$name] = $mapping["name"];
-	}
+
 	asort($mapping_parameters);
 	return 	$mapping_parameters;
 }

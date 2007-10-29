@@ -36,18 +36,22 @@ function parseLine($fic,$data,$encoding=1)
    	$num = count($data);
    	for ($c=0; $c < $num; $c++)
    	{
-       	switch ($encoding)
+       	//If field is not the last, or if field is the last of the line and is not empty
+       	if ($c < ($num -1) || ($c == ($num -1) && $c[$num] != EMPTY_VALUE))
        	{
-	       	//If file is ISO8859-1 : encode the datas in utf8
-       		case ENCODING_ISO8859_1:
-       			$csv[0][]=utf8_encode(addslashes($data[$c]));
-       			break;
-       		case ENCODING_UFT8:
-       			$csv[0][]=addslashes($data[$c]);
-       			break;
-       		case ENCODING_AUTO:
-       			$csv[0][]=toUTF8(addslashes($data[$c]));
-       			break;				
+	       	switch ($encoding)
+	       	{
+		       	//If file is ISO8859-1 : encode the datas in utf8
+	       		case ENCODING_ISO8859_1:
+	       			$csv[0][]=utf8_encode(addslashes($data[$c]));
+	       			break;
+	       		case ENCODING_UFT8:
+	       			$csv[0][]=addslashes($data[$c]);
+	       			break;
+	       		case ENCODING_AUTO:
+	       			$csv[0][]=toUTF8(addslashes($data[$c]));
+	       			break;				
+	       	}
        	}
    	}
     return $csv;	
