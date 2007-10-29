@@ -346,6 +346,9 @@ class DataInjectionModel extends CommonDBTM {
 		
 		if(isset($fields["dropdown_public"]))
 			$this->setPublic($fields["dropdown_public"]);
+
+		if(isset($fields["perform_network_connection"]))
+			$this->setPerformNetworkConnection($fields["perform_network_connection"]);
 	}
 	
 }

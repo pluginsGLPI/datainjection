@@ -170,7 +170,6 @@ function checkLine($model,$line,$res)
 					//If field is not the good type -> error
 					if ($res_check_type != TYPE_CHECK_OK)
 					{
-						$res->setStatus(false);
 						$res->setCheckStatus(-1);
 						$res->addCheckMessage($mapping->getName(),$res_check_type);
 						break;
@@ -790,7 +789,7 @@ function addLocation($location,$entity,$parentid,$canadd)
  */
 function reformatDate($original_date)
 {
-	$new_date=preg_replace('/(\d{1,2})-(\d{1,2})-(\d{4})/','\3-\2-\1',$original_date);
+	$new_date=preg_replace('/(\d{1,2})[-\/](\d{1,2})[-\/](\d{4})/','\3-\2-\1',$original_date);
 	if (ereg('[0-9]{2,4}-[0-9]{1,2}-[0-9]{1,2}',$new_date))
 		return $new_date;
 	else

@@ -173,10 +173,10 @@ class DataInjectionResults {
 				$message = $DATAINJECTIONLANG["result"][3];
 			break;
 			case ERROR_IMPORT_WRONG_TYPE:
-				$message = $DATAINJECTIONLANG["result"][4];
+				$message = $DATAINJECTIONLANG["result"][1];
 			break;
 			case ERROR_IMPORT_FIELD_MANDATORY:
-				$message = $DATAINJECTIONLANG["result"][1];
+				$message = $DATAINJECTIONLANG["result"][4];
 			break;
 			case TYPE_CHECK_OK:
 				$message = $DATAINJECTIONLANG["result"][2];
