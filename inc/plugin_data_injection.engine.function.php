@@ -374,6 +374,8 @@ function addField(&$array,$field,$value,$check_exists=true)
  */
 function preAddCommonFields($common_fields,$type,$fields,$entity)
 {
+	
+	$setFields = array();
 	switch ($type)
 	{
 		case PHONE_TYPE:
