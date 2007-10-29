@@ -69,7 +69,9 @@ $DATAINJECTIONLANG["choiceStep"][6] = "Use an existing model";
 $DATAINJECTIONLANG["choiceStep"][7] = "Model's comments";
 $DATAINJECTIONLANG["choiceStep"][8] = "No comments";
 $DATAINJECTIONLANG["choiceStep"][9] = "Make your choice";
-
+$DATAINJECTIONLANG["choiceStep"][10] = "Depending on your rights, you may not access all the choices.";
+$DATAINJECTIONLANG["choiceStep"][11] = "You must select a model for use, update and deletion.";
+$DATAINJECTIONLANG["choiceStep"][12] = "Export an existing model";
 
 $DATAINJECTIONLANG["modelStep"][1] = "Collecting informations about the file";
 $DATAINJECTIONLANG["modelStep"][2] = "Modification of the model";
@@ -86,8 +88,11 @@ $DATAINJECTIONLANG["modelStep"][12] = "Allow update of existing fields :";
 $DATAINJECTIONLANG["modelStep"][13] = "Main informations";
 $DATAINJECTIONLANG["modelStep"][14] = "CSV Options";
 $DATAINJECTIONLANG["modelStep"][15] = "Advanced options";
-
-
+$DATAINJECTIONLANG["modelStep"][16] = "Diffusion :";
+$DATAINJECTIONLANG["modelStep"][17] = "Public";
+$DATAINJECTIONLANG["modelStep"][18] = "Private";
+$DATAINJECTIONLANG["modelStep"][19] = "Advanced options gives you a better control of the import process. Only advance users should modify it.";
+$DATAINJECTIONLANG["modelStep"][20] = "Try to establish network connection is possible";
 
 $DATAINJECTIONLANG["deleteStep"][1] = "Confirm deletion";
 $DATAINJECTIONLANG["deleteStep"][2] = "Watch out. If you delete the model, the mappings and informations will be deleting too.";
@@ -105,6 +110,10 @@ $DATAINJECTIONLANG["fileStep"][5] = "File format is wrong";
 $DATAINJECTIONLANG["fileStep"][6] = "Extension";
 $DATAINJECTIONLANG["fileStep"][7] = "required";
 $DATAINJECTIONLANG["fileStep"][8] = "Impossible to copy the file in";
+$DATAINJECTIONLANG["fileStep"][9] = "File encoding :";
+$DATAINJECTIONLANG["fileStep"][10] = "Automatic detection";
+$DATAINJECTIONLANG["fileStep"][11] = "UTF-8";
+$DATAINJECTIONLANG["fileStep"][12] = "ISO8859-1";
 
 $DATAINJECTIONLANG["mappingStep"][1] = "columns to map have been found";
 $DATAINJECTIONLANG["mappingStep"][2] = "Header of the file";
@@ -121,6 +130,8 @@ $DATAINJECTIONLANG["mappingStep"][11] = "La notion obligatoire correspond à un 
 $DATAINJECTIONLANG["infoStep"][1] = "Complementary informations";
 $DATAINJECTIONLANG["infoStep"][2] = "Modification of complementary informations";
 $DATAINJECTIONLANG["infoStep"][3] = "This step allows you to add informations not present in the file. You'll be asked for theses informations while using the model.";
+$DATAINJECTIONLANG["infoStep"][4] = "The are common to all the imported objects.";
+$DATAINJECTIONLANG["infoStep"][5] = "Mandatory information";
 
 $DATAINJECTIONLANG["saveStep"][1] = "Save the model";
 $DATAINJECTIONLANG["saveStep"][2] = "Do you want to save the model ?";
@@ -134,8 +145,13 @@ $DATAINJECTIONLANG["saveStep"][9] = "Your model has been updated, but is still r
 $DATAINJECTIONLANG["saveStep"][10] = "Do you want to use the model ?";
 $DATAINJECTIONLANG["saveStep"][11] = "The number of columns of the file is incorrect.";
 $DATAINJECTIONLANG["saveStep"][12] = "At least one column is incorrect";
-
-
+$DATAINJECTIONLANG["saveStep"][13] = "Save model in order to use to later";
+$DATAINJECTIONLANG["saveStep"][14] = "You'll only have to select it into the list in the first step.";
+$DATAINJECTIONLANG["saveStep"][15] = "You can add a comment to add informations about the model.";
+$DATAINJECTIONLANG["saveStep"][16] = " awaited column(s)";
+$DATAINJECTIONLANG["saveStep"][17] = " found column(s)";
+$DATAINJECTIONLANG["saveStep"][18] = " Into the file : ";
+$DATAINJECTIONLANG["saveStep"][19] = " From the model : ";
 
 $DATAINJECTIONLANG["fillInfoStep"][1] = "Watch out, you're about to inject datas into GLPI. Are you sure you want to do it ?";
 $DATAINJECTIONLANG["fillInfoStep"][2] = "Fill the informations that must be inserted during injection.";
@@ -151,6 +167,9 @@ $DATAINJECTIONLANG["logStep"][2] = "You can watch or export injection's report b
 $DATAINJECTIONLANG["logStep"][3] = "Injection's successful";
 $DATAINJECTIONLANG["logStep"][4] = "Array of successful injections";
 $DATAINJECTIONLANG["logStep"][5] = "Array of unsuccessful injections";
+$DATAINJECTIONLANG["logStep"][6] = "The 'Export in PDF' button allows you to save a report of the injection onto your harddrive.";
+$DATAINJECTIONLANG["logStep"][7] = "The 'Generation the imported file' allows you to generate a CSV file with only the failed line during the process.";
+$DATAINJECTIONLANG["logStep"][8] = "Injection encounters errors";
 
 $DATAINJECTIONLANG["button"][1] = "< Next";
 $DATAINJECTIONLANG["button"][2] = "Previous >";
@@ -158,6 +177,7 @@ $DATAINJECTIONLANG["button"][3] = "See the file";
 $DATAINJECTIONLANG["button"][4] = "See the log";
 $DATAINJECTIONLANG["button"][5] = "Export the log";
 $DATAINJECTIONLANG["button"][6] = "Finish";
+$DATAINJECTIONLANG["button"][7] = "Export rapport in PDF";
 
 $DATAINJECTIONLANG["result"][1] = "One data is not the good type";
 $DATAINJECTIONLANG["result"][2] = "Datas to insert are incorrect";
@@ -180,6 +200,7 @@ $DATAINJECTIONLANG["profiles"][3] = "Use a model";
 $DATAINJECTIONLANG["profile"][4] = "List of profiles already configured";
 
 $DATAINJECTIONLANG["mappings"][1] = "Number of ports";
+$DATAINJECTIONLANG["mappings"][2] = "Network port";
 
 $DATAINJECTIONLANG["history"][1] = "from CSV file";
 $DATAINJECTIONLANG["logevent"][1] = "injection of a CSV file.";

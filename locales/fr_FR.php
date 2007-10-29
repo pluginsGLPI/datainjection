@@ -144,11 +144,16 @@ $DATAINJECTIONLANG["saveStep"][7] = "Votre modèle n'a pas été mis à jour mai
 $DATAINJECTIONLANG["saveStep"][8] = "Votre modèle a été enregistré et est prêt à l'emploi.";
 $DATAINJECTIONLANG["saveStep"][9] = "Votre modèle a été mis à jour et est prêt à l'emploi.";
 $DATAINJECTIONLANG["saveStep"][10] = "Voulez-vous utiliser le modèle maintenant ?";
-$DATAINJECTIONLANG["saveStep"][11] = "Le nombre de colonnes du fichier n'est pas correct.";
-$DATAINJECTIONLANG["saveStep"][12] = "Au moins une colonne est incorrecte";
+$DATAINJECTIONLANG["saveStep"][11] = "Le nombre de colonnes du fichier n'est pas correct : ";
+$DATAINJECTIONLANG["saveStep"][12] = "Au moins une colonne est incorrecte : ";
 $DATAINJECTIONLANG["saveStep"][13] = "Enregistrer le modèle afin qu'il puisse être utilisé ultérieurement.";
 $DATAINJECTIONLANG["saveStep"][14] = "Il vous suffira de le sélectionner dans le menu déroulant de la première étape lors de la demande du choix.";
 $DATAINJECTIONLANG["saveStep"][15] = "Vous pouvez écrire un commentaire pour ajouter des informations sur la nature du modèle.";
+$DATAINJECTIONLANG["saveStep"][16] = " colonne(s) attendue(s)";
+$DATAINJECTIONLANG["saveStep"][17] = " colonne(s) trouvée(s)";
+$DATAINJECTIONLANG["saveStep"][18] = " Dans le fichier : ";
+$DATAINJECTIONLANG["saveStep"][19] = " Dans le modèle : ";
+
 
 $DATAINJECTIONLANG["fillInfoStep"][1] = "Attention ! Vous êtes sur le point d'importer des données dans GLPI. Etes-vous sûr de vouloir importer ?";
 $DATAINJECTIONLANG["fillInfoStep"][2] = "Remplissez les champs pour que les informations soient insérées dans GLPI lors de l'importation.";

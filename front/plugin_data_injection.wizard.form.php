@@ -202,7 +202,7 @@ if($load)
 						else
 							$error=$DATAINJECTIONLANG["saveStep"][12];	
 						
-						$error .= "<br />(" . $file->getError(true) . ")";
+						$error .= "<br><br><center>" . $file->getError(true) . "<center>";
 						unset($_SESSION["plugin_data_injection"]["file"]);
 						}
 	    			}
