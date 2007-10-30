@@ -1435,7 +1435,7 @@ function traitement()
 	$i++;
 	$datas = $engine->getDatas();
 	echo "<script type='text/javascript'>change_progress('".$progress."%')</script>";
-	flush();	
+	glpi_flush();	
 		
 	$_SESSION["plugin_data_injection"]["import"]["tab_result"] = serialize($tab_result);
 	$_SESSION["plugin_data_injection"]["import"]["global_result"] = serialize($global_result);
