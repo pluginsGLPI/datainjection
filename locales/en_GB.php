@@ -47,6 +47,7 @@ $DATAINJECTIONLANG["setup"][6] = "Warning, the update is irreversible.";
 $DATAINJECTIONLANG["setup"][7] = "Warning, the uninstallation of the plugin is irreversible.<br> You will loose all the data.";
 $DATAINJECTIONLANG["setup"][8] = "Column";
 $DATAINJECTIONLANG["setup"][9] = "Rights management";
+$DATAINJECTIONLANG["setup"][10] = "PHP 5 or higher is required to use this plugin";
 
 $DATAINJECTIONLANG["presentation"][1] = "Welcome to the file injection wizard";
 $DATAINJECTIONLANG["presentation"][2] = "This wizard allows you to import CSV files into GLPI";

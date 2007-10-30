@@ -47,6 +47,7 @@ $DATAINJECTIONLANG["setup"][6] = "Attention, la mise à jour du plugin est irré
 $DATAINJECTIONLANG["setup"][7] = "Attention, la désinstallation du plugin est irréversible.<br> Vous perdrez toutes les données.";
 $DATAINJECTIONLANG["setup"][8] = "Colonne";
 $DATAINJECTIONLANG["setup"][9] = "Gestion des droits";
+$DATAINJECTIONLANG["setup"][10] = "Ce plugin est compatible avec PHP 5 ou supérieur";
 
 $DATAINJECTIONLANG["presentation"][1] = "Bienvenue dans l'assistant d'importation de fichiers";
 $DATAINJECTIONLANG["presentation"][2] = "Cet assistant permet d'importer des fichiers au format CSV.";
