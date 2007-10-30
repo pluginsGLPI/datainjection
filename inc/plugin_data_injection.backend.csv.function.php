@@ -37,7 +37,8 @@ function parseLine($fic,$data,$encoding=1)
    	for ($c=0; $c < $num; $c++)
    	{
        	//If field is not the last, or if field is the last of the line and is not empty
-       	if ($c < ($num -1) || ($c == ($num -1) && $c[$num] != EMPTY_VALUE))
+       	
+       	if ($c < ($num -1) || ($c == ($num -1) && $data[$num-1] != EMPTY_VALUE))
        	{
 	       	switch ($encoding)
 	       	{

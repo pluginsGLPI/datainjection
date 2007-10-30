@@ -710,15 +710,19 @@ function logAddOrUpdate($device_type,$device_id,$action_type)
 {
 	global $DATAINJECTIONLANG;
 	
-	$changes[0]=0;
-	
-	if ($action_type == INJECTION_ADD)
-		$changes[2] = $DATAINJECTIONLANG["result"][8]." ".$DATAINJECTIONLANG["history"][1];
-	else
-		$changes[2] = $DATAINJECTIONLANG["result"][9]." ".$DATAINJECTIONLANG["history"][1];
-	
-	$changes[1] = "";		
-	historyLog ($device_id,$device_type,$changes,0,HISTORY_LOG_SIMPLE_MESSAGE);
+	//Do not add history for users and groups
+	if($device_type != USER_TYPE && $device_type != GROUP_TYPE)
+		{
+		$changes[0]=0;
+		
+		if ($action_type == INJECTION_ADD)
+			$changes[2] = $DATAINJECTIONLANG["result"][8]." ".$DATAINJECTIONLANG["history"][1];
+		else
+			$changes[2] = $DATAINJECTIONLANG["result"][9]." ".$DATAINJECTIONLANG["history"][1];
+		
+		$changes[1] = "";		
+		historyLog ($device_id,$device_type,$changes,0,HISTORY_LOG_SIMPLE_MESSAGE);
+	}
 }
 
 /*
