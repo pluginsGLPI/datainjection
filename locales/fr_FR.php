@@ -82,7 +82,7 @@ $DATAINJECTIONLANG["modelStep"][5] = "Type de fichier :";
 $DATAINJECTIONLANG["modelStep"][6] = "Création des lignes :";
 $DATAINJECTIONLANG["modelStep"][7] = "Mise à jour des lignes :";
 $DATAINJECTIONLANG["modelStep"][8] = "Ajouter des intitulés :";
-$DATAINJECTIONLANG["modelStep"][9] = "Présence d'un entête :";
+$DATAINJECTIONLANG["modelStep"][9] = "Présence d'un en-tête :";
 $DATAINJECTIONLANG["modelStep"][10] = "Délimiteur du fichier :";
 $DATAINJECTIONLANG["modelStep"][11] = "Délimiteur non défini";
 $DATAINJECTIONLANG["modelStep"][12] = "Mise à jour des champs existants :";
@@ -118,7 +118,7 @@ $DATAINJECTIONLANG["fileStep"][11] = "UTF-8";
 $DATAINJECTIONLANG["fileStep"][12] = "ISO8859-1";
 
 $DATAINJECTIONLANG["mappingStep"][1] = "colonnes trouvées";
-$DATAINJECTIONLANG["mappingStep"][2] = "Entête du fichier";
+$DATAINJECTIONLANG["mappingStep"][2] = "En-tête du fichier";
 $DATAINJECTIONLANG["mappingStep"][3] = "Tables";
 $DATAINJECTIONLANG["mappingStep"][4] = "Champs";
 $DATAINJECTIONLANG["mappingStep"][5] = "Champs de liaison";
@@ -126,7 +126,7 @@ $DATAINJECTIONLANG["mappingStep"][6] = "-------Choisir une table-------";
 $DATAINJECTIONLANG["mappingStep"][7] = "-------Choisir un champ-------";
 $DATAINJECTIONLANG["mappingStep"][8] = "Au moins un champ de liaison doit être défini";
 $DATAINJECTIONLANG["mappingStep"][9] = "Dans cette étape vous allez mettre en relation les champs du fichier et de la base de données.";
-$DATAINJECTIONLANG["mappingStep"][10] = "La colonne entête correspond aux entêtes du fichier";
+$DATAINJECTIONLANG["mappingStep"][10] = "La colonne en-tête correspond aux en-têtes du fichier";
 $DATAINJECTIONLANG["mappingStep"][11] = "Au moins un champs de liaison doit être renseigné : il permet de rechercher si les données à insérer existent déjà en base";
 
 $DATAINJECTIONLANG["infoStep"][1] = "Informations complémentaires";
