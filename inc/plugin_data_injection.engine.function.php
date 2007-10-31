@@ -386,17 +386,17 @@ function preAddCommonFields($common_fields,$type,$fields,$entity)
 			$setFields = array("contract");
 		break;		
 		case NETWORKING_TYPE:
-			$setFields = array("nb_ports","ifmac","ifaddr","plug","contract","port");		
+			$setFields = array("nb_ports","ifmac","ifaddr","plug","contract","port","vlan");		
 			
 			//If a number of ports is provided, then a specific port cannot be modified
 			if (isset($fields["nb_ports"]) && isset($fields["port"]))
 				unset($setFields["port"]);
 		break;
 		case PRINTER_TYPE:
-			$setFields = array("nb_ports","ifmac","ifaddr","plug","contract");
+			$setFields = array("nb_ports","ifmac","ifaddr","plug","contract","vlan");
 		break;	
 		case COMPUTER_TYPE:
-			$setFields = array("nb_ports","ifmac","ifaddr","plug","contract");
+			$setFields = array("nb_ports","ifmac","ifaddr","plug","contract","vlan");
 		break;	
 		default:
 		break;
@@ -490,7 +490,7 @@ function addNecessaryFields($model,$mapping,$mapping_definition,$entity,$type,&$
 	switch ($type)
 	{
 		case COMPUTER_TYPE:
-			$unsetFields = array("plug","contract");
+			$unsetFields = array("plug","contract","vlan");
 			addField($fields,"FK_entities",$entity);
 			break;
 		case MONITOR_TYPE:
@@ -498,7 +498,7 @@ function addNecessaryFields($model,$mapping,$mapping_definition,$entity,$type,&$
 			addField($fields,"FK_entities",$entity);
 			break;
 		case PRINTER_TYPE:
-			$unsetFields = array("ifmac","ifaddr","contract");
+			$unsetFields = array("ifmac","ifaddr","contract","vlan");
 			addField($fields,"FK_entities",$entity);
 			break;
 		case PHONE_TYPE:
@@ -506,7 +506,7 @@ function addNecessaryFields($model,$mapping,$mapping_definition,$entity,$type,&$
 			addField($fields,"FK_entities",$entity);
 			break;
 		case NETWORKING_TYPE:
-			$unsetFields = array("ifmac","ifaddr","contract","ports");
+			$unsetFields = array("ifmac","ifaddr","contract","ports","vlan");
 			addField($fields,"FK_entities",$entity);
 			break;
 		case PERIPHERAL_TYPE:

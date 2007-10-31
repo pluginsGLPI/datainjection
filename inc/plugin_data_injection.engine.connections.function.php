@@ -105,6 +105,17 @@ function addNetworkPlug($common_fields,$canadd)
 		return 0;
 }
 
+function addVlan($common_fields,$canadd)
+{
+	if (isset($common_fields["network_port_id"]) && isset($common_fields["vlan"]))
+	{
+		$vlan_id = getDropdownValue(array(), array("table"=>"glpi_dropdown_vlan"),$common_fields["vlan"],$common_fields["FK_entities"],$canadd);
+		assignVlan($common_fields["network_port_id"],$vlan_id);	  
+	}
+	else
+		return 0;
+}
+
 function updatePort($common_fields,$canadd)
 {
 	global $DB;
@@ -112,21 +123,13 @@ function updatePort($common_fields,$canadd)
 	$netport = new Netport;
 	$input=array();
 	
-	//Try to find a port with this mac and/or ip already connected to this item
-	//$result = $DB->query("SELECT ID FROM glpi_networking_ports WHERE on_device=".$common_fields["device_id"].(isset($input["ifaddr"])?" AND ifaddr='".$input["ifaddr"]."'":'')." ".(isset($input["ifmac"])?" AND ifmac='".$input["ifmac"]."'":''));
-	//if ($DB->numrows($result) > 0)
-	//	$common_fields["network_port_id"] = $DB->result($result,0,"ID");
-	//else
-		//	If the network card still exists, don't add it
-	//	$common_fields["network_port_id"] = $netport->add($input);
-	
-				
 	if ($common_fields["network_port_id"] != EMPTY_VALUE)
 	{
 		$common_fields["netpoint"]=addNetworkPlug($common_fields,$canadd);
 		$input["netpoint"]=$common_fields["netpoint"];
 		$input["ID"]=$common_fields["network_port_id"];
 		$netport->update($input);
+		addVlan($common_fields,$canadd);
 		connectWire($common_fields);
 	}
 }

@@ -240,6 +240,13 @@ $DATA_INJECTION_MAPPING[COMPUTER_TYPE]['contract']['name']=$LANG["financial"][1]
 $DATA_INJECTION_MAPPING[COMPUTER_TYPE]['contract']['type']='text';
 $DATA_INJECTION_MAPPING[COMPUTER_TYPE]['contract']['linkfield']='contract';
 $DATA_INJECTION_MAPPING[COMPUTER_TYPE]['contract']['table_type']='single';
+
+$DATA_INJECTION_MAPPING[COMPUTER_TYPE]['vlan']['table']='glpi_dropdown_vlan';
+$DATA_INJECTION_MAPPING[COMPUTER_TYPE]['vlan']['field']='vlan';
+$DATA_INJECTION_MAPPING[COMPUTER_TYPE]['vlan']['name']=$LANG["networking"][56];
+$DATA_INJECTION_MAPPING[COMPUTER_TYPE]['vlan']['type']='text';
+$DATA_INJECTION_MAPPING[COMPUTER_TYPE]['vlan']['table_type']='virtual';
+
 // ----------------------------------------------------------------------
 //MONITOR MAPPING
 // ----------------------------------------------------------------------
@@ -561,6 +568,12 @@ $DATA_INJECTION_MAPPING[PRINTER_TYPE]['contract']['name']=$LANG["financial"][1];
 $DATA_INJECTION_MAPPING[PRINTER_TYPE]['contract']['type']='text';
 $DATA_INJECTION_MAPPING[PRINTER_TYPE]['contract']['linkfield']='contract';
 $DATA_INJECTION_MAPPING[PRINTER_TYPE]['contract']['table_type']='single';
+
+$DATA_INJECTION_MAPPING[PRINTER_TYPE]['vlan']['table']='glpi_dropdown_vlan';
+$DATA_INJECTION_MAPPING[PRINTER_TYPE]['vlan']['field']='vlan';
+$DATA_INJECTION_MAPPING[PRINTER_TYPE]['vlan']['name']=$LANG["networking"][56];
+$DATA_INJECTION_MAPPING[PRINTER_TYPE]['vlan']['type']='text';
+$DATA_INJECTION_MAPPING[PRINTER_TYPE]['vlan']['table_type']='virtual';
 
 // ----------------------------------------------------------------------
 //PHONE MAPPING
@@ -977,6 +990,12 @@ $DATA_INJECTION_MAPPING[NETWORKING_TYPE]['plug']['field']='plug';
 $DATA_INJECTION_MAPPING[NETWORKING_TYPE]['plug']['name']=$LANG["networking"][51];
 $DATA_INJECTION_MAPPING[NETWORKING_TYPE]['plug']['type']='text';
 $DATA_INJECTION_MAPPING[NETWORKING_TYPE]['plug']['table_type']='virtual';
+
+$DATA_INJECTION_MAPPING[NETWORKING_TYPE]['vlan']['table']='glpi_dropdown_vlan';
+$DATA_INJECTION_MAPPING[NETWORKING_TYPE]['vlan']['field']='vlan';
+$DATA_INJECTION_MAPPING[NETWORKING_TYPE]['vlan']['name']=$LANG["networking"][56];
+$DATA_INJECTION_MAPPING[NETWORKING_TYPE]['vlan']['type']='text';
+$DATA_INJECTION_MAPPING[NETWORKING_TYPE]['vlan']['table_type']='virtual';
 
 // ----------------------------------------------------------------------
 //USER MAPPING
