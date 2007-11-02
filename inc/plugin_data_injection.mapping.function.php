@@ -43,6 +43,8 @@ function getAllMappingsDefinitionsTypes($primary_type)
 		case USER_TYPE:
 		//nobreak
 		case GROUP_TYPE:
+		//nobreak
+		case ENTERPRISE_TYPE:
 		break;
 		
 		//Add infocom type

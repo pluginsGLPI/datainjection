@@ -385,6 +385,9 @@ function preAddCommonFields($common_fields,$type,$fields,$entity)
 		case MONITOR_TYPE:
 			$setFields = array("contract");
 		break;		
+		case ENTERPRISE_TYPE:
+			$setFields = array("contract");
+		break;		
 		case NETWORKING_TYPE:
 			$setFields = array("nb_ports","ifmac","ifaddr","plug","contract","port","vlan");		
 			
@@ -419,6 +422,11 @@ function addCommonFields(&$common_fields,$type,$fields,$entity,$ID)
 	switch ($type)
 	{
 		//Copy/paste is voluntary in order to know exactly which fields are included or not
+		case ENTERPRISE_TYPE:
+			addField($common_fields,"device_id",$ID,true);
+			addField($common_fields,"device_type",$type,false);
+			addField($common_fields,"FK_entities",$entity,false);
+			break;
 		case COMPUTER_TYPE:
 			$setFields = array("location");
 			addField($common_fields,"device_id",$ID,true);
@@ -456,7 +464,6 @@ function addCommonFields(&$common_fields,$type,$fields,$entity,$ID)
 			addField($common_fields,"FK_entities",$entity,false);
 			break;
 		case GROUP_TYPE:
-			//addField($common_fields,"FK_entities",$entity,false);
 			break;
 		case CONTRACT_TYPE:
 			addField($common_fields,"FK_entities",$entity,false);
@@ -515,6 +522,9 @@ function addNecessaryFields($model,$mapping,$mapping_definition,$entity,$type,&$
 			break;
 
 		case GROUP_TYPE:
+		break;
+		case ENTERPRISE_TYPE:
+		addField($fields,"FK_entities",$entity);
 		break;
 		case CONTRACT_TYPE:
 		addField($fields,"FK_entities",$entity);
@@ -615,6 +625,9 @@ function processBeforeEnd($model,$type,$fields,&$common_fields)
 {
 	switch ($type)
 	{
+		case ENTERPRISE_TYPE:
+			addContract($common_fields);					
+		break;		
 		case USER_TYPE:
 			//If user ID is given, add the user in this group
 			if (isset($common_fields["FK_user"]) && isset($common_fields["FK_group"]))
