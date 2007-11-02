@@ -38,6 +38,8 @@ function getAllMappingsDefinitionsTypes($primary_type)
 	
 	switch ($primary_type)
 	{
+		case CONTACT_TYPE:
+		//nobreak
 		case CONTRACT_TYPE:
 		//nobreak
 		case USER_TYPE:

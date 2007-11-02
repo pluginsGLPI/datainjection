@@ -52,8 +52,8 @@
 
 global $LANG,$DATA_INJECTION_MAPPING,$IMPORT_TYPES,$IMPORT_PRIMARY_TYPES,$DATAINJECTIONLANG;
 //Store all the type of items that could be imported
-$IMPORT_TYPES = array(COMPUTER_TYPE, MONITOR_TYPE, PRINTER_TYPE,PHONE_TYPE, USER_TYPE, INFOCOM_TYPE, NETWORKING_TYPE, GROUP_TYPE, CONTRACT_TYPE, PERIPHERAL_TYPE, ENTERPRISE_TYPE);
-$IMPORT_PRIMARY_TYPES = array(COMPUTER_TYPE, MONITOR_TYPE, PRINTER_TYPE, PHONE_TYPE, USER_TYPE, NETWORKING_TYPE, GROUP_TYPE, CONTRACT_TYPE, PERIPHERAL_TYPE, ENTERPRISE_TYPE);
+$IMPORT_TYPES = array(COMPUTER_TYPE, MONITOR_TYPE, PRINTER_TYPE,PHONE_TYPE, USER_TYPE, INFOCOM_TYPE, NETWORKING_TYPE, GROUP_TYPE, CONTRACT_TYPE, PERIPHERAL_TYPE, ENTERPRISE_TYPE, CONTACT_TYPE);
+$IMPORT_PRIMARY_TYPES = array(COMPUTER_TYPE, MONITOR_TYPE, PRINTER_TYPE, PHONE_TYPE, USER_TYPE, NETWORKING_TYPE, GROUP_TYPE, CONTRACT_TYPE, PERIPHERAL_TYPE, ENTERPRISE_TYPE, CONTACT_TYPE);
 
 // ----------------------------------------------------------------------
 //COMPUTER MAPPING
@@ -1321,6 +1321,10 @@ $DATA_INJECTION_MAPPING[PERIPHERAL_TYPE]['contract']['type']='text';
 $DATA_INJECTION_MAPPING[PERIPHERAL_TYPE]['contract']['linkfield']='contract';
 $DATA_INJECTION_MAPPING[PERIPHERAL_TYPE]['contract']['table_type']='single';
 
+// ----------------------------------------------------------------------
+//ENTERPRISE MAPPING
+// ----------------------------------------------------------------------
+
 $DATA_INJECTION_MAPPING[ENTERPRISE_TYPE]['name']['table']='glpi_enterprises';
 $DATA_INJECTION_MAPPING[ENTERPRISE_TYPE]['name']['field']='name';
 $DATA_INJECTION_MAPPING[ENTERPRISE_TYPE]['name']['name']=$LANG["common"][16];
@@ -1376,11 +1380,6 @@ $DATA_INJECTION_MAPPING[ENTERPRISE_TYPE]['email']['field']='email';
 $DATA_INJECTION_MAPPING[ENTERPRISE_TYPE]['email']['name']=$LANG["setup"][14];
 $DATA_INJECTION_MAPPING[ENTERPRISE_TYPE]['email']['type']='text';
 
-$DATA_INJECTION_MAPPING[ENTERPRISE_TYPE]['email']['table']='glpi_enterprises';
-$DATA_INJECTION_MAPPING[ENTERPRISE_TYPE]['email']['field']='email';
-$DATA_INJECTION_MAPPING[ENTERPRISE_TYPE]['email']['name']=$LANG["setup"][14];
-$DATA_INJECTION_MAPPING[ENTERPRISE_TYPE]['email']['type']='text';
-
 $DATA_INJECTION_MAPPING[ENTERPRISE_TYPE]['notes']['table']='glpi_enterprises';
 $DATA_INJECTION_MAPPING[ENTERPRISE_TYPE]['notes']['field']='notes';
 $DATA_INJECTION_MAPPING[ENTERPRISE_TYPE]['notes']['name']=$LANG["reminder"][2];
@@ -1406,5 +1405,63 @@ $DATA_INJECTION_MAPPING[ENTERPRISE_TYPE]['contract']['name']=$LANG["financial"][
 $DATA_INJECTION_MAPPING[ENTERPRISE_TYPE]['contract']['type']='text';
 $DATA_INJECTION_MAPPING[ENTERPRISE_TYPE]['contract']['linkfield']='contract';
 $DATA_INJECTION_MAPPING[ENTERPRISE_TYPE]['contract']['table_type']='single';
+
+// ----------------------------------------------------------------------
+//CONTACT MAPPING
+// ----------------------------------------------------------------------
+
+$DATA_INJECTION_MAPPING[CONTACT_TYPE]['name']['table']='glpi_contacts';
+$DATA_INJECTION_MAPPING[CONTACT_TYPE]['name']['field']='name';
+$DATA_INJECTION_MAPPING[CONTACT_TYPE]['name']['name']=$LANG["common"][16];
+$DATA_INJECTION_MAPPING[CONTACT_TYPE]['name']['type']='text';
+
+$DATA_INJECTION_MAPPING[CONTACT_TYPE]['comments']['table']='glpi_contacts';
+$DATA_INJECTION_MAPPING[CONTACT_TYPE]['comments']['field']='comments';
+$DATA_INJECTION_MAPPING[CONTACT_TYPE]['comments']['name']=$LANG["common"][25];
+$DATA_INJECTION_MAPPING[CONTACT_TYPE]['comments']['type']='text';
+$DATA_INJECTION_MAPPING[CONTACT_TYPE]['comments']['table_type']='multitext';
+
+$DATA_INJECTION_MAPPING[CONTACT_TYPE]['email']['table']='glpi_contacts';
+$DATA_INJECTION_MAPPING[CONTACT_TYPE]['email']['field']='email';
+$DATA_INJECTION_MAPPING[CONTACT_TYPE]['email']['name']=$LANG["setup"][14];
+$DATA_INJECTION_MAPPING[CONTACT_TYPE]['email']['type']='text';
+
+$DATA_INJECTION_MAPPING[CONTACT_TYPE]['firstname']['table']='glpi_contacts';
+$DATA_INJECTION_MAPPING[CONTACT_TYPE]['firstname']['field']='firstname';
+$DATA_INJECTION_MAPPING[CONTACT_TYPE]['firstname']['name']=$LANG["common"][43];
+$DATA_INJECTION_MAPPING[CONTACT_TYPE]['firstname']['type']='text';
+
+$DATA_INJECTION_MAPPING[CONTACT_TYPE]['phone']['table']='glpi_contacts';
+$DATA_INJECTION_MAPPING[CONTACT_TYPE]['phone']['field']='phone';
+$DATA_INJECTION_MAPPING[CONTACT_TYPE]['phone']['name']=$LANG["phones"][4];
+$DATA_INJECTION_MAPPING[CONTACT_TYPE]['phone']['type']='text';
+
+$DATA_INJECTION_MAPPING[CONTACT_TYPE]['phone2']['table']='glpi_contacts';
+$DATA_INJECTION_MAPPING[CONTACT_TYPE]['phone2']['field']='phone2';
+$DATA_INJECTION_MAPPING[CONTACT_TYPE]['phone2']['name']=$LANG["phones"][4]." 2";
+$DATA_INJECTION_MAPPING[CONTACT_TYPE]['phone2']['type']='text';
+
+$DATA_INJECTION_MAPPING[CONTACT_TYPE]['mobile']['table']='glpi_contacts';
+$DATA_INJECTION_MAPPING[CONTACT_TYPE]['mobile']['field']='mobile';
+$DATA_INJECTION_MAPPING[CONTACT_TYPE]['mobile']['name']=$LANG["common"][42];
+$DATA_INJECTION_MAPPING[CONTACT_TYPE]['mobile']['type']='text';
+
+$DATA_INJECTION_MAPPING[CONTACT_TYPE]['fax']['table']='glpi_contacts';
+$DATA_INJECTION_MAPPING[CONTACT_TYPE]['fax']['field']='fax';
+$DATA_INJECTION_MAPPING[CONTACT_TYPE]['fax']['name']=$LANG["financial"][30];
+$DATA_INJECTION_MAPPING[CONTACT_TYPE]['fax']['type']='text';
+
+$DATA_INJECTION_MAPPING[CONTACT_TYPE]['notes']['table']='glpi_contacts';
+$DATA_INJECTION_MAPPING[CONTACT_TYPE]['notes']['field']='notes';
+$DATA_INJECTION_MAPPING[CONTACT_TYPE]['notes']['name']=$LANG["reminder"][2];
+$DATA_INJECTION_MAPPING[CONTACT_TYPE]['notes']['type']='text';
+$DATA_INJECTION_MAPPING[CONTACT_TYPE]['notes']['table_type']='multitext';
+
+$DATA_INJECTION_MAPPING[CONTACT_TYPE]['type']['table']='glpi_dropdown_contact_type';
+$DATA_INJECTION_MAPPING[CONTACT_TYPE]['type']['field']='name';
+$DATA_INJECTION_MAPPING[CONTACT_TYPE]['type']['name']=$LANG["setup"][80];
+$DATA_INJECTION_MAPPING[CONTACT_TYPE]['type']['type']='text';
+$DATA_INJECTION_MAPPING[CONTACT_TYPE]['type']['linkfield']='type';
+$DATA_INJECTION_MAPPING[CONTACT_TYPE]['type']['table_type']='dropdown';
 
 ?>

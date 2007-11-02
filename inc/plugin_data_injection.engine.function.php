@@ -422,6 +422,9 @@ function addCommonFields(&$common_fields,$type,$fields,$entity,$ID)
 	switch ($type)
 	{
 		//Copy/paste is voluntary in order to know exactly which fields are included or not
+		case CONTACT_TYPE:
+			addField($common_fields,"FK_entities",$entity,false);
+			break;
 		case ENTERPRISE_TYPE:
 			addField($common_fields,"device_id",$ID,true);
 			addField($common_fields,"device_type",$type,false);
@@ -496,6 +499,10 @@ function addNecessaryFields($model,$mapping,$mapping_definition,$entity,$type,&$
 	$unsetFields = array();
 	switch ($type)
 	{
+		case CONTACT_TYPE:
+			addField($fields,"FK_entities",$entity);
+			break;
+		
 		case COMPUTER_TYPE:
 			$unsetFields = array("plug","contract","vlan");
 			addField($fields,"FK_entities",$entity);
