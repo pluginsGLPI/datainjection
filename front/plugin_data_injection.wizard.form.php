@@ -34,7 +34,7 @@ if (!defined('GLPI_ROOT')) {
 	define('GLPI_ROOT', '../../..');
 }
 
-$NEEDED_ITEMS=array("user","contact","enterprise","contract","networking","group","monitor","phone","infocom","printer","profile","entity","computer","software","setup","peripheral");
+$NEEDED_ITEMS=array("user","contact","enterprise","contract","networking","group","monitor","phone","infocom","printer","profile","entity","computer","software","setup","peripheral","cartridge","consumable");
 include (GLPI_ROOT."/inc/includes.php");
 
 commonHeader($DATAINJECTIONLANG["config"][1],$_SERVER["PHP_SELF"],"plugins","data_injection");

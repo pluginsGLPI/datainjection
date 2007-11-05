@@ -52,6 +52,10 @@ function getLogItemType($device_type)
 			return "contracts";
 		case PRINTER_TYPE:
 			return "printers";	
+		case CONTACT_TYPE:
+			return "contacts";
+		case CARTRIDGE_TYPE:
+			return "cartridges";
 		default:
 			return "";							   		
     } 

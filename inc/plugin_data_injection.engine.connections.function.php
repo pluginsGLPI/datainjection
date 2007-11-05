@@ -150,7 +150,13 @@ function connectWire($common_fields)
 function addContract($common_fields)
 {
 	if (isset($common_fields["contract"]))
-		addDeviceContract($common_fields["contract"],$common_fields['device_type'],$common_fields['device_id']);	
+		addEnterpriseContract($common_fields["contract"],$common_fields['device_id']);
+}
+
+function addContact($common_fields)
+{
+	if (isset($common_fields["contact"]))
+		addContactEnterprise($common_fields['device_id'],$common_fields['contact']);
 }
 
 /*
@@ -220,5 +226,22 @@ function addPort(&$common_fields,$i,$network_cards_infos,$just_add_port,$add_car
 		$common_fields["network_port_id"] = $netport->add($input);
 	else
 		$netport->update($input);		
+}
+
+function addEntity($fields)
+{
+	$entity = new Entity;
+	
+}
+
+function getEntityParentId($parent_name)
+{
+	global $DB;
+	$sql = "SELECT ID, level FROM glpi_entities WHERE name='".$parent_name."' OR completename='".$parent_name."'";
+	$result = $DD->query($sql);
+	if ($DB->numrows($result) > 0)
+		return array("ID"=>$DB->result($result,0,"ID"),"level"=>$DB->result($result,0,"level"));
+	else
+		return array("ID"=>0);	
 }
 ?>

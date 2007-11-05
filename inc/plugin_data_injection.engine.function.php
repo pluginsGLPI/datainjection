@@ -240,6 +240,7 @@ function getDropdownValue($mapping, $mapping_definition,$value,$entity,$canadd=0
 function findUser($value,$entity)
 {
 	global $DB;
+	
 	$sql = "SELECT ID FROM glpi_users WHERE LOWER(name)=\"".strtolower($value)."\" OR (CONCAT(LOWER(realname),' ',LOWER(firstname))=\"".strtolower($value)."\" OR CONCAT(LOWER(firstname),' ',LOWER(realname))=\"".strtolower($value)."\")";
 	$result = $DB->query($sql);
 	if ($DB->numrows($result)>0)
@@ -255,6 +256,28 @@ function findUser($value,$entity)
 	else
 		return EMPTY_VALUE;		
 }
+
+
+/*
+ * Find a user. Look for login OR firstname + lastname OR lastname + firstname
+ * @param value the user to look for
+ * @param entity the entity where the user should have right
+ * @return the user ID if found or ''
+ */
+function findContact($value,$entity)
+{
+	global $DB;
+	$sql = "SELECT ID FROM glpi_contacts WHERE FK_entities=".$entity." AND (LOWER(name)=\"".strtolower($value)."\" OR (CONCAT(LOWER(name),' ',LOWER(firstname))=\"".strtolower($value)."\" OR CONCAT(LOWER(firstname),' ',LOWER(name))=\"".strtolower($value)."\"))";
+	$result = $DB->query($sql);
+	if ($DB->numrows($result)>0)
+	{
+		//check if user has right on the current entity
+		return $DB->result($result,0,"ID");
+	}
+	else
+		return EMPTY_VALUE;		
+}
+
 /*
  * Function to check if the datas to inject already exists in DB
  * @param type the type of datas to inject
@@ -295,7 +318,10 @@ function dataAlreadyInDB($type,$fields,$mapping_definition,$model)
 		switch ($obj->table)
 		{
 			case "glpi_users":
+			//nobreak
 			case "glpi_groups":
+			//nobreak
+			case "glpi_cartridges":
 				$where_entity = " 1";
 				break;	
 			default:
@@ -379,6 +405,9 @@ function preAddCommonFields($common_fields,$type,$fields,$entity)
 	$setFields = array();
 	switch ($type)
 	{
+		case ENTITY_TYPE:
+			$setFields = array("address","postcode","town","state","country","website","phonenumber","fax","email","notes");
+		break;
 		case PHONE_TYPE:
 			$setFields = array("contract");
 		break;	
@@ -386,7 +415,7 @@ function preAddCommonFields($common_fields,$type,$fields,$entity)
 			$setFields = array("contract");
 		break;		
 		case ENTERPRISE_TYPE:
-			$setFields = array("contract");
+			$setFields = array("contract","contact");
 		break;		
 		case NETWORKING_TYPE:
 			$setFields = array("nb_ports","ifmac","ifaddr","plug","contract","port","vlan");		
@@ -422,7 +451,19 @@ function addCommonFields(&$common_fields,$type,$fields,$entity,$ID)
 	switch ($type)
 	{
 		//Copy/paste is voluntary in order to know exactly which fields are included or not
+		case ENTITY_TYPE:
+			break;
 		case CONTACT_TYPE:
+			addField($common_fields,"FK_entities",$entity,false);
+			break;
+		case CARTRIDGE_TYPE:
+			addField($common_fields,"device_id",$ID,true);
+			addField($common_fields,"device_type",$type,false);
+			addField($common_fields,"FK_entities",$entity,false);
+			break;
+		case CONSUMABLE_TYPE:
+			addField($common_fields,"device_id",$ID,true);
+			addField($common_fields,"device_type",$type,false);
 			addField($common_fields,"FK_entities",$entity,false);
 			break;
 		case ENTERPRISE_TYPE:
@@ -499,10 +540,20 @@ function addNecessaryFields($model,$mapping,$mapping_definition,$entity,$type,&$
 	$unsetFields = array();
 	switch ($type)
 	{
+		case ENTITY_TYPE:
+			$unsetFields = array("address","postcode","town","state","country","website","phonenumber","fax","email","notes");
+			break;
 		case CONTACT_TYPE:
 			addField($fields,"FK_entities",$entity);
 			break;
-		
+		case CONSUMABLE_TYPE:
+			addField($fields,"FK_entities",$entity);
+			break;
+		case CARTRIDGE_TYPE:
+			addField($fields,"FK_entities",$entity);
+			break;
+		case CARTRIDGE_ITEM_TYPE:
+			break;
 		case COMPUTER_TYPE:
 			$unsetFields = array("plug","contract","vlan");
 			addField($fields,"FK_entities",$entity);
@@ -576,7 +627,10 @@ function getFieldValue($mapping, $mapping_definition,$field_value,$entity,$obj,$
 			case "dropdown":
 				$obj[$mapping_definition["linkfield"]] = getDropdownValue($mapping,$mapping_definition,$field_value,$entity,$canadd);
 				break;
-			
+			case "contact":
+				//find a contact by looking into name field OR firstname + name OR name + firstname
+				$obj[$mapping_definition["linkfield"]] = findContact($field_value,$entity);
+				break;		
 			case "user":
 				//find a user by looking into login field OR firstname + lastname OR lastname + firstname
 				$obj[$mapping_definition["linkfield"]] = findUser($field_value,$entity);
@@ -633,7 +687,8 @@ function processBeforeEnd($model,$type,$fields,&$common_fields)
 	switch ($type)
 	{
 		case ENTERPRISE_TYPE:
-			addContract($common_fields);					
+			addContract($common_fields);
+			addContact($common_fields);					
 		break;		
 		case USER_TYPE:
 			//If user ID is given, add the user in this group

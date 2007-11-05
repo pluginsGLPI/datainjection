@@ -38,6 +38,19 @@ function getAllInfosDefinitionsTypes($primary_type)
 	
 	switch ($primary_type)
 	{
+		case CONTACT_TYPE:
+		//nobreak
+		case CONTRACT_TYPE:
+		//nobreak
+		case USER_TYPE:
+		//nobreak
+		case GROUP_TYPE:
+		//nobreak
+		case ENTERPRISE_TYPE:
+		//nobreak
+		case ENTITY_TYPE:
+		break;
+		
 		//Add infocom type
 		default:
 			$commonitem->setType(INFOCOM_TYPE);

@@ -226,7 +226,7 @@ function modelStep($target)
 		echo "<td style='width:150px'><select name='dropdown_device_type' style='background-color:#e6e6e6' disabled>";
 	
 	$types = getAllPrimaryTypes();
-		
+	
 	foreach($types as $type)
 		{
 		if(isset($model))
@@ -1204,11 +1204,14 @@ function fillInfoStep($target,$error)
 
 						switch ($DATA_INJECTION_INFOS[$value->getInfosType()][$value->getValue()]["field"])
 						{
+							case "alarm":
+								dropdownInteger("field[$key][1]",$value->getInfosText(),-1,100);
+								break;
 							case "amort_time":
-								dropdownInteger("amort_time","",0,15);
+								dropdownInteger("field[$key][1]","",0,15);
 								break;
 							case "warranty_duration":
-								dropdownInteger("warranty_duration","",0,120);
+								dropdownInteger("field[$key][1]","",0,120);
 								break;
 							case "amort_type":
 								dropdownAmortType("field[$key][1]");

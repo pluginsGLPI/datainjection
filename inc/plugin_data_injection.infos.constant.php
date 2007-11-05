@@ -39,7 +39,7 @@
 // ----------------------------------------------------------------------
 // ----------------------------------------------------------------------
 global $LANG,$DATA_INJECTION_INFOS,$INJECTION_INFOS_TYPES;
-$INJECTION_INFOS_TYPES = array(COMPUTER_TYPE, MONITOR_TYPE, PRINTER_TYPE,PHONE_TYPE, INFOCOM_TYPE, NETWORKING_TYPE, PERIPHERAL_TYPE);
+$INJECTION_INFOS_TYPES = array(COMPUTER_TYPE, MONITOR_TYPE, PRINTER_TYPE,PHONE_TYPE, INFOCOM_TYPE, NETWORKING_TYPE, PERIPHERAL_TYPE, CONTACT_TYPE, CARTRIDGE_TYPE, CARTRIDGE_ITEM_TYPE);
 
 // ----------------------------------------------------------------------
 //INFOCOM INFOS
@@ -451,5 +451,148 @@ $DATA_INJECTION_INFOS[NETWORKING_TYPE]['contract']['table']='glpi_contracts';
 $DATA_INJECTION_INFOS[NETWORKING_TYPE]['contract']['field']='comments';
 $DATA_INJECTION_INFOS[NETWORKING_TYPE]['contract']['name']=$LANG["financial"][1];
 $DATA_INJECTION_INFOS[NETWORKING_TYPE]['contract']['input_type']='dropdown';
+
+// ----------------------------------------------------------------------
+//CONTACT INFOS
+// ----------------------------------------------------------------------
+$DATA_INJECTION_INFOS[CONTACT_TYPE]['comments']['table']='glpi_contacts';
+$DATA_INJECTION_INFOS[CONTACT_TYPE]['comments']['field']='comments';
+$DATA_INJECTION_INFOS[CONTACT_TYPE]['comments']['name']=$LANG["common"][25];
+$DATA_INJECTION_INFOS[CONTACT_TYPE]['comments']['table_type']='multitext';
+
+$DATA_INJECTION_INFOS[CONTACT_TYPE]['type']['table']='glpi_dropdown_contact_type';
+$DATA_INJECTION_INFOS[CONTACT_TYPE]['type']['field']='name';
+$DATA_INJECTION_INFOS[CONTACT_TYPE]['type']['name']=$LANG["setup"][80];
+$DATA_INJECTION_INFOS[CONTACT_TYPE]['type']['type']='text';
+$DATA_INJECTION_INFOS[CONTACT_TYPE]['type']['linkfield']='type';
+$DATA_INJECTION_INFOS[CONTACT_TYPE]['type']['input_type']='dropdown';
+
+// ----------------------------------------------------------------------
+//ENTERPRISES INFOS
+// ----------------------------------------------------------------------
+$DATA_INJECTION_INFOS[ENTERPRISE_TYPE]['notes']['table']='glpi_enterprises';
+$DATA_INJECTION_INFOS[ENTERPRISE_TYPE]['notes']['field']='notes';
+$DATA_INJECTION_INFOS[ENTERPRISE_TYPE]['notes']['name']=$LANG["reminder"][2];
+$DATA_INJECTION_INFOS[ENTERPRISE_TYPE]['notes']['type']='text';
+$DATA_INJECTION_INFOS[ENTERPRISE_TYPE]['notes']['table_type']='multitext';
+
+$DATA_INJECTION_INFOS[ENTERPRISE_TYPE]['comments']['table']='glpi_enterprises';
+$DATA_INJECTION_INFOS[ENTERPRISE_TYPE]['comments']['field']='comments';
+$DATA_INJECTION_INFOS[ENTERPRISE_TYPE]['comments']['name']=$LANG["common"][25];
+$DATA_INJECTION_INFOS[ENTERPRISE_TYPE]['comments']['type']='text';
+$DATA_INJECTION_INFOS[ENTERPRISE_TYPE]['comments']['table_type']='multitext';
+
+$DATA_INJECTION_INFOS[ENTERPRISE_TYPE]['type']['table']='glpi_dropdown_enttype';
+$DATA_INJECTION_INFOS[ENTERPRISE_TYPE]['type']['field']='name';
+$DATA_INJECTION_INFOS[ENTERPRISE_TYPE]['type']['name']=$LANG["setup"][80];
+$DATA_INJECTION_INFOS[ENTERPRISE_TYPE]['type']['type']='text';
+$DATA_INJECTION_INFOS[ENTERPRISE_TYPE]['type']['linkfield']='type';
+$DATA_INJECTION_INFOS[ENTERPRISE_TYPE]['type']['input_type']='dropdown';
+
+$DATA_INJECTION_INFOS[ENTERPRISE_TYPE]['contract']['table']='glpi_contracts';
+$DATA_INJECTION_INFOS[ENTERPRISE_TYPE]['contract']['field']='name';
+$DATA_INJECTION_INFOS[ENTERPRISE_TYPE]['contract']['name']=$LANG["financial"][1];
+$DATA_INJECTION_INFOS[ENTERPRISE_TYPE]['contract']['type']='text';
+$DATA_INJECTION_INFOS[ENTERPRISE_TYPE]['contract']['linkfield']='contract';
+$DATA_INJECTION_INFOS[ENTERPRISE_TYPE]['contract']['input_type']='dropdown';
+
+$DATA_INJECTION_INFOS[ENTERPRISE_TYPE]['contact']['table']='glpi_contacts';
+$DATA_INJECTION_INFOS[ENTERPRISE_TYPE]['contact']['field']='name';
+$DATA_INJECTION_INFOS[ENTERPRISE_TYPE]['contact']['name']=$LANG["common"][18];
+$DATA_INJECTION_INFOS[ENTERPRISE_TYPE]['contact']['type']='text';
+$DATA_INJECTION_INFOS[ENTERPRISE_TYPE]['contact']['linkfield']='contact';
+$DATA_INJECTION_INFOS[ENTERPRISE_TYPE]['contact']['input_type']='dropdown';
+
+// ----------------------------------------------------------------------
+//CONSUMABLE INFOS
+// ----------------------------------------------------------------------
+$DATA_INJECTION_INFOS[CONSUMABLE_TYPE]['notes']['table']='glpi_consumables_type';
+$DATA_INJECTION_INFOS[CONSUMABLE_TYPE]['notes']['field']='notes';
+$DATA_INJECTION_INFOS[CONSUMABLE_TYPE]['notes']['name']=$LANG["reminder"][2];
+$DATA_INJECTION_INFOS[CONSUMABLE_TYPE]['notes']['type']='text';
+$DATA_INJECTION_INFOS[CONSUMABLE_TYPE]['notes']['table_type']='multitext';
+
+$DATA_INJECTION_INFOS[CONSUMABLE_TYPE]['comments']['table']='glpi_consumables_type';
+$DATA_INJECTION_INFOS[CONSUMABLE_TYPE]['comments']['field']='comments';
+$DATA_INJECTION_INFOS[CONSUMABLE_TYPE]['comments']['name']=$LANG["common"][25];
+$DATA_INJECTION_INFOS[CONSUMABLE_TYPE]['comments']['type']='text';
+$DATA_INJECTION_INFOS[CONSUMABLE_TYPE]['comments']['table_type']='multitext';
+
+$DATA_INJECTION_INFOS[CONSUMABLE_TYPE]['type']['table']='glpi_dropdown_consumable_type';
+$DATA_INJECTION_INFOS[CONSUMABLE_TYPE]['type']['field']='name';
+$DATA_INJECTION_INFOS[CONSUMABLE_TYPE]['type']['name']=$LANG["setup"][80];
+$DATA_INJECTION_INFOS[CONSUMABLE_TYPE]['type']['type']='text';
+$DATA_INJECTION_INFOS[CONSUMABLE_TYPE]['type']['linkfield']='type';
+$DATA_INJECTION_INFOS[CONSUMABLE_TYPE]['type']['input_type']='dropdown';
+
+$DATA_INJECTION_INFOS[CONSUMABLE_TYPE]['tech_num']['table']='glpi_users';
+$DATA_INJECTION_INFOS[CONSUMABLE_TYPE]['tech_num']['field']='name';
+$DATA_INJECTION_INFOS[CONSUMABLE_TYPE]['tech_num']['name']=$LANG["common"][10];
+$DATA_INJECTION_INFOS[CONSUMABLE_TYPE]['tech_num']['linkfield']='tech_num';
+$DATA_INJECTION_INFOS[CONSUMABLE_TYPE]['tech_num']['input_type']='dropdown';
+
+$DATA_INJECTION_INFOS[CONSUMABLE_TYPE]['FK_glpi_enterprise']['table']='glpi_dropdown_manufacturer';
+$DATA_INJECTION_INFOS[CONSUMABLE_TYPE]['FK_glpi_enterprise']['field']='name';
+$DATA_INJECTION_INFOS[CONSUMABLE_TYPE]['FK_glpi_enterprise']['name']=$LANG["common"][5];
+$DATA_INJECTION_INFOS[CONSUMABLE_TYPE]['FK_glpi_enterprise']['linkfield']='FK_enterprise';
+$DATA_INJECTION_INFOS[CONSUMABLE_TYPE]['FK_glpi_enterprise']['input_type']='dropdown';
+
+$DATA_INJECTION_INFOS[CONSUMABLE_TYPE]['alarm']['table']='glpi_consumables_type';
+$DATA_INJECTION_INFOS[CONSUMABLE_TYPE]['alarm']['field']='alarm';
+$DATA_INJECTION_INFOS[CONSUMABLE_TYPE]['alarm']['name']=$LANG["consumables"][38];
+$DATA_INJECTION_INFOS[CONSUMABLE_TYPE]['alarm']['linkfield']='FK_enterprise';
+$DATA_INJECTION_INFOS[CONSUMABLE_TYPE]['alarm']['input_type']='dropdown';
+
+$DATA_INJECTION_INFOS[CONSUMABLE_TYPE]['location']['table']='glpi_dropdown_locations';
+$DATA_INJECTION_INFOS[CONSUMABLE_TYPE]['location']['field']='name';
+$DATA_INJECTION_INFOS[CONSUMABLE_TYPE]['location']['name']=$LANG["common"][15];
+$DATA_INJECTION_INFOS[CONSUMABLE_TYPE]['location']['linkfield']='location';
+$DATA_INJECTION_INFOS[CONSUMABLE_TYPE]['location']['input_type']='dropdown';
+
+// ----------------------------------------------------------------------
+//CARTRIDGE INFOS
+// ----------------------------------------------------------------------
+$DATA_INJECTION_INFOS[CARTRIDGE_TYPE]['notes']['table']='glpi_cartridges_type';
+$DATA_INJECTION_INFOS[CARTRIDGE_TYPE]['notes']['field']='notes';
+$DATA_INJECTION_INFOS[CARTRIDGE_TYPE]['notes']['name']=$LANG["reminder"][2];
+$DATA_INJECTION_INFOS[CARTRIDGE_TYPE]['notes']['type']='text';
+$DATA_INJECTION_INFOS[CARTRIDGE_TYPE]['notes']['table_type']='multitext';
+
+$DATA_INJECTION_INFOS[CARTRIDGE_TYPE]['comments']['table']='glpi_cartridges_type';
+$DATA_INJECTION_INFOS[CARTRIDGE_TYPE]['comments']['field']='comments';
+$DATA_INJECTION_INFOS[CARTRIDGE_TYPE]['comments']['name']=$LANG["common"][25];
+$DATA_INJECTION_INFOS[CARTRIDGE_TYPE]['comments']['type']='text';
+$DATA_INJECTION_INFOS[CARTRIDGE_TYPE]['comments']['table_type']='multitext';
+
+$DATA_INJECTION_INFOS[CARTRIDGE_TYPE]['type']['table']='glpi_dropdown_cartridge_type';
+$DATA_INJECTION_INFOS[CARTRIDGE_TYPE]['type']['field']='name';
+$DATA_INJECTION_INFOS[CARTRIDGE_TYPE]['type']['name']=$LANG["setup"][80];
+$DATA_INJECTION_INFOS[CARTRIDGE_TYPE]['type']['type']='text';
+$DATA_INJECTION_INFOS[CARTRIDGE_TYPE]['type']['linkfield']='type';
+$DATA_INJECTION_INFOS[CARTRIDGE_TYPE]['type']['input_type']='dropdown';
+
+$DATA_INJECTION_INFOS[CARTRIDGE_TYPE]['tech_num']['table']='glpi_users';
+$DATA_INJECTION_INFOS[CARTRIDGE_TYPE]['tech_num']['field']='name';
+$DATA_INJECTION_INFOS[CARTRIDGE_TYPE]['tech_num']['name']=$LANG["common"][10];
+$DATA_INJECTION_INFOS[CARTRIDGE_TYPE]['tech_num']['linkfield']='tech_num';
+$DATA_INJECTION_INFOS[CARTRIDGE_TYPE]['tech_num']['input_type']='dropdown';
+
+$DATA_INJECTION_INFOS[CARTRIDGE_TYPE]['FK_glpi_enterprise']['table']='glpi_dropdown_manufacturer';
+$DATA_INJECTION_INFOS[CARTRIDGE_TYPE]['FK_glpi_enterprise']['field']='name';
+$DATA_INJECTION_INFOS[CARTRIDGE_TYPE]['FK_glpi_enterprise']['name']=$LANG["common"][5];
+$DATA_INJECTION_INFOS[CARTRIDGE_TYPE]['FK_glpi_enterprise']['linkfield']='FK_enterprise';
+$DATA_INJECTION_INFOS[CARTRIDGE_TYPE]['FK_glpi_enterprise']['input_type']='dropdown';
+
+$DATA_INJECTION_INFOS[CARTRIDGE_TYPE]['alarm']['table']='glpi_cartridges_type';
+$DATA_INJECTION_INFOS[CARTRIDGE_TYPE]['alarm']['field']='alarm';
+$DATA_INJECTION_INFOS[CARTRIDGE_TYPE]['alarm']['name']=$LANG["consumables"][38];
+$DATA_INJECTION_INFOS[CARTRIDGE_TYPE]['alarm']['linkfield']='FK_enterprise';
+$DATA_INJECTION_INFOS[CARTRIDGE_TYPE]['alarm']['input_type']='dropdown';
+
+$DATA_INJECTION_INFOS[CARTRIDGE_TYPE]['location']['table']='glpi_dropdown_locations';
+$DATA_INJECTION_INFOS[CARTRIDGE_TYPE]['location']['field']='name';
+$DATA_INJECTION_INFOS[CARTRIDGE_TYPE]['location']['name']=$LANG["common"][15];
+$DATA_INJECTION_INFOS[CARTRIDGE_TYPE]['location']['linkfield']='location';
+$DATA_INJECTION_INFOS[CARTRIDGE_TYPE]['location']['input_type']='dropdown';
 
 ?>
