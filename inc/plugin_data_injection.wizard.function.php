@@ -100,18 +100,6 @@ function choiceStep($target)
 		echo "</tr>";
 		/**************************************************************/
 
-		/**************************Export******************************/
-		/*
-		echo "<tr>";
-		if (plugin_data_injection_haveRight("create_model","w"))
-			echo "<td><input type='radio' name='choice' value='5' onClick='show_Select($nbmodel);deleteOnglet(2)' /></td>";
-		else
-			echo "<td><input type='radio' name='choice' value='5' onClick='show_Select($nbmodel);deleteOnglet(2)' disabled /></td>";
-		echo "<td>".$DATAINJECTIONLANG["choiceStep"][12]."</td>";
-		echo "</tr>";
-		*/
-		/**************************************************************/
-
 		/**************************Using*******************************/
 		echo "<tr>";
 		if (plugin_data_injection_haveRight("use_model","r"))
@@ -231,16 +219,17 @@ function modelStep($target)
 		{
 		if(isset($model))
 			{
-			if($model->getDeviceType() == $type[0])
-				echo "<option value='".$type[0]."' selected>".$type[1]."</option>";
+			if($model->getDeviceType() == $type[1])
+				echo "<option value='".$type[1]."' selected>".$type[0]."</option>";
 			else
-				echo "<option value='".$type[0]."'>".$type[1]."</option>";
+				echo "<option value='".$type[1]."'>".$type[0]."</option>";
 			}
 		else
-			echo "<option value='".$type[0]."'>".$type[1]."</option>";
+			echo "<option value='".$type[1]."'>".$type[0]."</option>";
 		}
 	
 	echo "</select></td></tr>";
+
 	/**************************************************************/
 	
 	/**************************Type********************************/

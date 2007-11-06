@@ -107,10 +107,9 @@ function getAllPrimaryTypes()
 	foreach ($IMPORT_PRIMARY_TYPES as $type)
 	{
 		$commonitem->setType($type);
-		$types[] = array($type,$commonitem->getType());
+		$types[] = array($commonitem->getType(),$type);
 	}
-	sort($types);
+	asort($types);
 	return $types;
 }
-
 ?>
