@@ -187,7 +187,10 @@ function plugin_data_injection_initSession()
 				if ($DB->numrows($result)) {
 					while ($data = $DB->fetch_assoc($result)) {
 						$prof->fields = array ();
-						$prof->getFromDB($data['ID']);
+						if(isset($_SESSION["glpiactiveprofile"]["ID"]))
+							$prof->getFromDB($_SESSION["glpiactiveprofile"]["ID"]);
+						else
+							$prof->getFromDB($data['ID']);
 						$_SESSION['glpi_plugin_data_injection_profile'] = $prof->fields;
 						$_SESSION["glpi_plugin_data_injection_installed"]=1;
 					}		
