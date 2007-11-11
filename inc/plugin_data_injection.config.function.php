@@ -148,25 +148,6 @@ function plugin_data_injection_uninstall() {
 	}
 }
 
-function deleteDir($fichier) {
-	if (file_exists($fichier))
-		{
-		chmod($fichier,0777);
-		if (is_dir($fichier))
-			{
-			$id_dossier = opendir($fichier);
-			while($element = readdir($id_dossier))
-				{
-				if ($element != "." && $element != "..")
-				unlink($fichier."/".$element);
-				}
-			closedir($id_dossier);
-			rmdir($fichier);
-			}
-		else unlink($fichier);
-		}
-}
-
 function plugin_data_injection_initSession() {
 	global $DB;
 	

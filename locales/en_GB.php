@@ -48,6 +48,7 @@ $DATAINJECTIONLANG["setup"][7] = "Warning, the uninstallation of the plugin is i
 $DATAINJECTIONLANG["setup"][8] = "Column";
 $DATAINJECTIONLANG["setup"][9] = "Rights management";
 $DATAINJECTIONLANG["setup"][10] = "PHP 5 or higher is required to use this plugin";
+$DATAINJECTIONLANG["setup"][11] = "Instructions";
 
 $DATAINJECTIONLANG["presentation"][1] = "Welcome to the file injection wizard";
 $DATAINJECTIONLANG["presentation"][2] = "This wizard allows you to import CSV files into GLPI";

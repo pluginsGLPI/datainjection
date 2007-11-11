@@ -45,9 +45,9 @@ if(!isset($_SESSION["glpi_plugin_data_injection_installed"]) || $_SESSION["glpi_
 	
 			echo "<div align='center'>";
 			echo "<table class='tab_cadre' cellpadding='5'>";
-			echo "<tr><th>".$DATAINJECTIONLANG["setup"][1];
-			echo "</th></tr>";
-			echo "<tr class='tab_bg_1'><td>";
+			echo "<tr><th>".$DATAINJECTIONLANG["setup"][1]."</th></tr>";
+			echo "<tr class='tab_bg_1'><td align='center'><a href='http://glpi-project.org/wiki/doku.php?id=".substr($_SESSION["glpilanguage"],0,2).":plugins:data_injection_use' target='_blank'>".$DATAINJECTIONLANG["setup"][11]."</a></td></tr>";
+			echo "<tr class='tab_bg_1'><td align='center'>";
 			echo "<a href='plugin_data_injection.install.php'>".$DATAINJECTIONLANG["setup"][3]."</a></td></tr>";
 			echo "</table></div>";
 }
@@ -55,19 +55,16 @@ else
 {
 	commonHeader($DATAINJECTIONLANG["config"][1], $_SERVER["PHP_SELF"],"plugins","data_injection");
 		echo "<div align='center'>";
-		echo "<form name=cas action=\"".$_SERVER["PHP_SELF"]."\" method=\"post\">";
-
 		echo "<table class='tab_cadre' cellpadding='6'>";
-		echo "<tr class='tab_bg_2'><th colspan='6'>" . $DATAINJECTIONLANG["setup"][1]."</th></tr></table>";
-		echo "<br>";
-		echo "<table class='tab_cadre' cellpadding='6'>";
+		echo "<tr class='tab_bg_2'><th>" . $DATAINJECTIONLANG["setup"][1]."</th></tr>";
 		if (haveRight("profile","w")){
-			echo "<tr class='tab_bg_2'><td colspan='5' align='center'><a href=\"../front/plugin_data_injection.profile.php\">".$DATAINJECTIONLANG["setup"][9]."</a></td/></tr>";
+			echo "<tr class='tab_bg_1'><td align='center'><a href=\"../front/plugin_data_injection.profile.php\">".$DATAINJECTIONLANG["setup"][9]."</a></td/></tr>";
 		}
+		echo "<tr class='tab_bg_1'><td align='center'><a href='http://glpi-project.org/wiki/doku.php?id=".substr($_SESSION["glpilanguage"],0,2).":plugins:data_injection_use' target='_blank'>".$DATAINJECTIONLANG["setup"][11]."</a></td></tr>";
 		if (haveRight("config","w")){
-			echo "<tr class='tab_bg_2'><td colspan='5' align='center'><a href=\"../front/plugin_data_injection.uninstall.php\">".$DATAINJECTIONLANG["setup"][5]."</a></td/></tr>";
+			echo "<tr class='tab_bg_1'><td align='center'><a href=\"../front/plugin_data_injection.uninstall.php\">".$DATAINJECTIONLANG["setup"][5]."</a></td/></tr>";
 		}
-		echo "</table></form></div>";
+		echo "</table></div>";
 }
 
 commonFooter();
