@@ -167,36 +167,28 @@ function deleteDir($fichier) {
 		}
 }
 
-function plugin_data_injection_initSession()
-{
-	global $CFG_GLPI,$DB;
+function plugin_data_injection_initSession() {
+	global $DB;
 	
 	if(TableExists("glpi_plugin_data_injection_filetype")){
-
-		$prof=new DataInjectionProfile();
+		$profile=new DataInjectionProfile();
+	
+		$query = "SELECT DISTINCT glpi_profiles.* FROM glpi_users_profiles INNER JOIN glpi_profiles ON (glpi_users_profiles.FK_profiles = glpi_profiles.ID) WHERE glpi_users_profiles.FK_users='".$_SESSION["glpiID"]."'";
+		$result = $DB->query($query);
 		$_SESSION['glpi_plugin_data_injection_profile'] = array ();
-		
-		$query0 = "SELECT DISTINCT glpi_profiles.name FROM glpi_users_profiles INNER JOIN glpi_profiles ON (glpi_users_profiles.FK_profiles = glpi_profiles.ID)
-					WHERE glpi_users_profiles.FK_users='".$_SESSION["glpiID"]."'";
-		$result0 = $DB->query($query0);
-		if ($DB->numrows($result0)) {
-			while ($data0 = $DB->fetch_assoc($result0)) {
-				$query = "SELECT * FROM glpi_plugin_data_injection_profiles WHERE (name = '".$data0["name"]."')";
-				$result = $DB->query($query);
-					
-				if ($DB->numrows($result)) {
-					while ($data = $DB->fetch_assoc($result)) {
-						$prof->fields = array ();
-						if(isset($_SESSION["glpiactiveprofile"]["ID"]))
-							$prof->getFromDB($_SESSION["glpiactiveprofile"]["ID"]);
-						else
-							$prof->getFromDB($data['ID']);
-						$_SESSION['glpi_plugin_data_injection_profile'] = $prof->fields;
-						$_SESSION["glpi_plugin_data_injection_installed"]=1;
-					}		
-				}	
-			}		
-		}			
+		if ($DB->numrows($result)) {
+			while ($data = $DB->fetch_assoc($result)) {
+				$profile->fields = array ();
+				if(isset($_SESSION["glpiactiveprofile"]["ID"])){
+					$profile->getFromDB($_SESSION["glpiactiveprofile"]["ID"]);
+					$_SESSION['glpi_plugin_data_injection_profile'] = $profile->fields;
+				}else{
+					$profile->getFromDB($data['ID']);
+					$_SESSION['glpi_plugin_data_injection_profile'] = $profile->fields;
+				}
+				$_SESSION["glpi_plugin_data_injection_installed"]=1;
+			}
+		}
 	}
 }
 
