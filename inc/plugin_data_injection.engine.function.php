@@ -409,26 +409,26 @@ function preAddCommonFields($common_fields,$type,$fields,$entity)
 			$setFields = array("address","postcode","town","state","country","website","phonenumber","fax","email","notes");
 		break;
 		case PHONE_TYPE:
-			$setFields = array("contract");
+			$setFields = array("contract","template");
 		break;	
 		case MONITOR_TYPE:
-			$setFields = array("contract");
+			$setFields = array("contract","template");
 		break;		
 		case ENTERPRISE_TYPE:
 			$setFields = array("contract","contact");
 		break;		
 		case NETWORKING_TYPE:
-			$setFields = array("nb_ports","ifmac","ifaddr","plug","contract","port","vlan");		
+			$setFields = array("nb_ports","ifmac","ifaddr","plug","contract","port","vlan","template");		
 			
 			//If a number of ports is provided, then a specific port cannot be modified
 			if (isset($fields["nb_ports"]) && isset($fields["port"]))
 				unset($setFields["port"]);
 		break;
 		case PRINTER_TYPE:
-			$setFields = array("nb_ports","ifmac","ifaddr","plug","contract","vlan");
+			$setFields = array("nb_ports","ifmac","ifaddr","plug","contract","vlan","template");
 		break;	
 		case COMPUTER_TYPE:
-			$setFields = array("nb_ports","ifmac","ifaddr","plug","contract","vlan");
+			$setFields = array("nb_ports","ifmac","ifaddr","plug","contract","vlan","template");
 		break;	
 		default:
 		break;
@@ -555,7 +555,7 @@ function addNecessaryFields($model,$mapping,$mapping_definition,$entity,$type,&$
 		case CARTRIDGE_ITEM_TYPE:
 			break;
 		case COMPUTER_TYPE:
-			$unsetFields = array("plug","contract","vlan");
+			$unsetFields = array("plug","contract","vlan","template");
 			addField($fields,"FK_entities",$entity);
 			break;
 		case MONITOR_TYPE:
@@ -563,15 +563,15 @@ function addNecessaryFields($model,$mapping,$mapping_definition,$entity,$type,&$
 			addField($fields,"FK_entities",$entity);
 			break;
 		case PRINTER_TYPE:
-			$unsetFields = array("ifmac","ifaddr","contract","vlan");
+			$unsetFields = array("ifmac","ifaddr","contract","vlan","template");
 			addField($fields,"FK_entities",$entity);
 			break;
 		case PHONE_TYPE:
-			$unsetFields = array("plug","contract");
+			$unsetFields = array("plug","contract","template");
 			addField($fields,"FK_entities",$entity);
 			break;
 		case NETWORKING_TYPE:
-			$unsetFields = array("ifmac","ifaddr","contract","ports","vlan");
+			$unsetFields = array("ifmac","ifaddr","contract","ports","vlan","template");
 			addField($fields,"FK_entities",$entity);
 			break;
 		case PERIPHERAL_TYPE:
@@ -696,15 +696,27 @@ function processBeforeEnd($model,$type,$fields,&$common_fields)
 				addUserGroup($common_fields["FK_user"],$common_fields["FK_group"]);
 		break;
 		case NETWORKING_TYPE:
+			updateWithTemplate($common_fields,$common_fields["template"]);
+
 			//Add ports if the mapping exists
 			addNetworkCard($common_fields,$model->getCanAddDropdown(),$model->getPerformNetworkConnection());
 			addContract($common_fields);
 		break;	
 		case PRINTER_TYPE:
-		//nobreak
+			updateWithTemplate($common_fields,$common_fields["template"]);
+			addNetworkCard($common_fields,$model->getCanAddDropdown(),$model->getPerformNetworkConnection());
+			addContract($common_fields);					
+		break;
+		case MONITOR_TYPE:
+			updateWithTemplate($common_fields,$common_fields["template"]);
+		break;
 		case COMPUTER_TYPE:
-		//nobreak
+			updateWithTemplate($common_fields,$common_fields["template"]);
+			addNetworkCard($common_fields,$model->getCanAddDropdown(),$model->getPerformNetworkConnection());
+			addContract($common_fields);					
+		break;
 		case PHONE_TYPE:
+			updateWithTemplate($common_fields,$common_fields["template"]);
 			addNetworkCard($common_fields,$model->getCanAddDropdown(),$model->getPerformNetworkConnection());
 			addContract($common_fields);					
 		break;	
@@ -896,5 +908,22 @@ function reformatMacAddress($mac)
 		}
 	}
 	return $mac;
+}
+
+function dropdownTemplate($name,$entity,$table,$value='')
+{
+	global $DB;
+	$result = $DB->query("SELECT tplname, ID FROM ".$table." WHERE FK_entities=".$entity." AND tplname <> '' GROUP BY tplname ORDER BY tplname");
+	
+	$rand=mt_rand();
+	echo "<select name='$name' id='dropdown_".$name.$rand."'>";
+
+	echo "<option value='0'".($value==0?" selected ":"").">-------------</option>";
+
+	while ($data = $DB->fetch_array($result))
+		echo "<option value='".$data["ID"]."'".($value==$data["tplname"]?" selected ":"").">".$data["tplname"]."</option>";
+
+	echo "</select>";	
+	return $rand;
 }
 ?>

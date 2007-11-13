@@ -42,6 +42,7 @@ define ("NOT_MAPPED",-1);
 define ("ITEM_NOT_FOUND",-1);
 
 define ("EMPTY_VALUE",'');
+define ("DROPDOWN_DEFAULT_VALUE",0);
 define ("COMMON_FIELDS","common");
 
 define ("ERROR_IMPORT_WRONG_TYPE",0);

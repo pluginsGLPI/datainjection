@@ -244,4 +244,30 @@ function getEntityParentId($parent_name)
 	else
 		return array("ID"=>0);	
 }
+
+function updateWithTemplate($common_fields,$template_id)
+{
+	if (isset($common_fields["template"]))
+	{
+		$tpl = getInstance($common_fields["device_type"]);
+		$tpl->getFromDB($template_id);
+	
+		$item = getInstance($common_fields["device_type"]);
+		$item->getFromDB($common_fields["device_id"]);
+	
+		//Unset fields from template
+		unset($tpl->fields["ID"]);
+		unset($tpl->fields["date_mod"]);
+		unset($tpl->fields["is_template"]);
+		unset($tpl->fields["FK_entities"]);			
+		
+		foreach ($tpl->fields as $key=>$value)
+		{
+			if ($value != EMPTY_VALUE && ( !isset($item->fields[$key]) || $item->fields[$key] == EMPTY_VALUE || $item->fields[$key] == DROPDOWN_DEFAULT_VALUE))
+				$item->fields[$key]=$value;
+		}
+		
+		$item->update($item->fields);
+	}	
+}
 ?>

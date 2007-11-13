@@ -33,6 +33,10 @@
 if (!defined('GLPI_ROOT')) {
 	define('GLPI_ROOT', '../../..');
 }
+//Mysql Replication configuration : only work with 0.71
+//Plugin must never use replicate!
+$USEDBREPLICATE=0;
+$DBCONNECTION_REQUIRED=1;
 
 $NEEDED_ITEMS=array("user","contact","enterprise","contract","networking","group","monitor","phone","infocom","printer","profile","entity","computer","software","setup","peripheral","cartridge","consumable");
 include (GLPI_ROOT."/inc/includes.php");

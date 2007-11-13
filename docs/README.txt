@@ -37,6 +37,7 @@ Author :Walid NOUH
 1 - Presentation
 This plugin enables you inject datas from CSV files into GLPI. 
 Compatibility 0.70
+PHP5 or higher is required !
 
 2 - Installation
 

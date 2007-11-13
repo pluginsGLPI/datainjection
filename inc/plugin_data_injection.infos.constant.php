@@ -177,6 +177,11 @@ $DATA_INJECTION_INFOS[COMPUTER_TYPE]['contract']['field']='comments';
 $DATA_INJECTION_INFOS[COMPUTER_TYPE]['contract']['name']=$LANG["financial"][1];
 $DATA_INJECTION_INFOS[COMPUTER_TYPE]['contract']['input_type']='dropdown';
 
+$DATA_INJECTION_INFOS[COMPUTER_TYPE]['template']['table']='glpi_computers';
+$DATA_INJECTION_INFOS[COMPUTER_TYPE]['template']['field']='tplname';
+$DATA_INJECTION_INFOS[COMPUTER_TYPE]['template']['name']=$LANG["common"][13];
+$DATA_INJECTION_INFOS[COMPUTER_TYPE]['template']['input_type']='dropdown';
+
 // ----------------------------------------------------------------------
 //MONITOR INFOS
 // ----------------------------------------------------------------------
@@ -231,6 +236,11 @@ $DATA_INJECTION_INFOS[MONITOR_TYPE]['contract']['table']='glpi_contracts';
 $DATA_INJECTION_INFOS[MONITOR_TYPE]['contract']['field']='comments';
 $DATA_INJECTION_INFOS[MONITOR_TYPE]['contract']['name']=$LANG["financial"][1];
 $DATA_INJECTION_INFOS[MONITOR_TYPE]['contract']['input_type']='dropdown';
+
+$DATA_INJECTION_INFOS[MONITOR_TYPE]['template']['table']='glpi_monitors';
+$DATA_INJECTION_INFOS[MONITOR_TYPE]['template']['field']='tplname';
+$DATA_INJECTION_INFOS[MONITOR_TYPE]['template']['name']=$LANG["common"][13];
+$DATA_INJECTION_INFOS[MONITOR_TYPE]['template']['input_type']='dropdown';
 
 // ----------------------------------------------------------------------
 //PRINTER INFOS
@@ -287,6 +297,11 @@ $DATA_INJECTION_INFOS[PRINTER_TYPE]['contract']['field']='comments';
 $DATA_INJECTION_INFOS[PRINTER_TYPE]['contract']['name']=$LANG["financial"][1];
 $DATA_INJECTION_INFOS[PRINTER_TYPE]['contract']['input_type']='dropdown';
 
+$DATA_INJECTION_INFOS[PRINTER_TYPE]['template']['table']='glpi_printers';
+$DATA_INJECTION_INFOS[PRINTER_TYPE]['template']['field']='tplname';
+$DATA_INJECTION_INFOS[PRINTER_TYPE]['template']['name']=$LANG["common"][13];
+$DATA_INJECTION_INFOS[PRINTER_TYPE]['template']['input_type']='dropdown';
+
 // ----------------------------------------------------------------------
 //PHONE INFOS
 // ----------------------------------------------------------------------
@@ -341,6 +356,11 @@ $DATA_INJECTION_INFOS[PHONE_TYPE]['contract']['table']='glpi_contracts';
 $DATA_INJECTION_INFOS[PHONE_TYPE]['contract']['field']='comments';
 $DATA_INJECTION_INFOS[PHONE_TYPE]['contract']['name']=$LANG["financial"][1];
 $DATA_INJECTION_INFOS[PHONE_TYPE]['contract']['input_type']='dropdown';
+
+$DATA_INJECTION_INFOS[PHONE_TYPE]['template']['table']='glpi_phones';
+$DATA_INJECTION_INFOS[PHONE_TYPE]['template']['field']='tplname';
+$DATA_INJECTION_INFOS[PHONE_TYPE]['template']['name']=$LANG["common"][13];
+$DATA_INJECTION_INFOS[PHONE_TYPE]['template']['input_type']='dropdown';
 
 // ----------------------------------------------------------------------
 //PERIPHERAL INFOS
@@ -451,6 +471,11 @@ $DATA_INJECTION_INFOS[NETWORKING_TYPE]['contract']['table']='glpi_contracts';
 $DATA_INJECTION_INFOS[NETWORKING_TYPE]['contract']['field']='comments';
 $DATA_INJECTION_INFOS[NETWORKING_TYPE]['contract']['name']=$LANG["financial"][1];
 $DATA_INJECTION_INFOS[NETWORKING_TYPE]['contract']['input_type']='dropdown';
+
+$DATA_INJECTION_INFOS[NETWORKING_TYPE]['template']['table']='glpi_networking';
+$DATA_INJECTION_INFOS[NETWORKING_TYPE]['template']['field']='tplname';
+$DATA_INJECTION_INFOS[NETWORKING_TYPE]['template']['name']=$LANG["common"][13];
+$DATA_INJECTION_INFOS[NETWORKING_TYPE]['template']['input_type']='dropdown';
 
 // ----------------------------------------------------------------------
 //CONTACT INFOS
