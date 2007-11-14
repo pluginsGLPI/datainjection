@@ -245,10 +245,11 @@ function getEntityParentId($parent_name)
 		return array("ID"=>0);	
 }
 
-function updateWithTemplate($common_fields,$template_id)
+function updateWithTemplate($common_fields)
 {
 	if (isset($common_fields["template"]))
 	{
+		$template_id = $common_fields["template"];
 		$tpl = getInstance($common_fields["device_type"]);
 		$tpl->getFromDB($template_id);
 	

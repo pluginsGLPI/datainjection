@@ -623,6 +623,9 @@ function getFieldValue($mapping, $mapping_definition,$field_value,$entity,$obj,$
 	{
 		switch ($mapping_definition["table_type"])
 		{
+			case "template":
+				$obj[$mapping_definition["linkfield"]] = findTemplate($entity,$mapping_definition["table"],$field_value);
+				break;
 			//Read and add in a dropdown table
 			case "dropdown":
 				$obj[$mapping_definition["linkfield"]] = getDropdownValue($mapping,$mapping_definition,$field_value,$entity,$canadd);
@@ -696,27 +699,27 @@ function processBeforeEnd($model,$type,$fields,&$common_fields)
 				addUserGroup($common_fields["FK_user"],$common_fields["FK_group"]);
 		break;
 		case NETWORKING_TYPE:
-			updateWithTemplate($common_fields,$common_fields["template"]);
+			updateWithTemplate($common_fields);
 
 			//Add ports if the mapping exists
 			addNetworkCard($common_fields,$model->getCanAddDropdown(),$model->getPerformNetworkConnection());
 			addContract($common_fields);
 		break;	
 		case PRINTER_TYPE:
-			updateWithTemplate($common_fields,$common_fields["template"]);
+			updateWithTemplate($common_fields);
 			addNetworkCard($common_fields,$model->getCanAddDropdown(),$model->getPerformNetworkConnection());
 			addContract($common_fields);					
 		break;
 		case MONITOR_TYPE:
-			updateWithTemplate($common_fields,$common_fields["template"]);
+			updateWithTemplate($common_fields);
 		break;
 		case COMPUTER_TYPE:
-			updateWithTemplate($common_fields,$common_fields["template"]);
+			updateWithTemplate($common_fields);
 			addNetworkCard($common_fields,$model->getCanAddDropdown(),$model->getPerformNetworkConnection());
 			addContract($common_fields);					
 		break;
 		case PHONE_TYPE:
-			updateWithTemplate($common_fields,$common_fields["template"]);
+			updateWithTemplate($common_fields);
 			addNetworkCard($common_fields,$model->getCanAddDropdown(),$model->getPerformNetworkConnection());
 			addContract($common_fields);					
 		break;	
@@ -910,6 +913,15 @@ function reformatMacAddress($mac)
 	return $mac;
 }
 
+function findTemplate($entity,$table,$value)
+{
+	global $DB;
+	$result = $DB->query("SELECT ID FROM ".$table." WHERE FK_entities=".$entity." AND tplname='".addslashes($value)."'");
+	if ($DB->numrows($result)==1)
+		return $DB->result($result,0,"ID");
+	else	
+		return 0;
+}
 function dropdownTemplate($name,$entity,$table,$value='')
 {
 	global $DB;
