@@ -62,7 +62,7 @@ if (isset($_POST["add"])){
 	foreach ($_POST["item"] as $key => $val){
 		if ($val==1) {
 
-			echo $query="DELETE FROM glpi_plugin_data_injection_profiles WHERE ID='".$key."'";
+			$query="DELETE FROM glpi_plugin_data_injection_profiles WHERE ID='".$key."'";
 			$DB->query($query);
 		}
 	}
