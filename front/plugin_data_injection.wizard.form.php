@@ -30,6 +30,8 @@
 // Original Author of file: Walid Nouh (walid.nouh@atosorigin.com)
 // Purpose of file:
 // ----------------------------------------------------------------------
+ini_set("max_execution_time", "0");
+
 if (!defined('GLPI_ROOT')) {
 	define('GLPI_ROOT', '../../..');
 }
@@ -38,7 +40,7 @@ if (!defined('GLPI_ROOT')) {
 $USEDBREPLICATE=0;
 $DBCONNECTION_REQUIRED=1;
 
-$NEEDED_ITEMS=array("user","contact","enterprise","contract","networking","group","monitor","phone","infocom","printer","profile","entity","computer","software","setup","peripheral","cartridge","consumable");
+$NEEDED_ITEMS=array("ocsng","user","contact","enterprise","contract","networking","group","monitor","phone","infocom","printer","profile","entity","computer","software","setup","peripheral","cartridge","consumable");
 include (GLPI_ROOT."/inc/includes.php");
 
 commonHeader($DATAINJECTIONLANG["config"][1],$_SERVER["PHP_SELF"],"plugins","data_injection");
