@@ -201,7 +201,7 @@ $DATAINJECTIONLANG["result"][14] = "Ligne";
 $DATAINJECTIONLANG["profiles"][1] = "Créer un modèle";
 $DATAINJECTIONLANG["profiles"][2] = "Supprimer un modèle";
 $DATAINJECTIONLANG["profiles"][3] = "Utiliser un modèle";
-$DATAINJECTIONLANG["profile"][4] = "Listes des profils déjà configurés";
+$DATAINJECTIONLANG["profiles"][4] = "Listes des profils déjà configurés";
 
 $DATAINJECTIONLANG["mappings"][1] = "Nombre de ports";
 $DATAINJECTIONLANG["mappings"][2] = "Port réseau";
