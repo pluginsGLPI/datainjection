@@ -884,7 +884,7 @@ function addLocation($location,$entity,$parentid,$canadd)
  */
 function reformatDate($original_date)
 {
-	$new_date=preg_replace('/(\d{1,2})[-\/](\d{1,2})[-\/](\d{4})/','\3-\2-\1',$original_date);
+	$new_date=preg_replace('/(\d{1,2})[-\/](\d{1,2})[-\/](\d{4})/','\3-\1-\2',$original_date);
 	if (ereg('[0-9]{2,4}-[0-9]{1,2}-[0-9]{1,2}',$new_date))
 		return $new_date;
 	else
