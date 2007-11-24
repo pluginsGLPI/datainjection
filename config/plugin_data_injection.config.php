@@ -64,5 +64,7 @@ define ("ENCODING_AUTO",2);
 define ("MODEL_PRIVATE",0);
 define ("MODEL_PUBLIC",1);
 
-
+define ("DATE_TYPE_DDMMYYYY","dd-mm-yyyy");
+define ("DATE_TYPE_MMDDYYYY","mm-dd-yyyy");
+define ("DATE_TYPE_YYYYMMDD","yyyy-mm-dd");
 ?>

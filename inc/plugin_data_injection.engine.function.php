@@ -58,7 +58,7 @@ function reformatDatasBeforeCheck($model,$line)
 				case "date":
 					//If the value is a date, try to reformat it if it's not the good type (dd-mm-yyyy instead of yyyy-mm-dd)
 					if (isset($mapping_definition["type"]) && $mapping_definition["type"]=="date")
-						$line[$rank] = reformatDate($line[$rank]);
+						$line[$rank] = reformatDate($model->getDateFormat(),$line[$rank]);
 				break;
 				case "mac":
 					$line[$rank]=reformatMacAddress($line[$rank]);
@@ -882,9 +882,21 @@ function addLocation($location,$entity,$parentid,$canadd)
  * @param original_date the original date
  * @return the date reformated, if needed
  */
-function reformatDate($original_date)
+function reformatDate($date_format,$original_date)
 {
-	$new_date=preg_replace('/(\d{1,2})[-\/](\d{1,2})[-\/](\d{4})/','\3-\1-\2',$original_date);
+	switch ($date_format)
+	{
+		case DATE_TYPE_YYYYMMDD:
+			$new_date=preg_replace('/(\d{1,2})[-\/](\d{1,2})[-\/](\d{4})/','\1-\2-\3',$original_date);
+		break;	
+		case DATE_TYPE_DDMMYYYY:
+			$new_date=preg_replace('/(\d{1,2})[-\/](\d{1,2})[-\/](\d{4})/','\3-\2-\1',$original_date);
+		break;
+		case DATE_TYPE_MMDDYYYY:
+			$new_date=preg_replace('/(\d{1,2})[-\/](\d{1,2})[-\/](\d{4})/','\3-\1-\2',$original_date);
+		break;
+	}
+	
 	if (ereg('[0-9]{2,4}-[0-9]{1,2}-[0-9]{1,2}',$new_date))
 		return $new_date;
 	else

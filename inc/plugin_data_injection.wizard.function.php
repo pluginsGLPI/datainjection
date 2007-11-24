@@ -353,15 +353,32 @@ function modelStep($target)
 	echo "</select>";
 	echo "</td></tr>";
 	/**************************************************************/
+
+	/***************Date format*********************/
+	echo "<tr><td>".$DATAINJECTIONLANG["modelStep"][21]."</td><td>";
+	
+	$date_format[DATE_TYPE_DDMMYYYY]=$DATAINJECTIONLANG["modelStep"][22];
+	$date_format[DATE_TYPE_MMDDYYYY]=$DATAINJECTIONLANG["modelStep"][23];
+	$date_format[DATE_TYPE_YYYYMMDD]=$DATAINJECTIONLANG["modelStep"][24];
+	
+	if(isset($model))
+		$format = $model->getDateFormat();
+	else
+		$format = DATE_TYPE_YYYYMMDD;
+	dropdownArrayValues("date_format",$date_format,$format);
+	echo "</td></tr>";
+	/**************************************************************/
 	
 	echo "</table>";
 	echo "</fieldset>";
-	
+
 	/*********************Delimiter Error**************************/
 	echo "<div id='delimiter_error' class='delimiter' >".$DATAINJECTIONLANG["modelStep"][11]."</div>";
 	/**************************************************************/
 	
 	echo "</td></tr>";
+	
+	/**************************************************************/
 	
 	/**************************Button******************************/
 	echo "<tr><td class='wizard_button' colspan='2'>";

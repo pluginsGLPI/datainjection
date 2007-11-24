@@ -239,6 +239,11 @@ class DataInjectionModel extends CommonDBTM {
 		return $this->fields["perform_network_connection"];
 	}
 
+	function getDateFormat()
+	{
+		return $this->fields["date_format"];
+	}
+
 	//---- Save -----//
 	function setModelType($type)
 	{
@@ -315,6 +320,11 @@ class DataInjectionModel extends CommonDBTM {
 		$this->fields["user_id"] = $user;
 	}
 
+	function setDateFormat($df)
+	{
+		$this->fields["date_format"] = $df;
+	}
+
 	function setPerformNetworkConnection($perform)
 	{
 		$this->fields["perform_network_connection"] = $perform;
@@ -349,6 +359,9 @@ class DataInjectionModel extends CommonDBTM {
 
 		if(isset($fields["perform_network_connection"]))
 			$this->setPerformNetworkConnection($fields["perform_network_connection"]);
+			
+		if(isset($fields["date_format"]))
+			$this->setDateFormat($fields["date_format"]);
 	}
 	
 }

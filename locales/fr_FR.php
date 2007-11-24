@@ -95,7 +95,10 @@ $DATAINJECTIONLANG["modelStep"][17] = "Public";
 $DATAINJECTIONLANG["modelStep"][18] = "Privée";
 $DATAINJECTIONLANG["modelStep"][19] = "Les options avancées permettent un contrôle plus fin de l'import. Elles ne doivent être modifiées que par des utilisateurs expérimentés.";
 $DATAINJECTIONLANG["modelStep"][20] = "Essayer de réaliser les connexions réseau";
-
+$DATAINJECTIONLANG["modelStep"][21] = "Format des dates";
+$DATAINJECTIONLANG["modelStep"][22] = "jj-mm-aaaa";
+$DATAINJECTIONLANG["modelStep"][23] = "mm-jj-aaaa";
+$DATAINJECTIONLANG["modelStep"][24] = "aaaa-mm-jj";
 
 $DATAINJECTIONLANG["deleteStep"][1] = "Confirmation de la suppression";
 $DATAINJECTIONLANG["deleteStep"][2] = "Attention si vous supprimez le modèle, les mappings et les informations complémentaires seront supprimés également.";

@@ -54,6 +54,7 @@ function plugin_data_injection_Install() {
 	  `public` int(1) NOT NULL default '1',
 	  `perform_network_connection` int(1) NOT NULL default '0',
 	  `user_id` int(11) NOT NULL,
+	  `date_format` varchar(11) NOT NULL default 'yyyy-mm-dd',
 	  PRIMARY KEY  (`ID`)
 	) ENGINE=MyISAM;";
 	

@@ -95,6 +95,10 @@ $DATAINJECTIONLANG["modelStep"][17] = "Public";
 $DATAINJECTIONLANG["modelStep"][18] = "Private";
 $DATAINJECTIONLANG["modelStep"][19] = "Advanced options gives you a better control of the import process. Only advance users should modify it.";
 $DATAINJECTIONLANG["modelStep"][20] = "Try to establish network connection is possible";
+$DATAINJECTIONLANG["modelStep"][21] = "Dates format";
+$DATAINJECTIONLANG["modelStep"][22] = "dd-mm-yyyy";
+$DATAINJECTIONLANG["modelStep"][23] = "mm-dd-yyyy";
+$DATAINJECTIONLANG["modelStep"][24] = "yyyy-mm-dd";
 
 $DATAINJECTIONLANG["deleteStep"][1] = "Confirm deletion";
 $DATAINJECTIONLANG["deleteStep"][2] = "Watch out. If you delete the model, the mappings and informations will be deleting too.";
