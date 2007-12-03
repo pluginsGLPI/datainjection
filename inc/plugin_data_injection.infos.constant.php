@@ -209,7 +209,7 @@ $DATA_INJECTION_INFOS[MONITOR_TYPE]['type']['name']=$LANG["common"][17];
 $DATA_INJECTION_INFOS[MONITOR_TYPE]['type']['linkfield']='type';
 $DATA_INJECTION_INFOS[MONITOR_TYPE]['type']['input_type']='dropdown';
 
-$DATA_INJECTION_INFOS[MONITOR_TYPE]['model']['table']='glpi_dropdown_model';
+$DATA_INJECTION_INFOS[MONITOR_TYPE]['model']['table']='glpi_dropdown_model_monitors';
 $DATA_INJECTION_INFOS[MONITOR_TYPE]['model']['field']='name';
 $DATA_INJECTION_INFOS[MONITOR_TYPE]['model']['name']=$LANG["common"][22];
 $DATA_INJECTION_INFOS[MONITOR_TYPE]['model']['linkfield']='model';
@@ -269,7 +269,7 @@ $DATA_INJECTION_INFOS[PRINTER_TYPE]['type']['name']=$LANG["common"][17];
 $DATA_INJECTION_INFOS[PRINTER_TYPE]['type']['linkfield']='type';
 $DATA_INJECTION_INFOS[PRINTER_TYPE]['type']['input_type']='dropdown';
 
-$DATA_INJECTION_INFOS[PRINTER_TYPE]['model']['table']='glpi_dropdown_model';
+$DATA_INJECTION_INFOS[PRINTER_TYPE]['model']['table']='glpi_dropdown_model_printers';
 $DATA_INJECTION_INFOS[PRINTER_TYPE]['model']['field']='name';
 $DATA_INJECTION_INFOS[PRINTER_TYPE]['model']['name']=$LANG["common"][22];
 $DATA_INJECTION_INFOS[PRINTER_TYPE]['model']['linkfield']='model';
@@ -329,7 +329,7 @@ $DATA_INJECTION_INFOS[PHONE_TYPE]['type']['name']=$LANG["common"][17];
 $DATA_INJECTION_INFOS[PHONE_TYPE]['type']['linkfield']='type';
 $DATA_INJECTION_INFOS[PHONE_TYPE]['type']['input_type']='dropdown';
 
-$DATA_INJECTION_INFOS[PHONE_TYPE]['model']['table']='glpi_dropdown_model';
+$DATA_INJECTION_INFOS[PHONE_TYPE]['model']['table']='glpi_dropdown_model_phones';
 $DATA_INJECTION_INFOS[PHONE_TYPE]['model']['field']='name';
 $DATA_INJECTION_INFOS[PHONE_TYPE]['model']['name']=$LANG["common"][22];
 $DATA_INJECTION_INFOS[PHONE_TYPE]['model']['linkfield']='model';
@@ -389,7 +389,7 @@ $DATA_INJECTION_INFOS[PERIPHERAL_TYPE]['type']['name']=$LANG["common"][17];
 $DATA_INJECTION_INFOS[PERIPHERAL_TYPE]['type']['linkfield']='type';
 $DATA_INJECTION_INFOS[PERIPHERAL_TYPE]['type']['input_type']='dropdown';
 
-$DATA_INJECTION_INFOS[PERIPHERAL_TYPE]['model']['table']='glpi_dropdown_model';
+$DATA_INJECTION_INFOS[PERIPHERAL_TYPE]['model']['table']='glpi_dropdown_model_peripherals';
 $DATA_INJECTION_INFOS[PERIPHERAL_TYPE]['model']['field']='name';
 $DATA_INJECTION_INFOS[PERIPHERAL_TYPE]['model']['name']=$LANG["common"][22];
 $DATA_INJECTION_INFOS[PERIPHERAL_TYPE]['model']['linkfield']='model';
@@ -444,7 +444,7 @@ $DATA_INJECTION_INFOS[NETWORKING_TYPE]['type']['name']=$LANG["common"][17];
 $DATA_INJECTION_INFOS[NETWORKING_TYPE]['type']['linkfield']='type';
 $DATA_INJECTION_INFOS[NETWORKING_TYPE]['type']['input_type']='dropdown';
 
-$DATA_INJECTION_INFOS[NETWORKING_TYPE]['model']['table']='glpi_dropdown_model';
+$DATA_INJECTION_INFOS[NETWORKING_TYPE]['model']['table']='glpi_dropdown_model_networking';
 $DATA_INJECTION_INFOS[NETWORKING_TYPE]['model']['field']='name';
 $DATA_INJECTION_INFOS[NETWORKING_TYPE]['model']['name']=$LANG["common"][22];
 $DATA_INJECTION_INFOS[NETWORKING_TYPE]['model']['linkfield']='model';
