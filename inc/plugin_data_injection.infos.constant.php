@@ -70,7 +70,7 @@ $DATA_INJECTION_INFOS[INFOCOM_TYPE]['warranty_value']['name']=$LANG["financial"]
 
 $DATA_INJECTION_INFOS[INFOCOM_TYPE]['FK_enterprise']['table']='glpi_enterprises';
 $DATA_INJECTION_INFOS[INFOCOM_TYPE]['FK_enterprise']['field']='name';
-$DATA_INJECTION_INFOS[INFOCOM_TYPE]['FK_enterprise']['name']=$LANG["common"][5];
+$DATA_INJECTION_INFOS[INFOCOM_TYPE]['FK_enterprise']['name']=$LANG["financial"][26];
 $DATA_INJECTION_INFOS[INFOCOM_TYPE]['FK_enterprise']['linkfield']='FK_enterprise';
 $DATA_INJECTION_INFOS[INFOCOM_TYPE]['FK_enterprise']['input_type']='dropdown';
 
