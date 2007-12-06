@@ -789,7 +789,7 @@ $DATA_INJECTION_MAPPING[INFOCOM_TYPE]['warranty_value']['field']='warranty_value
 $DATA_INJECTION_MAPPING[INFOCOM_TYPE]['warranty_value']['name']=$LANG["financial"][78];
 $DATA_INJECTION_MAPPING[INFOCOM_TYPE]['warranty_value']['type']='text';
 
-$DATA_INJECTION_MAPPING[INFOCOM_TYPE]['manufacturer']['table']='glpi_dropdown_manufacturer';
+$DATA_INJECTION_MAPPING[INFOCOM_TYPE]['manufacturer']['table']='glpi_enterprises';
 $DATA_INJECTION_MAPPING[INFOCOM_TYPE]['manufacturer']['field']='name';
 $DATA_INJECTION_MAPPING[INFOCOM_TYPE]['manufacturer']['name']=$LANG["financial"][26];
 $DATA_INJECTION_MAPPING[INFOCOM_TYPE]['manufacturer']['type']='text';
