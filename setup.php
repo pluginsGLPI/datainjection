@@ -68,7 +68,7 @@ function plugin_init_data_injection() {
 function plugin_version_data_injection() {
 	global $DATAINJECTIONLANG;
 
-		return array ('name' => $DATAINJECTIONLANG["name"][1], 'version' => '1.0');
+		return array ('name' => $DATAINJECTIONLANG["name"][1], 'version' => '1.1');
 	}
 
 // Hook done on delete item case
