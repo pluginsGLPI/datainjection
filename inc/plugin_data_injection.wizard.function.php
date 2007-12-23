@@ -717,7 +717,7 @@ function mappingStep($target)
 		echo "<tr><td colspan='5'>";
 		echo "<table style='margin-top: 10px'>";
 		echo "<tr><td style='text-align:center'>";
-		echo "Nbr de ligne : <input type='text' id='nbline' name='nbline' size='2' maxlength='3' value='1' onfocus=\"this.value=''\" /> / ".$nbline;
+		echo $DATAINJECTIONLANG["mappingStep"][12] . " : <input type='text' id='nbline' name='nbline' size='2' maxlength='3' value='1' onfocus=\"this.value=''\" /> / ".$nbline;
 		echo "</td></tr>";
 		echo "<tr><td style='text-align:center'>";
 		echo "<input type='button' name='popup' value='".$DATAINJECTIONLANG["button"][3]."' class='submit' onclick='file_popup($nbline)' />";

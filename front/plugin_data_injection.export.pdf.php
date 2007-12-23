@@ -28,7 +28,7 @@ $pdf->addJpegFromFile("../pics/fd_logo.jpg",25,$height-50);
 $pdf->selectFont("../fonts/Times-Roman.afm");
 $pdf->setFontFamily('Times-Roman.afm',array('b'=>'Times-Bold.afm','i'=>'Times-Italic.afm','bi'=>'Times-BoldItalic.afm'));
 
-$pdf->addText(200,$height-45,14,utf8_decode('<b>Rapport des importations du fichier '.$_SESSION["plugin_data_injection"]["file_name"].'</b>'));
+$pdf->addText(200,$height-45,14,utf8_decode('<b>' .  $DATAINJECTIONLANG["pdf"][1] . ' ' . $_SESSION["plugin_data_injection"]["file_name"].'</b>'));
 
 $pdf->restoreState();
 $pdf->closeObject();

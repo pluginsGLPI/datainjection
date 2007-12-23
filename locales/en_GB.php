@@ -177,8 +177,8 @@ $DATAINJECTIONLANG["logStep"][6] = "The 'Export in PDF' button allows you to sav
 $DATAINJECTIONLANG["logStep"][7] = "The 'Generation the imported file' allows you to generate a CSV file with only the failed line during the process.";
 $DATAINJECTIONLANG["logStep"][8] = "Injection encounters errors";
 
-$DATAINJECTIONLANG["button"][1] = "< Next";
-$DATAINJECTIONLANG["button"][2] = "Previous >";
+$DATAINJECTIONLANG["button"][1] = "< Previous";
+$DATAINJECTIONLANG["button"][2] = "Next >";
 $DATAINJECTIONLANG["button"][3] = "See the file";
 $DATAINJECTIONLANG["button"][4] = "See the log";
 $DATAINJECTIONLANG["button"][5] = "Export the log";
