@@ -1,8 +1,8 @@
 ﻿/*
  * @version $Id: setup.php,v 1.2 2006/04/02 14:45:27 moyo Exp $
- ----------------------------------------------------------------------
- GLPI - Gestionnaire Libre de Parc Informatique
- Copyright (C) 2003-2006 by the INDEPNET Development Team.
+ ---------------------------------------------------------------------- 
+ GLPI - Gestionnaire Libre de Parc Informatique 
+ Copyright (C) 2003-2008 by the INDEPNET Development Team.
  
  http://indepnet.net/   http://glpi-project.org/
  ----------------------------------------------------------------------

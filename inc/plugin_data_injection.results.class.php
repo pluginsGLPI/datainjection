@@ -3,7 +3,7 @@
  * @version $Id: rules.constant.php 5351 2007-08-07 11:57:46Z walid $
  -------------------------------------------------------------------------
  GLPI - Gestionnaire Libre de Parc Informatique
- Copyright (C) 2003-2007 by the INDEPNET Development Team.
+ Copyright (C) 2003-2008 by the INDEPNET Development Team.
 
  http://indepnet.net/   http://glpi-project.org
  -------------------------------------------------------------------------
