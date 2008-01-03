@@ -1511,7 +1511,7 @@ $DATA_INJECTION_MAPPING[CARTRIDGE_TYPE]['name']['type']='text';
 
 $DATA_INJECTION_MAPPING[CARTRIDGE_TYPE]['ref']['table']='glpi_cartridges_type';
 $DATA_INJECTION_MAPPING[CARTRIDGE_TYPE]['ref']['field']='ref';
-$DATA_INJECTION_MAPPING[CARTRIDGE_TYPE]['ref']['name']=$LANG["cartridges"][2];
+$DATA_INJECTION_MAPPING[CARTRIDGE_TYPE]['ref']['name']=$LANG["consumables"][2];
 $DATA_INJECTION_MAPPING[CARTRIDGE_TYPE]['ref']['type']='text';
 
 $DATA_INJECTION_MAPPING[CARTRIDGE_TYPE]['location']['table']='glpi_dropdown_locations';
@@ -1550,7 +1550,7 @@ $DATA_INJECTION_MAPPING[CARTRIDGE_TYPE]['comments']['table_type']='multitext';
 
 $DATA_INJECTION_MAPPING[CARTRIDGE_TYPE]['alarm']['table']='glpi_cartridges_type';
 $DATA_INJECTION_MAPPING[CARTRIDGE_TYPE]['alarm']['field']='alarm';
-$DATA_INJECTION_MAPPING[CARTRIDGE_TYPE]['alarm']['name']=$LANG["cartridges"][38];
+$DATA_INJECTION_MAPPING[CARTRIDGE_TYPE]['alarm']['name']=$LANG["consumables"][38];
 $DATA_INJECTION_MAPPING[CARTRIDGE_TYPE]['alarm']['type']='integer';
 
 $DATA_INJECTION_MAPPING[CARTRIDGE_TYPE]['notes']['table']='glpi_cartridges_type';
@@ -1571,7 +1571,7 @@ $DATA_INJECTION_MAPPING[CARTRIDGE_ITEM_TYPE]['FK_glpi_cartridges_type']['table_t
 
 $DATA_INJECTION_MAPPING[CARTRIDGE_ITEM_TYPE]['date_in']['table']='glpi_cartridges';
 $DATA_INJECTION_MAPPING[CARTRIDGE_ITEM_TYPE]['date_in']['field']='date_in';
-$DATA_INJECTION_MAPPING[CARTRIDGE_ITEM_TYPE]['date_in']['name']=$LANG["cartridges"][25];
+$DATA_INJECTION_MAPPING[CARTRIDGE_ITEM_TYPE]['date_in']['name']=$LANG["consumables"][26];
 $DATA_INJECTION_MAPPING[CARTRIDGE_ITEM_TYPE]['date_in']['type']='date';
 
 $DATA_INJECTION_MAPPING[CARTRIDGE_ITEM_TYPE]['date_use']['table']='glpi_cartridges';
@@ -1606,7 +1606,7 @@ $DATA_INJECTION_MAPPING[CONSUMABLE_TYPE]['name']['type']='text';
 
 $DATA_INJECTION_MAPPING[CONSUMABLE_TYPE]['ref']['table']='glpi_consumables_type';
 $DATA_INJECTION_MAPPING[CONSUMABLE_TYPE]['ref']['field']='ref';
-$DATA_INJECTION_MAPPING[CONSUMABLE_TYPE]['ref']['name']=$LANG["cartridges"][2];
+$DATA_INJECTION_MAPPING[CONSUMABLE_TYPE]['ref']['name']=$LANG["consumables"][2];
 $DATA_INJECTION_MAPPING[CONSUMABLE_TYPE]['ref']['type']='text';
 
 $DATA_INJECTION_MAPPING[CONSUMABLE_TYPE]['location']['table']='glpi_dropdown_locations';
@@ -1645,7 +1645,7 @@ $DATA_INJECTION_MAPPING[CONSUMABLE_TYPE]['comments']['table_type']='multitext';
 
 $DATA_INJECTION_MAPPING[CONSUMABLE_TYPE]['alarm']['table']='glpi_consumables_type';
 $DATA_INJECTION_MAPPING[CONSUMABLE_TYPE]['alarm']['field']='alarm';
-$DATA_INJECTION_MAPPING[CONSUMABLE_TYPE]['alarm']['name']=$LANG["cartridges"][38];
+$DATA_INJECTION_MAPPING[CONSUMABLE_TYPE]['alarm']['name']=$LANG["consumables"][38];
 $DATA_INJECTION_MAPPING[CONSUMABLE_TYPE]['alarm']['type']='integer';
 
 $DATA_INJECTION_MAPPING[CONSUMABLE_TYPE]['notes']['table']='glpi_consumables_type';
