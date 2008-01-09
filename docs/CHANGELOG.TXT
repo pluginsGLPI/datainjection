@@ -32,6 +32,13 @@
 // Purpose of file:
 // ----------------------------------------------------------------------
 
+Version 1.1:
+
+- amélioration de la création des ports réseaux
+	- Matériel réseau : choix du nombre de ports à créer
+		chargement IP et MAC
+	- Autre matériel : choix du nom du port à créer
+
 Version 1.0:
 
 Injection de fichiers CSV contenant des : 

@@ -31,70 +31,106 @@
 // Purpose of file:
 // ----------------------------------------------------------------------
 
-/*
- * Add a port
+/**
+ * Add a Network Card (for computer, printer, ... but not for network device)
+ * 
  * @param common_fields the common_fields
  * @param canadd indicates if user has right to add values
  */
-function addNetworkCard(&$common_fields,$canadd,$canconnect)
+function addNetworkCard(&$common_fields, $canadd, $canconnect)
 {
-	$just_add_port=false;
-	$add_card_informations = false;
+	global $DATAINJECTIONLANG;
+	
 	$input=array();
 	
 	//Unset fields is mac or ip is empty
 	if ((isset($common_fields["ifmac"]) && $common_fields["ifmac"] == EMPTY_VALUE))
 		unset($common_fields["ifmac"]);
+		
 	if ((isset($common_fields["ifaddr"]) && $common_fields["ifaddr"] == EMPTY_VALUE))
 		unset($common_fields["ifaddr"]);
 
-	//Must add port ONLY if ip or mac or number of port is provided
-	if (isset($common_fields["ifmac"]) || isset($common_fields["ifaddr"]) || isset($common_fields["nb_ports"]))
+	if ((isset($common_fields["port"]) && $common_fields["port"] == EMPTY_VALUE))
+		unset($common_fields["port"]);
+
+	//Must add port ONLY if ip or mac or name of port is provided
+	if (isset($common_fields["ifmac"]) || isset($common_fields["ifaddr"]) || isset($common_fields["port"]))
 	{	
-		//If no number of port is provided, set it to 1
-		if (!isset($common_fields["nb_ports"]))
-			$common_fields["nb_ports"]=1;
-		else
-		{	
-			//Number of port is provided : only a port, do not connect
-			if (isset($common_fields["ifmac"]))
-				unset($common_fields["ifmac"]);
-			if (isset($common_fields["ifaddr"]))	
-				unset($common_fields["ifaddr"]);
-			$just_add_port=true;	
-		}		
-	
-		if (isset($common_fields["ifmac"]) || isset($common_fields["ifaddr"]))
-		{
-			$add_card_informations=true;
-			if (isset($common_fields["ifaddr"]))
-				$input[0]["ifaddr"]=$common_fields["ifaddr"];
-			if (isset($common_fields["ifmac"]))
-				$input[0]["ifmac"]=$common_fields["ifmac"];
-			if (isset($common_fields["port"]))
-				$input[0]["port"]=$common_fields["port"];
-		}			
-	
-		addNetworPorts($common_fields,$input,$canadd,$just_add_port,$add_card_informations,$canconnect);
+		$add_card_informations=true;
+		if (isset($common_fields["ifaddr"])) {
+			$input["ifaddr"]=$common_fields["ifaddr"];			
+		}
+		if (isset($common_fields["ifmac"])) {
+			$input["ifmac"]=$common_fields["ifmac"];			
+		}	
+		if (isset($common_fields["port"])) {
+			$input["name"]=$common_fields["port"];			
+		} else {
+			$input["name"]=$DATAINJECTIONLANG["mappings"][2];			
+		}
+		$input["logical_number"]=0;
+			
+		addFullPort($common_fields,$input);
+
+		//Only try to create network plug and perform network connection is the option was set in the injection model
+		if ($canconnect) {
+			updatePort($common_fields, $canadd);
+		}
 	}
 }
 
-function addNetworPorts($common_fields,$network_cards_infos=array(),$canadd,$just_add_port=false,$add_card_informations=false,$canconnect=false)
+/*
+ * Add port, check if it exists
+ */
+function addFullPort (&$common_fields, $input)
 {
 	global $DB;
-	$network_ports_ids=array();
-	if ($just_add_port)
-			addPorts($common_fields["device_id"],$common_fields["device_type"],$common_fields["nb_ports"]);
-	else
+	$ID=0;
+	$netport = new Netport;
+
+	//First, detect if port is already present
+	$sql = "SELECT ID FROM glpi_networking_ports WHERE on_device=".$common_fields["device_id"]." AND name='".$input["name"]."'";
+	$result = $DB->query($sql);
+	if ($DB->numrows($result) > 0) {
+		$ID = $DB->result($result,0,"ID");
+	}
+
+	if ($ID) {
+		$input["ID"]=$ID;
+		$common_fields["network_port_id"] = $ID;
+
+		$netport->update($input);		
+	} else {
+		$input["on_device"]=$common_fields["device_id"];
+		$input["device_type"]=$common_fields["device_type"];
+
+		$common_fields["network_port_id"] = $netport->add($input);
+	}	
+}
+
+/**
+ * Add a Network Ports (for network device only)
+ * 
+ * @param common_fields the common_fields
+ */
+function addNetworkPorts($common_fields)
+{
 	
-		for ($i=0;$i<$common_fields["nb_ports"];$i++)
+	if (isset($common_fields["nb_ports"])) {
+		for ($i=1 ; $i <= $common_fields["nb_ports"] ; $i++)
 		{
-			addPort($common_fields,$i,$network_cards_infos,$just_add_port,$add_card_informations);
-			
-			//Only try to create network plug and perform network connection is the option was set in the injection model
-			if ($canconnect)
-				updatePort($common_fields,$canadd,$canconnect);
-		}
+			$input = array();
+			$netport = new Netport;
+	
+			$add="";
+			if ($i<10) $add="0";
+			$input["logical_number"]=$i;
+			$input["name"]=$add.$i;
+			$input["on_device"]=$common_fields["device_id"];
+			$input["device_type"]=$common_fields["device_type"];
+			$netport->add($input);
+		}	
+	}
 }
 
 function addNetworkPlug($common_fields,$canadd)
@@ -116,14 +152,14 @@ function addVlan($common_fields,$canadd)
 		return 0;
 }
 
-function updatePort($common_fields,$canadd)
+function updatePort(&$common_fields, $canadd)
 {
 	global $DB;
 		
 	$netport = new Netport;
 	$input=array();
 	
-	if ($common_fields["network_port_id"] != EMPTY_VALUE)
+	if (isset($common_fields["network_port_id"]) && $common_fields["network_port_id"] != EMPTY_VALUE)
 	{
 		$common_fields["netpoint"]=addNetworkPlug($common_fields,$canadd);
 		$input["netpoint"]=$common_fields["netpoint"];
@@ -134,11 +170,16 @@ function updatePort($common_fields,$canadd)
 	}
 }
 
+/* 
+ * For all type device, except network
+ * TODO : need to be improved (search by network name+port)
+ */
 function connectWire($common_fields)
 {
 	global $DB;
 	
-	if (isset($common_fields["netpoint"]) && isset($common_fields["network_port_id"]))
+	if (isset($common_fields["netpoint"]) && $common_fields["netpoint"]>0 &&
+		isset($common_fields["network_port_id"]) && $common_fields["network_port_id"]>0)
 	{
 		$sql = "SELECT ID FROM glpi_networking_ports WHERE ID!=".$common_fields["network_port_id"]." AND netpoint=".$common_fields["netpoint"]." AND device_type=".NETWORKING_TYPE;
 		$result=$DB->query($sql);
@@ -157,75 +198,6 @@ function addContact($common_fields)
 {
 	if (isset($common_fields["contact"]))
 		addContactEnterprise($common_fields['device_id'],$common_fields['contact']);
-}
-
-/*
- * Add port without checking if it exists or not
- */
-function addPorts($on_device,$device_type,$nb_ports)
-{
-	for ($i=0; $i < $nb_ports;$i++)
-	{
-		$input = array();
-		$netport = new Netport;
-
-		$add="";
-		if ($i<9) $add="0";
-		$input["logical_number"]=($i+1);
-		$input["name"]=$add.($i+1);
-		$input["on_device"]=$on_device;
-		$input["device_type"]=$device_type;
-		$netport->add($input);
-	}	
-}
-
-/*
- * Add port, check if it exists and try to connect it to a plug, and to a network device
- */
-function addPort(&$common_fields,$i,$network_cards_infos,$just_add_port,$add_card_informations=false)
-{
-	global $DB;
-	$ID=0;
-	$input = array();
-	$netport = new Netport;
-
-	//If a port number is provided
-	if (isset($common_fields["port"]))
-	{
-		//First, detect if port is already present
-		$sql = "SELECT ID FROM glpi_networking_ports WHERE on_device=".$common_fields["device_id"]." AND name='".$common_fields["port"]."'";
-		$result = $DB->query($sql);
-		if ($DB->numrows($result) > 0)
-			$ID = $DB->result($result,0,"ID");
-	}
-
-	if (!$ID)
-	{
-		$add="";
-		if ($i<9) $add="0";
-		$input["logical_number"]=($i+1);
-		$input["name"]=$add.($i+1);
-		$input["on_device"]=$common_fields["device_id"];
-		$input["device_type"]=$common_fields["device_type"];
-	}
-	else
-	{
-		$input["ID"]=$ID;
-		$common_fields["network_port_id"]=$ID;
-	}	
-					
-	if ($add_card_informations && isset($network_cards_infos[$i]))
-	{
-		if (isset($network_cards_infos[$i]["ifaddr"]))
-			$input["ifaddr"]=$network_cards_infos[$i]["ifaddr"];
-		if (isset($network_cards_infos[$i]["ifmac"]))
-			$input["ifmac"]=$network_cards_infos[$i]["ifmac"];
-	}	
-
-	if (!$ID)
-		$common_fields["network_port_id"] = $netport->add($input);
-	else
-		$netport->update($input);		
 }
 
 function addEntity($fields)

@@ -228,6 +228,12 @@ $DATA_INJECTION_MAPPING[COMPUTER_TYPE]['ifaddr']['name']=$LANG["networking"][14]
 $DATA_INJECTION_MAPPING[COMPUTER_TYPE]['ifaddr']['type']='ip';
 $DATA_INJECTION_MAPPING[COMPUTER_TYPE]['ifaddr']['table_type']='virtual';
 
+$DATA_INJECTION_MAPPING[COMPUTER_TYPE]['port']['table']='';
+$DATA_INJECTION_MAPPING[COMPUTER_TYPE]['port']['field']='port';
+$DATA_INJECTION_MAPPING[COMPUTER_TYPE]['port']['name']=$DATAINJECTIONLANG["mappings"][2];
+$DATA_INJECTION_MAPPING[COMPUTER_TYPE]['port']['type']='text';
+$DATA_INJECTION_MAPPING[COMPUTER_TYPE]['port']['table_type']='virtual';
+
 $DATA_INJECTION_MAPPING[COMPUTER_TYPE]['plug']['table']='';
 $DATA_INJECTION_MAPPING[COMPUTER_TYPE]['plug']['field']='plug';
 $DATA_INJECTION_MAPPING[COMPUTER_TYPE]['plug']['name']=$LANG["networking"][51];
@@ -564,11 +570,11 @@ $DATA_INJECTION_MAPPING[PRINTER_TYPE]['ifaddr']['name']=$LANG["networking"][14];
 $DATA_INJECTION_MAPPING[PRINTER_TYPE]['ifaddr']['type']='ip';
 $DATA_INJECTION_MAPPING[PRINTER_TYPE]['ifaddr']['table_type']='virtual';
 
-$DATA_INJECTION_MAPPING[PRINTER_TYPE]['nb_ports']['table']='glpi_networking';
-$DATA_INJECTION_MAPPING[PRINTER_TYPE]['nb_ports']['field']='nb_ports';
-$DATA_INJECTION_MAPPING[PRINTER_TYPE]['nb_ports']['name']=$DATAINJECTIONLANG["mappings"][1];
-$DATA_INJECTION_MAPPING[PRINTER_TYPE]['nb_ports']['type']='integer';
-$DATA_INJECTION_MAPPING[PRINTER_TYPE]['nb_ports']['table_type']='virtual';
+$DATA_INJECTION_MAPPING[PRINTER_TYPE]['port']['table']='';
+$DATA_INJECTION_MAPPING[PRINTER_TYPE]['port']['field']='port';
+$DATA_INJECTION_MAPPING[PRINTER_TYPE]['port']['name']=$DATAINJECTIONLANG["mappings"][2];
+$DATA_INJECTION_MAPPING[PRINTER_TYPE]['port']['type']='text';
+$DATA_INJECTION_MAPPING[PRINTER_TYPE]['port']['table_type']='virtual';
 
 $DATA_INJECTION_MAPPING[PRINTER_TYPE]['plug']['table']='';
 $DATA_INJECTION_MAPPING[PRINTER_TYPE]['plug']['field']='plug';
@@ -746,6 +752,12 @@ $DATA_INJECTION_MAPPING[PHONE_TYPE]['ifaddr']['field']='ifaddr';
 $DATA_INJECTION_MAPPING[PHONE_TYPE]['ifaddr']['name']=$LANG["networking"][14];
 $DATA_INJECTION_MAPPING[PHONE_TYPE]['ifaddr']['type']='ip';
 $DATA_INJECTION_MAPPING[PHONE_TYPE]['ifaddr']['table_type']='virtual';
+
+$DATA_INJECTION_MAPPING[PHONE_TYPE]['port']['table']='';
+$DATA_INJECTION_MAPPING[PHONE_TYPE]['port']['field']='port';
+$DATA_INJECTION_MAPPING[PHONE_TYPE]['port']['name']=$DATAINJECTIONLANG["mappings"][2];
+$DATA_INJECTION_MAPPING[PHONE_TYPE]['port']['type']='text';
+$DATA_INJECTION_MAPPING[PHONE_TYPE]['port']['table_type']='virtual';
 
 $DATA_INJECTION_MAPPING[PHONE_TYPE]['contract']['table']='glpi_contracts';
 $DATA_INJECTION_MAPPING[PHONE_TYPE]['contract']['field']='name';

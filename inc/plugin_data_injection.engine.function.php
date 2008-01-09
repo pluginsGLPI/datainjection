@@ -409,7 +409,7 @@ function preAddCommonFields($common_fields,$type,$fields,$entity)
 			$setFields = array("address","postcode","town","state","country","website","phonenumber","fax","email","notes");
 		break;
 		case PHONE_TYPE:
-			$setFields = array("contract","template");
+			$setFields = array("port","ifmac","ifaddr","contract","template");
 		break;	
 		case MONITOR_TYPE:
 			$setFields = array("contract","template");
@@ -418,17 +418,13 @@ function preAddCommonFields($common_fields,$type,$fields,$entity)
 			$setFields = array("contract","contact");
 		break;		
 		case NETWORKING_TYPE:
-			$setFields = array("nb_ports","ifmac","ifaddr","plug","contract","port","vlan","template");		
-			
-			//If a number of ports is provided, then a specific port cannot be modified
-			if (isset($fields["nb_ports"]) && isset($fields["port"]))
-				unset($setFields["port"]);
+			$setFields = array("nb_ports","plug","contract","port","vlan","template");		
 		break;
 		case PRINTER_TYPE:
-			$setFields = array("nb_ports","ifmac","ifaddr","plug","contract","vlan","template");
+			$setFields = array("port","ifmac","ifaddr","plug","contract","vlan","template");
 		break;	
 		case COMPUTER_TYPE:
-			$setFields = array("nb_ports","ifmac","ifaddr","plug","contract","vlan","template");
+			$setFields = array("port","ifmac","ifaddr","plug","contract","vlan","template");
 		break;	
 		default:
 		break;
@@ -571,7 +567,7 @@ function addNecessaryFields($model,$mapping,$mapping_definition,$entity,$type,&$
 			addField($fields,"FK_entities",$entity);
 			break;
 		case NETWORKING_TYPE:
-			$unsetFields = array("ifmac","ifaddr","contract","ports","vlan","template");
+			$unsetFields = array("contract","nb_ports","vlan","template");
 			addField($fields,"FK_entities",$entity);
 			break;
 		case PERIPHERAL_TYPE:
@@ -702,7 +698,8 @@ function processBeforeEnd($model,$type,$fields,&$common_fields)
 			updateWithTemplate($common_fields);
 
 			//Add ports if the mapping exists
-			addNetworkCard($common_fields,$model->getCanAddDropdown(),$model->getPerformNetworkConnection());
+			//addNetworkCard($common_fields,$model->getCanAddDropdown(),$model->getPerformNetworkConnection());
+			addNetworkPorts($common_fields);
 			addContract($common_fields);
 		break;	
 		case PRINTER_TYPE:
