@@ -132,7 +132,7 @@ $DATAINJECTIONLANG["mappingStep"][8] = "You must select at least one mandatory m
 $DATAINJECTIONLANG["mappingStep"][9] = "This step allows you to map field's fields with ones in database.";
 $DATAINJECTIONLANG["mappingStep"][10] = "The column headers corresponds to the header of your file";
 $DATAINJECTIONLANG["mappingStep"][11] = "La notion obligatoire correspond à un champ qui devra absolument être connue dans le fichier, vous devez avoir au moins un mapping obligatoire avant de continuer l'assistant";
-$DATAINJECTIONLANG["mappingStep"][12] = "Number of line";
+$DATAINJECTIONLANG["mappingStep"][12] = "Number of lines";
 
 $DATAINJECTIONLANG["infoStep"][1] = "Complementary informations";
 $DATAINJECTIONLANG["infoStep"][2] = "Modification of complementary informations";

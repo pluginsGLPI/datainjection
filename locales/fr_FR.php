@@ -132,7 +132,7 @@ $DATAINJECTIONLANG["mappingStep"][8] = "Au moins un champ de liaison doit être 
 $DATAINJECTIONLANG["mappingStep"][9] = "Dans cette étape vous allez mettre en relation les champs du fichier et de la base de données.";
 $DATAINJECTIONLANG["mappingStep"][10] = "La colonne en-tête correspond aux en-têtes du fichier";
 $DATAINJECTIONLANG["mappingStep"][11] = "Au moins un champs de liaison doit être renseigné : il permet de rechercher si les données à insérer existent déjà en base";
-$DATAINJECTIONLANG["mappingStep"][12] = "Numéro de ligne";
+$DATAINJECTIONLANG["mappingStep"][12] = "Nombre de lignes";
 
 $DATAINJECTIONLANG["infoStep"][1] = "Informations complémentaires";
 $DATAINJECTIONLANG["infoStep"][2] = "Modification des informations complémentaires";
