@@ -887,7 +887,7 @@ function reformatDate($date_format,$original_date)
 	switch ($date_format)
 	{
 		case DATE_TYPE_YYYYMMDD:
-			$new_date=preg_replace('/(\d{1,2})[-\/](\d{1,2})[-\/](\d{4})/','\1-\2-\3',$original_date);
+			$new_date=preg_replace('/(\d{4})[-\/](\d{1,2})[-\/](\d{1,2})/','\1-\2-\3',$original_date);
 		break;	
 		case DATE_TYPE_DDMMYYYY:
 			$new_date=preg_replace('/(\d{1,2})[-\/](\d{1,2})[-\/](\d{4})/','\3-\2-\1',$original_date);
