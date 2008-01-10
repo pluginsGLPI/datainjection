@@ -72,7 +72,7 @@ function plugin_data_injection_Install() {
 	$DB->query($query) or die($DB->error());
 
 	
-	$query="CREATE TABLE `glpi_plugin_data_injection_mappings` (
+	$query="CREATE TABLE IF NOT EXISTS `glpi_plugin_data_injection_mappings` (
 		`ID` INT( 11 ) NOT NULL AUTO_INCREMENT PRIMARY KEY ,
 		`model_id` INT( 11 ) NOT NULL ,
 		`type` INT( 11 ) NOT NULL DEFAULT '1',
@@ -83,7 +83,7 @@ function plugin_data_injection_Install() {
 		) ENGINE = MYISAM ;";
 	$DB->query($query) or die($DB->error());
 
-	$query="CREATE TABLE `glpi_plugin_data_injection_infos` (
+	$query="CREATE TABLE IF NOT EXISTS `glpi_plugin_data_injection_infos` (
 		`ID` INT( 11 ) NOT NULL AUTO_INCREMENT PRIMARY KEY ,
 		`model_id` INT( 11 ) NOT NULL ,
 		`type` int(11) NOT NULL default '9',
@@ -103,7 +103,7 @@ function plugin_data_injection_Install() {
 	";
 	$DB->query($query) or die($DB->error());
 	
-	$query="INSERT INTO `glpi_plugin_data_injection_filetype` (`ID`, `name`, `value`, `backend_class_name`, `model_class_name`) VALUES 
+	$query="REPLACE INTO `glpi_plugin_data_injection_filetype` (`ID`, `name`, `value`, `backend_class_name`, `model_class_name`) VALUES 
 (1, 'CSV', 1, 'BackendCSV', 'DataInjectionModelCSV');";
 	$DB->query($query) or die($DB->error());
 
@@ -118,7 +118,7 @@ function plugin_data_injection_Install() {
 	$DB->query($query) or die($DB->error());
 	
 	if (!is_dir(PLUGIN_DATA_INJECTION_UPLOAD_DIR)) {
-		mkdir(PLUGIN_DATA_INJECTION_UPLOAD_DIR);
+		@mkdir(PLUGIN_DATA_INJECTION_UPLOAD_DIR) or die("Can't create folder " . PLUGIN_DATA_INJECTION_UPLOAD_DIR);
 	}
 }
 
@@ -152,7 +152,8 @@ function plugin_data_injection_uninstall() {
 function plugin_data_injection_initSession() {
 	global $DB;
 	
-	if(TableExists("glpi_plugin_data_injection_filetype")){
+	if(TableExists("glpi_plugin_data_injection_filetype") && 
+		is_dir(PLUGIN_DATA_INJECTION_UPLOAD_DIR) && is_writable(PLUGIN_DATA_INJECTION_UPLOAD_DIR)){
 		$profile=new DataInjectionProfile();
 	
 		$query = "SELECT DISTINCT glpi_profiles.* FROM glpi_users_profiles INNER JOIN glpi_profiles ON (glpi_users_profiles.FK_profiles = glpi_profiles.ID) WHERE glpi_users_profiles.FK_users='".$_SESSION["glpiID"]."'";

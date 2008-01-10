@@ -38,20 +38,14 @@ define('GLPI_ROOT', '../../..');
 ; 
 
 include (GLPI_ROOT."/inc/includes.php");
-if (haveRight("config","w") && haveRight("profile","w")){
 
+checkSeveralRightsAnd(array("config"=>"w", "profile"=>"w"));
 
-	if(TableExists("glpi_plugin_data_injection_filetype")){
-		cleanCache("GLPI_HEADER_".$_SESSION["glpiID"]);
-		plugin_data_injection_uninstall();
-		unset($_SESSION["glpi_plugin_data_injection_installed"]);
-	}
-	glpi_header($_SERVER['HTTP_REFERER']);
-
-}else{
-commonHeader($DATAINJECTIONLANG["config"][1], $_SERVER["PHP_SELF"],"plugins","data_injection");
-	echo "<div align='center'><br><br><img src=\"".$CFG_GLPI["root_doc"]."/pics/warning.png\" alt=\"warning\"><br><br>";
-	echo "<b>".$LANG["login"][5]."</b></div>";
-	commonFooter();
+if(TableExists("glpi_plugin_data_injection_filetype")){
+	cleanCache("GLPI_HEADER_".$_SESSION["glpiID"]);
+	plugin_data_injection_uninstall();
+	unset($_SESSION["glpi_plugin_data_injection_installed"]);
 }
+glpi_header($_SERVER['HTTP_REFERER']);
+
 ?>
