@@ -401,6 +401,7 @@ function addField(&$array,$field,$value,$check_exists=true)
  */
 function preAddCommonFields($common_fields,$type,$fields,$entity)
 {
+	global $IMPORT_NETFIELDS;
 	
 	$setFields = array();
 	switch ($type)
@@ -409,7 +410,7 @@ function preAddCommonFields($common_fields,$type,$fields,$entity)
 			$setFields = array("address","postcode","town","state","country","website","phonenumber","fax","email","notes");
 		break;
 		case PHONE_TYPE:
-			$setFields = array("port","ifmac","ifaddr","contract","template");
+			$setFields = array_merge($IMPORT_NETFIELDS,array("contract","template"));
 		break;	
 		case MONITOR_TYPE:
 			$setFields = array("contract","template");
@@ -421,10 +422,10 @@ function preAddCommonFields($common_fields,$type,$fields,$entity)
 			$setFields = array("nb_ports","plug","contract","port","vlan","template");		
 		break;
 		case PRINTER_TYPE:
-			$setFields = array("port","ifmac","ifaddr","plug","contract","vlan","template");
+			$setFields = array_merge($IMPORT_NETFIELDS,array("contract","vlan","template"));
 		break;	
 		case COMPUTER_TYPE:
-			$setFields = array("port","ifmac","ifaddr","plug","contract","vlan","template");
+			$setFields = array_merge($IMPORT_NETFIELDS,array("contract","vlan","template"));
 		break;	
 		default:
 		break;

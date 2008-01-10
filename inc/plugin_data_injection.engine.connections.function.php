@@ -39,37 +39,29 @@
  */
 function addNetworkCard(&$common_fields, $canadd, $canconnect)
 {
-	global $DATAINJECTIONLANG;
+	global $DATAINJECTIONLANG, $IMPORT_NETFIELDS;
 	
 	$input=array();
+	$input["name"]=$DATAINJECTIONLANG["mappings"][2];			
+	$input["logical_number"]=0;
+	
 	
 	//Unset fields is mac or ip is empty
-	if ((isset($common_fields["ifmac"]) && $common_fields["ifmac"] == EMPTY_VALUE))
-		unset($common_fields["ifmac"]);
+	foreach ($IMPORT_NETFIELDS as $field) {
+		$dest= ($field=="port" ? "name" : $field);
+		if (isset($common_fields["$field"])) {
+			if ($common_fields["$field"] == EMPTY_VALUE) {
+				unset($common_fields["$field"]);
+			} else {
+				$input["$dest"]=$common_fields["$field"];			
+				
+			}			
+		}
+	}
 		
-	if ((isset($common_fields["ifaddr"]) && $common_fields["ifaddr"] == EMPTY_VALUE))
-		unset($common_fields["ifaddr"]);
-
-	if ((isset($common_fields["port"]) && $common_fields["port"] == EMPTY_VALUE))
-		unset($common_fields["port"]);
-
 	//Must add port ONLY if ip or mac or name of port is provided
-	if (isset($common_fields["ifmac"]) || isset($common_fields["ifaddr"]) || isset($common_fields["port"]))
+	if (isset($input["ifmac"]) || isset($input["ifaddr"]) || isset($input["name"]))
 	{	
-		$add_card_informations=true;
-		if (isset($common_fields["ifaddr"])) {
-			$input["ifaddr"]=$common_fields["ifaddr"];			
-		}
-		if (isset($common_fields["ifmac"])) {
-			$input["ifmac"]=$common_fields["ifmac"];			
-		}	
-		if (isset($common_fields["port"])) {
-			$input["name"]=$common_fields["port"];			
-		} else {
-			$input["name"]=$DATAINJECTIONLANG["mappings"][2];			
-		}
-		$input["logical_number"]=0;
-			
 		addFullPort($common_fields,$input);
 
 		//Only try to create network plug and perform network connection is the option was set in the injection model
