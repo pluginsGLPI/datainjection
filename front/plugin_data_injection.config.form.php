@@ -41,7 +41,7 @@ include (GLPI_ROOT."/inc/includes.php");
 
 if(!isset($_SESSION["glpi_plugin_data_injection_installed"]) || $_SESSION["glpi_plugin_data_injection_installed"]!=1) {
 	
-	commonHeader($LANG["title"][2],$_SERVER['PHP_SELF'],"config","plugins");
+	commonHeader($LANG["common"][12],$_SERVER['PHP_SELF'],"config","plugins");
 	
 			echo "<div align='center'>";
 			echo "<table class='tab_cadre' cellpadding='5'>";
