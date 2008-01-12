@@ -35,7 +35,6 @@ $DATAINJECTIONLANG["headings"][1] = "Importar archivo";
 $DATAINJECTIONLANG["name"][1] = "Importar archivo";
 $title = $DATAINJECTIONLANG["name"][1] ;
 
-$DATAINJECTIONLANG["popup"][1] = "Cerrar";
 $DATAINJECTIONLANG["pdf"][1] = "Informe de importación";
 
 $DATAINJECTIONLANG["config"][1]= "Configuración de " . $title;
@@ -188,6 +187,7 @@ $DATAINJECTIONLANG["button"][4] = "Ver el log";
 $DATAINJECTIONLANG["button"][5] = "Exportar el log";
 $DATAINJECTIONLANG["button"][6] = "Finalizar";
 $DATAINJECTIONLANG["button"][7] = "Exportar informe en PDF";
+$DATAINJECTIONLANG["button"][8] = "Cerrar";
 
 $DATAINJECTIONLANG["result"][1] = "Un valor no es del tipo correcto";
 $DATAINJECTIONLANG["result"][2] = "Datos correctos";

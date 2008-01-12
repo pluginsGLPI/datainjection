@@ -30,34 +30,23 @@
 
 function getAllMappingsDefinitionsTypes($primary_type)
 {
+	global $DATAINJECTIONLANG, $CFG_GLPI;
+	
 	$types = array();
 	$commonitem = new CommonItem;
 
 	$commonitem->setType($primary_type);
 	$types[] = array($primary_type,$commonitem->getType());
 	
-	switch ($primary_type)
-	{
-		case ENTITY_TYPE:
-		//nobreak
-		case CONTACT_TYPE:
-		//nobreak
-		case CONTRACT_TYPE:
-		//nobreak
-		case USER_TYPE:
-		//nobreak
-		case GROUP_TYPE:
-		//nobreak
-		case ENTERPRISE_TYPE:
-		break;
-		
-		//Add infocom type
-		default:
-			$commonitem->setType(INFOCOM_TYPE);
-			$types[] = array(INFOCOM_TYPE,$commonitem->getType());
-		break;	
+	if (in_array($primary_type, $CFG_GLPI["infocom_types"])) {
+		$commonitem->setType(INFOCOM_TYPE);
+		$types[] = array(INFOCOM_TYPE,$commonitem->getType());		
 	}
-
+	
+	if ($primary_type!=NETWORKING_TYPE && in_array($primary_type, $CFG_GLPI["netport_types"])) {
+		$types[] = array(NETPORT_TYPE,$DATAINJECTIONLANG["mappings"][2]);		
+	}
+	
 	asort($types);
 	return $types;
 }

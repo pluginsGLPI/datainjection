@@ -185,6 +185,7 @@ $DATAINJECTIONLANG["button"][4] = "See the log";
 $DATAINJECTIONLANG["button"][5] = "Export the log";
 $DATAINJECTIONLANG["button"][6] = "Finish";
 $DATAINJECTIONLANG["button"][7] = "Export rapport in PDF";
+$DATAINJECTIONLANG["button"][8] = "Close";
 
 $DATAINJECTIONLANG["result"][1] = "One data is not the good type";
 $DATAINJECTIONLANG["result"][2] = "Datas to insert are incorrect";

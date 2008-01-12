@@ -338,6 +338,10 @@ function dataAlreadyInDB($type,$fields,$mapping_definition,$model)
 				$where.=" AND device_type=".$model->getDeviceType()." AND FK_device=".$fields["FK_device"];
 			break;
 
+			case NETPORT_TYPE :
+				$where.=" AND device_type=".$model->getDeviceType()." AND on_device=".$fields["on_device"];
+			break;
+
 			default:
 			break;	
 		}
@@ -359,6 +363,9 @@ function dataAlreadyInDB($type,$fields,$mapping_definition,$model)
  */
 function getInstance($device_type)
 {
+		if ($device_type == NETPORT_TYPE)
+			return new Netport;
+			
 		$commonitem = new CommonItem;
 		$commonitem->setType($device_type,1);
 		return $commonitem->obj;
@@ -410,7 +417,7 @@ function preAddCommonFields($common_fields,$type,$fields,$entity)
 			$setFields = array("address","postcode","town","state","country","website","phonenumber","fax","email","notes");
 		break;
 		case PHONE_TYPE:
-			$setFields = array_merge($IMPORT_NETFIELDS,array("contract","template"));
+			$setFields = array("contract","template");
 		break;	
 		case MONITOR_TYPE:
 			$setFields = array("contract","template");
@@ -419,13 +426,16 @@ function preAddCommonFields($common_fields,$type,$fields,$entity)
 			$setFields = array("contract","contact");
 		break;		
 		case NETWORKING_TYPE:
-			$setFields = array("nb_ports","plug","contract","port","vlan","template");		
+			$setFields = array("nb_ports","contract","template");		
 		break;
 		case PRINTER_TYPE:
-			$setFields = array_merge($IMPORT_NETFIELDS,array("contract","vlan","template"));
+			$setFields = array("contract","template");
 		break;	
 		case COMPUTER_TYPE:
-			$setFields = array_merge($IMPORT_NETFIELDS,array("contract","vlan","template"));
+			$setFields = array("contract","template");
+		break;	
+		case NETPORT_TYPE:
+			$setFields = array("vlan");
 		break;	
 		default:
 		break;
@@ -448,6 +458,9 @@ function addCommonFields(&$common_fields,$type,$fields,$entity,$ID)
 	switch ($type)
 	{
 		//Copy/paste is voluntary in order to know exactly which fields are included or not
+		case NETPORT_TYPE:
+			addField($common_fields,"network_port_id",$ID,true);
+			break;
 		case ENTITY_TYPE:
 			break;
 		case CONTACT_TYPE:
@@ -606,6 +619,13 @@ function addNecessaryFields($model,$mapping,$mapping_definition,$entity,$type,&$
 			//Set the device type
 			addField($fields,"device_type",$model->getDeviceType());
 			break;
+		case NETPORT_TYPE:
+			//Set the device_id
+			addField($fields,"on_device",$common_fields["device_id"]);
+					
+			//Set the device type
+			addField($fields,"device_type",$model->getDeviceType());
+			break;
 		default:
 			break;	
 	}
@@ -697,15 +717,11 @@ function processBeforeEnd($model,$type,$fields,&$common_fields)
 		break;
 		case NETWORKING_TYPE:
 			updateWithTemplate($common_fields);
-
-			//Add ports if the mapping exists
-			//addNetworkCard($common_fields,$model->getCanAddDropdown(),$model->getPerformNetworkConnection());
 			addNetworkPorts($common_fields);
 			addContract($common_fields);
 		break;	
 		case PRINTER_TYPE:
 			updateWithTemplate($common_fields);
-			addNetworkCard($common_fields,$model->getCanAddDropdown(),$model->getPerformNetworkConnection());
 			addContract($common_fields);					
 		break;
 		case MONITOR_TYPE:
@@ -713,14 +729,15 @@ function processBeforeEnd($model,$type,$fields,&$common_fields)
 		break;
 		case COMPUTER_TYPE:
 			updateWithTemplate($common_fields);
-			addNetworkCard($common_fields,$model->getCanAddDropdown(),$model->getPerformNetworkConnection());
 			addContract($common_fields);					
 		break;
 		case PHONE_TYPE:
 			updateWithTemplate($common_fields);
-			addNetworkCard($common_fields,$model->getCanAddDropdown(),$model->getPerformNetworkConnection());
 			addContract($common_fields);					
 		break;	
+		case NETPORT_TYPE:
+			addVlan($common_fields,$model->getCanAddDropdown());
+		break;
 		default:
 		break;
 	}

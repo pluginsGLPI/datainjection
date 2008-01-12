@@ -186,6 +186,7 @@ $DATAINJECTIONLANG["button"][4] = "Voir le rapport";
 $DATAINJECTIONLANG["button"][5] = "Générer le fichier importer";
 $DATAINJECTIONLANG["button"][6] = "Terminé";
 $DATAINJECTIONLANG["button"][7] = "Exporter le rapport en PDF";
+$DATAINJECTIONLANG["button"][8] = "Fermer";
 
 $DATAINJECTIONLANG["result"][1] = "Mauvais type";
 $DATAINJECTIONLANG["result"][2] = "Les données à insérer sont correctes";

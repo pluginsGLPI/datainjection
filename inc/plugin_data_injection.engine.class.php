@@ -207,6 +207,9 @@ class DataInjectionEngine
 		{
 			//Post processing, if some actions need to be done
 			processBeforeEnd($this->getModel(),$this->getModel()->getDeviceType(),$fields,$db_fields[COMMON_FIELDS]);
+			
+			logInFile("debug", print_r($fields, true));
+			logInFile("debug", print_r($db_fields, true));
 
 			//----------------------------------------------------//
 			//-------------Process other types-------------------//
@@ -235,6 +238,7 @@ class DataInjectionEngine
 					}	
 					else
 					{
+						$fields["ID"] = $ID;
 						filterFields($fields,$fields_from_db,$this->getModel()->getCanOverwriteIfNotEmpty());
 						//Item aleady in DB -> update
 						addCommonFields($db_fields[COMMON_FIELDS],$type,$fields,$this->entity,$ID);
