@@ -1118,12 +1118,12 @@ $DATA_INJECTION_MAPPING[USER_TYPE]['email']['type']='text';
 
 $DATA_INJECTION_MAPPING[USER_TYPE]['phone']['table']='glpi_users';
 $DATA_INJECTION_MAPPING[USER_TYPE]['phone']['field']='phone';
-$DATA_INJECTION_MAPPING[USER_TYPE]['phone']['name']=$LANG["help"][35];
+$DATA_INJECTION_MAPPING[USER_TYPE]['phone']['name']=$LANG["phones"][4];
 $DATA_INJECTION_MAPPING[USER_TYPE]['phone']['type']='text';
 
 $DATA_INJECTION_MAPPING[USER_TYPE]['phone2']['table']='glpi_users';
 $DATA_INJECTION_MAPPING[USER_TYPE]['phone2']['field']='phone2';
-$DATA_INJECTION_MAPPING[USER_TYPE]['phone2']['name']=$LANG["help"][35]." 2";
+$DATA_INJECTION_MAPPING[USER_TYPE]['phone2']['name']=$LANG["phones"][4]." 2";
 $DATA_INJECTION_MAPPING[USER_TYPE]['phone2']['type']='text';
 
 $DATA_INJECTION_MAPPING[USER_TYPE]['mobile']['table']='glpi_users';
@@ -1463,7 +1463,7 @@ $DATA_INJECTION_MAPPING[ENTERPRISE_TYPE]['website']['type']='text';
 
 $DATA_INJECTION_MAPPING[ENTERPRISE_TYPE]['phonenumber']['table']='glpi_enterprises';
 $DATA_INJECTION_MAPPING[ENTERPRISE_TYPE]['phonenumber']['field']='phonenumber';
-$DATA_INJECTION_MAPPING[ENTERPRISE_TYPE]['phonenumber']['name']=$LANG["help"][35];
+$DATA_INJECTION_MAPPING[ENTERPRISE_TYPE]['phonenumber']['name']=$LANG["financial"][29];
 $DATA_INJECTION_MAPPING[ENTERPRISE_TYPE]['phonenumber']['type']='text';
 
 $DATA_INJECTION_MAPPING[ENTERPRISE_TYPE]['fax']['table']='glpi_enterprises';
@@ -1536,12 +1536,12 @@ $DATA_INJECTION_MAPPING[CONTACT_TYPE]['firstname']['type']='text';
 
 $DATA_INJECTION_MAPPING[CONTACT_TYPE]['phone']['table']='glpi_contacts';
 $DATA_INJECTION_MAPPING[CONTACT_TYPE]['phone']['field']='phone';
-$DATA_INJECTION_MAPPING[CONTACT_TYPE]['phone']['name']=$LANG["help"][35];
+$DATA_INJECTION_MAPPING[CONTACT_TYPE]['phone']['name']=$LANG["phones"][4];
 $DATA_INJECTION_MAPPING[CONTACT_TYPE]['phone']['type']='text';
 
 $DATA_INJECTION_MAPPING[CONTACT_TYPE]['phone2']['table']='glpi_contacts';
 $DATA_INJECTION_MAPPING[CONTACT_TYPE]['phone2']['field']='phone2';
-$DATA_INJECTION_MAPPING[CONTACT_TYPE]['phone2']['name']=$LANG["help"][35]." 2";
+$DATA_INJECTION_MAPPING[CONTACT_TYPE]['phone2']['name']=$LANG["phones"][4]." 2";
 $DATA_INJECTION_MAPPING[CONTACT_TYPE]['phone2']['type']='text';
 
 $DATA_INJECTION_MAPPING[CONTACT_TYPE]['mobile']['table']='glpi_contacts';
@@ -1772,7 +1772,7 @@ $DATA_INJECTION_MAPPING[ENTITY_TYPE]['website']['type']='text';
 
 $DATA_INJECTION_MAPPING[ENTITY_TYPE]['phonenumber']['table']='glpi_entities_data';
 $DATA_INJECTION_MAPPING[ENTITY_TYPE]['phonenumber']['field']='phonenumber';
-$DATA_INJECTION_MAPPING[ENTITY_TYPE]['phonenumber']['name']=$LANG["help"][35];
+$DATA_INJECTION_MAPPING[ENTITY_TYPE]['phonenumber']['name']=$LANG["financial"][29];
 $DATA_INJECTION_MAPPING[ENTITY_TYPE]['phonenumber']['type']='text';
 
 $DATA_INJECTION_MAPPING[ENTITY_TYPE]['fax']['table']='glpi_entities_data';
