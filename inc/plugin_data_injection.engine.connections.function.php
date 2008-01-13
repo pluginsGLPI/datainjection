@@ -135,12 +135,11 @@ function addNetworkPlug($common_fields,$canadd)
 
 function addVlan($common_fields,$canadd)
 {
-	logInFile("debug", "*** addVlan :" . print_r($common_fields, true));
 	
 	if (isset($common_fields["network_port_id"]) && isset($common_fields["vlan"]))
 	{
 		$vlan_id = getDropdownValue(array(), array("table"=>"glpi_dropdown_vlan"),$common_fields["vlan"],$common_fields["FK_entities"],$canadd);
-		assignVlan($common_fields["network_port_id"],$vlan_id);	  
+		if ($vlan_id>0) assignVlan($common_fields["network_port_id"],$vlan_id);	  
 	}
 	else
 		return 0;

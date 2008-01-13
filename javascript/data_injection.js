@@ -91,7 +91,7 @@ function go_mapping(id)
 	sel = document.getElementById('table'+id);
 	idtable = sel.options[sel.selectedIndex].value;
 	
-	if(idtable!=-1)
+	if(sel.selectedIndex==1)
 		document.getElementById("check"+id).disabled=false;
 	else
 		{

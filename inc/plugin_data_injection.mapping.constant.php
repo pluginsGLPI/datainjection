@@ -1664,7 +1664,7 @@ $DATA_INJECTION_MAPPING[ENTITY_TYPE]['comments']['table_type']='multitext';
 // NETPORT MAPPING
 // ----------------------------------------------------------------------
 $DATA_INJECTION_MAPPING[NETPORT_TYPE]['logical_number']['table']='glpi_networking_ports';
-$DATA_INJECTION_MAPPING[NETPORT_TYPE]['logical_number']['field']='name';
+$DATA_INJECTION_MAPPING[NETPORT_TYPE]['logical_number']['field']='logical_number';
 $DATA_INJECTION_MAPPING[NETPORT_TYPE]['logical_number']['name']=$LANG["networking"][21];
 $DATA_INJECTION_MAPPING[NETPORT_TYPE]['logical_number']['type']='integer';
 

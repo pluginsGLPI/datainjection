@@ -340,6 +340,11 @@ function dataAlreadyInDB($type,$fields,$mapping_definition,$model)
 
 			case NETPORT_TYPE :
 				$where.=" AND device_type=".$model->getDeviceType()." AND on_device=".$fields["on_device"];
+				if (isset($fields["logical_number"]) && $fields["logical_number"]!=EMPTY_VALUE) {
+					$where .= " AND logical_number=".$fields["logical_number"];
+				} else {
+					$where .= " AND logical_number=0";
+				}
 			break;
 
 			default:
@@ -547,6 +552,7 @@ function addCommonFields(&$common_fields,$type,$fields,$entity,$ID)
 function addNecessaryFields($model,$mapping,$mapping_definition,$entity,$type,&$fields,$common_fields)
 {
 	global $DB;
+
 	$unsetFields = array();
 	switch ($type)
 	{
@@ -565,7 +571,7 @@ function addNecessaryFields($model,$mapping,$mapping_definition,$entity,$type,&$
 		case CARTRIDGE_ITEM_TYPE:
 			break;
 		case COMPUTER_TYPE:
-			$unsetFields = array("plug","contract","vlan","template");
+			$unsetFields = array("contract","template");
 			addField($fields,"FK_entities",$entity);
 			break;
 		case MONITOR_TYPE:
@@ -573,15 +579,15 @@ function addNecessaryFields($model,$mapping,$mapping_definition,$entity,$type,&$
 			addField($fields,"FK_entities",$entity);
 			break;
 		case PRINTER_TYPE:
-			$unsetFields = array("ifmac","ifaddr","contract","vlan","template");
+			$unsetFields = array("contract","template");
 			addField($fields,"FK_entities",$entity);
 			break;
 		case PHONE_TYPE:
-			$unsetFields = array("plug","contract","template");
+			$unsetFields = array("contract","template");
 			addField($fields,"FK_entities",$entity);
 			break;
 		case NETWORKING_TYPE:
-			$unsetFields = array("contract","nb_ports","vlan","template");
+			$unsetFields = array("contract","nb_ports","template");
 			addField($fields,"FK_entities",$entity);
 			break;
 		case PERIPHERAL_TYPE:
@@ -590,13 +596,13 @@ function addNecessaryFields($model,$mapping,$mapping_definition,$entity,$type,&$
 			break;
 
 		case GROUP_TYPE:
-		break;
+			break;
 		case ENTERPRISE_TYPE:
-		addField($fields,"FK_entities",$entity);
-		break;
+			addField($fields,"FK_entities",$entity);
+			break;
 		case CONTRACT_TYPE:
-		addField($fields,"FK_entities",$entity);
-		break;
+			addField($fields,"FK_entities",$entity);
+			break;
 		case USER_TYPE:
 			if (isset ($fields["password"])) 
 			{

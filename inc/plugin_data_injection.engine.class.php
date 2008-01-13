@@ -208,9 +208,6 @@ class DataInjectionEngine
 			//Post processing, if some actions need to be done
 			processBeforeEnd($this->getModel(),$this->getModel()->getDeviceType(),$fields,$db_fields[COMMON_FIELDS]);
 			
-			logInFile("debug", print_r($fields, true));
-			logInFile("debug", print_r($db_fields, true));
-
 			//----------------------------------------------------//
 			//-------------Process other types-------------------//
 			//--------------------------------------------------//
@@ -222,7 +219,11 @@ class DataInjectionEngine
 				if ($type != COMMON_FIELDS && $type != $this->getModel()->getDeviceType())
 				{
 					$obj = getInstance($type);
-					//If necessary, add default fields which are mandatory to create the object
+
+					// Add some fields to the common fields BEFORE inserting the secondary type (in order to save some fields)
+					$db_fields[COMMON_FIELDS] = preAddCommonFields($db_fields[COMMON_FIELDS],$type,$fields,$this->getEntity());
+
+					// If necessary, add default fields which are mandatory to create the object
 					addNecessaryFields($this->getModel(),$mapping,$mapping_definition,$this->getEntity(),$type,$fields,$db_fields[COMMON_FIELDS]);
 					
 					//Check if the line already exists in database

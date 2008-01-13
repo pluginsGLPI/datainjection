@@ -43,7 +43,7 @@ function getAllMappingsDefinitionsTypes($primary_type)
 		$types[] = array(INFOCOM_TYPE,$commonitem->getType());		
 	}
 	
-	if ($primary_type!=NETWORKING_TYPE && in_array($primary_type, $CFG_GLPI["netport_types"])) {
+	if (in_array($primary_type, $CFG_GLPI["netport_types"])) {
 		$types[] = array(NETPORT_TYPE,$DATAINJECTIONLANG["mappings"][2]);		
 	}
 	

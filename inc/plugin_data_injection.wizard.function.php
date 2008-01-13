@@ -649,7 +649,7 @@ function mappingStep($target)
 				/**************************************************************/
 		
 				/*********************Checkbox Mandatory***********************/
-				if($value->getMappingType()==-1)
+				if($value->getMappingType() != $model->getDeviceType())
 					echo "<td style='text-align:center'><input type='checkbox' name='field[$key][3]' id='check$key' disabled /></td>";
 				else
 					{
