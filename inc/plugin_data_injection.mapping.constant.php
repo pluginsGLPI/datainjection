@@ -1698,8 +1698,9 @@ $DATA_INJECTION_MAPPING[NETPORT_TYPE]['gateway']['field']='gateway';
 $DATA_INJECTION_MAPPING[NETPORT_TYPE]['gateway']['name']=$LANG["networking"][59];
 $DATA_INJECTION_MAPPING[NETPORT_TYPE]['gateway']['type']='ip';
 
-$DATA_INJECTION_MAPPING[NETPORT_TYPE]['netpoint']['table']='glpi_networking_ports';
-$DATA_INJECTION_MAPPING[NETPORT_TYPE]['netpoint']['field']='netpoint';
+$DATA_INJECTION_MAPPING[NETPORT_TYPE]['netpoint']['table']='glpi_dropdown_netpoint';
+$DATA_INJECTION_MAPPING[NETPORT_TYPE]['netpoint']['field']='name';
+$DATA_INJECTION_MAPPING[NETPORT_TYPE]['netpoint']['linkfield']='netpoint';
 $DATA_INJECTION_MAPPING[NETPORT_TYPE]['netpoint']['name']=$LANG["networking"][51];
 $DATA_INJECTION_MAPPING[NETPORT_TYPE]['netpoint']['type']='text';
 $DATA_INJECTION_MAPPING[NETPORT_TYPE]['netpoint']['table_type']='dropdown';

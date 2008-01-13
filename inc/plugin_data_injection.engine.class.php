@@ -176,6 +176,10 @@ class DataInjectionEngine
 			filterFields($fields,$fields_from_db,$this->getModel()->getCanOverwriteIfNotEmpty());
 			$fields["ID"] = $ID;
 
+			// Save fields from DB (mainly for location if not provided in CSV)
+			addCommonFields($db_fields[COMMON_FIELDS],$this->getModel()->getDeviceType(),$fields_from_db,$this->getEntity(),$ID);
+
+			// Save fields from CSV
 			addCommonFields($db_fields[COMMON_FIELDS],$this->getModel()->getDeviceType(),$fields,$this->getEntity(),$ID);
 
 			if (count($fields) > 1)
