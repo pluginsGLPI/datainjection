@@ -36,7 +36,7 @@
  * 
  * @param common_fields the common_fields
  * @param canadd indicates if user has right to add values
- */
+ *
 function addNetworkCard(&$common_fields, $canadd, $canconnect)
 {
 	global $DATAINJECTIONLANG, $IMPORT_NETFIELDS;
@@ -73,7 +73,7 @@ function addNetworkCard(&$common_fields, $canadd, $canconnect)
 
 /*
  * Add port, check if it exists
- */
+ *
 function addFullPort (&$common_fields, $input)
 {
 	global $DB;
@@ -100,6 +100,50 @@ function addFullPort (&$common_fields, $input)
 	}	
 }
 
+function updatePort(&$common_fields, $canadd)
+{
+	global $DB;
+		
+	$netport = new Netport;
+	$input=array();
+	
+	if (isset($common_fields["network_port_id"]) && $common_fields["network_port_id"] != EMPTY_VALUE)
+	{
+		$common_fields["netpoint"]=addNetworkPlug($common_fields,$canadd);
+		$input["netpoint"]=$common_fields["netpoint"];
+		$input["ID"]=$common_fields["network_port_id"];
+		$netport->update($input);
+		addVlan($common_fields,$canadd);
+		connectWire($common_fields);
+	}
+}
+function addNetworkPlug($common_fields,$canadd)
+{
+	if (isset($common_fields["network_port_id"]) && isset($common_fields["plug"]))
+		return getDropdownValue(array(), array("table"=>"glpi_dropdown_netpoint"),$common_fields["plug"],$common_fields["FK_entities"],$canadd,(isset($common_fields["location"])?$common_fields["location"]:0));	  
+	else
+		return 0;
+}
+/* 
+ * For all type device, except network
+ * TODO : need to be improved (search by network name+port)
+ *
+function connectWire($common_fields)
+{
+	global $DB;
+	
+	if (isset($common_fields["netpoint"]) && $common_fields["netpoint"]>0 &&
+		isset($common_fields["network_port_id"]) && $common_fields["network_port_id"]>0)
+	{
+		$sql = "SELECT ID FROM glpi_networking_ports WHERE ID!=".$common_fields["network_port_id"]." AND netpoint=".$common_fields["netpoint"]." AND device_type=".NETWORKING_TYPE;
+		$result=$DB->query($sql);
+		if($DB->numrows($result)>0)
+			$DB->query("INSERT INTO glpi_networking_wire (end1,end2) VALUES (".$common_fields["network_port_id"].",".$DB->result($result,0,"ID").")");
+	}
+}
+
+*/
+
 /**
  * Add a Network Ports (for network device only)
  * 
@@ -125,14 +169,6 @@ function addNetworkPorts($common_fields)
 	}
 }
 
-function addNetworkPlug($common_fields,$canadd)
-{
-	if (isset($common_fields["network_port_id"]) && isset($common_fields["plug"]))
-		return getDropdownValue(array(), array("table"=>"glpi_dropdown_netpoint"),$common_fields["plug"],$common_fields["FK_entities"],$canadd,(isset($common_fields["location"])?$common_fields["location"]:0));	  
-	else
-		return 0;
-}
-
 function addVlan($common_fields,$canadd)
 {
 	
@@ -145,39 +181,19 @@ function addVlan($common_fields,$canadd)
 		return 0;
 }
 
-function updatePort(&$common_fields, $canadd)
+function addNetPoint ($common_fields,$canadd) 
 {
-	global $DB;
+	if (isset($common_fields["location"]) && isset($common_fields["netpoint"]))
+	{
+		$id=checkNetpoint($common_fields["device_type"],$common_fields["FK_entities"],$common_fields["location"],$common_fields["netpoint"],$canadd);
 		
-	$netport = new Netport;
-	$input=array();
-	
-	if (isset($common_fields["network_port_id"]) && $common_fields["network_port_id"] != EMPTY_VALUE)
-	{
-		$common_fields["netpoint"]=addNetworkPlug($common_fields,$canadd);
-		$input["netpoint"]=$common_fields["netpoint"];
-		$input["ID"]=$common_fields["network_port_id"];
-		$netport->update($input);
-		addVlan($common_fields,$canadd);
-		connectWire($common_fields);
-	}
-}
-
-/* 
- * For all type device, except network
- * TODO : need to be improved (search by network name+port)
- */
-function connectWire($common_fields)
-{
-	global $DB;
-	
-	if (isset($common_fields["netpoint"]) && $common_fields["netpoint"]>0 &&
-		isset($common_fields["network_port_id"]) && $common_fields["network_port_id"]>0)
-	{
-		$sql = "SELECT ID FROM glpi_networking_ports WHERE ID!=".$common_fields["network_port_id"]." AND netpoint=".$common_fields["netpoint"]." AND device_type=".NETWORKING_TYPE;
-		$result=$DB->query($sql);
-		if($DB->numrows($result)>0)
-			$DB->query("INSERT INTO glpi_networking_wire (end1,end2) VALUES (".$common_fields["network_port_id"].",".$DB->result($result,0,"ID").")");
+		if ($id>0) {
+			$port = new Netport();
+			$port->update(array(
+				"ID" => $common_fields["network_port_id"],
+				"netpoint" => $id 
+				));	
+		}
 	}
 }
 

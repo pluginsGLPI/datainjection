@@ -209,7 +209,8 @@ function getDropdownValue($mapping, $mapping_definition,$value,$entity,$canadd=0
 			case "glpi_dropdown_locations":
 				return checkLocation($value,$entity,$rightToAdd);
 			case "glpi_dropdown_netpoint":
-				$input["value2"] = $location;
+				// not handle here !
+				return EMPTY_VALUE;	
 			break;
 			default:
 				$input["value2"] = EMPTY_VALUE;
@@ -229,6 +230,44 @@ function getDropdownValue($mapping, $mapping_definition,$value,$entity,$canadd=0
 			return addDropdown($input);
 		else
 			return EMPTY_VALUE;	
+}
+
+function checkNetpoint($primary_type,$entity,$location,$value,$canadd) {
+	global $DB;
+
+	// networking device can use netpoint in all the entity
+	$sql="SELECT ID FROM glpi_dropdown_netpoint WHERE FK_entities=$entity AND name='$value'";
+	
+	if ($primary_type != NETWORKING_TYPE) {
+		// other device can only use netpoint in the location
+		$sql .= " AND location=$location";
+	}
+	$result = $DB->query($sql);
+	if ($DB->numrows($result)>0) {
+		// found
+		$ID = $DB->result($result,0,"ID");
+		
+		// Check if not used
+		if (countElementsInTable("glpi_networking_ports",
+			"netpoint=$ID AND device_type".($primary_type == NETWORKING_TYPE ?"=":"!=").NETWORKING_TYPE)) {
+			return EMPTY_VALUE;					
+		} else {
+			return $ID;
+		}
+					
+	} else if ($canadd) {
+		$input["tablename"] = "glpi_dropdown_netpoint";
+		$input["value"] = $value;
+		$input["value2"] = $location;
+		$input["FK_entities"] = $entity;
+		$input["type"] = EMPTY_VALUE;
+		$input["comments"] = EMPTY_VALUE;
+		
+		return addDropdown($input);
+				
+	} else {
+		return EMPTY_VALUE;			
+	}
 }
 
 /*
@@ -440,7 +479,7 @@ function preAddCommonFields($common_fields,$type,$fields,$entity)
 			$setFields = array("contract","template");
 		break;	
 		case NETPORT_TYPE:
-			$setFields = array("vlan");
+			$setFields = array("netpoint","vlan");
 		break;	
 		default:
 		break;
@@ -626,6 +665,8 @@ function addNecessaryFields($model,$mapping,$mapping_definition,$entity,$type,&$
 			addField($fields,"device_type",$model->getDeviceType());
 			break;
 		case NETPORT_TYPE:
+			$unsetFields = array("netpoint","vlan");
+
 			//Set the device_id
 			addField($fields,"on_device",$common_fields["device_id"]);
 					
@@ -743,6 +784,7 @@ function processBeforeEnd($model,$type,$fields,&$common_fields)
 		break;	
 		case NETPORT_TYPE:
 			addVlan($common_fields,$model->getCanAddDropdown());
+			addNetpoint($common_fields,$model->getCanAddDropdown());
 		break;
 		default:
 		break;

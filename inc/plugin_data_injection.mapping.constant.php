@@ -1699,11 +1699,10 @@ $DATA_INJECTION_MAPPING[NETPORT_TYPE]['gateway']['name']=$LANG["networking"][59]
 $DATA_INJECTION_MAPPING[NETPORT_TYPE]['gateway']['type']='ip';
 
 $DATA_INJECTION_MAPPING[NETPORT_TYPE]['netpoint']['table']='glpi_dropdown_netpoint';
-$DATA_INJECTION_MAPPING[NETPORT_TYPE]['netpoint']['field']='name';
-$DATA_INJECTION_MAPPING[NETPORT_TYPE]['netpoint']['linkfield']='netpoint';
+$DATA_INJECTION_MAPPING[NETPORT_TYPE]['netpoint']['field']='netpoint';
 $DATA_INJECTION_MAPPING[NETPORT_TYPE]['netpoint']['name']=$LANG["networking"][51];
 $DATA_INJECTION_MAPPING[NETPORT_TYPE]['netpoint']['type']='text';
-$DATA_INJECTION_MAPPING[NETPORT_TYPE]['netpoint']['table_type']='dropdown';
+$DATA_INJECTION_MAPPING[NETPORT_TYPE]['netpoint']['table_type']='virtual'; // can't be a dropdown
 
 $DATA_INJECTION_MAPPING[NETPORT_TYPE]['vlan']['table']='glpi_dropdown_vlan';
 $DATA_INJECTION_MAPPING[NETPORT_TYPE]['vlan']['field']='vlan';

@@ -143,6 +143,10 @@ class DataInjectionEngine
 			if ($this->getModel()->getBehaviorAdd())
 			{
 				$ID = $obj->add($fields);
+				
+				//Add some default values (getempty() or getFromDB($ID) could be better)
+				addCommonFields($db_fields[COMMON_FIELDS],$this->getModel()->getDeviceType(),array("location",0),$this->getEntity(),$ID);
+				
 				//Add the ID to the fields, so it can be reused after
 				addCommonFields($db_fields[COMMON_FIELDS],$this->getModel()->getDeviceType(),$fields,$this->getEntity(),$ID);
 				
