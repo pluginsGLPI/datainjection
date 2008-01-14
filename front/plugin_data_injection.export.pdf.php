@@ -160,10 +160,7 @@ if(count($tab_result[0])>0)
 		if ($value->getCheckStatus() == TYPE_CHECK_OK && $value->getStatus() != IMPORT_OK)
 			$pdf->addJpegFromFile("../pics/ok2.jpg",40,($start_tab-25)-(20*$i)+2);
 		else	
-		//if($key%2==0)
 			$pdf->addJpegFromFile("../pics/notok.jpg",40,($start_tab-25)-(20*$i)+2);
-		//else
-		//	$pdf->addJpegFromFile("../pics/notok2.jpg",40,($start_tab-25)-(20*$i)+2);
 		
 		$pdf->addText(85,($start_tab-20)-(20*$i),9,utf8_decode($value->getLineID()));
 		
@@ -172,10 +169,7 @@ if(count($tab_result[0])>0)
 		
 		if($value->getCheckStatus() != TYPE_CHECK_OK)
 			{
-			//if($key%2==0)
-				$pdf->addJpegFromFile("../pics/danger.jpg",120,($start_tab-25)-(20*$i)+2);
-			//else
-			//	$pdf->addJpegFromFile("../pics/danger2.jpg",120,($start_tab-25)-(20*$i)+2);
+			$pdf->addJpegFromFile("../pics/danger.jpg",120,($start_tab-25)-(20*$i)+2);
 			
 			$x=135;
 			$length=125;
@@ -190,12 +184,9 @@ if(count($tab_result[0])>0)
 		$x=275;
 		$length=100;
 		
-		if($value->getCheckStatus() == TYPE_CHECK_OK && $value->getStatus() != IMPORT_OK)
+		if($value->getInjectionStatus() != IMPORT_OK)
 			{
-			//if($key%2==0)
-				$pdf->addJpegFromFile("../pics/danger.jpg",275,($start_tab-25)-(20*$i)+2);
-			//else
-			//	$pdf->addJpegFromFile("../pics/danger2.jpg",275,($start_tab-25)-(20*$i)+2);
+			$pdf->addJpegFromFile("../pics/danger.jpg",275,($start_tab-25)-(20*$i)+2);
 			
 			$x=290;
 			$length=85;

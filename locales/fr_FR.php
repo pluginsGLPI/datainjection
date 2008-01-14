@@ -202,6 +202,7 @@ $DATAINJECTIONLANG["result"][11] = "Import des données";
 $DATAINJECTIONLANG["result"][12] = "Type d'injection";
 $DATAINJECTIONLANG["result"][13] = "Identifiant de l'objet";
 $DATAINJECTIONLANG["result"][14] = "Ligne";
+$DATAINJECTIONLANG["result"][15] = "Donnée introuvable";
 
 $DATAINJECTIONLANG["profiles"][1] = "Créer un modèle";
 $DATAINJECTIONLANG["profiles"][2] = "Supprimer un modèle";

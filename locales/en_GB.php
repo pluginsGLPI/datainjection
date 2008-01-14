@@ -201,6 +201,7 @@ $DATAINJECTIONLANG["result"][11] = "Datas injection";
 $DATAINJECTIONLANG["result"][12] = "Type of injection";
 $DATAINJECTIONLANG["result"][13] = "Object identifier";
 $DATAINJECTIONLANG["result"][14] = "Line";
+$DATAINJECTIONLANG["result"][15] = "Data not found";
 
 $DATAINJECTIONLANG["profiles"][1] = "Create a model";
 $DATAINJECTIONLANG["profiles"][2] = "Delete model";

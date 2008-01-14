@@ -88,9 +88,13 @@ class DataInjectionEngine
 		$line = reformatDatasBeforeCheck($this->getModel(),$line);
 		
 		$result = checkLine($this->getModel(),$line,$result);
-		if (!$result->getStatus())
+		if (!$result->getStatus()) {
 			return $result;
-			
+		}
+		
+		// Can be overwrited	
+		$result->setInjectionStatus(IMPORT_OK);
+		
 		//Array to store the fields to write to db
 		$db_fields = array();
 		$db_fields[COMMON_FIELDS] = array();
@@ -106,6 +110,7 @@ class DataInjectionEngine
 					$db_fields[$mapping->getMappingType()] = array();
 				
 				$db_fields[$mapping->getMappingType()] = getFieldValue(
+						$result,
 						$mapping, 
 						$mapping_definition,$line[$i],
 						$this->getEntity(),
@@ -159,7 +164,7 @@ class DataInjectionEngine
 				$result->setInjectedId($ID);
 				$result->setInjectionType(INJECTION_ADD);
 
-				$result->setInjectionStatus(IMPORT_OK);
+				// $result->setInjectionStatus(IMPORT_OK);
 			}
 			else
 			{
@@ -196,7 +201,7 @@ class DataInjectionEngine
 			$result->setInjectedId($ID);
 			$result->setInjectionType(INJECTION_UPDATE);
 
-			$result->setInjectionStatus(IMPORT_OK);
+			// $result->setInjectionStatus(IMPORT_OK);
 		}
 		else
 		{	

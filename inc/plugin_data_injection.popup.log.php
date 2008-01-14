@@ -98,7 +98,7 @@ if(count($tab_result[1])>0)
 		echo $value->getCheckMessage()."</td>";
 		
 		echo "<td style='height:30px;width:300px'>";
-		if($value->getStatus() != IMPORT_OK)
+		if($value->getInjectionStatus() != IMPORT_OK)
 			echo "<img src='../pics/danger.png' alt='danger' />";
 		echo $value->getInjectionMessage()."</td>";
 		
@@ -156,7 +156,7 @@ if(count($tab_result[0])>0)
 		echo $value->getCheckMessage()."</td>";
 		
 		echo "<td style='height:30px;width:300px'>";
-		if($value->getStatus() != IMPORT_OK)
+		if($value->getInjectionStatus() != IMPORT_OK)
 			echo "<img src='../pics/danger.png' alt='danger' />";
 		echo $value->getInjectionMessage()."</td>";
 		

@@ -79,27 +79,36 @@ class DataInjectionResults {
 		return $this->check_status;
 	}
 	
-	
+	function getInjectionStatus()
+	{
+		return $this->injection_status;
+	}
+
 	function getCheckMessage()
 	{
 		if ($this->check_status == TYPE_CHECK_OK)
 			return $this->getLabel(TYPE_CHECK_OK);
 			
 		$output = "";
-		foreach ($this->check_message as $field => $res)
-			$output .= ($output=!""?"\n":"").$this->getLabel($res)." : '".$field."'";
+		foreach ($this->check_message as $field => $res) {
+			$output .= ($output=!""?"\n":"").$this->getLabel($res)." ($field)";			
+		}
 		
 		return $output;
 	}	
 	
 	function getInjectionMessage()
 	{
-		if ($this->status == IMPORT_OK)
+		if ($this->injection_status == IMPORT_OK)
 			return $this->getLabel(IMPORT_OK);
 			
 		$output = "";
-		foreach ($this->injection_message as $res)
+		foreach ($this->injection_message as $field => $res) {
 			$output .= ($output=!""?"\n":"").$this->getLabel($res);
+			if ($field) {
+				$output .= " ($field)";
+			}			
+		}
 		
 		return $output;
 	}
@@ -146,14 +155,18 @@ class DataInjectionResults {
 		$this->line_id = $ID;
 	}
 	
-	function addCheckMessage($field,$message)
+	function addCheckMessage($message, $field)
 	{
 		$this->check_message[$field] = $message;
 	}
 
-	function addInjectionMessage($message)
+	function addInjectionMessage($message, $field=false)
 	{
-		$this->injection_message[] = $message;
+		if ($field) {
+			$this->injection_message[$field] = $message;
+		} else {
+			$this->injection_message[] = $message;
+		}
 	}
 			
 	private function getLabel($type)
@@ -183,6 +196,9 @@ class DataInjectionResults {
 			break;
 			case IMPORT_OK:
 				$message = $DATAINJECTIONLANG["result"][7];
+			break;
+			case PARTIALY_IMPORTED:
+				$message = $DATAINJECTIONLANG["result"][15];
 			break;
 		}
 		return $message;

@@ -1174,6 +1174,11 @@ $DATA_INJECTION_MAPPING[CONTRACT_TYPE]['renewal']['field']='renewal';
 $DATA_INJECTION_MAPPING[CONTRACT_TYPE]['renewal']['name']=$LANG["financial"][107];
 $DATA_INJECTION_MAPPING[CONTRACT_TYPE]['renewal']['type']='integer';
 
+$DATA_INJECTION_MAPPING[CONTRACT_TYPE]['recursive']['table']='glpi_contracts';
+$DATA_INJECTION_MAPPING[CONTRACT_TYPE]['recursive']['field']='recursive';
+$DATA_INJECTION_MAPPING[CONTRACT_TYPE]['recursive']['name']=$LANG["entity"][9];
+$DATA_INJECTION_MAPPING[CONTRACT_TYPE]['recursive']['type']='integer';
+
 // ----------------------------------------------------------------------
 //PERIPHERAL MAPPING
 // ----------------------------------------------------------------------
@@ -1366,12 +1371,17 @@ $DATA_INJECTION_MAPPING[ENTERPRISE_TYPE]['contract']['type']='text';
 $DATA_INJECTION_MAPPING[ENTERPRISE_TYPE]['contract']['linkfield']='contract';
 $DATA_INJECTION_MAPPING[ENTERPRISE_TYPE]['contract']['table_type']='single';
 
-$DATA_INJECTION_MAPPING[ENTERPRISE_TYPE]['contact']['table']='glpi_contracts';
+$DATA_INJECTION_MAPPING[ENTERPRISE_TYPE]['contact']['table']='glpi_contacts';
 $DATA_INJECTION_MAPPING[ENTERPRISE_TYPE]['contact']['field']='name';
 $DATA_INJECTION_MAPPING[ENTERPRISE_TYPE]['contact']['name']=$LANG["common"][18];
 $DATA_INJECTION_MAPPING[ENTERPRISE_TYPE]['contact']['type']='text';
 $DATA_INJECTION_MAPPING[ENTERPRISE_TYPE]['contact']['linkfield']='contact';
-$DATA_INJECTION_MAPPING[ENTERPRISE_TYPE]['contact']['table_type']='contact';
+$DATA_INJECTION_MAPPING[ENTERPRISE_TYPE]['contact']['table_type']='single';
+
+$DATA_INJECTION_MAPPING[ENTERPRISE_TYPE]['recursive']['table']='glpi_contracts';
+$DATA_INJECTION_MAPPING[ENTERPRISE_TYPE]['recursive']['field']='recursive';
+$DATA_INJECTION_MAPPING[ENTERPRISE_TYPE]['recursive']['name']=$LANG["entity"][9];
+$DATA_INJECTION_MAPPING[ENTERPRISE_TYPE]['recursive']['type']='integer';
 
 // ----------------------------------------------------------------------
 //CONTACT MAPPING
@@ -1430,6 +1440,11 @@ $DATA_INJECTION_MAPPING[CONTACT_TYPE]['type']['name']=$LANG["setup"][80];
 $DATA_INJECTION_MAPPING[CONTACT_TYPE]['type']['type']='text';
 $DATA_INJECTION_MAPPING[CONTACT_TYPE]['type']['linkfield']='type';
 $DATA_INJECTION_MAPPING[CONTACT_TYPE]['type']['table_type']='dropdown';
+
+$DATA_INJECTION_MAPPING[CONTACT_TYPE]['recursive']['table']='glpi_contracts';
+$DATA_INJECTION_MAPPING[CONTACT_TYPE]['recursive']['field']='recursive';
+$DATA_INJECTION_MAPPING[CONTACT_TYPE]['recursive']['name']=$LANG["entity"][9];
+$DATA_INJECTION_MAPPING[CONTACT_TYPE]['recursive']['type']='integer';
 
 // ----------------------------------------------------------------------
 //CARTRIDGE TYPE MAPPING

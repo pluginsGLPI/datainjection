@@ -155,7 +155,7 @@ function checkLine($model,$line,$res)
 			{
 				$res->setStatus(false);
 				$res->setCheckStatus(-1);
-				$res->addCheckMessage($mapping->getName(),ERROR_IMPORT_FIELD_MANDATORY);
+				$res->addCheckMessage(ERROR_IMPORT_FIELD_MANDATORY,$mapping->getName());
 					break;				
 			}
 			else
@@ -171,7 +171,7 @@ function checkLine($model,$line,$res)
 					if ($res_check_type != TYPE_CHECK_OK)
 					{
 						$res->setCheckStatus(-1);
-						$res->addCheckMessage($mapping->getName(),$res_check_type);
+						$res->addCheckMessage($res_check_type,$mapping->getName());
 						break;
 					}
 					else
@@ -679,9 +679,9 @@ function addNecessaryFields($model,$mapping,$mapping_definition,$entity,$type,&$
 	unsetFields($fields,$unsetFields);
 }
 
-function getFieldValue($mapping, $mapping_definition,$field_value,$entity,$obj,$canadd)
+function getFieldValue($result, $mapping, $mapping_definition,$field_value,$entity,$obj,$canadd)
 {
-	global $DB;
+	global $DB, $CFG_GLPI;
 	
 	if (isset($mapping_definition["table_type"]))
 	{
@@ -705,19 +705,21 @@ function getFieldValue($mapping, $mapping_definition,$field_value,$entity,$obj,$
 				
 			//Read in a single table	
 			case "single":
-				switch ($mapping_definition["table"])
-				{
-					case "glpi_networking_ports":
-						$where=" WHERE ".$mapping_definition["field"]."='".$field_value."'";
-					break;
-					default:
-						$where=" WHERE ".$mapping_definition["field"]."='".$field_value."' AND FK_entities=".$entity;
-					break;
+				$sql = "SELECT ID FROM ".$mapping_definition["table"]." WHERE ".$mapping_definition["field"]."='".$field_value."'";
+				
+				if (in_array($mapping_definition["table"], $CFG_GLPI["specif_entities_tables"])) {
+					$sql .= getEntitiesRestrictRequest($separator = " AND ", $mapping_definition["table"], '', $entity, 
+						in_array($mapping_definition["table"], $CFG_GLPI["recursive_type"]));
 				}
-				$sql = "SELECT ID FROM ".$mapping_definition["table"].$where;
-				$result = $DB->query($sql);
-				if ($DB->numrows($result))
-					$obj[$mapping_definition["linkfield"]] = $DB->result($result,0, "ID");
+				$res = $DB->query($sql);
+				if ($DB->numrows($res)) {
+					logInFile("debug", "Trouvé SQL=$sql\n");
+					$obj[$mapping_definition["linkfield"]] = $DB->result($res,0, "ID");					
+				} else {
+					$result->setInjectionStatus(PARTIALY_IMPORTED);
+					$result->addInjectionMessage(PARTIALY_IMPORTED,$mapping_definition["linkfield"]);
+					logInFile("debug", "Absent SQL=$sql\n");
+				}
 				break;
 			case "multitext":
 				//Multitext means that the several input fields can be mapped into one field in DB. all the informations
