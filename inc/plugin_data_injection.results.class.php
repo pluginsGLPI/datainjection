@@ -86,7 +86,7 @@ class DataInjectionResults {
 			return $this->getLabel(TYPE_CHECK_OK);
 			
 		$output = "";
-		foreach ($this->check_message[0] as $field => $res)
+		foreach ($this->check_message as $field => $res)
 			$output .= ($output=!""?"\n":"").$this->getLabel($res)." : '".$field."'";
 		
 		return $output;
@@ -148,7 +148,7 @@ class DataInjectionResults {
 	
 	function addCheckMessage($field,$message)
 	{
-		$this->check_message[] = array($field=>$message);
+		$this->check_message[$field] = $message;
 	}
 
 	function addInjectionMessage($message)
