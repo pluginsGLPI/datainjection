@@ -713,12 +713,10 @@ function getFieldValue($result, $mapping, $mapping_definition,$field_value,$enti
 				}
 				$res = $DB->query($sql);
 				if ($DB->numrows($res)) {
-					logInFile("debug", "Trouvé SQL=$sql\n");
 					$obj[$mapping_definition["linkfield"]] = $DB->result($res,0, "ID");					
 				} else {
 					$result->setInjectionStatus(PARTIALY_IMPORTED);
 					$result->addInjectionMessage(PARTIALY_IMPORTED,$mapping_definition["linkfield"]);
-					logInFile("debug", "Absent SQL=$sql\n");
 				}
 				break;
 			case "multitext":
