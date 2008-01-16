@@ -30,7 +30,7 @@
 class DataInjectionResults {
 	
 	//Overall status of the process
-	private $status;
+	//private $status;
 	
 	//Status of the data check
 	private $check_status;
@@ -71,7 +71,8 @@ class DataInjectionResults {
 	
 	function getStatus()
 	{
-		return $this->status;
+		return ($this->check_status == CHECK_OK && 
+			$this->injection_status == IMPORT_OK);
 	}
 	
 	function getCheckStatus()
@@ -86,12 +87,12 @@ class DataInjectionResults {
 
 	function getCheckMessage()
 	{
-		if ($this->check_status == TYPE_CHECK_OK)
+		if ($this->check_status == CHECK_OK)
 			return $this->getLabel(TYPE_CHECK_OK);
 			
 		$output = "";
 		foreach ($this->check_message as $field => $res) {
-			$output .= ($output=!""?"\n":"").$this->getLabel($res)." ($field)";			
+			$output .= ($output?"\n":" ").$this->getLabel($res)." ($field)";			
 		}
 		
 		return $output;
@@ -104,8 +105,8 @@ class DataInjectionResults {
 			
 		$output = "";
 		foreach ($this->injection_message as $field => $res) {
-			$output .= ($output=!""?"\n":"").$this->getLabel($res);
-			if ($field) {
+			$output .= ($output?"\n":" ").$this->getLabel($res);
+			if ($field && !intval($field)) {
 				$output .= " ($field)";
 			}			
 		}
@@ -125,7 +126,7 @@ class DataInjectionResults {
 
 	//Setters
 	
-	function setStatus($status)
+/*	function setStatus($status)
 	{
 		$this->status = $status;
 	}
@@ -139,7 +140,7 @@ class DataInjectionResults {
 	{
 		$this->injection_status = $status;
 	}
-
+*/
 	function setInjectionType($type)
 	{
 		$this->injection_type = $type;
@@ -155,18 +156,60 @@ class DataInjectionResults {
 		$this->line_id = $ID;
 	}
 	
+	/** 
+	 * Add a message for Check pass
+	 * 
+	 * @param $message : number
+	 * @param $field : name (only if error)
+	 * 
+	 * @return boolean : OK
+	 */
 	function addCheckMessage($message, $field)
 	{
-		$this->check_message[$field] = $message;
+		switch ($message) {
+			case TYPE_CHECK_OK:
+				$this->check_status = CHECK_OK;
+				$this->injection_status = IMPORT_OK;
+				break;
+			case ERROR_IMPORT_WRONG_TYPE:
+			case ERROR_IMPORT_FIELD_MANDATORY:
+				$this->check_status = CHECK_NOTOK;
+				$this->injection_status = NOT_IMPORTED;
+
+				$this->check_message[$field] = $message;
+				break;
+		}
+		return ($this->check_status == CHECK_OK);
 	}
 
+	/** 
+	 * Add a message for Injection pass
+	 * 
+	 * @param $message : number
+	 * @param $field : name (optional)
+	 * 
+	 * @return boolean : OK
+	 */
 	function addInjectionMessage($message, $field=false)
 	{
+		switch ($message) {
+			case ERROR_IMPORT_ALREADY_IMPORTED:
+			case ERROR_CANNOT_IMPORT:
+			case ERROR_CANNOT_UPDATE:
+				$this->injection_status = NOT_IMPORTED;
+				break;
+			case WARNING_NOTFOUND:
+			case WARNING_USED:
+				$this->injection_status = PARTIALY_IMPORTED;
+				break;
+		}
 		if ($field) {
 			$this->injection_message[$field] = $message;
 		} else {
 			$this->injection_message[] = $message;
 		}
+		
+		return ($this->injection_status == IMPORT_OK);
 	}
 			
 	private function getLabel($type)
@@ -197,8 +240,11 @@ class DataInjectionResults {
 			case IMPORT_OK:
 				$message = $DATAINJECTIONLANG["result"][7];
 			break;
-			case PARTIALY_IMPORTED:
+			case WARNING_NOTFOUND:
 				$message = $DATAINJECTIONLANG["result"][15];
+			break;
+			case WARNING_USED:
+				$message = $DATAINJECTIONLANG["result"][16];
 			break;
 		}
 		return $message;

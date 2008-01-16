@@ -153,8 +153,6 @@ function checkLine($model,$line,$res)
 			//If field is mandatory AND not mapped -> error
 			if ($mapping->isMandatory() && (!isset($line[$rank]) || $line[$rank] == NULL || $line[$rank] == EMPTY_VALUE || $line[$rank] == -1))
 			{
-				$res->setStatus(false);
-				$res->setCheckStatus(-1);
 				$res->addCheckMessage(ERROR_IMPORT_FIELD_MANDATORY,$mapping->getName());
 					break;				
 			}
@@ -168,16 +166,8 @@ function checkLine($model,$line,$res)
 					$res_check_type = checkType($mapping->getMappingType(), $mapping->getValue(), $field,$mapping->isMandatory());
 
 					//If field is not the good type -> error
-					if ($res_check_type != TYPE_CHECK_OK)
-					{
-						$res->setCheckStatus(-1);
-						$res->addCheckMessage($res_check_type,$mapping->getName());
+					if (!$res->addCheckMessage($res_check_type,$mapping->getName())) {
 						break;
-					}
-					else
-					{
-						$res->setStatus(true);
-						$res->setCheckStatus(TYPE_CHECK_OK);
 					}
 				}	
 			}
@@ -232,7 +222,7 @@ function getDropdownValue($mapping, $mapping_definition,$value,$entity,$canadd=0
 			return EMPTY_VALUE;	
 }
 
-function checkNetpoint($primary_type,$entity,$location,$value,$canadd) {
+function checkNetpoint($result,$primary_type,$entity,$location,$value,$port_id,$canadd) {
 	global $DB;
 
 	// networking device can use netpoint in all the entity
@@ -242,14 +232,19 @@ function checkNetpoint($primary_type,$entity,$location,$value,$canadd) {
 		// other device can only use netpoint in the location
 		$sql .= " AND location=$location";
 	}
-	$result = $DB->query($sql);
-	if ($DB->numrows($result)>0) {
+	$res = $DB->query($sql);
+	if ($DB->numrows($res)>0) {
 		// found
-		$ID = $DB->result($result,0,"ID");
+		$ID = $DB->result($res,0,"ID");
 		
 		// Check if not used
-		if (countElementsInTable("glpi_networking_ports",
-			"netpoint=$ID AND device_type".($primary_type == NETWORKING_TYPE ?"=":"!=").NETWORKING_TYPE)) {
+		$sql2="SELECT ID FROM glpi_networking_ports WHERE netpoint=$ID AND device_type".($primary_type == NETWORKING_TYPE ?"=":"!=").NETWORKING_TYPE;
+		$res2 = $DB->query($sql2);
+		if ($DB->numrows($res2)>0) {
+			$usedby = $DB->result($res2,0,"ID");
+			if ($usedby != $port_id) {
+				$result->addInjectionMessage(WARNING_USED, "netpoint");	
+			}
 			return EMPTY_VALUE;					
 		} else {
 			return $ID;
@@ -266,6 +261,7 @@ function checkNetpoint($primary_type,$entity,$location,$value,$canadd) {
 		return addDropdown($input);
 				
 	} else {
+		$result->addInjectionMessage(WARNING_NOTFOUND, "netpoint");
 		return EMPTY_VALUE;			
 	}
 }
@@ -692,7 +688,12 @@ function getFieldValue($result, $mapping, $mapping_definition,$field_value,$enti
 				break;
 			//Read and add in a dropdown table
 			case "dropdown":
-				$obj[$mapping_definition["linkfield"]] = getDropdownValue($mapping,$mapping_definition,$field_value,$entity,$canadd);
+				$val = getDropdownValue($mapping,$mapping_definition,$field_value,$entity,$canadd);
+				if ($val == EMPTY_VALUE) {
+					$result->addInjectionMessage(WARNING_NOTFOUND,$mapping_definition["linkfield"]);
+				} else {
+					$obj[$mapping_definition["linkfield"]] = $val;
+				}
 				break;
 			case "contact":
 				//find a contact by looking into name field OR firstname + name OR name + firstname
@@ -715,8 +716,7 @@ function getFieldValue($result, $mapping, $mapping_definition,$field_value,$enti
 				if ($DB->numrows($res)) {
 					$obj[$mapping_definition["linkfield"]] = $DB->result($res,0, "ID");					
 				} else {
-					$result->setInjectionStatus(PARTIALY_IMPORTED);
-					$result->addInjectionMessage(PARTIALY_IMPORTED,$mapping_definition["linkfield"]);
+					$result->addInjectionMessage(WARNING_NOTFOUND,$mapping_definition["linkfield"]);
 				}
 				break;
 			case "multitext":
@@ -743,13 +743,15 @@ function getFieldValue($result, $mapping, $mapping_definition,$field_value,$enti
 
 /*
  * Process actions after item was imported in DB (mainly create connections)
+ * 
+ * @param result the result set
  * @param model the model
  * @param type the type of the item inserted
  * @param fields the fields of the item inserted
  * @param common_fields the array of common fields
  * @return the common_fields
  */
-function processBeforeEnd($model,$type,$fields,&$common_fields)
+function processBeforeEnd($result,$model,$type,$fields,&$common_fields)
 {
 	switch ($type)
 	{
@@ -784,7 +786,7 @@ function processBeforeEnd($model,$type,$fields,&$common_fields)
 		break;	
 		case NETPORT_TYPE:
 			addVlan($common_fields,$model->getCanAddDropdown());
-			addNetpoint($common_fields,$model->getCanAddDropdown());
+			addNetpoint($result,$common_fields,$model->getCanAddDropdown());
 		break;
 		default:
 		break;

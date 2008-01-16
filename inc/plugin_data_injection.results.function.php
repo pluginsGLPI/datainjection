@@ -35,12 +35,10 @@ function sortAllResults($results)
 	
 	foreach ($results as $result)
 	{
-		if ($result->getCheckStatus()!=TYPE_CHECK_OK ||
-			$result->getInjectionStatus()!=IMPORT_OK ||
-			!$result->getStatus())
-			$results_sorted[0][] = $result;
-		else	
+		if ($result->getStatus())
 			$results_sorted[1][] = $result;
+		else	
+			$results_sorted[0][] = $result;
 	}
 	return $results_sorted;
 }

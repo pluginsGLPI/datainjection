@@ -80,22 +80,21 @@ if(count($tab_result[1])>0)
 		
 		$pdf->restoreState();
 		
-		//if($key%2==0)
-			$pdf->addJpegFromFile("../pics/ok.jpg",40,($start_tab-25)-(20*$i)+2);
-		//else
-		//	$pdf->addJpegFromFile("../pics/ok2.jpg",40,($start_tab-25)-(20*$i)+2);
+		$pdf->addJpegFromFile("../pics/ok.jpg",40,($start_tab-25)-(20*$i)+2);
 		
 		$pdf->addText(85,($start_tab-20)-(20*$i),9,utf8_decode($value->getLineID()));
 		
 		$y=($start_tab-20)-(20*$i)+4;
 		$temp=utf8_decode($value->getCheckMessage());
-		while($temp = $pdf->addTextWrap(120,$y,140,7,$temp))
+		while($temp = $pdf->addTextWrap(120,$y,140,7,$temp)) {
 			$y-=7;
+		}
 		
 		$y=($start_tab-20)-(20*$i)+4;
 		$temp=utf8_decode($value->getInjectionMessage());
-		while($temp = $pdf->addTextWrap(275,$y,100,7,$temp))
-			$y-=7;
+		while($temp = $pdf->addTextWrap(275,$y,100,7,$temp)) {
+			$y-=7;			
+		}
 		
 		$pdf->addText(415,($start_tab-20)-(20*$i),9,utf8_decode(($value->getInjectionType()==INJECTION_ADD?$DATAINJECTIONLANG["result"][8]:$DATAINJECTIONLANG["result"][9])));
 		$pdf->addText(515,($start_tab-20)-(20*$i),9,utf8_decode($value->getInjectedId()));
@@ -157,50 +156,54 @@ if(count($tab_result[0])>0)
 		
 		$pdf->restoreState();
 		
-		if ($value->getCheckStatus() == TYPE_CHECK_OK && $value->getStatus() != IMPORT_OK)
-			$pdf->addJpegFromFile("../pics/ok2.jpg",40,($start_tab-25)-(20*$i)+2);
-		else	
+		// Global status
+		if ($value->getCheckStatus() != CHECK_OK || $value->getInjectionStatus()==NOT_IMPORTED) {
 			$pdf->addJpegFromFile("../pics/notok.jpg",40,($start_tab-25)-(20*$i)+2);
+		} else {
+			$pdf->addJpegFromFile("../pics/danger.jpg",40,($start_tab-25)-(20*$i)+2);
+		}
 		
 		$pdf->addText(85,($start_tab-20)-(20*$i),9,utf8_decode($value->getLineID()));
 		
 		$x=120;
 		$length=140;
 		
-		if($value->getCheckStatus() != TYPE_CHECK_OK)
-			{
-			$pdf->addJpegFromFile("../pics/danger.jpg",120,($start_tab-25)-(20*$i)+2);
-			
+		// Check status
+		if ($value->getCheckStatus() != CHECK_OK) {
+			$pdf->addJpegFromFile("../pics/notok.jpg",120,($start_tab-25)-(20*$i)+2);
 			$x=135;
 			$length=125;
-			}
+		}
 		
 		$y=($start_tab-20)-(20*$i)+4;
 		$temp=utf8_decode($value->getCheckMessage());
-		while($temp = $pdf->addTextWrap($x,$y,$length,7,$temp))
-			$y-=7;
-		
+		while($temp = $pdf->addTextWrap($x,$y,$length,7,$temp)) {
+			$y-=7;			
+		}
 		
 		$x=275;
 		$length=100;
 		
-		if($value->getInjectionStatus() != IMPORT_OK)
-			{
+		// Injection status
+		if($value->getInjectionStatus() == NOT_IMPORTED) {
+			$pdf->addJpegFromFile("../pics/notok.jpg",275,($start_tab-25)-(20*$i)+2);
+		} else {
 			$pdf->addJpegFromFile("../pics/danger.jpg",275,($start_tab-25)-(20*$i)+2);
-			
-			$x=290;
-			$length=85;
-			}
-			
-			
+		}
+		$x=290;
+		$length=85;
+		
 		$y=($start_tab-20)-(20*$i)+4;
 		$temp=utf8_decode($value->getInjectionMessage());
-		while($temp = $pdf->addTextWrap($x,$y,$length,7,$temp))
+		while($temp = $pdf->addTextWrap($x,$y,$length,7,$temp)) {
 			$y-=7;
+		}
 		
 		
 		$pdf->addText(415,($start_tab-20)-(20*$i),9,utf8_decode(($value->getInjectionType()==INJECTION_ADD?$DATAINJECTIONLANG["result"][8]:$DATAINJECTIONLANG["result"][9])));
-		$pdf->addText(515,($start_tab-20)-(20*$i),9,utf8_decode($value->getInjectedId()));
+		if ($value->getInjectedId()>0) {
+			$pdf->addText(515,($start_tab-20)-(20*$i),9,utf8_decode($value->getInjectedId()));
+		}
 		
 		$i++;
 		

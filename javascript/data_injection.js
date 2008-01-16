@@ -225,7 +225,7 @@ function file_popup(totalline)
 	x = (x - 970)/2;
 	y = (y - nbline)/2;
 	
-	window.open('../inc/plugin_data_injection.popup.file.php?nbline='+nbline+'', 'Popup', 'resizable=no, location=no, menubar=no, scrollbars=yes, toolbar=no, status=no, width=970, height='+height+', left='+x+', top='+y+'');
+	window.open('../front/plugin_data_injection.popup.file.php?nbline='+nbline+'', 'Popup', 'resizable=no, location=no, menubar=no, scrollbars=yes, toolbar=no, status=no, width=970, height='+height+', left='+x+', top='+y+'');
 }
 
 function log_popup(nbline)
@@ -238,7 +238,7 @@ function log_popup(nbline)
 	x = (x - 1010)/2;
 	y = (y - nbline)/2;
 	
-	window.open('../inc/plugin_data_injection.popup.log.php', 'Popup', 'resizable=no, location=no, menubar=no, scrollbars=yes, toolbar=no, status=no, width=1010, height='+height+', left='+x+', top='+y+'');
+	window.open('../front/plugin_data_injection.popup.log.php', 'Popup', 'resizable=no, location=no, menubar=no, scrollbars=yes, toolbar=no, status=no, width=1010, height='+height+', left='+x+', top='+y+'');
 }
 
 function verif_delimiter()

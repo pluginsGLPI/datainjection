@@ -181,11 +181,11 @@ function addVlan($common_fields,$canadd)
 		return 0;
 }
 
-function addNetPoint ($common_fields,$canadd) 
+function addNetPoint ($result,$common_fields,$canadd) 
 {
 	if (isset($common_fields["location"]) && isset($common_fields["netpoint"]))
 	{
-		$id=checkNetpoint($common_fields["device_type"],$common_fields["FK_entities"],$common_fields["location"],$common_fields["netpoint"],$canadd);
+		$id=checkNetpoint($result,$common_fields["device_type"],$common_fields["FK_entities"],$common_fields["location"],$common_fields["netpoint"],$common_fields["network_port_id"],$canadd);
 		
 		if ($id>0) {
 			$port = new Netport();

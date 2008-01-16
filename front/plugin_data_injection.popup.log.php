@@ -83,24 +83,22 @@ if(count($tab_result[1])>0)
 	
 	foreach($tab_result[1] as $key => $value)
 		{
-		if($key%2==0)
-			$num = 1;
-		else
-			$num = 2;
+		$num=($key%2)+1;
 	
 		echo "<tr class='tab_bg_$num'>";
+		// Global status OK
 		echo "<td style='height:30px;width:30px'><img src='../pics/ok.png' alt='success' /></td>";
 		echo "<td style='height:30px;width:50px'>".$value->getLineID()."</td>";
 		
 		echo "<td style='height:30px;width:300px'>";
-		if($value->getCheckStatus() != TYPE_CHECK_OK)
+		if($value->getCheckStatus() != CHECK_OK)
 			echo "<img src='../pics/danger.png' alt='danger' />";
-		echo $value->getCheckMessage()."</td>";
+		echo nl2br($value->getCheckMessage())."</td>";
 		
 		echo "<td style='height:30px;width:300px'>";
 		if($value->getInjectionStatus() != IMPORT_OK)
 			echo "<img src='../pics/danger.png' alt='danger' />";
-		echo $value->getInjectionMessage()."</td>";
+		echo nl2br($value->getInjectionMessage())."</td>";
 		
 		echo "<td style='height:30px;width:200px'>".($value->getInjectionType()==INJECTION_ADD?$DATAINJECTIONLANG["result"][8]:$DATAINJECTIONLANG["result"][9])."</td>";
 		
@@ -141,24 +139,33 @@ if(count($tab_result[0])>0)
 	
 	foreach($tab_result[0] as $key => $value)
 		{
-		if($key%2==0)
-			$num = 1;
-		else
-			$num = 2;
-	
-		echo "<tr class='tab_bg_$num'>";
-		echo "<td style='height:30px;width:30px'><img src='../pics/notok.png' alt='success' /></td>";
-		echo "<td style='height:30px;width:50px'>".$value->getLineID()."</td>";
+		$num=($key%2)+1;
 		
-		echo "<td style='height:30px;width:300px'>";
-		if($value->getCheckStatus() != TYPE_CHECK_OK)
-			echo "<img src='../pics/danger.png' alt='danger' />";
-		echo $value->getCheckMessage()."</td>";
+		// Global status
+		echo "<tr class='tab_bg_$num'><td style='height:30px;width:30px'>";
+		if ($value->getCheckStatus() != CHECK_OK || $value->getInjectionStatus()==NOT_IMPORTED) {
+			echo "<img src='../pics/notok.png' alt='error' />";
+		} else {
+			echo "<img src='../pics/danger.png' alt='warning' />";
+		}
+		echo "</td><td style='height:30px;width:50px'>".$value->getLineID()."</td>";
 		
+		// Check status
 		echo "<td style='height:30px;width:300px'>";
-		if($value->getInjectionStatus() != IMPORT_OK)
-			echo "<img src='../pics/danger.png' alt='danger' />";
-		echo $value->getInjectionMessage()."</td>";
+		if($value->getCheckStatus() != CHECK_OK) {
+			echo "<img src='../pics/notok.png' alt='error' />";
+		}
+		echo nl2br($value->getCheckMessage())."</td>";
+		
+		
+		// Injection status
+		echo "<td style='height:30px;width:300px'>";
+		if($value->getInjectionStatus() == NOT_IMPORTED) {
+			echo "<img src='../pics/notok.png' alt='error' />";			
+		} else {
+			echo "<img src='../pics/danger.png' alt='danger' />";			
+		}
+		echo nl2br($value->getInjectionMessage())."</td>";
 		
 		echo "<td style='height:30px;width:200px'>".($value->getInjectionType()==INJECTION_ADD?$DATAINJECTIONLANG["result"][8]:$DATAINJECTIONLANG["result"][9])."</td>";
 		

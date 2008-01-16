@@ -93,7 +93,7 @@ class DataInjectionEngine
 		}
 		
 		// Can be overwrited	
-		$result->setInjectionStatus(IMPORT_OK);
+		//$result->setInjectionStatus(IMPORT_OK);
 		
 		//Array to store the fields to write to db
 		$db_fields = array();
@@ -150,7 +150,7 @@ class DataInjectionEngine
 				$ID = $obj->add($fields);
 				
 				//Add some default values (getempty() or getFromDB($ID) could be better)
-				addCommonFields($db_fields[COMMON_FIELDS],$this->getModel()->getDeviceType(),array("location",0),$this->getEntity(),$ID);
+				addCommonFields($db_fields[COMMON_FIELDS],$this->getModel()->getDeviceType(),array("location"=>0),$this->getEntity(),$ID);
 				
 				//Add the ID to the fields, so it can be reused after
 				addCommonFields($db_fields[COMMON_FIELDS],$this->getModel()->getDeviceType(),$fields,$this->getEntity(),$ID);
@@ -159,24 +159,16 @@ class DataInjectionEngine
 				logAddOrUpdate($this->getModel()->getDeviceType(),$ID,INJECTION_ADD);
 				
 				//Set status and messages
-				$result->setStatus(true);
-
 				$result->setInjectedId($ID);
 				$result->setInjectionType(INJECTION_ADD);
-
-				// $result->setInjectionStatus(IMPORT_OK);
 			}
 			else
 			{
 				//Object doesn't exists, but adding is not allowed by the model
 				$process = false;
 				
-				$result->setStatus(false);
-
 				$result->setInjectedId(NOT_IMPORTED);
-				$result->setInjectionType(INJECTION_ADD);
-				
-				$result->setInjectionStatus(NOT_IMPORTED);
+				$result->setInjectionType(INJECTION_ADD);			
 				$result->addInjectionMessage(ERROR_CANNOT_IMPORT);
 			}
 		}	
@@ -196,30 +188,23 @@ class DataInjectionEngine
 				logAddOrUpdate($this->getModel()->getDeviceType(),$ID,INJECTION_UPDATE);
 				$obj->update($fields);
 			}
-			$result->setStatus(true);
-
 			$result->setInjectedId($ID);
 			$result->setInjectionType(INJECTION_UPDATE);
-
-			// $result->setInjectionStatus(IMPORT_OK);
 		}
 		else
 		{	
 			//Object exists but update is not allowed by the model
 			$process = false;
 
-			$result->setStatus(false);
-
 			$result->setInjectedId($ID);
-			$result->setInjectionType(INJECTION_UPDATE);
-			
-			$result->setInjectionStatus(NOT_IMPORTED);
+			$result->setInjectionType(INJECTION_UPDATE);			
+			$result->addInjectionMessage(ERROR_IMPORT_ALREADY_IMPORTED);
 			$result->addInjectionMessage(ERROR_CANNOT_UPDATE);
 		}
 		if ($process)
 		{
 			//Post processing, if some actions need to be done
-			processBeforeEnd($this->getModel(),$this->getModel()->getDeviceType(),$fields,$db_fields[COMMON_FIELDS]);
+			processBeforeEnd($result,$this->getModel(),$this->getModel()->getDeviceType(),$fields,$db_fields[COMMON_FIELDS]);
 			
 			//----------------------------------------------------//
 			//-------------Process other types-------------------//
@@ -248,7 +233,7 @@ class DataInjectionEngine
 						//Not in DB -> add
 						$ID = $obj->add($fields);
 						//Add the ID to the fields, so it can be reused after
-						addCommonFields($db_fields[COMMON_FIELDS],$this->getModel()->getDeviceType(),$fields,$this->getEntity(),$ID);
+						addCommonFields($db_fields[COMMON_FIELDS],$type,$fields,$this->getEntity(),$ID);
 					}	
 					else
 					{
@@ -260,7 +245,7 @@ class DataInjectionEngine
 					}
 
 					//Post processing, if some actions need to be done
-					processBeforeEnd($this->getModel(),$type,$fields,$db_fields[COMMON_FIELDS]);
+					processBeforeEnd($result,$this->getModel(),$type,$fields,$db_fields[COMMON_FIELDS]);
 				}
 			}
 		}
