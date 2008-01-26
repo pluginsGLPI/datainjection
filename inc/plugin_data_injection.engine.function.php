@@ -384,7 +384,6 @@ function dataAlreadyInDB($type,$fields,$mapping_definition,$model)
 	}
 
 	$sql = "SELECT * FROM ".$obj->table." WHERE".$where_entity." ".$where;
-	logInFile("debug", "dataAlreadyInDB : $sql\n");
 	$result = $DB->query($sql);
 
 	if ($DB->numrows($result) > 0 )
