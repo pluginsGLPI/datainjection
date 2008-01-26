@@ -62,6 +62,7 @@ define ("ERROR_CANNOT_IMPORT",12);
 define ("ERROR_CANNOT_UPDATE",13);
 define ("WARNING_NOTFOUND",14);
 define ("WARNING_USED",15);
+define ("WARNING_NOTEMPTY",16);
 
 define ("INJECTION_ADD",0);
 define ("INJECTION_UPDATE",1);

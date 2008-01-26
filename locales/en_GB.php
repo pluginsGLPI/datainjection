@@ -211,6 +211,8 @@ $DATAINJECTIONLANG["profiles"][4] = "List of profiles already configured";
 
 $DATAINJECTIONLANG["mappings"][1] = "Number of ports";
 $DATAINJECTIONLANG["mappings"][2] = "Network port";
+$DATAINJECTIONLANG["mappings"][3] = "Connected to : device name";
+$DATAINJECTIONLANG["mappings"][4] = "Connected to : port number";
 
 $DATAINJECTIONLANG["history"][1] = "from CSV file";
 $DATAINJECTIONLANG["logevent"][1] = "injection of a CSV file.";

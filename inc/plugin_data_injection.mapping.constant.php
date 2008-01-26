@@ -1732,4 +1732,16 @@ $DATA_INJECTION_MAPPING[NETPORT_TYPE]['iface']['name']=$LANG["common"][65];
 $DATA_INJECTION_MAPPING[NETPORT_TYPE]['iface']['type']='text';
 $DATA_INJECTION_MAPPING[NETPORT_TYPE]['iface']['table_type']='dropdown';
 
+$DATA_INJECTION_MAPPING[NETPORT_TYPE]['netname']['table']='glpi_dropdown_wire';
+$DATA_INJECTION_MAPPING[NETPORT_TYPE]['netname']['field']='netname';
+$DATA_INJECTION_MAPPING[NETPORT_TYPE]['netname']['name']=$DATAINJECTIONLANG["mappings"][3];
+$DATA_INJECTION_MAPPING[NETPORT_TYPE]['netname']['type']='text';
+$DATA_INJECTION_MAPPING[NETPORT_TYPE]['netname']['table_type']='virtual';
+
+$DATA_INJECTION_MAPPING[NETPORT_TYPE]['netport']['table']='glpi_dropdown_wire';
+$DATA_INJECTION_MAPPING[NETPORT_TYPE]['netport']['field']='netport';
+$DATA_INJECTION_MAPPING[NETPORT_TYPE]['netport']['name']=$DATAINJECTIONLANG["mappings"][4];
+$DATA_INJECTION_MAPPING[NETPORT_TYPE]['netport']['type']='integer';
+$DATA_INJECTION_MAPPING[NETPORT_TYPE]['netport']['table_type']='virtual';
+
 ?>

@@ -370,16 +370,12 @@ function dataAlreadyInDB($type,$fields,$mapping_definition,$model)
 		switch ($type)
 		{
 			case INFOCOM_TYPE :
-				$where.=" AND device_type=".$model->getDeviceType()." AND FK_device=".$fields["FK_device"];
+				$where .= " AND device_type=".$model->getDeviceType()." AND FK_device=".$fields["FK_device"];
 			break;
 
 			case NETPORT_TYPE :
-				$where.=" AND device_type=".$model->getDeviceType()." AND on_device=".$fields["on_device"];
-				if (isset($fields["logical_number"]) && $fields["logical_number"]!=EMPTY_VALUE) {
-					$where .= " AND logical_number=".$fields["logical_number"];
-				} else {
-					$where .= " AND logical_number=0";
-				}
+				$where .= " AND device_type=".$model->getDeviceType()." AND on_device=".$fields["on_device"];
+				$where .= " AND logical_number=".$fields["logical_number"];
 			break;
 
 			default:
@@ -388,6 +384,7 @@ function dataAlreadyInDB($type,$fields,$mapping_definition,$model)
 	}
 
 	$sql = "SELECT * FROM ".$obj->table." WHERE".$where_entity." ".$where;
+	logInFile("debug", "dataAlreadyInDB : $sql\n");
 	$result = $DB->query($sql);
 
 	if ($DB->numrows($result) > 0 )
@@ -475,7 +472,7 @@ function preAddCommonFields($common_fields,$type,$fields,$entity)
 			$setFields = array("contract","template");
 		break;	
 		case NETPORT_TYPE:
-			$setFields = array("netpoint","vlan");
+			$setFields = array("netpoint","vlan","netname","netport");
 		break;	
 		default:
 		break;
@@ -661,13 +658,18 @@ function addNecessaryFields($model,$mapping,$mapping_definition,$entity,$type,&$
 			addField($fields,"device_type",$model->getDeviceType());
 			break;
 		case NETPORT_TYPE:
-			$unsetFields = array("netpoint","vlan");
+			if (!isset($fields["logical_number"]) || empty($fields["logical_number"])) {
+				$fields["logical_number"] = ($model->getDeviceType()==NETWORKING_TYPE ? 1 : 0);				
+			} 
+			$unsetFields = array("netpoint","vlan","netport","netname");
 
 			//Set the device_id
 			addField($fields,"on_device",$common_fields["device_id"]);
 					
 			//Set the device type
 			addField($fields,"device_type",$model->getDeviceType());
+			
+			
 			break;
 		default:
 			break;	
@@ -787,6 +789,7 @@ function processBeforeEnd($result,$model,$type,$fields,&$common_fields)
 		case NETPORT_TYPE:
 			addVlan($common_fields,$model->getCanAddDropdown());
 			addNetpoint($result,$common_fields,$model->getCanAddDropdown());
+			addNetworkingWire($result,$common_fields,$model->getCanOverwriteIfNotEmpty());
 		break;
 		default:
 		break;

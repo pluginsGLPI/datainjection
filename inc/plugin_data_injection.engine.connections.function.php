@@ -197,6 +197,68 @@ function addNetPoint ($result,$common_fields,$canadd)
 	}
 }
 
+function addNetworkingWire ($result,$common_fields,$canupdate)
+{
+	global $DB;
+	
+	if (!isset($common_fields["netname"]) || empty($common_fields["netname"]) ||
+	    !isset($common_fields["netport"]) || empty($common_fields["netport"])) {
+		   	logInFile("debug", "addNetworkingWire() : no data\n");
+	    	return false;
+	} 
+   	logInFile("debug", "addNetworkingWire(".$common_fields["netname"].",".$common_fields["netport"].")\n");
+
+	// Find port in database
+	$sql = "SELECT glpi_networking_ports.ID FROM glpi_networking_ports, glpi_networking " .
+			" WHERE glpi_networking_ports.device_type=" . NETWORKING_TYPE .
+			" AND glpi_networking_ports.on_device=glpi_networking.ID" .
+			" AND glpi_networking.is_template=0 " .
+			" AND glpi_networking.FK_entities=" . $common_fields["FK_entities"] .
+			" AND glpi_networking.name='" . $common_fields["netname"] . "'" .
+			" AND glpi_networking_ports.logical_number=" . $common_fields["netport"];
+	$res = $DB->query($sql);
+	if (!$res || $DB->numrows($res) < 1) {
+		$result->addInjectionMessage(WARNING_NOTFOUND, "networking");	
+	   	logInFile("debug", "addNetworkingWire($sql) : not found\n");
+    	return false;				
+	}
+	$srce = $common_fields["network_port_id"];
+	$dest = $DB->result($res,0,"ID");
+
+   	logInFile("debug", "addNetworkingWire() : srce=$srce, dest=$dest\n");
+	
+	$nw=new Netwire;
+	// Is this port used
+	$tmp=$nw->getOppositeContact($dest);
+	if ($tmp) {
+		if ($tmp == $srce) {
+		   	logInFile("debug", "addNetworkingWire() : OK already connected\n");
+		   	return true;
+		} else if ($canupdate){
+		   	logInFile("debug", "addNetworkingWire() : removing connection ($dest)\n");
+			removeConnector($dest);
+		} else {
+		   	logInFile("debug", "addNetworkingWire() : ERROR already connected (dest)\n");
+			$result->addInjectionMessage(WARNING_USED, "networking");	
+		   	return true;			
+		}		
+	}
+	// Is our already connected
+	$tmp=$nw->getOppositeContact($srce);
+	if ($tmp) {
+		if ($canupdate){
+		   	logInFile("debug", "addNetworkingWire() : removing connection ($srce)\n");
+			removeConnector($srce);
+		} else {
+		   	logInFile("debug", "addNetworkingWire() : ERROR already connected (srce)\n");
+			$result->addInjectionMessage(WARNING_NOTEMPTY, "networking");	
+		   	return true;			
+		}		
+	}
+   	logInFile("debug", "addNetworkingWire() : making connection ($srce,$dest)\n");
+	return makeConnector($common_fields["network_port_id"], $dest);
+}
+
 function addContract($common_fields)
 {
 	if (isset($common_fields["contract"]))
@@ -219,7 +281,7 @@ function getEntityParentId($parent_name)
 {
 	global $DB;
 	$sql = "SELECT ID, level FROM glpi_entities WHERE name='".$parent_name."' OR completename='".$parent_name."'";
-	$result = $DD->query($sql);
+	$result = $DB->query($sql);
 	if ($DB->numrows($result) > 0)
 		return array("ID"=>$DB->result($result,0,"ID"),"level"=>$DB->result($result,0,"level"));
 	else
