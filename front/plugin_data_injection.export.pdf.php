@@ -80,7 +80,7 @@ if(count($tab_result[1])>0)
 		
 		$pdf->restoreState();
 		
-		$pdf->addJpegFromFile("../pics/ok.jpg",40,($start_tab-25)-(20*$i)+2);
+		$pdf->addJpegFromFile("../pics/ok.jpg",40,($start_tab-25)-(20*$i)+2,10,10);
 		
 		$pdf->addText(85,($start_tab-20)-(20*$i),9,utf8_decode($value->getLineID()));
 		
@@ -158,9 +158,9 @@ if(count($tab_result[0])>0)
 		
 		// Global status
 		if ($value->getCheckStatus() != CHECK_OK || $value->getInjectionStatus()==NOT_IMPORTED) {
-			$pdf->addJpegFromFile("../pics/notok.jpg",40,($start_tab-25)-(20*$i)+2);
+			$pdf->addJpegFromFile("../pics/notok.jpg",40,($start_tab-25)-(20*$i)+2,10,10);
 		} else {
-			$pdf->addJpegFromFile("../pics/danger.jpg",40,($start_tab-25)-(20*$i)+2);
+			$pdf->addJpegFromFile("../pics/danger.jpg",40,($start_tab-25)-(20*$i)+2,10,10);
 		}
 		
 		$pdf->addText(85,($start_tab-20)-(20*$i),9,utf8_decode($value->getLineID()));
@@ -170,7 +170,7 @@ if(count($tab_result[0])>0)
 		
 		// Check status
 		if ($value->getCheckStatus() != CHECK_OK) {
-			$pdf->addJpegFromFile("../pics/notok.jpg",120,($start_tab-25)-(20*$i)+2);
+			$pdf->addJpegFromFile("../pics/notok.jpg",120,($start_tab-25)-(20*$i)+2,10,10);
 			$x=135;
 			$length=125;
 		}
@@ -186,9 +186,9 @@ if(count($tab_result[0])>0)
 		
 		// Injection status
 		if($value->getInjectionStatus() == NOT_IMPORTED) {
-			$pdf->addJpegFromFile("../pics/notok.jpg",275,($start_tab-25)-(20*$i)+2);
+			$pdf->addJpegFromFile("../pics/notok.jpg",275,($start_tab-25)-(20*$i)+2,10,10);
 		} else {
-			$pdf->addJpegFromFile("../pics/danger.jpg",275,($start_tab-25)-(20*$i)+2);
+			$pdf->addJpegFromFile("../pics/danger.jpg",275,($start_tab-25)-(20*$i)+2,10,10);
 		}
 		$x=290;
 		$length=85;

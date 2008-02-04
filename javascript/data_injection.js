@@ -287,12 +287,12 @@ function show_option()
 {	
 	if(document.getElementById('option').style.display == 'none')
 		{
-		document.getElementById('option_img').src = '../pics/minus2.png';
+		document.getElementById('option_img').src = '../pics/minus.png';
 		document.getElementById('option').style.display = 'block';
 		}
 	else
 		{
-		document.getElementById('option_img').src = '../pics/plus2.png';
+		document.getElementById('option_img').src = '../pics/plus.png';
 		document.getElementById('option').style.display = 'none';
 		}
 }
