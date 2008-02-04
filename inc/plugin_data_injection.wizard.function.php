@@ -299,7 +299,7 @@ function modelStep($target)
 	echo "<script type='text/javascript'>show_backend($id)</script>";
 	
 	echo "<fieldset class='modelStep_selection'>";
-	echo "<legend><a href='javascript:show_option()'><img src='../pics/plus2.png' alt='plus' id='option_img' style='width:20px;float:left' /></a>".$DATAINJECTIONLANG["modelStep"][15]."</legend>";
+	echo "<legend><a href='javascript:show_option()'><img src='../pics/plus.png' alt='plus' id='option_img' style='width:20px;float:left' /></a>".$DATAINJECTIONLANG["modelStep"][15]."</legend>";
 	echo "<table class='modelStep_table' id='option' style='display:none'>";
 	
 	/**********************Can add dropdown************************/
