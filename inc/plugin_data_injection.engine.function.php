@@ -31,40 +31,84 @@
 // Purpose of file:
 // ----------------------------------------------------------------------
 
+function getDropdownMinimalName ($table, $id) 
+{
+	global $DB;
+	
+	$name = EMPTY_VALUE;	
+	if ($id>0){
+		$query = "SELECT name FROM ". $table ." WHERE ID=$id";
+		if ($result = $DB->query($query)){
+			if($DB->numrows($result) > 0) {
+				$data=$DB->fetch_assoc($result);
+				$name = $data["name"];
+			}
+		}
+	}
+	return $name; 
+}
 /*
  * Reformat datas if needed
  * @param model the model
  * @param line the line of data to inject
  * @return the line modified
  */
-function reformatDatasBeforeCheck($model,$line)
+function reformatDatasBeforeCheck ($model,$line)
 {
 	global $DATA_INJECTION_MAPPING;
 
-	for ($i=0, $mappings = $model->getMappings(); $i < count($mappings); $i++)
+	$manu="";
+	$mappings = $model->getMappings();
+	
+	// First pass : empty check + find the manufacturer
+	foreach ($mappings as $mapping)
 	{
-		$mapping = $mappings[$i];
 		$rank = $mapping->getRank();
 
 		//If a value is set to NULL -> ignore the value during injection
-		if (isset($line[$rank]) && $line[$rank] == "NULL")
+		if (isset($line[$rank]) && $line[$rank] == "NULL") {
 			$line[$rank]=EMPTY_VALUE;
-			
-		elseif ($mapping->getValue() != NOT_MAPPED)
+		}	
+		// Apply manufacturer dictionnary
+		else if ($mapping->getValue() == "manufacturer") {
+			// TODO : probably a bad idea to add new value in check, but...
+			$id = externalImportDropdown('glpi_dropdown_manufacturer', $line[$rank], -1, array(), '', $model->getCanAddDropdown());
+			$manu = getDropdownMinimalName('glpi_dropdown_manufacturer', $id);
+			error_log("manufacturer : " . $line[$rank] . " => $manu");
+			$line[$rank] = $manu;
+		} 
+	}
+	
+	// Second pass : type check + apply dictionary
+	foreach ($mappings as $mapping)
+	{
+		$rank = $mapping->getRank();
+	
+		if ($line[$rank] != EMPTY_VALUE && $mapping->getValue() != NOT_MAPPED)
 		{
 			$mapping_definition = $DATA_INJECTION_MAPPING[$mapping->getMappingType()][$mapping->getValue()];
+			
+			// Check some types 
 			switch ($mapping_definition["type"])
 			{
 				case "date":
 					//If the value is a date, try to reformat it if it's not the good type (dd-mm-yyyy instead of yyyy-mm-dd)
 					if (isset($mapping_definition["type"]) && $mapping_definition["type"]=="date")
 						$line[$rank] = reformatDate($model->getDateFormat(),$line[$rank]);
-				break;
+					break;
 				case "mac":
 					$line[$rank]=reformatMacAddress($line[$rank]);
-				break;
+					break;
 				default:
 				break;
+			}
+			// Apply dropdown dictionnary
+			if (isset($mapping_definition["table_type"]) && $mapping_definition["table_type"]=="dropdown" && $mapping->getValue()!="manufacturer")  {
+				$id = externalImportDropdown($mapping_definition["table"], $line[$rank], -1, 
+					array("manufacturer" => $manu), '', $model->getCanAddDropdown());
+				$val = getDropdownMinimalName($mapping_definition["table"], $id);
+				error_log($mapping->getValue() . " : " . $line[$rank] . " => $val");
+				$line[$rank] = $val;					
 			}
 		}
 	}

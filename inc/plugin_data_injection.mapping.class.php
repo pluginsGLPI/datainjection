@@ -141,6 +141,7 @@ class MappingCollection {
 		
 		$sql = "SELECT * FROM glpi_plugin_data_injection_mappings WHERE model_id=".$model_id." ORDER BY rank ASC";
 		$result = $DB->query($sql);
+		$this->mappingCollection = array();
 		while  ($data = $DB->fetch_array($result))
 		{
 			// Addslashes to conform to value return by parseLine

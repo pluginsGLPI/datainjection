@@ -40,7 +40,8 @@ if (!defined('GLPI_ROOT')) {
 $USEDBREPLICATE=0;
 $DBCONNECTION_REQUIRED=1;
 
-$NEEDED_ITEMS=array("ocsng","user","contact","enterprise","contract","networking","group","monitor","phone","infocom","printer","profile","entity","computer","software","setup","peripheral","cartridge","consumable");
+$NEEDED_ITEMS=array("ocsng","user","contact","enterprise","contract","networking","group","monitor","phone","infocom","printer","profile","entity",
+	"computer","software","setup","peripheral","cartridge","consumable","rulesengine","rule.dictionnary.dropdown");
 include (GLPI_ROOT."/inc/includes.php");
 
 commonHeader($DATAINJECTIONLANG["config"][1],$_SERVER["PHP_SELF"],"plugins","data_injection");
