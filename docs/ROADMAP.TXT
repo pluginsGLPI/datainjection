@@ -34,3 +34,4 @@
 
 Possibilité d'injecter plus de types de données dans GLPI.
 Add possibility to inject more data types into GLPI.
+

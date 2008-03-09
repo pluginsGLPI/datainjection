@@ -32,6 +32,14 @@
 // Purpose of file:
 // ----------------------------------------------------------------------
 
+Version 1.2:
+
+- GLPI 0.71 compatibility
+- recursivity
+- network port importation with connection to network equipment
+- apply dictionaries (manufacturer, type and model)
+- can use of dropdown as mandatory field
+
 Version 1.1:
 
 - amélioration de la création des ports réseaux

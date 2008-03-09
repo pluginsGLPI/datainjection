@@ -38,13 +38,17 @@ Author : Walid NOUH
 
 Ce plugin vous permet d'injecter des fichiers CSV dans GLPI.
 
-Compatibilité 0.70.
+Compatibilité 0.71.
 Le plugin nécessite obligatoirement PHP5 ou supérieur !
 
 2 - Installation
 
-- Récupérez l'archive tar.gz du plugin
-- Décompressez la dans le répertoire plugins de votre installation de glpi
+Disponible en RPM dans les dépôts Fedora/EPEL
+	yum install glpi-data-injection
+
+Sinon :
+	Récupérez l'archive tar.gz du plugin
+	Décompressez la dans le répertoire plugins de votre installation de glpi
 
 Une fois copié dans le répertoire, dans l'onglet plugin vous verrez apparaître "Injection de fichiers".
 Règlez les droits sur le plugin en fonction des profils.

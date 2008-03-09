@@ -35,13 +35,20 @@
 Author :Walid NOUH
 
 1 - Presentation
+
 This plugin enables you inject datas from CSV files into GLPI. 
-Compatibility 0.70
+
+Compatibility 0.71
 PHP5 or higher is required !
 
 2 - Installation
 
-- Download the tarball of this plugin
-- Uncompress it in the plugins directory of your glpi installation
+RPM are available in Fedora/EPEL repository
+	yum install glpi-data-injection
+
+Else
+	Download the tarball of this plugin
+	Uncompress it in the plugins directory of your glpi installation
 
 Once copied in the repertory, go the the "Configuration"->"Plugins"->"File injection" menu, and install the plugin
+
