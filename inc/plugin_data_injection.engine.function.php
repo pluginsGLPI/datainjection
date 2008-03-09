@@ -74,7 +74,6 @@ function reformatDatasBeforeCheck ($model,$line)
 			// TODO : probably a bad idea to add new value in check, but...
 			$id = externalImportDropdown('glpi_dropdown_manufacturer', $line[$rank], -1, array(), '', $model->getCanAddDropdown());
 			$manu = getDropdownMinimalName('glpi_dropdown_manufacturer', $id);
-			error_log("manufacturer : " . $line[$rank] . " => $manu");
 			$line[$rank] = $manu;
 		} 
 	}
@@ -107,7 +106,6 @@ function reformatDatasBeforeCheck ($model,$line)
 				$id = externalImportDropdown($mapping_definition["table"], $line[$rank], -1, 
 					array("manufacturer" => $manu), '', $model->getCanAddDropdown());
 				$val = getDropdownMinimalName($mapping_definition["table"], $id);
-				error_log($mapping->getValue() . " : " . $line[$rank] . " => $val");
 				$line[$rank] = $val;					
 			}
 		}
