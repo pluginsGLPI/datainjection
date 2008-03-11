@@ -205,6 +205,7 @@ $DATAINJECTIONLANG["result"][13] = "ID de objeto";
 $DATAINJECTIONLANG["result"][14] = "Línea";
 $DATAINJECTIONLANG["result"][15] = "Data not found";
 $DATAINJECTIONLANG["result"][16] = "Data already used";
+$DATAINJECTIONLANG["result"][17] = "No data to insert";
 
 $DATAINJECTIONLANG["profiles"][1] = "Crear modelo";
 $DATAINJECTIONLANG["profiles"][2] = "Borrar modelo";

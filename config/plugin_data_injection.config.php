@@ -63,6 +63,7 @@ define ("ERROR_CANNOT_UPDATE",13);
 define ("WARNING_NOTFOUND",14);
 define ("WARNING_USED",15);
 define ("WARNING_NOTEMPTY",16);
+define ("WARNING_ALLEMPTY",17);
 
 define ("INJECTION_ADD",0);
 define ("INJECTION_UPDATE",1);

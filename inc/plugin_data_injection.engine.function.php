@@ -106,6 +106,7 @@ function reformatDatasBeforeCheck ($model,$line)
 				$id = externalImportDropdown($mapping_definition["table"], $line[$rank], -1, 
 					array("manufacturer" => $manu), '', $model->getCanAddDropdown());
 				$val = getDropdownMinimalName($mapping_definition["table"], $id);
+
 				$line[$rank] = $val;					
 			}
 		}
@@ -436,6 +437,7 @@ function dataAlreadyInDB($type,$fields,$mapping_definition,$model)
 
 /*
  * Get an instance of the primary type
+ * 
  * @param device_type the type of the primary item
  * @return an instance of the primary item
  */
@@ -447,6 +449,25 @@ function getInstance($device_type)
 		$commonitem = new CommonItem;
 		$commonitem->setType($device_type,1);
 		return $commonitem->obj;
+}
+
+/*
+ * Get the name of a type
+ * 
+ * @param device_type the type of the item
+ * 
+ * @return a string
+ */
+function getInstanceName($device_type)
+{
+	global $LANG;
+	
+	if ($device_type == NETPORT_TYPE)
+		return $LANG["networking"][6];
+		
+	$commonitem = new CommonItem;
+	$commonitem->setType($device_type);
+	return $commonitem->getType();
 }
 
 /*
@@ -716,6 +737,23 @@ function addNecessaryFields($model,$mapping,$mapping_definition,$entity,$type,&$
 			break;	
 	}
 	unsetFields($fields,$unsetFields);
+}
+
+/*
+ * Check if all value of an array are empty
+ * 
+ * @param fields : array to check
+ * 
+ * @return boolean
+ * 
+ */
+function isAllEmpty ($fields) {
+	foreach ($fields as $key => $val) {
+		if (!empty($val)) {
+			return false;
+		}
+	}
+	return true;
 }
 
 function getFieldValue($result, $mapping, $mapping_definition,$field_value,$entity,$obj,$canadd)

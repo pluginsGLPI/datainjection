@@ -216,38 +216,44 @@ class DataInjectionEngine
 				//Browse the db_fields array : inject all the types execpt COMMON_FIELDS and the primary type
 				if ($type != COMMON_FIELDS && $type != $this->getModel()->getDeviceType())
 				{
-					$obj = getInstance($type);
+					if (isAllEmpty($fields)) {
 
-					// Add some fields to the common fields BEFORE inserting the secondary type (in order to save some fields)
-					$db_fields[COMMON_FIELDS] = preAddCommonFields($db_fields[COMMON_FIELDS],$type,$fields,$this->getEntity());
+						$result->addInjectionMessage(WARNING_EMPTY, getInstanceName($type));
 
-					// If necessary, add default fields which are mandatory to create the object
-					addNecessaryFields($this->getModel(),$mapping,$mapping_definition,$this->getEntity(),$type,$fields,$db_fields[COMMON_FIELDS]);
-					
-					//Check if the line already exists in database
-					$fields_from_db = dataAlreadyInDB($type,$fields,$mapping_definition,$this->getModel());
-
-					$ID = $fields_from_db["ID"];
-					if ($ID == ITEM_NOT_FOUND)
-					{
-						//Not in DB -> add
-						$ID = $obj->add($fields);
-						//Add the ID to the fields, so it can be reused after
-						addCommonFields($db_fields[COMMON_FIELDS],$type,$fields,$this->getEntity(),$ID);
-					}	
-					else
-					{
-						$fields["ID"] = $ID;
-						filterFields($fields,$fields_from_db,$this->getModel()->getCanOverwriteIfNotEmpty());
-						//Item aleady in DB -> update
-						addCommonFields($db_fields[COMMON_FIELDS],$type,$fields,$this->entity,$ID);
-						$obj->update($fields);
-					}
-
-					//Post processing, if some actions need to be done
-					processBeforeEnd($result,$this->getModel(),$type,$fields,$db_fields[COMMON_FIELDS]);
-				}
-			}
+					} else {
+						$obj = getInstance($type);
+	
+						// Add some fields to the common fields BEFORE inserting the secondary type (in order to save some fields)
+						$db_fields[COMMON_FIELDS] = preAddCommonFields($db_fields[COMMON_FIELDS],$type,$fields,$this->getEntity());
+	
+						// If necessary, add default fields which are mandatory to create the object
+						addNecessaryFields($this->getModel(),$mapping,$mapping_definition,$this->getEntity(),$type,$fields,$db_fields[COMMON_FIELDS]);
+						
+						//Check if the line already exists in database
+						$fields_from_db = dataAlreadyInDB($type,$fields,$mapping_definition,$this->getModel());
+	
+						$ID = $fields_from_db["ID"];
+						if ($ID == ITEM_NOT_FOUND)
+						{
+							//Not in DB -> add
+							$ID = $obj->add($fields);
+							//Add the ID to the fields, so it can be reused after
+							addCommonFields($db_fields[COMMON_FIELDS],$type,$fields,$this->getEntity(),$ID);
+						}	
+						else
+						{
+							$fields["ID"] = $ID;
+							filterFields($fields,$fields_from_db,$this->getModel()->getCanOverwriteIfNotEmpty());
+							//Item aleady in DB -> update
+							addCommonFields($db_fields[COMMON_FIELDS],$type,$fields,$this->entity,$ID);
+							$obj->update($fields);
+						}
+	
+						//Post processing, if some actions need to be done
+						processBeforeEnd($result,$this->getModel(),$type,$fields,$db_fields[COMMON_FIELDS]);
+					} // Not all empty					
+				} // Type check
+			} // Each type
 		}
 		return $result;			
 	}

@@ -198,6 +198,7 @@ class DataInjectionResults {
 			case ERROR_CANNOT_UPDATE:
 				$this->injection_status = NOT_IMPORTED;
 				break;
+			case WARNING_ALLEMPTY:
 			case WARNING_NOTEMPTY:
 			case WARNING_NOTFOUND:
 			case WARNING_USED:
@@ -248,6 +249,10 @@ class DataInjectionResults {
 			case WARNING_USED:
 				$message = $DATAINJECTIONLANG["result"][16];
 			break;
+			case WARNING_ALLEMPTY:
+				$message = $DATAINJECTIONLANG["result"][17];
+			break;
+			
 		}
 		return $message;
 	}
