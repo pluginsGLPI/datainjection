@@ -51,9 +51,11 @@ function getDropdownMinimalName ($table, $id)
  * Reformat datas if needed
  * @param model the model
  * @param line the line of data to inject
+ * @param result of the check (input/ouput)
+ * 
  * @return the line modified
  */
-function reformatDatasBeforeCheck ($model,$line)
+function reformatDatasBeforeCheck ($model,$line,&$result)
 {
 	global $DATA_INJECTION_MAPPING;
 
@@ -66,14 +68,17 @@ function reformatDatasBeforeCheck ($model,$line)
 		$rank = $mapping->getRank();
 
 		//If a value is set to NULL -> ignore the value during injection
-		if (isset($line[$rank]) && $line[$rank] == "NULL") {
+		if (!isset($line[$rank]) || $line[$rank] == "NULL") {
 			$line[$rank]=EMPTY_VALUE;
 		}	
 		// Apply manufacturer dictionnary
 		else if ($mapping->getValue() == "manufacturer") {
 			// TODO : probably a bad idea to add new value in check, but...
 			$id = externalImportDropdown('glpi_dropdown_manufacturer', $line[$rank], -1, array(), '', $model->getCanAddDropdown());
-			$manu = getDropdownMinimalName('glpi_dropdown_manufacturer', $id);
+			$manu = getDropdownMinimalName('glpi_dropdown_manufacturer', $id);		
+			if ($id<=0) {
+				$result->addInjectionMessage(WARNING_NOTFOUND, $line[$rank]);
+			}
 			$line[$rank] = $manu;
 		} 
 	}
@@ -106,7 +111,9 @@ function reformatDatasBeforeCheck ($model,$line)
 				$id = externalImportDropdown($mapping_definition["table"], $line[$rank], -1, 
 					array("manufacturer" => $manu), '', $model->getCanAddDropdown());
 				$val = getDropdownMinimalName($mapping_definition["table"], $id);
-
+				if ($id<=0) {
+					$result->addInjectionMessage(WARNING_NOTFOUND, $line[$rank]);
+				}
 				$line[$rank] = $val;					
 			}
 		}
@@ -116,8 +123,10 @@ function reformatDatasBeforeCheck ($model,$line)
 
 /*
  * Check if the data to import is the good type
+ * 
  * @param the type of data waited
  * @data the data to import
+ * 
  * @return true if the data is the correct type
  */
 function checkType($type, $name, $data,$mandatory)
@@ -181,12 +190,18 @@ function checkType($type, $name, $data,$mandatory)
 
 /*
  * check one line of data to import
+ * 
  * @param model the model to use
  * @param line the line of datas
- * @return an array to give the result of the check ("result"=>value,"message"=>error message if any)
+ * @param result of the check (input/ouput)
+ * 
+ * @return status of the check
  */
-function checkLine($model,$line,$res)
+function checkLine($model,$line,&$res)
 {
+		// First : all is OK.
+		$res->addCheckMessage(TYPE_CHECK_OK);
+		
 		//Get all mappings for a model
 		for ($i=0, $mappings = $model->getMappings(); $i < count($mappings); $i++)
 		{
@@ -216,7 +231,7 @@ function checkLine($model,$line,$res)
 			}
 		}
 
-		return $res;
+		return $res->getStatus();
 	}
 
 /*
@@ -266,7 +281,7 @@ function getDropdownValue($mapping, $mapping_definition,$value,$entity,$canadd=0
 }
 
 function checkNetpoint($result,$primary_type,$entity,$location,$value,$port_id,$canadd) {
-	global $DB;
+	global $DB, $LANG;
 
 	// networking device can use netpoint in all the entity
 	$sql="SELECT ID FROM glpi_dropdown_netpoint WHERE FK_entities=$entity AND name='$value'";
@@ -304,7 +319,7 @@ function checkNetpoint($result,$primary_type,$entity,$location,$value,$port_id,$
 		return addDropdown($input);
 				
 	} else {
-		$result->addInjectionMessage(WARNING_NOTFOUND, "netpoint");
+		$result->addInjectionMessage(WARNING_NOTFOUND, $LANG["networking"][51] . " '$value'");
 		return EMPTY_VALUE;			
 	}
 }
@@ -770,10 +785,10 @@ function getFieldValue($result, $mapping, $mapping_definition,$field_value,$enti
 			//Read and add in a dropdown table
 			case "dropdown":
 				$val = getDropdownValue($mapping,$mapping_definition,$field_value,$entity,$canadd);
-				if ($val == EMPTY_VALUE) {
-					$result->addInjectionMessage(WARNING_NOTFOUND,$mapping_definition["linkfield"]);
-				} else {
+				if ($val > 0) {
 					$obj[$mapping_definition["linkfield"]] = $val;
+				} else {
+					$result->addInjectionMessage(WARNING_NOTFOUND,$mapping_definition["linkfield"]);
 				}
 				break;
 			case "contact":
@@ -797,7 +812,7 @@ function getFieldValue($result, $mapping, $mapping_definition,$field_value,$enti
 				if ($DB->numrows($res)) {
 					$obj[$mapping_definition["linkfield"]] = $DB->result($res,0, "ID");					
 				} else {
-					$result->addInjectionMessage(WARNING_NOTFOUND,$mapping_definition["linkfield"]);
+					$result->addInjectionMessage(WARNING_NOTFOUND,$mapping_definition["linkfield"]."='$field_value'");
 				}
 				break;
 			case "multitext":

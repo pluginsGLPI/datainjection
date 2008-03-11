@@ -85,15 +85,11 @@ class DataInjectionEngine
 	{
 		$result = new DataInjectionResults;
 	
-		$line = reformatDatasBeforeCheck($this->getModel(),$line);
+		$line = reformatDatasBeforeCheck($this->getModel(),$line,$result);
 		
-		$result = checkLine($this->getModel(),$line,$result);
-		if (!$result->getStatus()) {
+		if (!checkLine($this->getModel(),$line,$result)) {
 			return $result;
 		}
-		
-		// Can be overwrited	
-		//$result->setInjectionStatus(IMPORT_OK);
 		
 		//Array to store the fields to write to db
 		$db_fields = array();
@@ -218,7 +214,7 @@ class DataInjectionEngine
 				{
 					if (isAllEmpty($fields)) {
 
-						$result->addInjectionMessage(WARNING_EMPTY, getInstanceName($type));
+						$result->addInjectionMessage(WARNING_ALLEMPTY, getInstanceName($type));
 
 					} else {
 						$obj = getInstance($type);

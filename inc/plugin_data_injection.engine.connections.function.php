@@ -216,7 +216,7 @@ function addNetworkingWire ($result,$common_fields,$canupdate)
 			" AND glpi_networking_ports.logical_number=" . $common_fields["netport"];
 	$res = $DB->query($sql);
 	if (!$res || $DB->numrows($res) < 1) {
-		$result->addInjectionMessage(WARNING_NOTFOUND, "networking");	
+		$result->addInjectionMessage(WARNING_NOTFOUND, $common_fields["netname"] . " #" . $common_fields["netport"]);	
     	return false;				
 	}
 	$srce = $common_fields["network_port_id"];

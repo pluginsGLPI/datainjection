@@ -100,15 +100,16 @@ class DataInjectionResults {
 	
 	function getInjectionMessage()
 	{
-		if ($this->injection_status == IMPORT_OK)
-			return $this->getLabel(IMPORT_OK);
-			
-		$output = "";
-		foreach ($this->injection_message as $field => $res) {
-			$output .= ($output?"\n":" ").$this->getLabel($res);
-			if ($field && !intval($field)) {
-				$output .= " ($field)";
-			}			
+		if (count($this->injection_message)) {
+			$output = "";
+			foreach ($this->injection_message as $field => $res) {
+				$output .= ($output?"\n":" ").$this->getLabel($res);
+				if ($field && !intval($field)) {
+					$output .= " ($field)";
+				}			
+			}
+		} else {
+			$output = $this->getLabel(IMPORT_OK);
 		}
 		
 		return $output;
@@ -164,7 +165,7 @@ class DataInjectionResults {
 	 * 
 	 * @return boolean : OK
 	 */
-	function addCheckMessage($message, $field)
+	function addCheckMessage($message, $field="")
 	{
 		switch ($message) {
 			case TYPE_CHECK_OK:
