@@ -105,14 +105,16 @@ class DataInjectionEngine
 				if (!isset($db_fields[$mapping->getMappingType()]))
 					$db_fields[$mapping->getMappingType()] = array();
 				
-				$db_fields[$mapping->getMappingType()] = getFieldValue(
+				$field = getFieldValue(
 						$result,
 						$mapping, 
 						$mapping_definition,$line[$i],
 						$this->getEntity(),
 						$db_fields[$mapping->getMappingType()],
-						$this->getModel()->getCanAddDropdown()
-				);
+						$this->getModel()->getCanAddDropdown());
+				if (!empty($field)) {
+					$db_fields[$mapping->getMappingType()] = $field;					
+				}
 			}
 		}
 
@@ -145,18 +147,27 @@ class DataInjectionEngine
 			{
 				$ID = $obj->add($fields);
 				
-				//Add some default values (getempty() or getFromDB($ID) could be better)
-				addCommonFields($db_fields[COMMON_FIELDS],$this->getModel()->getDeviceType(),array("location"=>0),$this->getEntity(),$ID);
-				
-				//Add the ID to the fields, so it can be reused after
-				addCommonFields($db_fields[COMMON_FIELDS],$this->getModel()->getDeviceType(),$fields,$this->getEntity(),$ID);
-				
-				//Log in history
-				logAddOrUpdate($this->getModel()->getDeviceType(),$ID,INJECTION_ADD);
-				
-				//Set status and messages
-				$result->setInjectedId($ID);
-				$result->setInjectionType(INJECTION_ADD);
+				if ($ID) {
+					//Add some default values (getempty() or getFromDB($ID) could be better)
+					addCommonFields($db_fields[COMMON_FIELDS],$this->getModel()->getDeviceType(),array("location"=>0),$this->getEntity(),$ID);
+					
+					//Add the ID to the fields, so it can be reused after
+					addCommonFields($db_fields[COMMON_FIELDS],$this->getModel()->getDeviceType(),$fields,$this->getEntity(),$ID);
+					
+					//Log in history
+					logAddOrUpdate($this->getModel()->getDeviceType(),$ID,INJECTION_ADD);
+					
+					//Set status and messages
+					$result->setInjectedId($ID);
+					$result->setInjectionType(INJECTION_ADD);
+				} else {					
+					// Add failed (SQL error ?)
+					$process = false;
+
+					$result->setInjectedId(NOT_IMPORTED);
+					$result->setInjectionType(INJECTION_ADD);			
+					$result->addInjectionMessage(ERROR_CANNOT_IMPORT);
+				} // ID
 			}
 			else
 			{
@@ -168,7 +179,7 @@ class DataInjectionEngine
 				$result->addInjectionMessage(ERROR_CANNOT_IMPORT);
 			}
 		}	
-		elseif ($this->getModel()->getBehaviorUpdate())
+		else if ($this->getModel()->getBehaviorUpdate())
 		{
 			filterFields($fields,$fields_from_db,$this->getModel()->getCanOverwriteIfNotEmpty());
 			$fields["ID"] = $ID;
@@ -212,11 +223,8 @@ class DataInjectionEngine
 				//Browse the db_fields array : inject all the types execpt COMMON_FIELDS and the primary type
 				if ($type != COMMON_FIELDS && $type != $this->getModel()->getDeviceType())
 				{
-					if (isAllEmpty($fields)) {
+					if (!isAllEmpty($fields)) {
 
-						$result->addInjectionMessage(WARNING_ALLEMPTY, getInstanceName($type));
-
-					} else {
 						$obj = getInstance($type);
 	
 						// Add some fields to the common fields BEFORE inserting the secondary type (in order to save some fields)
@@ -247,7 +255,10 @@ class DataInjectionEngine
 	
 						//Post processing, if some actions need to be done
 						processBeforeEnd($result,$this->getModel(),$type,$fields,$db_fields[COMMON_FIELDS]);
-					} // Not all empty					
+						
+					} /*else { // all empty
+						$result->addInjectionMessage(WARNING_ALLEMPTY, getInstanceName($type));
+					}*/			
 				} // Type check
 			} // Each type
 		}

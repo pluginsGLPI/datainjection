@@ -43,7 +43,7 @@ function plugin_data_injection_Install() {
 	  `ID` int(11) NOT NULL auto_increment,
 	  `name` varchar(255) NOT NULL,
 	  `comments` text,
-	  `date_mod` datetime NOT NULL,
+	  `date_mod` datetime default NULL,
 	  `type` int(11) NOT NULL default '1',
 	  `device_type` int(11) NOT NULL default '1',
 	  `FK_entities` int(11) NOT NULL,
