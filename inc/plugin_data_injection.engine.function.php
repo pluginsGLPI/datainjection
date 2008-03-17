@@ -107,7 +107,9 @@ function reformatDatasBeforeCheck ($model,$line,&$result)
 				break;
 			}
 			// Apply dropdown dictionnary
-			if (isset($mapping_definition["table_type"]) && $mapping_definition["table_type"]=="dropdown" && $mapping->getValue()!="manufacturer")  {
+			if (isset($mapping_definition["table_type"]) && $mapping_definition["table_type"]=="dropdown" 
+					&& $mapping->getValue()!="location"
+					&& $mapping->getValue()!="manufacturer")  {
 				$id = externalImportDropdown($mapping_definition["table"], $line[$rank], -1, 
 					array("manufacturer" => $manu), '', $model->getCanAddDropdown());
 				$val = getDropdownMinimalName($mapping_definition["table"], $id);
@@ -787,8 +789,8 @@ function getFieldValue($result, $mapping, $mapping_definition,$field_value,$enti
 				$val = getDropdownValue($mapping,$mapping_definition,$field_value,$entity,$canadd);
 				if ($val > 0) {
 					$obj[$mapping_definition["linkfield"]] = $val;
-				} else {
-					$result->addInjectionMessage(WARNING_NOTFOUND,$mapping_definition["linkfield"]);
+				} else if (!empty($field_value)) {
+					$result->addInjectionMessage(WARNING_NOTFOUND,$mapping_definition["linkfield"]."=$field_value");
 				}
 				break;
 			case "contact":
@@ -1003,7 +1005,7 @@ function checkLocation ($location, $entity, $canadd)
 {
 	$location_id = 0;
 	$locations = explode('>',$location);
-	
+
 	foreach ($locations as $location)
 		if ($location_id !== EMPTY_VALUE)
 			$location_id = addLocation(trim($location),$entity,$location_id,$canadd);
@@ -1030,13 +1032,15 @@ function addLocation($location,$entity,$parentid,$canadd)
 	
 	$ID = getDropdownID($input);
 	
-	if ($ID != -1)
+	if ($ID != -1) {
 		return $ID;
-
-	if ($canadd)	
+	}
+	
+	if ($canadd) {
 		return addDropdown($input);
-	else
-		return EMPTY_VALUE;	
+	} else {
+		return EMPTY_VALUE;
+	}	
 }
 
 /*
