@@ -55,7 +55,9 @@ class DataInjectionResults {
 	
 	function DataInjectionResults()
 	{
-		$this->status = -1;
+//		$this->status = -1;
+		$this->check_status = CHECK_OK;
+		$this->injection_status = IMPORT_OK;
 		$this->check_message = array();
 		$this->injection_message = array();
 		$this->injection_type = array();
@@ -69,10 +71,15 @@ class DataInjectionResults {
 		return $this->line_id;
 	}
 	
-	function getStatus()
+	function getStatus($check)
 	{
-		return ($this->check_status == CHECK_OK && 
-			$this->injection_status == IMPORT_OK);
+		// from checkline
+		if ($check){
+			return ($this->check_status == CHECK_OK );
+		}
+		else	// from report
+			return ($this->check_status == CHECK_OK && 
+				$this->injection_status == IMPORT_OK);
 	}
 	
 	function getCheckStatus()
@@ -170,7 +177,7 @@ class DataInjectionResults {
 		switch ($message) {
 			case TYPE_CHECK_OK:
 				$this->check_status = CHECK_OK;
-				$this->injection_status = IMPORT_OK;
+//				$this->injection_status = IMPORT_OK;
 				break;
 			case ERROR_IMPORT_WRONG_TYPE:
 			case ERROR_IMPORT_FIELD_MANDATORY:

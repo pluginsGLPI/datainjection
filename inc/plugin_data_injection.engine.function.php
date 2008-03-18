@@ -45,7 +45,7 @@ function getDropdownMinimalName ($table, $id)
 			}
 		}
 	}
-	return $name; 
+	return addslashes($name); 
 }
 /*
  * Reformat datas if needed
@@ -202,7 +202,7 @@ function checkType($type, $name, $data,$mandatory)
 function checkLine($model,$line,&$res)
 {
 		// First : all is OK.
-		$res->addCheckMessage(TYPE_CHECK_OK);
+//		$res->addCheckMessage(TYPE_CHECK_OK);
 		
 		//Get all mappings for a model
 		for ($i=0, $mappings = $model->getMappings(); $i < count($mappings); $i++)
@@ -233,7 +233,7 @@ function checkLine($model,$line,&$res)
 			}
 		}
 
-		return $res->getStatus();
+		return $res->getStatus(true);
 	}
 
 /*

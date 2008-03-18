@@ -35,7 +35,7 @@ function sortAllResults($results)
 	
 	foreach ($results as $result)
 	{
-		if ($result->getStatus())
+		if ($result->getStatus(false))
 			$results_sorted[1][] = $result;
 		else	
 			$results_sorted[0][] = $result;
