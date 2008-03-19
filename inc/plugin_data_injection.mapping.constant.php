@@ -730,7 +730,7 @@ $DATA_INJECTION_MAPPING[INFOCOM_TYPE]['manufacturer']['field']='name';
 $DATA_INJECTION_MAPPING[INFOCOM_TYPE]['manufacturer']['name']=$LANG["financial"][26];
 $DATA_INJECTION_MAPPING[INFOCOM_TYPE]['manufacturer']['type']='text';
 $DATA_INJECTION_MAPPING[INFOCOM_TYPE]['manufacturer']['linkfield']='FK_enterprise';
-$DATA_INJECTION_MAPPING[INFOCOM_TYPE]['manufacturer']['table_type']='dropdown';
+$DATA_INJECTION_MAPPING[INFOCOM_TYPE]['manufacturer']['table_type']='single';
 
 $DATA_INJECTION_MAPPING[INFOCOM_TYPE]['num_commande']['table']='glpi_infocoms';
 $DATA_INJECTION_MAPPING[INFOCOM_TYPE]['num_commande']['field']='num_commande';

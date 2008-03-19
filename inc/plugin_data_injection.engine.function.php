@@ -72,7 +72,9 @@ function reformatDatasBeforeCheck ($model,$line,&$result)
 			$line[$rank]=EMPTY_VALUE;
 		}	
 		// Apply manufacturer dictionnary
-		else if ($mapping->getValue() == "manufacturer") {
+		else if (isset($mapping_definition["table_type"]) 
+			&& $mapping_definition["table_type"]=="dropdown"
+			&& $mapping->getValue() == "manufacturer") {
 			// TODO : probably a bad idea to add new value in check, but...
 			$id = externalImportDropdown('glpi_dropdown_manufacturer', $line[$rank], -1, array(), '', $model->getCanAddDropdown());
 			$manu = getDropdownMinimalName('glpi_dropdown_manufacturer', $id);		
@@ -107,7 +109,8 @@ function reformatDatasBeforeCheck ($model,$line,&$result)
 				break;
 			}
 			// Apply dropdown dictionnary
-			if (isset($mapping_definition["table_type"]) && $mapping_definition["table_type"]=="dropdown" 
+			if (isset($mapping_definition["table_type"]) 
+					&& $mapping_definition["table_type"]=="dropdown" 
 					&& $mapping->getValue()!="location"
 					&& $mapping->getValue()!="manufacturer")  {
 				$id = externalImportDropdown($mapping_definition["table"], $line[$rank], -1, 
