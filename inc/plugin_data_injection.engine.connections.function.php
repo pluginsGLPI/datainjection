@@ -245,7 +245,7 @@ function addNetworkingWire ($result,$common_fields,$canupdate)
 		   	return true;			
 		}		
 	}
-	return makeConnector($common_fields["network_port_id"], $dest);
+	return makeConnector($common_fields["network_port_id"], $dest, true, false);
 }
 
 function addContract($common_fields)

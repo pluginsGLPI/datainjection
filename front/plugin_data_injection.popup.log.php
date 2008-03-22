@@ -91,13 +91,9 @@ if(count($tab_result[1])>0)
 		echo "<td style='height:30px;width:50px'>".$value->getLineID()."</td>";
 		
 		echo "<td style='height:30px;width:300px'>";
-		if($value->getCheckStatus() != CHECK_OK)
-			echo "<img src='../pics/danger.png' alt='danger' />";
 		echo nl2br($value->getCheckMessage())."</td>";
 		
 		echo "<td style='height:30px;width:300px'>";
-		if($value->getInjectionStatus() != IMPORT_OK)
-			echo "<img src='../pics/danger.png' alt='danger' />";
 		echo nl2br($value->getInjectionMessage())."</td>";
 		
 		echo "<td style='height:30px;width:200px'>".($value->getInjectionType()==INJECTION_ADD?$DATAINJECTIONLANG["result"][8]:$DATAINJECTIONLANG["result"][9])."</td>";
