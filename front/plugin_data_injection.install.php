@@ -38,7 +38,7 @@ if (!defined('GLPI_ROOT')) {
 	define('GLPI_ROOT', '../../..');
 }
 
-$NEEDED_ITEMS=array("data_injection");
+$NEEDED_ITEMS=array("data_injection","profile");
 
 include (GLPI_ROOT . "/inc/includes.php");
 

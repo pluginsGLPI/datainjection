@@ -190,29 +190,27 @@ function plugin_data_injection_createfirstaccess($ID){
 
 	GLOBAL $DB;
 	
-	$query0 ="SELECT * FROM glpi_plugin_data_injection_profiles where ID='".$ID."';";
-	$result0=$DB->query($query0);
-	if ($DB->numrows($result0)==0){
-		$query="SELECT * FROM glpi_profiles where ID='$ID';";
-		$result=$DB->query($query);
-		$name = $DB->result($result, 0, "glpi_profiles.name");
+	$DataInjectionProfile=new DataInjectionProfile();
+	if (!$DataInjectionProfile->GetfromDB($ID)){
 		
-		$query1 ="INSERT INTO `glpi_plugin_data_injection_profiles` ( `ID`, `name` , `is_default`, `create_model`, `use_model`) VALUES ('$ID', '$name','0','w','r');";
-		$DB->query($query1);
+		$Profile=new Profile();
+		$Profile->GetfromDB($ID);
+		$name=$Profile->fields["name"];
+
+		$query ="INSERT INTO `glpi_plugin_data_injection_profiles` ( `ID`, `name` , `is_default`, `create_model`, `use_model`) VALUES ('$ID', '$name','0','w','r');";
+		$DB->query($query);
 	}
 }
 
 function plugin_data_injection_createaccess($ID){
 
-	$DB = new DB;
-	$query="SELECT * FROM glpi_profiles where ID='$ID';";
-	$result=$DB->query($query);
-	$i = 0;
-	$name = $DB->result($result, $i, "glpi_profiles.name");
+	$Profile=new Profile();
+	$Profile->GetfromDB($ID);
+	$name=$Profile->fields["name"];
 
-	$query1 ="INSERT INTO `glpi_plugin_data_injection_profiles` ( `ID`, `name` , `is_default`, `create_model`, `use_model`) VALUES ('$ID', '$name','0',NULL,NULL);";
+	$query ="INSERT INTO `glpi_plugin_data_injection_profiles` ( `ID`, `name` , `is_default`, `create_model`, `use_model`) VALUES ('$ID', '$name','0',NULL,NULL);";
 
-	$DB->query($query1);
+	$DB->query($query);
 }
 
 function plugin_data_injection_haveRight($module,$right){
