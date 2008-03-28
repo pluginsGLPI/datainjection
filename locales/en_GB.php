@@ -204,6 +204,7 @@ $DATAINJECTIONLANG["result"][14] = "Line";
 $DATAINJECTIONLANG["result"][15] = "Data not found";
 $DATAINJECTIONLANG["result"][16] = "Data already used";
 $DATAINJECTIONLANG["result"][17] = "No data to insert";
+$DATAINJECTIONLANG["result"][18] = "Injection summary for file";
 
 $DATAINJECTIONLANG["profiles"][1] = "Create a model";
 $DATAINJECTIONLANG["profiles"][2] = "Delete model";
