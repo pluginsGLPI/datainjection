@@ -205,6 +205,7 @@ $DATAINJECTIONLANG["result"][14] = "Ligne";
 $DATAINJECTIONLANG["result"][15] = "Donnée introuvable";
 $DATAINJECTIONLANG["result"][16] = "Donnée déjà utilisée";
 $DATAINJECTIONLANG["result"][17] = "Pas de données à insérer";
+$DATAINJECTIONLANG["result"][18] = "Rapport d'injection du fichier";
 
 $DATAINJECTIONLANG["profiles"][1] = "Créer un modèle";
 $DATAINJECTIONLANG["profiles"][2] = "Supprimer un modèle";
