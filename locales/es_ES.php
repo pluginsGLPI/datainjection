@@ -35,8 +35,6 @@ $DATAINJECTIONLANG["headings"][1] = "Importar archivo";
 $DATAINJECTIONLANG["name"][1] = "Importar archivo";
 $title = $DATAINJECTIONLANG["name"][1] ;
 
-$DATAINJECTIONLANG["pdf"][1] = "Informe de importación";
-
 $DATAINJECTIONLANG["config"][1]= "Configuración de " . $title;
 
 $DATAINJECTIONLANG["setup"][0] = "";
