@@ -31,21 +31,14 @@
 // Purpose of file:
 // ----------------------------
 
-$DATAINJECTIONLANG["headings"][1] = "Импорт из файла";
 $DATAINJECTIONLANG["name"][1] = "Импорт из файла";
 $title = $DATAINJECTIONLANG["name"][1] ;
 
 $DATAINJECTIONLANG["config"][1]=$title." настройка плагина";
 
-$DATAINJECTIONLANG["setup"][0] = "";
 $DATAINJECTIONLANG["setup"][1] = $title." настройка плагина";
-$DATAINJECTIONLANG["setup"][2] = "";
 $DATAINJECTIONLANG["setup"][3] = "Установка плагина $title";
-$DATAINJECTIONLANG["setup"][4] = "Обновить плагин  $title до версии";
 $DATAINJECTIONLANG["setup"][5] = "Удалить плагин $title";
-$DATAINJECTIONLANG["setup"][6] = "Внимание! Обновление необратимо.";
-$DATAINJECTIONLANG["setup"][7] = "Внимание! Удаление плагина необратимо. <br>Вся связанная информация будет удалена..";
-$DATAINJECTIONLANG["setup"][8] = "Колонка";
 $DATAINJECTIONLANG["setup"][9] = "Настройка прав";
 $DATAINJECTIONLANG["setup"][10] = "PHP 5 или выше необходим для этого плагина";
 $DATAINJECTIONLANG["setup"][11] = "Инструкции";
@@ -60,7 +53,6 @@ $DATAINJECTIONLANG["step"][3] = "Шаг 3 : ";
 $DATAINJECTIONLANG["step"][4] = "Шаг 4 : ";
 $DATAINJECTIONLANG["step"][5] = "Шаг 5 : ";
 $DATAINJECTIONLANG["step"][6] = "Шаг 6 : ";
-$DATAINJECTIONLANG["step"][7] = "Шаг 7 : ";
 
 $DATAINJECTIONLANG["choiceStep"][1] = "Создание или использование модели";
 $DATAINJECTIONLANG["choiceStep"][2] = "Этот шаг позволяет создать, редактировать, удалять или использовать модель.";
@@ -73,7 +65,6 @@ $DATAINJECTIONLANG["choiceStep"][8] = "Нет комментария";
 $DATAINJECTIONLANG["choiceStep"][9] = "Сделайте выбор";
 $DATAINJECTIONLANG["choiceStep"][10] = "Список возможностей зависит от прав.";
 $DATAINJECTIONLANG["choiceStep"][11] = "Необходимо выбрать модель для использования, изменения или удаления.";
-$DATAINJECTIONLANG["choiceStep"][12] = "Export an existing model";
 
 $DATAINJECTIONLANG["modelStep"][1] = "Сбор информации о файле";
 $DATAINJECTIONLANG["modelStep"][2] = "Редактирование модели";
@@ -207,7 +198,6 @@ $DATAINJECTIONLANG["result"][17] = "No data to insert";
 $DATAINJECTIONLANG["result"][18] = "Итоги импорта файла";
 
 $DATAINJECTIONLANG["profiles"][1] = "Создать модель";
-$DATAINJECTIONLANG["profiles"][2] = "Delete model";
 $DATAINJECTIONLANG["profiles"][3] = "Использовать модель";
 $DATAINJECTIONLANG["profiles"][4] = "Список настроенных профилей";
 

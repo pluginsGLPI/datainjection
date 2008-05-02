@@ -31,21 +31,14 @@
 // Purpose of file:
 // ----------------------------
 
-$DATAINJECTIONLANG["headings"][1] = "Importar archivo";
 $DATAINJECTIONLANG["name"][1] = "Importar archivo";
 $title = $DATAINJECTIONLANG["name"][1] ;
 
 $DATAINJECTIONLANG["config"][1]= "Configuración de " . $title;
 
-$DATAINJECTIONLANG["setup"][0] = "";
 $DATAINJECTIONLANG["setup"][1] = "Configuración de " . $title;
-$DATAINJECTIONLANG["setup"][2] = "";
 $DATAINJECTIONLANG["setup"][3] = "Instalar el plugin $title";
-$DATAINJECTIONLANG["setup"][4] = "Actualizar el plugin$title a la versión";
 $DATAINJECTIONLANG["setup"][5] = "Desinstalar el plugin $title";
-$DATAINJECTIONLANG["setup"][6] = "Aviso, la actualización es irreversible.";
-$DATAINJECTIONLANG["setup"][7] = "Aviso, la desinstalación del plugin es irreversible.<br> Se perderán todos los datos.";
-$DATAINJECTIONLANG["setup"][8] = "Columna";
 $DATAINJECTIONLANG["setup"][9] = "Ajuste de permisos";
 $DATAINJECTIONLANG["setup"][10] = "Se requiere PHP 5 o superior para usar este plugin";
 $DATAINJECTIONLANG["setup"][11] = "Instrucciones";
@@ -60,7 +53,6 @@ $DATAINJECTIONLANG["step"][3] = "Paso 3 : ";
 $DATAINJECTIONLANG["step"][4] = "Paso 4 : ";
 $DATAINJECTIONLANG["step"][5] = "Paso 5 : ";
 $DATAINJECTIONLANG["step"][6] = "Paso 6 : ";
-$DATAINJECTIONLANG["step"][7] = "Paso 7 : ";
 
 $DATAINJECTIONLANG["choiceStep"][1] = "Uso o manejo del modelo";
 $DATAINJECTIONLANG["choiceStep"][2] = "Este primer paso permite crear, modificar, borrar o usar un modelo";
@@ -73,7 +65,6 @@ $DATAINJECTIONLANG["choiceStep"][8] = "Sin comentarios";
 $DATAINJECTIONLANG["choiceStep"][9] = "Elección";
 $DATAINJECTIONLANG["choiceStep"][10] = "Dependiendo de los permisos, puede que no tenga acceso a todas las opciones";
 $DATAINJECTIONLANG["choiceStep"][11] = "Debe seleccionar un modelo para usar, actualizar o borrar";
-$DATAINJECTIONLANG["choiceStep"][12] = "Exportar un modelo existente";
 
 $DATAINJECTIONLANG["modelStep"][1] = "Reuniendo información sobre el archivo";
 $DATAINJECTIONLANG["modelStep"][2] = "Modificación del modelo";
@@ -207,7 +198,6 @@ $DATAINJECTIONLANG["result"][17] = "No data to insert";
 $DATAINJECTIONLANG["result"][18] = "Injection summary for file";
 
 $DATAINJECTIONLANG["profiles"][1] = "Crear modelo";
-$DATAINJECTIONLANG["profiles"][2] = "Borrar modelo";
 $DATAINJECTIONLANG["profiles"][3] = "Usar modelo";
 $DATAINJECTIONLANG["profiles"][4] = "Lista de perfiles ya configurados";
 
