@@ -47,6 +47,30 @@ function getDropdownMinimalName ($table, $id)
 	}
 	return addslashes($name); 
 }
+
+function lookForNecessaryMappings($model)
+{
+	global $MANDATORY_MAPPINGS,$DATA_INJECTION_MAPPING;
+	$mandatory_fields = $MANDATORY_MAPPINGS[$model->getDeviceType()];
+	
+	$not_found = array();
+	
+	if (count($mandatory_fields) > 0)
+	{
+		$mappings = $model->getMappings();
+		foreach ($mandatory_fields as $mandatory_field)
+		{
+			$found = false;
+			foreach ($mappings as $mapping)
+				if ($mapping->getValue() == $mandatory_fields)
+					$found = true;
+			if (!$found)
+				$not_found[] = $DATA_INJECTION_MAPPING[$model->getModelType()][$mandatory_fields];
+		}
+	}
+	return $not_found;
+}
+
 /*
  * Reformat datas if needed
  * @param model the model
@@ -60,13 +84,15 @@ function reformatDatasBeforeCheck ($model,$line,&$result)
 	global $DATA_INJECTION_MAPPING;
 
 	$manu="";
+	$rank_manu = -1;
 	$mappings = $model->getMappings();
 	
 	// First pass : empty check + find the manufacturer
 	foreach ($mappings as $mapping)
 	{
+		$mapping_definition = $DATA_INJECTION_MAPPING[$mapping->getMappingType()][$mapping->getValue()];
 		$rank = $mapping->getRank();
-
+			
 		//If a value is set to NULL -> ignore the value during injection
 		if (!isset($line[$rank]) || $line[$rank] == "NULL") {
 			$line[$rank]=EMPTY_VALUE;
@@ -75,17 +101,47 @@ function reformatDatasBeforeCheck ($model,$line,&$result)
 		else if (isset($mapping_definition["table_type"]) 
 			&& $mapping_definition["table_type"]=="dropdown"
 			&& $mapping->getValue() == "manufacturer") {
+
+			$rank_manu = $rank;
+			
 			// TODO : probably a bad idea to add new value in check, but...
 			$id = externalImportDropdown('glpi_dropdown_manufacturer', $line[$rank], -1, array(), '', $model->getCanAddDropdown());
-			$manu = getDropdownMinimalName('glpi_dropdown_manufacturer', $id);		
+			$manu = getDropdownMinimalName('glpi_dropdown_manufacturer', $id);
+
 			if ($id<=0) {
 				$result->addInjectionMessage(WARNING_NOTFOUND, $line[$rank]);
 			}
 			$line[$rank] = $manu;
-		} 
+		}
 	}
-	
-	// Second pass : type check + apply dictionary
+
+	// Second pass : if software -> process dictionnary. It must be done before third pass
+	//because it can modify the manufacturer (which is used in third pass)
+	if($model->getDeviceType() == SOFTWARE_TYPE)
+	{		
+		foreach ($mappings as $mapping)
+		{
+			$rank = $mapping->getRank();
+
+			if ($mapping->getValue() == "name") {
+				$rulecollection = new DictionnarySoftwareCollection;
+				$res_rule = $rulecollection->processAllRules(array("name"=>$line[$rank],"manufacturer"=>$manu),array(),array());
+				
+				if(isset($res_rule["name"]))
+					$line[$rank]=$res_rule["name"]; 
+					
+				if(isset($res_rule["manufacturer"]))
+				{
+					$manu = $res_rule["manufacturer"];
+					if ($rank_manu > -1)
+						$line[$rank_manu]=getDropdownName("glpi_dropdown_manufacturer",$res_rule["manufacturer"]);
+				}
+					
+			}
+		}
+	}
+
+	// Third pass : type check + apply dictionary
 	foreach ($mappings as $mapping)
 	{
 		$rank = $mapping->getRank();
@@ -204,9 +260,6 @@ function checkType($type, $name, $data,$mandatory)
  */
 function checkLine($model,$line,&$res)
 {
-		// First : all is OK.
-//		$res->addCheckMessage(TYPE_CHECK_OK);
-		
 		//Get all mappings for a model
 		for ($i=0, $mappings = $model->getMappings(); $i < count($mappings); $i++)
 		{
@@ -536,22 +589,25 @@ function preAddCommonFields($common_fields,$type,$fields,$entity)
 			$setFields = array("address","postcode","town","state","country","website","phonenumber","fax","email","notes");
 		break;
 		case PHONE_TYPE:
-			$setFields = array("contract","template");
+			$setFields = array("contract");
 		break;	
 		case MONITOR_TYPE:
-			$setFields = array("contract","template");
+			$setFields = array("contract");
 		break;		
 		case ENTERPRISE_TYPE:
 			$setFields = array("contract","contact");
 		break;		
 		case NETWORKING_TYPE:
-			$setFields = array("nb_ports","contract","template");		
+			$setFields = array("nb_ports","contract");		
 		break;
 		case PRINTER_TYPE:
-			$setFields = array("contract","template");
+			$setFields = array("contract");
 		break;	
 		case COMPUTER_TYPE:
-			$setFields = array("contract","template");
+			$setFields = array("contract");
+		break;	
+		case SOFTWARE_TYPE:
+			$setFields = array("version","serial");
 		break;	
 		case NETPORT_TYPE:
 			$setFields = array("netpoint","vlan","netname","netport");
@@ -562,6 +618,7 @@ function preAddCommonFields($common_fields,$type,$fields,$entity)
 	setFields($fields,$common_fields,$setFields);
 	return $common_fields;
 }
+
 /*
  * Add new values to the array of common values
  * @param common_fields the array of common values
@@ -604,6 +661,11 @@ function addCommonFields(&$common_fields,$type,$fields,$entity,$ID)
 			$setFields = array("location");
 			addField($common_fields,"device_id",$ID,true);
 			addField($common_fields,"device_type",$type,false);
+			addField($common_fields,"FK_entities",$entity,false);
+			break;
+		case SOFTWARE_TYPE:
+			$setFields = array("location");
+			addField($common_fields,"device_id",$ID,true);
 			addField($common_fields,"FK_entities",$entity,false);
 			break;
 		case MONITOR_TYPE:
@@ -685,7 +747,7 @@ function addNecessaryFields($model,$mapping,$mapping_definition,$entity,$type,&$
 		case CARTRIDGE_ITEM_TYPE:
 			break;
 		case COMPUTER_TYPE:
-			$unsetFields = array("contract","template");
+			$unsetFields = array("contract");
 			addField($fields,"FK_entities",$entity);
 			break;
 		case MONITOR_TYPE:
@@ -693,25 +755,27 @@ function addNecessaryFields($model,$mapping,$mapping_definition,$entity,$type,&$
 			addField($fields,"FK_entities",$entity);
 			break;
 		case PRINTER_TYPE:
-			$unsetFields = array("contract","template");
+			$unsetFields = array("contract");
 			addField($fields,"FK_entities",$entity);
 			break;
 		case PHONE_TYPE:
-			$unsetFields = array("contract","template");
+			$unsetFields = array("contract");
 			addField($fields,"FK_entities",$entity);
 			break;
 		case NETWORKING_TYPE:
-			$unsetFields = array("contract","nb_ports","template");
+			$unsetFields = array("contract","nb_ports");
 			addField($fields,"FK_entities",$entity);
 			break;
 		case PERIPHERAL_TYPE:
 			$unsetFields = array("contract");
 			addField($fields,"FK_entities",$entity);
 			break;
-
 		case GROUP_TYPE:
 			break;
 		case ENTERPRISE_TYPE:
+			addField($fields,"FK_entities",$entity);
+			break;
+		case SOFTWARE_TYPE:
 			addField($fields,"FK_entities",$entity);
 			break;
 		case CONTRACT_TYPE:
@@ -866,23 +930,19 @@ function processBeforeEnd($result,$model,$type,$fields,&$common_fields)
 				addUserGroup($common_fields["FK_user"],$common_fields["FK_group"]);
 		break;
 		case NETWORKING_TYPE:
-			updateWithTemplate($common_fields);
 			addNetworkPorts($common_fields);
 			addContract($common_fields);
 		break;	
 		case PRINTER_TYPE:
-			updateWithTemplate($common_fields);
 			addContract($common_fields);					
 		break;
-		case MONITOR_TYPE:
-			updateWithTemplate($common_fields);
+		case LICENSE_TYPE:
+			addSoftwareLicensesInfos($common_fields);
 		break;
 		case COMPUTER_TYPE:
-			updateWithTemplate($common_fields);
 			addContract($common_fields);					
 		break;
 		case PHONE_TYPE:
-			updateWithTemplate($common_fields);
 			addContract($common_fields);					
 		break;	
 		case NETPORT_TYPE:
@@ -1097,12 +1157,13 @@ function reformatMacAddress($mac)
 function findTemplate($entity,$table,$value)
 {
 	global $DB;
-	$result = $DB->query("SELECT ID FROM ".$table." WHERE FK_entities=".$entity." AND tplname='".addslashes($value)."'");
+	$result = $DB->query("SELECT ID FROM ".$table." WHERE FK_entities=".$entity." AND tplname='".addslashes($value)."' AND is_template=1");
 	if ($DB->numrows($result)==1)
 		return $DB->result($result,0,"ID");
 	else	
 		return 0;
 }
+
 function dropdownTemplate($name,$entity,$table,$value='')
 {
 	global $DB;

@@ -141,10 +141,13 @@ class DataInjectionEngine
 		$fields_from_db = dataAlreadyInDB($this->getModel()->getDeviceType(),$fields,$mapping_definition,$this->getModel());
 
 		$ID = $fields_from_db["ID"];
+		
 		if ($ID == ITEM_NOT_FOUND)
 		{
 			if ($this->getModel()->getBehaviorAdd())
 			{
+				//Manage templates
+				updateWithTemplate($fields,$this->getModel()->getDeviceType());
 				$ID = $obj->add($fields);
 				
 				if ($ID) {
@@ -255,10 +258,7 @@ class DataInjectionEngine
 	
 						//Post processing, if some actions need to be done
 						processBeforeEnd($result,$this->getModel(),$type,$fields,$db_fields[COMMON_FIELDS]);
-						
-					} /*else { // all empty
-						$result->addInjectionMessage(WARNING_ALLEMPTY, getInstanceName($type));
-					}*/			
+					} 
 				} // Type check
 			} // Each type
 		}
@@ -280,5 +280,4 @@ class DataInjectionEngine
 		return $this->entity;
 	}
 }
-
 ?>

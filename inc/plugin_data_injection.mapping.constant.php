@@ -54,9 +54,10 @@ define ("NETPORT_TYPE",999);
 
 global $LANG,$DATA_INJECTION_MAPPING,$IMPORT_TYPES,$IMPORT_PRIMARY_TYPES,$DATAINJECTIONLANG,$IMPORT_NETFIELDS;
 //Store all the type of items that could be imported
-$IMPORT_TYPES = array(COMPUTER_TYPE, MONITOR_TYPE, PRINTER_TYPE,PHONE_TYPE, USER_TYPE, INFOCOM_TYPE, NETWORKING_TYPE, GROUP_TYPE, CONTRACT_TYPE, PERIPHERAL_TYPE, ENTERPRISE_TYPE, CONTACT_TYPE, CARTRIDGE_TYPE, CONSUMABLE_TYPE);
-$IMPORT_PRIMARY_TYPES = array(COMPUTER_TYPE, MONITOR_TYPE, PRINTER_TYPE, PHONE_TYPE, USER_TYPE, NETWORKING_TYPE, GROUP_TYPE, CONTRACT_TYPE, PERIPHERAL_TYPE, ENTERPRISE_TYPE, CONTACT_TYPE, CARTRIDGE_TYPE, CONSUMABLE_TYPE);
-$IMPORT_NETFIELDS = array("port","ifmac","ifaddr","netmask","subnet","gateway","plug");
+$IMPORT_TYPES = array(COMPUTER_TYPE, MONITOR_TYPE, PRINTER_TYPE,PHONE_TYPE, USER_TYPE, INFOCOM_TYPE, NETWORKING_TYPE, GROUP_TYPE, CONTRACT_TYPE, PERIPHERAL_TYPE, ENTERPRISE_TYPE, CONTACT_TYPE, CARTRIDGE_TYPE, CONSUMABLE_TYPE,SOFTWARE_TYPE,LICENSE_TYPE);
+$IMPORT_PRIMARY_TYPES = array(COMPUTER_TYPE, MONITOR_TYPE, PRINTER_TYPE, PHONE_TYPE, USER_TYPE, NETWORKING_TYPE, GROUP_TYPE, CONTRACT_TYPE, PERIPHERAL_TYPE, ENTERPRISE_TYPE, CONTACT_TYPE, CARTRIDGE_TYPE, CONSUMABLE_TYPE,SOFTWARE_TYPE);
+$MANDATORY_MAPPINGS = array(SOFTWARE_TYPE=>array("manufacturer"));
+
 // ----------------------------------------------------------------------
 //COMPUTER MAPPING
 // ----------------------------------------------------------------------
@@ -1743,5 +1744,78 @@ $DATA_INJECTION_MAPPING[NETPORT_TYPE]['netport']['field']='netport';
 $DATA_INJECTION_MAPPING[NETPORT_TYPE]['netport']['name']=$DATAINJECTIONLANG["mappings"][4];
 $DATA_INJECTION_MAPPING[NETPORT_TYPE]['netport']['type']='integer';
 $DATA_INJECTION_MAPPING[NETPORT_TYPE]['netport']['table_type']='virtual';
+
+// ----------------------------------------------------------------------
+//SOFTWARE MAPPING
+// ----------------------------------------------------------------------
+$DATA_INJECTION_MAPPING[SOFTWARE_TYPE]['name']['table']='glpi_software';
+$DATA_INJECTION_MAPPING[SOFTWARE_TYPE]['name']['field']='name';
+$DATA_INJECTION_MAPPING[SOFTWARE_TYPE]['name']['name']=$LANG["common"][16];
+$DATA_INJECTION_MAPPING[SOFTWARE_TYPE]['name']['type']='text';
+
+$DATA_INJECTION_MAPPING[SOFTWARE_TYPE]['comments']['table']='glpi_software';
+$DATA_INJECTION_MAPPING[SOFTWARE_TYPE]['comments']['field']='comments';
+$DATA_INJECTION_MAPPING[SOFTWARE_TYPE]['comments']['name']=$LANG["common"][25];
+$DATA_INJECTION_MAPPING[SOFTWARE_TYPE]['comments']['type']='text';
+$DATA_INJECTION_MAPPING[SOFTWARE_TYPE]['comments']['table_type']='multitext';
+
+$DATA_INJECTION_MAPPING[SOFTWARE_TYPE]['location']['table']='glpi_dropdown_locations';
+$DATA_INJECTION_MAPPING[SOFTWARE_TYPE]['location']['field']='name';
+$DATA_INJECTION_MAPPING[SOFTWARE_TYPE]['location']['name']=$LANG["common"][15];
+$DATA_INJECTION_MAPPING[SOFTWARE_TYPE]['location']['linkfield']='location';
+$DATA_INJECTION_MAPPING[SOFTWARE_TYPE]['location']['type']='text';
+$DATA_INJECTION_MAPPING[SOFTWARE_TYPE]['location']['table_type']='dropdown';
+
+$DATA_INJECTION_MAPPING[SOFTWARE_TYPE]['manufacturer']['table']='glpi_dropdown_manufacturer';
+$DATA_INJECTION_MAPPING[SOFTWARE_TYPE]['manufacturer']['field']='name';
+$DATA_INJECTION_MAPPING[SOFTWARE_TYPE]['manufacturer']['name']=$LANG["common"][5];
+$DATA_INJECTION_MAPPING[SOFTWARE_TYPE]['manufacturer']['type']='text';
+$DATA_INJECTION_MAPPING[SOFTWARE_TYPE]['manufacturer']['linkfield']='FK_glpi_enterprise';
+$DATA_INJECTION_MAPPING[SOFTWARE_TYPE]['manufacturer']['table_type']='dropdown';
+
+$DATA_INJECTION_MAPPING[SOFTWARE_TYPE]['tech_num']['table']='glpi_users';
+$DATA_INJECTION_MAPPING[SOFTWARE_TYPE]['tech_num']['field']='name';
+$DATA_INJECTION_MAPPING[SOFTWARE_TYPE]['tech_num']['name']=$LANG["common"][10];
+$DATA_INJECTION_MAPPING[SOFTWARE_TYPE]['tech_num']['linkfield']='tech_num';
+$DATA_INJECTION_MAPPING[SOFTWARE_TYPE]['tech_num']['type']='text';
+$DATA_INJECTION_MAPPING[SOFTWARE_TYPE]['tech_num']['table_type']='user';
+
+$DATA_INJECTION_MAPPING[SOFTWARE_TYPE]['state']['table']='glpi_dropdown_state';
+$DATA_INJECTION_MAPPING[SOFTWARE_TYPE]['state']['field']='name';
+$DATA_INJECTION_MAPPING[SOFTWARE_TYPE]['state']['name']=$LANG["joblist"][0];
+$DATA_INJECTION_MAPPING[SOFTWARE_TYPE]['state']['linkfield']='state';
+$DATA_INJECTION_MAPPING[SOFTWARE_TYPE]['state']['table_type']='dropdown';
+$DATA_INJECTION_MAPPING[SOFTWARE_TYPE]['state']['type']='text';
+
+$DATA_INJECTION_MAPPING[LICENSE_TYPE]['serial']['table']='glpi_licenses';
+$DATA_INJECTION_MAPPING[LICENSE_TYPE]['serial']['field']='serial';
+$DATA_INJECTION_MAPPING[LICENSE_TYPE]['serial']['name']=$LANG["common"][19];
+$DATA_INJECTION_MAPPING[LICENSE_TYPE]['serial']['type']='text';
+
+$DATA_INJECTION_MAPPING[LICENSE_TYPE]['version']['table']='glpi_licenses';
+$DATA_INJECTION_MAPPING[LICENSE_TYPE]['version']['field']='version';
+$DATA_INJECTION_MAPPING[LICENSE_TYPE]['version']['name']=$LANG["rulesengine"][78];
+$DATA_INJECTION_MAPPING[LICENSE_TYPE]['version']['type']='text';
+
+$DATA_INJECTION_MAPPING[LICENSE_TYPE]['expire']['table']='glpi_licenses';
+$DATA_INJECTION_MAPPING[LICENSE_TYPE]['expire']['field']='expire';
+$DATA_INJECTION_MAPPING[LICENSE_TYPE]['expire']['name']=$LANG["software"][32];
+$DATA_INJECTION_MAPPING[LICENSE_TYPE]['expire']['type']='text';
+
+$DATA_INJECTION_MAPPING[LICENSE_TYPE]['expire']['table']='glpi_licenses';
+$DATA_INJECTION_MAPPING[LICENSE_TYPE]['expire']['field']='expire';
+$DATA_INJECTION_MAPPING[LICENSE_TYPE]['expire']['name']=$LANG["software"][32];
+$DATA_INJECTION_MAPPING[LICENSE_TYPE]['expire']['type']='text';
+
+$DATA_INJECTION_MAPPING[LICENSE_TYPE]['oem']['table']='glpi_licenses';
+$DATA_INJECTION_MAPPING[LICENSE_TYPE]['oem']['field']='expire';
+$DATA_INJECTION_MAPPING[LICENSE_TYPE]['oem']['name']=$LANG["software"][28];
+$DATA_INJECTION_MAPPING[LICENSE_TYPE]['oem']['type']='integer';
+
+$DATA_INJECTION_MAPPING[LICENSE_TYPE]['comments']['table']='glpi_software';
+$DATA_INJECTION_MAPPING[LICENSE_TYPE]['comments']['field']='comments';
+$DATA_INJECTION_MAPPING[LICENSE_TYPE]['comments']['name']=$LANG["common"][25];
+$DATA_INJECTION_MAPPING[LICENSE_TYPE]['comments']['type']='text';
+$DATA_INJECTION_MAPPING[LICENSE_TYPE]['comments']['table_type']='multitext';
 
 ?>

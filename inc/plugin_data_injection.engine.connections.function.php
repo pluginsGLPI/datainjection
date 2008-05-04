@@ -32,119 +32,6 @@
 // ----------------------------------------------------------------------
 
 /**
- * Add a Network Card (for computer, printer, ... but not for network device)
- * 
- * @param common_fields the common_fields
- * @param canadd indicates if user has right to add values
- *
-function addNetworkCard(&$common_fields, $canadd, $canconnect)
-{
-	global $DATAINJECTIONLANG, $IMPORT_NETFIELDS;
-	
-	$input=array();
-	$input["name"]=$DATAINJECTIONLANG["mappings"][2];			
-	$input["logical_number"]=0;
-	
-	
-	//Unset fields is mac or ip is empty
-	foreach ($IMPORT_NETFIELDS as $field) {
-		$dest= ($field=="port" ? "name" : $field);
-		if (isset($common_fields["$field"])) {
-			if ($common_fields["$field"] == EMPTY_VALUE) {
-				unset($common_fields["$field"]);
-			} else {
-				$input["$dest"]=$common_fields["$field"];			
-				
-			}			
-		}
-	}
-		
-	//Must add port ONLY if ip or mac or name of port is provided
-	if (isset($input["ifmac"]) || isset($input["ifaddr"]) || isset($input["name"]))
-	{	
-		addFullPort($common_fields,$input);
-
-		//Only try to create network plug and perform network connection is the option was set in the injection model
-		if ($canconnect) {
-			updatePort($common_fields, $canadd);
-		}
-	}
-}
-
-/*
- * Add port, check if it exists
- *
-function addFullPort (&$common_fields, $input)
-{
-	global $DB;
-	$ID=0;
-	$netport = new Netport;
-
-	//First, detect if port is already present
-	$sql = "SELECT ID FROM glpi_networking_ports WHERE on_device=".$common_fields["device_id"]." AND name='".$input["name"]."'";
-	$result = $DB->query($sql);
-	if ($DB->numrows($result) > 0) {
-		$ID = $DB->result($result,0,"ID");
-	}
-
-	if ($ID) {
-		$input["ID"]=$ID;
-		$common_fields["network_port_id"] = $ID;
-
-		$netport->update($input);		
-	} else {
-		$input["on_device"]=$common_fields["device_id"];
-		$input["device_type"]=$common_fields["device_type"];
-
-		$common_fields["network_port_id"] = $netport->add($input);
-	}	
-}
-
-function updatePort(&$common_fields, $canadd)
-{
-	global $DB;
-		
-	$netport = new Netport;
-	$input=array();
-	
-	if (isset($common_fields["network_port_id"]) && $common_fields["network_port_id"] != EMPTY_VALUE)
-	{
-		$common_fields["netpoint"]=addNetworkPlug($common_fields,$canadd);
-		$input["netpoint"]=$common_fields["netpoint"];
-		$input["ID"]=$common_fields["network_port_id"];
-		$netport->update($input);
-		addVlan($common_fields,$canadd);
-		connectWire($common_fields);
-	}
-}
-function addNetworkPlug($common_fields,$canadd)
-{
-	if (isset($common_fields["network_port_id"]) && isset($common_fields["plug"]))
-		return getDropdownValue(array(), array("table"=>"glpi_dropdown_netpoint"),$common_fields["plug"],$common_fields["FK_entities"],$canadd,(isset($common_fields["location"])?$common_fields["location"]:0));	  
-	else
-		return 0;
-}
-/* 
- * For all type device, except network
- * TODO : need to be improved (search by network name+port)
- *
-function connectWire($common_fields)
-{
-	global $DB;
-	
-	if (isset($common_fields["netpoint"]) && $common_fields["netpoint"]>0 &&
-		isset($common_fields["network_port_id"]) && $common_fields["network_port_id"]>0)
-	{
-		$sql = "SELECT ID FROM glpi_networking_ports WHERE ID!=".$common_fields["network_port_id"]." AND netpoint=".$common_fields["netpoint"]." AND device_type=".NETWORKING_TYPE;
-		$result=$DB->query($sql);
-		if($DB->numrows($result)>0)
-			$DB->query("INSERT INTO glpi_networking_wire (end1,end2) VALUES (".$common_fields["network_port_id"].",".$DB->result($result,0,"ID").")");
-	}
-}
-
-*/
-
-/**
  * Add a Network Ports (for network device only)
  * 
  * @param common_fields the common_fields
@@ -277,16 +164,14 @@ function getEntityParentId($parent_name)
 		return array("ID"=>0);	
 }
 
-function updateWithTemplate($common_fields)
+function updateWithTemplate(&$fields,$type)
 {
-	if (isset($common_fields["template"]))
+	if (isset($fields["template"]))
 	{
-		$template_id = $common_fields["template"];
-		$tpl = getInstance($common_fields["device_type"]);
-		$tpl->getFromDB($template_id);
-	
-		$item = getInstance($common_fields["device_type"]);
-		$item->getFromDB($common_fields["device_id"]);
+		$fields["ID"]=$fields["template"];
+
+		$tpl = getInstance($type);
+		$tpl->getFromDB($fields["ID"]);
 	
 		//Unset fields from template
 		unset($tpl->fields["ID"]);
@@ -296,11 +181,9 @@ function updateWithTemplate($common_fields)
 		
 		foreach ($tpl->fields as $key=>$value)
 		{
-			if ($value != EMPTY_VALUE && ( !isset($item->fields[$key]) || $item->fields[$key] == EMPTY_VALUE || $item->fields[$key] == DROPDOWN_DEFAULT_VALUE))
-				$item->fields[$key]=$value;
+			if ($value != EMPTY_VALUE && ( !isset($fields[$key]) || $fields[$key] == EMPTY_VALUE || $fields[$key] == DROPDOWN_DEFAULT_VALUE))
+				$fields[$key]=$value;
 		}
-		
-		$item->update($item->fields);
 	}	
 }
 ?>
