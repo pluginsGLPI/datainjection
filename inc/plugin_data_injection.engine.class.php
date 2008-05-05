@@ -85,7 +85,7 @@ class DataInjectionEngine
 	{
 		$result = new DataInjectionResults;
 	
-		$line = reformatDatasBeforeCheck($this->getModel(),$line,$result);
+		$line = reformatDatasBeforeCheck($this->getModel(),$line,$this->getEntity(),$result);
 		
 		if (!checkLine($this->getModel(),$line,$result)) {
 			return $result;
@@ -108,7 +108,8 @@ class DataInjectionEngine
 				$field = getFieldValue(
 						$result,
 						$mapping, 
-						$mapping_definition,$line[$i],
+						$mapping_definition,
+						$line[$i],
 						$this->getEntity(),
 						$db_fields[$mapping->getMappingType()],
 						$this->getModel()->getCanAddDropdown());

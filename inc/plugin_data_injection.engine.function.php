@@ -79,9 +79,9 @@ function lookForNecessaryMappings($model)
  * 
  * @return the line modified
  */
-function reformatDatasBeforeCheck ($model,$line,&$result)
+function reformatDatasBeforeCheck ($model,$line,$entity,&$result)
 {
-	global $DATA_INJECTION_MAPPING;
+	global $DATA_INJECTION_MAPPING,$CFG_GLPI;
 
 	$manu="";
 	$rank_manu = -1;
@@ -173,7 +173,9 @@ function reformatDatasBeforeCheck ($model,$line,&$result)
 					&& $mapping_definition["table_type"]=="dropdown" 
 					&& $mapping->getValue()!="location"
 					&& $mapping->getValue()!="manufacturer")  {
-				$id = externalImportDropdown($mapping_definition["table"], $line[$rank], -1, 
+				(in_array($mapping_definition["table"],$CFG_GLPI["specif_entities_tables"])?$per_entity=$entity:$per_entity=-1);
+						
+				$id = externalImportDropdown($mapping_definition["table"], $line[$rank], $per_entity, 
 					array("manufacturer" => $manu), '', $model->getCanAddDropdown());
 				$val = getDropdownMinimalName($mapping_definition["table"], $id);
 				if ($id<=0) {
@@ -850,7 +852,7 @@ function isAllEmpty ($fields) {
 function getFieldValue($result, $mapping, $mapping_definition,$field_value,$entity,$obj,$canadd)
 {
 	global $DB, $CFG_GLPI;
-	
+
 	if (isset($mapping_definition["table_type"]))
 	{
 		switch ($mapping_definition["table_type"])
