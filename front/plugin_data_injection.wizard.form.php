@@ -45,6 +45,8 @@ $NEEDED_ITEMS=array("ocsng","user","contact","enterprise","contract","networking
 	"rule.dictionnary.software","device");
 include (GLPI_ROOT."/inc/includes.php");
 
+plugin_data_injection_loadHook("variables");
+
 commonHeader($DATAINJECTIONLANG["config"][1],$_SERVER["PHP_SELF"],"plugins","data_injection");
 
 $load=1;

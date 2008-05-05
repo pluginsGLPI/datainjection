@@ -90,28 +90,32 @@ function reformatDatasBeforeCheck ($model,$line,&$result)
 	// First pass : empty check + find the manufacturer
 	foreach ($mappings as $mapping)
 	{
-		$mapping_definition = $DATA_INJECTION_MAPPING[$mapping->getMappingType()][$mapping->getValue()];
 		$rank = $mapping->getRank();
-			
-		//If a value is set to NULL -> ignore the value during injection
-		if (!isset($line[$rank]) || $line[$rank] == "NULL") {
-			$line[$rank]=EMPTY_VALUE;
-		}	
-		// Apply manufacturer dictionnary
-		else if (isset($mapping_definition["table_type"]) 
-			&& $mapping_definition["table_type"]=="dropdown"
-			&& $mapping->getValue() == "manufacturer") {
-
-			$rank_manu = $rank;
-			
-			// TODO : probably a bad idea to add new value in check, but...
-			$id = externalImportDropdown('glpi_dropdown_manufacturer', $line[$rank], -1, array(), '', $model->getCanAddDropdown());
-			$manu = getDropdownMinimalName('glpi_dropdown_manufacturer', $id);
-
-			if ($id<=0) {
-				$result->addInjectionMessage(WARNING_NOTFOUND, $line[$rank]);
+		
+		if ($mapping->getValue() != NOT_MAPPED)
+		{
+			$mapping_definition = $DATA_INJECTION_MAPPING[$mapping->getMappingType()][$mapping->getValue()];
+				
+			//If a value is set to NULL -> ignore the value during injection
+			if (!isset($line[$rank]) || $line[$rank] == "NULL") {
+				$line[$rank]=EMPTY_VALUE;
+			}	
+			// Apply manufacturer dictionnary
+			else if (isset($mapping_definition["table_type"]) 
+				&& $mapping_definition["table_type"]=="dropdown"
+				&& $mapping->getValue() == "manufacturer") {
+	
+				$rank_manu = $rank;
+				
+				// TODO : probably a bad idea to add new value in check, but...
+				$id = externalImportDropdown('glpi_dropdown_manufacturer', $line[$rank], -1, array(), '', $model->getCanAddDropdown());
+				$manu = getDropdownMinimalName('glpi_dropdown_manufacturer', $id);
+	
+				if ($id<=0) {
+					$result->addInjectionMessage(WARNING_NOTFOUND, $line[$rank]);
+				}
+				$line[$rank] = $manu;
 			}
-			$line[$rank] = $manu;
 		}
 	}
 
@@ -149,7 +153,7 @@ function reformatDatasBeforeCheck ($model,$line,&$result)
 		if ($line[$rank] != EMPTY_VALUE && $mapping->getValue() != NOT_MAPPED)
 		{
 			$mapping_definition = $DATA_INJECTION_MAPPING[$mapping->getMappingType()][$mapping->getValue()];
-			
+
 			// Check some types 
 			switch ($mapping_definition["type"])
 			{
@@ -402,10 +406,10 @@ function findUser($value,$entity)
 		if (in_array($entity,$entities))
 			return $ID;
 		else
-			return EMPTY_VALUE;	
+			return 0;	
 	}
 	else
-		return EMPTY_VALUE;		
+		return 0;		
 }
 
 
@@ -818,6 +822,9 @@ function addNecessaryFields($model,$mapping,$mapping_definition,$entity,$type,&$
 			
 			break;
 		default:
+			//Add entity field for plugins
+			if ($type > 1000)
+				addField($fields,"FK_entities",$entity);
 			break;	
 	}
 	unsetFields($fields,$unsetFields);

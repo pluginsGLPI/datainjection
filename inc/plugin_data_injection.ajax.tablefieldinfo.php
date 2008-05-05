@@ -39,6 +39,8 @@ include("../plugin_data_injection.includes.php");
 
 global $DATAINJECTIONLANG;
 
+plugin_data_injection_loadHook("variables");
+
 if(isset($_POST['id']))
 	{
 	echo "<select name='field[".$_POST['id']."][1]' style='width: 150px'>";
