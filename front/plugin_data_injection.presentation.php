@@ -37,7 +37,7 @@ if (!defined('GLPI_ROOT')) {
 $NEEDED_ITEMS=array("data_injection");
 include (GLPI_ROOT."/inc/includes.php");
 
-commonHeader($DATAINJECTIONLANG["config"][1], $_SERVER["PHP_SELF"],"plugins","data_injection");
+commonHeader($DATAINJECTIONLANG["name"][1], $_SERVER["PHP_SELF"],"plugins","data_injection");
 
 initSession();
 $_SESSION["plugin_data_injection"]["load"]="presentation";
