@@ -497,7 +497,7 @@ $DATA_INJECTION_INFOS[CONTACT_TYPE]['type']['input_type']='dropdown';
 // ----------------------------------------------------------------------
 $DATA_INJECTION_INFOS[ENTERPRISE_TYPE]['notes']['table']='glpi_enterprises';
 $DATA_INJECTION_INFOS[ENTERPRISE_TYPE]['notes']['field']='notes';
-$DATA_INJECTION_INFOS[ENTERPRISE_TYPE]['notes']['name']=$LANG["reminder"][2];
+$DATA_INJECTION_INFOS[ENTERPRISE_TYPE]['notes']['name']=$LANG["title"][37];
 $DATA_INJECTION_INFOS[ENTERPRISE_TYPE]['notes']['type']='text';
 $DATA_INJECTION_INFOS[ENTERPRISE_TYPE]['notes']['table_type']='multitext';
 
@@ -533,7 +533,7 @@ $DATA_INJECTION_INFOS[ENTERPRISE_TYPE]['contact']['input_type']='dropdown';
 // ----------------------------------------------------------------------
 $DATA_INJECTION_INFOS[CONSUMABLE_TYPE]['notes']['table']='glpi_consumables_type';
 $DATA_INJECTION_INFOS[CONSUMABLE_TYPE]['notes']['field']='notes';
-$DATA_INJECTION_INFOS[CONSUMABLE_TYPE]['notes']['name']=$LANG["reminder"][2];
+$DATA_INJECTION_INFOS[CONSUMABLE_TYPE]['notes']['name']=$LANG["title"][37];
 $DATA_INJECTION_INFOS[CONSUMABLE_TYPE]['notes']['type']='text';
 $DATA_INJECTION_INFOS[CONSUMABLE_TYPE]['notes']['table_type']='multitext';
 
@@ -579,7 +579,7 @@ $DATA_INJECTION_INFOS[CONSUMABLE_TYPE]['location']['input_type']='dropdown';
 // ----------------------------------------------------------------------
 $DATA_INJECTION_INFOS[CARTRIDGE_TYPE]['notes']['table']='glpi_cartridges_type';
 $DATA_INJECTION_INFOS[CARTRIDGE_TYPE]['notes']['field']='notes';
-$DATA_INJECTION_INFOS[CARTRIDGE_TYPE]['notes']['name']=$LANG["reminder"][2];
+$DATA_INJECTION_INFOS[CARTRIDGE_TYPE]['notes']['name']=$LANG["title"][37];
 $DATA_INJECTION_INFOS[CARTRIDGE_TYPE]['notes']['type']='text';
 $DATA_INJECTION_INFOS[CARTRIDGE_TYPE]['notes']['table_type']='multitext';
 
