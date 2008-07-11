@@ -1059,9 +1059,11 @@ function logAddOrUpdate($device_type,$device_id,$action_type)
  */
 function filterFields(&$fields,$fields_from_db,$can_overwrite)
 {
+	
 	//If no right to overwrite existing fields in DB -> unset the field
 	foreach ($fields as $field=>$value)
-		if ($field != "ID" && !$can_overwrite && (isset($fields_from_db[$field])))
+		//If fields exists in DB (and is not empty) and if we don't have right to override fields
+		if ( (isset($fields_from_db[$field]) && $fields_from_db[$field] !='')  && ($field != "ID" && !$can_overwrite ))
 			unset ($fields[$field]);
 
 }
