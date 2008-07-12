@@ -265,7 +265,7 @@ function plugin_data_injection_loadHook($hook_name, $params = array ()) {
 		if (function_exists($function)) {
 			$function ($type, $params);
 		}
-	} else {
+	} else if (isset($PLUGIN_HOOKS['plugin_types'])){
 		//Browse all plugins
 		foreach ($PLUGIN_HOOKS['plugin_types'] as $type => $name) {
 			$function = 'plugin_' . $name . '_data_injection_' . $hook_name;
