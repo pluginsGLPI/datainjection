@@ -1051,7 +1051,7 @@ function logAddOrUpdate($device_type,$device_id,$action_type)
 	}
 }
 
-/*
+/**
  * Unset the fields when user have no rights to add or modify
  * @param fields the fields to insert into DB
  * @param fields_from_db fields already in DB
@@ -1059,21 +1059,22 @@ function logAddOrUpdate($device_type,$device_id,$action_type)
  */
 function filterFields(&$fields,$fields_from_db,$can_overwrite,$type)
 {
-	global $DATA_INJECTION_MAPPING;
-	
 	//If no right to overwrite existing fields in DB -> unset the field
 	foreach ($fields as $field=>$value)
-		//If 
-		//  * fields exists in DB (and is not empty) 
-		//  * field exists in DB, comes from a dropdown, and value is 0
-		// and if we don't have right to override fields
-		if (($field != "ID" && !$can_overwrite ) &&
-			((isset($fields_from_db[$field]) && isset($DATA_INJECTION_MAPPING[$type][$field]['table_type']) && $DATA_INJECTION_MAPPING[$type][$field]['table_type'] == "dropdown" && $fields_from_db[$field] !=0) ||
-			(isset($fields_from_db[$field]) && $fields_from_db[$field] !=EMPTY_VALUE)))
-				unset ($fields[$field]);
+	{
+		if ($fields_from_db[$field] && !$can_overwrite)
+		{
+			$name = getMappingNameByTypeAndValue($type,$field);
+			if ( $field == "ID" || ((isset($DATA_INJECTION_MAPPING[$type][$name]['table_type']) &&
+			 	$DATA_INJECTION_MAPPING[$type][$name]['table_type'] == "dropdown")
+			 	&& $fields_from_db[$field] > 0 ) || $fields_from_db[$field] !=EMPTY_VALUE)
+			 		unset ($fields[$field]);
+		}	
+		
+	}
 }
 
-/*
+/**
  * Create a tree of locations
  * @param location the full tree of locations
  * @param entity the current entity
@@ -1092,7 +1093,7 @@ function checkLocation ($location, $entity, $canadd)
 	return $location_id;	
 }
 
-/*
+/**
  * Add a location at a specified level
  * @param location the full tree of locations
  * @param entity the current entity
@@ -1122,7 +1123,7 @@ function addLocation($location,$entity,$parentid,$canadd)
 	}	
 }
 
-/*
+/**
  * Reformat date from dd-mm-yyyy to yyyy-mm-dd
  * @param original_date the original date
  * @return the date reformated, if needed

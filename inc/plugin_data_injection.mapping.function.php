@@ -72,6 +72,17 @@ function getMappingDefinitionByTypeAndName($type,$name)
 		return null;	
 }
 
+function getMappingNameByTypeAndValue($type,$value)
+{
+	global $DATA_INJECTION_MAPPING;
+	
+	foreach ($DATA_INJECTION_MAPPING[$type] as $name => $mapping)
+		if ($name == $value || (isset($mapping["linkfield"]) && $mapping["linkfield"] == $value))
+			return $name;
+	
+	return "";			
+}
+
 function getAllMandatoriesMappings($type,$model)
 {
 	global $DATA_INJECTION_MAPPING;
