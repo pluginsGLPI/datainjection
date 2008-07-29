@@ -185,7 +185,7 @@ class DataInjectionEngine
 		}	
 		else if ($this->getModel()->getBehaviorUpdate())
 		{
-			filterFields($fields,$fields_from_db,$this->getModel()->getCanOverwriteIfNotEmpty());
+			filterFields($fields,$fields_from_db,$this->getModel()->getCanOverwriteIfNotEmpty(),$this->getModel()->getDeviceType());
 			$fields["ID"] = $ID;
 
 			// Save fields from DB (mainly for location if not provided in CSV)
@@ -251,7 +251,7 @@ class DataInjectionEngine
 						else
 						{
 							$fields["ID"] = $ID;
-							filterFields($fields,$fields_from_db,$this->getModel()->getCanOverwriteIfNotEmpty());
+							filterFields($fields,$fields_from_db,$this->getModel()->getCanOverwriteIfNotEmpty(),$type);
 							//Item aleady in DB -> update
 							addCommonFields($db_fields[COMMON_FIELDS],$type,$fields,$this->entity,$ID);
 							$obj->update($fields);

@@ -1057,15 +1057,20 @@ function logAddOrUpdate($device_type,$device_id,$action_type)
  * @param fields_from_db fields already in DB
  * @param can_overwrite indicates if the model allows datas already in DB to be overwrited
  */
-function filterFields(&$fields,$fields_from_db,$can_overwrite)
+function filterFields(&$fields,$fields_from_db,$can_overwrite,$type)
 {
+	global $DATA_INJECTION_MAPPING;
 	
 	//If no right to overwrite existing fields in DB -> unset the field
 	foreach ($fields as $field=>$value)
-		//If fields exists in DB (and is not empty) and if we don't have right to override fields
-		if ( (isset($fields_from_db[$field]) && $fields_from_db[$field] !='')  && ($field != "ID" && !$can_overwrite ))
-			unset ($fields[$field]);
-
+		//If 
+		//  * fields exists in DB (and is not empty) 
+		//  * field exists in DB, comes from a dropdown, and value is 0
+		// and if we don't have right to override fields
+		if (($field != "ID" && !$can_overwrite ) &&
+			((isset($fields_from_db[$field]) && isset($DATA_INJECTION_MAPPING[$type][$field]['table_type']) && $DATA_INJECTION_MAPPING[$type][$field]['table_type'] == "dropdown" && $fields_from_db[$field] !=0) ||
+			(isset($fields_from_db[$field]) && $fields_from_db[$field] !=EMPTY_VALUE)))
+				unset ($fields[$field]);
 }
 
 /*
