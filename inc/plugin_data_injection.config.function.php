@@ -201,8 +201,7 @@ function plugin_data_injection_createfirstaccess($ID) {
 }
 
 function plugin_data_injection_createaccess($ID) {
-
-	GLOBAL $DB;
+	global $DB;
 	
 	$Profile = new Profile();
 	$Profile->GetfromDB($ID);
