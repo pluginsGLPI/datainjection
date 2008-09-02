@@ -242,6 +242,11 @@ $DATA_INJECTION_INFOS[MONITOR_TYPE]['template']['field']='tplname';
 $DATA_INJECTION_INFOS[MONITOR_TYPE]['template']['name']=$LANG["common"][13];
 $DATA_INJECTION_INFOS[MONITOR_TYPE]['template']['input_type']='dropdown';
 
+$DATA_INJECTION_INFOS[MONITOR_TYPE]['is_global']['table']='glpi_monitors';
+$DATA_INJECTION_INFOS[MONITOR_TYPE]['is_global']['field']='is_global';
+$DATA_INJECTION_INFOS[MONITOR_TYPE]['is_global']['name']=$LANG["peripherals"][33];
+$DATA_INJECTION_INFOS[MONITOR_TYPE]['is_global']['input_type']='dropdown';
+
 // ----------------------------------------------------------------------
 //PRINTER INFOS
 // ----------------------------------------------------------------------
@@ -301,6 +306,11 @@ $DATA_INJECTION_INFOS[PRINTER_TYPE]['template']['table']='glpi_printers';
 $DATA_INJECTION_INFOS[PRINTER_TYPE]['template']['field']='tplname';
 $DATA_INJECTION_INFOS[PRINTER_TYPE]['template']['name']=$LANG["common"][13];
 $DATA_INJECTION_INFOS[PRINTER_TYPE]['template']['input_type']='dropdown';
+
+$DATA_INJECTION_INFOS[PRINTER_TYPE]['is_global']['table']='glpi_printers';
+$DATA_INJECTION_INFOS[PRINTER_TYPE]['is_global']['field']='is_global';
+$DATA_INJECTION_INFOS[PRINTER_TYPE]['is_global']['name']=$LANG["peripherals"][33];
+$DATA_INJECTION_INFOS[PRINTER_TYPE]['is_global']['type']='dropdown';
 
 // ----------------------------------------------------------------------
 //PHONE INFOS
@@ -362,6 +372,11 @@ $DATA_INJECTION_INFOS[PHONE_TYPE]['template']['field']='tplname';
 $DATA_INJECTION_INFOS[PHONE_TYPE]['template']['name']=$LANG["common"][13];
 $DATA_INJECTION_INFOS[PHONE_TYPE]['template']['input_type']='dropdown';
 
+$DATA_INJECTION_INFOS[PHONE_TYPE]['is_global']['table']='glpi_phones';
+$DATA_INJECTION_INFOS[PHONE_TYPE]['is_global']['field']='is_global';
+$DATA_INJECTION_INFOS[PHONE_TYPE]['is_global']['name']=$LANG["peripherals"][33];
+$DATA_INJECTION_INFOS[PHONE_TYPE]['is_global']['input_type']='dropdown';
+
 // ----------------------------------------------------------------------
 //PERIPHERAL INFOS
 // ----------------------------------------------------------------------
@@ -416,6 +431,11 @@ $DATA_INJECTION_INFOS[PERIPHERAL_TYPE]['contract']['table']='glpi_contracts';
 $DATA_INJECTION_INFOS[PERIPHERAL_TYPE]['contract']['field']='comments';
 $DATA_INJECTION_INFOS[PERIPHERAL_TYPE]['contract']['name']=$LANG["financial"][1];
 $DATA_INJECTION_INFOS[PERIPHERAL_TYPE]['contract']['input_type']='dropdown';
+
+$DATA_INJECTION_INFOS[PERIPHERAL_TYPE]['is_global']['table']='glpi_peripherals';
+$DATA_INJECTION_INFOS[PERIPHERAL_TYPE]['is_global']['field']='is_global';
+$DATA_INJECTION_INFOS[PERIPHERAL_TYPE]['is_global']['name']=$LANG["peripherals"][33];
+$DATA_INJECTION_INFOS[PERIPHERAL_TYPE]['is_global']['input_type']='dropdown';
 
 // ----------------------------------------------------------------------
 //NETWORKING INFOS
@@ -476,6 +496,11 @@ $DATA_INJECTION_INFOS[NETWORKING_TYPE]['template']['table']='glpi_networking';
 $DATA_INJECTION_INFOS[NETWORKING_TYPE]['template']['field']='tplname';
 $DATA_INJECTION_INFOS[NETWORKING_TYPE]['template']['name']=$LANG["common"][13];
 $DATA_INJECTION_INFOS[NETWORKING_TYPE]['template']['input_type']='dropdown';
+
+$DATA_INJECTION_INFOS[NETWORKING_TYPE]['is_global']['table']='glpi_networking';
+$DATA_INJECTION_INFOS[NETWORKING_TYPE]['is_global']['field']='is_global';
+$DATA_INJECTION_INFOS[NETWORKING_TYPE]['is_global']['name']=$LANG["peripherals"][33];
+$DATA_INJECTION_INFOS[NETWORKING_TYPE]['is_global']['input_type']='dropdown';
 
 // ----------------------------------------------------------------------
 //CONTACT INFOS

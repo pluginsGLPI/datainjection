@@ -385,6 +385,11 @@ $DATA_INJECTION_MAPPING[MONITOR_TYPE]['template']['table_type']='template';
 $DATA_INJECTION_MAPPING[MONITOR_TYPE]['template']['type']='text';
 $DATA_INJECTION_MAPPING[MONITOR_TYPE]['template']['linkfield']='template';
 
+$DATA_INJECTION_MAPPING[MONITOR_TYPE]['is_global']['table']='glpi_monitors';
+$DATA_INJECTION_MAPPING[MONITOR_TYPE]['is_global']['field']='is_global';
+$DATA_INJECTION_MAPPING[MONITOR_TYPE]['is_global']['name']=$LANG["peripherals"][33];
+$DATA_INJECTION_MAPPING[MONITOR_TYPE]['is_global']['type']='integer';
+
 // ----------------------------------------------------------------------
 //PRINTER MAPPING
 // ----------------------------------------------------------------------
@@ -545,6 +550,11 @@ $DATA_INJECTION_MAPPING[PRINTER_TYPE]['template']['table_type']='template';
 $DATA_INJECTION_MAPPING[PRINTER_TYPE]['template']['type']='text';
 $DATA_INJECTION_MAPPING[PRINTER_TYPE]['template']['linkfield']='template';
 
+$DATA_INJECTION_MAPPING[PRINTER_TYPE]['is_global']['table']='glpi_printers';
+$DATA_INJECTION_MAPPING[PRINTER_TYPE]['is_global']['field']='is_global';
+$DATA_INJECTION_MAPPING[PRINTER_TYPE]['is_global']['name']=$LANG["peripherals"][33];
+$DATA_INJECTION_MAPPING[PRINTER_TYPE]['is_global']['type']='integer';
+
 // ----------------------------------------------------------------------
 //PHONE MAPPING
 // ----------------------------------------------------------------------
@@ -697,6 +707,11 @@ $DATA_INJECTION_MAPPING[PHONE_TYPE]['template']['name']=$LANG["common"][13];
 $DATA_INJECTION_MAPPING[PHONE_TYPE]['template']['table_type']='template';
 $DATA_INJECTION_MAPPING[PHONE_TYPE]['template']['type']='text';
 $DATA_INJECTION_MAPPING[PHONE_TYPE]['template']['linkfield']='template';
+
+$DATA_INJECTION_MAPPING[PHONE_TYPE]['is_global']['table']='glpi_monitors';
+$DATA_INJECTION_MAPPING[PHONE_TYPE]['is_global']['field']='is_global';
+$DATA_INJECTION_MAPPING[PHONE_TYPE]['is_global']['name']=$LANG["peripherals"][33];
+$DATA_INJECTION_MAPPING[PHONE_TYPE]['is_global']['type']='integer';
 
 // ----------------------------------------------------------------------
 //INFOCOM MAPPING
@@ -962,6 +977,11 @@ $DATA_INJECTION_MAPPING[NETWORKING_TYPE]['template']['name']=$LANG["common"][13]
 $DATA_INJECTION_MAPPING[NETWORKING_TYPE]['template']['table_type']='template';
 $DATA_INJECTION_MAPPING[NETWORKING_TYPE]['template']['type']='text';
 $DATA_INJECTION_MAPPING[NETWORKING_TYPE]['template']['linkfield']='template';
+
+$DATA_INJECTION_MAPPING[NETWORKING_TYPE]['is_global']['table']='glpi_networking';
+$DATA_INJECTION_MAPPING[NETWORKING_TYPE]['is_global']['field']='is_global';
+$DATA_INJECTION_MAPPING[NETWORKING_TYPE]['is_global']['name']=$LANG["peripherals"][33];
+$DATA_INJECTION_MAPPING[NETWORKING_TYPE]['is_global']['type']='integer';
 
 // ----------------------------------------------------------------------
 //USER MAPPING
@@ -1291,6 +1311,11 @@ $DATA_INJECTION_MAPPING[PERIPHERAL_TYPE]['contract']['name']=$LANG["financial"][
 $DATA_INJECTION_MAPPING[PERIPHERAL_TYPE]['contract']['type']='text';
 $DATA_INJECTION_MAPPING[PERIPHERAL_TYPE]['contract']['linkfield']='contract';
 $DATA_INJECTION_MAPPING[PERIPHERAL_TYPE]['contract']['table_type']='single';
+
+$DATA_INJECTION_MAPPING[PERIPHERAL_TYPE]['is_global']['table']='glpi_peripherals';
+$DATA_INJECTION_MAPPING[PERIPHERAL_TYPE]['is_global']['field']='is_global';
+$DATA_INJECTION_MAPPING[PERIPHERAL_TYPE]['is_global']['name']=$LANG["peripherals"][33];
+$DATA_INJECTION_MAPPING[PERIPHERAL_TYPE]['is_global']['type']='integer';
 
 // ----------------------------------------------------------------------
 //ENTERPRISE MAPPING

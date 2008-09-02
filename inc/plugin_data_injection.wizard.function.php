@@ -1228,6 +1228,9 @@ function fillInfoStep($target,$error)
 							case "tplname":
 								dropdownTemplate("field[$key][1]",$_SESSION["glpiactive_entity"],$DATA_INJECTION_INFOS[$value->getInfosType()][$value->getValue()]["table"]);
 								break;
+							case "is_global":
+								dropdownSimpleManagement("field[$key][1]");
+								break;
 							default:
 								dropdownValue($DATA_INJECTION_INFOS[$value->getInfosType()][$value->getValue()]["table"], "field[$key][1]", $value->getInfosText(), 0, $_SESSION["glpiactive_entity"]);
 								break;						 

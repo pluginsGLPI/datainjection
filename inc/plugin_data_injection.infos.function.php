@@ -59,4 +59,11 @@ function getAllInfosDefinitionsByType($type)
 	return 	$mapping_parameters;
 }
 
+function dropdownSimpleManagement($name)
+{
+	global $LANG;
+	$values[0]=$LANG["peripherals"][32];
+	$values[1]=$LANG["peripherals"][31];
+	dropdownArrayValues($name,$values);	
+}
 ?>
