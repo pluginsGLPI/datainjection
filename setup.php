@@ -71,6 +71,7 @@ function plugin_version_data_injection() {
 		return array (
 			'name' => $DATAINJECTIONLANG["name"][1], 
 			'minGlpiVersion' => '0.71', 
+			'maxGlpiVersion' => '0.71', 
 			'version' => '1.2');
 	}
 
