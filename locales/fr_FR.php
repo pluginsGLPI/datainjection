@@ -206,6 +206,7 @@ $DATAINJECTIONLANG["mappings"][1] = "Nombre de ports";
 $DATAINJECTIONLANG["mappings"][2] = "Port réseau";
 $DATAINJECTIONLANG["mappings"][3] = "Connecté à : Nom actif";
 $DATAINJECTIONLANG["mappings"][4] = "Connecté à : Numéro de port";
+$DATAINJECTIONLANG["mappings"][5] = "Ordinateur";
 
 $DATAINJECTIONLANG["history"][1] = "depuis un fichier CSV";
 $DATAINJECTIONLANG["logevent"][1] = "injection d'un fichier CSV.";

@@ -30,7 +30,7 @@
 
 function getAllInfosDefinitionsTypes($primary_type)
 {
-	global $CFG_GLPI;
+	global $CFG_GLPI,$CONNECT_TO_COMPUTER_TYPES,$DATAINJECTIONLANG;
 	$types = array();
 	$commonitem = new CommonItem;
 
@@ -40,6 +40,10 @@ function getAllInfosDefinitionsTypes($primary_type)
 	if (in_array($primary_type, $CFG_GLPI["infocom_types"])) {
 		$commonitem->setType(INFOCOM_TYPE);
 		$types[] = array(INFOCOM_TYPE,$commonitem->getType());		
+	}
+
+	if (in_array($primary_type,$CONNECT_TO_COMPUTER_TYPES)) {
+		$types[] = array(COMPUTER_CONNECTION_TYPE,$DATAINJECTIONLANG["mappings"][5]);		
 	}
 
 	asort($types);

@@ -186,4 +186,24 @@ function updateWithTemplate(&$fields,$type)
 		}
 	}	
 }
+
+function connectPeripheral($fields)
+{
+	global $DB;
+	if (isset($fields["name"]) || isset($fields["serial"]) || isset($fields["otherserial"]))
+	{
+		//Look for a not deleted, not template computer in the entity
+		$sql = "SELECT ID FROM glpi_computers WHERE deleted=0 AND is_template=0 AND FK_entities=".$fields["FK_entities"];
+		
+		foreach (array("name","serial","otherserial") as $tmpfield)
+		{
+			if (isset($fields[$tmpfield]))
+				$sql.=" AND $tmpfield='".addslashes($fields[$tmpfield])."'";
+		}
+		
+		$result = $DB->query($sql);
+		if ($DB->numrows($result) == 1)
+			Connect($fields["device_id"],$DB->result($result,0,"ID"),PERIPHERAL_TYPE);
+	}
+}
 ?>

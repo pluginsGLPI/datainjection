@@ -522,12 +522,17 @@ function dataAlreadyInDB($type,$fields,$mapping_definition,$model)
  */
 function getInstance($device_type)
 {
-		if ($device_type == NETPORT_TYPE)
-			return new Netport;
-			
-		$commonitem = new CommonItem;
-		$commonitem->setType($device_type,1);
-		return $commonitem->obj;
+		switch ($device_type)
+		{
+			case NETPORT_TYPE:
+				return new Netport;
+			case COMPUTER_CONNECTION_TYPE:
+				return null;
+			default:
+				$commonitem = new CommonItem;
+				$commonitem->setType($device_type,1);
+				return $commonitem->obj;
+		}
 }
 
 /*
@@ -773,7 +778,7 @@ function addNecessaryFields($model,$mapping,$mapping_definition,$entity,$type,&$
 			addField($fields,"FK_entities",$entity);
 			break;
 		case PERIPHERAL_TYPE:
-			$unsetFields = array("contract");
+			$unsetFields = array("contract","computer_name","computer_serial","computer_otherserial");
 			addField($fields,"FK_entities",$entity);
 			break;
 		case GROUP_TYPE:
@@ -823,6 +828,11 @@ function addNecessaryFields($model,$mapping,$mapping_definition,$entity,$type,&$
 			
 			
 			break;
+		case COMPUTER_CONNECTION_TYPE:
+			//Set the device_id
+			addField($fields,"FK_entities",$entity);
+			addField($fields,"device_id",$common_fields["device_id"]);
+		 	break;
 		default:
 			//Add entity field for plugins
 			if ($type > 1000)
@@ -959,6 +969,9 @@ function processBeforeEnd($result,$model,$type,$fields,&$common_fields)
 			addNetpoint($result,$common_fields,$model->getCanAddDropdown());
 			addNetworkingWire($result,$common_fields,$model->getCanOverwriteIfNotEmpty());
 		break;
+		case COMPUTER_CONNECTION_TYPE:
+			connectPeripheral($fields);
+		break;	
 		default:
 		break;
 	}

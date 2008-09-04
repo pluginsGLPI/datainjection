@@ -30,7 +30,7 @@
 
 function getAllMappingsDefinitionsTypes($primary_type)
 {
-	global $DATAINJECTIONLANG, $CFG_GLPI;
+	global $DATAINJECTIONLANG,$LANG, $CFG_GLPI,$CONNECT_TO_COMPUTER_TYPES;
 	
 	$types = array();
 	$commonitem = new CommonItem;
@@ -45,6 +45,10 @@ function getAllMappingsDefinitionsTypes($primary_type)
 	
 	if (in_array($primary_type, $CFG_GLPI["netport_types"])) {
 		$types[] = array(NETPORT_TYPE,$DATAINJECTIONLANG["mappings"][2]);		
+	}
+
+	if (in_array($primary_type,$CONNECT_TO_COMPUTER_TYPES)) {
+		$types[] = array(COMPUTER_CONNECTION_TYPE,$DATAINJECTIONLANG["mappings"][5]);		
 	}
 	
 	asort($types);
