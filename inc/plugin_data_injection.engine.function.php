@@ -739,7 +739,10 @@ function addCommonFields(&$common_fields,$type,$fields,$entity,$ID)
 function addNecessaryFields($model,$mapping,$mapping_definition,$entity,$type,&$fields,$common_fields)
 {
 	global $DB;
-
+	
+	//Internal field to identify object injected with data_injection
+	addField($fields,"_from_data_injection",1);
+	
 	$unsetFields = array();
 	switch ($type)
 	{
