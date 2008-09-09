@@ -186,7 +186,7 @@ function plugin_data_injection_changeprofile() {
 
 function plugin_data_injection_createfirstaccess($ID) {
 
-	GLOBAL $DB;
+	global $DB;
 
 	$DataInjectionProfile = new DataInjectionProfile();
 	if (!$DataInjectionProfile->GetfromDB($ID)) {

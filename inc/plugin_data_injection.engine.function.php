@@ -835,6 +835,7 @@ function addNecessaryFields($model,$mapping,$mapping_definition,$entity,$type,&$
 			//Set the device_id
 			addField($fields,"FK_entities",$entity);
 			addField($fields,"device_id",$common_fields["device_id"]);
+			addField($fields,"device_type",$model->getDeviceType());
 		 	break;
 		default:
 			//Add entity field for plugins
@@ -1078,7 +1079,7 @@ function filterFields(&$fields,$fields_from_db,$can_overwrite,$type)
 	//If no right to overwrite existing fields in DB -> unset the field
 	foreach ($fields as $field=>$value)
 	{
-		if ($fields_from_db[$field] && !$can_overwrite)
+		if ($field[0] != '_' && $fields_from_db[$field] && !$can_overwrite)
 		{
 			$name = getMappingNameByTypeAndValue($type,$field);
 			if ( $field == "ID" || ((isset($DATA_INJECTION_MAPPING[$type][$name]['table_type']) &&

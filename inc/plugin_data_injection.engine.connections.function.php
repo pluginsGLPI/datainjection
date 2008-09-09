@@ -203,7 +203,7 @@ function connectPeripheral($fields)
 		
 		$result = $DB->query($sql);
 		if ($DB->numrows($result) == 1)
-			Connect($fields["device_id"],$DB->result($result,0,"ID"),PERIPHERAL_TYPE);
+			Connect($fields["device_id"],$DB->result($result,0,"ID"),$fields["device_type"]);
 	}
 }
 ?>

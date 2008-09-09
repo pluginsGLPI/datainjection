@@ -64,7 +64,7 @@ $IMPORT_PRIMARY_TYPES = array(COMPUTER_TYPE, MONITOR_TYPE, PRINTER_TYPE, PHONE_T
 $MANDATORY_MAPPINGS = array(SOFTWARE_TYPE=>array("manufacturer"));
 
 //Types to be connected to a computer
-$CONNECT_TO_COMPUTER_TYPES = array(PERIPHERAL_TYPE);
+$CONNECT_TO_COMPUTER_TYPES = array(PERIPHERAL_TYPE,MONITOR_TYPE,PRINTER_TYPE);
 
 // ----------------------------------------------------------------------
 //COMPUTER MAPPING
