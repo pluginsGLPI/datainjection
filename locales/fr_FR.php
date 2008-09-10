@@ -211,4 +211,6 @@ $DATAINJECTIONLANG["mappings"][5] = "Ordinateur";
 $DATAINJECTIONLANG["history"][1] = "depuis un fichier CSV";
 $DATAINJECTIONLANG["logevent"][1] = "injection d'un fichier CSV.";
 
+$DATAINJECTIONLANG["entity"][0] = "Entité parente";
+
 ?>

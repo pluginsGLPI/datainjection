@@ -72,7 +72,7 @@ function plugin_version_data_injection() {
 			'name' => $DATAINJECTIONLANG["name"][1], 
 			'minGlpiVersion' => '0.71', 
 			'maxGlpiVersion' => '0.71.2', 
-			'version' => '1.2');
+			'version' => '1.3');
 	}
 
 // Hook done on delete item case

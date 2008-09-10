@@ -474,6 +474,8 @@ function dataAlreadyInDB($type,$fields,$mapping_definition,$model)
 
 		switch ($obj->table)
 		{
+			case "glpi_entities":
+			//nobreak
 			case "glpi_users":
 			//nobreak
 			case "glpi_groups":
@@ -597,7 +599,7 @@ function preAddCommonFields($common_fields,$type,$fields,$entity)
 	switch ($type)
 	{
 		case ENTITY_TYPE:
-			$setFields = array("address","postcode","town","state","country","website","phonenumber","fax","email","notes");
+			$setFields = array("address","postcode","town","state","country","website","phonenumber","fax","email","notes","admin_email","admin_reply");
 		break;
 		case PHONE_TYPE:
 			$setFields = array("contract");
@@ -649,6 +651,7 @@ function addCommonFields(&$common_fields,$type,$fields,$entity,$ID)
 			addField($common_fields,"network_port_id",$ID,true);
 			break;
 		case ENTITY_TYPE:
+			addField($common_fields,"FK_entities",$ID,true);
 			break;
 		case CONTACT_TYPE:
 			addField($common_fields,"FK_entities",$entity,false);
@@ -747,7 +750,7 @@ function addNecessaryFields($model,$mapping,$mapping_definition,$entity,$type,&$
 	switch ($type)
 	{
 		case ENTITY_TYPE:
-			$unsetFields = array("address","postcode","town","state","country","website","phonenumber","fax","email","notes");
+			$unsetFields = array("address","postcode","town","state","country","website","phonenumber","fax","email","notes","admin_email","admin_reply");
 			break;
 		case CONTACT_TYPE:
 			addField($fields,"FK_entities",$entity);
@@ -916,6 +919,9 @@ function getFieldValue($result, $mapping, $mapping_definition,$field_value,$enti
 				if (!empty($field_value))
 					$obj[$mapping_definition["field"]] .= $mapping->getName()."=".$field_value."\n";		
 				break;	
+			case "entity":
+				$obj[$mapping_definition["field"]] = checkEntity($field_value,$entity);
+			break;	
 			case "virtual":
 			//nobreak
 			default :
@@ -976,6 +982,9 @@ function processBeforeEnd($result,$model,$type,$fields,&$common_fields)
 		case COMPUTER_CONNECTION_TYPE:
 			connectPeripheral($fields);
 		break;	
+		case ENTITY_TYPE:
+			addEntityPostProcess($common_fields);
+		break;
 		default:
 		break;
 	}
@@ -1140,6 +1149,41 @@ function addLocation($location,$entity,$parentid,$canadd)
 	}	
 }
 
+/**
+ * Locate an entity
+ * @param location the full tree of locations
+ * @param entity the current entity
+ * @return the location ID
+ */
+function checkEntity ($completename, $entity)
+{
+	global $DB;
+	$sql = "SELECT ID FROM glpi_entities WHERE completename='".addslashes($completename)."' ".getEntitiesRestrictRequest("AND","glpi_entities","parentID");
+	$result = $DB->query($sql);
+	if ($DB->numrows($result)==1)
+		return $DB->result($result,0,"ID");
+	else
+		return $entity;	
+	
+}
+
+function addEntityPostProcess($common_fields)
+{
+	global $DB;
+	
+	$fields = array();
+	$fields_list = array("FK_entities","address","postcode","town","state","country","website","phonenumber","fax","email","notes","admin_email","admin_reply");
+	foreach ($fields_list as $field)
+		if (isset($common_fields[$field]))
+			$fields[$field]=$common_fields[$field];
+	if (!empty($fields))
+	{
+		$data = new EntityData;
+		$data->add($fields);			
+	}
+
+	regenerateTreeCompleteNameUnderID("glpi_entities", $common_fields["FK_entities"]);	
+}
 /**
  * Reformat date from dd-mm-yyyy to yyyy-mm-dd
  * @param original_date the original date
