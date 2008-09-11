@@ -112,7 +112,8 @@ class DataInjectionEngine
 						$line[$i],
 						$this->getEntity(),
 						$db_fields[$mapping->getMappingType()],
-						$this->getModel()->getCanAddDropdown());
+						$this->getModel()->getCanAddDropdown(),
+						lookIfSeveralMappingsForField($this->getModel(),$mapping_definition,$mapping->getValue(),$line));
 				if (!empty($field)) {
 					$db_fields[$mapping->getMappingType()] = $field;					
 				}

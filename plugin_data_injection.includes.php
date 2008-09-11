@@ -56,4 +56,7 @@ include_once("config/plugin_data_injection.config.php");
 include_once("inc/plugin_data_injection.results.class.php");
 include_once("inc/plugin_data_injection.results.function.php");
 include_once("inc/plugin_data_injection.log.function.php");
+include_once("inc/plugin_data_injection.checks.function.php");
+include_once("inc/plugin_data_injection.dropdown.function.php");
+include_once("inc/plugin_data_injection.reformat.function.php");
 ?>

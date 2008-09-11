@@ -27,26 +27,9 @@
  ------------------------------------------------------------------------
 */
 
-// Original Author of file: Walid Nouh (walid.nouh@atosorigin.com)
+// Original Author of file: Walid Nouh
 // Purpose of file:
 // ----------------------------------------------------------------------
-
-function getDropdownMinimalName ($table, $id) 
-{
-	global $DB;
-	
-	$name = EMPTY_VALUE;	
-	if ($id>0){
-		$query = "SELECT name FROM ". $table ." WHERE ID=$id";
-		if ($result = $DB->query($query)){
-			if($DB->numrows($result) > 0) {
-				$data=$DB->fetch_assoc($result);
-				$name = $data["name"];
-			}
-		}
-	}
-	return addslashes($name); 
-}
 
 function lookForNecessaryMappings($model)
 {
@@ -71,369 +54,33 @@ function lookForNecessaryMappings($model)
 	return $not_found;
 }
 
-/*
- * Reformat datas if needed
- * @param model the model
- * @param line the line of data to inject
- * @param result of the check (input/ouput)
- * 
- * @return the line modified
+/**
+ * For multitext only ! Check it there's more than one value to inject in a field
+ * @model the model
+ * @mapping_definition the mapping_definition corresponding to the field
+ * @value the value of the mapping
+ * @line the complete line to inject
+ * @return true if more than one value to inject, false if not
  */
-function reformatDatasBeforeCheck ($model,$line,$entity,&$result)
+function lookIfSeveralMappingsForField($model,$mapping_definition,$value)
 {
-	global $DATA_INJECTION_MAPPING,$CFG_GLPI;
+	global $MANDATORY_MAPPINGS,$DATA_INJECTION_MAPPING;
 
-	$manu="";
-	$rank_manu = -1;
-	$mappings = $model->getMappings();
+	$mapping_count = 0;
 	
-	// First pass : empty check + find the manufacturer
-	foreach ($mappings as $mapping)
+	if (isset($mapping_definition["table_type"]) && $mapping_definition["table_type"] == "multitext")
 	{
-		$rank = $mapping->getRank();
-		
-		if ($mapping->getValue() != NOT_MAPPED)
+		$mappings = $model->getMappings();
+		foreach ($model->getMappings() as $mapping)
 		{
-			$mapping_definition = $DATA_INJECTION_MAPPING[$mapping->getMappingType()][$mapping->getValue()];
-				
-			//If a value is set to NULL -> ignore the value during injection
-			if (!isset($line[$rank]) || $line[$rank] == "NULL") {
-				$line[$rank]=EMPTY_VALUE;
-			}	
-			// Apply manufacturer dictionnary
-			else if (isset($mapping_definition["table_type"]) 
-				&& $mapping_definition["table_type"]=="dropdown"
-				&& $mapping->getValue() == "manufacturer") {
+			if ($mapping->getValue() == $value)
+				$mapping_count++;
+		}
+	}
 	
-				$rank_manu = $rank;
-				
-				// TODO : probably a bad idea to add new value in check, but...
-				$id = externalImportDropdown('glpi_dropdown_manufacturer', $line[$rank], -1, array(), '', $model->getCanAddDropdown());
-				$manu = getDropdownMinimalName('glpi_dropdown_manufacturer', $id);
-	
-				if ($id<=0) {
-					$result->addInjectionMessage(WARNING_NOTFOUND, $line[$rank]);
-				}
-				$line[$rank] = $manu;
-			}
-		}
-	}
-
-	// Second pass : if software -> process dictionnary. It must be done before third pass
-	//because it can modify the manufacturer (which is used in third pass)
-	if($model->getDeviceType() == SOFTWARE_TYPE)
-	{		
-		foreach ($mappings as $mapping)
-		{
-			$rank = $mapping->getRank();
-
-			if ($mapping->getValue() == "name") {
-				$rulecollection = new DictionnarySoftwareCollection;
-				$res_rule = $rulecollection->processAllRules(array("name"=>$line[$rank],"manufacturer"=>$manu),array(),array());
-				
-				if(isset($res_rule["name"]))
-					$line[$rank]=$res_rule["name"]; 
-					
-				if(isset($res_rule["manufacturer"]))
-				{
-					$manu = $res_rule["manufacturer"];
-					if ($rank_manu > -1)
-						$line[$rank_manu]=getDropdownName("glpi_dropdown_manufacturer",$res_rule["manufacturer"]);
-				}
-					
-			}
-		}
-	}
-
-	// Third pass : type check + apply dictionary
-	foreach ($mappings as $mapping)
-	{
-		$rank = $mapping->getRank();
-	
-		if ($line[$rank] != EMPTY_VALUE && $mapping->getValue() != NOT_MAPPED)
-		{
-			$mapping_definition = $DATA_INJECTION_MAPPING[$mapping->getMappingType()][$mapping->getValue()];
-
-			// Check some types 
-			switch ($mapping_definition["type"])
-			{
-				case "date":
-					//If the value is a date, try to reformat it if it's not the good type (dd-mm-yyyy instead of yyyy-mm-dd)
-					if (isset($mapping_definition["type"]) && $mapping_definition["type"]=="date")
-						$line[$rank] = reformatDate($model->getDateFormat(),$line[$rank]);
-					break;
-				case "mac":
-					$line[$rank]=reformatMacAddress($line[$rank]);
-					break;
-				default:
-				break;
-			}
-			// Apply dropdown dictionnary
-			if (isset($mapping_definition["table_type"]) 
-					&& $mapping_definition["table_type"]=="dropdown" 
-					&& $mapping->getValue()!="location"
-					&& $mapping->getValue()!="manufacturer")  {
-				(in_array($mapping_definition["table"],$CFG_GLPI["specif_entities_tables"])?$per_entity=$entity:$per_entity=-1);
-						
-				$id = externalImportDropdown($mapping_definition["table"], $line[$rank], $per_entity, 
-					array("manufacturer" => $manu), '', $model->getCanAddDropdown());
-				$val = getDropdownMinimalName($mapping_definition["table"], $id);
-				if ($id<=0) {
-					$result->addInjectionMessage(WARNING_NOTFOUND, $line[$rank]);
-				}
-				$line[$rank] = $val;					
-			}
-		}
-	}
-	return $line;
+	return ($mapping_count>1?true:false);
 }
 
-/*
- * Check if the data to import is the good type
- * 
- * @param the type of data waited
- * @data the data to import
- * 
- * @return true if the data is the correct type
- */
-function checkType($type, $name, $data,$mandatory)
-{
-	global $DATA_INJECTION_MAPPING;
-
-	if (isset($DATA_INJECTION_MAPPING[$type][$name]))
-	{
-		$field_type = $DATA_INJECTION_MAPPING[$type][$name]['type'];
-
-		//If no data provided AND this mapping is not mandatory
-		if (!$mandatory && ($data == null || $data == "NULL" || $data == EMPTY_VALUE))
-			return TYPE_CHECK_OK;
-			
-		switch($field_type)
-		{
-			case 'text' :
-				return TYPE_CHECK_OK;
-			break;
-			case 'integer' :
-				if (is_numeric($data))
-					return TYPE_CHECK_OK;
-				else
-					return ERROR_IMPORT_WRONG_TYPE;
-			break;
-			case 'float':
-				if (is_float($data))
-					return TYPE_CHECK_OK;
-				else
-					return ERROR_IMPORT_WRONG_TYPE;
-			break;
-			case 'date' :
-				ereg("([0-9]{4})[\-]([0-9]{2})[\-]([0-9]{2})",$data,$regs);
-				if (count($regs) > 0)
-					return TYPE_CHECK_OK;
-				else
-					return ERROR_IMPORT_WRONG_TYPE;
-			break;	
-			case 'ip':
-				ereg("([0-9]{1,3})\.([0-9]{1,3})\.([0-9]{1,3})\.([0-9]{1,3})",$data,$regs);
-				if (count($regs) > 0)
-					return TYPE_CHECK_OK;
-				else
-					return ERROR_IMPORT_WRONG_TYPE;
-			break;
-			case 'mac':
-				ereg("([0-9a-fA-F]{2}([:-]|$)){6}$",$data,$regs);
-				if (count($regs) > 0)
-					return TYPE_CHECK_OK;
-				else
-					return ERROR_IMPORT_WRONG_TYPE;
-			break;
-			default :
-				return ERROR_IMPORT_WRONG_TYPE;
-		}
-	}
-	else
-		return ERROR_IMPORT_WRONG_TYPE;
-
-}
-
-/*
- * check one line of data to import
- * 
- * @param model the model to use
- * @param line the line of datas
- * @param result of the check (input/ouput)
- * 
- * @return status of the check
- */
-function checkLine($model,$line,&$res)
-{
-		//Get all mappings for a model
-		for ($i=0, $mappings = $model->getMappings(); $i < count($mappings); $i++)
-		{
-			$mapping = $mappings[$i];
-			$rank = $mapping->getRank();
-
-			//If field is mandatory AND not mapped -> error
-			if ($mapping->isMandatory() && (!isset($line[$rank]) || $line[$rank] == NULL || $line[$rank] == EMPTY_VALUE || $line[$rank] == -1))
-			{
-				$res->addCheckMessage(ERROR_IMPORT_FIELD_MANDATORY,$mapping->getName());
-					break;				
-			}
-			else
-			{
-				//If field exists and if field is mapped
-				if (isset($line[$rank]) && $line[$rank] != "" && $mapping->getValue() != NOT_MAPPED)
-				{
-					//Check type
-					$field = $line[$rank];
-					$res_check_type = checkType($mapping->getMappingType(), $mapping->getValue(), $field,$mapping->isMandatory());
-
-					//If field is not the good type -> error
-					if (!$res->addCheckMessage($res_check_type,$mapping->getName())) {
-						break;
-					}
-				}	
-			}
-		}
-
-		return $res->getStatus(true);
-	}
-
-/*
- * Get the ID of an element in a dropdown table, create it if the value doesn't exists and if user has the right
- * @param mapping the mapping informations
- * @param mapping_definition the definition of the mapping
- * @param value the value to add
- * @param entity the active entity
- * @return the ID of the insert value in the dropdown table
- */	
-function getDropdownValue($mapping, $mapping_definition,$value,$entity,$canadd=0,$location=EMPTY_VALUE)
-{
-	global $DB, $CFG_GLPI;
-
-	if (empty ($value))
-		return 0;
-
-		$rightToAdd = haveRightDropdown($mapping_definition["table"],$canadd);
-
-		//Value doesn't exists -> add the value in the dropdown table
-		switch ($mapping_definition["table"])
-		{
-			case "glpi_dropdown_locations":
-				return checkLocation($value,$entity,$rightToAdd);
-			case "glpi_dropdown_netpoint":
-				// not handle here !
-				return EMPTY_VALUE;	
-			break;
-			default:
-				$input["value2"] = EMPTY_VALUE;
-				break;
-		}
-
-		$input["tablename"] = $mapping_definition["table"];
-		$input["value"] = $value;
-		$input["FK_entities"] = $entity;
-		$input["type"] = EMPTY_VALUE;
-		$input["comments"] = EMPTY_VALUE;
-		
-		$ID = getDropdownID($input);
-		if ($ID != -1)
-			return $ID;
-		else if ($rightToAdd)	
-			return addDropdown($input);
-		else
-			return EMPTY_VALUE;	
-}
-
-function checkNetpoint($result,$primary_type,$entity,$location,$value,$port_id,$canadd) {
-	global $DB, $LANG;
-
-	// networking device can use netpoint in all the entity
-	$sql="SELECT ID FROM glpi_dropdown_netpoint WHERE FK_entities=$entity AND name='$value'";
-	
-	if ($primary_type != NETWORKING_TYPE) {
-		// other device can only use netpoint in the location
-		$sql .= " AND location=$location";
-	}
-	$res = $DB->query($sql);
-	if ($DB->numrows($res)>0) {
-		// found
-		$ID = $DB->result($res,0,"ID");
-		
-		// Check if not used
-		$sql2="SELECT ID FROM glpi_networking_ports WHERE netpoint=$ID AND device_type".($primary_type == NETWORKING_TYPE ?"=":"!=").NETWORKING_TYPE;
-		$res2 = $DB->query($sql2);
-		if ($DB->numrows($res2)>0) {
-			$usedby = $DB->result($res2,0,"ID");
-			if ($usedby != $port_id) {
-				$result->addInjectionMessage(WARNING_USED, "netpoint");	
-			}
-			return EMPTY_VALUE;					
-		} else {
-			return $ID;
-		}
-					
-	} else if ($canadd) {
-		$input["tablename"] = "glpi_dropdown_netpoint";
-		$input["value"] = $value;
-		$input["value2"] = $location;
-		$input["FK_entities"] = $entity;
-		$input["type"] = EMPTY_VALUE;
-		$input["comments"] = EMPTY_VALUE;
-		
-		return addDropdown($input);
-				
-	} else {
-		$result->addInjectionMessage(WARNING_NOTFOUND, $LANG["networking"][51] . " '$value'");
-		return EMPTY_VALUE;			
-	}
-}
-
-/*
- * Find a user. Look for login OR firstname + lastname OR lastname + firstname
- * @param value the user to look for
- * @param entity the entity where the user should have right
- * @return the user ID if found or ''
- */
-function findUser($value,$entity)
-{
-	global $DB;
-	
-	$sql = "SELECT ID FROM glpi_users WHERE LOWER(name)=\"".strtolower($value)."\" OR (CONCAT(LOWER(realname),' ',LOWER(firstname))=\"".strtolower($value)."\" OR CONCAT(LOWER(firstname),' ',LOWER(realname))=\"".strtolower($value)."\")";
-	$result = $DB->query($sql);
-	if ($DB->numrows($result)>0)
-	{
-		//check if user has right on the current entity
-		$ID = $DB->result($result,0,"ID");
-		$entities = getUserEntities($ID,true);
-		if (in_array($entity,$entities))
-			return $ID;
-		else
-			return 0;	
-	}
-	else
-		return 0;		
-}
-
-
-/*
- * Find a user. Look for login OR firstname + lastname OR lastname + firstname
- * @param value the user to look for
- * @param entity the entity where the user should have right
- * @return the user ID if found or ''
- */
-function findContact($value,$entity)
-{
-	global $DB;
-	$sql = "SELECT ID FROM glpi_contacts WHERE FK_entities=".$entity." AND (LOWER(name)=\"".strtolower($value)."\" OR (CONCAT(LOWER(name),' ',LOWER(firstname))=\"".strtolower($value)."\" OR CONCAT(LOWER(firstname),' ',LOWER(name))=\"".strtolower($value)."\"))";
-	$result = $DB->query($sql);
-	if ($DB->numrows($result)>0)
-	{
-		//check if user has right on the current entity
-		return $DB->result($result,0,"ID");
-	}
-	else
-		return EMPTY_VALUE;		
-}
 
 /*
  * Function to check if the datas to inject already exists in DB
@@ -593,8 +240,6 @@ function addField(&$array,$field,$value,$check_exists=true)
  */
 function preAddCommonFields($common_fields,$type,$fields,$entity)
 {
-	global $IMPORT_NETFIELDS;
-	
 	$setFields = array();
 	switch ($type)
 	{
@@ -866,7 +511,7 @@ function isAllEmpty ($fields) {
 	return true;
 }
 
-function getFieldValue($result, $mapping, $mapping_definition,$field_value,$entity,$obj,$canadd)
+function getFieldValue($result, $mapping, $mapping_definition,$field_value,$entity,$obj,$canadd,$several)
 {
 	global $DB, $CFG_GLPI;
 
@@ -915,9 +560,14 @@ function getFieldValue($result, $mapping, $mapping_definition,$field_value,$enti
 				//are appended at the end of the field
 				if (!isset($obj[$mapping_definition["field"]]))
 					$obj[$mapping_definition["field"]]="";
-					
+				
 				if (!empty($field_value))
-					$obj[$mapping_definition["field"]] .= $mapping->getName()."=".$field_value."\n";		
+				{
+					if ($several)
+						$obj[$mapping_definition["field"]] .= $mapping->getName()."=".$field_value."\n";
+					else
+						$obj[$mapping_definition["field"]] .= $field_value."\n";			
+				}
 				break;	
 			case "entity":
 				$obj[$mapping_definition["field"]] = checkEntity($field_value,$entity);
@@ -1098,164 +748,5 @@ function filterFields(&$fields,$fields_from_db,$can_overwrite,$type)
 		}	
 		
 	}
-}
-
-/**
- * Create a tree of locations
- * @param location the full tree of locations
- * @param entity the current entity
- * @param canadd indicates if the user has the right to add locations
- * @return the location ID
- */
-function checkLocation ($location, $entity, $canadd)
-{
-	$location_id = 0;
-	$locations = explode('>',$location);
-
-	foreach ($locations as $location)
-		if ($location_id !== EMPTY_VALUE)
-			$location_id = addLocation(trim($location),$entity,$location_id,$canadd);
-		
-	return $location_id;	
-}
-
-/**
- * Add a location at a specified level
- * @param location the full tree of locations
- * @param entity the current entity
- * @param the parentid ID of the parent location
- * @param canadd indicates if the user has the right to add locations
- * @return the location ID
- */
-function addLocation($location,$entity,$parentid,$canadd)
-{
-	$input["tablename"] = "glpi_dropdown_locations";
-	$input["value"] = $location;
-	$input["value2"] = $parentid;
-	$input["type"] = "under";
-	$input["comments"] = EMPTY_VALUE;
-	$input["FK_entities"] = $entity;
-	
-	$ID = getDropdownID($input);
-	
-	if ($ID != -1) {
-		return $ID;
-	}
-	
-	if ($canadd) {
-		return addDropdown($input);
-	} else {
-		return EMPTY_VALUE;
-	}	
-}
-
-/**
- * Locate an entity
- * @param location the full tree of locations
- * @param entity the current entity
- * @return the location ID
- */
-function checkEntity ($completename, $entity)
-{
-	global $DB;
-	$sql = "SELECT ID FROM glpi_entities WHERE completename='".addslashes($completename)."' ".getEntitiesRestrictRequest("AND","glpi_entities","parentID");
-	$result = $DB->query($sql);
-	if ($DB->numrows($result)==1)
-		return $DB->result($result,0,"ID");
-	else
-		return $entity;	
-	
-}
-
-function addEntityPostProcess($common_fields)
-{
-	global $DB;
-	
-	$fields = array();
-	$fields_list = array("FK_entities","address","postcode","town","state","country","website","phonenumber","fax","email","notes","admin_email","admin_reply");
-	foreach ($fields_list as $field)
-		if (isset($common_fields[$field]))
-			$fields[$field]=$common_fields[$field];
-	if (!empty($fields))
-	{
-		$data = new EntityData;
-		$data->add($fields);			
-	}
-
-	regenerateTreeCompleteNameUnderID("glpi_entities", $common_fields["FK_entities"]);	
-}
-/**
- * Reformat date from dd-mm-yyyy to yyyy-mm-dd
- * @param original_date the original date
- * @return the date reformated, if needed
- */
-function reformatDate($date_format,$original_date)
-{
-	switch ($date_format)
-	{
-		case DATE_TYPE_YYYYMMDD:
-			$new_date=preg_replace('/(\d{4})[-\/](\d{1,2})[-\/](\d{1,2})/','\1-\2-\3',$original_date);
-		break;	
-		case DATE_TYPE_DDMMYYYY:
-			$new_date=preg_replace('/(\d{1,2})[-\/](\d{1,2})[-\/](\d{4})/','\3-\2-\1',$original_date);
-		break;
-		case DATE_TYPE_MMDDYYYY:
-			$new_date=preg_replace('/(\d{1,2})[-\/](\d{1,2})[-\/](\d{4})/','\3-\1-\2',$original_date);
-		break;
-	}
-	
-	if (ereg('[0-9]{2,4}-[0-9]{1,2}-[0-9]{1,2}',$new_date))
-		return $new_date;
-	else
-		return $original_date;	
-}
-
-/*
- * Reformat mac adress if mac doesn't contains : or - as seperator
- * @param mac the original mac address
- * @return the mac address modified, if needed
- */
-function reformatMacAddress($mac)
-{
-	preg_match("/^([0-9a-fA-F]{2})([0-9a-fA-F]{2})([0-9a-fA-F]{2})([0-9a-fA-F]{2})([0-9a-fA-F]{2})([0-9a-fA-F]{2})/",$mac,$results);
-	if (count($results) > 0)
-	{
-		$mac="";
-		$first=true;
-		unset($results[0]);
-		foreach($results as $result)
-		{
-			$mac.=(!$first?":":"").$result;
-			$first=false;
-		}
-	}
-	return $mac;
-}
-
-function findTemplate($entity,$table,$value)
-{
-	global $DB;
-	$result = $DB->query("SELECT ID FROM ".$table." WHERE FK_entities=".$entity." AND tplname='".addslashes($value)."' AND is_template=1");
-	if ($DB->numrows($result)==1)
-		return $DB->result($result,0,"ID");
-	else	
-		return 0;
-}
-
-function dropdownTemplate($name,$entity,$table,$value='')
-{
-	global $DB;
-	$result = $DB->query("SELECT tplname, ID FROM ".$table." WHERE FK_entities=".$entity." AND tplname <> '' GROUP BY tplname ORDER BY tplname");
-	
-	$rand=mt_rand();
-	echo "<select name='$name' id='dropdown_".$name.$rand."'>";
-
-	echo "<option value='0'".($value==0?" selected ":"").">-------------</option>";
-
-	while ($data = $DB->fetch_array($result))
-		echo "<option value='".$data["ID"]."'".($value==$data["tplname"]?" selected ":"").">".$data["tplname"]."</option>";
-
-	echo "</select>";	
-	return $rand;
 }
 ?>
