@@ -30,7 +30,7 @@
 
 function getAllMappingsDefinitionsTypes($primary_type)
 {
-	global $DATAINJECTIONLANG,$LANG, $CFG_GLPI,$CONNECT_TO_COMPUTER_TYPES;
+	global $DATAINJECTIONLANG,$LANG, $CFG_GLPI,$CONNECT_TO_COMPUTER_TYPES,$DEVICES_TYPES;
 	
 	$types = array();
 	$commonitem = new CommonItem;
@@ -115,5 +115,16 @@ function getAllPrimaryTypes()
 	}
 	asort($types);
 	return $types;
+}
+
+function getDeviceTypeByPluginType($type)
+{
+	global $DEVICES_TYPES;
+
+	for ($index=1; $index < count($DEVICES_TYPES) +1; $index++)
+		if ($type == $DEVICES_TYPES[$index])
+			return $index;
+	
+	return 0;				
 }
 ?>

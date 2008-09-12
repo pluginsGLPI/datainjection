@@ -121,6 +121,20 @@ function dataAlreadyInDB($type,$fields,$mapping_definition,$model)
 
 		switch ($obj->table)
 		{
+			//Devices types
+			case "glpi_device_moboard":
+			case "glpi_device_processor":
+			case "glpi_device_ram":
+			case "glpi_device_hdd":
+			case "glpi_device_iface":
+			case "glpi_device_drive":
+			case "glpi_device_control":
+			case "glpi_device_gfxcard":			
+			case "glpi_device_sndcard":			
+			case "glpi_device_pci":
+			case "glpi_device_case":
+			case "glpi_device_power":			
+									
 			case "glpi_entities":
 			//nobreak
 			case "glpi_users":
@@ -173,10 +187,40 @@ function getInstance($device_type)
 {
 		switch ($device_type)
 		{
+			
+			//Devices
+			case PLUGIN_DATA_INJECTION_MOBOARD_DEVICE_TYPE:
+				return new Device(MOBOARD_DEVICE);
+			case PLUGIN_DATA_INJECTION_MOBOARD_PROCESSOR_TYPE:
+				return new Device(PROCESSOR_DEVICE);
+			case PLUGIN_DATA_INJECTION_RAM_DEVICE_TYPE:
+				return new Device(RAM_DEVICE);
+			case PLUGIN_DATA_INJECTION_HDD_DEVICE_TYPE:
+				return new Device(HDD_DEVICE);
+			case PLUGIN_DATA_INJECTION_NETWORK_DEVICE_TYPE:
+				return new Device(NETWORK_DEVICE);
+			case PLUGIN_DATA_INJECTION_DRIVE_DEVICE_TYPE:
+				return new Device(DRIVE_DEVICE);
+			case PLUGIN_DATA_INJECTION_CONTROL_DEVICE_TYPE:
+				return new Device(CONTROL_DEVICE);
+			case PLUGIN_DATA_INJECTION_GFX_DEVICE_TYPE:
+				return new Device(GFX_DEVICE);
+			case PLUGIN_DATA_INJECTION_SND_DEVICE_TYPE:
+				return new Device(PCI_DEVICE);
+			case PLUGIN_DATA_INJECTION_CASE_DEVICE_TYPE:
+				return new Device(CASE_DEVICE);
+			case PLUGIN_DATA_INJECTION_POWER_DEVICE_TYPE:
+				return new Device(POWER_DEVICE);
+				
+			//Network ports	
 			case NETPORT_TYPE:
 				return new Netport;
+			
+			//Connection to computers
 			case COMPUTER_CONNECTION_TYPE:
 				return null;
+			
+			//Plugins
 			default:
 				$commonitem = new CommonItem;
 				$commonitem->setType($device_type,1);
