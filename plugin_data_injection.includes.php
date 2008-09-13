@@ -59,4 +59,5 @@ include_once("inc/plugin_data_injection.log.function.php");
 include_once("inc/plugin_data_injection.checks.function.php");
 include_once("inc/plugin_data_injection.dropdown.function.php");
 include_once("inc/plugin_data_injection.reformat.function.php");
+include_once("inc/plugin_data_injection.device.function.php");
 ?>

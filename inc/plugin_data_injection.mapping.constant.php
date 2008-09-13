@@ -1937,26 +1937,139 @@ function addDeviceSpecificMappings() {
 		$DATA_INJECTION_MAPPING[$infos["ID"]]['comments']['type'] = 'text';
 		$DATA_INJECTION_MAPPING[$infos["ID"]]['comments']['table_type'] = 'multitext';
 
-		$DATA_INJECTION_MAPPING[$infos["ID"]]['specific_default']['table'] = $infos["table"];
-		$DATA_INJECTION_MAPPING[$infos["ID"]]['specific_default']['field'] = 'specific_default';
-		$DATA_INJECTION_MAPPING[$infos["ID"]]['specific_default']['name'] = $LANG["common"][44];
-		$DATA_INJECTION_MAPPING[$infos["ID"]]['specific_default']['type'] = 'text';
+		switch ($infos["ID"])
+		{
+			case PLUGIN_DATA_INJECTION_MOBOARD_DEVICE_TYPE:
+				$DATA_INJECTION_MAPPING[PLUGIN_DATA_INJECTION_MOBOARD_DEVICE_TYPE]['chipset']['table'] = $infos["table"];
+				$DATA_INJECTION_MAPPING[PLUGIN_DATA_INJECTION_MOBOARD_DEVICE_TYPE]['chipset']['field'] = 'chipset';
+				$DATA_INJECTION_MAPPING[PLUGIN_DATA_INJECTION_MOBOARD_DEVICE_TYPE]['chipset']['name'] = $LANG["device_moboard"][0];
+				$DATA_INJECTION_MAPPING[PLUGIN_DATA_INJECTION_MOBOARD_DEVICE_TYPE]['chipset']['type'] = 'text';
+			break;
+			case PLUGIN_DATA_INJECTION_GFX_DEVICE_TYPE:
+				$DATA_INJECTION_MAPPING[PLUGIN_DATA_INJECTION_GFX_DEVICE_TYPE]['interface']['table'] = $infos["table"];
+				$DATA_INJECTION_MAPPING[PLUGIN_DATA_INJECTION_GFX_DEVICE_TYPE]['interface']['field'] = 'interface';
+				$DATA_INJECTION_MAPPING[PLUGIN_DATA_INJECTION_GFX_DEVICE_TYPE]['interface']['name'] = $LANG["common"][65];
+				$DATA_INJECTION_MAPPING[PLUGIN_DATA_INJECTION_GFX_DEVICE_TYPE]['interface']['type'] = 'text';
+			break;
+			case PLUGIN_DATA_INJECTION_PROCESSOR_DEVICE_TYPE:
+				$DATA_INJECTION_MAPPING[PLUGIN_DATA_INJECTION_PROCESSOR_DEVICE_TYPE]['frequence']['table'] = $infos["table"];
+				$DATA_INJECTION_MAPPING[PLUGIN_DATA_INJECTION_PROCESSOR_DEVICE_TYPE]['frequence']['field'] = 'frequence';
+				$DATA_INJECTION_MAPPING[PLUGIN_DATA_INJECTION_PROCESSOR_DEVICE_TYPE]['frequence']['name'] = $LANG["device_ram"][1];
+				$DATA_INJECTION_MAPPING[PLUGIN_DATA_INJECTION_PROCESSOR_DEVICE_TYPE]['frequence']['type'] = 'text';
+			break;
+			case PLUGIN_DATA_INJECTION_RAM_DEVICE_TYPE:
+				$DATA_INJECTION_MAPPING[PLUGIN_DATA_INJECTION_RAM_DEVICE_TYPE]['frequence']['table'] = $infos["table"];
+				$DATA_INJECTION_MAPPING[PLUGIN_DATA_INJECTION_RAM_DEVICE_TYPE]['frequence']['field'] = 'frequence';
+				$DATA_INJECTION_MAPPING[PLUGIN_DATA_INJECTION_RAM_DEVICE_TYPE]['frequence']['name'] = $LANG["device_ram"][1];
+				$DATA_INJECTION_MAPPING[PLUGIN_DATA_INJECTION_RAM_DEVICE_TYPE]['frequence']['type'] = 'text';
+
+				$DATA_INJECTION_MAPPING[PLUGIN_DATA_INJECTION_RAM_DEVICE_TYPE]['type']['table'] = "glpi_dropdown_ram_type";
+				$DATA_INJECTION_MAPPING[PLUGIN_DATA_INJECTION_RAM_DEVICE_TYPE]['type']['field'] = 'name';
+				$DATA_INJECTION_MAPPING[PLUGIN_DATA_INJECTION_RAM_DEVICE_TYPE]['type']['name'] = $LANG["common"][17];
+				$DATA_INJECTION_MAPPING[PLUGIN_DATA_INJECTION_RAM_DEVICE_TYPE]['type']['type'] = 'text';
+				$DATA_INJECTION_MAPPING[PLUGIN_DATA_INJECTION_RAM_DEVICE_TYPE]['type']['linkfield'] = 'type';				
+				$DATA_INJECTION_MAPPING[PLUGIN_DATA_INJECTION_RAM_DEVICE_TYPE]['type']['table_type'] = 'dropdown';				
+
+				$DATA_INJECTION_MAPPING[PLUGIN_DATA_INJECTION_RAM_DEVICE_TYPE]['specific_default']['table'] = $infos["table"];
+				$DATA_INJECTION_MAPPING[PLUGIN_DATA_INJECTION_RAM_DEVICE_TYPE]['specific_default']['field'] = 'specific_default';
+				$DATA_INJECTION_MAPPING[PLUGIN_DATA_INJECTION_RAM_DEVICE_TYPE]['specific_default']['name'] = $LANG["device_ram"][2];
+				$DATA_INJECTION_MAPPING[PLUGIN_DATA_INJECTION_RAM_DEVICE_TYPE]['specific_default']['type'] = 'text';
+			break;
+			case PLUGIN_DATA_INJECTION_HDD_DEVICE_TYPE:	 				 					
+				$DATA_INJECTION_MAPPING[PLUGIN_DATA_INJECTION_HDD_DEVICE_TYPE]['rpm']['table'] = $infos["table"];
+				$DATA_INJECTION_MAPPING[PLUGIN_DATA_INJECTION_HDD_DEVICE_TYPE]['rpm']['field'] = 'rpm';
+				$DATA_INJECTION_MAPPING[PLUGIN_DATA_INJECTION_HDD_DEVICE_TYPE]['rpm']['name'] = $LANG["device_hdd"][0];
+				$DATA_INJECTION_MAPPING[PLUGIN_DATA_INJECTION_HDD_DEVICE_TYPE]['rpm']['type'] = 'text';
+
+				$DATA_INJECTION_MAPPING[PLUGIN_DATA_INJECTION_HDD_DEVICE_TYPE]['cache']['table'] = $infos["table"];
+				$DATA_INJECTION_MAPPING[PLUGIN_DATA_INJECTION_HDD_DEVICE_TYPE]['cache']['field'] = 'cache';
+				$DATA_INJECTION_MAPPING[PLUGIN_DATA_INJECTION_HDD_DEVICE_TYPE]['cache']['name'] = $LANG["device_hdd"][1];
+				$DATA_INJECTION_MAPPING[PLUGIN_DATA_INJECTION_HDD_DEVICE_TYPE]['cache']['type'] = 'text';
+
+				$DATA_INJECTION_MAPPING[PLUGIN_DATA_INJECTION_HDD_DEVICE_TYPE]['specific_default']['table'] = $infos["table"];
+				$DATA_INJECTION_MAPPING[PLUGIN_DATA_INJECTION_HDD_DEVICE_TYPE]['specific_default']['field'] = 'specific_default';
+				$DATA_INJECTION_MAPPING[PLUGIN_DATA_INJECTION_HDD_DEVICE_TYPE]['specific_default']['name'] = $LANG["device_hdd"][4];
+				$DATA_INJECTION_MAPPING[PLUGIN_DATA_INJECTION_HDD_DEVICE_TYPE]['specific_default']['type'] = 'text';
+			break;
+			case PLUGIN_DATA_INJECTION_NETWORK_DEVICE_TYPE:
+				$DATA_INJECTION_MAPPING[PLUGIN_DATA_INJECTION_NETWORK_DEVICE_TYPE]['rpm']['table'] = $infos["table"];
+				$DATA_INJECTION_MAPPING[PLUGIN_DATA_INJECTION_NETWORK_DEVICE_TYPE]['rpm']['field'] = 'bandwith';
+				$DATA_INJECTION_MAPPING[PLUGIN_DATA_INJECTION_NETWORK_DEVICE_TYPE]['rpm']['name'] = $LANG["device_iface"][0];
+				$DATA_INJECTION_MAPPING[PLUGIN_DATA_INJECTION_NETWORK_DEVICE_TYPE]['rpm']['type'] = 'text';
+				
+				$DATA_INJECTION_MAPPING[PLUGIN_DATA_INJECTION_HDD_DEVICE_TYPE]['specific_default']['table'] = $infos["table"];
+				$DATA_INJECTION_MAPPING[PLUGIN_DATA_INJECTION_HDD_DEVICE_TYPE]['specific_default']['field'] = 'specific_default';
+				$DATA_INJECTION_MAPPING[PLUGIN_DATA_INJECTION_HDD_DEVICE_TYPE]['specific_default']['name'] = $LANG["device_iface"][0];
+				$DATA_INJECTION_MAPPING[PLUGIN_DATA_INJECTION_HDD_DEVICE_TYPE]['specific_default']['type'] = 'mac';
+			break;
+			case PLUGIN_DATA_INJECTION_DRIVE_DEVICE_TYPE:
+				$DATA_INJECTION_MAPPING[PLUGIN_DATA_INJECTION_DRIVE_DEVICE_TYPE]['is_writer']['table'] = $infos["table"];
+				$DATA_INJECTION_MAPPING[PLUGIN_DATA_INJECTION_DRIVE_DEVICE_TYPE]['is_writer']['field'] = 'is_writer';
+				$DATA_INJECTION_MAPPING[PLUGIN_DATA_INJECTION_DRIVE_DEVICE_TYPE]['is_writer']['name'] = $LANG["device_drive"][0];
+				$DATA_INJECTION_MAPPING[PLUGIN_DATA_INJECTION_DRIVE_DEVICE_TYPE]['is_writer']['type'] = 'integer';
+
+				$DATA_INJECTION_MAPPING[PLUGIN_DATA_INJECTION_DRIVE_DEVICE_TYPE]['speed']['table'] = $infos["table"];
+				$DATA_INJECTION_MAPPING[PLUGIN_DATA_INJECTION_DRIVE_DEVICE_TYPE]['speed']['field'] = 'speed';
+				$DATA_INJECTION_MAPPING[PLUGIN_DATA_INJECTION_DRIVE_DEVICE_TYPE]['speed']['name'] = $LANG["device_drive"][1];
+				$DATA_INJECTION_MAPPING[PLUGIN_DATA_INJECTION_DRIVE_DEVICE_TYPE]['speed']['type'] = 'text';
+
+				$DATA_INJECTION_MAPPING[PLUGIN_DATA_INJECTION_DRIVE_DEVICE_TYPE]['interface']['table'] = $infos["table"];
+				$DATA_INJECTION_MAPPING[PLUGIN_DATA_INJECTION_DRIVE_DEVICE_TYPE]['interface']['field'] = 'interface';
+				$DATA_INJECTION_MAPPING[PLUGIN_DATA_INJECTION_DRIVE_DEVICE_TYPE]['interface']['name'] = $LANG["common"][65];
+				$DATA_INJECTION_MAPPING[PLUGIN_DATA_INJECTION_DRIVE_DEVICE_TYPE]['interface']['type'] = 'text';
+			break;
+			case PLUGIN_DATA_INJECTION_CONTROL_DEVICE_TYPE:
+				$DATA_INJECTION_MAPPING[PLUGIN_DATA_INJECTION_CONTROL_DEVICE_TYPE]['raid']['table'] = $infos["table"];
+				$DATA_INJECTION_MAPPING[PLUGIN_DATA_INJECTION_CONTROL_DEVICE_TYPE]['raid']['field'] = 'raid';
+				$DATA_INJECTION_MAPPING[PLUGIN_DATA_INJECTION_CONTROL_DEVICE_TYPE]['raid']['name'] = $LANG["device_control"][0];
+				$DATA_INJECTION_MAPPING[PLUGIN_DATA_INJECTION_CONTROL_DEVICE_TYPE]['raid']['type'] = 'integer';
+
+				$DATA_INJECTION_MAPPING[PLUGIN_DATA_INJECTION_CONTROL_DEVICE_TYPE]['interface']['table'] = $infos["table"];
+				$DATA_INJECTION_MAPPING[PLUGIN_DATA_INJECTION_CONTROL_DEVICE_TYPE]['interface']['field'] = 'interface';
+				$DATA_INJECTION_MAPPING[PLUGIN_DATA_INJECTION_CONTROL_DEVICE_TYPE]['interface']['name'] = $LANG["common"][65];
+				$DATA_INJECTION_MAPPING[PLUGIN_DATA_INJECTION_CONTROL_DEVICE_TYPE]['interface']['type'] = 'text';
+			break;	
+			case PLUGIN_DATA_INJECTION_GFX_DEVICE_TYPE:
+				$DATA_INJECTION_MAPPING[PLUGIN_DATA_INJECTION_GFX_DEVICE_TYPE]['interface']['table'] = $infos["table"];
+				$DATA_INJECTION_MAPPING[PLUGIN_DATA_INJECTION_GFX_DEVICE_TYPE]['interface']['field'] = 'interface';
+				$DATA_INJECTION_MAPPING[PLUGIN_DATA_INJECTION_GFX_DEVICE_TYPE]['interface']['name'] = $LANG["common"][65];
+				$DATA_INJECTION_MAPPING[PLUGIN_DATA_INJECTION_GFX_DEVICE_TYPE]['interface']['type'] = 'text';
+
+				$DATA_INJECTION_MAPPING[PLUGIN_DATA_INJECTION_GFX_DEVICE_TYPE]['specific_default']['table'] = $infos["table"];
+				$DATA_INJECTION_MAPPING[PLUGIN_DATA_INJECTION_GFX_DEVICE_TYPE]['specific_default']['field'] = 'specific_default';
+				$DATA_INJECTION_MAPPING[PLUGIN_DATA_INJECTION_GFX_DEVICE_TYPE]['specific_default']['name'] = $LANG["device_gfxcard"][0];
+				$DATA_INJECTION_MAPPING[PLUGIN_DATA_INJECTION_GFX_DEVICE_TYPE]['specific_default']['type'] = 'mac';
+			break;
+			case PLUGIN_DATA_INJECTION_SND_DEVICE_TYPE:
+				$DATA_INJECTION_MAPPING[PLUGIN_DATA_INJECTION_SND_DEVICE_TYPE]['type']['table'] = $infos["table"];
+				$DATA_INJECTION_MAPPING[PLUGIN_DATA_INJECTION_SND_DEVICE_TYPE]['type']['field'] = 'type';
+				$DATA_INJECTION_MAPPING[PLUGIN_DATA_INJECTION_SND_DEVICE_TYPE]['type']['name'] = $LANG["common"][17];
+				$DATA_INJECTION_MAPPING[PLUGIN_DATA_INJECTION_SND_DEVICE_TYPE]['type']['type'] = 'text';
+			break;	
+			case PLUGIN_DATA_INJECTION_PCI_DEVICE_TYPE:
+			break;
+			case PLUGIN_DATA_INJECTION_CASE_DEVICE_TYPE:
+				$DATA_INJECTION_MAPPING[PLUGIN_DATA_INJECTION_CASE_DEVICE_TYPE]['type']['table'] = "glpi_dropdown_case_type";
+				$DATA_INJECTION_MAPPING[PLUGIN_DATA_INJECTION_CASE_DEVICE_TYPE]['type']['field'] = 'name';
+				$DATA_INJECTION_MAPPING[PLUGIN_DATA_INJECTION_CASE_DEVICE_TYPE]['type']['name'] = $LANG["device_case"][0];
+				$DATA_INJECTION_MAPPING[PLUGIN_DATA_INJECTION_CASE_DEVICE_TYPE]['type']['type'] = 'text';
+				$DATA_INJECTION_MAPPING[PLUGIN_DATA_INJECTION_CASE_DEVICE_TYPE]['type']['linkfield'] = 'type';				
+				$DATA_INJECTION_MAPPING[PLUGIN_DATA_INJECTION_CASE_DEVICE_TYPE]['type']['table_type'] = 'dropdown';				
+			break;	
+			case PLUGIN_DATA_INJECTION_POWER_DEVICE_TYPE:
+				$DATA_INJECTION_MAPPING[PLUGIN_DATA_INJECTION_POWER_DEVICE_TYPE]['power']['table'] = $infos["table"];
+				$DATA_INJECTION_MAPPING[PLUGIN_DATA_INJECTION_POWER_DEVICE_TYPE]['power']['field'] = 'power';
+				$DATA_INJECTION_MAPPING[PLUGIN_DATA_INJECTION_POWER_DEVICE_TYPE]['power']['name'] = $LANG["device_power"][0];
+				$DATA_INJECTION_MAPPING[PLUGIN_DATA_INJECTION_POWER_DEVICE_TYPE]['power']['type'] = 'text';
+
+				$DATA_INJECTION_MAPPING[PLUGIN_DATA_INJECTION_POWER_DEVICE_TYPE]['atx']['table'] = "glpi_dropdown_power_type";
+				$DATA_INJECTION_MAPPING[PLUGIN_DATA_INJECTION_POWER_DEVICE_TYPE]['atx']['field'] = 'name';
+				$DATA_INJECTION_MAPPING[PLUGIN_DATA_INJECTION_POWER_DEVICE_TYPE]['atx']['name'] = $LANG["device_power"][1];
+				$DATA_INJECTION_MAPPING[PLUGIN_DATA_INJECTION_POWER_DEVICE_TYPE]['atx']['type'] = 'text';
+				$DATA_INJECTION_MAPPING[PLUGIN_DATA_INJECTION_POWER_DEVICE_TYPE]['atx']['linkfield'] = 'atx';				
+				$DATA_INJECTION_MAPPING[PLUGIN_DATA_INJECTION_POWER_DEVICE_TYPE]['atx']['table_type'] = 'dropdown';				
+			break;									
+		}
 	}
-
-	$DATA_INJECTION_MAPPING[PLUGIN_DATA_INJECTION_MOBOARD_DEVICE_TYPE]['chipset']['table'] = $infos["table"];
-	$DATA_INJECTION_MAPPING[PLUGIN_DATA_INJECTION_MOBOARD_DEVICE_TYPE]['chipset']['field'] = 'chipset';
-	$DATA_INJECTION_MAPPING[PLUGIN_DATA_INJECTION_MOBOARD_DEVICE_TYPE]['chipset']['name'] = $LANG["device_moboard"][0];
-	$DATA_INJECTION_MAPPING[PLUGIN_DATA_INJECTION_MOBOARD_DEVICE_TYPE]['chipset']['type'] = 'text';
-
-	$DATA_INJECTION_MAPPING[PLUGIN_DATA_INJECTION_GFX_DEVICE_TYPE]['interface']['table'] = $infos["table"];
-	$DATA_INJECTION_MAPPING[PLUGIN_DATA_INJECTION_GFX_DEVICE_TYPE]['interface']['field'] = 'interface';
-	$DATA_INJECTION_MAPPING[PLUGIN_DATA_INJECTION_GFX_DEVICE_TYPE]['interface']['name'] = $LANG["common"][65];
-	$DATA_INJECTION_MAPPING[PLUGIN_DATA_INJECTION_GFX_DEVICE_TYPE]['interface']['type'] = 'text';
-
-	$DATA_INJECTION_MAPPING[PLUGIN_DATA_INJECTION_PROCESSOR_DEVICE_TYPE]['frequence']['table'] = $infos["table"];
-	$DATA_INJECTION_MAPPING[PLUGIN_DATA_INJECTION_PROCESSOR_DEVICE_TYPE]['frequence']['field'] = 'frequence';
-	$DATA_INJECTION_MAPPING[PLUGIN_DATA_INJECTION_PROCESSOR_DEVICE_TYPE]['frequence']['name'] = $LANG["device_ram"][1];
-	$DATA_INJECTION_MAPPING[PLUGIN_DATA_INJECTION_PROCESSOR_DEVICE_TYPE]['frequence']['type'] = 'text';
-
 }
 ?>
