@@ -64,6 +64,7 @@ function plugin_init_data_injection() {
 
 	loadDeviceSpecificTypes();
 	addDeviceSpecificMappings();
+	addDeviceSpecificInfos();
 }
 
 function plugin_version_data_injection() {
