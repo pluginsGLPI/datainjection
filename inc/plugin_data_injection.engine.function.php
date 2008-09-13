@@ -191,7 +191,7 @@ function getInstance($device_type)
 			//Devices
 			case PLUGIN_DATA_INJECTION_MOBOARD_DEVICE_TYPE:
 				return new Device(MOBOARD_DEVICE);
-			case PLUGIN_DATA_INJECTION_MOBOARD_PROCESSOR_TYPE:
+			case PLUGIN_DATA_INJECTION_PROCESSOR_DEVICE_TYPE:
 				return new Device(PROCESSOR_DEVICE);
 			case PLUGIN_DATA_INJECTION_RAM_DEVICE_TYPE:
 				return new Device(RAM_DEVICE);

@@ -38,7 +38,7 @@
 //INFORMATIONS
 // ----------------------------------------------------------------------
 // ----------------------------------------------------------------------
-global $LANG,$DATA_INJECTION_INFOS,$INJECTION_INFOS_TYPES,$DEVICES_TYPES_STRING;
+global $LANG,$DATA_INJECTION_INFOS,$INJECTION_INFOS_TYPES;
 $INJECTION_INFOS_TYPES = array(COMPUTER_TYPE, MONITOR_TYPE, PRINTER_TYPE,PHONE_TYPE, INFOCOM_TYPE, NETWORKING_TYPE, PERIPHERAL_TYPE, CONTACT_TYPE, CARTRIDGE_TYPE, CARTRIDGE_ITEM_TYPE);
 
 // ----------------------------------------------------------------------
