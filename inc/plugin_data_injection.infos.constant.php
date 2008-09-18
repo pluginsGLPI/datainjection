@@ -648,10 +648,10 @@ $DATA_INJECTION_INFOS[CARTRIDGE_TYPE]['location']['input_type']='dropdown';
 // ----------------------------------------------------------------------
 //PSEUDO TYPE FOR PERIPHERAL TO COMPUTER CONNECTION
 // ----------------------------------------------------------------------
-$DATA_INJECTION_INFOS[COMPUTER_CONNECTION_TYPE]['name']['table']='glpi_computers';
-$DATA_INJECTION_INFOS[COMPUTER_CONNECTION_TYPE]['name']['field']='name';
-$DATA_INJECTION_INFOS[COMPUTER_CONNECTION_TYPE]['name']['name']=$LANG["common"][16];
-$DATA_INJECTION_INFOS[COMPUTER_CONNECTION_TYPE]['name']['input_type']='dropdown';
+$DATA_INJECTION_INFOS[COMPUTER_CONNECTION_TYPE]['computer_id']['table']='glpi_computers';
+$DATA_INJECTION_INFOS[COMPUTER_CONNECTION_TYPE]['computer_id']['field']='name';
+$DATA_INJECTION_INFOS[COMPUTER_CONNECTION_TYPE]['computer_id']['name']=$LANG["common"][16];
+$DATA_INJECTION_INFOS[COMPUTER_CONNECTION_TYPE]['computer_id']['input_type']='dropdown';
 
 // ----------------------------------------------------------------------
 //COMPONENTS

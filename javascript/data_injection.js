@@ -71,7 +71,7 @@ function getXhr()
 	return xhr;
 }
 		
-function go_mapping(id)
+function go_mapping(id,type)
 {	
 	var xhr = getXhr();
 
@@ -90,8 +90,9 @@ function go_mapping(id)
 
 	sel = document.getElementById('table'+id);
 	idtable = sel.options[sel.selectedIndex].value;
+
 	
-	if(sel.selectedIndex==1)
+	if (sel.value==type)
 		document.getElementById("check"+id).disabled=false;
 	else
 		{
