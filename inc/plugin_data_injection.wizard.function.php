@@ -677,7 +677,7 @@ function mappingStep($target)
 			
 			/************************Select table**************************/
 			echo "<td>";
-			echo "<select name='field[$key][1]' id='table$key' onchange='go_mapping($key)' style='width: 150px'>";
+			echo "<select name='field[$key][1]' id='table$key' onchange='go_mapping($key,".$model->getDeviceType().")' style='width: 150px'>";
 			
 			$types = getAllMappingsDefinitionsTypes($model->getDeviceType());
 			

@@ -28,12 +28,12 @@
  --------------------------------------------------------------------------
  */
 
-function getAllModels($user_id)
+function getAllModels($user_id,$order="name")
 {
 	global $DB;
 	
 	$models = array();
-	$sql = "SELECT * FROM glpi_plugin_data_injection_models WHERE public=".MODEL_PUBLIC." OR (public=".MODEL_PRIVATE." AND user_id=$user_id) ORDER BY name";
+	$sql = "SELECT * FROM glpi_plugin_data_injection_models WHERE public=".MODEL_PUBLIC." OR (public=".MODEL_PRIVATE." AND user_id=$user_id) ORDER BY ".($order=="name"?"name":$order);
 	$result = $DB->query($sql);
 	while ($data = $DB->fetch_array($result))
 		{	

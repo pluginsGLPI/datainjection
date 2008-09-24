@@ -57,8 +57,8 @@ function plugin_data_injection_Install() {
 					  `perform_network_connection` int(1) NOT NULL default '0',
 					  `user_id` int(11) NOT NULL,
 					  `date_format` varchar(11) NOT NULL default 'yyyy-mm-dd',
-					  PRIMARY KEY  (`ID`)
-					) ENGINE=MyISAM;";
+					  PRIMARY KEY  (`ID`) 
+					) ENGINE=MyISAM CHARSET=utf8 COLLATE=utf8_unicode_ci;";
 
 	$DB->query($query) or die($DB->error());
 
@@ -69,7 +69,7 @@ function plugin_data_injection_Install() {
 					  `delimiter` varchar(1) NOT NULL default ';',
 					  `header_present` int(1) NOT NULL default '1',
 					  PRIMARY KEY  (`ID`)
-					) ENGINE=MyISAM;";
+					) ENGINE=MyISAM CHARSET=utf8 COLLATE=utf8_unicode_ci;";
 
 	$DB->query($query) or die($DB->error());
 
@@ -81,7 +81,7 @@ function plugin_data_injection_Install() {
 						`name` VARCHAR( 255 ) NOT NULL ,
 						`value` VARCHAR( 255 ) NOT NULL ,
 						`mandatory` INT( 1 ) NOT NULL DEFAULT '0'		
-						) ENGINE = MYISAM ;";
+						) ENGINE = MYISAM CHARSET=utf8 COLLATE=utf8_unicode_ci ;";
 	$DB->query($query) or die($DB->error());
 
 	$query = "CREATE TABLE IF NOT EXISTS `glpi_plugin_data_injection_infos` (
@@ -90,7 +90,7 @@ function plugin_data_injection_Install() {
 						`type` int(11) NOT NULL default '9',
 						`value` VARCHAR( 255 ) NOT NULL ,
 						`mandatory` INT( 1 ) NOT NULL DEFAULT '0'		
-						) ENGINE = MYISAM ;";
+						) ENGINE = MYISAM CHARSET=utf8 COLLATE=utf8_unicode_ci ;";
 	$DB->query($query) or die($DB->error());
 
 	$query = "CREATE TABLE IF NOT EXISTS `glpi_plugin_data_injection_filetype` (
@@ -100,7 +100,7 @@ function plugin_data_injection_Install() {
 					  `backend_class_name` varchar(255) NOT NULL,
 					  `model_class_name` varchar(255) NOT NULL,
 					  PRIMARY KEY  (`ID`)
-					) ENGINE=MyISAM AUTO_INCREMENT=2 ;
+					) ENGINE=MyISAM AUTO_INCREMENT=2  CHARSET=utf8 COLLATE=utf8_unicode_ci;
 					";
 	$DB->query($query) or die($DB->error());
 
@@ -115,7 +115,7 @@ function plugin_data_injection_Install() {
 					  `create_model` char(1) default NULL,
 					  `use_model` char(1) default NULL,
 					  PRIMARY KEY  (`ID`)
-					) ENGINE=MyISAM;";
+					) ENGINE=MyISAM CHARSET=utf8 COLLATE=utf8_unicode_ci;";
 	$DB->query($query) or die($DB->error());
 
 	if (!is_dir(PLUGIN_DATA_INJECTION_UPLOAD_DIR)) {

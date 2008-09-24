@@ -133,9 +133,18 @@ function addNetworkingWire($result, $common_fields, $canupdate) {
 	return makeConnector($common_fields["network_port_id"], $dest, true, false);
 }
 
-function addContract($common_fields) {
-	if (isset ($common_fields["contract"]))
-		addEnterpriseContract($common_fields["contract"], $common_fields['device_id']);
+function addContract($common_fields, $type) {
+	if (isset ($common_fields["contract"])) {
+		switch ($type) {
+			default :
+				addContract($common_fields["contract"], $type, $common_fields['device_id']);
+				break;
+			case ENTERPRISE_TYPE :
+				addEnterpriseContract($common_fields["contract"], $common_fields['device_id']);
+				break;
+		}
+	}
+
 }
 
 function addContact($common_fields) {
@@ -194,7 +203,7 @@ function connectPeripheral($fields) {
 
 	if (isset ($fields["name"]) || isset ($fields["serial"]) || isset ($fields["otherserial"])) {
 
-		if (!isset($fields["computer_id"])) {
+		if (!isset ($fields["computer_id"])) {
 
 			//Look for a not deleted, not template computer in the entity
 			$sql = "SELECT ID FROM glpi_computers WHERE deleted=0 AND is_template=0 AND FK_entities=" . $fields["FK_entities"];

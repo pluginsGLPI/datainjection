@@ -1104,6 +1104,13 @@ $DATA_INJECTION_MAPPING[CONTRACT_TYPE]['notice']['field'] = 'notice';
 $DATA_INJECTION_MAPPING[CONTRACT_TYPE]['notice']['name'] = $LANG["financial"][10];
 $DATA_INJECTION_MAPPING[CONTRACT_TYPE]['notice']['type'] = 'integer';
 
+$DATA_INJECTION_MAPPING[CONTRACT_TYPE]['comments']['table'] = 'glpi_contracts';
+$DATA_INJECTION_MAPPING[CONTRACT_TYPE]['comments']['field'] = 'comments';
+$DATA_INJECTION_MAPPING[CONTRACT_TYPE]['comments']['name'] = $LANG["common"][25];
+$DATA_INJECTION_MAPPING[CONTRACT_TYPE]['comments']['type'] = 'text';
+$DATA_INJECTION_MAPPING[CONTRACT_TYPE]['comments']['table_type'] = 'multitext';
+
+
 $DATA_INJECTION_MAPPING[CONTRACT_TYPE]['bill_type']['table'] = 'glpi_contracts';
 $DATA_INJECTION_MAPPING[CONTRACT_TYPE]['bill_type']['field'] = 'bill_type';
 $DATA_INJECTION_MAPPING[CONTRACT_TYPE]['bill_type']['name'] = $LANG["financial"][98];
