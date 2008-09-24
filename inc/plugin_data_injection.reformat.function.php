@@ -76,6 +76,11 @@ function reformatDatasBeforeCheck ($model,$line,$entity,&$result)
 				}
 				$line[$rank] = $manu;
 			}
+			//If value is not in a hierarchical dropdown -> check if there's no < or > in it
+			//Must be careful, because hierarchical dropdown tables uses > as separator !
+			elseif (!in_array($mapping_definition["table"],$CFG_GLPI["dropdowntree_tables"])) {
+				 $line[$rank] = reformatSpecialChars($line[$rank]);
+				}
 		}
 	}
 
@@ -174,7 +179,7 @@ function reformatDate($date_format,$original_date)
 		return $original_date;	
 }
 
-/*
+/**
  * Reformat mac adress if mac doesn't contains : or - as seperator
  * @param mac the original mac address
  * @return the mac address modified, if needed
@@ -194,5 +199,15 @@ function reformatMacAddress($mac)
 		}
 	}
 	return $mac;
+}
+
+/**
+ * Replace < and > by their html code
+ * @value to inject
+ * @value modified
+ */
+function reformatSpecialChars($value)
+{
+	return str_replace(array('<','>'),array("&lt;","&gt;"),$value);
 }
 ?>
