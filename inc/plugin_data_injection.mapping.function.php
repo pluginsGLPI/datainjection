@@ -28,9 +28,19 @@
  --------------------------------------------------------------------------
  */
 
+// ----------------------------------------------------------------------
+// Original Author of file: Walid Nouh
+// Purpose of file:
+// ----------------------------------------------------------------------
+
+/**
+ * Get all the available mapping types for a primary type
+ * @param primary_type the primary type
+ * @return an array of all the types availables for this primary type
+ */
 function getAllMappingsDefinitionsTypes($primary_type)
 {
-	global $DATAINJECTIONLANG,$LANG, $CFG_GLPI,$CONNECT_TO_COMPUTER_TYPES,$DEVICES_TYPES;
+	global $DATAINJECTIONLANG,$LANG, $CFG_GLPI,$CONNECT_TO_COMPUTER_TYPES,$DEVICES_TYPES,$CONNECT_TO_SOFTWARE_TYPES;
 	
 	$types = array();
 	$commonitem = new CommonItem;
@@ -50,11 +60,20 @@ function getAllMappingsDefinitionsTypes($primary_type)
 	if (in_array($primary_type,$CONNECT_TO_COMPUTER_TYPES)) {
 		$types[] = array(COMPUTER_CONNECTION_TYPE,$DATAINJECTIONLANG["mappings"][5]);		
 	}
+
+	if (in_array($primary_type,$CONNECT_TO_SOFTWARE_TYPES)) {
+		$types[] = array(SOFTWARE_CONNECTION_TYPE,$LANG["help"][31]);		
+	}
 	
 	asort($types);
 	return $types;
 }
 
+/**
+ * Get all the available mappings for a type
+ * @type the type
+ * @return an array with all the available mappings for this type
+ */
 function getAllMappingsDefinitionsByType($type)
 {
 	global $DATA_INJECTION_MAPPING,$LANG;
@@ -67,6 +86,13 @@ function getAllMappingsDefinitionsByType($type)
 	return 	$mapping_parameters;
 }
 
+
+/**
+ * Get a mapping definition by his type and name
+ * @type the mapping type
+ * @name the mapping name
+ * @return an array with all the informations about this mapping
+ */
 function getMappingDefinitionByTypeAndName($type,$name)
 {
 	global $DATA_INJECTION_MAPPING;
@@ -76,6 +102,12 @@ function getMappingDefinitionByTypeAndName($type,$name)
 		return null;	
 }
 
+/**
+ * Get a mapping definition by his type and value
+ * @type the mapping type
+ * @name the mapping value
+ * @return an array with all the informations about this mapping
+ */
 function getMappingNameByTypeAndValue($type,$value)
 {
 	global $DATA_INJECTION_MAPPING;
@@ -87,6 +119,12 @@ function getMappingNameByTypeAndValue($type,$value)
 	return "";			
 }
 
+/**
+ * Return the list of all the mandatory mappings for a specific type
+ * @type the type of objet to inject
+ * @model the model to use
+ * @return an array with all the mandatory mappings for the type
+ */
 function getAllMandatoriesMappings($type,$model)
 {
 	global $DATA_INJECTION_MAPPING;
@@ -101,6 +139,10 @@ function getAllMandatoriesMappings($type,$model)
 	return $mandatories;
 }
 
+/**
+ * Return the list of all the mandatory types
+ * @return an array with all the primary types
+ */
 function getAllPrimaryTypes()
 {
 	global $IMPORT_PRIMARY_TYPES,$LANG;
@@ -117,6 +159,9 @@ function getAllPrimaryTypes()
 	return $types;
 }
 
+/**
+ * Return the type of an object by mapping type
+ */
 function getDeviceTypeByPluginType($type)
 {
 	global $DEVICES_TYPES;

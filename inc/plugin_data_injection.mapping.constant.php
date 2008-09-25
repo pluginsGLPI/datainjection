@@ -47,8 +47,19 @@
 // - date : the data must be a date
 // - ip : an ip address
 // - mac : a mac address
+// - multitext : can add more than one value in the same field : values will be added one per line, with template : mapping=value
 
-global $LANG, $DATA_INJECTION_MAPPING, $IMPORT_TYPES, $IMPORT_PRIMARY_TYPES, $DATAINJECTIONLANG, $PLUGIN_HOOKS, $CONNECT_TO_COMPUTER_TYPES, $DEVICES_TYPES_STRING;
+//Table type :
+// - no table type present : standard text data
+// - dropdown : data come from a dropdown table
+// - virtual : data is not in the database. A process needs to be made in order to treat the value as it represents
+// - template : represent a template
+// - single : read a table, which is not a dropdown table. Manage entity restrict too if needed 
+// - user : look for a user. Need specific processing (first look for login, then lastname + firstname, then firstname + lastname)
+
+global $LANG, $DATA_INJECTION_MAPPING, $IMPORT_TYPES, $IMPORT_PRIMARY_TYPES,
+	   $DATAINJECTIONLANG, $PLUGIN_HOOKS, $CONNECT_TO_COMPUTER_TYPES,
+	   $DEVICES_TYPES_STRING, $CONNECT_TO_COMPUTER_TYPES;
 
 // ----------------------------------------------------------------------
 //COMPUTER MAPPING
@@ -84,7 +95,6 @@ $DATA_INJECTION_MAPPING[COMPUTER_TYPE]['os']['name'] = $LANG["computers"][9];
 $DATA_INJECTION_MAPPING[COMPUTER_TYPE]['os']['linkfield'] = 'os';
 $DATA_INJECTION_MAPPING[COMPUTER_TYPE]['os']['type'] = 'text';
 $DATA_INJECTION_MAPPING[COMPUTER_TYPE]['os']['table_type'] = 'dropdown';
-
 $DATA_INJECTION_MAPPING[COMPUTER_TYPE]['os_version']['table'] = 'glpi_dropdown_os_version';
 $DATA_INJECTION_MAPPING[COMPUTER_TYPE]['os_version']['field'] = 'name';
 $DATA_INJECTION_MAPPING[COMPUTER_TYPE]['os_version']['name'] = $LANG["computers"][52];
@@ -1110,7 +1120,6 @@ $DATA_INJECTION_MAPPING[CONTRACT_TYPE]['comments']['name'] = $LANG["common"][25]
 $DATA_INJECTION_MAPPING[CONTRACT_TYPE]['comments']['type'] = 'text';
 $DATA_INJECTION_MAPPING[CONTRACT_TYPE]['comments']['table_type'] = 'multitext';
 
-
 $DATA_INJECTION_MAPPING[CONTRACT_TYPE]['bill_type']['table'] = 'glpi_contracts';
 $DATA_INJECTION_MAPPING[CONTRACT_TYPE]['bill_type']['field'] = 'bill_type';
 $DATA_INJECTION_MAPPING[CONTRACT_TYPE]['bill_type']['name'] = $LANG["financial"][98];
@@ -1869,9 +1878,27 @@ $DATA_INJECTION_MAPPING[COMPUTER_CONNECTION_TYPE]['otherserial']['name'] = $LANG
 $DATA_INJECTION_MAPPING[COMPUTER_CONNECTION_TYPE]['otherserial']['type'] = 'text';
 
 // ----------------------------------------------------------------------
+//PSEUDO TYPE FOR PERIPHERAL TO COMPUTER CONNECTION
+// ----------------------------------------------------------------------
+$DATA_INJECTION_MAPPING[SOFTWARE_CONNECTION_TYPE]['name']['table'] = 'glpi_software';
+$DATA_INJECTION_MAPPING[SOFTWARE_CONNECTION_TYPE]['name']['field'] = 'name';
+$DATA_INJECTION_MAPPING[SOFTWARE_CONNECTION_TYPE]['name']['name'] = $LANG["help"][31];
+$DATA_INJECTION_MAPPING[SOFTWARE_CONNECTION_TYPE]['name']['type'] = 'text';
+
+$DATA_INJECTION_MAPPING[SOFTWARE_CONNECTION_TYPE]['manufacturer']['table'] = 'glpi_dropdown_manufacturer';
+$DATA_INJECTION_MAPPING[SOFTWARE_CONNECTION_TYPE]['manufacturer']['field'] = 'name';
+$DATA_INJECTION_MAPPING[SOFTWARE_CONNECTION_TYPE]['manufacturer']['name'] = $LANG["common"][5];
+$DATA_INJECTION_MAPPING[SOFTWARE_CONNECTION_TYPE]['manufacturer']['type'] = 'text';
+$DATA_INJECTION_MAPPING[SOFTWARE_CONNECTION_TYPE]['manufacturer']['linkfield'] = 'FK_glpi_enterprise';
+$DATA_INJECTION_MAPPING[SOFTWARE_CONNECTION_TYPE]['manufacturer']['table_type'] = 'dropdown';
+
+// ----------------------------------------------------------------------
 //COMPONENTS
 // ----------------------------------------------------------------------
 
+/**
+ * Add mappings to inject peripherals
+ */
 function addDeviceSpecificMappings() {
 	global $DEVICES_TYPES_STRING, $DATA_INJECTION_MAPPING, $LANG;
 	foreach ($DEVICES_TYPES_STRING as $name => $infos) {
@@ -1914,7 +1941,7 @@ function addDeviceSpecificMappings() {
 
 				$DATA_INJECTION_MAPPING[PLUGIN_DATA_INJECTION_PROCESSOR_DEVICE_TYPE]['specif_default']['table'] = $infos["table"];
 				$DATA_INJECTION_MAPPING[PLUGIN_DATA_INJECTION_PROCESSOR_DEVICE_TYPE]['specif_default']['field'] = 'specif_default';
-				$DATA_INJECTION_MAPPING[PLUGIN_DATA_INJECTION_PROCESSOR_DEVICE_TYPE]['specif_default']['name'] = $LANG["device_ram"][1]." ".$LANG["devices"][24];
+				$DATA_INJECTION_MAPPING[PLUGIN_DATA_INJECTION_PROCESSOR_DEVICE_TYPE]['specif_default']['name'] = $LANG["device_ram"][1] . " " . $LANG["devices"][24];
 				$DATA_INJECTION_MAPPING[PLUGIN_DATA_INJECTION_PROCESSOR_DEVICE_TYPE]['specif_default']['type'] = 'text';
 
 				break;
@@ -1933,7 +1960,7 @@ function addDeviceSpecificMappings() {
 
 				$DATA_INJECTION_MAPPING[PLUGIN_DATA_INJECTION_RAM_DEVICE_TYPE]['specific_default']['table'] = $infos["table"];
 				$DATA_INJECTION_MAPPING[PLUGIN_DATA_INJECTION_RAM_DEVICE_TYPE]['specific_default']['field'] = 'specific_default';
-				$DATA_INJECTION_MAPPING[PLUGIN_DATA_INJECTION_RAM_DEVICE_TYPE]['specific_default']['name'] = $LANG["device_ram"][2]." ".$LANG["devices"][24];
+				$DATA_INJECTION_MAPPING[PLUGIN_DATA_INJECTION_RAM_DEVICE_TYPE]['specific_default']['name'] = $LANG["device_ram"][2] . " " . $LANG["devices"][24];
 				$DATA_INJECTION_MAPPING[PLUGIN_DATA_INJECTION_RAM_DEVICE_TYPE]['specific_default']['type'] = 'text';
 				break;
 			case PLUGIN_DATA_INJECTION_HDD_DEVICE_TYPE :
@@ -1949,7 +1976,7 @@ function addDeviceSpecificMappings() {
 
 				$DATA_INJECTION_MAPPING[PLUGIN_DATA_INJECTION_HDD_DEVICE_TYPE]['specific_default']['table'] = $infos["table"];
 				$DATA_INJECTION_MAPPING[PLUGIN_DATA_INJECTION_HDD_DEVICE_TYPE]['specific_default']['field'] = 'specific_default';
-				$DATA_INJECTION_MAPPING[PLUGIN_DATA_INJECTION_HDD_DEVICE_TYPE]['specific_default']['name'] = $LANG["device_hdd"][4]." ".$LANG["devices"][24];
+				$DATA_INJECTION_MAPPING[PLUGIN_DATA_INJECTION_HDD_DEVICE_TYPE]['specific_default']['name'] = $LANG["device_hdd"][4] . " " . $LANG["devices"][24];
 				$DATA_INJECTION_MAPPING[PLUGIN_DATA_INJECTION_HDD_DEVICE_TYPE]['specific_default']['type'] = 'text';
 				break;
 			case PLUGIN_DATA_INJECTION_NETWORK_DEVICE_TYPE :
@@ -1960,7 +1987,7 @@ function addDeviceSpecificMappings() {
 
 				$DATA_INJECTION_MAPPING[PLUGIN_DATA_INJECTION_NETWORK_DEVICE_TYPE]['specific_default']['table'] = $infos["table"];
 				$DATA_INJECTION_MAPPING[PLUGIN_DATA_INJECTION_NETWORK_DEVICE_TYPE]['specific_default']['field'] = 'specific_default';
-				$DATA_INJECTION_MAPPING[PLUGIN_DATA_INJECTION_NETWORK_DEVICE_TYPE]['specific_default']['name'] = $LANG["device_iface"][2]." ".$LANG["devices"][24];
+				$DATA_INJECTION_MAPPING[PLUGIN_DATA_INJECTION_NETWORK_DEVICE_TYPE]['specific_default']['name'] = $LANG["device_iface"][2] . " " . $LANG["devices"][24];
 				$DATA_INJECTION_MAPPING[PLUGIN_DATA_INJECTION_NETWORK_DEVICE_TYPE]['specific_default']['type'] = 'mac';
 				break;
 
@@ -1999,13 +2026,12 @@ function addDeviceSpecificMappings() {
 
 				$DATA_INJECTION_MAPPING[PLUGIN_DATA_INJECTION_GFX_DEVICE_TYPE]['specific_default']['table'] = $infos["table"];
 				$DATA_INJECTION_MAPPING[PLUGIN_DATA_INJECTION_GFX_DEVICE_TYPE]['specific_default']['field'] = 'specific_default';
-				$DATA_INJECTION_MAPPING[PLUGIN_DATA_INJECTION_GFX_DEVICE_TYPE]['specific_default']['name'] = $LANG["device_gfxcard"][0]." ".$LANG["devices"][24];
+				$DATA_INJECTION_MAPPING[PLUGIN_DATA_INJECTION_GFX_DEVICE_TYPE]['specific_default']['name'] = $LANG["device_gfxcard"][0] . " " . $LANG["devices"][24];
 				$DATA_INJECTION_MAPPING[PLUGIN_DATA_INJECTION_GFX_DEVICE_TYPE]['specific_default']['type'] = 'mac';
-
 
 				$DATA_INJECTION_MAPPING[PLUGIN_DATA_INJECTION_GFX_DEVICE_TYPE]['specific_default']['table'] = $infos["table"];
 				$DATA_INJECTION_MAPPING[PLUGIN_DATA_INJECTION_GFX_DEVICE_TYPE]['specific_default']['field'] = 'specific_default';
-				$DATA_INJECTION_MAPPING[PLUGIN_DATA_INJECTION_GFX_DEVICE_TYPE]['specific_default']['name'] = $LANG["device_gfxcard"][0]." ".$LANG["devices"][24];
+				$DATA_INJECTION_MAPPING[PLUGIN_DATA_INJECTION_GFX_DEVICE_TYPE]['specific_default']['name'] = $LANG["device_gfxcard"][0] . " " . $LANG["devices"][24];
 				$DATA_INJECTION_MAPPING[PLUGIN_DATA_INJECTION_GFX_DEVICE_TYPE]['specific_default']['type'] = 'mac';
 				break;
 			case PLUGIN_DATA_INJECTION_SND_DEVICE_TYPE :

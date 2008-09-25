@@ -40,6 +40,7 @@ global $IMPORT_TYPES,$IMPORT_PRIMARY_TYPES,$CONNECT_TO_COMPUTER_TYPES;
 // pseudo_type
 define("COMPUTER_CONNECTION_TYPE", 998);
 define("NETPORT_TYPE", 999);
+define("SOFTWARE_CONNECTION_TYPE", 997);
 
 //Store all the type of items that could be imported
 $IMPORT_TYPES = array (
@@ -59,6 +60,7 @@ $IMPORT_TYPES = array (
 	CONSUMABLE_TYPE,
 );
 
+//Primary types to be imported
 $IMPORT_PRIMARY_TYPES = array (
 	COMPUTER_TYPE,
 	MONITOR_TYPE,
@@ -83,4 +85,10 @@ $CONNECT_TO_COMPUTER_TYPES = array (
 	PRINTER_TYPE,
 	PHONE_TYPE,
 );
+
+//Types to be connected to a sofware
+$CONNECT_TO_SOFTWARE_TYPES = array (
+	SOFTWARE_TYPE
+);
+
 ?>
