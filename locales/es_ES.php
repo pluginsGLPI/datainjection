@@ -205,8 +205,10 @@ $DATAINJECTIONLANG["mappings"][1] = "Número de puertos";
 $DATAINJECTIONLANG["mappings"][2] = "Puerto de red";
 $DATAINJECTIONLANG["mappings"][3] = "Connected to : device name";
 $DATAINJECTIONLANG["mappings"][4] = "Connected to : port number";
+$DATAINJECTIONLANG["mappings"][5] = "Computer";
 
 $DATAINJECTIONLANG["history"][1] = "de archivo CSV";
 $DATAINJECTIONLANG["logevent"][1] = "importación de un archivo CSV.";
 
+$DATAINJECTIONLANG["entity"][0] = "Parent entity";
 ?>
