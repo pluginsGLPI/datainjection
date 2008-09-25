@@ -62,7 +62,7 @@ function checkType($type, $name, $data,$mandatory)
 					return ERROR_IMPORT_WRONG_TYPE;
 			break;
 			case 'float':
-				if (is_float($data))
+				if (is_true_float($data))
 					return TYPE_CHECK_OK;
 				else
 					return ERROR_IMPORT_WRONG_TYPE;
@@ -325,5 +325,13 @@ function findTemplate($entity,$table,$value)
 		return $DB->result($result,0,"ID");
 	else	
 		return 0;
+}
+
+/**
+ * Function found on php.net page about is_float, because is_float doesn't behave correctly
+ */
+function is_true_float($val){
+    if( is_float($val) || ( (float) $val > (int) $val || strlen($val) != strlen( (int) $val) ) && (int) $val != 0  ) return true;
+    else return false;
 }
 ?>
