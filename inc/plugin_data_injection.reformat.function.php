@@ -114,8 +114,8 @@ function reformatDatasBeforeCheck ($model,$line,$entity,&$result)
 	foreach ($mappings as $mapping)
 	{
 		$rank = $mapping->getRank();
-	
-		if ($line[$rank] != EMPTY_VALUE && $mapping->getValue() != NOT_MAPPED)
+
+		if (isset($line[$rank]) && $line[$rank] != EMPTY_VALUE && $mapping->getValue() != NOT_MAPPED)
 		{
 			$mapping_definition = $DATA_INJECTION_MAPPING[$mapping->getMappingType()][$mapping->getValue()];
 
