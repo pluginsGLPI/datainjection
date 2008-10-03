@@ -198,6 +198,8 @@ function getInstance($device_type) {
 			return new Device(CASE_DEVICE);
 		case PLUGIN_DATA_INJECTION_POWER_DEVICE_TYPE :
 			return new Device(POWER_DEVICE);
+		case PLUGIN_DATA_INJECTION_PCI_DEVICE_TYPE :
+			return new Device(PCI_DEVICE);
 
 			//Network ports	
 		case NETPORT_TYPE :
