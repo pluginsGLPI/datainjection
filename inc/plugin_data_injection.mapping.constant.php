@@ -670,7 +670,7 @@ $DATA_INJECTION_MAPPING[PHONE_TYPE]['flags_hp']['type'] = 'integer';
 
 $DATA_INJECTION_MAPPING[PHONE_TYPE]['firmware']['table'] = 'glpi_phones';
 $DATA_INJECTION_MAPPING[PHONE_TYPE]['firmware']['field'] = 'firmware';
-$DATA_INJECTION_MAPPING[PHONE_TYPE]['firmware']['name'] = $LANG["phones"][35];
+$DATA_INJECTION_MAPPING[PHONE_TYPE]['firmware']['name'] = $LANG["setup"][71];
 $DATA_INJECTION_MAPPING[PHONE_TYPE]['firmware']['type'] = 'text';
 
 $DATA_INJECTION_MAPPING[PHONE_TYPE]['FK_groups']['table'] = 'glpi_groups';
