@@ -239,7 +239,7 @@ function plugin_data_injection_createaccess($ID) {
 	$Profile->GetfromDB($ID);
 	$name = $Profile->fields["name"];
 
-	$query = "INSERT INTO `glpi_plugin_data_injection_profiles` ( `ID`, `name` , `is_default`, `create_model`, `use_model`) VALUES ('$ID', '$name','0',NULL,NULL);";
+	$query = "INSERT INTO `glpi_plugin_data_injection_profiles` ( `ID`, `name` , `is_default`, `model`) VALUES ('$ID', '$name','0',NULL);";
 
 	$DB->query($query);
 }
