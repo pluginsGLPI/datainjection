@@ -37,6 +37,8 @@ include (GLPI_ROOT."/inc/includes.php");
 
 include("../plugin_data_injection.includes.php");
 
+header("Content-Type: text/html; charset=UTF-8");
+
 echo "<!DOCTYPE HTML PUBLIC '-//W3C//DTD HTML 4.01 Transitional//EN' 'http://www.w3.org/TR/html4/loose.dtd'>";
 
 echo "<html>";

@@ -34,7 +34,15 @@
 
 function getDropdownMinimalName ($table, $id) 
 {
-	global $DB;
+	global $DB,$LANG;
+
+	if ($table == "glpi_entities")
+	{
+		if ($id==0)
+			return $LANG["entity"][2];
+		elseif ($id==-1)
+			return $LANG["common"][77];	
+	}
 	
 	$name = EMPTY_VALUE;	
 	if ($id>0){
@@ -95,7 +103,6 @@ function getDropdownValue($mapping, $mapping_definition,$value,$entity,$canadd=0
 			return EMPTY_VALUE;	
 }
 
-
 function dropdownTemplate($name,$entity,$table,$value='')
 {
 	global $DB;
@@ -111,5 +118,115 @@ function dropdownTemplate($name,$entity,$table,$value='')
 
 	echo "</select>";	
 	return $rand;
+}
+
+function dropdownDateFormat($name,$format)
+{
+	global $DATAINJECTIONLANG;
+	$date_format[DATE_TYPE_DDMMYYYY]=$DATAINJECTIONLANG["modelStep"][22];
+	$date_format[DATE_TYPE_MMDDYYYY]=$DATAINJECTIONLANG["modelStep"][23];
+	$date_format[DATE_TYPE_YYYYMMDD]=$DATAINJECTIONLANG["modelStep"][24];
+
+	dropdownArrayValues($name,$date_format,$format);
+}
+
+function dropdownFloatFormat($name,$format)
+{
+	global $DATAINJECTIONLANG;
+	$float_format[FLOAT_TYPE_DOT]=$DATAINJECTIONLANG["modelStep"][25];
+	$float_format[FLOAT_TYPE_COMMA]=$DATAINJECTIONLANG["modelStep"][26];
+	$float_format[FLOAT_TYPE_DOT_AND_COM]=$DATAINJECTIONLANG["modelStep"][27];
+
+	dropdownArrayValues($name,$float_format,$format);
+}
+
+function dropdownPrimaryTypeSelection($name,$model=null,$disable=false)
+{
+	echo "<select name='$name' ".($disable?"style='background-color:#e6e6e6' disabled":"").">";
+	
+	$default_value=($model==null?0:$model->getDeviceType());
+		
+	foreach(getAllPrimaryTypes() as $type)
+		echo "<option value='".$type[1]."' ".(($default_value == $type[1])?"selected":"").">".$type[0]."</option>";
+	
+	echo "</select>";
+}
+
+function dropdownFileTypes($name,$model=null,$disable=false)
+{
+	
+	if($_SESSION["plugin_data_injection"]["choice"]==1)
+		{
+		$id=0;
+		echo "<td><select id='dropdown_type' name='dropdown_type' onchange='show_backend($id)'>";
+		}
+	else
+		{
+		echo "<td><select name='dropdown_type' style='background-color:#e6e6e6' disabled>";
+		$id=$model->getModelType();
+		}
+	
+		
+	$types = getAllTypes();
+	
+	foreach($types as $key => $type)
+		{
+		if(isset($model))
+			{
+			if($model->getModelType() == $type->getBackendID())
+				echo "<option value='".$type->getBackendID()."' selected>".$type->getBackendName()."</option>";
+			else
+				echo "<option value='".$type->getBackendID()."'>".$type->getBackendName()."</option>";
+			}
+		else
+			echo "<option value='".$type->getBackendID()."'>".$type->getBackendName()."</option>";
+		}
+		
+	echo "</select></td></tr>";
+	
+}
+
+function dropdownModels($disable=false,$models,$with_select=true)
+{
+		$nbmodel = count($models);
+		if ($with_select)
+		{
+			if ($disable)	
+				echo "<select style='background-color:#e6e6e6' disabled name='dropdown' id='dropdown' onchange='show_comments($nbmodel)'>";
+			else			
+				echo "<select name='dropdown' id='dropdown' onchange='show_comments($nbmodel)'>";
+		}
+
+		$prev = -2;
+			
+		foreach($models as $model)
+		{
+			if ($model->getEntity() != $prev) {
+				if ($prev >= -1) {
+					echo "</optgroup>";
+				}
+				$prev = $model->getEntity();
+				echo "<optgroup label=\"" . getDropdownMinimalName("glpi_entities", $prev) . "\">";
+			}
+			echo "<option value='".$model->getModelID()."'>".$model->getModelName()." / ".getDropdownName('glpi_plugin_data_injection_filetype',$model->getModelType())."</option>";
+		}
+		
+		if ($prev >= 0) {
+			echo "</optgroup>";
+		}
+	
+
+		if ($with_select)
+			echo "</select>";
+	
+}
+
+function dropdownFileEncoding($name)
+{
+	global $DATAINJECTIONLANG;
+	$values[ENCODING_AUTO]=$DATAINJECTIONLANG["fileStep"][10];
+	$values[ENCODING_UFT8]=$DATAINJECTIONLANG["fileStep"][11];
+	$values[ENCODING_ISO8859_1]=$DATAINJECTIONLANG["fileStep"][12];
+	dropdownArrayValues($name,$values,ENCODING_AUTO);
 }
 ?>

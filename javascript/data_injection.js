@@ -5,6 +5,18 @@ function change_color_step(id)
 
 function show_Select(cpt)
 {	
+			var xhr = getXhr();
+		
+			xhr.onreadystatechange = function(){
+		
+				if(xhr.readyState == 4 && xhr.status == 200)
+					{
+					leselect = xhr.responseText;
+					document.getElementById('dropdown').innerHTML = leselect;
+					}
+			}
+
+
 	if (document.getElementById('create').checked)
 		{
 		document.getElementById('dropdown').disabled=true;
@@ -17,7 +29,18 @@ function show_Select(cpt)
 		document.getElementById('dropdown').style.backgroundColor='white';
 		document.getElementById('comment_select').style.display='block';
 		show_comments(cpt);
+
+		xhr.open("POST","../inc/plugin_data_injection.ajax.selectmodel.php",true);
+		xhr.setRequestHeader('Content-Type','application/x-www-form-urlencoded');
+		
+		if (document.getElementById('choice4').checked)
+			xhr.send("action=read");
+		else
+		{
+			if (document.getElementById('choice3').checked || document.getElementById('choice2').checked)
+				xhr.send("action=write");
 		}
+	}
 }
 
 function deleteOnglet(nbonglet)

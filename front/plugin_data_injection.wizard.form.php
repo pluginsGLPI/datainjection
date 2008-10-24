@@ -122,7 +122,7 @@ if($load)
 		else		
 			$model = getModelInstanceByType($_POST["dropdown_type"]);
 			
-		$model->setFields($_POST,$_SESSION["glpiactive_entity"],$_SESSION["glpiID"]);
+		$model->setFields($_POST,0,$_SESSION["glpiID"]);
 				
 		$_SESSION["plugin_data_injection"]["model"] = serialize($model);
 		

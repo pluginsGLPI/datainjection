@@ -68,13 +68,7 @@ class DataInjectionProfile extends CommonDBTM {
 
 		echo "<tr class='tab_bg_2'>";
 		echo "<td>".$DATAINJECTIONLANG["profiles"][1].":</td><td>";
-		dropdownNoneReadWrite("create_model",$this->fields["create_model"],1,0,1);
-		echo "</td>";
-		echo "</tr>\n";
-
-		echo "<tr class='tab_bg_2'>";
-		echo "<td>".$DATAINJECTIONLANG["profiles"][3].":</td><td>";
-		dropdownNoneReadWrite("use_model",$this->fields["use_model"],1,1,0);
+		dropdownNoneReadWrite("model",$this->fields["model"],1,0,1);
 		echo "</td>";
 		echo "</tr>\n";
 

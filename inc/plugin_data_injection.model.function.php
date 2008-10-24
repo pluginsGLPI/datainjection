@@ -1,4 +1,5 @@
 <?php
+
 /*
  * @version $Id: rules.constant.php 5351 2007-08-07 11:57:46Z walid $
  -------------------------------------------------------------------------
@@ -28,39 +29,38 @@
  --------------------------------------------------------------------------
  */
 
-function getAllModels($user_id,$order="name")
-{
+function getAllModels($user_id, $order = "name", $entity = -1, $can_write = false) {
 	global $DB;
-	
-	$models = array();
-	$sql = "SELECT * FROM glpi_plugin_data_injection_models WHERE public=".MODEL_PUBLIC." OR (public=".MODEL_PRIVATE." AND user_id=$user_id) ORDER BY ".($order=="name"?"name":$order);
+
+	$models = array ();
+	$sql = "SELECT * FROM glpi_plugin_data_injection_models WHERE" .
+	" (private=" . MODEL_PUBLIC . getEntitiesRestrictRequest(" AND", "glpi_plugin_data_injection_models ", "FK_entities", $entity,true) . ") OR (private=" . MODEL_PRIVATE . " AND FK_users=$user_id)" .
+	" ORDER BY FK_entities, " . ($order == "name" ? "name" : $order);
 	$result = $DB->query($sql);
-	while ($data = $DB->fetch_array($result))
-		{	
-		$model = new DataInjectionModel($data["ID"]);
-		$model->fields = $data;
-		$models[] = $model;
+
+	while ($data = $DB->fetch_array($result)) {
+		$model = new DataInjectionModel();
+		if ($model->can($data["ID"], ($can_write ? "w" : "r"))) {
+			$model->fields = $data;
+			$models[] = $model;
 		}
-	
+	}
+
 	return $models;
 }
 
-function getModelInstanceByType($type)
-{
+function getModelInstanceByType($type) {
 	global $DB;
-	$sql="SELECT model_class_name FROM glpi_plugin_data_injection_filetype WHERE value=".$type;
+	$sql = "SELECT model_class_name FROM glpi_plugin_data_injection_filetype WHERE value=" . $type;
 	$res = $DB->query($sql);
-	if ($DB->numrows($res) > 0)
-	{
+	if ($DB->numrows($res) > 0) {
 		$backend_infos = $DB->fetch_array($res);
 		return new $backend_infos["model_class_name"];
-	}
-	else
+	} else
 		return null;
 }
 
-function getModelInstanceByID($model_id)
-{
+function getModelInstanceByID($model_id) {
 	$model = new DataInjectionModel;
 	$model->getFromDB($model_id);
 	$model = getModelInstanceByType($model->getModelType());
@@ -68,39 +68,41 @@ function getModelInstanceByID($model_id)
 	return $model;
 }
 
-function exportModelAsCsv()
-{
+function exportModelAsCsv() {
 	$ficname = tempnam(PLUGIN_DATA_INJECTION_UPLOAD_DIR, "CSV");
 	$fic = fopen($ficname, "wb");
-	if (!$fic) return false;
-	
-	$sql ="SHOW COLUMNS FROM ".$this->table;
-	
-	if ($data=$DB->fetch_assoc($sql)){
-		$str="";
-		foreach ($data as $nom=>$val) {
-			if (!empty($str)) $str.=";";
+	if (!$fic)
+		return false;
+
+	$sql = "SHOW COLUMNS FROM " . $this->table;
+
+	if ($data = $DB->fetch_assoc($sql)) {
+		$str = "";
+		foreach ($data as $nom => $val) {
+			if (!empty ($str))
+				$str .= ";";
 			$str .= '"' . $nom . '"';
 		}
-		
+
 		fwrite($fic, $str . "\r\n");
 	}
 
-	$sql ="SELECT * FROM ".$this->table." WHERE ID=".$this->fields["ID"];
-	$result = $DB->query($sql);	
-	while ($data=$DB->fetch_assoc($result)) {
-			$str="";
-			foreach ($data as $nom=>$val) {
-				if (!empty($str)) $str.=";";
-				
-				if (!empty($val))
-					if (is_numeric($val))
-						$str .= $val;
-					else
-						$str .= '"' . mysql_escape_string($val) . '"';
-			}	
-			fwrite($fic, $str . "\r\n");
-		} 
+	$sql = "SELECT * FROM " . $this->table . " WHERE ID=" . $this->fields["ID"];
+	$result = $DB->query($sql);
+	while ($data = $DB->fetch_assoc($result)) {
+		$str = "";
+		foreach ($data as $nom => $val) {
+			if (!empty ($str))
+				$str .= ";";
+
+			if (!empty ($val))
+				if (is_numeric($val))
+					$str .= $val;
+				else
+					$str .= '"' . mysql_escape_string($val) . '"';
+		}
+		fwrite($fic, $str . "\r\n");
+	}
 	fclose($fic);
 	return $ficname;
 }

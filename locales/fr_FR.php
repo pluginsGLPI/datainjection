@@ -90,6 +90,10 @@ $DATAINJECTIONLANG["modelStep"][21] = "Format des dates";
 $DATAINJECTIONLANG["modelStep"][22] = "jj-mm-aaaa";
 $DATAINJECTIONLANG["modelStep"][23] = "mm-jj-aaaa";
 $DATAINJECTIONLANG["modelStep"][24] = "aaaa-mm-jj";
+$DATAINJECTIONLANG["modelStep"][25] = "1 234.56";
+$DATAINJECTIONLANG["modelStep"][26] = "1 234,56";
+$DATAINJECTIONLANG["modelStep"][27] = "1,234.56";
+$DATAINJECTIONLANG["modelStep"][28] = "Format des nombres flottants";
 
 $DATAINJECTIONLANG["deleteStep"][1] = "Confirmation de la suppression";
 $DATAINJECTIONLANG["deleteStep"][2] = "Attention si vous supprimez le modèle, les mappings et les informations complémentaires seront supprimés également.";
@@ -198,8 +202,7 @@ $DATAINJECTIONLANG["result"][16] = "Donnée déjà utilisée";
 $DATAINJECTIONLANG["result"][17] = "Pas de données à insérer";
 $DATAINJECTIONLANG["result"][18] = "Rapport d'injection du fichier";
 
-$DATAINJECTIONLANG["profiles"][1] = "Créer un modèle";
-$DATAINJECTIONLANG["profiles"][3] = "Utiliser un modèle";
+$DATAINJECTIONLANG["profiles"][1] = "Gestion des modèles";
 $DATAINJECTIONLANG["profiles"][4] = "Listes des profils déjà configurés";
 
 $DATAINJECTIONLANG["mappings"][1] = "Nombre de ports";

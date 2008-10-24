@@ -739,7 +739,7 @@ $DATA_INJECTION_MAPPING[INFOCOM_TYPE]['warranty_info']['type'] = 'text';
 $DATA_INJECTION_MAPPING[INFOCOM_TYPE]['warranty_value']['table'] = 'glpi_infocoms';
 $DATA_INJECTION_MAPPING[INFOCOM_TYPE]['warranty_value']['field'] = 'warranty_value';
 $DATA_INJECTION_MAPPING[INFOCOM_TYPE]['warranty_value']['name'] = $LANG["financial"][78];
-$DATA_INJECTION_MAPPING[INFOCOM_TYPE]['warranty_value']['type'] = 'text';
+$DATA_INJECTION_MAPPING[INFOCOM_TYPE]['warranty_value']['type'] = 'float';
 
 $DATA_INJECTION_MAPPING[INFOCOM_TYPE]['manufacturer']['table'] = 'glpi_enterprises';
 $DATA_INJECTION_MAPPING[INFOCOM_TYPE]['manufacturer']['field'] = 'name';
@@ -766,7 +766,7 @@ $DATA_INJECTION_MAPPING[INFOCOM_TYPE]['num_immo']['type'] = 'text';
 $DATA_INJECTION_MAPPING[INFOCOM_TYPE]['value']['table'] = 'glpi_infocoms';
 $DATA_INJECTION_MAPPING[INFOCOM_TYPE]['value']['field'] = 'value';
 $DATA_INJECTION_MAPPING[INFOCOM_TYPE]['value']['name'] = $LANG["financial"][21];
-$DATA_INJECTION_MAPPING[INFOCOM_TYPE]['value']['type'] = 'text';
+$DATA_INJECTION_MAPPING[INFOCOM_TYPE]['value']['type'] = 'float';
 
 $DATA_INJECTION_MAPPING[INFOCOM_TYPE]['amort_time']['table'] = 'glpi_infocoms';
 $DATA_INJECTION_MAPPING[INFOCOM_TYPE]['amort_time']['field'] = 'amort_time';

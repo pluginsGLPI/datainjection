@@ -60,7 +60,7 @@ $IMPORT_TYPES = array (
 	CONSUMABLE_TYPE,
 );
 
-//Primary types to be imported
+//Primary types to import
 $IMPORT_PRIMARY_TYPES = array (
 	COMPUTER_TYPE,
 	MONITOR_TYPE,
@@ -78,7 +78,7 @@ $IMPORT_PRIMARY_TYPES = array (
 	ENTITY_TYPE,
 );
 
-//Types to be connected to a computer
+//Types to connect to a computer
 $CONNECT_TO_COMPUTER_TYPES = array (
 	PERIPHERAL_TYPE,
 	MONITOR_TYPE,
@@ -86,9 +86,8 @@ $CONNECT_TO_COMPUTER_TYPES = array (
 	PHONE_TYPE,
 );
 
-//Types to be connected to a sofware
+//Types to connect to a sofware
 $CONNECT_TO_SOFTWARE_TYPES = array (
 	SOFTWARE_TYPE
 );
-
 ?>

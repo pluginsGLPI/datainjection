@@ -72,10 +72,15 @@ define ("ENCODING_ISO8859_1",0);
 define ("ENCODING_UFT8",1);
 define ("ENCODING_AUTO",2);
 
-define ("MODEL_PRIVATE",0);
-define ("MODEL_PUBLIC",1);
+define ("MODEL_PRIVATE",1);
+define ("MODEL_PUBLIC",0);
 
 define ("DATE_TYPE_DDMMYYYY","dd-mm-yyyy");
 define ("DATE_TYPE_MMDDYYYY","mm-dd-yyyy");
 define ("DATE_TYPE_YYYYMMDD","yyyy-mm-dd");
+
+define ("FLOAT_TYPE_DOT",0);
+define ("FLOAT_TYPE_COMMA",1);
+define ("FLOAT_TYPE_DOT_AND_COM",2);
+
 ?>

@@ -42,80 +42,79 @@ function plugin_data_injection_Install() {
 	$DB = new DB;
 
 	$query = "CREATE TABLE IF NOT EXISTS `glpi_plugin_data_injection_models` (
-					  `ID` int(11) NOT NULL auto_increment,
-					  `name` varchar(255) NOT NULL,
-					  `comments` text,
-					  `date_mod` datetime NOT NULL default '0000-00-00 00:00:00',
-					  `type` int(11) NOT NULL default '1',
-					  `device_type` int(11) NOT NULL default '1',
-					  `FK_entities` int(11) NOT NULL,
-					  `behavior_add` int(1) NOT NULL default '1',
-					  `behavior_update` int(1) NOT NULL default '0',
-					  `can_add_dropdown` int(1) NOT NULL default '0',
-					  `can_overwrite_if_not_empty` int(1) NOT NULL default '1',
-					  `public` int(1) NOT NULL default '1',
-					  `perform_network_connection` int(1) NOT NULL default '0',
-					  `user_id` int(11) NOT NULL,
-					  `date_format` varchar(11) NOT NULL default 'yyyy-mm-dd',
-					  PRIMARY KEY  (`ID`) 
-					) ENGINE=MyISAM CHARSET=utf8 COLLATE=utf8_unicode_ci;";
+							  `ID` int(11) NOT NULL auto_increment,
+							  `name` varchar(255) NOT NULL,
+							  `comments` text,
+							  `date_mod` datetime NOT NULL default '0000-00-00 00:00:00',
+							  `type` int(11) NOT NULL default '1',
+							  `device_type` int(11) NOT NULL default '1',
+							  `FK_entities` int(11) NOT NULL,
+							  `behavior_add` int(1) NOT NULL default '1',
+							  `behavior_update` int(1) NOT NULL default '0',
+							  `can_add_dropdown` int(1) NOT NULL default '0',
+							  `can_overwrite_if_not_empty` int(1) NOT NULL default '1',
+							  `public` int(1) NOT NULL default '1',
+							  `perform_network_connection` int(1) NOT NULL default '0',
+							  `user_id` int(11) NOT NULL,
+							  `date_format` varchar(11) NOT NULL default 'yyyy-mm-dd',
+							  PRIMARY KEY  (`ID`) 
+							) ENGINE=MyISAM CHARSET=utf8 COLLATE=utf8_unicode_ci;";
 
 	$DB->query($query) or die($DB->error());
 
 	$query = "CREATE TABLE IF NOT EXISTS `glpi_plugin_data_injection_models_csv` (
-					  `ID` int(11) NOT NULL auto_increment,
-					  `model_id` int(11) NOT NULL,
-					  `device_type` int(11) NOT NULL default '1',
-					  `delimiter` varchar(1) NOT NULL default ';',
-					  `header_present` int(1) NOT NULL default '1',
-					  PRIMARY KEY  (`ID`)
-					) ENGINE=MyISAM CHARSET=utf8 COLLATE=utf8_unicode_ci;";
+							  `ID` int(11) NOT NULL auto_increment,
+							  `model_id` int(11) NOT NULL,
+							  `device_type` int(11) NOT NULL default '1',
+							  `delimiter` varchar(1) NOT NULL default ';',
+							  `header_present` int(1) NOT NULL default '1',
+							  PRIMARY KEY  (`ID`)
+							) ENGINE=MyISAM CHARSET=utf8 COLLATE=utf8_unicode_ci;";
 
 	$DB->query($query) or die($DB->error());
 
 	$query = "CREATE TABLE IF NOT EXISTS `glpi_plugin_data_injection_mappings` (
-						`ID` INT( 11 ) NOT NULL AUTO_INCREMENT PRIMARY KEY ,
-						`model_id` INT( 11 ) NOT NULL ,
-						`type` INT( 11 ) NOT NULL DEFAULT '1',
-						`rank` INT( 11 ) NOT NULL ,
-						`name` VARCHAR( 255 ) NOT NULL ,
-						`value` VARCHAR( 255 ) NOT NULL ,
-						`mandatory` INT( 1 ) NOT NULL DEFAULT '0'		
-						) ENGINE = MYISAM CHARSET=utf8 COLLATE=utf8_unicode_ci ;";
+								`ID` INT( 11 ) NOT NULL AUTO_INCREMENT PRIMARY KEY ,
+								`model_id` INT( 11 ) NOT NULL ,
+								`type` INT( 11 ) NOT NULL DEFAULT '1',
+								`rank` INT( 11 ) NOT NULL ,
+								`name` VARCHAR( 255 ) NOT NULL ,
+								`value` VARCHAR( 255 ) NOT NULL ,
+								`mandatory` INT( 1 ) NOT NULL DEFAULT '0'		
+								) ENGINE = MYISAM CHARSET=utf8 COLLATE=utf8_unicode_ci ;";
 	$DB->query($query) or die($DB->error());
 
 	$query = "CREATE TABLE IF NOT EXISTS `glpi_plugin_data_injection_infos` (
-						`ID` INT( 11 ) NOT NULL AUTO_INCREMENT PRIMARY KEY ,
-						`model_id` INT( 11 ) NOT NULL ,
-						`type` int(11) NOT NULL default '9',
-						`value` VARCHAR( 255 ) NOT NULL ,
-						`mandatory` INT( 1 ) NOT NULL DEFAULT '0'		
-						) ENGINE = MYISAM CHARSET=utf8 COLLATE=utf8_unicode_ci ;";
+								`ID` INT( 11 ) NOT NULL AUTO_INCREMENT PRIMARY KEY ,
+								`model_id` INT( 11 ) NOT NULL ,
+								`type` int(11) NOT NULL default '9',
+								`value` VARCHAR( 255 ) NOT NULL ,
+								`mandatory` INT( 1 ) NOT NULL DEFAULT '0'		
+								) ENGINE = MYISAM CHARSET=utf8 COLLATE=utf8_unicode_ci ;";
 	$DB->query($query) or die($DB->error());
 
 	$query = "CREATE TABLE IF NOT EXISTS `glpi_plugin_data_injection_filetype` (
-					  `ID` int(11) NOT NULL auto_increment,
-					  `name` varchar(255) NOT NULL,
-					  `value` int(11) NOT NULL,
-					  `backend_class_name` varchar(255) NOT NULL,
-					  `model_class_name` varchar(255) NOT NULL,
-					  PRIMARY KEY  (`ID`)
-					) ENGINE=MyISAM AUTO_INCREMENT=2  CHARSET=utf8 COLLATE=utf8_unicode_ci;
-					";
+							  `ID` int(11) NOT NULL auto_increment,
+							  `name` varchar(255) NOT NULL,
+							  `value` int(11) NOT NULL,
+							  `backend_class_name` varchar(255) NOT NULL,
+							  `model_class_name` varchar(255) NOT NULL,
+							  PRIMARY KEY  (`ID`)
+							) ENGINE=MyISAM AUTO_INCREMENT=2  CHARSET=utf8 COLLATE=utf8_unicode_ci;
+							";
 	$DB->query($query) or die($DB->error());
 
 	$query = "REPLACE INTO `glpi_plugin_data_injection_filetype` (`ID`, `name`, `value`, `backend_class_name`, `model_class_name`) VALUES 
-				(1, 'CSV', 1, 'BackendCSV', 'DataInjectionModelCSV');";
+						(1, 'CSV', 1, 'BackendCSV', 'DataInjectionModelCSV');";
 	$DB->query($query) or die($DB->error());
 
 	$query = "CREATE TABLE IF NOT EXISTS `glpi_plugin_data_injection_profiles` (
-					  `ID` int(11) NOT NULL auto_increment,
-					  `name` varchar(255) default NULL,
-					  `is_default` int(6) NOT NULL default '0',
-					  `create_model` char(1) default NULL,
-					  `use_model` char(1) default NULL,
-					  PRIMARY KEY  (`ID`)
-					) ENGINE=MyISAM CHARSET=utf8 COLLATE=utf8_unicode_ci;";
+							  `ID` int(11) NOT NULL auto_increment,
+							  `name` varchar(255) default NULL,
+							  `is_default` int(6) NOT NULL default '0',
+							  `model` char(1) default NULL,
+							  PRIMARY KEY  (`ID`)
+							) ENGINE=MyISAM CHARSET=utf8 COLLATE=utf8_unicode_ci;";
 	$DB->query($query) or die($DB->error());
 
 	if (!is_dir(PLUGIN_DATA_INJECTION_UPLOAD_DIR)) {
@@ -147,6 +146,39 @@ function plugin_data_injection_uninstall() {
 	if (is_dir(PLUGIN_DATA_INJECTION_UPLOAD_DIR)) {
 		deleteDir(PLUGIN_DATA_INJECTION_UPLOAD_DIR);
 	}
+}
+
+function updateV132() {
+	global $DB;
+	$$sql = "ALTER TABLE `glpi_plugin_data_injection_models` ADD `float_format` INT( 1 ) NOT NULL DEFAULT '0';";
+	$DB->query($sql);
+
+	//Template recursivity : need standardize names in order to use privatePublicSwitch
+	$sql = " ALTER TABLE `glpi_plugin_data_injection_models` CHANGE `user_id` `FK_users` INT( 11 ) NOT NULL";
+	$DB->query($sql);
+	
+	$sql = " ALTER TABLE `glpi_plugin_data_injection_models` CHANGE `public` `private` INT( 1 ) NOT NULL  DEFAULT '0'";
+	$DB->query($sql);
+	
+	
+	
+	$sql="UPDATE `glpi_plugin_data_injection_models` SET FK_entities=-1 AND private=1 WHERE private=0";
+	$DB->query($sql);
+	
+	$sql="UPDATE `glpi_plugin_data_injection_models` SET private=0 WHERE private=1 AND FK_entities>0";
+	$DB->query($sql);
+	
+	$sql = "ALTER TABLE `glpi_plugin_data_injection_models` ADD `recursive` INT( 1 ) NOT NULL DEFAULT '0';";
+	$DB->query($sql);
+
+	$sql="UPDATE `glpi_plugin_data_injection_profiles` SET create_model=use_model WHERE create_model IS NULL";
+	$DB->query($sql);
+
+	$sql="ALTER TABLE `glpi_plugin_data_injection_profiles` DROP `use_model`";
+	$DB->query($sql);
+	
+	$sql=" ALTER TABLE `glpi_plugin_data_injection_profiles` CHANGE `create_model` `model` CHAR( 1 ) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL";
+	$DB->query($sql);
 }
 
 function plugin_data_injection_initSession() {
@@ -195,14 +227,14 @@ function plugin_data_injection_createfirstaccess($ID) {
 		$Profile->GetfromDB($ID);
 		$name = $Profile->fields["name"];
 
-		$query = "INSERT INTO `glpi_plugin_data_injection_profiles` ( `ID`, `name` , `is_default`, `create_model`, `use_model`) VALUES ('$ID', '$name','0','w','r');";
+		$query = "INSERT INTO `glpi_plugin_data_injection_profiles` ( `ID`, `name` , `is_default`, `model`) VALUES ('$ID', '$name','0','w');";
 		$DB->query($query);
 	}
 }
 
 function plugin_data_injection_createaccess($ID) {
 	global $DB;
-	
+
 	$Profile = new Profile();
 	$Profile->GetfromDB($ID);
 	$name = $Profile->fields["name"];
@@ -242,6 +274,11 @@ function plugin_data_injection_haveRight($module, $right) {
 		return false;
 }
 
+function plugin_data_injection_haveTypeRight($module,$right)
+{
+	return plugin_data_injection_haveRight("model", $right);	
+}
+
 function plugin_data_injection_checkRight($module, $right) {
 	global $CFG_GLPI;
 
@@ -266,14 +303,15 @@ function plugin_data_injection_loadHook($hook_name, $params = array ()) {
 		if (function_exists($function)) {
 			$function ($type, $params);
 		}
-	} else if (isset($PLUGIN_HOOKS['plugin_types'])){
-		//Browse all plugins
-		foreach ($PLUGIN_HOOKS['plugin_types'] as $type => $name) {
-			$function = 'plugin_' . $name . '_data_injection_' . $hook_name;
-			if (function_exists($function)) {
-				$function ($type, $params);
+	} else
+		if (isset ($PLUGIN_HOOKS['plugin_types'])) {
+			//Browse all plugins
+			foreach ($PLUGIN_HOOKS['plugin_types'] as $type => $name) {
+				$function = 'plugin_' . $name . '_data_injection_' . $hook_name;
+				if (function_exists($function)) {
+					$function ($type, $params);
+				}
 			}
 		}
-	}
 }
 ?>

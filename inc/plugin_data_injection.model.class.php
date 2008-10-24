@@ -36,10 +36,13 @@ class DataInjectionModel extends CommonDBTM {
 	function DataInjectionModel()
 	{
 		$this->table="glpi_plugin_data_injection_models";
-    	$this->type=-1;
+    	$this->type=PLUGIN_DATA_INJECTION_MODEL;
     	$this->mappings = new MappingCollection;
     	$this->infos = new InfosCollection;
     	$this->init();
+    	$this->may_be_private=true;
+    	$this->may_be_recursive=true;
+    	$this->entity_assign=true;
 	}
 
 	function init()
@@ -224,14 +227,9 @@ class DataInjectionModel extends CommonDBTM {
 		return $this->fields["can_overwrite_if_not_empty"];
 	}
 	
-	function getPublic()
-	{
-		return $this->fields["public"];
-	}
-	
 	function getUserID()
 	{
-		return $this->fields["user_id"];
+		return $this->fields["FK_users"];
 	}
 
 	function getPerformNetworkConnection()
@@ -242,6 +240,21 @@ class DataInjectionModel extends CommonDBTM {
 	function getDateFormat()
 	{
 		return $this->fields["date_format"];
+	}
+
+	function getFloatFormat()
+	{
+		return $this->fields["float_format"];
+	}
+
+	function getRecursive()
+	{
+		return $this->fields["recursive"];
+	}
+
+	function getPrivate()
+	{
+		return $this->fields["private"];
 	}
 
 	//---- Save -----//
@@ -310,14 +323,14 @@ class DataInjectionModel extends CommonDBTM {
 		$this->fields["can_overwrite_if_not_empty"] = $canoverwrite; 
 	}
 	
-	function setPublic($public)
+	function setPrivate($private)
 	{
-		$this->fields["public"] = $public;
+		$this->fields["private"] = $private;
 	}
 		
 	function setUserID($user)
 	{
-		$this->fields["user_id"] = $user;
+		$this->fields["FK_users"] = $user;
 	}
 
 	function setDateFormat($df)
@@ -325,14 +338,25 @@ class DataInjectionModel extends CommonDBTM {
 		$this->fields["date_format"] = $df;
 	}
 
+	function setFloatFormat($ff)
+	{
+		$this->fields["float_format"] = $ff;
+	}
+
 	function setPerformNetworkConnection($perform)
 	{
 		$this->fields["perform_network_connection"] = $perform;
 	}
+
+	function setRecursive($recursive)
+	{
+		$this->fields["recursive"] = $recursive;
+	}
 	
 	function setFields($fields,$entity,$user_id)
 	{
-		$this->setEntity($entity);
+		//$this->setEntity($entity);
+		$this->setEntity($fields["FK_entities"]);
 		
 		$this->setUserID($user_id);
 		
@@ -354,14 +378,21 @@ class DataInjectionModel extends CommonDBTM {
 		if(isset($fields["can_overwrite_if_not_empty"]))
 			$this->setCanOverwriteIfNotEmpty($fields["can_overwrite_if_not_empty"]);
 		
-		if(isset($fields["dropdown_public"]))
-			$this->setPublic($fields["dropdown_public"]);
+		if(isset($fields["private"]))
+			$this->setPrivate($fields["private"]);
 
 		if(isset($fields["perform_network_connection"]))
 			$this->setPerformNetworkConnection($fields["perform_network_connection"]);
 			
 		if(isset($fields["date_format"]))
 			$this->setDateFormat($fields["date_format"]);
+
+		if(isset($fields["float_format"]))
+			$this->setFloatFormat($fields["float_format"]);
+
+		if(isset($fields["recursive"]))
+			$this->setRecursive($fields["recursive"]);
+
 	}
 	
 }

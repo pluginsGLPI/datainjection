@@ -130,6 +130,8 @@ function reformatDatasBeforeCheck ($model,$line,$entity,&$result)
 				case "mac":
 					$line[$rank]=reformatMacAddress($line[$rank]);
 					break;
+					case "float":
+					$line[$rank]=reformatFloat($line[$rank],$model->getFloatFormat());
 				default:
 				break;
 			}
@@ -209,5 +211,34 @@ function reformatMacAddress($mac)
 function reformatSpecialChars($value)
 {
 	return str_replace(array('<','>'),array("&lt;","&gt;"),$value);
+}
+
+/**
+ * Reformat float value. Input could be :
+ * xxxx.xx
+ * xx,xxx.xx
+ * xxxx,xx
+ * @value value : the float to reformat
+ * @format the float format
+ * @return the float modified as expected in GLPI
+ */
+function reformatFloat($value,$format)
+{
+	if ($value=='')
+		return $value;
+		
+	switch ($format)
+	{
+		case FLOAT_TYPE_COMMA:
+		$value = str_replace(array(" ", ","), array("","."), $value);
+		break;
+		case FLOAT_TYPE_DOT:
+		$value = str_replace(" ","", $value);
+		break;
+		case FLOAT_TYPE_DOT_AND_COM:
+		$value=str_replace(",","", $value);
+		break;
+	}
+	return $value;
 }
 ?>
