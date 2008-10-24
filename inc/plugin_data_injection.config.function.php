@@ -48,14 +48,15 @@ function plugin_data_injection_Install() {
 							  `date_mod` datetime NOT NULL default '0000-00-00 00:00:00',
 							  `type` int(11) NOT NULL default '1',
 							  `device_type` int(11) NOT NULL default '1',
-							  `FK_entities` int(11) NOT NULL,
+							  `FK_entities` int(11) NOT NULL default '-1',
 							  `behavior_add` int(1) NOT NULL default '1',
 							  `behavior_update` int(1) NOT NULL default '0',
 							  `can_add_dropdown` int(1) NOT NULL default '0',
 							  `can_overwrite_if_not_empty` int(1) NOT NULL default '1',
-							  `public` int(1) NOT NULL default '1',
+							  `private` int(1) NOT NULL default '1',
+							  `recursive` int(1) NOT NULL default '0',
 							  `perform_network_connection` int(1) NOT NULL default '0',
-							  `user_id` int(11) NOT NULL,
+							  `FK_users` int(11) NOT NULL,
 							  `date_format` varchar(11) NOT NULL default 'yyyy-mm-dd',
 							  PRIMARY KEY  (`ID`) 
 							) ENGINE=MyISAM CHARSET=utf8 COLLATE=utf8_unicode_ci;";
