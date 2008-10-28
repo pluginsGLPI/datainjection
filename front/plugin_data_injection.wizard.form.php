@@ -174,7 +174,7 @@ if($load)
 			
 			$tmpfname = tempnam (realpath(PLUGIN_DATA_INJECTION_UPLOAD_DIR), "Tmp");
 			
-	    	if( !strstr(substr($name_file,strlen($name_file)-4), strtolower($extension)) )
+	    	if( !strstr(strtolower(substr($name_file,strlen($name_file)-4)), strtolower($extension)) )
 	        	$error = $DATAINJECTIONLANG["fileStep"][5]."<br />".$DATAINJECTIONLANG["fileStep"][6]." ".$extension." ".$DATAINJECTIONLANG["fileStep"][7];
 	    	else
 	    		{

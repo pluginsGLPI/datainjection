@@ -125,7 +125,7 @@ class BackendCSV extends Backend{
 				$this->setError($key);
 				$check = 2;
 			} 
-			else if (strtoupper(stripslashes($header[$mapping->getRank()])) != strtoupper(stripslashes($mapping->getName()))) {
+			else if (trim(strtoupper(stripslashes($header[$mapping->getRank()]))) != trim(strtoupper(stripslashes($mapping->getName())))) {
 				$this->setError($DATAINJECTIONLANG["saveStep"][18].stripslashes($header[$mapping->getRank()])."\n". $DATAINJECTIONLANG["saveStep"][19].stripslashes($mapping->getName()));				
 				$check = 2;
 			}
