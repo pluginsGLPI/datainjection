@@ -149,9 +149,9 @@ function plugin_data_injection_uninstall() {
 	}
 }
 
-function updateV132() {
+function plugin_data_injection_update131_14() {
 	global $DB;
-	$$sql = "ALTER TABLE `glpi_plugin_data_injection_models` ADD `float_format` INT( 1 ) NOT NULL DEFAULT '0';";
+	$sql = "ALTER TABLE `glpi_plugin_data_injection_models` ADD `float_format` INT( 1 ) NOT NULL DEFAULT '0';";
 	$DB->query($sql);
 
 	//Template recursivity : need standardize names in order to use privatePublicSwitch

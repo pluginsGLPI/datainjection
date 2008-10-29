@@ -39,6 +39,10 @@ include (GLPI_ROOT."/inc/includes.php");
 
 commonHeader($DATAINJECTIONLANG["name"][1],$_SERVER["PHP_SELF"],"plugins","data_injection");
 
+if (!FieldExists("glpi_plugin_data_injection_models","recursive"))
+glpi_header(GLPI_ROOT .
+		"/plugins/data_injection/front/plugin_data_injection.install.php");
+else
 glpi_header(GLPI_ROOT .
 		"/plugins/data_injection/front/plugin_data_injection.presentation.php");
 commonFooter();
