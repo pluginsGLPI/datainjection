@@ -586,10 +586,10 @@ $DATA_INJECTION_MAPPING[PHONE_TYPE]['contact']['field'] = 'contact';
 $DATA_INJECTION_MAPPING[PHONE_TYPE]['contact']['name'] = $LANG["common"][18];
 $DATA_INJECTION_MAPPING[PHONE_TYPE]['contact']['type'] = 'text';
 
-$DATA_INJECTION_MAPPING[PHONE_TYPE]['contactnum']['table'] = 'glpi_phones';
-$DATA_INJECTION_MAPPING[PHONE_TYPE]['contactnum']['field'] = 'contact_num';
-$DATA_INJECTION_MAPPING[PHONE_TYPE]['contactnum']['name'] = $LANG["common"][21];
-$DATA_INJECTION_MAPPING[PHONE_TYPE]['contactnum']['type'] = 'text';
+$DATA_INJECTION_MAPPING[PHONE_TYPE]['contact_num']['table'] = 'glpi_phones';
+$DATA_INJECTION_MAPPING[PHONE_TYPE]['contact_num']['field'] = 'contact_num';
+$DATA_INJECTION_MAPPING[PHONE_TYPE]['contact_num']['name'] = $LANG["common"][21];
+$DATA_INJECTION_MAPPING[PHONE_TYPE]['contact_num']['type'] = 'text';
 
 $DATA_INJECTION_MAPPING[PHONE_TYPE]['comments']['table'] = 'glpi_phones';
 $DATA_INJECTION_MAPPING[PHONE_TYPE]['comments']['field'] = 'comments';
