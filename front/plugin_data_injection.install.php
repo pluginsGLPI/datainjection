@@ -50,15 +50,18 @@ if (substr(phpversion(),0,1) < "5") {
 	echo "<strong>".$DATAINJECTIONLANG["setup"][10]."</strong>";
 
 } else {
-	if (!FieldExists("glpi_plugin_data_injection_models","recursive"))
-		plugin_data_injection_update131_14();	
-	else
-	{
-		cleanCache("GLPI_HEADER_".$_SESSION["glpiID"]);
+	cleanCache("GLPI_HEADER_".$_SESSION["glpiID"]);
+	
+	if (!TableExists("glpi_plugin_data_injection_models")) {
+		// First Install
 		plugin_data_injection_Install();
 		plugin_data_injection_createfirstaccess($_SESSION['glpiactiveprofile']['ID']);
-		plugin_data_injection_initSession();
+
+	} else if (!FieldExists("glpi_plugin_data_injection_models","recursive")) {
+		// Update
+		plugin_data_injection_update131_14();	
 	}
+	plugin_data_injection_initSession();
 	glpi_header($_SERVER['HTTP_REFERER']);
 }
 

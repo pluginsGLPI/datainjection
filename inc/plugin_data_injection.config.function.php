@@ -186,7 +186,7 @@ function plugin_data_injection_update131_14() {
 function plugin_data_injection_initSession() {
 	global $DB;
 
-	if (TableExists("glpi_plugin_data_injection_filetype") && is_dir(PLUGIN_DATA_INJECTION_UPLOAD_DIR) && is_writable(PLUGIN_DATA_INJECTION_UPLOAD_DIR)) {
+	if (FieldExists("glpi_plugin_data_injection_models","recursive") && is_dir(PLUGIN_DATA_INJECTION_UPLOAD_DIR) && is_writable(PLUGIN_DATA_INJECTION_UPLOAD_DIR)) {
 		$profile = new DataInjectionProfile();
 
 		$query = "SELECT DISTINCT glpi_profiles.* FROM glpi_users_profiles INNER JOIN glpi_profiles ON (glpi_users_profiles.FK_profiles = glpi_profiles.ID) WHERE glpi_users_profiles.FK_users='" . $_SESSION["glpiID"] . "'";
