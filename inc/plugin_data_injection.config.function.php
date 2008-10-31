@@ -58,6 +58,7 @@ function plugin_data_injection_Install() {
 							  `perform_network_connection` int(1) NOT NULL default '0',
 							  `FK_users` int(11) NOT NULL,
 							  `date_format` varchar(11) NOT NULL default 'yyyy-mm-dd',
+							  `float_format` INT( 1 ) NOT NULL DEFAULT '0',
 							  PRIMARY KEY  (`ID`) 
 							) ENGINE=MyISAM CHARSET=utf8 COLLATE=utf8_unicode_ci;";
 
