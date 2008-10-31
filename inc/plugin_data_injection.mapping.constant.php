@@ -128,10 +128,10 @@ $DATA_INJECTION_MAPPING[COMPUTER_TYPE]['contact']['field'] = 'contact';
 $DATA_INJECTION_MAPPING[COMPUTER_TYPE]['contact']['name'] = $LANG["common"][18];
 $DATA_INJECTION_MAPPING[COMPUTER_TYPE]['contact']['type'] = 'text';
 
-$DATA_INJECTION_MAPPING[COMPUTER_TYPE]['contactnum']['table'] = 'glpi_computers';
-$DATA_INJECTION_MAPPING[COMPUTER_TYPE]['contactnum']['field'] = 'contact_num';
-$DATA_INJECTION_MAPPING[COMPUTER_TYPE]['contactnum']['name'] = $LANG["common"][21];
-$DATA_INJECTION_MAPPING[COMPUTER_TYPE]['contactnum']['type'] = 'text';
+$DATA_INJECTION_MAPPING[COMPUTER_TYPE]['contact_num']['table'] = 'glpi_computers';
+$DATA_INJECTION_MAPPING[COMPUTER_TYPE]['contact_num']['field'] = 'contact_num';
+$DATA_INJECTION_MAPPING[COMPUTER_TYPE]['contact_num']['name'] = $LANG["common"][21];
+$DATA_INJECTION_MAPPING[COMPUTER_TYPE]['contact_num']['type'] = 'text';
 
 $DATA_INJECTION_MAPPING[COMPUTER_TYPE]['manufacturer']['table'] = 'glpi_dropdown_manufacturer';
 $DATA_INJECTION_MAPPING[COMPUTER_TYPE]['manufacturer']['field'] = 'name';
@@ -265,10 +265,10 @@ $DATA_INJECTION_MAPPING[MONITOR_TYPE]['contact']['field'] = 'contact';
 $DATA_INJECTION_MAPPING[MONITOR_TYPE]['contact']['name'] = $LANG["common"][18];
 $DATA_INJECTION_MAPPING[MONITOR_TYPE]['contact']['type'] = 'text';
 
-$DATA_INJECTION_MAPPING[MONITOR_TYPE]['contactnum']['table'] = 'glpi_monitors';
-$DATA_INJECTION_MAPPING[MONITOR_TYPE]['contactnum']['field'] = 'contact_num';
-$DATA_INJECTION_MAPPING[MONITOR_TYPE]['contactnum']['name'] = $LANG["common"][21];
-$DATA_INJECTION_MAPPING[MONITOR_TYPE]['contactnum']['type'] = 'text';
+$DATA_INJECTION_MAPPING[MONITOR_TYPE]['contact_num']['table'] = 'glpi_monitors';
+$DATA_INJECTION_MAPPING[MONITOR_TYPE]['contact_num']['field'] = 'contact_num';
+$DATA_INJECTION_MAPPING[MONITOR_TYPE]['contact_num']['name'] = $LANG["common"][21];
+$DATA_INJECTION_MAPPING[MONITOR_TYPE]['contact_num']['type'] = 'text';
 
 $DATA_INJECTION_MAPPING[MONITOR_TYPE]['comments']['table'] = 'glpi_monitors';
 $DATA_INJECTION_MAPPING[MONITOR_TYPE]['comments']['field'] = 'comments';
@@ -421,10 +421,10 @@ $DATA_INJECTION_MAPPING[PRINTER_TYPE]['contact']['field'] = 'contact';
 $DATA_INJECTION_MAPPING[PRINTER_TYPE]['contact']['name'] = $LANG["common"][18];
 $DATA_INJECTION_MAPPING[PRINTER_TYPE]['contact']['type'] = 'text';
 
-$DATA_INJECTION_MAPPING[PRINTER_TYPE]['contactnum']['table'] = 'glpi_printers';
-$DATA_INJECTION_MAPPING[PRINTER_TYPE]['contactnum']['field'] = 'contact_num';
-$DATA_INJECTION_MAPPING[PRINTER_TYPE]['contactnum']['name'] = $LANG["common"][21];
-$DATA_INJECTION_MAPPING[PRINTER_TYPE]['contactnum']['type'] = 'text';
+$DATA_INJECTION_MAPPING[PRINTER_TYPE]['contact_num']['table'] = 'glpi_printers';
+$DATA_INJECTION_MAPPING[PRINTER_TYPE]['contact_num']['field'] = 'contact_num';
+$DATA_INJECTION_MAPPING[PRINTER_TYPE]['contact_num']['name'] = $LANG["common"][21];
+$DATA_INJECTION_MAPPING[PRINTER_TYPE]['contact_num']['type'] = 'text';
 
 $DATA_INJECTION_MAPPING[PRINTER_TYPE]['comments']['table'] = 'glpi_printers';
 $DATA_INJECTION_MAPPING[PRINTER_TYPE]['comments']['field'] = 'comments';
@@ -835,10 +835,10 @@ $DATA_INJECTION_MAPPING[NETWORKING_TYPE]['contact']['field'] = 'contact';
 $DATA_INJECTION_MAPPING[NETWORKING_TYPE]['contact']['name'] = $LANG["common"][18];
 $DATA_INJECTION_MAPPING[NETWORKING_TYPE]['contact']['type'] = 'text';
 
-$DATA_INJECTION_MAPPING[NETWORKING_TYPE]['contactnum']['table'] = 'glpi_networking';
-$DATA_INJECTION_MAPPING[NETWORKING_TYPE]['contactnum']['field'] = 'contact_num';
-$DATA_INJECTION_MAPPING[NETWORKING_TYPE]['contactnum']['name'] = $LANG["common"][21];
-$DATA_INJECTION_MAPPING[NETWORKING_TYPE]['contactnum']['type'] = 'text';
+$DATA_INJECTION_MAPPING[NETWORKING_TYPE]['contact_num']['table'] = 'glpi_networking';
+$DATA_INJECTION_MAPPING[NETWORKING_TYPE]['contact_num']['field'] = 'contact_num';
+$DATA_INJECTION_MAPPING[NETWORKING_TYPE]['contact_num']['name'] = $LANG["common"][21];
+$DATA_INJECTION_MAPPING[NETWORKING_TYPE]['contact_num']['type'] = 'text';
 
 $DATA_INJECTION_MAPPING[NETWORKING_TYPE]['comments']['table'] = 'glpi_networking';
 $DATA_INJECTION_MAPPING[NETWORKING_TYPE]['comments']['field'] = 'comments';
@@ -1236,10 +1236,10 @@ $DATA_INJECTION_MAPPING[PERIPHERAL_TYPE]['contact']['field'] = 'contact';
 $DATA_INJECTION_MAPPING[PERIPHERAL_TYPE]['contact']['name'] = $LANG["common"][18];
 $DATA_INJECTION_MAPPING[PERIPHERAL_TYPE]['contact']['type'] = 'text';
 
-$DATA_INJECTION_MAPPING[PERIPHERAL_TYPE]['contactnum']['table'] = 'glpi_peripherals';
-$DATA_INJECTION_MAPPING[PERIPHERAL_TYPE]['contactnum']['field'] = 'contact_num';
-$DATA_INJECTION_MAPPING[PERIPHERAL_TYPE]['contactnum']['name'] = $LANG["common"][21];
-$DATA_INJECTION_MAPPING[PERIPHERAL_TYPE]['contactnum']['type'] = 'text';
+$DATA_INJECTION_MAPPING[PERIPHERAL_TYPE]['contact_num']['table'] = 'glpi_peripherals';
+$DATA_INJECTION_MAPPING[PERIPHERAL_TYPE]['contact_num']['field'] = 'contact_num';
+$DATA_INJECTION_MAPPING[PERIPHERAL_TYPE]['contact_num']['name'] = $LANG["common"][21];
+$DATA_INJECTION_MAPPING[PERIPHERAL_TYPE]['contact_num']['type'] = 'text';
 
 $DATA_INJECTION_MAPPING[PERIPHERAL_TYPE]['comments']['table'] = 'glpi_peripherals';
 $DATA_INJECTION_MAPPING[PERIPHERAL_TYPE]['comments']['field'] = 'comments';
