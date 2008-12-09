@@ -562,6 +562,7 @@ function addNecessaryFields($model, $mapping, $mapping_definition, $entity, $typ
 			addField($fields, "FK_entities", $entity);
 			break;
 		case USER_TYPE :
+			addField($fields, "FK_entities", $entity);
 			if (isset ($fields["password"])) {
 				if (empty ($fields["password"])) {
 					unset ($fields["password"]);
