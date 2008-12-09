@@ -39,7 +39,7 @@ if (!defined('GLPI_ROOT')) {
 }
 
 function plugin_data_injection_Install() {
-	$DB = new DB;
+	global $DB;
 
 	$query = "CREATE TABLE IF NOT EXISTS `glpi_plugin_data_injection_models` (
 							  `ID` int(11) NOT NULL auto_increment,
@@ -125,7 +125,7 @@ function plugin_data_injection_Install() {
 }
 
 function plugin_data_injection_uninstall() {
-	$DB = new DB;
+	global $DB;
 
 	$query = "DROP TABLE `glpi_plugin_data_injection_models`;";
 	$DB->query($query) or die($DB->error());
@@ -219,7 +219,6 @@ function plugin_data_injection_changeprofile() {
 }
 
 function plugin_data_injection_createfirstaccess($ID) {
-
 	global $DB;
 
 	$DataInjectionProfile = new DataInjectionProfile();
