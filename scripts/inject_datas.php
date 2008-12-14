@@ -77,8 +77,12 @@ $NEEDED_ITEMS = array (
 	"device"
 );
 
+include (GLPI_ROOT . "/config/based_config.php");
 include (GLPI_ROOT . "/inc/includes.php");
 include ("../plugin_data_injection.includes.php");
+
+print_r($_SESSION);
+$CFG_GLPI["debug"]=0; 
 
 $start = true;
 
@@ -105,6 +109,7 @@ function print_help() {
 }
 function listModels($entity) {
 	$models = getAllModels(1, "ID",$entity);
+	
 	foreach ($models as $model)
 		echo $model->getModelID() . " : " . $model->getModelName() . " / " . getDropdownName('glpi_plugin_data_injection_filetype', $model->getModelType()) . "\n";
 }

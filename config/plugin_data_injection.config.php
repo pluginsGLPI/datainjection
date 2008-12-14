@@ -27,7 +27,7 @@
  ------------------------------------------------------------------------
 */
 
-// Original Author of file: Walid Nouh (walid.nouh@atosorigin.com)
+// Original Author of file: Walid Nouh
 // Purpose of file:
 // ----------------------------------------------------------------------
 
