@@ -58,7 +58,7 @@
 // - user : look for a user. Need specific processing (first look for login, then lastname + firstname, then firstname + lastname)
 
 global $LANG, $DATA_INJECTION_MAPPING, $IMPORT_TYPES, $IMPORT_PRIMARY_TYPES,
-	   $DATAINJECTIONLANG, $PLUGIN_HOOKS, $CONNECT_TO_COMPUTER_TYPES,
+	   $PLUGIN_HOOKS, $CONNECT_TO_COMPUTER_TYPES,
 	   $DEVICES_TYPES_STRING, $CONNECT_TO_COMPUTER_TYPES;
 
 // ----------------------------------------------------------------------
@@ -911,7 +911,7 @@ $DATA_INJECTION_MAPPING[NETWORKING_TYPE]['state']['type'] = 'text';
 
 $DATA_INJECTION_MAPPING[NETWORKING_TYPE]['firmware']['table'] = 'glpi_networking';
 $DATA_INJECTION_MAPPING[NETWORKING_TYPE]['firmware']['field'] = 'firmware';
-$DATA_INJECTION_MAPPING[NETWORKING_TYPE]['firmware']['name'] = $LANG["networking"][49];
+$DATA_INJECTION_MAPPING[NETWORKING_TYPE]['firmware']['name'] = $LANG['setup'][71];
 $DATA_INJECTION_MAPPING[NETWORKING_TYPE]['firmware']['type'] = 'text';
 
 $DATA_INJECTION_MAPPING[NETWORKING_TYPE]['ifmac']['table'] = 'glpi_networking';
@@ -947,7 +947,7 @@ $DATA_INJECTION_MAPPING[NETWORKING_TYPE]['FK_users']['table_type'] = 'user';
 
 $DATA_INJECTION_MAPPING[NETWORKING_TYPE]['nb_ports']['table'] = 'glpi_networking';
 $DATA_INJECTION_MAPPING[NETWORKING_TYPE]['nb_ports']['field'] = 'nb_ports';
-$DATA_INJECTION_MAPPING[NETWORKING_TYPE]['nb_ports']['name'] = $DATAINJECTIONLANG["mappings"][1];
+$DATA_INJECTION_MAPPING[NETWORKING_TYPE]['nb_ports']['name'] = $LANG["datainjection"]["mappings"][1];
 $DATA_INJECTION_MAPPING[NETWORKING_TYPE]['nb_ports']['type'] = 'integer';
 $DATA_INJECTION_MAPPING[NETWORKING_TYPE]['nb_ports']['table_type'] = 'virtual';
 
@@ -960,7 +960,7 @@ $DATA_INJECTION_MAPPING[NETWORKING_TYPE]['contract']['table_type'] = 'single';
 
 $DATA_INJECTION_MAPPING[NETWORKING_TYPE]['port']['table'] = 'glpi_networking_ports';
 $DATA_INJECTION_MAPPING[NETWORKING_TYPE]['port']['field'] = 'port';
-$DATA_INJECTION_MAPPING[NETWORKING_TYPE]['port']['name'] = $DATAINJECTIONLANG["mappings"][2];
+$DATA_INJECTION_MAPPING[NETWORKING_TYPE]['port']['name'] = $LANG["datainjection"]["mappings"][2];
 $DATA_INJECTION_MAPPING[NETWORKING_TYPE]['port']['type'] = 'text';
 $DATA_INJECTION_MAPPING[NETWORKING_TYPE]['port']['table_type'] = 'virtual';
 
@@ -1142,12 +1142,12 @@ $DATA_INJECTION_MAPPING[CONTRACT_TYPE]['compta_num']['type'] = 'integer';
 
 $DATA_INJECTION_MAPPING[CONTRACT_TYPE]['week_begin_hour']['table'] = 'glpi_contracts';
 $DATA_INJECTION_MAPPING[CONTRACT_TYPE]['week_begin_hour']['field'] = 'week_begin_hour';
-$DATA_INJECTION_MAPPING[CONTRACT_TYPE]['week_begin_hour']['name'] = $LANG["financial"][59] . " " . $LANG["financial"][60] . " : " . $LANG["reservation"][12];
+$DATA_INJECTION_MAPPING[CONTRACT_TYPE]['week_begin_hour']['name'] = $LANG["financial"][59] . " " . $LANG["financial"][60] . " : " . $LANG['search'][8];
 $DATA_INJECTION_MAPPING[CONTRACT_TYPE]['week_begin_hour']['type'] = 'date';
 
 $DATA_INJECTION_MAPPING[CONTRACT_TYPE]['week_end_hour']['table'] = 'glpi_contracts';
 $DATA_INJECTION_MAPPING[CONTRACT_TYPE]['week_end_hour']['field'] = 'week_end_hour';
-$DATA_INJECTION_MAPPING[CONTRACT_TYPE]['week_end_hour']['name'] = $LANG["financial"][59] . " " . $LANG["financial"][60] . " : " . $LANG["reservation"][13];
+$DATA_INJECTION_MAPPING[CONTRACT_TYPE]['week_end_hour']['name'] = $LANG["financial"][59] . " " . $LANG["financial"][60] . " : " . $LANG['search'][9];
 $DATA_INJECTION_MAPPING[CONTRACT_TYPE]['week_end_hour']['type'] = 'date';
 
 $DATA_INJECTION_MAPPING[CONTRACT_TYPE]['saturday']['table'] = 'glpi_contracts';
@@ -1157,12 +1157,12 @@ $DATA_INJECTION_MAPPING[CONTRACT_TYPE]['saturday']['type'] = 'integer';
 
 $DATA_INJECTION_MAPPING[CONTRACT_TYPE]['saturday_begin_hour']['table'] = 'glpi_contracts';
 $DATA_INJECTION_MAPPING[CONTRACT_TYPE]['saturday_begin_hour']['field'] = 'saturday_begin_hour';
-$DATA_INJECTION_MAPPING[CONTRACT_TYPE]['saturday_begin_hour']['name'] = $LANG["financial"][59] . " " . $LANG["financial"][61] . " : " . $LANG["reservation"][12];
+$DATA_INJECTION_MAPPING[CONTRACT_TYPE]['saturday_begin_hour']['name'] = $LANG["financial"][59] . " " . $LANG["financial"][61] . " : " . $LANG['search'][8];
 $DATA_INJECTION_MAPPING[CONTRACT_TYPE]['saturday_begin_hour']['type'] = 'date';
 
 $DATA_INJECTION_MAPPING[CONTRACT_TYPE]['saturday_end_hour']['table'] = 'glpi_contracts';
 $DATA_INJECTION_MAPPING[CONTRACT_TYPE]['saturday_end_hour']['field'] = 'week_end_hour';
-$DATA_INJECTION_MAPPING[CONTRACT_TYPE]['saturday_end_hour']['name'] = $LANG["financial"][59] . " " . $LANG["financial"][61] . " : " . $LANG["reservation"][13];
+$DATA_INJECTION_MAPPING[CONTRACT_TYPE]['saturday_end_hour']['name'] = $LANG["financial"][59] . " " . $LANG["financial"][61] . " : " . $LANG['search'][9];
 $DATA_INJECTION_MAPPING[CONTRACT_TYPE]['saturday_end_hour']['type'] = 'date';
 
 $DATA_INJECTION_MAPPING[CONTRACT_TYPE]['monday']['table'] = 'glpi_contracts';
@@ -1172,12 +1172,12 @@ $DATA_INJECTION_MAPPING[CONTRACT_TYPE]['monday']['type'] = 'integer';
 
 $DATA_INJECTION_MAPPING[CONTRACT_TYPE]['monday_begin_hour']['table'] = 'glpi_contracts';
 $DATA_INJECTION_MAPPING[CONTRACT_TYPE]['monday_begin_hour']['field'] = 'monday_begin_hour';
-$DATA_INJECTION_MAPPING[CONTRACT_TYPE]['monday_begin_hour']['name'] = $LANG["financial"][59] . " " . $LANG["financial"][62] . " : " . $LANG["reservation"][12];
+$DATA_INJECTION_MAPPING[CONTRACT_TYPE]['monday_begin_hour']['name'] = $LANG["financial"][59] . " " . $LANG["financial"][62] . " : " . $LANG['search'][8];
 $DATA_INJECTION_MAPPING[CONTRACT_TYPE]['monday_begin_hour']['type'] = 'date';
 
 $DATA_INJECTION_MAPPING[CONTRACT_TYPE]['monday_end_hour']['table'] = 'glpi_contracts';
 $DATA_INJECTION_MAPPING[CONTRACT_TYPE]['monday_end_hour']['field'] = 'monday_end_hour';
-$DATA_INJECTION_MAPPING[CONTRACT_TYPE]['monday_end_hour']['name'] = $LANG["financial"][59] . " " . $LANG["financial"][62] . " : " . $LANG["reservation"][13];
+$DATA_INJECTION_MAPPING[CONTRACT_TYPE]['monday_end_hour']['name'] = $LANG["financial"][59] . " " . $LANG["financial"][62] . " : " . $LANG['search'][9];
 $DATA_INJECTION_MAPPING[CONTRACT_TYPE]['monday_end_hour']['type'] = 'date';
 
 $DATA_INJECTION_MAPPING[CONTRACT_TYPE]['device_countmax']['table'] = 'glpi_contracts';
@@ -1640,7 +1640,7 @@ $DATA_INJECTION_MAPPING[ENTITY_TYPE]['name']['type'] = 'text';
 
 $DATA_INJECTION_MAPPING[ENTITY_TYPE]['parentID']['table'] = 'glpi_entities';
 $DATA_INJECTION_MAPPING[ENTITY_TYPE]['parentID']['field'] = 'parentID';
-$DATA_INJECTION_MAPPING[ENTITY_TYPE]['parentID']['name'] = $DATAINJECTIONLANG["entity"][0];
+$DATA_INJECTION_MAPPING[ENTITY_TYPE]['parentID']['name'] = $LANG["datainjection"]["entity"][0];
 $DATA_INJECTION_MAPPING[ENTITY_TYPE]['parentID']['type'] = 'text';
 $DATA_INJECTION_MAPPING[ENTITY_TYPE]['parentID']['table_type'] = 'entity';
 
@@ -1776,19 +1776,20 @@ $DATA_INJECTION_MAPPING[NETPORT_TYPE]['iface']['table_type'] = 'dropdown';
 
 $DATA_INJECTION_MAPPING[NETPORT_TYPE]['netname']['table'] = 'glpi_dropdown_wire';
 $DATA_INJECTION_MAPPING[NETPORT_TYPE]['netname']['field'] = 'netname';
-$DATA_INJECTION_MAPPING[NETPORT_TYPE]['netname']['name'] = $DATAINJECTIONLANG["mappings"][3];
+$DATA_INJECTION_MAPPING[NETPORT_TYPE]['netname']['name'] = $LANG["datainjection"]["mappings"][3];
 $DATA_INJECTION_MAPPING[NETPORT_TYPE]['netname']['type'] = 'text';
 $DATA_INJECTION_MAPPING[NETPORT_TYPE]['netname']['table_type'] = 'virtual';
 
 $DATA_INJECTION_MAPPING[NETPORT_TYPE]['netport']['table'] = 'glpi_dropdown_wire';
 $DATA_INJECTION_MAPPING[NETPORT_TYPE]['netport']['field'] = 'netport';
-$DATA_INJECTION_MAPPING[NETPORT_TYPE]['netport']['name'] = $DATAINJECTIONLANG["mappings"][4];
+$DATA_INJECTION_MAPPING[NETPORT_TYPE]['netport']['name'] = $LANG["datainjection"]["mappings"][4];
 $DATA_INJECTION_MAPPING[NETPORT_TYPE]['netport']['type'] = 'integer';
 $DATA_INJECTION_MAPPING[NETPORT_TYPE]['netport']['table_type'] = 'virtual';
 
 // ----------------------------------------------------------------------
 //SOFTWARE MAPPING
 // ----------------------------------------------------------------------
+/*
 $DATA_INJECTION_MAPPING[SOFTWARE_TYPE]['name']['table'] = 'glpi_software';
 $DATA_INJECTION_MAPPING[SOFTWARE_TYPE]['name']['field'] = 'name';
 $DATA_INJECTION_MAPPING[SOFTWARE_TYPE]['name']['name'] = $LANG["common"][16];
@@ -1858,7 +1859,7 @@ $DATA_INJECTION_MAPPING[LICENSE_TYPE]['comments']['field'] = 'comments';
 $DATA_INJECTION_MAPPING[LICENSE_TYPE]['comments']['name'] = $LANG["common"][25];
 $DATA_INJECTION_MAPPING[LICENSE_TYPE]['comments']['type'] = 'text';
 $DATA_INJECTION_MAPPING[LICENSE_TYPE]['comments']['table_type'] = 'multitext';
-
+*/
 // ----------------------------------------------------------------------
 //PSEUDO TYPE FOR PERIPHERAL TO COMPUTER CONNECTION
 // ----------------------------------------------------------------------

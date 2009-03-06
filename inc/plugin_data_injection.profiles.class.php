@@ -50,7 +50,7 @@ class DataInjectionProfile extends CommonDBTM {
 	}
 
 	function showDataInjectionForm($target,$ID){
-		global $LANG,$DATAINJECTIONLANG;
+		global $LANG;
 
 		if (!haveRight("profile","r")) return false;
 		$canedit=haveRight("profile","w");
@@ -64,10 +64,10 @@ class DataInjectionProfile extends CommonDBTM {
 		echo "<form name='form' method='post' action=\"$target\">";
 		echo "<table class='tab_cadre'>";
 
-		echo "<tr><th colspan='2' align='center'><strong>".$DATAINJECTIONLANG["setup"][9]."</strong></th></tr>\n";
+		echo "<tr><th colspan='2' align='center'><strong>".$LANG["datainjection"]["setup"][9]."</strong></th></tr>\n";
 
 		echo "<tr class='tab_bg_2'>";
-		echo "<td>".$DATAINJECTIONLANG["profiles"][1].":</td><td>";
+		echo "<td>".$LANG["datainjection"]["profiles"][1].":</td><td>";
 		dropdownNoneReadWrite("model",$this->fields["model"],1,1,1);
 		echo "</td>";
 		echo "</tr>\n";

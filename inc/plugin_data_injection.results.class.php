@@ -224,41 +224,41 @@ class DataInjectionResults {
 			
 	private function getLabel($type)
 	{
-		global $DATAINJECTIONLANG;
+		global $LANG;
 		
 		$message = "";
 		switch ($type)
 		{
 			case ERROR_CANNOT_IMPORT:
-				$message = $DATAINJECTIONLANG["result"][5];
+				$message = $LANG["datainjection"]["result"][5];
 			break;
 			case WARNING_NOTEMPTY:
 			case ERROR_CANNOT_UPDATE:
-				$message = $DATAINJECTIONLANG["result"][6];
+				$message = $LANG["datainjection"]["result"][6];
 			break;
 			case ERROR_IMPORT_ALREADY_IMPORTED:
-				$message = $DATAINJECTIONLANG["result"][3];
+				$message = $LANG["datainjection"]["result"][3];
 			break;
 			case ERROR_IMPORT_WRONG_TYPE:
-				$message = $DATAINJECTIONLANG["result"][1];
+				$message = $LANG["datainjection"]["result"][1];
 			break;
 			case ERROR_IMPORT_FIELD_MANDATORY:
-				$message = $DATAINJECTIONLANG["result"][4];
+				$message = $LANG["datainjection"]["result"][4];
 			break;
 			case TYPE_CHECK_OK:
-				$message = $DATAINJECTIONLANG["result"][2];
+				$message = $LANG["datainjection"]["result"][2];
 			break;
 			case IMPORT_OK:
-				$message = $DATAINJECTIONLANG["result"][7];
+				$message = $LANG["datainjection"]["result"][7];
 			break;
 			case WARNING_NOTFOUND:
-				$message = $DATAINJECTIONLANG["result"][15];
+				$message = $LANG["datainjection"]["result"][15];
 			break;
 			case WARNING_USED:
-				$message = $DATAINJECTIONLANG["result"][16];
+				$message = $LANG["datainjection"]["result"][16];
 			break;
 			case WARNING_ALLEMPTY:
-				$message = $DATAINJECTIONLANG["result"][17];
+				$message = $LANG["datainjection"]["result"][17];
 			break;
 			
 		}

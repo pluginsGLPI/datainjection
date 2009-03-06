@@ -1,6 +1,5 @@
 <?php
 
-
 /*
  ----------------------------------------------------------------------
  GLPI - Gestionnaire Libre de Parc Informatique
@@ -32,20 +31,32 @@
 // Original Author of file: Walid Nouh
 // Purpose of file:
 // ----------------------------------------------------------------------
-if(!defined('GLPI_ROOT')){
-	define('GLPI_ROOT', '../..'); 
+
+function plugin_pre_item_delete_data_injection($input) {
+	if (isset ($input["_item_type_"]))
+		switch ($input["_item_type_"]) {
+			case PROFILE_TYPE :
+				// Manipulate data if needed 
+				$DataInjectionProfile = new DataInjectionProfile;
+				$DataInjectionProfile->cleanProfiles($input["ID"]);
+				break;
+		}
+	return $input;
 }
-include (GLPI_ROOT."/inc/includes.php");
 
-commonHeader($LANG["datainjection"]["name"][1],$_SERVER["PHP_SELF"],"plugins","data_injection");
 
-if (!FieldExists("glpi_plugin_data_injection_models","recursive"))
-glpi_header(GLPI_ROOT .
-		"/plugins/data_injection/front/plugin_data_injection.install.php");
-else
-glpi_header(GLPI_ROOT .
-		"/plugins/data_injection/front/plugin_data_injection.presentation.php");
-commonFooter();
+function plugin_data_injection_changeprofile() {
+	$plugin = new Plugin;
+	
+
+	
+	if (isset ($_SESSION["glpi_plugin_data_injection_installed"]) && $_SESSION["glpi_plugin_data_injection_installed"] == 1) {
+		$prof = new DataInjectionProfile();
+		if ($prof->getFromDB($_SESSION['glpiactiveprofile']['ID']))
+			$_SESSION["glpi_plugin_data_injection_profile"] = $prof->fields;
+		else
+			unset ($_SESSION["glpi_plugin_data_injection_profile"]);
+	}
+}
+
 ?>
-
-

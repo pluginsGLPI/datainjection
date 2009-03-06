@@ -822,16 +822,16 @@ function keepInfo($info) {
  * @param the action_type the type of action(add or update)
  */
 function logAddOrUpdate($device_type, $device_id, $action_type) {
-	global $DATAINJECTIONLANG;
+	global $LANG;
 
 	//Do not add history for users and groups
 	if ($device_type != USER_TYPE && $device_type != GROUP_TYPE) {
 		$changes[0] = 0;
 
 		if ($action_type == INJECTION_ADD)
-			$changes[2] = $DATAINJECTIONLANG["result"][8] . " " . $DATAINJECTIONLANG["history"][1];
+			$changes[2] = $LANG["datainjection"]["result"][8] . " " . $LANG["datainjection"]["history"][1];
 		else
-			$changes[2] = $DATAINJECTIONLANG["result"][9] . " " . $DATAINJECTIONLANG["history"][1];
+			$changes[2] = $LANG["datainjection"]["result"][9] . " " . $LANG["datainjection"]["history"][1];
 
 		$changes[1] = "";
 		historyLog($device_id, $device_type, $changes, 0, HISTORY_LOG_SIMPLE_MESSAGE);

@@ -37,7 +37,7 @@ if (!defined('GLPI_ROOT')) {
 $NEEDED_ITEMS=array("data_injection");
 include (GLPI_ROOT."/inc/includes.php");
 
-commonHeader($DATAINJECTIONLANG["name"][1], $_SERVER["PHP_SELF"],"plugins","data_injection");
+commonHeader($LANG["datainjection"]["name"][1], $_SERVER["PHP_SELF"],"plugins","data_injection");
 
 initSession();
 $_SESSION["plugin_data_injection"]["load"]="presentation";
@@ -54,16 +54,16 @@ echo "</td>";
 
 echo "<td class='wizard_right_area' style='width: 400px' valign='top'>";
 
-echo "<div class='presentation_title'>".$DATAINJECTIONLANG["presentation"][1]."</div>";
+echo "<div class='presentation_title'>".$LANG["datainjection"]["presentation"][1]."</div>";
 
-echo "<div class='presentation_text'>".$DATAINJECTIONLANG["presentation"][2]."<br /><br /><br />".$DATAINJECTIONLANG["presentation"][3]."</div>";
+echo "<div class='presentation_text'>".$LANG["datainjection"]["presentation"][2]."<br /><br /><br />".$LANG["datainjection"]["presentation"][3]."</div>";
 
 echo "</td>";
 echo "</tr>";	
 	
 echo "<tr><td class='wizard_button' colspan='2'>";
 echo "<div class='next'>";
-echo "<input type='submit' name='presentation' value='".$DATAINJECTIONLANG["button"][2]."' class='submit' />";
+echo "<input type='submit' name='presentation' value='".$LANG["datainjection"]["button"][2]."' class='submit' />";
 echo "</div>";
 echo "</td></tr></table>";
 echo "</form>";

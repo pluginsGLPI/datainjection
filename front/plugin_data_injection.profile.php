@@ -79,8 +79,8 @@ else  if (isset($_POST["update"])){
 echo "<div align='center'><form method='post' name='massiveaction_form' id='massiveaction_form'  action=\"./plugin_data_injection.profile.php\">";
 
 echo "<table class='tab_cadre' cellpadding='5'><tr><th colspan='5'>";
-echo $DATAINJECTIONLANG["profiles"][4]." : </th></tr>";
-echo "<tr><th></th><th>".$LANG["Menu"][35]."</th><th>".$DATAINJECTIONLANG["profiles"][1]."</th></tr>";
+echo $LANG["datainjection"]["profiles"][4]." : </th></tr>";
+echo "<tr><th></th><th>".$LANG["Menu"][35]."</th><th>".$LANG["datainjection"]["profiles"][1]."</th></tr>";
 
 $query0="SELECT * FROM glpi_plugin_data_injection_profiles ORDER BY name";
 $result0=$DB->query($query0);
@@ -115,7 +115,7 @@ echo "</table></form></div>";
 
 echo "<div align='center'><form method='post' action=\"".$CFG_GLPI["root_doc"]."/plugins/data_injection/front/plugin_data_injection.profile.php\">";
 echo "<table class='tab_cadre' cellpadding='5'><tr><th colspan='2'>";
-echo $DATAINJECTIONLANG["setup"][1]."<br />" . $DATAINJECTIONLANG["setup"][9] . "</th></tr>\n";
+echo $LANG["datainjection"]["setup"][1]."<br />" . $LANG["datainjection"]["setup"][9] . "</th></tr>\n";
 
 echo "<tr class='tab_bg_1'><td>" . $LANG["profiles"][22] . "&nbsp;: ";
 $query="SELECT ID, name FROM glpi_profiles ORDER BY name";

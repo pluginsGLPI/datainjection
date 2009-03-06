@@ -122,20 +122,20 @@ function dropdownTemplate($name,$entity,$table,$value='')
 
 function dropdownDateFormat($name,$format)
 {
-	global $DATAINJECTIONLANG;
-	$date_format[DATE_TYPE_DDMMYYYY]=$DATAINJECTIONLANG["modelStep"][22];
-	$date_format[DATE_TYPE_MMDDYYYY]=$DATAINJECTIONLANG["modelStep"][23];
-	$date_format[DATE_TYPE_YYYYMMDD]=$DATAINJECTIONLANG["modelStep"][24];
+	global $LANG;
+	$date_format[DATE_TYPE_DDMMYYYY]=$LANG["datainjection"]["modelStep"][22];
+	$date_format[DATE_TYPE_MMDDYYYY]=$LANG["datainjection"]["modelStep"][23];
+	$date_format[DATE_TYPE_YYYYMMDD]=$LANG["datainjection"]["modelStep"][24];
 
 	dropdownArrayValues($name,$date_format,$format);
 }
 
 function dropdownFloatFormat($name,$format)
 {
-	global $DATAINJECTIONLANG;
-	$float_format[FLOAT_TYPE_DOT]=$DATAINJECTIONLANG["modelStep"][25];
-	$float_format[FLOAT_TYPE_COMMA]=$DATAINJECTIONLANG["modelStep"][26];
-	$float_format[FLOAT_TYPE_DOT_AND_COM]=$DATAINJECTIONLANG["modelStep"][27];
+	global $LANG;
+	$float_format[FLOAT_TYPE_DOT]=$LANG["datainjection"]["modelStep"][25];
+	$float_format[FLOAT_TYPE_COMMA]=$LANG["datainjection"]["modelStep"][26];
+	$float_format[FLOAT_TYPE_DOT_AND_COM]=$LANG["datainjection"]["modelStep"][27];
 
 	dropdownArrayValues($name,$float_format,$format);
 }
@@ -223,10 +223,10 @@ function dropdownModels($disable=false,$models,$with_select=true)
 
 function dropdownFileEncoding($name)
 {
-	global $DATAINJECTIONLANG;
-	$values[ENCODING_AUTO]=$DATAINJECTIONLANG["fileStep"][10];
-	$values[ENCODING_UFT8]=$DATAINJECTIONLANG["fileStep"][11];
-	$values[ENCODING_ISO8859_1]=$DATAINJECTIONLANG["fileStep"][12];
+	global $LANG;
+	$values[ENCODING_AUTO]=$LANG["datainjection"]["fileStep"][10];
+	$values[ENCODING_UFT8]=$LANG["datainjection"]["fileStep"][11];
+	$values[ENCODING_ISO8859_1]=$LANG["datainjection"]["fileStep"][12];
 	dropdownArrayValues($name,$values,ENCODING_AUTO);
 }
 ?>

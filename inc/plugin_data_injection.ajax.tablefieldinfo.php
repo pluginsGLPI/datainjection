@@ -37,7 +37,7 @@ include (GLPI_ROOT."/inc/includes.php");
 
 include("../plugin_data_injection.includes.php");
 
-global $DATAINJECTIONLANG;
+global $LANG;
 
 plugin_data_injection_loadHook("variables");
 
@@ -48,7 +48,7 @@ if(isset($_POST['id']))
 	if(isset($_POST['idMapping']))
 		{
 			if($_POST['idMapping'] == NOT_MAPPED)
-				echo "<option value='-1'>".$DATAINJECTIONLANG["mappingStep"][7]."</option>";
+				echo "<option value='-1'>".$LANG["datainjection"]["mappingStep"][7]."</option>";
 			else
 				{
 					$values = getAllInfosDefinitionsByType($_POST['idMapping']);

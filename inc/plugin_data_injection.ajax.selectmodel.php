@@ -37,7 +37,7 @@ include (GLPI_ROOT."/inc/includes.php");
 
 include("../plugin_data_injection.includes.php");
 
-global $DATAINJECTIONLANG;
+global $LANG;
 
 if(isset($_POST['action']))
 {
