@@ -57,7 +57,7 @@
 // - single : read a table, which is not a dropdown table. Manage entity restrict too if needed 
 // - user : look for a user. Need specific processing (first look for login, then lastname + firstname, then firstname + lastname)
 
-global $LANG, $DATA_INJECTION_MAPPING, $IMPORT_TYPES, $IMPORT_PRIMARY_TYPES,
+global $DATA_INJECTION_MAPPING, $IMPORT_TYPES, $IMPORT_PRIMARY_TYPES,
 	   $PLUGIN_HOOKS, $CONNECT_TO_COMPUTER_TYPES,
 	   $DEVICES_TYPES_STRING, $CONNECT_TO_COMPUTER_TYPES;
 
@@ -947,7 +947,7 @@ $DATA_INJECTION_MAPPING[NETWORKING_TYPE]['FK_users']['table_type'] = 'user';
 
 $DATA_INJECTION_MAPPING[NETWORKING_TYPE]['nb_ports']['table'] = 'glpi_networking';
 $DATA_INJECTION_MAPPING[NETWORKING_TYPE]['nb_ports']['field'] = 'nb_ports';
-$DATA_INJECTION_MAPPING[NETWORKING_TYPE]['nb_ports']['name'] = $LANG["datainjection"]["mappings"][1];
+$DATA_INJECTION_MAPPING[NETWORKING_TYPE]['nb_ports']['name'] = $LANG["data_injection"]["mappings"][1];
 $DATA_INJECTION_MAPPING[NETWORKING_TYPE]['nb_ports']['type'] = 'integer';
 $DATA_INJECTION_MAPPING[NETWORKING_TYPE]['nb_ports']['table_type'] = 'virtual';
 
@@ -960,7 +960,7 @@ $DATA_INJECTION_MAPPING[NETWORKING_TYPE]['contract']['table_type'] = 'single';
 
 $DATA_INJECTION_MAPPING[NETWORKING_TYPE]['port']['table'] = 'glpi_networking_ports';
 $DATA_INJECTION_MAPPING[NETWORKING_TYPE]['port']['field'] = 'port';
-$DATA_INJECTION_MAPPING[NETWORKING_TYPE]['port']['name'] = $LANG["datainjection"]["mappings"][2];
+$DATA_INJECTION_MAPPING[NETWORKING_TYPE]['port']['name'] = $LANG["data_injection"]["mappings"][2];
 $DATA_INJECTION_MAPPING[NETWORKING_TYPE]['port']['type'] = 'text';
 $DATA_INJECTION_MAPPING[NETWORKING_TYPE]['port']['table_type'] = 'virtual';
 
@@ -1640,7 +1640,7 @@ $DATA_INJECTION_MAPPING[ENTITY_TYPE]['name']['type'] = 'text';
 
 $DATA_INJECTION_MAPPING[ENTITY_TYPE]['parentID']['table'] = 'glpi_entities';
 $DATA_INJECTION_MAPPING[ENTITY_TYPE]['parentID']['field'] = 'parentID';
-$DATA_INJECTION_MAPPING[ENTITY_TYPE]['parentID']['name'] = $LANG["datainjection"]["entity"][0];
+$DATA_INJECTION_MAPPING[ENTITY_TYPE]['parentID']['name'] = $LANG["data_injection"]["entity"][0];
 $DATA_INJECTION_MAPPING[ENTITY_TYPE]['parentID']['type'] = 'text';
 $DATA_INJECTION_MAPPING[ENTITY_TYPE]['parentID']['table_type'] = 'entity';
 
@@ -1776,13 +1776,13 @@ $DATA_INJECTION_MAPPING[NETPORT_TYPE]['iface']['table_type'] = 'dropdown';
 
 $DATA_INJECTION_MAPPING[NETPORT_TYPE]['netname']['table'] = 'glpi_dropdown_wire';
 $DATA_INJECTION_MAPPING[NETPORT_TYPE]['netname']['field'] = 'netname';
-$DATA_INJECTION_MAPPING[NETPORT_TYPE]['netname']['name'] = $LANG["datainjection"]["mappings"][3];
+$DATA_INJECTION_MAPPING[NETPORT_TYPE]['netname']['name'] = $LANG["data_injection"]["mappings"][3];
 $DATA_INJECTION_MAPPING[NETPORT_TYPE]['netname']['type'] = 'text';
 $DATA_INJECTION_MAPPING[NETPORT_TYPE]['netname']['table_type'] = 'virtual';
 
 $DATA_INJECTION_MAPPING[NETPORT_TYPE]['netport']['table'] = 'glpi_dropdown_wire';
 $DATA_INJECTION_MAPPING[NETPORT_TYPE]['netport']['field'] = 'netport';
-$DATA_INJECTION_MAPPING[NETPORT_TYPE]['netport']['name'] = $LANG["datainjection"]["mappings"][4];
+$DATA_INJECTION_MAPPING[NETPORT_TYPE]['netport']['name'] = $LANG["data_injection"]["mappings"][4];
 $DATA_INJECTION_MAPPING[NETPORT_TYPE]['netport']['type'] = 'integer';
 $DATA_INJECTION_MAPPING[NETPORT_TYPE]['netport']['table_type'] = 'virtual';
 

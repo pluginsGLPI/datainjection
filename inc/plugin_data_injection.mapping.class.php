@@ -29,7 +29,7 @@
  */
 class DataInjectionMapping extends CommonDBTM {
 	
-	function DataInjectionMapping()
+	function _construct()
 	{
 		$this->table="glpi_plugin_data_injection_mappings";
     	$this->type=-1;

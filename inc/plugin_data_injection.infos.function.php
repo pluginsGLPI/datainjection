@@ -43,7 +43,7 @@ function getAllInfosDefinitionsTypes($primary_type)
 	}
 
 	if (in_array($primary_type,$CONNECT_TO_COMPUTER_TYPES)) {
-		$types[] = array(COMPUTER_CONNECTION_TYPE,$LANG["datainjection"]["mappings"][5]);		
+		$types[] = array(COMPUTER_CONNECTION_TYPE,$LANG["data_injection"]["mappings"][5]);		
 	}
 
 	asort($types);

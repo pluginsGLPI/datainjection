@@ -32,7 +32,7 @@
 // ----------------------------------------------------------------------
 
 include_once("inc/plugin_data_injection.common.constant.php");
-include_once("inc/plugin_data_injection.mapping.constant.php");
+//include_once("inc/plugin_data_injection.mapping.constant.php");
 include_once("inc/plugin_data_injection.infos.constant.php");
 include_once("inc/plugin_data_injection.backend.class.php");
 include_once("inc/plugin_data_injection.backend.function.php");

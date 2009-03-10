@@ -49,7 +49,7 @@ if(isset($_POST['id']))
 	if(isset($_POST['idMapping']))
 		{
 			if($_POST['idMapping'] == NOT_MAPPED)
-				echo "<option value='-1'>".$LANG["datainjection"]["mappingStep"][7]."</option>";
+				echo "<option value='-1'>".$LANG["data_injection"]["mappingStep"][7]."</option>";
 			else
 				{
 					$values = getAllMappingsDefinitionsByType($_POST['idMapping']);

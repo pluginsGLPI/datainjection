@@ -1,5 +1,6 @@
 <?php
 
+
 /*
  ----------------------------------------------------------------------
  GLPI - Gestionnaire Libre de Parc Informatique
@@ -44,13 +45,10 @@ function plugin_pre_item_delete_data_injection($input) {
 	return $input;
 }
 
-
 function plugin_data_injection_changeprofile() {
 	$plugin = new Plugin;
-	
 
-	
-	if (isset ($_SESSION["glpi_plugin_data_injection_installed"]) && $_SESSION["glpi_plugin_data_injection_installed"] == 1) {
+	if ($plugin->isInstalled("data_injection") && $plugin->isActivated("data_injection")) {
 		$prof = new DataInjectionProfile();
 		if ($prof->getFromDB($_SESSION['glpiactiveprofile']['ID']))
 			$_SESSION["glpi_plugin_data_injection_profile"] = $prof->fields;
@@ -59,4 +57,47 @@ function plugin_data_injection_changeprofile() {
 	}
 }
 
+function plugin_headings_actions_data_injection($type) {
+	switch ($type) {
+		case PROFILE_TYPE :
+			return array (
+				1 => "plugin_headings_data_injection",
+				
+			);
+			break;
+	}
+	return false;
+}
+
+function plugin_get_headings_data_injection($type, $withtemplate) {
+	global $LANG;
+
+	switch ($type) {
+		case PROFILE_TYPE :
+			if ($withtemplate)
+				return array ();
+			else
+				return array (
+					1 => $LANG["data_injection"]["name"][1]
+				);
+			break;
+	}
+	return false;
+}
+
+function plugin_headings_data_injection($type, $ID, $withtemplate = 0) {
+	global $CFG_GLPI;
+
+	switch ($type) {
+		case PROFILE_TYPE :
+			$profile = new DataInjectionProfile;
+			if (!$profile->getFromDB($ID))
+				plugin_data_injection_createaccess($ID);
+
+			$profile->showForm($CFG_GLPI["root_doc"] . "/plugins/data_injection/front/plugin_data_injection.profile.php", $ID);
+			break;
+		default :
+			break;
+	}
+}
 ?>

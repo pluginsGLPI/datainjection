@@ -43,47 +43,45 @@ function plugin_init_data_injection() {
 
 	if ($plugin->isInstalled("data_injection") && $plugin->isActivated("data_injection")) {
 
-		if (plugin_data_injection_haveRight("model", "r") && $plugin->isActivated("data_injection")) {
+		$PLUGIN_HOOKS['headings']['data_injection'] = 'plugin_get_headings_data_injection';
+		$PLUGIN_HOOKS['headings_action']['data_injection'] = 'plugin_headings_actions_data_injection';
+
+		if (plugin_data_injection_haveRight("model", "r"))
 			$PLUGIN_HOOKS['menu_entry']['data_injection'] = true;
-			$PLUGIN_HOOKS['submenu_entry']['data_injection']['config'] = 'front/plugin_data_injection.config.form.php';
-		}
-		if (haveRight("config", "w") || haveRight("profile", "w")) {
-			// Config page
-			$PLUGIN_HOOKS['config_page']['data_injection'] = 'front/plugin_data_injection.config.form.php';
-		}
+
 		$PLUGIN_HOOKS['pre_item_delete']['data_injection'] = 'plugin_pre_item_delete_data_injection';
-	} else
-		if (haveRight("config", "w")) {
-			$PLUGIN_HOOKS['config_page']['data_injection'] = 'front/plugin_data_injection.config.form.php';
-		}
 
-	// Css file
-	$PLUGIN_HOOKS['add_css']['data_injection'] = 'css/data_injection.css';
-
-	// Javascript file
-	$PLUGIN_HOOKS['add_javascript']['data_injection'] = 'javascript/data_injection.js';
-
-	registerPluginType('data_injection', 'PLUGIN_DATA_INJECTION_MODEL', 1450, array(
-			'classname'  => 'DataInjectionModel',
-			'tablename'  => 'glpi_plugin_data_injection_models',
-			'typename'   => 'DATa_INJECTION',
-			'formpage'   => '',
-			'searchpage' => '',
-			'specif_entities_tables' => true,
-			'recursive_type' => true
-			));
-
-	loadDeviceSpecificTypes();
-	addDeviceSpecificMappings();
-	addDeviceSpecificInfos();
+		// Css file
+		$PLUGIN_HOOKS['add_css']['data_injection'] = 'css/data_injection.css';
+	
+		// Javascript file
+		$PLUGIN_HOOKS['add_javascript']['data_injection'] = 'javascript/data_injection.js';
+	
+		registerPluginType('data_injection', 'PLUGIN_DATA_INJECTION_MODEL', 1450, array(
+				'classname'  => 'DataInjectionModel',
+				'tablename'  => 'glpi_plugin_data_injection_models',
+				'typename'   => 'DATA_INJECTION',
+				'formpage'   => '',
+				'searchpage' => '',
+				'specif_entities_tables' => true,
+				'recursive_type' => true
+				));
+	/*
+		loadDeviceSpecificTypes();
+		addDeviceSpecificMappings();
+		addDeviceSpecificInfos();
+	*/
+	}
 }
 
 function plugin_version_data_injection() {
 	global $LANG;
 
 	return array (
-		'name' => $LANG["datainjection"]["name"][1],
+		'name' => $LANG["data_injection"]["name"][1],
 		'minGlpiVersion' => '0.72',
+		'author'=>'Dévi Balpe & Walid Nouh & Remi Collet',
+		'homepage'=>'http://glpi-project.org/wiki/doku.php?id='.substr($_SESSION["glpilanguage"],0,2).':plugins:pluginslist',
 		'version' => '1.5.0'
 	);
 }
@@ -225,9 +223,9 @@ function plugin_data_injection_uninstall() {
 
 function plugin_data_injection_initSession() {
 	global $DB;
-
+	$plugin = new Plugin;
 	
-	if (FieldExists("glpi_plugin_data_injection_models","recursive") && is_dir(PLUGIN_DATA_INJECTION_UPLOAD_DIR) && is_writable(PLUGIN_DATA_INJECTION_UPLOAD_DIR)) {
+	if ($plugin->isActivated("data_injection") && is_dir(PLUGIN_DATA_INJECTION_UPLOAD_DIR) && is_writable(PLUGIN_DATA_INJECTION_UPLOAD_DIR)) {
 		$profile = new DataInjectionProfile();
 
 		$query = "SELECT DISTINCT glpi_profiles.* FROM glpi_users_profiles INNER JOIN glpi_profiles ON (glpi_users_profiles.FK_profiles = glpi_profiles.ID) WHERE glpi_users_profiles.FK_users='" . $_SESSION["glpiID"] . "'";
@@ -243,7 +241,6 @@ function plugin_data_injection_initSession() {
 					$profile->getFromDB($data['ID']);
 					$_SESSION['glpi_plugin_data_injection_profile'] = $profile->fields;
 				}
-				$_SESSION["glpi_plugin_data_injection_installed"] = 1;
 			}
 		}
 	}

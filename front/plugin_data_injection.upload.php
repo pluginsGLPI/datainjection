@@ -39,16 +39,16 @@ if (!defined('GLPI_ROOT')) {
 $NEEDED_ITEMS=array("data_injection");
 include (GLPI_ROOT."/inc/includes.php");
 
-commonHeader($LANG["datainjection"]["config"][1], $_SERVER["PHP_SELF"],"plugins","data_injection");
+commonHeader($LANG["data_injection"]["config"][1], $_SERVER["PHP_SELF"],"plugins","data_injection");
 
 if(!isset($_SESSION["glpi_plugin_data_injection_installed"]) || $_SESSION["glpi_plugin_data_injection_installed"]!=1) {
 	if(!TableExists("glpi_plugin_data_injection_config")) {
 			echo "<div align='center'>";
 			echo "<table class='tab_cadre' cellpadding='5'>";
-			echo "<tr><th>".$LANG["datainjection"]["setup"][1];
+			echo "<tr><th>".$LANG["data_injection"]["setup"][1];
 			echo "</th></tr>";
 			echo "<tr class='tab_bg_1'><td>";
-			echo "<a href='plugin_data_injection.install.php'>".$LANG["datainjection"]["setup"][3]."</a></td></tr>";
+			echo "<a href='plugin_data_injection.install.php'>".$LANG["data_injection"]["setup"][3]."</a></td></tr>";
 			echo "</table></div>";
 	}
 }

@@ -28,7 +28,7 @@ $pdf->addJpegFromFile("../pics/fd_logo.jpg",25,$height-50);
 $pdf->selectFont("../fonts/Times-Roman.afm");
 $pdf->setFontFamily('Times-Roman.afm',array('b'=>'Times-Bold.afm','i'=>'Times-Italic.afm','bi'=>'Times-BoldItalic.afm'));
 
-$pdf->addText(200,$height-45,14,utf8_decode('<b>' .  $LANG["datainjection"]["result"][18] . ' ' . $_SESSION["plugin_data_injection"]["file_name"].'</b>'));
+$pdf->addText(200,$height-45,14,utf8_decode('<b>' .  $LANG["data_injection"]["result"][18] . ' ' . $_SESSION["plugin_data_injection"]["file_name"].'</b>'));
 
 $pdf->restoreState();
 $pdf->closeObject();
@@ -52,13 +52,13 @@ if(count($tab_result[1])>0)
 	$pdf->filledRectangle(395,($start_tab-25)-(20*$i),80,15);
 	$pdf->filledRectangle(480,($start_tab-25)-(20*$i),90,15);
 	$pdf->restoreState();
-	$pdf->addText(32,($start_tab)-(20*$i),9,'<b><i>'.utf8_decode($LANG["datainjection"]["logStep"][4]).' :</i></b>');
+	$pdf->addText(32,($start_tab)-(20*$i),9,'<b><i>'.utf8_decode($LANG["data_injection"]["logStep"][4]).' :</i></b>');
 	$pdf->addText(32,($start_tab-20)-(20*$i),9,'<b>'.utf8_decode($LANG["joblist"][0]).'</b>');
-	$pdf->addText(80,($start_tab-20)-(20*$i),9,'<b>'.utf8_decode($LANG["datainjection"]["result"][14]).'</b>');
-	$pdf->addText(145,($start_tab-20)-(20*$i),9,'<b>'.utf8_decode($LANG["datainjection"]["result"][10]).'</b>');
-	$pdf->addText(290,($start_tab-20)-(20*$i),9,'<b>'.utf8_decode($LANG["datainjection"]["result"][11]).'</b>');
-	$pdf->addText(405,($start_tab-20)-(20*$i),9,'<b>'.utf8_decode($LANG["datainjection"]["result"][12]).'</b>');
-	$pdf->addText(485,($start_tab-20)-(20*$i),9,'<b>'.utf8_decode($LANG["datainjection"]["result"][13]).'</b>');
+	$pdf->addText(80,($start_tab-20)-(20*$i),9,'<b>'.utf8_decode($LANG["data_injection"]["result"][14]).'</b>');
+	$pdf->addText(145,($start_tab-20)-(20*$i),9,'<b>'.utf8_decode($LANG["data_injection"]["result"][10]).'</b>');
+	$pdf->addText(290,($start_tab-20)-(20*$i),9,'<b>'.utf8_decode($LANG["data_injection"]["result"][11]).'</b>');
+	$pdf->addText(405,($start_tab-20)-(20*$i),9,'<b>'.utf8_decode($LANG["data_injection"]["result"][12]).'</b>');
+	$pdf->addText(485,($start_tab-20)-(20*$i),9,'<b>'.utf8_decode($LANG["data_injection"]["result"][13]).'</b>');
 
 	$i++;
 
@@ -96,7 +96,7 @@ if(count($tab_result[1])>0)
 			$y-=7;			
 		}
 		
-		$pdf->addText(415,($start_tab-20)-(20*$i),9,utf8_decode(($value->getInjectionType()==INJECTION_ADD?$LANG["datainjection"]["result"][8]:$LANG["datainjection"]["result"][9])));
+		$pdf->addText(415,($start_tab-20)-(20*$i),9,utf8_decode(($value->getInjectionType()==INJECTION_ADD?$LANG["data_injection"]["result"][8]:$LANG["data_injection"]["result"][9])));
 		$pdf->addText(515,($start_tab-20)-(20*$i),9,utf8_decode($value->getInjectedId()));
 		
 		$i++;
@@ -128,13 +128,13 @@ if(count($tab_result[0])>0)
 	$pdf->filledRectangle(395,($start_tab-25)-(20*$i),80,15);
 	$pdf->filledRectangle(480,($start_tab-25)-(20*$i),90,15);
 	$pdf->restoreState();
-	$pdf->addText(32,($start_tab)-(20*$i),9,'<b><i>'.utf8_decode($LANG["datainjection"]["logStep"][5]).' :</i></b>');
+	$pdf->addText(32,($start_tab)-(20*$i),9,'<b><i>'.utf8_decode($LANG["data_injection"]["logStep"][5]).' :</i></b>');
 	$pdf->addText(32,($start_tab-20)-(20*$i),9,'<b>'.utf8_decode($LANG["joblist"][0]).'</b>');
-	$pdf->addText(80,($start_tab-20)-(20*$i),9,'<b>'.utf8_decode($LANG["datainjection"]["result"][14]).'</b>');
-	$pdf->addText(145,($start_tab-20)-(20*$i),9,'<b>'.utf8_decode($LANG["datainjection"]["result"][10]).'</b>');
-	$pdf->addText(290,($start_tab-20)-(20*$i),9,'<b>'.utf8_decode($LANG["datainjection"]["result"][11]).'</b>');
-	$pdf->addText(405,($start_tab-20)-(20*$i),9,'<b>'.utf8_decode($LANG["datainjection"]["result"][12]).'</b>');
-	$pdf->addText(485,($start_tab-20)-(20*$i),9,'<b>'.utf8_decode($LANG["datainjection"]["result"][13]).'</b>');
+	$pdf->addText(80,($start_tab-20)-(20*$i),9,'<b>'.utf8_decode($LANG["data_injection"]["result"][14]).'</b>');
+	$pdf->addText(145,($start_tab-20)-(20*$i),9,'<b>'.utf8_decode($LANG["data_injection"]["result"][10]).'</b>');
+	$pdf->addText(290,($start_tab-20)-(20*$i),9,'<b>'.utf8_decode($LANG["data_injection"]["result"][11]).'</b>');
+	$pdf->addText(405,($start_tab-20)-(20*$i),9,'<b>'.utf8_decode($LANG["data_injection"]["result"][12]).'</b>');
+	$pdf->addText(485,($start_tab-20)-(20*$i),9,'<b>'.utf8_decode($LANG["data_injection"]["result"][13]).'</b>');
 
 	$i++;
 
@@ -200,7 +200,7 @@ if(count($tab_result[0])>0)
 		}
 		
 		
-		$pdf->addText(415,($start_tab-20)-(20*$i),9,utf8_decode(($value->getInjectionType()==INJECTION_ADD?$LANG["datainjection"]["result"][8]:$LANG["datainjection"]["result"][9])));
+		$pdf->addText(415,($start_tab-20)-(20*$i),9,utf8_decode(($value->getInjectionType()==INJECTION_ADD?$LANG["data_injection"]["result"][8]:$LANG["data_injection"]["result"][9])));
 		if ($value->getInjectedId()>0) {
 			$pdf->addText(515,($start_tab-20)-(20*$i),9,utf8_decode($value->getInjectedId()));
 		}

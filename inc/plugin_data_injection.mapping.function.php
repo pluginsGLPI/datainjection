@@ -54,11 +54,11 @@ function getAllMappingsDefinitionsTypes($primary_type)
 	}
 	
 	if (in_array($primary_type, $CFG_GLPI["netport_types"])) {
-		$types[] = array(NETPORT_TYPE,$LANG["datainjection"]["mappings"][2]);		
+		$types[] = array(NETPORT_TYPE,$LANG["data_injection"]["mappings"][2]);		
 	}
 
 	if (in_array($primary_type,$CONNECT_TO_COMPUTER_TYPES)) {
-		$types[] = array(COMPUTER_CONNECTION_TYPE,$LANG["datainjection"]["mappings"][5]);		
+		$types[] = array(COMPUTER_CONNECTION_TYPE,$LANG["data_injection"]["mappings"][5]);		
 	}
 
 	if (in_array($primary_type,$CONNECT_TO_SOFTWARE_TYPES)) {

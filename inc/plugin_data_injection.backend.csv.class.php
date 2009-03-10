@@ -32,7 +32,7 @@
 // ----------------------------------------------------------------------
 class BackendCSV extends Backend{
 	
-    function BackendCSV() {
+    function _construct() {
     	$this->injectionDatas = new InjectionDatas;
     	$this->errmsg = "";
     }
@@ -110,7 +110,7 @@ class BackendCSV extends Backend{
 		$header = $this->getHeader($model->isHeaderPresent());
 
 		if (count($model->getMappings()) != count($header)) {
-			$this->setError(count($model->getMappings()) ." ".$LANG["datainjection"]["saveStep"][16]."\n" . count($header)." ".$LANG["datainjection"]["saveStep"][17]);			
+			$this->setError(count($model->getMappings()) ." ".$LANG["data_injection"]["saveStep"][16]."\n" . count($header)." ".$LANG["data_injection"]["saveStep"][17]);			
 			return 1;
 		}
 		
@@ -126,7 +126,7 @@ class BackendCSV extends Backend{
 				$check = 2;
 			} 
 			else if (trim(strtoupper(stripslashes($header[$mapping->getRank()]))) != trim(strtoupper(stripslashes($mapping->getName())))) {
-				$this->setError($LANG["datainjection"]["saveStep"][18].stripslashes($header[$mapping->getRank()])."\n". $LANG["datainjection"]["saveStep"][19].stripslashes($mapping->getName()));				
+				$this->setError($LANG["data_injection"]["saveStep"][18].stripslashes($header[$mapping->getRank()])."\n". $LANG["data_injection"]["saveStep"][19].stripslashes($mapping->getName()));				
 				$check = 2;
 			}
 		}	

@@ -53,7 +53,7 @@ class DataInjectionResults {
 	//ID of the line processed
 	private $line_id;
 	
-	function DataInjectionResults()
+	function _construct()
 	{
 //		$this->status = -1;
 		$this->check_status = CHECK_OK;
@@ -230,35 +230,35 @@ class DataInjectionResults {
 		switch ($type)
 		{
 			case ERROR_CANNOT_IMPORT:
-				$message = $LANG["datainjection"]["result"][5];
+				$message = $LANG["data_injection"]["result"][5];
 			break;
 			case WARNING_NOTEMPTY:
 			case ERROR_CANNOT_UPDATE:
-				$message = $LANG["datainjection"]["result"][6];
+				$message = $LANG["data_injection"]["result"][6];
 			break;
 			case ERROR_IMPORT_ALREADY_IMPORTED:
-				$message = $LANG["datainjection"]["result"][3];
+				$message = $LANG["data_injection"]["result"][3];
 			break;
 			case ERROR_IMPORT_WRONG_TYPE:
-				$message = $LANG["datainjection"]["result"][1];
+				$message = $LANG["data_injection"]["result"][1];
 			break;
 			case ERROR_IMPORT_FIELD_MANDATORY:
-				$message = $LANG["datainjection"]["result"][4];
+				$message = $LANG["data_injection"]["result"][4];
 			break;
 			case TYPE_CHECK_OK:
-				$message = $LANG["datainjection"]["result"][2];
+				$message = $LANG["data_injection"]["result"][2];
 			break;
 			case IMPORT_OK:
-				$message = $LANG["datainjection"]["result"][7];
+				$message = $LANG["data_injection"]["result"][7];
 			break;
 			case WARNING_NOTFOUND:
-				$message = $LANG["datainjection"]["result"][15];
+				$message = $LANG["data_injection"]["result"][15];
 			break;
 			case WARNING_USED:
-				$message = $LANG["datainjection"]["result"][16];
+				$message = $LANG["data_injection"]["result"][16];
 			break;
 			case WARNING_ALLEMPTY:
-				$message = $LANG["datainjection"]["result"][17];
+				$message = $LANG["data_injection"]["result"][17];
 			break;
 			
 		}

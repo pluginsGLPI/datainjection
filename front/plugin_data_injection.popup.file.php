@@ -95,7 +95,7 @@ echo "<table class='tab_cadre_fixe'><tr>";
 
 
 echo "<div style='margin-top:15px;text-align:center'>";
-echo "<a href='javascript:window.close()'>" . $LANG["datainjection"]["button"][8] .  "</a>";
+echo "<a href='javascript:window.close()'>" . $LANG["data_injection"]["button"][8] .  "</a>";
 echo "</div>";
 
 echo "</body>";

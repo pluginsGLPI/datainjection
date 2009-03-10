@@ -42,7 +42,7 @@ class DataInjectionEngine
 	//Current entity
 	private $entity;
 		
-	function DataInjectionEngine($model,$filename,$backend, $entity=0)
+	function _construct($model,$filename,$backend, $entity=0)
 	{
 		//Instanciate model
 		$this->model = $model;
