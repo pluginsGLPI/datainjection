@@ -57,6 +57,7 @@ function plugin_init_data_injection() {
 		// Javascript file
 		$PLUGIN_HOOKS['add_javascript']['data_injection'] = 'javascript/data_injection.js';
 	
+		include_once("inc/plugin_data_injection.mapping.constant.php");
 		registerPluginType('data_injection', 'PLUGIN_DATA_INJECTION_MODEL', 1450, array(
 				'classname'  => 'DataInjectionModel',
 				'tablename'  => 'glpi_plugin_data_injection_models',
@@ -66,11 +67,10 @@ function plugin_init_data_injection() {
 				'specif_entities_tables' => true,
 				'recursive_type' => true
 				));
-	/*
+	
 		loadDeviceSpecificTypes();
 		addDeviceSpecificMappings();
 		addDeviceSpecificInfos();
-	*/
 	}
 }
 

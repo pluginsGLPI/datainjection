@@ -37,7 +37,7 @@ if(!defined('GLPI_ROOT')){
 }
 include (GLPI_ROOT."/inc/includes.php");
 
-commonHeader($LANG["datainjection"]["name"][1],$_SERVER["PHP_SELF"],"plugins","data_injection");
+commonHeader($LANG["data_injection"]["name"][1],$_SERVER["PHP_SELF"],"plugins","data_injection");
 
 if (!FieldExists("glpi_plugin_data_injection_models","recursive"))
 glpi_header(GLPI_ROOT .

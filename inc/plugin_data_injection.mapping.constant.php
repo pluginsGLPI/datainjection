@@ -59,7 +59,7 @@
 
 global $DATA_INJECTION_MAPPING, $IMPORT_TYPES, $IMPORT_PRIMARY_TYPES,
 	   $PLUGIN_HOOKS, $CONNECT_TO_COMPUTER_TYPES,
-	   $DEVICES_TYPES_STRING, $CONNECT_TO_COMPUTER_TYPES;
+	   $DEVICES_TYPES_STRING, $CONNECT_TO_COMPUTER_TYPES, $LANG;
 
 // ----------------------------------------------------------------------
 //COMPUTER MAPPING
@@ -95,6 +95,7 @@ $DATA_INJECTION_MAPPING[COMPUTER_TYPE]['os']['name'] = $LANG["computers"][9];
 $DATA_INJECTION_MAPPING[COMPUTER_TYPE]['os']['linkfield'] = 'os';
 $DATA_INJECTION_MAPPING[COMPUTER_TYPE]['os']['type'] = 'text';
 $DATA_INJECTION_MAPPING[COMPUTER_TYPE]['os']['table_type'] = 'dropdown';
+
 $DATA_INJECTION_MAPPING[COMPUTER_TYPE]['os_version']['table'] = 'glpi_dropdown_os_version';
 $DATA_INJECTION_MAPPING[COMPUTER_TYPE]['os_version']['field'] = 'name';
 $DATA_INJECTION_MAPPING[COMPUTER_TYPE]['os_version']['name'] = $LANG["computers"][52];

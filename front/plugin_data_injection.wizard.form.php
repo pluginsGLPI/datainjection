@@ -47,7 +47,7 @@ include (GLPI_ROOT."/inc/includes.php");
 
 plugin_data_injection_loadHook("variables");
 
-commonHeader($LANG["data_injection"]["config"][1],$_SERVER["PHP_SELF"],"plugins","data_injection");
+commonHeader($LANG["data_injection"]["name"][1],$_SERVER["PHP_SELF"],"plugins","data_injection");
 
 $load=1;
 $error="";
