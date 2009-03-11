@@ -57,11 +57,13 @@ function plugin_init_data_injection() {
 		// Javascript file
 		$PLUGIN_HOOKS['add_javascript']['data_injection'] = 'javascript/data_injection.js';
 	
+		//Need to load mappings when all the other files are loaded...
+		//TODO : check with it cannot be included at the same at as the other files...
 		include_once("inc/plugin_data_injection.mapping.constant.php");
 		registerPluginType('data_injection', 'PLUGIN_DATA_INJECTION_MODEL', 1450, array(
 				'classname'  => 'DataInjectionModel',
 				'tablename'  => 'glpi_plugin_data_injection_models',
-				'typename'   => 'DATA_INJECTION',
+				'typename'   => $LANG['common'][22],
 				'formpage'   => '',
 				'searchpage' => '',
 				'specif_entities_tables' => true,
