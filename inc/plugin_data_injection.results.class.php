@@ -53,7 +53,7 @@ class DataInjectionResults {
 	//ID of the line processed
 	private $line_id;
 	
-	function _construct()
+	function __construct()
 	{
 //		$this->status = -1;
 		$this->check_status = CHECK_OK;

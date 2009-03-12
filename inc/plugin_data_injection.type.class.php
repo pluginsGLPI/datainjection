@@ -40,7 +40,7 @@ class BackendType extends CommonDBTM{
 	 * Constructor
 	 * @param file input file to read
 	 */
-    function _construct() {
+    function __construct() {
     	$this->table = "glpi_plugin_data_injection_filetype";
     }
     

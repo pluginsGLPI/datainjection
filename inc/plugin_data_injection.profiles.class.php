@@ -34,7 +34,7 @@
 
 class DataInjectionProfile extends CommonDBTM {
 	
-	function DataInjectionProfile()
+	function __construct()
 	{
 		$this->table="glpi_plugin_data_injection_profiles";
     	$this->type=-1;

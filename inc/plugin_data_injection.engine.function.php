@@ -317,13 +317,16 @@ function preAddCommonFields($common_fields, $type, $fields, $entity) {
 				"contract"
 			);
 			break;
+/*
 		case SOFTWARE_TYPE :
 			$setFields = array (
 				"version",
 				"serial"
 			);
+
 			break;
-		case NETPORT_TYPE :
+*/
+				case NETPORT_TYPE :
 			$setFields = array (
 				"netpoint",
 				"vlan",
@@ -383,6 +386,7 @@ function addCommonFields(& $common_fields, $type, $fields, $entity, $ID) {
 			addField($common_fields, "device_type", $type, false);
 			addField($common_fields, "FK_entities", $entity, false);
 			break;
+/*
 		case SOFTWARE_TYPE :
 			$setFields = array (
 				"location"
@@ -390,7 +394,12 @@ function addCommonFields(& $common_fields, $type, $fields, $entity, $ID) {
 			addField($common_fields, "device_id", $ID, true);
 			addField($common_fields, "FK_entities", $entity, false);
 			break;
-		case MONITOR_TYPE :
+*/
+			case DOCUMENT_TYPE :
+			addField($common_fields, "FK_entities", $entity, false);
+			break;
+
+			case MONITOR_TYPE :
 			$setFields = array (
 				"location"
 			);
@@ -502,6 +511,9 @@ function addNecessaryFields($model, $mapping, $mapping_definition, $entity, $typ
 		case CONTACT_TYPE :
 			addField($fields, "FK_entities", $entity);
 			break;
+		case DOCUMENT_TYPE :
+			addField($fields, "FK_entities", $entity);
+			break;
 		case CONSUMABLE_TYPE :
 			addField($fields, "FK_entities", $entity);
 			break;
@@ -555,9 +567,11 @@ function addNecessaryFields($model, $mapping, $mapping_definition, $entity, $typ
 		case ENTERPRISE_TYPE :
 			addField($fields, "FK_entities", $entity);
 			break;
+/*
 		case SOFTWARE_TYPE :
 			addField($fields, "FK_entities", $entity);
 			break;
+*/
 		case CONTRACT_TYPE :
 			addField($fields, "FK_entities", $entity);
 			break;
@@ -730,10 +744,12 @@ function processBeforeEnd($result, $model, $type, $fields, & $common_fields) {
 		case PRINTER_TYPE :
 			addContract($common_fields,$type);
 			break;
+/*
 		case LICENSE_TYPE :
 			addSoftwareLicensesInfos($common_fields);
 			break;
-		case COMPUTER_TYPE :
+*/
+				case COMPUTER_TYPE :
 			addContract($common_fields,$type);
 			break;
 		case PHONE_TYPE :

@@ -32,7 +32,7 @@
 // ----------------------------------------------------------------------
 class BackendCSV extends Backend{
 	
-    function _construct() {
+    function __construct() {
     	$this->injectionDatas = new InjectionDatas;
     	$this->errmsg = "";
     }

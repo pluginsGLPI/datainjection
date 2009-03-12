@@ -1861,6 +1861,57 @@ $DATA_INJECTION_MAPPING[LICENSE_TYPE]['comments']['name'] = $LANG["common"][25];
 $DATA_INJECTION_MAPPING[LICENSE_TYPE]['comments']['type'] = 'text';
 $DATA_INJECTION_MAPPING[LICENSE_TYPE]['comments']['table_type'] = 'multitext';
 */
+
+// ----------------------------------------------------------------------
+//DOCUMENTS MAPPING
+// ----------------------------------------------------------------------
+
+$DATA_INJECTION_MAPPING[DOCUMENT_TYPE]['name']['table'] = 'glpi_docs';
+$DATA_INJECTION_MAPPING[DOCUMENT_TYPE]['name']['field'] = 'name';
+$DATA_INJECTION_MAPPING[DOCUMENT_TYPE]['name']['name'] = $LANG["common"][16];
+$DATA_INJECTION_MAPPING[DOCUMENT_TYPE]['name']['type'] = 'text';
+
+$DATA_INJECTION_MAPPING[DOCUMENT_TYPE]['comments']['table'] = 'glpi_docs';
+$DATA_INJECTION_MAPPING[DOCUMENT_TYPE]['comments']['field'] = 'comments';
+$DATA_INJECTION_MAPPING[DOCUMENT_TYPE]['comments']['name'] = $LANG["common"][25];
+$DATA_INJECTION_MAPPING[DOCUMENT_TYPE]['comments']['type'] = 'text';
+$DATA_INJECTION_MAPPING[DOCUMENT_TYPE]['comments']['table_type'] = 'multitext';
+
+$DATA_INJECTION_MAPPING[DOCUMENT_TYPE]['notes']['table'] = 'glpi_docs';
+$DATA_INJECTION_MAPPING[DOCUMENT_TYPE]['notes']['field'] = 'notes';
+$DATA_INJECTION_MAPPING[DOCUMENT_TYPE]['notes']['name'] = $LANG["title"][37];
+$DATA_INJECTION_MAPPING[DOCUMENT_TYPE]['notes']['table_type'] = 'multitext';
+$DATA_INJECTION_MAPPING[DOCUMENT_TYPE]['notes']['type'] = 'text';
+
+$DATA_INJECTION_MAPPING[DOCUMENT_TYPE]['FK_users']['table'] = 'glpi_users';
+$DATA_INJECTION_MAPPING[DOCUMENT_TYPE]['FK_users']['field'] = 'name';
+$DATA_INJECTION_MAPPING[DOCUMENT_TYPE]['FK_users']['name'] = $LANG["common"][34];
+$DATA_INJECTION_MAPPING[DOCUMENT_TYPE]['FK_users']['linkfield'] = 'FK_users';
+$DATA_INJECTION_MAPPING[DOCUMENT_TYPE]['FK_users']['type'] = 'text';
+$DATA_INJECTION_MAPPING[DOCUMENT_TYPE]['FK_users']['table_type'] = 'user';
+
+$DATA_INJECTION_MAPPING[DOCUMENT_TYPE]['recursive']['table'] = 'glpi_contracts';
+$DATA_INJECTION_MAPPING[DOCUMENT_TYPE]['recursive']['field'] = 'recursive';
+$DATA_INJECTION_MAPPING[DOCUMENT_TYPE]['recursive']['name'] = $LANG["entity"][9];
+$DATA_INJECTION_MAPPING[DOCUMENT_TYPE]['recursive']['type'] = 'integer';
+
+$DATA_INJECTION_MAPPING[DOCUMENT_TYPE]['link']['table'] = 'glpi_docs';
+$DATA_INJECTION_MAPPING[DOCUMENT_TYPE]['link']['field'] = 'notes';
+$DATA_INJECTION_MAPPING[DOCUMENT_TYPE]['link']['name'] = $LANG['document'][33];
+$DATA_INJECTION_MAPPING[DOCUMENT_TYPE]['link']['type'] = 'text';
+
+$DATA_INJECTION_MAPPING[DOCUMENT_TYPE]['rubrique']['table'] = 'glpi_dropdown_rubdocs';
+$DATA_INJECTION_MAPPING[DOCUMENT_TYPE]['rubrique']['field'] = 'name';
+$DATA_INJECTION_MAPPING[DOCUMENT_TYPE]['rubrique']['name'] = $LANG["document"][3];
+$DATA_INJECTION_MAPPING[DOCUMENT_TYPE]['rubrique']['linkfield'] = 'rubrique';
+$DATA_INJECTION_MAPPING[DOCUMENT_TYPE]['rubrique']['type'] = 'text';
+$DATA_INJECTION_MAPPING[DOCUMENT_TYPE]['rubrique']['table_type'] = 'dropdown';
+
+$DATA_INJECTION_MAPPING[DOCUMENT_TYPE]['mime']['table'] = 'glpi_docs';
+$DATA_INJECTION_MAPPING[DOCUMENT_TYPE]['mime']['field'] = 'mime';
+$DATA_INJECTION_MAPPING[DOCUMENT_TYPE]['mime']['name'] = $LANG['document'][4];
+$DATA_INJECTION_MAPPING[DOCUMENT_TYPE]['mime']['type'] = 'text';
+
 // ----------------------------------------------------------------------
 //PSEUDO TYPE FOR PERIPHERAL TO COMPUTER CONNECTION
 // ----------------------------------------------------------------------

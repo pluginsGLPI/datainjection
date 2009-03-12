@@ -31,7 +31,7 @@ class DataInjectionInfos extends CommonDBTM {
 	
 	var $text;
 	
-	function _construct()
+	function __construct()
 	{
 		$this->table="glpi_plugin_data_injection_infos";
     	$this->type=-1;
@@ -103,7 +103,7 @@ class InfosCollection {
 	
 	var $infosCollection;
 	
-	function InfosCollection()
+	function __construct()
 	{
 		$this->infosCollection = array();
 	}
