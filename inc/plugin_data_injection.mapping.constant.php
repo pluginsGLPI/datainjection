@@ -1895,10 +1895,10 @@ $DATA_INJECTION_MAPPING[DOCUMENT_TYPE]['recursive']['field'] = 'recursive';
 $DATA_INJECTION_MAPPING[DOCUMENT_TYPE]['recursive']['name'] = $LANG["entity"][9];
 $DATA_INJECTION_MAPPING[DOCUMENT_TYPE]['recursive']['type'] = 'integer';
 
-$DATA_INJECTION_MAPPING[DOCUMENT_TYPE]['link']['table'] = 'glpi_docs';
-$DATA_INJECTION_MAPPING[DOCUMENT_TYPE]['link']['field'] = 'notes';
-$DATA_INJECTION_MAPPING[DOCUMENT_TYPE]['link']['name'] = $LANG['document'][33];
-$DATA_INJECTION_MAPPING[DOCUMENT_TYPE]['link']['type'] = 'text';
+$DATA_INJECTION_MAPPING[DOCUMENT_TYPE]['filename']['table'] = 'glpi_docs';
+$DATA_INJECTION_MAPPING[DOCUMENT_TYPE]['filename']['field'] = 'filename';
+$DATA_INJECTION_MAPPING[DOCUMENT_TYPE]['filename']['name'] = $LANG['document'][33];
+$DATA_INJECTION_MAPPING[DOCUMENT_TYPE]['filename']['type'] = 'text';
 
 $DATA_INJECTION_MAPPING[DOCUMENT_TYPE]['rubrique']['table'] = 'glpi_dropdown_rubdocs';
 $DATA_INJECTION_MAPPING[DOCUMENT_TYPE]['rubrique']['field'] = 'name';
