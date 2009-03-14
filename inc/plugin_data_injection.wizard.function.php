@@ -99,13 +99,15 @@ function choiceStep($target) {
 
 		/**************************Using*******************************/
 		echo "<tr>";
+		echo "<div id='choice4_div'><td>";
 		if (plugin_data_injection_haveRight("model", "r"))
 			if ($_SESSION["plugin_data_injection"]["choice"] == 4)
-				echo "<td><input type='radio' name='choice' id='choice4' value='4' onClick='show_Select($nbmodel);deleteOnglet(5)' checked /></td>";
+				echo "<input type='radio' name='choice' id='choice4' value='4' onClick='show_Select($nbmodel);deleteOnglet(5)' checked />";
 			else
-				echo "<td><input type='radio' name='choice' id='choice4' value='4' onClick='show_Select($nbmodel);deleteOnglet(5)' /></td>";
+				echo "<input type='radio' name='choice' id='choice4' value='4' onClick='show_Select($nbmodel);deleteOnglet(5)' />";
 		else
-			echo "<td><input type='radio' name='choice' id='choice4' value='4' onClick='show_Select($nbmodel);deleteOnglet(5)' disabled /></td>";
+			echo "<input type='radio' name='choice' id='choice4' value='4' onClick='show_Select($nbmodel);deleteOnglet(5)' disabled />";
+		echo "</td></div>";
 		echo "<td>" . $DATAINJECTIONLANG["choiceStep"][6] . "</td>";
 		echo "</tr>";
 		echo "</table>";

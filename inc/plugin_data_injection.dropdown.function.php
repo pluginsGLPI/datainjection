@@ -192,9 +192,9 @@ function dropdownModels($disable=false,$models,$with_select=true)
 		if ($with_select)
 		{
 			if ($disable)	
-				echo "<select style='background-color:#e6e6e6' disabled name='dropdown' id='dropdown' onchange='show_comments($nbmodel)'>";
+				echo "\n<select style='background-color:#e6e6e6' disabled name='dropdown' id='dropdown' onchange='show_comments($nbmodel)'>";
 			else			
-				echo "<select name='dropdown' id='dropdown' onchange='show_comments($nbmodel)'>";
+				echo "\n<select name='dropdown' id='dropdown' onchange='show_comments($nbmodel)'>";
 		}
 
 		$prev = -2;
@@ -203,21 +203,21 @@ function dropdownModels($disable=false,$models,$with_select=true)
 		{
 			if ($model->getEntity() != $prev) {
 				if ($prev >= -1) {
-					echo "</optgroup>";
+					echo "</optgroup>\n";
 				}
 				$prev = $model->getEntity();
-				echo "<optgroup label=\"" . getDropdownMinimalName("glpi_entities", $prev) . "\">";
+				echo "\n<optgroup label=\"" . getDropdownMinimalName("glpi_entities", $prev) . "\">";
 			}
-			echo "<option value='".$model->getModelID()."'>".$model->getModelName()." / ".getDropdownName('glpi_plugin_data_injection_filetype',$model->getModelType())."</option>";
+			echo "\n<option value='".$model->getModelID()."'>".$model->getModelName()." , ".getDropdownName('glpi_plugin_data_injection_filetype',$model->getModelType())."</option>";
 		}
 		
-		if ($prev >= 0) {
+		if ($prev >= -1) {
 			echo "</optgroup>";
 		}
 	
 
 		if ($with_select)
-			echo "</select>";
+			echo "</select>\n";
 	
 }
 

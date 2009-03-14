@@ -12,7 +12,7 @@ function show_Select(cpt)
 				if(xhr.readyState == 4 && xhr.status == 200)
 					{
 					leselect = xhr.responseText;
-					document.getElementById('dropdown').innerHTML = leselect;
+					document.getElementById('choice4_div').innerHTML = leselect;
 					}
 			}
 
