@@ -211,7 +211,7 @@ function dropdownModels($disable=false,$models,$with_select=true)
 			echo "<option value='".$model->getModelID()."'>".$model->getModelName()." / ".getDropdownName('glpi_plugin_data_injection_filetype',$model->getModelType())."</option>";
 		}
 		
-		if ($prev >= 0) {
+		if ($prev >= -1) {
 			echo "</optgroup>";
 		}
 	
