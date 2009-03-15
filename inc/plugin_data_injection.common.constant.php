@@ -58,6 +58,7 @@ $IMPORT_TYPES = array (
 	CONTACT_TYPE,
 	CARTRIDGE_TYPE,
 	CONSUMABLE_TYPE,
+	DOCUMENT_TYPE
 );
 
 //Primary types to import
@@ -76,6 +77,7 @@ $IMPORT_PRIMARY_TYPES = array (
 	CARTRIDGE_TYPE,
 	CONSUMABLE_TYPE,
 	ENTITY_TYPE,
+	DOCUMENT_TYPE
 );
 
 //Types to connect to a computer
@@ -89,5 +91,10 @@ $CONNECT_TO_COMPUTER_TYPES = array (
 //Types to connect to a sofware
 $CONNECT_TO_SOFTWARE_TYPES = array (
 	SOFTWARE_TYPE
+);
+
+//Types to connect to a sofware
+$CONNECT_TO_SPECIFIED_TYPE = array (
+	DOCUMENT_TYPE
 );
 ?>

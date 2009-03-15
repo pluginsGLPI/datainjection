@@ -57,7 +57,7 @@ class DataInjectionEngine
 		$this->backend = $backend;
 	}
 	
-	/*
+	/**
 	 * Get datas imported read from the file
 	 */
 	function getDatas()
@@ -68,7 +68,7 @@ class DataInjectionEngine
 			return array();	
 	}
 	
-	/*
+	/**
 	 * Return the number of lines of the file
 	 * @return the number of line of the file
 	 */
@@ -77,7 +77,7 @@ class DataInjectionEngine
 		return $this->backend->getNumberOfLine();
 	}
 	
-	/*
+	/**
 	 * Inject one line of datas
 	 * @param line one line of data to import
 	 */
@@ -257,6 +257,7 @@ class DataInjectionEngine
 								filterFields($fields,$fields_from_db,$this->getModel()->getCanOverwriteIfNotEmpty(),$type);
 								//Item aleady in DB -> update
 								addCommonFields($db_fields[COMMON_FIELDS],$type,$fields,$this->entity,$ID);
+								
 								$obj->update($fields);
 							}
 						}

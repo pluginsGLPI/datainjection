@@ -60,7 +60,11 @@ if (substr(phpversion(),0,1) < "5") {
 	} else if (!FieldExists("glpi_plugin_data_injection_models","recursive")) {
 		// Update
 		plugin_data_injection_update131_14();	
+	}elseif (!FieldExists("glpi_plugin_data_injection_models","port_unicity"))
+	{
+		plugin_data_injection_update14_15();
 	}
+	
 	plugin_data_injection_initSession();
 	glpi_header($_SERVER['HTTP_REFERER']);
 }

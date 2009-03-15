@@ -30,7 +30,7 @@
 // Original Author of file: Walid Nouh
 // Purpose of file:
 // ----------------------------------------------------------------------
-/*
+/**
  * Check if the data to import is the good type
  * 
  * @param the type of data waited
@@ -97,7 +97,7 @@ function checkType($type, $name, $data,$mandatory)
 
 }
 
-/*
+/**
  * check one line of data to import
  * 
  * @param model the model to use
@@ -141,9 +141,23 @@ function checkLine($model,$line,&$res)
 	}
 
 
-function checkNetpoint($result,$primary_type,$entity,$location,$value,$port_id,$canadd) {
+/**
+ * check if a network plug exists, if not then create it
+ * @param result the array to log injection informations
+ * @param fields the fields to use to check if plug exists or not
+ * @param canadd indicates if a network plug can be created or not
+ * 
+ * @return the network port's ID
+ */
+function checkNetpoint($result,$fields,$canadd) {
 	global $DB, $LANG;
 
+	$primary_type = $fields["device_type"];
+	$entity = $fields["FK_entities"];
+	$location = $fields["location"];
+	$value = $fields["netpoint"];
+	$port_id = $fields["network_port_id"];
+	
 	// networking device can use netpoint in all the entity
 	$sql="SELECT ID FROM glpi_dropdown_netpoint WHERE FK_entities=$entity AND name='$value'";
 	
@@ -151,6 +165,7 @@ function checkNetpoint($result,$primary_type,$entity,$location,$value,$port_id,$
 		// other device can only use netpoint in the location
 		$sql .= " AND location=$location";
 	}
+	
 	$res = $DB->query($sql);
 	if ($DB->numrows($res)>0) {
 		// found
@@ -185,7 +200,7 @@ function checkNetpoint($result,$primary_type,$entity,$location,$value,$port_id,$
 	}
 }
 
-/*
+/**
  * Find a user. Look for login OR firstname + lastname OR lastname + firstname
  * @param value the user to look for
  * @param entity the entity where the user should have right
@@ -212,7 +227,7 @@ function findUser($value,$entity)
 }
 
 
-/*
+/**
  * Find a user. Look for login OR firstname + lastname OR lastname + firstname
  * @param value the user to look for
  * @param entity the entity where the user should have right

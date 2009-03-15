@@ -147,7 +147,8 @@ function dataAlreadyInDB($type, $fields, $mapping_definition, $model) {
 
 			case NETPORT_TYPE :
 				$where .= " AND device_type=" . $model->getDeviceType() . " AND on_device=" . $fields["on_device"];
-				$where .= " AND logical_number=" . $fields["logical_number"];
+				$where.= getPortUnicityRequest($model,$fields);
+				//$where .= " AND logical_number=" . $fields["logical_number"];
 				break;
 
 			default :
@@ -328,7 +329,10 @@ function preAddCommonFields($common_fields, $type, $fields, $entity) {
 				"netpoint",
 				"vlan",
 				"netname",
-				"netport"
+				"netport",
+				"netmac",
+				"ifaddr",
+				"name"
 			);
 			break;
 		default :
@@ -591,7 +595,8 @@ function addNecessaryFields($model, $mapping, $mapping_definition, $entity, $typ
 				"netpoint",
 				"vlan",
 				"netport",
-				"netname"
+				"netname",
+				"netmac"
 			);
 
 			//Set the device_id
@@ -599,7 +604,6 @@ function addNecessaryFields($model, $mapping, $mapping_definition, $entity, $typ
 
 			//Set the device type
 			addField($fields, "device_type", $model->getDeviceType());
-
 			break;
 		case COMPUTER_CONNECTION_TYPE :
 			//Set the device_id
@@ -741,7 +745,7 @@ function processBeforeEnd($result, $model, $type, $fields, & $common_fields) {
 			break;
 		case NETPORT_TYPE :
 			addVlan($common_fields, $model->getCanAddDropdown());
-			addNetpoint($result, $common_fields, $model->getCanAddDropdown());
+			addNetPoint($result, $common_fields, $model->getCanAddDropdown());
 			addNetworkingWire($result, $common_fields, $model->getCanOverwriteIfNotEmpty());
 			break;
 		case COMPUTER_CONNECTION_TYPE :
@@ -854,5 +858,43 @@ function filterFields(& $fields, $fields_from_db, $can_overwrite, $type) {
 		}
 
 	}
+}
+
+/**
+ * Build where sql request to look for a network port
+ * @param model the model
+ * @param fields the fields to insert into DB
+ * 
+ * @return the sql where clause
+ */
+function getPortUnicityRequest($model,$fields)
+{
+	$where = "";
+	switch ($model->getPortUnicity())
+	{
+		case MODEL_NETPORT_LOGICAL_NUMER:
+			$where .= " AND logical_number='" . $fields["logical_number"]."'";
+		break;
+		case MODEL_NETPORT_LOGICAL_NUMER_MAC:
+			$where .= " AND logical_number='" . $fields["logical_number"]."'";
+			$where .= " AND name='" . $fields["name"]."'";
+			$where .= " AND ifmac='" . $fields["ifmac"]."'";
+		break;
+		case MODEL_NETPORT_LOGICAL_NUMER_NAME:
+			$where .= " AND logical_number='" . $fields["logical_number"]."'";
+			$where .= " AND name='" . $fields["name"]."'";
+		break;
+		case MODEL_NETPORT_LOGICAL_NUMER_NAME_MAC:
+			$where .= " AND logical_number='" . $fields["logical_number"]."'";
+			$where .= " AND ifmac='" . $fields["ifmac"]."'";
+		break;
+		case MODEL_NETPORT_MACADDRESS:
+			$where .= " AND ifmac='" . $fields["ifmac"]."'";
+		break;
+		case MODEL_NETPORT_NAME:
+			$where .= " AND name='" . $fields["name"]."'";
+		break;
+	}
+	return $where;
 }
 ?>

@@ -69,9 +69,18 @@ function addVlan($common_fields, $canadd) {
 		return 0;
 }
 
+/**
+ * Add a network plug
+ * @param result the array to log injection informations
+ * @param fields the fields to use to check if plug exists or not
+ * @param canadd indicates if a network plug can be created or not
+ * 
+ * @return nothing
+ */
 function addNetPoint($result, $common_fields, $canadd) {
-	if (isset ($common_fields["location"]) && isset ($common_fields["netpoint"])) {
-		$id = checkNetpoint($result, $common_fields["device_type"], $common_fields["FK_entities"], $common_fields["location"], $common_fields["netpoint"], $common_fields["network_port_id"], $canadd);
+	if (isset ($common_fields["location"]) && 
+		(isset ($common_fields["netpoint"]) || isset($common_fields["netname"]) || isset($common_fields["netmac"]) )) {
+		$id = checkNetpoint($result, $common_fields, $canadd);
 
 		if ($id > 0) {
 			$port = new Netport();
@@ -133,6 +142,13 @@ function addNetworkingWire($result, $common_fields, $canupdate) {
 	return makeConnector($common_fields["network_port_id"], $dest, true, false);
 }
 
+/**
+ * Add a contract to an object
+ * @param common_fields the fields to use
+ * @type the type of object
+ * 
+ * @return nothing
+ */
 function addContract($common_fields, $type) {
 	if (isset ($common_fields["contract"])) {
 		switch ($type) {

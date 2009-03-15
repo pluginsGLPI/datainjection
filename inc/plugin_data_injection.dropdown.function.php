@@ -229,4 +229,16 @@ function dropdownFileEncoding($name)
 	$values[ENCODING_ISO8859_1]=$DATAINJECTIONLANG["fileStep"][12];
 	dropdownArrayValues($name,$values,ENCODING_AUTO);
 }
+
+function dropdownPortUnicity($name,$value)
+{
+	global $LANG;
+	$values[MODEL_NETPORT_LOGICAL_NUMER] = $LANG["networking"][21];
+	$values[MODEL_NETPORT_NAME] = $LANG["common"][16];
+	$values[MODEL_NETPORT_MACADDRESS] = $LANG["device_iface"][2];
+	$values[MODEL_NETPORT_LOGICAL_NUMER_NAME] =$LANG["networking"][21]."+".$LANG["common"][16];
+	$values[MODEL_NETPORT_LOGICAL_NUMER_MAC]=$LANG["networking"][21]."+".$LANG["device_iface"][2];
+	$values[MODEL_NETPORT_LOGICAL_NUMER_NAME_MAC]=$LANG["networking"][21]."+".$LANG["common"][16]."+".$LANG["device_iface"][2];
+	dropdownArrayValues($name,$values,$value);
+}
 ?>

@@ -183,6 +183,12 @@ function plugin_data_injection_update131_14() {
 	$DB->query($sql);
 }
 
+function plugin_data_injection_update14_15()
+{
+	global $DB;
+	$query = "ALTER TABLE `glpi_plugin_data_injection_models` CHANGE `port_existance` `port_unicity` INT( 1 ) NOT NULL DEFAULT '0' ";
+	$DB->query($query);
+}
 function plugin_data_injection_initSession() {
 	global $DB;
 

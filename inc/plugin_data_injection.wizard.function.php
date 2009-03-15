@@ -99,7 +99,7 @@ function choiceStep($target) {
 
 		/**************************Using*******************************/
 		echo "<tr>";
-		echo "<div id='choice4_div'><td>";
+		echo "<div ='choice4_div'><td>";
 		if (plugin_data_injection_haveRight("model", "r"))
 			if ($_SESSION["plugin_data_injection"]["choice"] == 4)
 				echo "<input type='radio' name='choice' id='choice4' value='4' onClick='show_Select($nbmodel);deleteOnglet(5)' checked />";
@@ -272,6 +272,18 @@ function modelStep($target) {
 	echo "</td></tr>";
 	/**************************************************************/
 
+	/***************Date format*********************/
+	echo "<tr><td>" . $DATAINJECTIONLANG["modelStep"][21] . "</td><td>";
+	dropdownDateFormat("date_format", (isset ($model) ? $model->getDateFormat() : DATE_TYPE_YYYYMMDD));
+	echo "</td></tr>";
+	/**************************************************************/
+
+	/***************Float format*********************/
+	echo "<tr><td>" . $LANG["setup"][150] . "</td><td>";
+	dropdownFloatFormat("float_format", (isset ($model) ? $model->getFloatFormat() : FLOAT_TYPE_DOT));
+	echo "</td></tr>";
+	/**************************************************************/
+
 	/***************Can add network connections*********************/
 	echo "<tr><td>" . $DATAINJECTIONLANG["modelStep"][20] . "</td><td>";
 	dropdownYesNo("perform_network_connection", (isset ($model)?$model->getPerformNetworkConnection():0));
@@ -279,17 +291,12 @@ function modelStep($target) {
 
 	/**************************************************************/
 
-	/***************Date format*********************/
-	echo "<tr><td>" . $DATAINJECTIONLANG["modelStep"][21] . "</td><td>";
-	dropdownDateFormat("date_format", (isset ($model) ? $format = $model->getDateFormat() : $format = DATE_TYPE_YYYYMMDD));
+	/***************Port existance*********************/
+	echo "<tr><td>" . $DATAINJECTIONLANG["mappings"][7] . "</td><td>";
+	dropdownPortUnicity("port_unicity", (isset ($model) ? $model->getPortUnicity() : MODEL_NETPORT_LOGICAL_NUMER));
 	echo "</td></tr>";
 	/**************************************************************/
 
-	/***************Float format*********************/
-	echo "<tr><td>" . $LANG["setup"][150] . "</td><td>";
-	dropdownFloatFormat("float_format", (isset ($model) ? $format = $model->getFloatFormat() : $format = FLOAT_TYPE_DOT));
-	echo "</td></tr>";
-	/**************************************************************/
 
 	echo "</table>";
 	echo "</fieldset>";
