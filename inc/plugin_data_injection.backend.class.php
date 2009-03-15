@@ -149,7 +149,7 @@ class InjectionDatas
 {
 	private $injectionDatas;
 	
-	function InjectionDatas()
+	function __construct()
 	{
 		$injectionDatas = array();
 	}

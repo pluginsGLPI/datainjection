@@ -33,7 +33,7 @@ class DataInjectionModel extends CommonDBTM {
 	private $backend;
 	protected $infos;
 		
-	function DataInjectionModel()
+	function __construct()
 	{
 		$this->table="glpi_plugin_data_injection_models";
     	$this->type=PLUGIN_DATA_INJECTION_MODEL;
