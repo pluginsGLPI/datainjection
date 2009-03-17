@@ -84,13 +84,12 @@ class DataInjectionEngine
 	function injectLine($line,$infos = array())
 	{
 		$result = new DataInjectionResults;
-	
 		$line = reformatDatasBeforeCheck($this->getModel(),$line,$this->getEntity(),$result);
 		
 		if (!checkLine($this->getModel(),$line,$result)) {
 			return $result;
 		}
-		
+
 		//Array to store the fields to write to db
 		$db_fields = array();
 		$db_fields[COMMON_FIELDS] = array();
@@ -236,7 +235,7 @@ class DataInjectionEngine
 						{
 							// Add some fields to the common fields BEFORE inserting the secondary type (in order to save some fields)
 							$db_fields[COMMON_FIELDS] = preAddCommonFields($db_fields[COMMON_FIELDS],$type,$fields,$this->getEntity());
-		
+							
 							// If necessary, add default fields which are mandatory to create the object
 							addNecessaryFields($this->getModel(),$mapping,$mapping_definition,$this->getEntity(),$type,$fields,$db_fields[COMMON_FIELDS]);
 							

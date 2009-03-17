@@ -213,9 +213,12 @@ $DATAINJECTIONLANG["mappings"][5] = "Ordinateur";
 $DATAINJECTIONLANG["mappings"][6] = "Connecté à : adresse MAC du port";
 $DATAINJECTIONLANG["mappings"][7] = "Critère d'unicité d'un port";
 
+
 $DATAINJECTIONLANG["history"][1] = "depuis un fichier CSV";
 $DATAINJECTIONLANG["logevent"][1] = "injection d'un fichier CSV.";
 
 $DATAINJECTIONLANG["entity"][0] = "Entité parente";
+
+$DATAINJECTIONLANG["associate"][0] = "Association à un objet";
 
 ?>

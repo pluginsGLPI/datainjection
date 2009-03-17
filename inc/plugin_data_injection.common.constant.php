@@ -35,12 +35,13 @@
 // Purpose of file:
 // ----------------------------------------------------------------------
 
-global $IMPORT_TYPES,$IMPORT_PRIMARY_TYPES,$CONNECT_TO_COMPUTER_TYPES;
+global $IMPORT_TYPES,$IMPORT_PRIMARY_TYPES,$CONNECT_TO_COMPUTER_TYPES,$CONNECT_TO_ALL_TYPES;
 
 // pseudo_type
 define("COMPUTER_CONNECTION_TYPE", 998);
 define("NETPORT_TYPE", 999);
 define("SOFTWARE_CONNECTION_TYPE", 997);
+define("CONNECTION_ALL_TYPES", 996);
 
 //Store all the type of items that could be imported
 $IMPORT_TYPES = array (
@@ -94,7 +95,9 @@ $CONNECT_TO_SOFTWARE_TYPES = array (
 );
 
 //Types to connect to a sofware
-$CONNECT_TO_SPECIFIED_TYPE = array (
+$CONNECT_TO_ALL_TYPES = array (
 	DOCUMENT_TYPE
 );
+
+
 ?>

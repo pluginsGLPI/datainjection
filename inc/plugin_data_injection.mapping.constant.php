@@ -1774,17 +1774,26 @@ $DATA_INJECTION_MAPPING[NETPORT_TYPE]['iface']['name'] = $LANG["common"][65];
 $DATA_INJECTION_MAPPING[NETPORT_TYPE]['iface']['type'] = 'text';
 $DATA_INJECTION_MAPPING[NETPORT_TYPE]['iface']['table_type'] = 'dropdown';
 
-$DATA_INJECTION_MAPPING[NETPORT_TYPE]['netname']['table'] = 'glpi_dropdown_wire';
+//Name of the device to connect to
+$DATA_INJECTION_MAPPING[NETPORT_TYPE]['netname']['table'] = '';
 $DATA_INJECTION_MAPPING[NETPORT_TYPE]['netname']['field'] = 'netname';
 $DATA_INJECTION_MAPPING[NETPORT_TYPE]['netname']['name'] = $DATAINJECTIONLANG["mappings"][3];
 $DATA_INJECTION_MAPPING[NETPORT_TYPE]['netname']['type'] = 'text';
 $DATA_INJECTION_MAPPING[NETPORT_TYPE]['netname']['table_type'] = 'virtual';
 
-$DATA_INJECTION_MAPPING[NETPORT_TYPE]['netport']['table'] = 'glpi_dropdown_wire';
+//Logical number of the port to connect to
+$DATA_INJECTION_MAPPING[NETPORT_TYPE]['netport']['table'] = '';
 $DATA_INJECTION_MAPPING[NETPORT_TYPE]['netport']['field'] = 'netport';
 $DATA_INJECTION_MAPPING[NETPORT_TYPE]['netport']['name'] = $DATAINJECTIONLANG["mappings"][4];
 $DATA_INJECTION_MAPPING[NETPORT_TYPE]['netport']['type'] = 'integer';
 $DATA_INJECTION_MAPPING[NETPORT_TYPE]['netport']['table_type'] = 'virtual';
+
+//Mac address of the port to connect to
+$DATA_INJECTION_MAPPING[NETPORT_TYPE]['netmac']['table'] = '';
+$DATA_INJECTION_MAPPING[NETPORT_TYPE]['netmac']['field'] = 'netmac';
+$DATA_INJECTION_MAPPING[NETPORT_TYPE]['netmac']['name'] = $DATAINJECTIONLANG["mappings"][6];
+$DATA_INJECTION_MAPPING[NETPORT_TYPE]['netmac']['type'] = 'mac';
+$DATA_INJECTION_MAPPING[NETPORT_TYPE]['netmac']['table_type'] = 'virtual';
 
 // ----------------------------------------------------------------------
 //SOFTWARE MAPPING
@@ -1941,6 +1950,21 @@ $DATA_INJECTION_MAPPING[SOFTWARE_CONNECTION_TYPE]['manufacturer']['name'] = $LAN
 $DATA_INJECTION_MAPPING[SOFTWARE_CONNECTION_TYPE]['manufacturer']['type'] = 'text';
 $DATA_INJECTION_MAPPING[SOFTWARE_CONNECTION_TYPE]['manufacturer']['linkfield'] = 'FK_glpi_enterprise';
 $DATA_INJECTION_MAPPING[SOFTWARE_CONNECTION_TYPE]['manufacturer']['table_type'] = 'dropdown';
+
+// ----------------------------------------------------------------------
+//PSEUDO TYPE FOR PERIPHERAL TO COMPUTER CONNECTION
+// ----------------------------------------------------------------------
+$DATA_INJECTION_MAPPING[CONNECTION_ALL_TYPES]['device_type']['table'] = '';
+$DATA_INJECTION_MAPPING[CONNECTION_ALL_TYPES]['device_type']['field'] = 'device_type';
+$DATA_INJECTION_MAPPING[CONNECTION_ALL_TYPES]['device_type']['name'] = $LANG["common"][17];
+$DATA_INJECTION_MAPPING[CONNECTION_ALL_TYPES]['device_type']['type'] = 'text';
+$DATA_INJECTION_MAPPING[CONNECTION_ALL_TYPES]['device_type']['table_type'] = 'virtual';
+
+$DATA_INJECTION_MAPPING[CONNECTION_ALL_TYPES]['name']['table'] = '';
+$DATA_INJECTION_MAPPING[CONNECTION_ALL_TYPES]['name']['field'] = 'name';
+$DATA_INJECTION_MAPPING[CONNECTION_ALL_TYPES]['name']['name'] = $LANG["common"][16];
+$DATA_INJECTION_MAPPING[CONNECTION_ALL_TYPES]['name']['type'] = 'text';
+$DATA_INJECTION_MAPPING[CONNECTION_ALL_TYPES]['name']['table_type'] = 'virtual';
 
 // ----------------------------------------------------------------------
 //COMPONENTS

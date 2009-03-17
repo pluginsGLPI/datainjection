@@ -349,4 +349,15 @@ function is_true_float($val){
     if( is_float($val) || ( (float) $val > (int) $val || strlen($val) != strlen( (int) $val) ) && (int) $val != 0  ) return true;
     else return false;
 }
+
+function isDocumentAssociatedWithObject($document_id,$device_type,$device_id)
+{
+	global $DB;
+	$query = "SELECT ID FROM glpi_doc_device WHERE FK_doc=$document_id AND FK_device=$device_id AND device_type=$device_type";
+	$result = $DB->query($query);
+	if ($DB->numrows($result) > 0)
+		return true;
+	else
+		return false;		
+}
 ?>

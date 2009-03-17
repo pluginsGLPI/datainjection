@@ -148,7 +148,6 @@ function dataAlreadyInDB($type, $fields, $mapping_definition, $model) {
 			case NETPORT_TYPE :
 				$where .= " AND device_type=" . $model->getDeviceType() . " AND on_device=" . $fields["on_device"];
 				$where.= getPortUnicityRequest($model,$fields);
-				//$where .= " AND logical_number=" . $fields["logical_number"];
 				break;
 
 			default :
@@ -305,7 +304,9 @@ function preAddCommonFields($common_fields, $type, $fields, $entity) {
 		case NETWORKING_TYPE :
 			$setFields = array (
 				"nb_ports",
-				"contract"
+				"contract",
+				"ifmac",
+				"name"
 			);
 			break;
 		case PRINTER_TYPE :
@@ -331,10 +332,18 @@ function preAddCommonFields($common_fields, $type, $fields, $entity) {
 				"netname",
 				"netport",
 				"netmac",
-				"ifaddr",
-				"name"
+				"name",
+				"netmac",
+				"ifmac"
 			);
 			break;
+		case CONNECTION_ALL_TYPES:
+			$setFields = array (
+				"device_type",
+				"name",
+				"ID"
+			);
+			break;				
 		default :
 			break;
 	}
@@ -396,6 +405,7 @@ function addCommonFields(& $common_fields, $type, $fields, $entity, $ID) {
 			break;
         case DOCUMENT_TYPE : 
             addField($common_fields, "FK_entities", $entity, false); 
+			addField($common_fields, "device_id", $ID, true);
             break; 
 		case MONITOR_TYPE :
 			$setFields = array (
@@ -602,8 +612,11 @@ function addNecessaryFields($model, $mapping, $mapping_definition, $entity, $typ
 				"vlan",
 				"netport",
 				"netname",
-				"netmac"
+				"netmac",
 			);
+
+			//Set the device_id
+			addField($fields, "ifmac", $common_fields["ifmac"]);
 
 			//Set the device_id
 			addField($fields, "on_device", $common_fields["device_id"]);
@@ -611,12 +624,19 @@ function addNecessaryFields($model, $mapping, $mapping_definition, $entity, $typ
 			//Set the device type
 			addField($fields, "device_type", $model->getDeviceType());
 			break;
+
+		//Object connections
 		case COMPUTER_CONNECTION_TYPE :
 			//Set the device_id
 			addField($fields, "FK_entities", $entity);
 			addField($fields, "device_id", $common_fields["device_id"]);
-			addField($fields, "device_type", $model->getDeviceType());
 			break;
+		case CONNECTION_ALL_TYPES :
+			//Set the device_id
+			addField($fields, "FK_entities", $entity);
+			addField($fields, "device_id", $common_fields["device_id"]);
+			break;
+			
 		default :
 			//Add entity field for plugins
 			if ($type > 1000)
@@ -760,6 +780,9 @@ function processBeforeEnd($result, $model, $type, $fields, & $common_fields) {
 		case ENTITY_TYPE :
 			addEntityPostProcess($common_fields);
 			break;
+		case CONNECTION_ALL_TYPES:
+			connectToObjectByType($fields);
+			break;
 		default :
 			break;
 	}
@@ -879,26 +902,27 @@ function getPortUnicityRequest($model,$fields)
 	switch ($model->getPortUnicity())
 	{
 		case MODEL_NETPORT_LOGICAL_NUMER:
-			$where .= " AND logical_number='" . $fields["logical_number"]."'";
+			$where .= " AND logical_number='" . (isset($fields["logical_number"])?$fields["logical_number"]:'')."'";
 		break;
 		case MODEL_NETPORT_LOGICAL_NUMER_MAC:
-			$where .= " AND logical_number='" . $fields["logical_number"]."'";
-			$where .= " AND name='" . $fields["name"]."'";
-			$where .= " AND ifmac='" . $fields["ifmac"]."'";
+			$where .= " AND logical_number='" . (isset($fields["logical_number"])?$fields["logical_number"]:'')."'";
+			$where .= " AND name='" . (isset($fields["name"])?$fields["name"]:'')."'";
+			$where .= " AND ifmac='" . (isset($fields["ifmac"])?$fields["ifmac"]:'')."'";
 		break;
 		case MODEL_NETPORT_LOGICAL_NUMER_NAME:
-			$where .= " AND logical_number='" . $fields["logical_number"]."'";
-			$where .= " AND name='" . $fields["name"]."'";
+			$where .= " AND logical_number='" . (isset($fields["logical_number"])?$fields["logical_number"]:'')."'";
+			$where .= " AND name='" . (isset($fields["name"])?$fields["name"]:'')."'";
 		break;
 		case MODEL_NETPORT_LOGICAL_NUMER_NAME_MAC:
-			$where .= " AND logical_number='" . $fields["logical_number"]."'";
-			$where .= " AND ifmac='" . $fields["ifmac"]."'";
+			$where .= " AND logical_number='" . (isset($fields["logical_number"])?$fields["logical_number"]:'')."'";
+			$where .= " AND name='" . (isset($fields["name"])?$fields["name"]:'')."'";
+			$where .= " AND ifmac='" . (isset($fields["ifmac"])?$fields["ifmac"]:'')."'";
 		break;
 		case MODEL_NETPORT_MACADDRESS:
-			$where .= " AND ifmac='" . $fields["ifmac"]."'";
+			$where .= " AND ifmac='" . (isset($fields["ifmac"])?$fields["ifmac"]:'')."'";
 		break;
 		case MODEL_NETPORT_NAME:
-			$where .= " AND name='" . $fields["name"]."'";
+			$where .= " AND name='" . (isset($fields["name"])?$fields["name"]:'')."'";
 		break;
 	}
 	return $where;
