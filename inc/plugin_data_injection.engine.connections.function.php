@@ -325,7 +325,7 @@ function connectPeripheral($fields) {
 /**
  * Connect the object to inject to another one
  */
-function connectToObjectByType($fields) {
+function connectToObjectByType($result,$fields) {
 	global $DB;
 	$document = new Document;
 
@@ -349,8 +349,12 @@ function connectToObjectByType($fields) {
 				//If document is not already linked to the object
 				if (!isDocumentAssociatedWithObject($fields["device_id"], $type, $ID))
 					addDeviceDocument($fields["device_id"], $type, $ID);
+				else
+					$result->addInjectionMessage(WARNING_ALREADY_LINKED);	
 			}
 		}
+			else
+				$result->addInjectionMessage(WARNING_SEVERAL_VALUES_FOUND);
 	}
 }
 

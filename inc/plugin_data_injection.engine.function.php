@@ -781,7 +781,7 @@ function processBeforeEnd($result, $model, $type, $fields, & $common_fields) {
 			addEntityPostProcess($common_fields);
 			break;
 		case CONNECTION_ALL_TYPES:
-			connectToObjectByType($fields);
+			connectToObjectByType($result,$fields);
 			break;
 		default :
 			break;

@@ -260,7 +260,12 @@ class DataInjectionResults {
 			case WARNING_ALLEMPTY:
 				$message = $DATAINJECTIONLANG["result"][17];
 			break;
-			
+			case WARNING_SEVERAL_VALUES_FOUND:
+				$message = $DATAINJECTIONLANG["result"][19];
+			break;
+			case WARNING_ALREADY_LINKED:
+				$message = $DATAINJECTIONLANG["result"][20];
+			break;
 		}
 		return $message;
 	}

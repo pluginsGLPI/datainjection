@@ -201,6 +201,8 @@ $DATAINJECTIONLANG["result"][15] = "Donnée introuvable";
 $DATAINJECTIONLANG["result"][16] = "Donnée déjà utilisée";
 $DATAINJECTIONLANG["result"][17] = "Pas de données à insérer";
 $DATAINJECTIONLANG["result"][18] = "Rapport d'injection du fichier";
+$DATAINJECTIONLANG["result"][19] = "Plus d'une valeur trouvée";
+$DATAINJECTIONLANG["result"][20] = "L'objet est déjà lié";
 
 $DATAINJECTIONLANG["profiles"][1] = "Gestion des modèles";
 $DATAINJECTIONLANG["profiles"][4] = "Listes des profils déjà configurés";
