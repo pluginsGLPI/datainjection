@@ -770,12 +770,12 @@ function processBeforeEnd($result, $model, $type, $fields, & $common_fields) {
 			addContract($common_fields,$type);
 			break;
 		case NETPORT_TYPE :
-			addVlan($common_fields, $model->getCanAddDropdown());
+			addVlan($result,$common_fields, $model->getCanAddDropdown());
 			addNetPoint($result, $common_fields, $model->getCanAddDropdown());
 			addNetworkingWire($result, $common_fields, $model->getCanOverwriteIfNotEmpty());
 			break;
 		case COMPUTER_CONNECTION_TYPE :
-			connectPeripheral($fields);
+			connectPeripheral($result,$fields);
 			break;
 		case ENTITY_TYPE :
 			addEntityPostProcess($common_fields);

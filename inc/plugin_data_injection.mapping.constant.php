@@ -1957,8 +1957,8 @@ $DATA_INJECTION_MAPPING[SOFTWARE_CONNECTION_TYPE]['manufacturer']['table_type'] 
 $DATA_INJECTION_MAPPING[CONNECTION_ALL_TYPES]['device_type']['table'] = '';
 $DATA_INJECTION_MAPPING[CONNECTION_ALL_TYPES]['device_type']['field'] = 'device_type';
 $DATA_INJECTION_MAPPING[CONNECTION_ALL_TYPES]['device_type']['name'] = $LANG["common"][17];
-$DATA_INJECTION_MAPPING[CONNECTION_ALL_TYPES]['device_type']['type'] = 'text';
-$DATA_INJECTION_MAPPING[CONNECTION_ALL_TYPES]['device_type']['table_type'] = 'virtual';
+$DATA_INJECTION_MAPPING[CONNECTION_ALL_TYPES]['device_type']['type'] = 'integer';
+$DATA_INJECTION_MAPPING[CONNECTION_ALL_TYPES]['device_type']['table_type'] = 'glpi_type';
 
 $DATA_INJECTION_MAPPING[CONNECTION_ALL_TYPES]['name']['table'] = '';
 $DATA_INJECTION_MAPPING[CONNECTION_ALL_TYPES]['name']['field'] = 'name';

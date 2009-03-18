@@ -88,6 +88,14 @@ function checkType($type, $name, $data,$mandatory)
 				else
 					return ERROR_IMPORT_WRONG_TYPE;
 			break;
+			case 'glpi_type':
+				$commonitem = new Commonitem;
+				$commonitem->setType($data);
+				if($commonitem->obj != null)
+					return TYPE_CHECK_OK;
+				else
+					return ERROR_IMPORT_WRONG_TYPE;
+			break;
 			default :
 				return ERROR_IMPORT_WRONG_TYPE;
 		}

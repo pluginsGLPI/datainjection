@@ -210,6 +210,8 @@ class DataInjectionResults {
 			case WARNING_NOTEMPTY:
 			case WARNING_NOTFOUND:
 			case WARNING_USED:
+			case WARNING_ALREADY_LINKED:
+			case WARNING_SEVERAL_VALUES_FOUND:
 				$this->injection_status = PARTIALY_IMPORTED;
 				break;
 		}

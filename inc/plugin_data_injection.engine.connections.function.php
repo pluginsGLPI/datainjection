@@ -60,7 +60,7 @@ function addNetworkPorts($common_fields) {
 /**
  * Assign a VLAN to a port
  */
-function addVlan($common_fields, $canadd) {
+function addVlan($result, $common_fields, $canadd) {
 
 	if (isset ($common_fields["network_port_id"]) && isset ($common_fields["vlan"])) {
 		//Get the VLAN ID by his name
@@ -71,6 +71,7 @@ function addVlan($common_fields, $canadd) {
 		//Check if vlan is not already assign to the port
 		if ($vlan_id > 0 && !checkVlanAlreadyAssignToPort($common_fields["network_port_id"], $vlan_id))
 			assignVlan($common_fields["network_port_id"], $vlan_id);
+		elseif ($vlan_id > 0) $result->addInjectionMessage(WARNING_ALREADY_LINKED);
 	}
 }
 
@@ -267,7 +268,7 @@ function updateWithTemplate(& $fields, $type) {
  * Connect peripherals or devices to a computer
  * @fields the common_fields
  */
-function connectPeripheral($fields) {
+function connectPeripheral($result, $fields) {
 	global $DB;
 
 	$connect = true;
@@ -292,9 +293,10 @@ function connectPeripheral($fields) {
 			$result = $DB->query($sql);
 
 			//If only one computer was found in the entity, perform connection
-			if ($DB->numrows($result) != 1)
+			if ($DB->numrows($result) != 1) {
+				$result->addInjectionMessage(WARNING_SEVERAL_VALUES_FOUND);
 				$connect = false;
-			else
+			} else
 				$fields["computer_id"] = $DB->result($result, 0, "ID");
 		}
 	}
@@ -325,7 +327,7 @@ function connectPeripheral($fields) {
 /**
  * Connect the object to inject to another one
  */
-function connectToObjectByType($result,$fields) {
+function connectToObjectByType($result, $fields) {
 	global $DB;
 	$document = new Document;
 
@@ -337,26 +339,22 @@ function connectToObjectByType($result,$fields) {
 	else {
 		$commonitem = new CommonItem;
 		$commonitem->setType($type, true);
-		if ($commonitem->obj != null)
-		{
+		if ($commonitem->obj != null) {
 			$query = "SELECT ID FROM " . $commonitem->obj->table . " WHERE name='$name'";
-			$result = $DB->query($query);
-	
-			if ($DB->numrows($result) != 1)
+			$result_sql = $DB->query($query);
+
+			if ($DB->numrows($result_sql) != 1)
 				return false;
 			else {
-				$ID = $DB->result($result, 0, "ID");
+				$ID = $DB->result($result_sql, 0, "ID");
 				//If document is not already linked to the object
 				if (!isDocumentAssociatedWithObject($fields["device_id"], $type, $ID))
 					addDeviceDocument($fields["device_id"], $type, $ID);
 				else
-					$result->addInjectionMessage(WARNING_ALREADY_LINKED);	
+					$result->addInjectionMessage(WARNING_ALREADY_LINKED);
 			}
-		}
-			else
-				$result->addInjectionMessage(WARNING_SEVERAL_VALUES_FOUND);
+		} else
+			$result->addInjectionMessage(WARNING_SEVERAL_VALUES_FOUND);
 	}
 }
-
-
 ?>
