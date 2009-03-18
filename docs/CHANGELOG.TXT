@@ -28,9 +28,15 @@
 */
 
 // ----------------------------------------------------------------------
-// Original Author of file: Walid NOUH et BALPE Dévi
+// Original Author of file: Walid NOUH & BALPE Dévi
 // Purpose of file:
 // ----------------------------------------------------------------------
+Version 1.5.0
+- #181 Error when selecting a model using Internet Explorer
+- #186 Network port update not working when using port name
+- #188 update or connect to a network port using the port's mac address
+- #190 Add more warning messages during the import process
+
 Version 1.4.0:
 - #143 Models by entity
 - #159 User import always in root entity
@@ -65,15 +71,6 @@ Version 1.1:
 	- Autre matériel : choix du nom du port à créer
 
 Version 1.0:
-
-Injection de fichiers CSV contenant des : 
- - ordinateurs
- - moniteurs
- - imprimantes
- - téléphones
- - matériels réseaux
- - contrats
- 
  Injection of files for :
   - computers
   - monitors

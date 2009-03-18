@@ -196,6 +196,8 @@ $DATAINJECTIONLANG["result"][15] = "Data not found";
 $DATAINJECTIONLANG["result"][16] = "Data already used";
 $DATAINJECTIONLANG["result"][17] = "No data to insert";
 $DATAINJECTIONLANG["result"][18] = "Injection summary for file";
+$DATAINJECTIONLANG["result"][19] = "More than one value found";
+$DATAINJECTIONLANG["result"][20] = "Object is already linked";
 
 $DATAINJECTIONLANG["profiles"][1] = "Create a model";
 $DATAINJECTIONLANG["profiles"][3] = "Use a model";
@@ -206,6 +208,8 @@ $DATAINJECTIONLANG["mappings"][2] = "Network port";
 $DATAINJECTIONLANG["mappings"][3] = "Connected to : device name";
 $DATAINJECTIONLANG["mappings"][4] = "Connected to : port number";
 $DATAINJECTIONLANG["mappings"][5] = "Computer";
+$DATAINJECTIONLANG["mappings"][6] = "Connected to : port MAC address";
+$DATAINJECTIONLANG["mappings"][7] = "Port unicity criteria";
 
 $DATAINJECTIONLANG["history"][1] = "from CSV file";
 $DATAINJECTIONLANG["logevent"][1] = "injection of a CSV file.";

@@ -196,6 +196,8 @@ $DATAINJECTIONLANG["result"][15] = "Data not found";
 $DATAINJECTIONLANG["result"][16] = "Data already used";
 $DATAINJECTIONLANG["result"][17] = "No data to insert";
 $DATAINJECTIONLANG["result"][18] = "Итоги импорта файла";
+$DATAINJECTIONLANG["result"][19] = "More than one value found";
+$DATAINJECTIONLANG["result"][20] = "Object is already linked";
 
 $DATAINJECTIONLANG["profiles"][1] = "Создать модель";
 $DATAINJECTIONLANG["profiles"][3] = "Использовать модель";
@@ -206,6 +208,8 @@ $DATAINJECTIONLANG["mappings"][2] = "Сетевой порт";
 $DATAINJECTIONLANG["mappings"][3] = "Подключено : имя устройства";
 $DATAINJECTIONLANG["mappings"][4] = "Подключено : номер порта";
 $DATAINJECTIONLANG["mappings"][5] = "Компьютер";
+$DATAINJECTIONLANG["mappings"][6] = "Connected to : port MAC address";
+$DATAINJECTIONLANG["mappings"][7] = "Port unicity criteria";
 
 $DATAINJECTIONLANG["history"][1] = "from CSV file";
 $DATAINJECTIONLANG["logevent"][1] = "injection of a CSV file.";
