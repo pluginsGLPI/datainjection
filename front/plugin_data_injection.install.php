@@ -57,12 +57,12 @@ if (substr(phpversion(),0,1) < "5") {
 		plugin_data_injection_Install();
 		plugin_data_injection_createfirstaccess($_SESSION['glpiactiveprofile']['ID']);
 
-	} else if (!FieldExists("glpi_plugin_data_injection_models","recursive")) {
-		// Update
-		plugin_data_injection_update131_14();	
-	}elseif (!FieldExists("glpi_plugin_data_injection_models","port_unicity"))
+	}else
 	{
-		plugin_data_injection_update14_15();
+		if (!FieldExists("glpi_plugin_data_injection_models","recursive"))
+			plugin_data_injection_update131_14();	
+		if (!FieldExists("glpi_plugin_data_injection_models","port_unicity"))
+				plugin_data_injection_update14_15();
 	}
 	
 	plugin_data_injection_initSession();

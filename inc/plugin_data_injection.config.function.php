@@ -59,6 +59,7 @@ function plugin_data_injection_Install() {
 							  `FK_users` int(11) NOT NULL,
 							  `date_format` varchar(11) NOT NULL default 'yyyy-mm-dd',
 							  `float_format` INT( 1 ) NOT NULL DEFAULT '0',
+							  `port_unicity` INT( 1 ) NOT NULL DEFAULT '0',
 							  PRIMARY KEY  (`ID`) 
 							) ENGINE=MyISAM CHARSET=utf8 COLLATE=utf8_unicode_ci;";
 
@@ -186,7 +187,7 @@ function plugin_data_injection_update131_14() {
 function plugin_data_injection_update14_15()
 {
 	global $DB;
-	$query = "ALTER TABLE `glpi_plugin_data_injection_models` ADD `port_unicity` INT( 1 ) NOT NULL DEFAULT '1';";
+	$query = "ALTER TABLE `glpi_plugin_data_injection_models` ADD `port_unicity` INT( 1 ) NOT NULL DEFAULT '0';";
 	$DB->query($query);
 }
 function plugin_data_injection_initSession() {
