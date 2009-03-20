@@ -89,7 +89,9 @@ class DataInjectionEngine
 		if (!checkLine($this->getModel(),$line,$result)) {
 			return $result;
 		}
-
+		if ($result->getCheckStatus() != CHECK_OK)
+			$result->addInjectionMessage(PARTIALY_IMPORTED);
+			
 		//Array to store the fields to write to db
 		$db_fields = array();
 		$db_fields[COMMON_FIELDS] = array();
