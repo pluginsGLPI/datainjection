@@ -38,6 +38,7 @@ $DATAINJECTIONLANG["config"][1]=$title." настройка плагина";
 
 $DATAINJECTIONLANG["setup"][1] = $title." настройка плагина";
 $DATAINJECTIONLANG["setup"][3] = "Установка плагина $title";
+$DATAINJECTIONLANG["setup"][4] = "Update plugin $title";
 $DATAINJECTIONLANG["setup"][5] = "Удалить плагин $title";
 $DATAINJECTIONLANG["setup"][9] = "Настройка прав";
 $DATAINJECTIONLANG["setup"][10] = "PHP 5 или выше необходим для этого плагина";

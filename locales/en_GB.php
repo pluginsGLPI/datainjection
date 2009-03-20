@@ -38,6 +38,7 @@ $DATAINJECTIONLANG["config"][1]=$title." plugin configuration";
 
 $DATAINJECTIONLANG["setup"][1] = $title." plugin configuration";
 $DATAINJECTIONLANG["setup"][3] = "Install the plugin $title";
+$DATAINJECTIONLANG["setup"][4] = "Update plugin $title";
 $DATAINJECTIONLANG["setup"][5] = "Uninstall plugin $title";
 $DATAINJECTIONLANG["setup"][9] = "Rights management";
 $DATAINJECTIONLANG["setup"][10] = "PHP 5 or higher is required to use this plugin";
