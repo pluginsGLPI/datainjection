@@ -186,13 +186,13 @@ function plugin_data_injection_update131_14() {
 function plugin_data_injection_update14_15()
 {
 	global $DB;
-	$query = "ALTER TABLE `glpi_plugin_data_injection_models` CHANGE `port_existance` `port_unicity` INT( 1 ) NOT NULL DEFAULT '0' ";
+	$query = "ALTER TABLE `glpi_plugin_data_injection_models` ADD `port_unicity` INT( 1 ) NOT NULL DEFAULT '1';";
 	$DB->query($query);
 }
 function plugin_data_injection_initSession() {
 	global $DB;
 
-	if (FieldExists("glpi_plugin_data_injection_models","recursive") && is_dir(PLUGIN_DATA_INJECTION_UPLOAD_DIR) && is_writable(PLUGIN_DATA_INJECTION_UPLOAD_DIR)) {
+	if (!plugin_data_injection_needUpdateOrInstall() && is_dir(PLUGIN_DATA_INJECTION_UPLOAD_DIR) && is_writable(PLUGIN_DATA_INJECTION_UPLOAD_DIR)) {
 		$profile = new DataInjectionProfile();
 
 		$query = "SELECT DISTINCT glpi_profiles.* FROM glpi_users_profiles INNER JOIN glpi_profiles ON (glpi_users_profiles.FK_profiles = glpi_profiles.ID) WHERE glpi_users_profiles.FK_users='" . $_SESSION["glpiID"] . "'";
@@ -320,5 +320,17 @@ function plugin_data_injection_loadHook($hook_name, $params = array ()) {
 				}
 			}
 		}
+}
+
+function plugin_data_injection_needUpdateOrInstall()
+{
+	if (!TableExists("glpi_plugin_data_injection_models"))
+		return 1;
+	if (!FieldExists("glpi_plugin_data_injection_models","recursive"))
+		return 2;	
+	if (!FieldExists("glpi_plugin_data_injection_models","port_unicity"))
+		return 2;
+	else
+		return 0;	
 }
 ?>

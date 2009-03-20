@@ -44,24 +44,30 @@ commonHeader($LANG["common"][12],$_SERVER['PHP_SELF'],"config","plugins");
 echo "<div align='center'>";
 echo "<table class='tab_cadre' cellpadding='5'>";
 echo "<tr><th>".$DATAINJECTIONLANG["setup"][1]."</th></tr>";
-echo "<tr class='tab_bg_1'><td align='center'><a href='http://glpi-project.org/wiki/doku.php?id=".substr($_SESSION["glpilanguage"],0,2).":plugins:data_injection_use' target='_blank'>".$DATAINJECTIONLANG["setup"][11]."</a></td></tr>";
 
-if(isset($_SESSION["glpi_plugin_data_injection_installed"]) && $_SESSION["glpi_plugin_data_injection_installed"]>0) {
+if (plugin_data_injection_needUpdateOrInstall() != 0)
+{
+	// If not installed => install or upgrade
+	echo "<tr class='tab_bg_1'><td align='center'>";
+
+	if (plugin_data_injection_needUpdateOrInstall() == 1)
+		echo "<a href='plugin_data_injection.install.php'>".$DATAINJECTIONLANG["setup"][3]."</a></td></tr>";
+	else
+		echo "<a href='plugin_data_injection.install.php'>".$DATAINJECTIONLANG["setup"][4]."</a></td></tr>";			
+	
+}elseif(isset($_SESSION["glpi_plugin_data_injection_installed"]) && $_SESSION["glpi_plugin_data_injection_installed"]>0) {
+	echo "<tr class='tab_bg_1'><td align='center'><a href='http://glpi-project.org/wiki/doku.php?id=".substr($_SESSION["glpilanguage"],0,2).":plugins:data_injection_use' target='_blank'>".$DATAINJECTIONLANG["setup"][11]."</a></td></tr>";
+
 	// If installed => configure
 	if (haveRight("profile","w")){
 		echo "<tr class='tab_bg_1'><td align='center'><a href=\"../front/plugin_data_injection.profile.php\">".$DATAINJECTIONLANG["setup"][9]."</a></td/></tr>";
 	}
-} else {
-	// If not installed => install or upgrade
-	echo "<tr class='tab_bg_1'><td align='center'>";
-	echo "<a href='plugin_data_injection.install.php'>".$DATAINJECTIONLANG["setup"][3]."</a></td></tr>";		
-}
-if (TableExists("glpi_plugin_data_injection_models") && haveRight("config","w")){
-	// If installed (or need upgrade) => uninstall
-
-	echo "<tr class='tab_bg_1'><td align='center'><a href=\"../front/plugin_data_injection.uninstall.php\">".$DATAINJECTIONLANG["setup"][5]."</a></td/></tr>";
-}
+	if (TableExists("glpi_plugin_data_injection_models") && haveRight("config","w")){
+		// If installed (or need upgrade) => uninstall
 	
+		echo "<tr class='tab_bg_1'><td align='center'><a href=\"../front/plugin_data_injection.uninstall.php\">".$DATAINJECTIONLANG["setup"][5]."</a></td/></tr>";
+	}
+}
 
 echo "</table></div>";
 

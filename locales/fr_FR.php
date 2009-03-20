@@ -38,10 +38,12 @@ $DATAINJECTIONLANG["config"][1]="Configuration du plugin ".$title;
 
 $DATAINJECTIONLANG["setup"][1] = "Configuration du plugin ".$title."";
 $DATAINJECTIONLANG["setup"][3] = "Installer le plugin $title";
+$DATAINJECTIONLANG["setup"][4] = "Mettre à jour le plugin $title";
 $DATAINJECTIONLANG["setup"][5] = "Désinstaller le plugin $title";
 $DATAINJECTIONLANG["setup"][9] = "Gestion des droits";
 $DATAINJECTIONLANG["setup"][10] = "Ce plugin est compatible avec PHP 5 ou supérieur";
 $DATAINJECTIONLANG["setup"][11] = "Mode d'emploi";
+
 
 $DATAINJECTIONLANG["presentation"][1] = "Bienvenue dans l'assistant d'importation de fichiers";
 $DATAINJECTIONLANG["presentation"][2] = "Cet assistant permet d'importer des fichiers au format CSV.";
