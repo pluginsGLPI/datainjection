@@ -156,7 +156,7 @@ function addNetworkingWire($result, $common_fields, $canupdate) {
 		if ($use_mac)
 			$message[] = $common_fields["netmac"];
 		if ($use_logical_number)
-			$message[] = $common_fields["neport"];
+			$message[] = $common_fields["netport"];
 
 		//No port found	
 		if (!$res || $DB->numrows($res) < 1)
@@ -290,14 +290,14 @@ function connectPeripheral($result, $fields) {
 					addslashes($fields[$tmpfield]) . "'";
 			}
 
-			$result = $DB->query($sql);
+			$result_sql = $DB->query($sql);
 
 			//If only one computer was found in the entity, perform connection
-			if ($DB->numrows($result) != 1) {
+			if ($DB->numrows($result_sql) != 1) {
 				$result->addInjectionMessage(WARNING_SEVERAL_VALUES_FOUND);
 				$connect = false;
 			} else
-				$fields["computer_id"] = $DB->result($result, 0, "ID");
+				$fields["computer_id"] = $DB->result($result_sql, 0, "ID");
 		}
 	}
 	if ($connect)

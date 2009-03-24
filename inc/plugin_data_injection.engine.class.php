@@ -86,7 +86,10 @@ class DataInjectionEngine
 		$result = new DataInjectionResults;
 		$line = reformatDatasBeforeCheck($this->getModel(),$line,$this->getEntity(),$result);
 		
+		//If values check is not successful
 		if (!checkLine($this->getModel(),$line,$result)) {
+			//Add a message to indicate that import was impossible
+			$result->addInjectionMessage(IMPORT_IMPOSSIBLE);
 			return $result;
 		}
 		if ($result->getCheckStatus() != CHECK_OK)
@@ -271,6 +274,7 @@ class DataInjectionEngine
 				} // Type check
 			} // Each type
 		}
+
 		return $result;			
 	}
 

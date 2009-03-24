@@ -268,6 +268,9 @@ class DataInjectionResults {
 			case WARNING_ALREADY_LINKED:
 				$message = $DATAINJECTIONLANG["result"][20];
 			break;
+			case IMPORT_IMPOSSIBLE:
+				$message = $DATAINJECTIONLANG["result"][21];
+			break;
 		}
 		return $message;
 	}

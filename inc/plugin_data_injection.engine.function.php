@@ -616,7 +616,7 @@ function addNecessaryFields($model, $mapping, $mapping_definition, $entity, $typ
 			);
 
 			//Set the device_id
-			addField($fields, "ifmac", $common_fields["ifmac"]);
+			//addField($fields, "ifmac", $common_fields["ifmac"]);
 
 			//Set the device_id
 			addField($fields, "on_device", $common_fields["device_id"]);

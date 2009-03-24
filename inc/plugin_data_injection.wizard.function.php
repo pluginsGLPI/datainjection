@@ -1090,6 +1090,16 @@ function fillInfoStep($target, $error) {
 							break;
 					}
 					break;
+				case "yesno":
+					echo "<tr><td colspan='3'><input type='hidden' name='field[$key][0]' value='" . $value->getID() . "' /></td></tr>";
+					echo "<tr><td style='width: 200px'>" . $DATA_INJECTION_INFOS[$value->getInfosType()][$value->getValue()]["name"] . " : </td><td style='width: 130px'>";
+					dropdownYesNo("field[$key][1]");
+					if ($value->isMandatory())
+						echo "</td><td class='fillInfoStep_mandatory'>*</td></tr>";
+					else
+						echo "</td><td style='width:10px'></td></tr>";
+					break;
+				
 				case "dropdown" :
 					echo "<tr><td colspan='3'><input type='hidden' name='field[$key][0]' value='" . $value->getID() . "' /></td></tr>";
 					echo "<tr><td style='width: 200px'>" . $DATA_INJECTION_INFOS[$value->getInfosType()][$value->getValue()]["name"] . " : </td><td style='width: 130px'>";
@@ -1117,7 +1127,7 @@ function fillInfoStep($target, $error) {
 							dropdownSimpleManagement("field[$key][1]");
 							break;
 						default :
-							dropdownValue($DATA_INJECTION_INFOS[$value->getInfosType()][$value->getValue()]["table"], "field[$key][1]", $value->getInfosText(), 0, $_SESSION["glpiactive_entity"]);
+							dropdownValue($DATA_INJECTION_INFOS[$value->getInfosType()][$value->getValue()]["table"], "field[$key][1]", $value->getInfosText(), 1, $_SESSION["glpiactive_entity"]);
 							break;
 					}
 					if ($value->isMandatory())

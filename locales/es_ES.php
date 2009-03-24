@@ -199,7 +199,7 @@ $DATAINJECTIONLANG["result"][17] = "No data to insert";
 $DATAINJECTIONLANG["result"][18] = "Injection summary for file";
 $DATAINJECTIONLANG["result"][19] = "More than one value found";
 $DATAINJECTIONLANG["result"][20] = "Object is already linked";
-
+$DATAINJECTIONLANG["result"][21] = "Import is impossible";
 
 $DATAINJECTIONLANG["profiles"][1] = "Crear modelo";
 $DATAINJECTIONLANG["profiles"][3] = "Usar modelo";
