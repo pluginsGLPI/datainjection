@@ -91,6 +91,10 @@ $DATAINJECTIONLANG["modelStep"][21] = "Formato de fechas";
 $DATAINJECTIONLANG["modelStep"][22] = "dd-mm-aaaa";
 $DATAINJECTIONLANG["modelStep"][23] = "mm-dd-aaaa";
 $DATAINJECTIONLANG["modelStep"][24] = "aaaa-mm-dd";
+$DATAINJECTIONLANG["modelStep"][25] = "1 234.56";
+$DATAINJECTIONLANG["modelStep"][26] = "1 234,56";
+$DATAINJECTIONLANG["modelStep"][27] = "1,234.56";
+$DATAINJECTIONLANG["modelStep"][28] = "Float format";
 
 $DATAINJECTIONLANG["deleteStep"][1] = "Confirmar borrado";
 $DATAINJECTIONLANG["deleteStep"][2] = "Atención, si borra el modelo también se borrarán los mapeos y las informaciones.";

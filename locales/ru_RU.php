@@ -91,6 +91,10 @@ $DATAINJECTIONLANG["modelStep"][21] = "Формат дат";
 $DATAINJECTIONLANG["modelStep"][22] = "dd-mm-yyyy";
 $DATAINJECTIONLANG["modelStep"][23] = "mm-dd-yyyy";
 $DATAINJECTIONLANG["modelStep"][24] = "yyyy-mm-dd";
+$DATAINJECTIONLANG["modelStep"][25] = "1 234.56";
+$DATAINJECTIONLANG["modelStep"][26] = "1 234,56";
+$DATAINJECTIONLANG["modelStep"][27] = "1,234.56";
+$DATAINJECTIONLANG["modelStep"][28] = "Float format";
 
 $DATAINJECTIONLANG["deleteStep"][1] = "Удаление модели";
 $DATAINJECTIONLANG["deleteStep"][2] = "Внимание! Все настройки этой модели удаляются вместе с ней.";
