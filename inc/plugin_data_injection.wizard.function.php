@@ -1340,6 +1340,9 @@ function traitement() {
 	$_SESSION["plugin_data_injection"]["import"]["i"] = $i;
 	$_SESSION["plugin_data_injection"]["import"]["progress"] = $progress;
 	$_SESSION["plugin_data_injection"]["import"]["datas"] = $datas;
+	
+	if (isset($_SESSION["MESSAGE_AFTER_REDIRECT"]))
+		$_SESSION["MESSAGE_AFTER_REDIRECT"] = '';
 }
 
 function initImport() {
