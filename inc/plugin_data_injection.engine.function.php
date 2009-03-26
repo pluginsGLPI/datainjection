@@ -337,6 +337,10 @@ function preAddCommonFields($common_fields, $type, $fields, $entity) {
 				"ifmac"
 			);
 			break;
+		case COMPUTER_CONNECTION_TYPE:
+			$setFields = array (
+				"device_id",
+			);
 		case CONNECTION_ALL_TYPES:
 			$setFields = array (
 				"device_type",
@@ -630,6 +634,7 @@ function addNecessaryFields($model, $mapping, $mapping_definition, $entity, $typ
 			//Set the device_id
 			addField($fields, "FK_entities", $entity);
 			addField($fields, "device_id", $common_fields["device_id"]);
+			addField($fields, "device_type", $common_fields["device_type"]);
 			break;
 		case CONNECTION_ALL_TYPES :
 			//Set the device_id

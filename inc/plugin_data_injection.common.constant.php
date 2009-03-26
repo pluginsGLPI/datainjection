@@ -94,7 +94,7 @@ $CONNECT_TO_SOFTWARE_TYPES = array (
 	SOFTWARE_TYPE
 );
 
-//Types to connect to a sofware
+//Connect a type to all the others (by giving type + ID)
 $CONNECT_TO_ALL_TYPES = array (
 	DOCUMENT_TYPE
 );

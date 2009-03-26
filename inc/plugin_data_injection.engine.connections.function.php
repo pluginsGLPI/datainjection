@@ -270,9 +270,8 @@ function updateWithTemplate(& $fields, $type) {
  */
 function connectPeripheral($result, $fields) {
 	global $DB;
-
 	$connect = true;
-
+	
 	if (isset ($fields["name"]) || isset ($fields["serial"]) || isset ($fields["otherserial"])) {
 
 		if (!isset ($fields["computer_id"])) {
@@ -289,9 +288,8 @@ function connectPeripheral($result, $fields) {
 					$sql .= " AND $tmpfield='" .
 					addslashes($fields[$tmpfield]) . "'";
 			}
-
+			
 			$result_sql = $DB->query($sql);
-
 			//If only one computer was found in the entity, perform connection
 			if ($DB->numrows($result_sql) != 1) {
 				$result->addInjectionMessage(WARNING_SEVERAL_VALUES_FOUND);
@@ -300,6 +298,7 @@ function connectPeripheral($result, $fields) {
 				$fields["computer_id"] = $DB->result($result_sql, 0, "ID");
 		}
 	}
+
 	if ($connect)
 		switch ($fields["device_type"]) {
 			//Connect a device
