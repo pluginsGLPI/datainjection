@@ -71,6 +71,12 @@ function plugin_data_injection_update131_14() {
 	$DB->query($sql);
 }
 
+function plugin_data_injection_update14_15()
+{
+	global $DB;
+	$query = "ALTER TABLE `glpi_plugin_data_injection_models` ADD `port_unicity` INT( 1 ) NOT NULL DEFAULT '0';";
+	$DB->query($query);
+}
 
 function plugin_data_injection_createfirstaccess($ID) {
 	global $DB;
@@ -97,28 +103,6 @@ function plugin_data_injection_createaccess($ID) {
 	$query = "INSERT INTO `glpi_plugin_data_injection_profiles` ( `ID`, `name` , `is_default`, `model`) VALUES ('$ID', '$name','0',NULL);";
 
 	$DB->query($query);
-}
-
-function plugin_data_injection_loadHook($hook_name, $params = array ()) {
-	global $PLUGIN_HOOKS;
-
-	if (!empty ($params)) {
-		$type = $params["type"];
-		//If a plugin type is defined
-		$function = 'plugin_' . $PLUGIN_HOOKS['plugin_types'][$type] . '_data_injection_' . $hook_name;
-		if (function_exists($function)) {
-			$function ($type, $params);
-		}
-	} else
-		if (isset ($PLUGIN_HOOKS['plugin_types'])) {
-			//Browse all plugins
-			foreach ($PLUGIN_HOOKS['plugin_types'] as $type => $name) {
-				$function = 'plugin_' . $name . '_data_injection_' . $hook_name;
-				if (function_exists($function)) {
-					$function ($type, $params);
-				}
-			}
-		}
 }
 
 function plugin_data_injection_haveRight($module, $right) {
@@ -170,4 +154,37 @@ function plugin_data_injection_checkRight($module, $right) {
 	}
 }
 
+function plugin_data_injection_loadHook($hook_name, $params = array ()) {
+	global $PLUGIN_HOOKS;
+
+	if (!empty ($params)) {
+		$type = $params["type"];
+		//If a plugin type is defined
+		$function = 'plugin_' . $PLUGIN_HOOKS['plugin_types'][$type] . '_data_injection_' . $hook_name;
+		if (function_exists($function)) {
+			$function ($type, $params);
+		}
+	} else
+		if (isset ($PLUGIN_HOOKS['plugin_types'])) {
+			//Browse all plugins
+			foreach ($PLUGIN_HOOKS['plugin_types'] as $type => $name) {
+				$function = 'plugin_' . $name . '_data_injection_' . $hook_name;
+				if (function_exists($function)) {
+					$function ($type, $params);
+				}
+			}
+		}
+}
+
+function plugin_data_injection_needUpdateOrInstall()
+{
+	if (!TableExists("glpi_plugin_data_injection_models"))
+		return 1;
+	if (!FieldExists("glpi_plugin_data_injection_models","recursive"))
+		return 2;	
+	if (!FieldExists("glpi_plugin_data_injection_models","port_unicity"))
+		return 2;
+	else
+		return 0;	
+}
 ?>

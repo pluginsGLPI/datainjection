@@ -57,21 +57,53 @@ function addNetworkPorts($common_fields) {
 	}
 }
 
-function addVlan($common_fields, $canadd) {
+/**
+ * Assign a VLAN to a port
+ */
+function addVlan($result, $common_fields, $canadd) {
 
 	if (isset ($common_fields["network_port_id"]) && isset ($common_fields["vlan"])) {
+		//Get the VLAN ID by his name
 		$vlan_id = getDropdownValue(array (), array (
 			"table" => "glpi_dropdown_vlan"
 		), $common_fields["vlan"], $common_fields["FK_entities"], $canadd);
-		if ($vlan_id > 0)
+
+		//Check if vlan is not already assign to the port
+		if ($vlan_id > 0 && !checkVlanAlreadyAssignToPort($common_fields["network_port_id"], $vlan_id))
 			assignVlan($common_fields["network_port_id"], $vlan_id);
-	} else
-		return 0;
+		elseif ($vlan_id > 0) $result->addInjectionMessage(WARNING_ALREADY_LINKED);
+	}
 }
 
+/**
+ * Check if a vlan is already assign to a network port
+ * @param port_id the port ID
+ * @param vlan_id the vlan ID
+ *
+ * @return true if the vlan is already assign to the port, false otherwise
+ */
+function checkVlanAlreadyAssignToPort($port_id, $vlan_id) {
+	global $DB;
+	$query = "SELECT ID FROM glpi_networking_vlan WHERE FK_port='$port_id' AND FK_vlan='$vlan_id'";
+	$result = $DB->query($query);
+	if ($DB->numrows($result) > 0)
+		return true;
+	else
+		return false;
+}
+
+/**
+ * Add a network plug
+ * @param result the array to log injection informations
+ * @param fields the fields to use to check if plug exists or not
+ * @param canadd indicates if a network plug can be created or not
+ * 
+ * @return nothing
+ */
 function addNetPoint($result, $common_fields, $canadd) {
+	//Do not look for a network plug, if not update on this field is needed
 	if (isset ($common_fields["location"]) && isset ($common_fields["netpoint"])) {
-		$id = checkNetpoint($result, $common_fields["device_type"], $common_fields["FK_entities"], $common_fields["location"], $common_fields["netpoint"], $common_fields["network_port_id"], $canadd);
+		$id = checkNetpoint($result, $common_fields, $canadd);
 
 		if ($id > 0) {
 			$port = new Netport();
@@ -83,26 +115,59 @@ function addNetPoint($result, $common_fields, $canadd) {
 	}
 }
 
+/**
+ * Connect a network port to another one
+ * @param result the array to log injection informations
+ * @param fields the fields to use to check if plug exists or not
+ * @param canadd indicates if a network plug can be created or not
+ * 
+ * @return nothing
+ */
 function addNetworkingWire($result, $common_fields, $canupdate) {
 	global $DB;
 
-	if (!isset ($common_fields["netname"]) || empty ($common_fields["netname"]) || !isset ($common_fields["netport"]) || empty ($common_fields["netport"])) {
+	$use_name = (isset ($common_fields["netname"]) || !empty ($common_fields["netname"]));
+	$use_logical_number = (isset ($common_fields["netport"]) || !empty ($common_fields["netport"]));
+	$use_mac = (isset ($common_fields["netmac"]) || !empty ($common_fields["netmac"]));
+
+	if (!$use_name && !$use_logical_number && !$use_mac)
 		return false;
-	}
 
 	// Find port in database
 	$sql = "SELECT glpi_networking_ports.ID FROM glpi_networking_ports, glpi_networking " .
 	" WHERE glpi_networking_ports.device_type=" . NETWORKING_TYPE .
 	" AND glpi_networking_ports.on_device=glpi_networking.ID" .
 	" AND glpi_networking.is_template=0 " .
-	" AND glpi_networking.FK_entities=" . $common_fields["FK_entities"] .
-	" AND glpi_networking.name='" . $common_fields["netname"] . "'" .
-	" AND glpi_networking_ports.logical_number=" . $common_fields["netport"];
+	" AND glpi_networking.FK_entities=" . $common_fields["FK_entities"];
+	if ($use_name)
+		$sql .= " AND glpi_networking.name='" . $common_fields["netname"] . "'";
+	if ($use_logical_number)
+		$sql .= " AND glpi_networking_ports.logical_number='" . $common_fields["netport"] . "'";
+	if ($use_mac)
+		$sql .= " AND glpi_networking_ports.ifmac='" . $common_fields["netmac"] . "'";
+
 	$res = $DB->query($sql);
-	if (!$res || $DB->numrows($res) < 1) {
-		$result->addInjectionMessage(WARNING_NOTFOUND, $common_fields["netname"] . " #" . $common_fields["netport"]);
+
+	//No port or several found
+	if (!$res || $DB->numrows($res) != 1) {
+		$message = array ();
+		if ($use_name)
+			$message[] = $common_fields["netname"];
+		if ($use_mac)
+			$message[] = $common_fields["netmac"];
+		if ($use_logical_number)
+			$message[] = $common_fields["netport"];
+
+		//No port found	
+		if (!$res || $DB->numrows($res) < 1)
+			$result->addInjectionMessage(WARNING_NOTFOUND, implode(' ', $message));
+		else
+			//Several found
+			if ($res && $DB->numrows($res) != 1)
+				$result->addInjectionMessage(WARNING_SEVERAL_VALUES_FOUND, implode(' ', $message));
 		return false;
 	}
+
 	$srce = $common_fields["network_port_id"];
 	$dest = $DB->result($res, 0, "ID");
 
@@ -133,6 +198,13 @@ function addNetworkingWire($result, $common_fields, $canupdate) {
 	return makeConnector($common_fields["network_port_id"], $dest, true, false);
 }
 
+/**
+ * Add a contract to an object
+ * @param common_fields the fields to use
+ * @type the type of object
+ * 
+ * @return nothing
+ */
 function addContract($common_fields, $type) {
 	if (isset ($common_fields["contract"])) {
 		switch ($type) {
@@ -196,11 +268,10 @@ function updateWithTemplate(& $fields, $type) {
  * Connect peripherals or devices to a computer
  * @fields the common_fields
  */
-function connectPeripheral($fields) {
+function connectPeripheral($result, $fields) {
 	global $DB;
-
 	$connect = true;
-
+	
 	if (isset ($fields["name"]) || isset ($fields["serial"]) || isset ($fields["otherserial"])) {
 
 		if (!isset ($fields["computer_id"])) {
@@ -217,16 +288,17 @@ function connectPeripheral($fields) {
 					$sql .= " AND $tmpfield='" .
 					addslashes($fields[$tmpfield]) . "'";
 			}
-
-			$result = $DB->query($sql);
-
+			
+			$result_sql = $DB->query($sql);
 			//If only one computer was found in the entity, perform connection
-			if ($DB->numrows($result) != 1)
+			if ($DB->numrows($result_sql) != 1) {
+				$result->addInjectionMessage(WARNING_SEVERAL_VALUES_FOUND);
 				$connect = false;
-			else
-				$fields["computer_id"] = $DB->result($result, 0, "ID");
+			} else
+				$fields["computer_id"] = $DB->result($result_sql, 0, "ID");
 		}
 	}
+
 	if ($connect)
 		switch ($fields["device_type"]) {
 			//Connect a device
@@ -249,5 +321,39 @@ function connectPeripheral($fields) {
 				Connect($fields["device_id"], $fields["computer_id"], $fields["device_type"]);
 				break;
 		}
+}
+
+/**
+ * Connect the object to inject to another one
+ */
+function connectToObjectByType($result, $fields) {
+	global $DB;
+	$document = new Document;
+
+	$type = (isset ($fields["device_type"]) ? $fields["device_type"] : 0);
+	$name = (isset ($fields["name"]) ? $fields["name"] : '');
+
+	if ($type == 0 || $name == '')
+		return false;
+	else {
+		$commonitem = new CommonItem;
+		$commonitem->setType($type, true);
+		if ($commonitem->obj != null) {
+			$query = "SELECT ID FROM " . $commonitem->obj->table . " WHERE name='$name'";
+			$result_sql = $DB->query($query);
+
+			if ($DB->numrows($result_sql) != 1)
+				return false;
+			else {
+				$ID = $DB->result($result_sql, 0, "ID");
+				//If document is not already linked to the object
+				if (!isDocumentAssociatedWithObject($fields["device_id"], $type, $ID))
+					addDeviceDocument($fields["device_id"], $type, $ID);
+				else
+					$result->addInjectionMessage(WARNING_ALREADY_LINKED);
+			}
+		} else
+			$result->addInjectionMessage(WARNING_SEVERAL_VALUES_FOUND);
+	}
 }
 ?>

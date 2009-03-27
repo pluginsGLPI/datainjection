@@ -147,7 +147,7 @@ function dataAlreadyInDB($type, $fields, $mapping_definition, $model) {
 
 			case NETPORT_TYPE :
 				$where .= " AND device_type=" . $model->getDeviceType() . " AND on_device=" . $fields["on_device"];
-				$where .= " AND logical_number=" . $fields["logical_number"];
+				$where.= getPortUnicityRequest($model,$fields);
 				break;
 
 			default :
@@ -304,7 +304,9 @@ function preAddCommonFields($common_fields, $type, $fields, $entity) {
 		case NETWORKING_TYPE :
 			$setFields = array (
 				"nb_ports",
-				"contract"
+				"contract",
+				"ifmac",
+				"name"
 			);
 			break;
 		case PRINTER_TYPE :
@@ -317,23 +319,35 @@ function preAddCommonFields($common_fields, $type, $fields, $entity) {
 				"contract"
 			);
 			break;
-/*
 		case SOFTWARE_TYPE :
 			$setFields = array (
 				"version",
 				"serial"
 			);
-
 			break;
-*/
-				case NETPORT_TYPE :
+		case NETPORT_TYPE :
 			$setFields = array (
 				"netpoint",
 				"vlan",
 				"netname",
-				"netport"
+				"netport",
+				"netmac",
+				"name",
+				"netmac",
+				"ifmac"
 			);
 			break;
+		case COMPUTER_CONNECTION_TYPE:
+			$setFields = array (
+				"device_id",
+			);
+		case CONNECTION_ALL_TYPES:
+			$setFields = array (
+				"device_type",
+				"name",
+				"ID"
+			);
+			break;				
 		default :
 			break;
 	}
@@ -386,7 +400,6 @@ function addCommonFields(& $common_fields, $type, $fields, $entity, $ID) {
 			addField($common_fields, "device_type", $type, false);
 			addField($common_fields, "FK_entities", $entity, false);
 			break;
-/*
 		case SOFTWARE_TYPE :
 			$setFields = array (
 				"location"
@@ -394,12 +407,11 @@ function addCommonFields(& $common_fields, $type, $fields, $entity, $ID) {
 			addField($common_fields, "device_id", $ID, true);
 			addField($common_fields, "FK_entities", $entity, false);
 			break;
-*/
-			case DOCUMENT_TYPE :
-			addField($common_fields, "FK_entities", $entity, false);
-			break;
-
-			case MONITOR_TYPE :
+        case DOCUMENT_TYPE : 
+            addField($common_fields, "FK_entities", $entity, false); 
+			addField($common_fields, "device_id", $ID, true);
+            break; 
+		case MONITOR_TYPE :
 			$setFields = array (
 				"location"
 			);
@@ -511,9 +523,9 @@ function addNecessaryFields($model, $mapping, $mapping_definition, $entity, $typ
 		case CONTACT_TYPE :
 			addField($fields, "FK_entities", $entity);
 			break;
-		case DOCUMENT_TYPE :
-			addField($fields, "FK_entities", $entity);
-			break;
+		case DOCUMENT_TYPE : 
+            addField($fields, "FK_entities", $entity); 
+            break; 
 		case CONSUMABLE_TYPE :
 			addField($fields, "FK_entities", $entity);
 			break;
@@ -567,11 +579,9 @@ function addNecessaryFields($model, $mapping, $mapping_definition, $entity, $typ
 		case ENTERPRISE_TYPE :
 			addField($fields, "FK_entities", $entity);
 			break;
-/*
 		case SOFTWARE_TYPE :
 			addField($fields, "FK_entities", $entity);
 			break;
-*/
 		case CONTRACT_TYPE :
 			addField($fields, "FK_entities", $entity);
 			break;
@@ -605,22 +615,33 @@ function addNecessaryFields($model, $mapping, $mapping_definition, $entity, $typ
 				"netpoint",
 				"vlan",
 				"netport",
-				"netname"
+				"netname",
+				"netmac",
 			);
+
+			//Set the device_id
+			//addField($fields, "ifmac", $common_fields["ifmac"]);
 
 			//Set the device_id
 			addField($fields, "on_device", $common_fields["device_id"]);
 
 			//Set the device type
 			addField($fields, "device_type", $model->getDeviceType());
-
 			break;
+
+		//Object connections
 		case COMPUTER_CONNECTION_TYPE :
 			//Set the device_id
 			addField($fields, "FK_entities", $entity);
 			addField($fields, "device_id", $common_fields["device_id"]);
-			addField($fields, "device_type", $model->getDeviceType());
+			addField($fields, "device_type", $common_fields["device_type"]);
 			break;
+		case CONNECTION_ALL_TYPES :
+			//Set the device_id
+			addField($fields, "FK_entities", $entity);
+			addField($fields, "device_id", $common_fields["device_id"]);
+			break;
+			
 		default :
 			//Add entity field for plugins
 			if ($type > 1000)
@@ -744,27 +765,25 @@ function processBeforeEnd($result, $model, $type, $fields, & $common_fields) {
 		case PRINTER_TYPE :
 			addContract($common_fields,$type);
 			break;
-/*
-		case LICENSE_TYPE :
-			addSoftwareLicensesInfos($common_fields);
-			break;
-*/
-				case COMPUTER_TYPE :
+		case COMPUTER_TYPE :
 			addContract($common_fields,$type);
 			break;
 		case PHONE_TYPE :
 			addContract($common_fields,$type);
 			break;
 		case NETPORT_TYPE :
-			addVlan($common_fields, $model->getCanAddDropdown());
-			addNetpoint($result, $common_fields, $model->getCanAddDropdown());
+			addVlan($result,$common_fields, $model->getCanAddDropdown());
+			addNetPoint($result, $common_fields, $model->getCanAddDropdown());
 			addNetworkingWire($result, $common_fields, $model->getCanOverwriteIfNotEmpty());
 			break;
 		case COMPUTER_CONNECTION_TYPE :
-			connectPeripheral($fields);
+			connectPeripheral($result,$fields);
 			break;
 		case ENTITY_TYPE :
 			addEntityPostProcess($common_fields);
+			break;
+		case CONNECTION_ALL_TYPES:
+			connectToObjectByType($result,$fields);
 			break;
 		default :
 			break;
@@ -845,9 +864,9 @@ function logAddOrUpdate($device_type, $device_id, $action_type) {
 		$changes[0] = 0;
 
 		if ($action_type == INJECTION_ADD)
-			$changes[2] = $LANG["data_injection"]["result"][8] . " " . $LANG["data_injection"]["history"][1];
+			$changes[2] = $LANG["datainjection"]["result"][8] . " " . $LANG["datainjection"]["history"][1];
 		else
-			$changes[2] = $LANG["data_injection"]["result"][9] . " " . $LANG["data_injection"]["history"][1];
+			$changes[2] = $LANG["datainjection"]["result"][9] . " " . $LANG["datainjection"]["history"][1];
 
 		$changes[1] = "";
 		historyLog($device_id, $device_type, $changes, 0, HISTORY_LOG_SIMPLE_MESSAGE);
@@ -870,5 +889,44 @@ function filterFields(& $fields, $fields_from_db, $can_overwrite, $type) {
 		}
 
 	}
+}
+
+/**
+ * Build where sql request to look for a network port
+ * @param model the model
+ * @param fields the fields to insert into DB
+ * 
+ * @return the sql where clause
+ */
+function getPortUnicityRequest($model,$fields)
+{
+	$where = "";
+	switch ($model->getPortUnicity())
+	{
+		case MODEL_NETPORT_LOGICAL_NUMER:
+			$where .= " AND logical_number='" . (isset($fields["logical_number"])?$fields["logical_number"]:'')."'";
+		break;
+		case MODEL_NETPORT_LOGICAL_NUMER_MAC:
+			$where .= " AND logical_number='" . (isset($fields["logical_number"])?$fields["logical_number"]:'')."'";
+			$where .= " AND name='" . (isset($fields["name"])?$fields["name"]:'')."'";
+			$where .= " AND ifmac='" . (isset($fields["ifmac"])?$fields["ifmac"]:'')."'";
+		break;
+		case MODEL_NETPORT_LOGICAL_NUMER_NAME:
+			$where .= " AND logical_number='" . (isset($fields["logical_number"])?$fields["logical_number"]:'')."'";
+			$where .= " AND name='" . (isset($fields["name"])?$fields["name"]:'')."'";
+		break;
+		case MODEL_NETPORT_LOGICAL_NUMER_NAME_MAC:
+			$where .= " AND logical_number='" . (isset($fields["logical_number"])?$fields["logical_number"]:'')."'";
+			$where .= " AND name='" . (isset($fields["name"])?$fields["name"]:'')."'";
+			$where .= " AND ifmac='" . (isset($fields["ifmac"])?$fields["ifmac"]:'')."'";
+		break;
+		case MODEL_NETPORT_MACADDRESS:
+			$where .= " AND ifmac='" . (isset($fields["ifmac"])?$fields["ifmac"]:'')."'";
+		break;
+		case MODEL_NETPORT_NAME:
+			$where .= " AND name='" . (isset($fields["name"])?$fields["name"]:'')."'";
+		break;
+	}
+	return $where;
 }
 ?>

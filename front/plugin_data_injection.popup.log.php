@@ -74,14 +74,14 @@ if(count($tab_result[1])>0)
 	echo "<a href=\"javascript:show_log('1')\"><img src='../pics/plus.png' alt='plus' id='log1' /></a>";
 	echo "</td>";
 	echo "<td style='width: 900px;font-size: 14px;font-weight: bold;padding-left: 20px'>";
-	echo $LANG["data_injection"]["logStep"][4];
+	echo $LANG["datainjection"]["logStep"][4];
 	echo "</td>";
 	echo "</tr>";
 	echo "</table>";
 	
 	echo "<table class='tab_cadre_fixe' style='text-align: center' id='log1_table'>";
 	
-	echo "<tr><th>".$LANG["joblist"][0]."</th><th>".$LANG["data_injection"]["result"][14]."</th><th>".$LANG["data_injection"]["result"][10]."</th><th>".$LANG["data_injection"]["result"][11]."</th><th>".$LANG["data_injection"]["result"][12]."</th><th>".$LANG["data_injection"]["result"][13]."</th></tr>";
+	echo "<tr><th>".$LANG["joblist"][0]."</th><th>".$LANG["datainjection"]["result"][14]."</th><th>".$LANG["datainjection"]["result"][10]."</th><th>".$LANG["datainjection"]["result"][11]."</th><th>".$LANG["datainjection"]["result"][12]."</th><th>".$LANG["datainjection"]["result"][13]."</th></tr>";
 	
 	foreach($tab_result[1] as $key => $value)
 		{
@@ -98,7 +98,7 @@ if(count($tab_result[1])>0)
 		echo "<td style='height:30px;width:300px'>";
 		echo nl2br($value->getInjectionMessage())."</td>";
 		
-		echo "<td style='height:30px;width:200px'>".($value->getInjectionType()==INJECTION_ADD?$LANG["data_injection"]["result"][8]:$LANG["data_injection"]["result"][9])."</td>";
+		echo "<td style='height:30px;width:200px'>".($value->getInjectionType()==INJECTION_ADD?$LANG["datainjection"]["result"][8]:$LANG["datainjection"]["result"][9])."</td>";
 		
 		if ($value->getInjectedId() > 0)
 			{
@@ -126,14 +126,14 @@ if(count($tab_result[0])>0)
 	echo "<a href=\"javascript:show_log('2')\"><img src='../pics/minus.png' alt='minus' id='log2' /></a>";
 	echo "</td>";
 	echo "<td style='width: 900px;font-size: 14px;font-weight: bold;padding-left: 20px'>";
-	echo $LANG["data_injection"]["logStep"][5];
+	echo $LANG["datainjection"]["logStep"][5];
 	echo "</td>";
 	echo "</tr>";
 	echo "</table>";
 
 	echo "<table class='tab_cadre_fixe' style='text-align: center' id='log2_table'>";
 	
-	echo "<tr><th>".$LANG["joblist"][0]."</th><th>".$LANG["data_injection"]["result"][14]."</th><th>".$LANG["data_injection"]["result"][10]."</th><th>".$LANG["data_injection"]["result"][11]."</th><th>".$LANG["data_injection"]["result"][12]."</th><th>".$LANG["data_injection"]["result"][13]."</th></tr>";
+	echo "<tr><th>".$LANG["joblist"][0]."</th><th>".$LANG["datainjection"]["result"][14]."</th><th>".$LANG["datainjection"]["result"][10]."</th><th>".$LANG["datainjection"]["result"][11]."</th><th>".$LANG["datainjection"]["result"][12]."</th><th>".$LANG["datainjection"]["result"][13]."</th></tr>";
 	
 	foreach($tab_result[0] as $key => $value)
 		{
@@ -165,7 +165,7 @@ if(count($tab_result[0])>0)
 		}
 		echo nl2br($value->getInjectionMessage())."</td>";
 		
-		echo "<td style='height:30px;width:200px'>".($value->getInjectionType()==INJECTION_ADD?$LANG["data_injection"]["result"][8]:$LANG["data_injection"]["result"][9])."</td>";
+		echo "<td style='height:30px;width:200px'>".($value->getInjectionType()==INJECTION_ADD?$LANG["datainjection"]["result"][8]:$LANG["datainjection"]["result"][9])."</td>";
 		
 		if ($value->getInjectedId() > 0)
 			{
@@ -185,7 +185,7 @@ if(count($tab_result[1])>0)
 	echo "<script type='text/javascript'>document.getElementById('log1_table').style.display='none'</script>";
 
 echo "<div style='margin-top:15px;text-align:center'>";
-echo "<a href='javascript:window.close()'>" . $LANG["data_injection"]["button"][8] . "</a>";
+echo "<a href='javascript:window.close()'>" . $LANG["datainjection"]["button"][8] . "</a>";
 echo "</div>";
 
 echo "</body>";

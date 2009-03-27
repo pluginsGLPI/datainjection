@@ -57,7 +57,7 @@ class DataInjectionEngine
 		$this->backend = $backend;
 	}
 	
-	/*
+	/**
 	 * Get datas imported read from the file
 	 */
 	function getDatas()
@@ -68,7 +68,7 @@ class DataInjectionEngine
 			return array();	
 	}
 	
-	/*
+	/**
 	 * Return the number of lines of the file
 	 * @return the number of line of the file
 	 */
@@ -77,20 +77,24 @@ class DataInjectionEngine
 		return $this->backend->getNumberOfLine();
 	}
 	
-	/*
+	/**
 	 * Inject one line of datas
 	 * @param line one line of data to import
 	 */
 	function injectLine($line,$infos = array())
 	{
 		$result = new DataInjectionResults;
-	
 		$line = reformatDatasBeforeCheck($this->getModel(),$line,$this->getEntity(),$result);
 		
+		//If values check is not successful
 		if (!checkLine($this->getModel(),$line,$result)) {
+			//Add a message to indicate that import was impossible
+			$result->addInjectionMessage(IMPORT_IMPOSSIBLE);
 			return $result;
 		}
-		
+		if ($result->getCheckStatus() != CHECK_OK)
+			$result->addInjectionMessage(PARTIALY_IMPORTED);
+			
 		//Array to store the fields to write to db
 		$db_fields = array();
 		$db_fields[COMMON_FIELDS] = array();
@@ -236,7 +240,7 @@ class DataInjectionEngine
 						{
 							// Add some fields to the common fields BEFORE inserting the secondary type (in order to save some fields)
 							$db_fields[COMMON_FIELDS] = preAddCommonFields($db_fields[COMMON_FIELDS],$type,$fields,$this->getEntity());
-		
+							
 							// If necessary, add default fields which are mandatory to create the object
 							addNecessaryFields($this->getModel(),$mapping,$mapping_definition,$this->getEntity(),$type,$fields,$db_fields[COMMON_FIELDS]);
 							
@@ -257,6 +261,7 @@ class DataInjectionEngine
 								filterFields($fields,$fields_from_db,$this->getModel()->getCanOverwriteIfNotEmpty(),$type);
 								//Item aleady in DB -> update
 								addCommonFields($db_fields[COMMON_FIELDS],$type,$fields,$this->entity,$ID);
+								
 								$obj->update($fields);
 							}
 						}
@@ -269,6 +274,7 @@ class DataInjectionEngine
 				} // Type check
 			} // Each type
 		}
+
 		return $result;			
 	}
 

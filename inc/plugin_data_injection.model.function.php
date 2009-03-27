@@ -34,7 +34,7 @@ function getAllModels($user_id, $order = "name", $entity = -1, $can_write = fals
 
 	$models = array ();
 	$sql = "SELECT * FROM glpi_plugin_data_injection_models WHERE" .
-	" (private=" . MODEL_PUBLIC . getEntitiesRestrictRequest(" AND", "glpi_plugin_data_injection_models", "FK_entities", $entity,true) . ") OR (private=" . MODEL_PRIVATE . " AND FK_users=$user_id)" .
+	" (private=" . MODEL_PUBLIC . getEntitiesRestrictRequest(" AND", "glpi_plugin_data_injection_models ", "FK_entities", $entity,true) . ") OR (private=" . MODEL_PRIVATE . " AND FK_users=$user_id)" .
 	" ORDER BY FK_entities, " . ($order == "name" ? "name" : $order);
 	$result = $DB->query($sql);
 

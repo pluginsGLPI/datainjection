@@ -1,6 +1,4 @@
 <?php
-
-
 /*
    ----------------------------------------------------------------------
    GLPI - Gestionnaire Libre de Parc Informatique
@@ -29,37 +27,47 @@
    ------------------------------------------------------------------------
  */
 
-// Original Author of file: Walid Nouh
+// ----------------------------------------------------------------------
+// Original Author of file: CAILLAUD Xavier
 // Purpose of file:
 // ----------------------------------------------------------------------
+
+global $LANG;
+	
 if (!defined('GLPI_ROOT')) {
 	define('GLPI_ROOT', '../../..');
 }
 
-$NEEDED_ITEMS=array("data_injection");
-include (GLPI_ROOT."/inc/includes.php");
+$NEEDED_ITEMS=array("data_injection","profile");
 
-commonHeader($LANG["datainjection"]["config"][1], $_SERVER["PHP_SELF"],"plugins","data_injection");
+include (GLPI_ROOT . "/inc/includes.php");
 
-if(!isset($_SESSION["glpi_plugin_data_injection_installed"]) || $_SESSION["glpi_plugin_data_injection_installed"]!=1) {
-	if(!TableExists("glpi_plugin_data_injection_config")) {
-			echo "<div align='center'>";
-			echo "<table class='tab_cadre' cellpadding='5'>";
-			echo "<tr><th>".$LANG["datainjection"]["setup"][1];
-			echo "</th></tr>";
-			echo "<tr class='tab_bg_1'><td>";
-			echo "<a href='plugin_data_injection.install.php'>".$LANG["datainjection"]["setup"][3]."</a></td></tr>";
-			echo "</table></div>";
+checkRight("config","w");
+
+commonHeader($DATAINJECTIONLANG["config"][1], $_SERVER["PHP_SELF"],"plugins","data_injection");
+
+if (substr(phpversion(),0,1) < "5") {
+	echo "<strong>".$DATAINJECTIONLANG["setup"][10]."</strong>";
+
+} else {
+	cleanCache("GLPI_HEADER_".$_SESSION["glpiID"]);
+	
+	if (!TableExists("glpi_plugin_data_injection_models")) {
+		// First Install
+		plugin_data_injection_Install();
+		plugin_data_injection_createfirstaccess($_SESSION['glpiactiveprofile']['ID']);
+
+	}else
+	{
+		if (!FieldExists("glpi_plugin_data_injection_models","recursive"))
+			plugin_data_injection_update131_14();	
+		if (!FieldExists("glpi_plugin_data_injection_models","port_unicity"))
+				plugin_data_injection_update14_15();
 	}
+	
+	plugin_data_injection_initSession();
+	glpi_header($_SERVER['HTTP_REFERER']);
 }
-
-echo "<form action=\"\">";
-echo "enctype=\"multipart/form-data\" method=\"post\">";
-echo "<input type=\"file\" name=\"datafile\" size=\"40\">";
-echo "<div>";
-echo "<input type=\"submit\" value=\"Send\">";
-echo "</div>";
-echo "</form>";
 
 commonFooter();
 ?>

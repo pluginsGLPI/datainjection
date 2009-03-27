@@ -117,17 +117,19 @@ function loadDeviceSpecificTypes() {
 
 	//Devices have only one type in GLPI, so I need to define a list of different types in order to fit into the plugin's framework...
 	foreach ($DEVICES_TYPES_STRING as $name => $infos)
+	{
+				registerPluginType('data_injection', $name, $infos["ID"], array(
+				'classname'  => $infos["class"],
+				'tablename'  => $infos["table"],
+				'typename'   => $infos["label"],
+				'formpage'   => '',
+				'searchpage' => '',
+				'specif_entities_tables' => false,
+				'recursive_type' => false
+				));
 		
-			registerPluginType('data_injection', $name, $infos["ID"], array(
-			'classname'  => $infos["class"],
-			'tablename'  => $infos["table"],
-			'typename'   => $infos["label"],
-			'formpage'   => '',
-			'searchpage' => '',
-			'specif_entities_tables' => false,
-			'recursive_type' => false
-			));
-		
+	}
+
 	$DEVICES_TYPES = array (
 		PLUGIN_DATA_INJECTION_MOBOARD_DEVICE_TYPE,
 		PLUGIN_DATA_INJECTION_PROCESSOR_DEVICE_TYPE,

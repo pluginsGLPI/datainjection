@@ -123,9 +123,9 @@ function dropdownTemplate($name,$entity,$table,$value='')
 function dropdownDateFormat($name,$format)
 {
 	global $LANG;
-	$date_format[DATE_TYPE_DDMMYYYY]=$LANG["data_injection"]["modelStep"][22];
-	$date_format[DATE_TYPE_MMDDYYYY]=$LANG["data_injection"]["modelStep"][23];
-	$date_format[DATE_TYPE_YYYYMMDD]=$LANG["data_injection"]["modelStep"][24];
+	$date_format[DATE_TYPE_DDMMYYYY]=$LANG["datainjection"]["modelStep"][22];
+	$date_format[DATE_TYPE_MMDDYYYY]=$LANG["datainjection"]["modelStep"][23];
+	$date_format[DATE_TYPE_YYYYMMDD]=$LANG["datainjection"]["modelStep"][24];
 
 	dropdownArrayValues($name,$date_format,$format);
 }
@@ -133,9 +133,9 @@ function dropdownDateFormat($name,$format)
 function dropdownFloatFormat($name,$format)
 {
 	global $LANG;
-	$float_format[FLOAT_TYPE_DOT]=$LANG["data_injection"]["modelStep"][25];
-	$float_format[FLOAT_TYPE_COMMA]=$LANG["data_injection"]["modelStep"][26];
-	$float_format[FLOAT_TYPE_DOT_AND_COM]=$LANG["data_injection"]["modelStep"][27];
+	$float_format[FLOAT_TYPE_DOT]=$LANG["datainjection"]["modelStep"][25];
+	$float_format[FLOAT_TYPE_COMMA]=$LANG["datainjection"]["modelStep"][26];
+	$float_format[FLOAT_TYPE_DOT_AND_COM]=$LANG["datainjection"]["modelStep"][27];
 
 	dropdownArrayValues($name,$float_format,$format);
 }
@@ -192,9 +192,9 @@ function dropdownModels($disable=false,$models,$with_select=true)
 		if ($with_select)
 		{
 			if ($disable)	
-				echo "<select style='background-color:#e6e6e6' disabled name='dropdown' id='dropdown' onchange='show_comments($nbmodel)'>";
+				echo "\n<select style='background-color:#e6e6e6' disabled name='dropdown' id='dropdown' onchange='show_comments($nbmodel)'>";
 			else			
-				echo "<select name='dropdown' id='dropdown' onchange='show_comments($nbmodel)'>";
+				echo "\n<select name='dropdown' id='dropdown' onchange='show_comments($nbmodel)'>";
 		}
 
 		$prev = -2;
@@ -203,12 +203,12 @@ function dropdownModels($disable=false,$models,$with_select=true)
 		{
 			if ($model->getEntity() != $prev) {
 				if ($prev >= -1) {
-					echo "</optgroup>";
+					echo "</optgroup>\n";
 				}
 				$prev = $model->getEntity();
-				echo "<optgroup label=\"" . getDropdownMinimalName("glpi_entities", $prev) . "\">";
+				echo "\n<optgroup label=\"" . getDropdownMinimalName("glpi_entities", $prev) . "\">";
 			}
-			echo "<option value='".$model->getModelID()."'>".$model->getModelName()." / ".getDropdownName('glpi_plugin_data_injection_filetype',$model->getModelType())."</option>";
+			echo "\n<option value='".$model->getModelID()."'>".$model->getModelName()." , ".getDropdownName('glpi_plugin_data_injection_filetype',$model->getModelType())."</option>";
 		}
 		
 		if ($prev >= -1) {
@@ -217,16 +217,28 @@ function dropdownModels($disable=false,$models,$with_select=true)
 	
 
 		if ($with_select)
-			echo "</select>";
+			echo "</select>\n";
 	
 }
 
 function dropdownFileEncoding($name)
 {
 	global $LANG;
-	$values[ENCODING_AUTO]=$LANG["data_injection"]["fileStep"][10];
-	$values[ENCODING_UFT8]=$LANG["data_injection"]["fileStep"][11];
-	$values[ENCODING_ISO8859_1]=$LANG["data_injection"]["fileStep"][12];
+	$values[ENCODING_AUTO]=$LANG["datainjection"]["fileStep"][10];
+	$values[ENCODING_UFT8]=$LANG["datainjection"]["fileStep"][11];
+	$values[ENCODING_ISO8859_1]=$LANG["datainjection"]["fileStep"][12];
 	dropdownArrayValues($name,$values,ENCODING_AUTO);
+}
+
+function dropdownPortUnicity($name,$value)
+{
+	global $LANG;
+	$values[MODEL_NETPORT_LOGICAL_NUMER] = $LANG["networking"][21];
+	$values[MODEL_NETPORT_NAME] = $LANG["common"][16];
+	$values[MODEL_NETPORT_MACADDRESS] = $LANG["device_iface"][2];
+	$values[MODEL_NETPORT_LOGICAL_NUMER_NAME] =$LANG["networking"][21]."+".$LANG["common"][16];
+	$values[MODEL_NETPORT_LOGICAL_NUMER_MAC]=$LANG["networking"][21]."+".$LANG["device_iface"][2];
+	$values[MODEL_NETPORT_LOGICAL_NUMER_NAME_MAC]=$LANG["networking"][21]."+".$LANG["common"][16]."+".$LANG["device_iface"][2];
+	dropdownArrayValues($name,$values,$value);
 }
 ?>

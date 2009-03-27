@@ -57,9 +57,9 @@
 // - single : read a table, which is not a dropdown table. Manage entity restrict too if needed 
 // - user : look for a user. Need specific processing (first look for login, then lastname + firstname, then firstname + lastname)
 
-global $DATA_INJECTION_MAPPING, $IMPORT_TYPES, $IMPORT_PRIMARY_TYPES,
+global $LANG, $DATA_INJECTION_MAPPING, $IMPORT_TYPES, $IMPORT_PRIMARY_TYPES,
 	   $PLUGIN_HOOKS, $CONNECT_TO_COMPUTER_TYPES,
-	   $DEVICES_TYPES_STRING, $CONNECT_TO_COMPUTER_TYPES, $LANG;
+	   $DEVICES_TYPES_STRING, $CONNECT_TO_COMPUTER_TYPES;
 
 // ----------------------------------------------------------------------
 //COMPUTER MAPPING
@@ -95,7 +95,6 @@ $DATA_INJECTION_MAPPING[COMPUTER_TYPE]['os']['name'] = $LANG["computers"][9];
 $DATA_INJECTION_MAPPING[COMPUTER_TYPE]['os']['linkfield'] = 'os';
 $DATA_INJECTION_MAPPING[COMPUTER_TYPE]['os']['type'] = 'text';
 $DATA_INJECTION_MAPPING[COMPUTER_TYPE]['os']['table_type'] = 'dropdown';
-
 $DATA_INJECTION_MAPPING[COMPUTER_TYPE]['os_version']['table'] = 'glpi_dropdown_os_version';
 $DATA_INJECTION_MAPPING[COMPUTER_TYPE]['os_version']['field'] = 'name';
 $DATA_INJECTION_MAPPING[COMPUTER_TYPE]['os_version']['name'] = $LANG["computers"][52];
@@ -948,7 +947,7 @@ $DATA_INJECTION_MAPPING[NETWORKING_TYPE]['FK_users']['table_type'] = 'user';
 
 $DATA_INJECTION_MAPPING[NETWORKING_TYPE]['nb_ports']['table'] = 'glpi_networking';
 $DATA_INJECTION_MAPPING[NETWORKING_TYPE]['nb_ports']['field'] = 'nb_ports';
-$DATA_INJECTION_MAPPING[NETWORKING_TYPE]['nb_ports']['name'] = $LANG["data_injection"]["mappings"][1];
+$DATA_INJECTION_MAPPING[NETWORKING_TYPE]['nb_ports']['name'] = $LANG["datainjection"]["mappings"][1];
 $DATA_INJECTION_MAPPING[NETWORKING_TYPE]['nb_ports']['type'] = 'integer';
 $DATA_INJECTION_MAPPING[NETWORKING_TYPE]['nb_ports']['table_type'] = 'virtual';
 
@@ -961,7 +960,7 @@ $DATA_INJECTION_MAPPING[NETWORKING_TYPE]['contract']['table_type'] = 'single';
 
 $DATA_INJECTION_MAPPING[NETWORKING_TYPE]['port']['table'] = 'glpi_networking_ports';
 $DATA_INJECTION_MAPPING[NETWORKING_TYPE]['port']['field'] = 'port';
-$DATA_INJECTION_MAPPING[NETWORKING_TYPE]['port']['name'] = $LANG["data_injection"]["mappings"][2];
+$DATA_INJECTION_MAPPING[NETWORKING_TYPE]['port']['name'] = $LANG["datainjection"]["mappings"][2];
 $DATA_INJECTION_MAPPING[NETWORKING_TYPE]['port']['type'] = 'text';
 $DATA_INJECTION_MAPPING[NETWORKING_TYPE]['port']['table_type'] = 'virtual';
 
@@ -1641,7 +1640,7 @@ $DATA_INJECTION_MAPPING[ENTITY_TYPE]['name']['type'] = 'text';
 
 $DATA_INJECTION_MAPPING[ENTITY_TYPE]['parentID']['table'] = 'glpi_entities';
 $DATA_INJECTION_MAPPING[ENTITY_TYPE]['parentID']['field'] = 'parentID';
-$DATA_INJECTION_MAPPING[ENTITY_TYPE]['parentID']['name'] = $LANG["data_injection"]["entity"][0];
+$DATA_INJECTION_MAPPING[ENTITY_TYPE]['parentID']['name'] = $LANG["datainjection"]["entity"][0];
 $DATA_INJECTION_MAPPING[ENTITY_TYPE]['parentID']['type'] = 'text';
 $DATA_INJECTION_MAPPING[ENTITY_TYPE]['parentID']['table_type'] = 'entity';
 
@@ -1775,17 +1774,26 @@ $DATA_INJECTION_MAPPING[NETPORT_TYPE]['iface']['name'] = $LANG["common"][65];
 $DATA_INJECTION_MAPPING[NETPORT_TYPE]['iface']['type'] = 'text';
 $DATA_INJECTION_MAPPING[NETPORT_TYPE]['iface']['table_type'] = 'dropdown';
 
-$DATA_INJECTION_MAPPING[NETPORT_TYPE]['netname']['table'] = 'glpi_dropdown_wire';
+//Name of the device to connect to
+$DATA_INJECTION_MAPPING[NETPORT_TYPE]['netname']['table'] = '';
 $DATA_INJECTION_MAPPING[NETPORT_TYPE]['netname']['field'] = 'netname';
-$DATA_INJECTION_MAPPING[NETPORT_TYPE]['netname']['name'] = $LANG["data_injection"]["mappings"][3];
+$DATA_INJECTION_MAPPING[NETPORT_TYPE]['netname']['name'] = $LANG["datainjection"]["mappings"][3];
 $DATA_INJECTION_MAPPING[NETPORT_TYPE]['netname']['type'] = 'text';
 $DATA_INJECTION_MAPPING[NETPORT_TYPE]['netname']['table_type'] = 'virtual';
 
-$DATA_INJECTION_MAPPING[NETPORT_TYPE]['netport']['table'] = 'glpi_dropdown_wire';
+//Logical number of the port to connect to
+$DATA_INJECTION_MAPPING[NETPORT_TYPE]['netport']['table'] = '';
 $DATA_INJECTION_MAPPING[NETPORT_TYPE]['netport']['field'] = 'netport';
-$DATA_INJECTION_MAPPING[NETPORT_TYPE]['netport']['name'] = $LANG["data_injection"]["mappings"][4];
+$DATA_INJECTION_MAPPING[NETPORT_TYPE]['netport']['name'] = $LANG["datainjection"]["mappings"][4];
 $DATA_INJECTION_MAPPING[NETPORT_TYPE]['netport']['type'] = 'integer';
 $DATA_INJECTION_MAPPING[NETPORT_TYPE]['netport']['table_type'] = 'virtual';
+
+//Mac address of the port to connect to
+$DATA_INJECTION_MAPPING[NETPORT_TYPE]['netmac']['table'] = '';
+$DATA_INJECTION_MAPPING[NETPORT_TYPE]['netmac']['field'] = 'netmac';
+$DATA_INJECTION_MAPPING[NETPORT_TYPE]['netmac']['name'] = $LANG["datainjection"]["mappings"][6];
+$DATA_INJECTION_MAPPING[NETPORT_TYPE]['netmac']['type'] = 'mac';
+$DATA_INJECTION_MAPPING[NETPORT_TYPE]['netmac']['table_type'] = 'virtual';
 
 // ----------------------------------------------------------------------
 //SOFTWARE MAPPING
@@ -1829,39 +1837,7 @@ $DATA_INJECTION_MAPPING[SOFTWARE_TYPE]['state']['name'] = $LANG["joblist"][0];
 $DATA_INJECTION_MAPPING[SOFTWARE_TYPE]['state']['linkfield'] = 'state';
 $DATA_INJECTION_MAPPING[SOFTWARE_TYPE]['state']['table_type'] = 'dropdown';
 $DATA_INJECTION_MAPPING[SOFTWARE_TYPE]['state']['type'] = 'text';
-
-$DATA_INJECTION_MAPPING[LICENSE_TYPE]['serial']['table'] = 'glpi_licenses';
-$DATA_INJECTION_MAPPING[LICENSE_TYPE]['serial']['field'] = 'serial';
-$DATA_INJECTION_MAPPING[LICENSE_TYPE]['serial']['name'] = $LANG["common"][19];
-$DATA_INJECTION_MAPPING[LICENSE_TYPE]['serial']['type'] = 'text';
-
-$DATA_INJECTION_MAPPING[LICENSE_TYPE]['version']['table'] = 'glpi_licenses';
-$DATA_INJECTION_MAPPING[LICENSE_TYPE]['version']['field'] = 'version';
-$DATA_INJECTION_MAPPING[LICENSE_TYPE]['version']['name'] = $LANG["rulesengine"][78];
-$DATA_INJECTION_MAPPING[LICENSE_TYPE]['version']['type'] = 'text';
-
-$DATA_INJECTION_MAPPING[LICENSE_TYPE]['expire']['table'] = 'glpi_licenses';
-$DATA_INJECTION_MAPPING[LICENSE_TYPE]['expire']['field'] = 'expire';
-$DATA_INJECTION_MAPPING[LICENSE_TYPE]['expire']['name'] = $LANG["software"][32];
-$DATA_INJECTION_MAPPING[LICENSE_TYPE]['expire']['type'] = 'text';
-
-$DATA_INJECTION_MAPPING[LICENSE_TYPE]['expire']['table'] = 'glpi_licenses';
-$DATA_INJECTION_MAPPING[LICENSE_TYPE]['expire']['field'] = 'expire';
-$DATA_INJECTION_MAPPING[LICENSE_TYPE]['expire']['name'] = $LANG["software"][32];
-$DATA_INJECTION_MAPPING[LICENSE_TYPE]['expire']['type'] = 'text';
-
-$DATA_INJECTION_MAPPING[LICENSE_TYPE]['oem']['table'] = 'glpi_licenses';
-$DATA_INJECTION_MAPPING[LICENSE_TYPE]['oem']['field'] = 'expire';
-$DATA_INJECTION_MAPPING[LICENSE_TYPE]['oem']['name'] = $LANG["software"][28];
-$DATA_INJECTION_MAPPING[LICENSE_TYPE]['oem']['type'] = 'integer';
-
-$DATA_INJECTION_MAPPING[LICENSE_TYPE]['comments']['table'] = 'glpi_software';
-$DATA_INJECTION_MAPPING[LICENSE_TYPE]['comments']['field'] = 'comments';
-$DATA_INJECTION_MAPPING[LICENSE_TYPE]['comments']['name'] = $LANG["common"][25];
-$DATA_INJECTION_MAPPING[LICENSE_TYPE]['comments']['type'] = 'text';
-$DATA_INJECTION_MAPPING[LICENSE_TYPE]['comments']['table_type'] = 'multitext';
 */
-
 // ----------------------------------------------------------------------
 //DOCUMENTS MAPPING
 // ----------------------------------------------------------------------
@@ -1944,6 +1920,21 @@ $DATA_INJECTION_MAPPING[SOFTWARE_CONNECTION_TYPE]['manufacturer']['name'] = $LAN
 $DATA_INJECTION_MAPPING[SOFTWARE_CONNECTION_TYPE]['manufacturer']['type'] = 'text';
 $DATA_INJECTION_MAPPING[SOFTWARE_CONNECTION_TYPE]['manufacturer']['linkfield'] = 'FK_glpi_enterprise';
 $DATA_INJECTION_MAPPING[SOFTWARE_CONNECTION_TYPE]['manufacturer']['table_type'] = 'dropdown';
+
+// ----------------------------------------------------------------------
+//PSEUDO TYPE FOR PERIPHERAL TO COMPUTER CONNECTION
+// ----------------------------------------------------------------------
+$DATA_INJECTION_MAPPING[CONNECTION_ALL_TYPES]['device_type']['table'] = '';
+$DATA_INJECTION_MAPPING[CONNECTION_ALL_TYPES]['device_type']['field'] = 'device_type';
+$DATA_INJECTION_MAPPING[CONNECTION_ALL_TYPES]['device_type']['name'] = $LANG["common"][17];
+$DATA_INJECTION_MAPPING[CONNECTION_ALL_TYPES]['device_type']['type'] = 'integer';
+$DATA_INJECTION_MAPPING[CONNECTION_ALL_TYPES]['device_type']['table_type'] = 'glpi_type';
+
+$DATA_INJECTION_MAPPING[CONNECTION_ALL_TYPES]['name']['table'] = '';
+$DATA_INJECTION_MAPPING[CONNECTION_ALL_TYPES]['name']['field'] = 'name';
+$DATA_INJECTION_MAPPING[CONNECTION_ALL_TYPES]['name']['name'] = $LANG["common"][16];
+$DATA_INJECTION_MAPPING[CONNECTION_ALL_TYPES]['name']['type'] = 'text';
+$DATA_INJECTION_MAPPING[CONNECTION_ALL_TYPES]['name']['table_type'] = 'virtual';
 
 // ----------------------------------------------------------------------
 //COMPONENTS

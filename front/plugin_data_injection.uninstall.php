@@ -1,6 +1,4 @@
 <?php
-
-
 /*
    ----------------------------------------------------------------------
    GLPI - Gestionnaire Libre de Parc Informatique
@@ -29,37 +27,25 @@
    ------------------------------------------------------------------------
  */
 
-// Original Author of file: Walid Nouh
+// ----------------------------------------------------------------------
+// Original Author of file: GRISARD Jean Marc & CAILLAUD Xavier
 // Purpose of file:
 // ----------------------------------------------------------------------
-if (!defined('GLPI_ROOT')) {
-	define('GLPI_ROOT', '../../..');
-}
 
-$NEEDED_ITEMS=array("data_injection");
+
+
+define('GLPI_ROOT', '../../..'); 
+; 
+
 include (GLPI_ROOT."/inc/includes.php");
 
-commonHeader($LANG["datainjection"]["config"][1], $_SERVER["PHP_SELF"],"plugins","data_injection");
+checkSeveralRightsAnd(array("config"=>"w", "profile"=>"w"));
 
-if(!isset($_SESSION["glpi_plugin_data_injection_installed"]) || $_SESSION["glpi_plugin_data_injection_installed"]!=1) {
-	if(!TableExists("glpi_plugin_data_injection_config")) {
-			echo "<div align='center'>";
-			echo "<table class='tab_cadre' cellpadding='5'>";
-			echo "<tr><th>".$LANG["datainjection"]["setup"][1];
-			echo "</th></tr>";
-			echo "<tr class='tab_bg_1'><td>";
-			echo "<a href='plugin_data_injection.install.php'>".$LANG["datainjection"]["setup"][3]."</a></td></tr>";
-			echo "</table></div>";
-	}
+if(TableExists("glpi_plugin_data_injection_filetype")){
+	cleanCache("GLPI_HEADER_".$_SESSION["glpiID"]);
+	plugin_data_injection_uninstall();
+	unset($_SESSION["glpi_plugin_data_injection_installed"]);
 }
+glpi_header($_SERVER['HTTP_REFERER']);
 
-echo "<form action=\"\">";
-echo "enctype=\"multipart/form-data\" method=\"post\">";
-echo "<input type=\"file\" name=\"datafile\" size=\"40\">";
-echo "<div>";
-echo "<input type=\"submit\" value=\"Send\">";
-echo "</div>";
-echo "</form>";
-
-commonFooter();
 ?>

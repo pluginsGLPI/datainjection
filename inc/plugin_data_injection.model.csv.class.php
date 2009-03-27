@@ -119,11 +119,11 @@ class DataInjectionModelCSV extends DataInjectionModel {
 		if(isset($_SESSION["plugin_data_injection"]["model"]))
 			$model = unserialize($_SESSION["plugin_data_injection"]["model"]);
 		
-		echo "<legend>".$LANG["data_injection"]["modelStep"][14]."CSV</legend>";
+		echo "<legend>".$LANG["datainjection"]["modelStep"][14]."CSV</legend>";
 		echo "<table class='modelStep_table'>";
 		
 		/**************************Header******************************/
-		echo "<tr><td style='width:250px'>".$LANG["data_injection"]["modelStep"][9]."</td>";
+		echo "<tr><td style='width:250px'>".$LANG["datainjection"]["modelStep"][9]."</td>";
 		
 		if($_SESSION["plugin_data_injection"]["choice"]==1)
 			echo "<td style='width:150px'><select name='dropdown_header'>";
@@ -153,7 +153,7 @@ class DataInjectionModelCSV extends DataInjectionModel {
 		/**************************************************************/
 		
 		/************************Delimiter*****************************/
-		echo "<tr><td>".$LANG["data_injection"]["modelStep"][10]."</td>";
+		echo "<tr><td>".$LANG["datainjection"]["modelStep"][10]."</td>";
 		
 		if(isset($model))
 			{

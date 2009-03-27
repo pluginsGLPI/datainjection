@@ -47,7 +47,7 @@ include (GLPI_ROOT."/inc/includes.php");
 
 plugin_data_injection_loadHook("variables");
 
-commonHeader($LANG["data_injection"]["name"][1],$_SERVER["PHP_SELF"],"plugins","data_injection");
+commonHeader($LANG["datainjection"]["config"][1],$_SERVER["PHP_SELF"],"plugins","data_injection");
 
 $load=1;
 $error="";
@@ -162,7 +162,7 @@ if($load)
 	    $tmp_file = $_FILES["file"]["tmp_name"];
 	
 	    if( !is_uploaded_file($tmp_file) )
-	        $error = $LANG["data_injection"]["fileStep"][4];
+	        $error = $LANG["datainjection"]["fileStep"][4];
 	    else
 	    	{
 			$model = unserialize($_SESSION["plugin_data_injection"]["model"]);
@@ -175,11 +175,11 @@ if($load)
 			$tmpfname = tempnam (realpath(PLUGIN_DATA_INJECTION_UPLOAD_DIR), "Tmp");
 			
 	    	if( !strstr(strtolower(substr($name_file,strlen($name_file)-4)), strtolower($extension)) )
-	        	$error = $LANG["data_injection"]["fileStep"][5]."<br />".$LANG["data_injection"]["fileStep"][6]." ".$extension." ".$LANG["data_injection"]["fileStep"][7];
+	        	$error = $LANG["datainjection"]["fileStep"][5]."<br />".$LANG["datainjection"]["fileStep"][6]." ".$extension." ".$LANG["datainjection"]["fileStep"][7];
 	    	else
 	    		{
 	    		if( !move_uploaded_file($tmp_file, $tmpfname) )
-	        		$error = $LANG["data_injection"]["fileStep"][8]." ".$directory;
+	        		$error = $LANG["datainjection"]["fileStep"][8]." ".$directory;
 	    		else
 	    			{
 	    			$_SESSION["plugin_data_injection"]["file"] = basename($tmpfname);
@@ -208,9 +208,9 @@ if($load)
 					else
 						{
 						if ($ok==1)
-							$error=$LANG["data_injection"]["saveStep"][11];
+							$error=$LANG["datainjection"]["saveStep"][11];
 						else
-							$error=$LANG["data_injection"]["saveStep"][12];	
+							$error=$LANG["datainjection"]["saveStep"][12];	
 						
 						$error .= "<br><br><center>" . $file->getError(true) . "<center>";
 						unset($_SESSION["plugin_data_injection"]["file"]);
@@ -377,7 +377,7 @@ if($load)
 					
 					if($info->isMandatory() && (empty($field[1]) || empty($field[1])))
 						{
-						$error = $LANG["data_injection"]["fillInfoStep"][4];
+						$error = $LANG["datainjection"]["fillInfoStep"][4];
 						$_SESSION["plugin_data_injection"]["load"] = "next_fileStep";
 						}
 					}

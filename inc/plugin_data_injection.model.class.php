@@ -257,6 +257,11 @@ class DataInjectionModel extends CommonDBTM {
 		return $this->fields["private"];
 	}
 
+	function getPortUnicity()
+	{
+		return $this->fields["port_unicity"];
+	}
+	
 	//---- Save -----//
 	function setModelType($type)
 	{
@@ -393,8 +398,15 @@ class DataInjectionModel extends CommonDBTM {
 		if(isset($fields["recursive"]))
 			$this->setRecursive($fields["recursive"]);
 
+		if(isset($fields["port_unicity"]))
+			$this->setPortUnicity($fields["port_unicity"]);
+
 	}
 	
+	function setPortUnicity($unicity)
+	{
+		$this->fields["port_unicity"]=$unicity;
+	}
 }
 
 ?>

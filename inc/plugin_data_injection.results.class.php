@@ -210,6 +210,8 @@ class DataInjectionResults {
 			case WARNING_NOTEMPTY:
 			case WARNING_NOTFOUND:
 			case WARNING_USED:
+			case WARNING_ALREADY_LINKED:
+			case WARNING_SEVERAL_VALUES_FOUND:
 				$this->injection_status = PARTIALY_IMPORTED;
 				break;
 		}
@@ -230,37 +232,45 @@ class DataInjectionResults {
 		switch ($type)
 		{
 			case ERROR_CANNOT_IMPORT:
-				$message = $LANG["data_injection"]["result"][5];
+				$message = $LANG["datainjection"]["result"][5];
 			break;
 			case WARNING_NOTEMPTY:
 			case ERROR_CANNOT_UPDATE:
-				$message = $LANG["data_injection"]["result"][6];
+				$message = $LANG["datainjection"]["result"][6];
 			break;
 			case ERROR_IMPORT_ALREADY_IMPORTED:
-				$message = $LANG["data_injection"]["result"][3];
+				$message = $LANG["datainjection"]["result"][3];
 			break;
 			case ERROR_IMPORT_WRONG_TYPE:
-				$message = $LANG["data_injection"]["result"][1];
+				$message = $LANG["datainjection"]["result"][1];
 			break;
 			case ERROR_IMPORT_FIELD_MANDATORY:
-				$message = $LANG["data_injection"]["result"][4];
+				$message = $LANG["datainjection"]["result"][4];
 			break;
 			case TYPE_CHECK_OK:
-				$message = $LANG["data_injection"]["result"][2];
+				$message = $LANG["datainjection"]["result"][2];
 			break;
 			case IMPORT_OK:
-				$message = $LANG["data_injection"]["result"][7];
+				$message = $LANG["datainjection"]["result"][7];
 			break;
 			case WARNING_NOTFOUND:
-				$message = $LANG["data_injection"]["result"][15];
+				$message = $LANG["datainjection"]["result"][15];
 			break;
 			case WARNING_USED:
-				$message = $LANG["data_injection"]["result"][16];
+				$message = $LANG["datainjection"]["result"][16];
 			break;
 			case WARNING_ALLEMPTY:
-				$message = $LANG["data_injection"]["result"][17];
+				$message = $LANG["datainjection"]["result"][17];
 			break;
-			
+			case WARNING_SEVERAL_VALUES_FOUND:
+				$message = $LANG["datainjection"]["result"][19];
+			break;
+			case WARNING_ALREADY_LINKED:
+				$message = $LANG["datainjection"]["result"][20];
+			break;
+			case IMPORT_IMPOSSIBLE:
+				$message = $LANG["datainjection"]["result"][21];
+			break;
 		}
 		return $message;
 	}

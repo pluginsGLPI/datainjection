@@ -62,10 +62,10 @@ class DataInjectionProfile extends CommonDBTM {
 		echo "<form action='".$target."' method='post'>";
 		echo "<table class='tab_cadre_fixe'>";
 
-		echo "<tr><th colspan='2' align='center'><strong>".$LANG["data_injection"]["setup"][1]." ".$profile->fields["name"]."</strong></th></tr>";
+		echo "<tr><th colspan='2' align='center'><strong>".$LANG["datainjection"]["setup"][1]." ".$profile->fields["name"]."</strong></th></tr>";
 
 		echo "<tr class='tab_bg_2'>";
-		echo "<td>".$LANG["data_injection"]["profiles"][1].":</td><td>";
+		echo "<td>".$LANG["datainjection"]["profiles"][1].":</td><td>";
 		dropdownNoneReadWrite("model",$this->fields["model"],1,1,1);
 		echo "</td>";
 		echo "</tr>";
