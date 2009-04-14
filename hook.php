@@ -198,17 +198,19 @@ function plugin_headings_actions_data_injection($type) {
 	return false;
 }
 
-function plugin_get_headings_data_injection($type, $withtemplate) {
+function plugin_get_headings_data_injection($type, $ID, $withtemplate) {
 	global $LANG;
 
 	switch ($type) {
 		case PROFILE_TYPE :
-			if ($withtemplate)
-				return array ();
-			else
-				return array (
+			$prof = new Profile();
+			if ($ID>0 && $prof->getFromDB($ID) && $prof->fields['interface']=='central') {
+				return array(
 					1 => $LANG["datainjection"]["name"][1]
-				);
+				    );				
+			} else {
+				return array();
+			}
 			break;
 	}
 	return false;
