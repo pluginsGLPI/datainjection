@@ -1807,21 +1807,11 @@ $DATA_INJECTION_MAPPING[NETPORT_TYPE]['netpoint']['name'] = $LANG["networking"][
 $DATA_INJECTION_MAPPING[NETPORT_TYPE]['netpoint']['type'] = 'text';
 $DATA_INJECTION_MAPPING[NETPORT_TYPE]['netpoint']['table_type'] = 'virtual'; // can't be a dropdown
 
-$DATA_INJECTION_MAPPING[NETPORT_TYPE]['_netpoint_comments']['table'] = 'glpi_dropdown_locations';
-$DATA_INJECTION_MAPPING[NETPORT_TYPE]['_netpoint_comments']['field'] = '_netpoint_comments';
-$DATA_INJECTION_MAPPING[NETPORT_TYPE]['_netpoint_comments']['name'] = $LANG["networking"][51].' - '.$LANG['common'][25];
-$DATA_INJECTION_MAPPING[NETPORT_TYPE]['_netpoint_comments']['type'] = 'text';
-
 $DATA_INJECTION_MAPPING[NETPORT_TYPE]['vlan']['table'] = 'glpi_dropdown_vlan';
 $DATA_INJECTION_MAPPING[NETPORT_TYPE]['vlan']['field'] = 'vlan';
 $DATA_INJECTION_MAPPING[NETPORT_TYPE]['vlan']['name'] = $LANG["networking"][56];
 $DATA_INJECTION_MAPPING[NETPORT_TYPE]['vlan']['type'] = 'text';
 $DATA_INJECTION_MAPPING[NETPORT_TYPE]['vlan']['table_type'] = 'virtual';
-
-$DATA_INJECTION_MAPPING[NETPORT_TYPE]['_vlan_comments']['table'] = 'glpi_dropdown_locations';
-$DATA_INJECTION_MAPPING[NETPORT_TYPE]['_vlan_comments']['field'] = '_vlan_comments';
-$DATA_INJECTION_MAPPING[NETPORT_TYPE]['_vlan_comments']['name'] = $LANG["networking"][56].' - '.$LANG['common'][25];
-$DATA_INJECTION_MAPPING[NETPORT_TYPE]['_vlan_comments']['type'] = 'text';
 
 $DATA_INJECTION_MAPPING[NETPORT_TYPE]['iface']['table'] = 'glpi_dropdown_iface';
 $DATA_INJECTION_MAPPING[NETPORT_TYPE]['iface']['field'] = 'name';
@@ -1829,11 +1819,6 @@ $DATA_INJECTION_MAPPING[NETPORT_TYPE]['iface']['linkfield'] = 'iface';
 $DATA_INJECTION_MAPPING[NETPORT_TYPE]['iface']['name'] = $LANG["common"][65];
 $DATA_INJECTION_MAPPING[NETPORT_TYPE]['iface']['type'] = 'text';
 $DATA_INJECTION_MAPPING[NETPORT_TYPE]['iface']['table_type'] = 'dropdown';
-
-$DATA_INJECTION_MAPPING[NETPORT_TYPE]['_iface_comments']['table'] = 'glpi_dropdown_locations';
-$DATA_INJECTION_MAPPING[NETPORT_TYPE]['_iface_comments']['field'] = '_iface_comments';
-$DATA_INJECTION_MAPPING[NETPORT_TYPE]['_iface_comments']['name'] = $LANG["common"][65].' - '.$LANG['common'][25];
-$DATA_INJECTION_MAPPING[NETPORT_TYPE]['_iface_comments']['type'] = 'text';
 
 //Name of the device to connect to
 $DATA_INJECTION_MAPPING[NETPORT_TYPE]['netname']['table'] = '';
