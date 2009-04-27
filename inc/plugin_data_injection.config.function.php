@@ -82,10 +82,10 @@ function plugin_data_injection_createfirstaccess($ID) {
 	global $DB;
 
 	$DataInjectionProfile = new DataInjectionProfile();
-	if (!$DataInjectionProfile->GetfromDB($ID)) {
+	if (!$DataInjectionProfile->getFromDB($ID)) {
 
 		$Profile = new Profile();
-		$Profile->GetfromDB($ID);
+		$Profile->getFromDB($ID);
 		$name = $Profile->fields["name"];
 
 		$query = "INSERT INTO `glpi_plugin_data_injection_profiles` ( `ID`, `name` , `is_default`, `model`) VALUES ('$ID', '$name','0','w');";

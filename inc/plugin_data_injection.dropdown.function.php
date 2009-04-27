@@ -65,7 +65,7 @@ function getDropdownMinimalName ($table, $id)
  * @param entity the active entity
  * @return the ID of the insert value in the dropdown table
  */	
-function getDropdownValue($mapping, $mapping_definition,$value,$entity,$canadd=0,$location=EMPTY_VALUE)
+function getDropdownValue($mapping, $mapping_definition,$value,$entity,$canadd=0,$dropdown_comments=EMPTY_VALUE)
 {
 	global $DB, $CFG_GLPI;
 
@@ -78,7 +78,7 @@ function getDropdownValue($mapping, $mapping_definition,$value,$entity,$canadd=0
 		switch ($mapping_definition["table"])
 		{
 			case "glpi_dropdown_locations":
-				return checkLocation($value,$entity,$rightToAdd);
+				return checkLocation($value,$entity,$rightToAdd,$dropdown_comments);
 			case "glpi_dropdown_netpoint":
 				// not handle here !
 				return EMPTY_VALUE;	
@@ -92,7 +92,7 @@ function getDropdownValue($mapping, $mapping_definition,$value,$entity,$canadd=0
 		$input["value"] = $value;
 		$input["FK_entities"] = $entity;
 		$input["type"] = EMPTY_VALUE;
-		$input["comments"] = EMPTY_VALUE;
+		$input["comments"] = $dropdown_comments;
 		
 		$ID = getDropdownID($input);
 		if ($ID != -1)

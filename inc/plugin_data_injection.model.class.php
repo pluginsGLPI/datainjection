@@ -171,6 +171,11 @@ class DataInjectionModel extends CommonDBTM {
 	{
 		return $this->mappings->getMappingByRank($rank);
 	}
+
+	function getMappingByValue($value)
+	{
+		return $this->mappings->getMappingsByField("value",$value);
+	}
 	
 	function getModelInfos()
 	{

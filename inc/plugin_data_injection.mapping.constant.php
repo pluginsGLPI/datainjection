@@ -116,6 +116,11 @@ $DATA_INJECTION_MAPPING[COMPUTER_TYPE]['location']['linkfield'] = 'location';
 $DATA_INJECTION_MAPPING[COMPUTER_TYPE]['location']['type'] = 'text';
 $DATA_INJECTION_MAPPING[COMPUTER_TYPE]['location']['table_type'] = 'dropdown';
 
+$DATA_INJECTION_MAPPING[COMPUTER_TYPE]['_location_comments']['table'] = 'glpi_dropdown_locations';
+$DATA_INJECTION_MAPPING[COMPUTER_TYPE]['_location_comments']['field'] = '_location_comments';
+$DATA_INJECTION_MAPPING[COMPUTER_TYPE]['_location_comments']['name'] = $LANG["common"][15].' - '.$LANG['common'][25];
+$DATA_INJECTION_MAPPING[COMPUTER_TYPE]['_location_comments']['type'] = 'text';
+
 $DATA_INJECTION_MAPPING[COMPUTER_TYPE]['domain']['table'] = 'glpi_dropdown_domain';
 $DATA_INJECTION_MAPPING[COMPUTER_TYPE]['domain']['field'] = 'name';
 $DATA_INJECTION_MAPPING[COMPUTER_TYPE]['domain']['name'] = $LANG["setup"][89];
@@ -259,6 +264,12 @@ $DATA_INJECTION_MAPPING[MONITOR_TYPE]['location']['name'] = $LANG["common"][15];
 $DATA_INJECTION_MAPPING[MONITOR_TYPE]['location']['linkfield'] = 'location';
 $DATA_INJECTION_MAPPING[MONITOR_TYPE]['location']['type'] = 'text';
 $DATA_INJECTION_MAPPING[MONITOR_TYPE]['location']['table_type'] = 'dropdown';
+
+
+$DATA_INJECTION_MAPPING[MONITOR_TYPE]['_location_comments']['table'] = 'glpi_dropdown_locations';
+$DATA_INJECTION_MAPPING[MONITOR_TYPE]['_location_comments']['field'] = '_location_comments';
+$DATA_INJECTION_MAPPING[MONITOR_TYPE]['_location_comments']['name'] = $LANG["common"][15].' - '.$LANG['common'][25];
+$DATA_INJECTION_MAPPING[MONITOR_TYPE]['_location_comments']['type'] = 'text';
 
 $DATA_INJECTION_MAPPING[MONITOR_TYPE]['contact']['table'] = 'glpi_monitors';
 $DATA_INJECTION_MAPPING[MONITOR_TYPE]['contact']['field'] = 'contact';
@@ -415,6 +426,11 @@ $DATA_INJECTION_MAPPING[PRINTER_TYPE]['location']['name'] = $LANG["common"][15];
 $DATA_INJECTION_MAPPING[PRINTER_TYPE]['location']['linkfield'] = 'location';
 $DATA_INJECTION_MAPPING[PRINTER_TYPE]['location']['type'] = 'text';
 $DATA_INJECTION_MAPPING[PRINTER_TYPE]['location']['table_type'] = 'dropdown';
+
+$DATA_INJECTION_MAPPING[PRINTER_TYPE]['_location_comments']['table'] = 'glpi_dropdown_locations';
+$DATA_INJECTION_MAPPING[PRINTER_TYPE]['_location_comments']['field'] = '_location_comments';
+$DATA_INJECTION_MAPPING[PRINTER_TYPE]['_location_comments']['name'] = $LANG["common"][15].' - '.$LANG['common'][25];
+$DATA_INJECTION_MAPPING[PRINTER_TYPE]['_location_comments']['type'] = 'text';
 
 $DATA_INJECTION_MAPPING[PRINTER_TYPE]['contact']['table'] = 'glpi_printers';
 $DATA_INJECTION_MAPPING[PRINTER_TYPE]['contact']['field'] = 'contact';
@@ -580,6 +596,11 @@ $DATA_INJECTION_MAPPING[PHONE_TYPE]['location']['name'] = $LANG["common"][15];
 $DATA_INJECTION_MAPPING[PHONE_TYPE]['location']['linkfield'] = 'location';
 $DATA_INJECTION_MAPPING[PHONE_TYPE]['location']['type'] = 'text';
 $DATA_INJECTION_MAPPING[PHONE_TYPE]['location']['table_type'] = 'dropdown';
+
+$DATA_INJECTION_MAPPING[PHONE_TYPE]['_location_comments']['table'] = 'glpi_dropdown_locations';
+$DATA_INJECTION_MAPPING[PHONE_TYPE]['_location_comments']['field'] = '_location_comments';
+$DATA_INJECTION_MAPPING[PHONE_TYPE]['_location_comments']['name'] = $LANG["common"][15].' - '.$LANG['common'][25];
+$DATA_INJECTION_MAPPING[PHONE_TYPE]['_location_comments']['type'] = 'text';
 
 $DATA_INJECTION_MAPPING[PHONE_TYPE]['contact']['table'] = 'glpi_phones';
 $DATA_INJECTION_MAPPING[PHONE_TYPE]['contact']['field'] = 'contact';
@@ -830,6 +851,11 @@ $DATA_INJECTION_MAPPING[NETWORKING_TYPE]['location']['linkfield'] = 'location';
 $DATA_INJECTION_MAPPING[NETWORKING_TYPE]['location']['type'] = 'text';
 $DATA_INJECTION_MAPPING[NETWORKING_TYPE]['location']['table_type'] = 'dropdown';
 
+$DATA_INJECTION_MAPPING[NETWORKING_TYPE]['_location_comments']['table'] = 'glpi_dropdown_locations';
+$DATA_INJECTION_MAPPING[NETWORKING_TYPE]['_location_comments']['field'] = '_location_comments';
+$DATA_INJECTION_MAPPING[NETWORKING_TYPE]['_location_comments']['name'] = $LANG["common"][15].' - '.$LANG['common'][25];
+$DATA_INJECTION_MAPPING[NETWORKING_TYPE]['_location_comments']['type'] = 'text';
+
 $DATA_INJECTION_MAPPING[NETWORKING_TYPE]['contact']['table'] = 'glpi_networking';
 $DATA_INJECTION_MAPPING[NETWORKING_TYPE]['contact']['field'] = 'contact';
 $DATA_INJECTION_MAPPING[NETWORKING_TYPE]['contact']['name'] = $LANG["common"][18];
@@ -1038,6 +1064,11 @@ $DATA_INJECTION_MAPPING[USER_TYPE]['location']['linkfield'] = 'location';
 $DATA_INJECTION_MAPPING[USER_TYPE]['location']['type'] = 'text';
 $DATA_INJECTION_MAPPING[USER_TYPE]['location']['table_type'] = 'dropdown';
 
+$DATA_INJECTION_MAPPING[USER_TYPE]['_location_comments']['table'] = 'glpi_dropdown_locations';
+$DATA_INJECTION_MAPPING[USER_TYPE]['_location_comments']['field'] = '_location_comments';
+$DATA_INJECTION_MAPPING[USER_TYPE]['_location_comments']['name'] = $LANG["common"][15].' - '.$LANG['common'][25];
+$DATA_INJECTION_MAPPING[USER_TYPE]['_location_comments']['type'] = 'text';
+
 //This mapping needs post processing
 $DATA_INJECTION_MAPPING[USER_TYPE]['FK_group']['table'] = 'glpi_groups';
 $DATA_INJECTION_MAPPING[USER_TYPE]['FK_group']['field'] = 'name';
@@ -1230,6 +1261,11 @@ $DATA_INJECTION_MAPPING[PERIPHERAL_TYPE]['location']['name'] = $LANG["common"][1
 $DATA_INJECTION_MAPPING[PERIPHERAL_TYPE]['location']['linkfield'] = 'location';
 $DATA_INJECTION_MAPPING[PERIPHERAL_TYPE]['location']['type'] = 'text';
 $DATA_INJECTION_MAPPING[PERIPHERAL_TYPE]['location']['table_type'] = 'dropdown';
+
+$DATA_INJECTION_MAPPING[PERIPHERAL_TYPE]['_location_comments']['table'] = 'glpi_dropdown_locations';
+$DATA_INJECTION_MAPPING[PERIPHERAL_TYPE]['_location_comments']['field'] = '_location_comments';
+$DATA_INJECTION_MAPPING[PERIPHERAL_TYPE]['_location_comments']['name'] = $LANG["common"][15].' - '.$LANG['common'][25];
+$DATA_INJECTION_MAPPING[PERIPHERAL_TYPE]['_location_comments']['type'] = 'text';
 
 $DATA_INJECTION_MAPPING[PERIPHERAL_TYPE]['contact']['table'] = 'glpi_peripherals';
 $DATA_INJECTION_MAPPING[PERIPHERAL_TYPE]['contact']['field'] = 'contact';
@@ -1497,6 +1533,11 @@ $DATA_INJECTION_MAPPING[CARTRIDGE_TYPE]['location']['linkfield'] = 'location';
 $DATA_INJECTION_MAPPING[CARTRIDGE_TYPE]['location']['type'] = 'text';
 $DATA_INJECTION_MAPPING[CARTRIDGE_TYPE]['location']['table_type'] = 'dropdown';
 
+$DATA_INJECTION_MAPPING[CARTRIDGE_TYPE]['_location_comments']['table'] = 'glpi_dropdown_locations';
+$DATA_INJECTION_MAPPING[CARTRIDGE_TYPE]['_location_comments']['field'] = '_location_comments';
+$DATA_INJECTION_MAPPING[CARTRIDGE_TYPE]['_location_comments']['name'] = $LANG["common"][15].' - '.$LANG['common'][25];
+$DATA_INJECTION_MAPPING[CARTRIDGE_TYPE]['_location_comments']['type'] = 'text';
+
 $DATA_INJECTION_MAPPING[CARTRIDGE_TYPE]['type']['table'] = 'glpi_dropdown_cartridge_type';
 $DATA_INJECTION_MAPPING[CARTRIDGE_TYPE]['type']['field'] = 'name';
 $DATA_INJECTION_MAPPING[CARTRIDGE_TYPE]['type']['name'] = $LANG["setup"][80];
@@ -1591,6 +1632,11 @@ $DATA_INJECTION_MAPPING[CONSUMABLE_TYPE]['location']['name'] = $LANG["common"][1
 $DATA_INJECTION_MAPPING[CONSUMABLE_TYPE]['location']['linkfield'] = 'location';
 $DATA_INJECTION_MAPPING[CONSUMABLE_TYPE]['location']['type'] = 'text';
 $DATA_INJECTION_MAPPING[CONSUMABLE_TYPE]['location']['table_type'] = 'dropdown';
+
+$DATA_INJECTION_MAPPING[CONSUMABLE_TYPE]['_location_comments']['table'] = 'glpi_dropdown_locations';
+$DATA_INJECTION_MAPPING[CONSUMABLE_TYPE]['_location_comments']['field'] = '_location_comments';
+$DATA_INJECTION_MAPPING[CONSUMABLE_TYPE]['_location_comments']['name'] = $LANG["common"][15].' - '.$LANG['common'][25];
+$DATA_INJECTION_MAPPING[CONSUMABLE_TYPE]['_location_comments']['type'] = 'text';
 
 $DATA_INJECTION_MAPPING[CONSUMABLE_TYPE]['type']['table'] = 'glpi_dropdown_consumable_type';
 $DATA_INJECTION_MAPPING[CONSUMABLE_TYPE]['type']['field'] = 'name';
@@ -1761,11 +1807,21 @@ $DATA_INJECTION_MAPPING[NETPORT_TYPE]['netpoint']['name'] = $LANG["networking"][
 $DATA_INJECTION_MAPPING[NETPORT_TYPE]['netpoint']['type'] = 'text';
 $DATA_INJECTION_MAPPING[NETPORT_TYPE]['netpoint']['table_type'] = 'virtual'; // can't be a dropdown
 
+$DATA_INJECTION_MAPPING[NETPORT_TYPE]['_netpoint_comments']['table'] = 'glpi_dropdown_locations';
+$DATA_INJECTION_MAPPING[NETPORT_TYPE]['_netpoint_comments']['field'] = '_netpoint_comments';
+$DATA_INJECTION_MAPPING[NETPORT_TYPE]['_netpoint_comments']['name'] = $LANG["networking"][51].' - '.$LANG['common'][25];
+$DATA_INJECTION_MAPPING[NETPORT_TYPE]['_netpoint_comments']['type'] = 'text';
+
 $DATA_INJECTION_MAPPING[NETPORT_TYPE]['vlan']['table'] = 'glpi_dropdown_vlan';
 $DATA_INJECTION_MAPPING[NETPORT_TYPE]['vlan']['field'] = 'vlan';
 $DATA_INJECTION_MAPPING[NETPORT_TYPE]['vlan']['name'] = $LANG["networking"][56];
 $DATA_INJECTION_MAPPING[NETPORT_TYPE]['vlan']['type'] = 'text';
 $DATA_INJECTION_MAPPING[NETPORT_TYPE]['vlan']['table_type'] = 'virtual';
+
+$DATA_INJECTION_MAPPING[NETPORT_TYPE]['_vlan_comments']['table'] = 'glpi_dropdown_locations';
+$DATA_INJECTION_MAPPING[NETPORT_TYPE]['_vlan_comments']['field'] = '_vlan_comments';
+$DATA_INJECTION_MAPPING[NETPORT_TYPE]['_vlan_comments']['name'] = $LANG["networking"][56].' - '.$LANG['common'][25];
+$DATA_INJECTION_MAPPING[NETPORT_TYPE]['_vlan_comments']['type'] = 'text';
 
 $DATA_INJECTION_MAPPING[NETPORT_TYPE]['iface']['table'] = 'glpi_dropdown_iface';
 $DATA_INJECTION_MAPPING[NETPORT_TYPE]['iface']['field'] = 'name';
@@ -1773,6 +1829,11 @@ $DATA_INJECTION_MAPPING[NETPORT_TYPE]['iface']['linkfield'] = 'iface';
 $DATA_INJECTION_MAPPING[NETPORT_TYPE]['iface']['name'] = $LANG["common"][65];
 $DATA_INJECTION_MAPPING[NETPORT_TYPE]['iface']['type'] = 'text';
 $DATA_INJECTION_MAPPING[NETPORT_TYPE]['iface']['table_type'] = 'dropdown';
+
+$DATA_INJECTION_MAPPING[NETPORT_TYPE]['_iface_comments']['table'] = 'glpi_dropdown_locations';
+$DATA_INJECTION_MAPPING[NETPORT_TYPE]['_iface_comments']['field'] = '_iface_comments';
+$DATA_INJECTION_MAPPING[NETPORT_TYPE]['_iface_comments']['name'] = $LANG["common"][65].' - '.$LANG['common'][25];
+$DATA_INJECTION_MAPPING[NETPORT_TYPE]['_iface_comments']['type'] = 'text';
 
 //Name of the device to connect to
 $DATA_INJECTION_MAPPING[NETPORT_TYPE]['netname']['table'] = '';

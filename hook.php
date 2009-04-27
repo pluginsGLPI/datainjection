@@ -118,6 +118,9 @@ function plugin_data_injection_install() {
 	
 		if (!is_dir(PLUGIN_DATA_INJECTION_UPLOAD_DIR)) {
 			@ mkdir(PLUGIN_DATA_INJECTION_UPLOAD_DIR) or die("Can't create folder " . PLUGIN_DATA_INJECTION_UPLOAD_DIR);
+		
+		plugin_data_injection_createfirstaccess($_SESSION["glpiactiveprofile"]["ID"]);
+		
 		}
 	}
 	else 
@@ -135,24 +138,18 @@ function plugin_data_injection_install() {
 
 function plugin_data_injection_uninstall() {
 	global $DB;
+	
+	$tables = array("glpi_plugin_data_injection_models",
+					"glpi_plugin_data_injection_models_csv",
+					"glpi_plugin_data_injection_models_csv",
+					"glpi_plugin_data_injection_mappings",
+					"glpi_plugin_data_injection_infos",
+					"glpi_plugin_data_injection_filetype",
+					"glpi_plugin_data_injection_profiles");
 
-	$query = "DROP TABLE `glpi_plugin_data_injection_models`;";
-	$DB->query($query) or die($DB->error());
-
-	$query = "DROP TABLE `glpi_plugin_data_injection_models_csv`;";
-	$DB->query($query) or die($DB->error());
-
-	$query = "DROP TABLE `glpi_plugin_data_injection_mappings`;";
-	$DB->query($query) or die($DB->error());
-
-	$query = "DROP TABLE `glpi_plugin_data_injection_infos`;";
-	$DB->query($query) or die($DB->error());
-
-	$query = "DROP TABLE `glpi_plugin_data_injection_filetype`;";
-	$DB->query($query) or die($DB->error());
-
-	$query = "DROP TABLE `glpi_plugin_data_injection_profiles`;";
-	$DB->query($query) or die($DB->error());
+	foreach ($tables as $table)
+		if (TableExists($table))
+			$DB->query("DROP TABLE `$table`;") or die($DB->error());
 
 	if (is_dir(PLUGIN_DATA_INJECTION_UPLOAD_DIR)) {
 		deleteDir(PLUGIN_DATA_INJECTION_UPLOAD_DIR);

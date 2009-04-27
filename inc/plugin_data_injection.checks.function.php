@@ -262,14 +262,32 @@ function findContact($value,$entity)
  * @param canadd indicates if the user has the right to add locations
  * @return the location ID
  */
-function checkLocation ($location, $entity, $canadd)
+function checkLocation ($location, $entity, $canadd,$comments = EMPTY_VALUE)
 {
 	$location_id = 0;
 	$locations = explode('>',$location);
 
+	if ($comments != EMPTY_VALUE)
+	{
+		$final_location = count($locations);
+		$i = 0;
+	}
+	
 	foreach ($locations as $location)
+	{
+
 		if ($location_id !== EMPTY_VALUE)
-			$location_id = addLocation(trim($location),$entity,$location_id,$canadd);
+			$location_id = addLocation(trim($location),
+				$entity,
+				$location_id,
+				$canadd,
+				//Only add comments on the final location
+				($comments!= EMPTY_VALUE && $i==($final_location-1)?$comments:EMPTY_VALUE)
+			);
+			
+		if ($comments != EMPTY_VALUE)
+			$i++;		
+	}
 		
 	return $location_id;	
 }
@@ -280,15 +298,16 @@ function checkLocation ($location, $entity, $canadd)
  * @param entity the current entity
  * @param the parentid ID of the parent location
  * @param canadd indicates if the user has the right to add locations
+ * @param comments the dropdown comments
  * @return the location ID
  */
-function addLocation($location,$entity,$parentid,$canadd)
+function addLocation($location,$entity,$parentid,$canadd,$comments=EMPTY_VALUE)
 {
 	$input["tablename"] = "glpi_dropdown_locations";
 	$input["value"] = $location;
 	$input["value2"] = $parentid;
 	$input["type"] = "under";
-	$input["comments"] = EMPTY_VALUE;
+	$input["comments"] = $comments;
 	$input["FK_entities"] = $entity;
 	
 	$ID = getDropdownID($input);

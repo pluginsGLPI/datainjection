@@ -111,6 +111,11 @@ function dataAlreadyInDB($type, $fields, $mapping_definition, $model) {
 		}
 
 		switch ($obj->table) {
+			case "glpi_groups" :
+				//Groups can be recursive !
+				$where_entity = getEntitiesRestrictRequest("","glpi_groups","FK_entities",$fields["FK_entities"],true);
+				break;
+
 			//Devices types
 			case "glpi_device_moboard" :
 			case "glpi_device_processor" :
@@ -128,8 +133,6 @@ function dataAlreadyInDB($type, $fields, $mapping_definition, $model) {
 			case "glpi_entities" :
 				//nobreak
 			case "glpi_users" :
-				//nobreak
-			case "glpi_groups" :
 				//nobreak
 			case "glpi_cartridges" :
 				$where_entity = " 1";
@@ -668,7 +671,7 @@ function isAllEmpty($fields) {
 	return true;
 }
 
-function getFieldValue($result, $mapping, $mapping_definition, $field_value, $entity, $obj, $canadd, $several) {
+function getFieldValue($result, $mapping, $mapping_definition, $field_value, $entity, $obj, $canadd, $several,$field_comments = EMPTY_VALUE) {
 	global $DB, $CFG_GLPI;
 
 	if (isset ($mapping_definition["table_type"])) {
@@ -678,7 +681,7 @@ function getFieldValue($result, $mapping, $mapping_definition, $field_value, $en
 				break;
 				//Read and add in a dropdown table
 			case "dropdown" :
-				$val = getDropdownValue($mapping, $mapping_definition, $field_value, $entity, $canadd);
+				$val = getDropdownValue($mapping, $mapping_definition, $field_value, $entity, $canadd,$field_comments);
 				if ($val > 0) {
 					$obj[$mapping_definition["linkfield"]] = $val;
 				} else
@@ -928,5 +931,22 @@ function getPortUnicityRequest($model,$fields)
 		break;
 	}
 	return $where;
+}
+
+/**
+ * Look for comments assiocated with a dropdown
+ * @param model the injection model
+ * @line the line of datas to inject
+ * @mapping the mapping
+ */
+function getFieldCommentsIfExists($model,$line,$mapping)
+{
+	$field_name = $mapping->getName();
+	$field_comments_mapping = $model->getMappingByValue("_".$field_name."_comments");
+	if ($field_comments_mapping != null)
+		return $line[$field_comments_mapping->getRank()];
+	else
+		return EMPTY_VALUE;	
+	
 }
 ?>
