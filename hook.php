@@ -125,6 +125,10 @@ function plugin_data_injection_install() {
 	}
 	else 
 	{
+		//When updating, check if the upload folder is already present
+		if (!is_dir(PLUGIN_DATA_INJECTION_UPLOAD_DIR))
+			@ mkdir(PLUGIN_DATA_INJECTION_UPLOAD_DIR) or die("Can't create folder " . PLUGIN_DATA_INJECTION_UPLOAD_DIR);
+		
 		if (!FieldExists("glpi_plugin_data_injection_models","recursive")) {
 			// Update
 			plugin_data_injection_update131_14();	
