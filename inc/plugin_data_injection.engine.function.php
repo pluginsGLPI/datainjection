@@ -941,8 +941,9 @@ function getPortUnicityRequest($model,$fields)
  */
 function getFieldCommentsIfExists($model,$line,$mapping)
 {
-	$field_name = $mapping->getName();
+	$field_name = $mapping->getValue();
 	$field_comments_mapping = $model->getMappingByValue("_".$field_name."_comments");
+
 	if ($field_comments_mapping != null)
 		return $line[$field_comments_mapping->getRank()];
 	else
