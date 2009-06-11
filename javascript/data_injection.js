@@ -320,9 +320,3 @@ function show_option()
 		document.getElementById('option').style.display = 'none';
 		}
 }
-
-function change_progress(pourcentage)
-{
-	document.getElementById('importStep_progress').style.width = pourcentage;
-	document.getElementById('importStep_pourcentage').innerHTML = pourcentage;
-}

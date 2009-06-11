@@ -1214,17 +1214,26 @@ function importStep($target) {
 	echo "<td class='wizard_right_area' style='width: 400px' valign='top'>";
 
 	echo "<div id='new_import'>";
-	echo "<div class='importStep_cadre'><div class='importStep_progress' id='importStep_progress'><div class='importStep_pourcentage' id='importStep_pourcentage'>" . $_SESSION["plugin_data_injection"]["import"]["progress"] . " %</div></div></div>";
 
-	while ($_SESSION["plugin_data_injection"]["import"]["i"] < $_SESSION["plugin_data_injection"]["import"]["i_stop"])
-		traitement();
+	echo "<div class='importStep_cadre'>";
+	createProgressBar($LANG["datainjection"]["importStep"][1]);
+	echo "</div>";
 
+	while ($_SESSION["plugin_data_injection"]["import"]["i"] < $_SESSION["plugin_data_injection"]["import"]["i_stop"]) {
+		traitement();		
+		changeProgressBarPosition(
+			$_SESSION["plugin_data_injection"]["import"]["i"],
+			$_SESSION["plugin_data_injection"]["import"]["nbline"],
+			$LANG["datainjection"]["importStep"][1]."... ".
+			number_format($_SESSION["plugin_data_injection"]["import"]["i"]*100/$_SESSION["plugin_data_injection"]["import"]["nbline"],1).'%');	
+
+	}
+	changeProgressBarMessage($LANG["datainjection"]["importStep"][3]);
+	
 	$model = unserialize($_SESSION["plugin_data_injection"]["model"]);
 	logEvent(0, getLogItemType($model->getDeviceType()), 4, "plugin", $_SESSION["glpiname"] . " " . $LANG["datainjection"]["logevent"][1]);
 
 	echo "</div>";
-
-	echo "<div class='importStep_end'>" . $LANG["datainjection"]["importStep"][3] . "</div>";
 
 	echo "</td></tr>";
 
@@ -1324,22 +1333,17 @@ function traitement() {
 	$engine = unserialize($_SESSION["plugin_data_injection"]["import"]["engine"]);
 	$nbline = $_SESSION["plugin_data_injection"]["import"]["nbline"];
 	$i = $_SESSION["plugin_data_injection"]["import"]["i"];
-	$progress = $_SESSION["plugin_data_injection"]["import"]["progress"];
 	$datas = $_SESSION["plugin_data_injection"]["import"]["datas"];
 
 	$global_result = $engine->injectLine($datas[$i][0], $model->getInfos());
 	$global_result->setLineId($i);
 	$tab_result[] = $global_result;
-	$progress = round(($i * 100) / $nbline, 2);
 	$i++;
 	$datas = $engine->getDatas();
-	echo "<script type='text/javascript'>change_progress('" . $progress . "%')</script>";
-	glpi_flush();
-
+	
 	$_SESSION["plugin_data_injection"]["import"]["tab_result"] = serialize($tab_result);
 	$_SESSION["plugin_data_injection"]["import"]["global_result"] = serialize($global_result);
 	$_SESSION["plugin_data_injection"]["import"]["i"] = $i;
-	$_SESSION["plugin_data_injection"]["import"]["progress"] = $progress;
 	$_SESSION["plugin_data_injection"]["import"]["datas"] = $datas;
 	
 	if (isset($_SESSION["MESSAGE_AFTER_REDIRECT"]))
