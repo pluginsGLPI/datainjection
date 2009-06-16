@@ -81,6 +81,7 @@ function plugin_data_injection_update14_15()
 function plugin_data_injection_createfirstaccess($ID) {
 	global $DB;
 
+	include_once(GLPI_ROOT."/inc/profile.class.php");
 	$DataInjectionProfile = new DataInjectionProfile();
 	if (!$DataInjectionProfile->getFromDB($ID)) {
 
