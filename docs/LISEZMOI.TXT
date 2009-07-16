@@ -38,7 +38,7 @@ Author : Walid NOUH
 
 Ce plugin vous permet d'injecter des fichiers CSV dans GLPI.
 
-Compatibilité 0.71.
+Compatibilité 0.712
 Le plugin nécessite obligatoirement PHP5 ou supérieur !
 
 2 - Installation
