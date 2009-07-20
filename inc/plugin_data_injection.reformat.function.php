@@ -175,7 +175,7 @@ function reformatDate($date_format,$original_date)
 		break;
 	}
 	
-	if (ereg('[0-9]{2,4}-[0-9]{1,2}-[0-9]{1,2}',$new_date))
+	if (preg_match('/[0-9]{2,4}-[0-9]{1,2}-[0-9]{1,2}/',$new_date))
 		return $new_date;
 	else
 		return $original_date;	

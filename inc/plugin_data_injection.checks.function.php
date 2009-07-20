@@ -68,21 +68,21 @@ function checkType($type, $name, $data,$mandatory)
 					return ERROR_IMPORT_WRONG_TYPE;
 			break;
 			case 'date' :
-				ereg("([0-9]{4})[\-]([0-9]{2})[\-]([0-9]{2})",$data,$regs);
+				preg_match("/([0-9]{4})[\-]([0-9]{2})[\-]([0-9]{2})/",$data,$regs);
 				if (count($regs) > 0)
 					return TYPE_CHECK_OK;
 				else
 					return ERROR_IMPORT_WRONG_TYPE;
 			break;	
 			case 'ip':
-				ereg("([0-9]{1,3})\.([0-9]{1,3})\.([0-9]{1,3})\.([0-9]{1,3})",$data,$regs);
+				preg_match("/([0-9]{1,3})\.([0-9]{1,3})\.([0-9]{1,3})\.([0-9]{1,3})/",$data,$regs);
 				if (count($regs) > 0)
 					return TYPE_CHECK_OK;
 				else
 					return ERROR_IMPORT_WRONG_TYPE;
 			break;
 			case 'mac':
-				ereg("([0-9a-fA-F]{2}([:-]|$)){6}$",$data,$regs);
+				preg_match("/([0-9a-fA-F]{2}([:-]|$)){6}$/",$data,$regs);
 				if (count($regs) > 0)
 					return TYPE_CHECK_OK;
 				else
