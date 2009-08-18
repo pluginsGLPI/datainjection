@@ -511,7 +511,7 @@ function mappingStep($target) {
 			echo "<tr>";
 
 			/************************Header File***************************/
-			echo "<td><input type='hidden' name='field[$key][0]' value=\"" . $value->getName() . "\" />" . stripslashes($value->getName()) . " : </td>";
+			echo "<td><input id='name$key' type='hidden' name='field[$key][0]' value=\"" . $value->getName() . "\" />" . stripslashes($value->getName()) . " : </td>";
 			/**************************************************************/
 
 			/***********************Arrow Picture**************************/
@@ -575,7 +575,7 @@ function mappingStep($target) {
 			echo "<tr>";
 
 			/************************Header File***************************/
-			echo "<td><input type='hidden' name='field[$key][0]' value=\"$value\" />" . stripslashes($value) . " : </td>";
+			echo "<td><input id='name$key' type='hidden' name='field[$key][0]' value=\"$value\" />" . stripslashes($value) . " : </td>";
 			/**************************************************************/
 
 			/***********************Arrow Picture**************************/

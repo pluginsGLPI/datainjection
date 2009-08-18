@@ -114,6 +114,7 @@ function go_mapping(id,type)
 	sel = document.getElementById('table'+id);
 	idtable = sel.options[sel.selectedIndex].value;
 
+   nom = document.getElementById('name'+id).value;
 	
 	if (sel.value==type)
 		document.getElementById("check"+id).disabled=false;
@@ -123,7 +124,7 @@ function go_mapping(id,type)
 		document.getElementById("check"+id).checked=false;
 		}
 		
-	xhr.send("id="+id+"&idMapping="+idtable);
+	xhr.send("id="+id+"&idMapping="+idtable+"&name="+nom);
 }
 
 function go_info(id)

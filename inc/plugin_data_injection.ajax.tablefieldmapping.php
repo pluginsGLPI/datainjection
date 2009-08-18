@@ -54,8 +54,10 @@ if(isset($_POST['id']))
 				{
 					$values = getAllMappingsDefinitionsByType($_POST['idMapping']);
 
-					foreach($values as $key => $value)
-						echo "<option value='".$key."'>".$value."</option>";
+					foreach($values as $key => $value) {
+                  $sel = (isset($_POST['name']) && $_POST['name']==$value ? 'selected' : '');
+                  echo "<option value='$key' $sel>".$value."</option>";
+					}
 				}
 		}
 			
