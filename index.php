@@ -34,17 +34,17 @@ if (!defined('GLPI_ROOT')) {
 	define('GLPI_ROOT', '../..');
 }
 
-$NEEDED_ITEMS=array("data_injection");
+$NEEDED_ITEMS=array("datainjection");
 include (GLPI_ROOT."/inc/includes.php");
 
-commonHeader($LANG["datainjection"]["name"][1], $_SERVER["PHP_SELF"],"plugins","data_injection");
+commonHeader($LANG["datainjection"]["name"][1], $_SERVER["PHP_SELF"],"plugins","datainjection");
 
 initSession();
-$_SESSION["plugin_data_injection"]["load"]="presentation";
+$_SESSION["plugin_datainjection"]["load"]="presentation";
 
 echo "<div align='center'>";
 
-echo "<form action='./front/plugin_data_injection.wizard.form.php' method='post'>";
+echo "<form action='./front/plugin_datainjection.wizard.form.php' method='post'>";
 echo "<table class='wizard' style='margin-top:1px;'>";
 
 echo "<tr>";

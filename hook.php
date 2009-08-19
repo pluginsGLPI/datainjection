@@ -33,11 +33,11 @@
 // Purpose of file:
 // ----------------------------------------------------------------------
 
-function plugin_data_injection_install() {
+function plugin_datainjection_install() {
 	global $DB;
 
-	if (!TableExists("glpi_plugin_data_injection_models")) {
-		$query = "CREATE TABLE IF NOT EXISTS `glpi_plugin_data_injection_models` (
+	if (!TableExists("glpi_plugin_datainjection_models")) {
+		$query = "CREATE TABLE IF NOT EXISTS `glpi_plugin_datainjection_models` (
 								  `ID` int(11) NOT NULL auto_increment,
 								  `name` varchar(255) NOT NULL,
 								  `comments` text,
@@ -61,7 +61,7 @@ function plugin_data_injection_install() {
 	
 		$DB->query($query) or die($DB->error());
 	
-		$query = "CREATE TABLE IF NOT EXISTS `glpi_plugin_data_injection_models_csv` (
+		$query = "CREATE TABLE IF NOT EXISTS `glpi_plugin_datainjection_models_csv` (
 								  `ID` int(11) NOT NULL auto_increment,
 								  `model_id` int(11) NOT NULL,
 								  `device_type` int(11) NOT NULL default '1',
@@ -72,7 +72,7 @@ function plugin_data_injection_install() {
 	
 		$DB->query($query) or die($DB->error());
 	
-		$query = "CREATE TABLE IF NOT EXISTS `glpi_plugin_data_injection_mappings` (
+		$query = "CREATE TABLE IF NOT EXISTS `glpi_plugin_datainjection_mappings` (
 									`ID` INT( 11 ) NOT NULL AUTO_INCREMENT PRIMARY KEY ,
 									`model_id` INT( 11 ) NOT NULL ,
 									`type` INT( 11 ) NOT NULL DEFAULT '1',
@@ -83,7 +83,7 @@ function plugin_data_injection_install() {
 									) ENGINE = MYISAM CHARSET=utf8 COLLATE=utf8_unicode_ci ;";
 		$DB->query($query) or die($DB->error());
 	
-		$query = "CREATE TABLE IF NOT EXISTS `glpi_plugin_data_injection_infos` (
+		$query = "CREATE TABLE IF NOT EXISTS `glpi_plugin_datainjection_infos` (
 									`ID` INT( 11 ) NOT NULL AUTO_INCREMENT PRIMARY KEY ,
 									`model_id` INT( 11 ) NOT NULL ,
 									`type` int(11) NOT NULL default '9',
@@ -92,7 +92,7 @@ function plugin_data_injection_install() {
 									) ENGINE = MYISAM CHARSET=utf8 COLLATE=utf8_unicode_ci ;";
 		$DB->query($query) or die($DB->error());
 	
-		$query = "CREATE TABLE IF NOT EXISTS `glpi_plugin_data_injection_filetype` (
+		$query = "CREATE TABLE IF NOT EXISTS `glpi_plugin_datainjection_filetype` (
 								  `ID` int(11) NOT NULL auto_increment,
 								  `name` varchar(255) NOT NULL,
 								  `value` int(11) NOT NULL,
@@ -103,11 +103,11 @@ function plugin_data_injection_install() {
 								";
 		$DB->query($query) or die($DB->error());
 	
-		$query = "REPLACE INTO `glpi_plugin_data_injection_filetype` (`ID`, `name`, `value`, `backend_class_name`, `model_class_name`) VALUES 
+		$query = "REPLACE INTO `glpi_plugin_datainjection_filetype` (`ID`, `name`, `value`, `backend_class_name`, `model_class_name`) VALUES 
 							(1, 'CSV', 1, 'BackendCSV', 'DataInjectionModelCSV');";
 		$DB->query($query) or die($DB->error());
 	
-		$query = "CREATE TABLE IF NOT EXISTS `glpi_plugin_data_injection_profiles` (
+		$query = "CREATE TABLE IF NOT EXISTS `glpi_plugin_datainjection_profiles` (
 								  `ID` int(11) NOT NULL auto_increment,
 								  `name` varchar(255) default NULL,
 								  `is_default` int(6) NOT NULL default '0',
@@ -119,7 +119,7 @@ function plugin_data_injection_install() {
 		if (!is_dir(PLUGIN_DATA_INJECTION_UPLOAD_DIR)) {
 			@ mkdir(PLUGIN_DATA_INJECTION_UPLOAD_DIR) or die("Can't create folder " . PLUGIN_DATA_INJECTION_UPLOAD_DIR);
 		
-		plugin_data_injection_createfirstaccess($_SESSION["glpiactiveprofile"]["ID"]);
+		plugin_datainjection_createfirstaccess($_SESSION["glpiactiveprofile"]["ID"]);
 		
 		}
 	}
@@ -129,27 +129,28 @@ function plugin_data_injection_install() {
 		if (!is_dir(PLUGIN_DATA_INJECTION_UPLOAD_DIR))
 			@ mkdir(PLUGIN_DATA_INJECTION_UPLOAD_DIR) or die("Can't create folder " . PLUGIN_DATA_INJECTION_UPLOAD_DIR);
 		
-		if (!FieldExists("glpi_plugin_data_injection_models","recursive")) {
+		if (!FieldExists("glpi_plugin_datainjection_models","recursive")) {
 			// Update
-			plugin_data_injection_update131_14();	
+			plugin_datainjection_update131_14();	
 		}
-		if (!FieldExists("glpi_plugin_data_injection_models","port_unicity"))
-			plugin_data_injection_update14_15();		
+		if (!FieldExists("glpi_plugin_datainjection_models","port_unicity"))
+			plugin_datainjection_update14_15();		
 	}
-		
+
+   plugin_datainjection_changeprofile();
 	return true;
 }
 
-function plugin_data_injection_uninstall() {
+function plugin_datainjection_uninstall() {
 	global $DB;
 	
-	$tables = array("glpi_plugin_data_injection_models",
-					"glpi_plugin_data_injection_models_csv",
-					"glpi_plugin_data_injection_models_csv",
-					"glpi_plugin_data_injection_mappings",
-					"glpi_plugin_data_injection_infos",
-					"glpi_plugin_data_injection_filetype",
-					"glpi_plugin_data_injection_profiles");
+	$tables = array("glpi_plugin_datainjection_models",
+					"glpi_plugin_datainjection_models_csv",
+					"glpi_plugin_datainjection_models_csv",
+					"glpi_plugin_datainjection_mappings",
+					"glpi_plugin_datainjection_infos",
+					"glpi_plugin_datainjection_filetype",
+					"glpi_plugin_datainjection_profiles");
 
 	foreach ($tables as $table)
 		if (TableExists($table))
@@ -163,7 +164,7 @@ function plugin_data_injection_uninstall() {
 
 
 
-function plugin_pre_item_delete_data_injection($input) {
+function plugin_pre_item_delete_datainjection($input) {
 	if (isset ($input["_item_type_"]))
 		switch ($input["_item_type_"]) {
 			case PROFILE_TYPE :
@@ -175,23 +176,23 @@ function plugin_pre_item_delete_data_injection($input) {
 	return $input;
 }
 
-function plugin_data_injection_changeprofile() {
+function plugin_datainjection_changeprofile() {
 	$plugin = new Plugin;
 
-	if ($plugin->isInstalled("data_injection") && $plugin->isActivated("data_injection")) {
+	if ($plugin->isInstalled("datainjection") && $plugin->isActivated("datainjection")) {
 		$prof = new DataInjectionProfile();
 		if ($prof->getFromDB($_SESSION['glpiactiveprofile']['ID']))
-			$_SESSION["glpi_plugin_data_injection_profile"] = $prof->fields;
+			$_SESSION["glpi_plugin_datainjection_profile"] = $prof->fields;
 		else
-			unset ($_SESSION["glpi_plugin_data_injection_profile"]);
+			unset ($_SESSION["glpi_plugin_datainjection_profile"]);
 	}
 }
 
-function plugin_headings_actions_data_injection($type) {
+function plugin_headings_actions_datainjection($type) {
 	switch ($type) {
 		case PROFILE_TYPE :
 			return array (
-				1 => "plugin_headings_data_injection",
+				1 => "plugin_headings_datainjection",
 				
 			);
 			break;
@@ -199,7 +200,7 @@ function plugin_headings_actions_data_injection($type) {
 	return false;
 }
 
-function plugin_get_headings_data_injection($type, $ID, $withtemplate) {
+function plugin_get_headings_datainjection($type, $ID, $withtemplate) {
 	global $LANG;
 
 	switch ($type) {
@@ -217,16 +218,16 @@ function plugin_get_headings_data_injection($type, $ID, $withtemplate) {
 	return false;
 }
 
-function plugin_headings_data_injection($type, $ID, $withtemplate = 0) {
+function plugin_headings_datainjection($type, $ID, $withtemplate = 0) {
 	global $CFG_GLPI;
 
 	switch ($type) {
 		case PROFILE_TYPE :
 			$profile = new DataInjectionProfile;
 			if (!$profile->getFromDB($ID))
-				plugin_data_injection_createaccess($ID);
+				plugin_datainjection_createaccess($ID);
 
-			$profile->showForm($CFG_GLPI["root_doc"] . "/plugins/data_injection/front/plugin_data_injection.profile.php", $ID);
+			$profile->showForm($CFG_GLPI["root_doc"] . "/plugins/datainjection/front/plugin_datainjection.profile.php", $ID);
 			break;
 		default :
 			break;

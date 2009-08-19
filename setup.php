@@ -32,37 +32,37 @@
 // Purpose of file:
 // ----------------------------------------------------------------------
 
-include_once ("plugin_data_injection.includes.php");
+include_once ("plugin_datainjection.includes.php");
 
-function plugin_init_data_injection() {
+function plugin_init_datainjection() {
 	global $PLUGIN_HOOKS, $CFG_GLPI, $LANG;
 
 	$plugin = new Plugin;
 
-	if ($plugin->isInstalled("data_injection") && $plugin->isActivated("data_injection")) {
+	if ($plugin->isInstalled("datainjection") && $plugin->isActivated("datainjection")) {
 
-		$PLUGIN_HOOKS['change_profile']['data_injection'] = 'plugin_data_injection_changeprofile';
+		$PLUGIN_HOOKS['change_profile']['datainjection'] = 'plugin_datainjection_changeprofile';
 
-		$PLUGIN_HOOKS['headings']['data_injection'] = 'plugin_get_headings_data_injection';
-		$PLUGIN_HOOKS['headings_action']['data_injection'] = 'plugin_headings_actions_data_injection';
+		$PLUGIN_HOOKS['headings']['datainjection'] = 'plugin_get_headings_datainjection';
+		$PLUGIN_HOOKS['headings_action']['datainjection'] = 'plugin_headings_actions_datainjection';
 
-		if (plugin_data_injection_haveRight("model", "r"))
-			$PLUGIN_HOOKS['menu_entry']['data_injection'] = true;
+		if (plugin_datainjection_haveRight("model", "r"))
+			$PLUGIN_HOOKS['menu_entry']['datainjection'] = true;
 
-		$PLUGIN_HOOKS['pre_item_delete']['data_injection'] = 'plugin_pre_item_delete_data_injection';
+		$PLUGIN_HOOKS['pre_item_delete']['datainjection'] = 'plugin_pre_item_delete_datainjection';
 
 		// Css file
-		$PLUGIN_HOOKS['add_css']['data_injection'] = 'css/data_injection.css';
+		$PLUGIN_HOOKS['add_css']['datainjection'] = 'css/datainjection.css';
 	
 		// Javascript file
-		$PLUGIN_HOOKS['add_javascript']['data_injection'] = 'javascript/data_injection.js';
+		$PLUGIN_HOOKS['add_javascript']['datainjection'] = 'javascript/datainjection.js';
 	
 		//Need to load mappings when all the other files are loaded...
 		//TODO : check with it cannot be included at the same at as the other files...
-		include_once("inc/plugin_data_injection.mapping.constant.php");
-		registerPluginType('data_injection', 'PLUGIN_DATA_INJECTION_MODEL', 1450, array(
+		include_once("inc/plugin_datainjection.mapping.constant.php");
+		registerPluginType('datainjection', 'PLUGIN_DATA_INJECTION_MODEL', 1450, array(
 				'classname'  => 'DataInjectionModel',
-				'tablename'  => 'glpi_plugin_data_injection_models',
+				'tablename'  => 'glpi_plugin_datainjection_models',
 				'typename'   => $LANG['common'][22],
 				'formpage'   => '',
 				'searchpage' => '',
@@ -80,7 +80,7 @@ function plugin_init_data_injection() {
 	}
 }
 
-function plugin_version_data_injection() {
+function plugin_version_datainjection() {
 	global $LANG;
 
 	return array (
@@ -88,12 +88,12 @@ function plugin_version_data_injection() {
 		'minGlpiVersion' => '0.72',
 		'author'=>'Dévi Balpe & Walid Nouh & Remi Collet',
 		'homepage'=>'http://glpi-project.org/wiki/doku.php?id='.substr($_SESSION["glpilanguage"],0,2).':plugins:pluginslist',
-		'version' => '1.6.0'
+		'version' => '1.7.0'
 	);
 }
 
 
-function plugin_data_injection_check_prerequisites() {
+function plugin_datainjection_check_prerequisites() {
 	if (GLPI_VERSION >= 0.72) {
 		return true;
 	} else {
@@ -101,7 +101,7 @@ function plugin_data_injection_check_prerequisites() {
 	}
 }
 
-function plugin_data_injection_check_config() {
+function plugin_datainjection_check_config() {
 	return true;
 }
 
