@@ -69,7 +69,7 @@ function getModelInstanceByID($model_id) {
 }
 
 function exportModelAsCsv() {
-	$ficname = tempnam(PLUGIN_DATA_INJECTION_UPLOAD_DIR, "CSV");
+	$ficname = tempnam(PLUGIN_DATAINJECTION_UPLOAD_DIR, "CSV");
 	$fic = fopen($ficname, "wb");
 	if (!$fic)
 		return false;

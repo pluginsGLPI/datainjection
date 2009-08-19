@@ -5,7 +5,7 @@ if (!defined('GLPI_ROOT')) {
 
 include (GLPI_ROOT."/inc/includes.php");
 
-$fichier = PLUGIN_DATA_INJECTION_UPLOAD_DIR.$_SESSION["plugin_datainjection"]["file_name"];
+$fichier = PLUGIN_DATAINJECTION_UPLOAD_DIR.$_SESSION["plugin_datainjection"]["file_name"];
 $nom_fichier = $_SESSION["plugin_datainjection"]["file_name"];
 
 header('Content-disposition: attachment; filename=Error-'.$nom_fichier);

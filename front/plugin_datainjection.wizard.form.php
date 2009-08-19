@@ -172,7 +172,7 @@ if($load)
 			
 			$name_file = $_FILES["file"]["name"];
 			
-			$tmpfname = tempnam (realpath(PLUGIN_DATA_INJECTION_UPLOAD_DIR), "Tmp");
+			$tmpfname = tempnam (realpath(PLUGIN_DATAINJECTION_UPLOAD_DIR), "Tmp");
 			
 	    	if( !strstr(strtolower(substr($name_file,strlen($name_file)-4)), strtolower($extension)) )
 	        	$error = $LANG["datainjection"]["fileStep"][5]."<br />".$LANG["datainjection"]["fileStep"][6]." ".$extension." ".$LANG["datainjection"]["fileStep"][7];
@@ -185,7 +185,7 @@ if($load)
 	    			$_SESSION["plugin_datainjection"]["file"] = basename($tmpfname);
 	    			
 	    			$file=getBackend($model->getModelType());
-					$file->initBackend(PLUGIN_DATA_INJECTION_UPLOAD_DIR.$_SESSION["plugin_datainjection"]["file"],$model->getDelimiter(),$_POST["dropdown_encoding"]);
+					$file->initBackend(PLUGIN_DATAINJECTION_UPLOAD_DIR.$_SESSION["plugin_datainjection"]["file"],$model->getDelimiter(),$_POST["dropdown_encoding"]);
 					$file->read();
 					$file->deleteFile();
 					

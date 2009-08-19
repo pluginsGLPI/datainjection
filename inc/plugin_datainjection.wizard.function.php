@@ -1301,7 +1301,7 @@ function logStep($target) {
 
 	if (count($tab_result[0]) > 0) {
 		$model = unserialize($_SESSION["plugin_datainjection"]["model"]);
-		$file = PLUGIN_DATA_INJECTION_UPLOAD_DIR . $_SESSION["plugin_datainjection"]["file_name"];
+		$file = PLUGIN_DATAINJECTION_UPLOAD_DIR . $_SESSION["plugin_datainjection"]["file_name"];
 
 		$backend->export($file, $model, $tab_result);
 		echo "<td colspan='2'>";
@@ -1358,7 +1358,7 @@ function initImport() {
 
 	$global_result = new DataInjectionResults;
 
-	$engine = new DataInjectionEngine($model, PLUGIN_DATA_INJECTION_UPLOAD_DIR .
+	$engine = new DataInjectionEngine($model, PLUGIN_DATAINJECTION_UPLOAD_DIR .
 	$_SESSION["plugin_datainjection"]["file"], $file, $_SESSION["glpiactive_entity"]);
 
 	if ($engine->getModel()->isHeaderPresent()) {
@@ -1404,8 +1404,8 @@ function initSession() {
 		unset ($_SESSION["plugin_datainjection"]["file"]);
 
 	if (isset ($_SESSION["plugin_datainjection"]["file_name"])) {
-		if (file_exists(PLUGIN_DATA_INJECTION_UPLOAD_DIR . $_SESSION["plugin_datainjection"]["file_name"]))
-			unlink(PLUGIN_DATA_INJECTION_UPLOAD_DIR .
+		if (file_exists(PLUGIN_DATAINJECTION_UPLOAD_DIR . $_SESSION["plugin_datainjection"]["file_name"]))
+			unlink(PLUGIN_DATAINJECTION_UPLOAD_DIR .
 			$_SESSION["plugin_datainjection"]["file_name"]);
 		unset ($_SESSION["plugin_datainjection"]["file_name"]);
 	}

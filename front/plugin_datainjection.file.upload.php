@@ -41,7 +41,7 @@ include (GLPI_ROOT."/inc/includes.php");
 
 /*
 // Where the file is going to be placed 
-$target_path = PLUGIN_DATA_INJECTION_UPLOAD_DIR;
+$target_path = PLUGIN_DATAINJECTION_UPLOAD_DIR;
 
 // Add the original filename to our target path.  
 //Result is "uploads/filename.extension"
