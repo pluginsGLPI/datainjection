@@ -753,7 +753,7 @@ function getFieldValue($result, $mapping, $mapping_definition, $field_value, $en
 function processBeforeEnd($result, $model, $type, $fields, & $common_fields) {
 	switch ($type) {
 		case ENTERPRISE_TYPE :
-			addContract($common_fields,$type);
+			addContractToItem($common_fields,$type);
 			addContact($common_fields);
 			break;
 		case USER_TYPE :
@@ -763,16 +763,16 @@ function processBeforeEnd($result, $model, $type, $fields, & $common_fields) {
 			break;
 		case NETWORKING_TYPE :
 			addNetworkPorts($common_fields);
-			addContract($common_fields,$type);
+			addContractToItem($common_fields,$type);
 			break;
 		case PRINTER_TYPE :
-			addContract($common_fields,$type);
+			addContractToItem($common_fields,$type);
 			break;
 		case COMPUTER_TYPE :
-			addContract($common_fields,$type);
+			addContractToItem($common_fields,$type);
 			break;
 		case PHONE_TYPE :
-			addContract($common_fields,$type);
+			addContractToItem($common_fields,$type);
 			break;
 		case NETPORT_TYPE :
 			addVlan($result,$common_fields, $model->getCanAddDropdown());

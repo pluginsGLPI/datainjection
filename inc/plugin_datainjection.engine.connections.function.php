@@ -205,11 +205,11 @@ function addNetworkingWire($result, $common_fields, $canupdate) {
  * 
  * @return nothing
  */
-function addContract($common_fields, $type) {
-	if (isset ($common_fields["contract"])) {
+function addContractToItem($common_fields, $type) {
+   if (isset ($common_fields["contract"])) {
 		switch ($type) {
 			default :
-				addContract($common_fields["contract"], $type, $common_fields['device_id']);
+				addDeviceContract($common_fields["contract"], $type, $common_fields['device_id']);
 				break;
 			case ENTERPRISE_TYPE :
 				addEnterpriseContract($common_fields["contract"], $common_fields['device_id']);
