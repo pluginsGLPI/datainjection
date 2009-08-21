@@ -373,8 +373,13 @@ function findTemplate($entity,$table,$value)
  * Function found on php.net page about is_float, because is_float doesn't behave correctly
  */
 function is_true_float($val){
-    if( is_float($val) || ( (float) $val > (int) $val || strlen($val) != strlen( (int) $val) ) && (int) $val != 0  ) return true;
-    else return false;
+    //if( is_float($val) || ( (float) $val > (int) $val || strlen($val) != strlen( (int) $val) ) && (int) $val != 0  ) {
+    if( is_float($val) || ( (float) $val > (int) $val || strlen($val) != strlen( (int) $val) ) ) {
+       return true;
+    }
+    else {
+       return false;
+    }
 }
 
 function isDocumentAssociatedWithObject($document_id,$device_type,$device_id)
