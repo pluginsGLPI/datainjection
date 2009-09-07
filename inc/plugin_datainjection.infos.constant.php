@@ -312,6 +312,12 @@ $DATA_INJECTION_INFOS[PRINTER_TYPE]['is_global']['field']='is_global';
 $DATA_INJECTION_INFOS[PRINTER_TYPE]['is_global']['name']=$LANG["peripherals"][33];
 $DATA_INJECTION_INFOS[PRINTER_TYPE]['is_global']['type']='dropdown';
 
+$DATA_INJECTION_INFOS[PRINTER_TYPE]['recursive']['table'] = 'glpi_printers';
+$DATA_INJECTION_INFOS[PRINTER_TYPE]['recursive']['field'] = 'recursive';
+$DATA_INJECTION_INFOS[PRINTER_TYPE]['recursive']['name'] = $LANG["entity"][9];
+$DATA_INJECTION_INFOS[PRINTER_TYPE]['recursive']['type'] = 'integer';
+$DATA_INJECTION_INFOS[PRINTER_TYPE]['recursive']['input_type'] = 'yesno';
+
 // ----------------------------------------------------------------------
 //PHONE INFOS
 // ----------------------------------------------------------------------
@@ -502,6 +508,12 @@ $DATA_INJECTION_INFOS[NETWORKING_TYPE]['is_global']['field']='is_global';
 $DATA_INJECTION_INFOS[NETWORKING_TYPE]['is_global']['name']=$LANG["peripherals"][33];
 $DATA_INJECTION_INFOS[NETWORKING_TYPE]['is_global']['input_type']='dropdown';
 
+$DATA_INJECTION_INFOS[NETWORKING_TYPE]['recursive']['table'] = 'glpi_networking';
+$DATA_INJECTION_INFOS[NETWORKING_TYPE]['recursive']['field'] = 'recursive';
+$DATA_INJECTION_INFOS[NETWORKING_TYPE]['recursive']['name'] = $LANG["entity"][9];
+$DATA_INJECTION_INFOS[NETWORKING_TYPE]['recursive']['type'] = 'integer';
+$DATA_INJECTION_INFOS[NETWORKING_TYPE]['recursive']['input_type'] = 'yesno';
+
 // ----------------------------------------------------------------------
 //USER INFOS
 // ----------------------------------------------------------------------
@@ -574,6 +586,12 @@ $DATA_INJECTION_INFOS[GROUP_TYPE]['ldap_field']['table'] = 'glpi_groups';
 $DATA_INJECTION_INFOS[GROUP_TYPE]['ldap_field']['field'] = 'ldap_field';
 $DATA_INJECTION_INFOS[GROUP_TYPE]['ldap_field']['name'] = $LANG["setup"][260];
 $DATA_INJECTION_INFOS[GROUP_TYPE]['ldap_field']['type'] = 'text';
+
+$DATA_INJECTION_INFOS[GROUP_TYPE]['recursive']['table'] = 'glpi_groups';
+$DATA_INJECTION_INFOS[GROUP_TYPE]['recursive']['field'] = 'recursive';
+$DATA_INJECTION_INFOS[GROUP_TYPE]['recursive']['name'] = $LANG["entity"][9];
+$DATA_INJECTION_INFOS[GROUP_TYPE]['recursive']['type'] = 'integer';
+$DATA_INJECTION_INFOS[GROUP_TYPE]['recursive']['input_type'] = 'yesno';
 
 // ----------------------------------------------------------------------
 //CONTACT INFOS

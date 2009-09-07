@@ -592,6 +592,11 @@ $DATA_INJECTION_MAPPING[PRINTER_TYPE]['is_global']['field'] = 'is_global';
 $DATA_INJECTION_MAPPING[PRINTER_TYPE]['is_global']['name'] = $LANG["peripherals"][33];
 $DATA_INJECTION_MAPPING[PRINTER_TYPE]['is_global']['type'] = 'integer';
 
+$DATA_INJECTION_MAPPING[PRINTER_TYPE]['recursive']['table'] = 'glpi_printers';
+$DATA_INJECTION_MAPPING[PRINTER_TYPE]['recursive']['field'] = 'recursive';
+$DATA_INJECTION_MAPPING[PRINTER_TYPE]['recursive']['name'] = $LANG["entity"][9];
+$DATA_INJECTION_MAPPING[PRINTER_TYPE]['recursive']['type'] = 'integer';
+
 // ----------------------------------------------------------------------
 //PHONE MAPPING
 // ----------------------------------------------------------------------
@@ -1043,6 +1048,11 @@ $DATA_INJECTION_MAPPING[NETWORKING_TYPE]['is_global']['field'] = 'is_global';
 $DATA_INJECTION_MAPPING[NETWORKING_TYPE]['is_global']['name'] = $LANG["peripherals"][33];
 $DATA_INJECTION_MAPPING[NETWORKING_TYPE]['is_global']['type'] = 'integer';
 
+$DATA_INJECTION_MAPPING[NETWORKING_TYPE]['recursive']['table'] = 'glpi_groups';
+$DATA_INJECTION_MAPPING[NETWORKING_TYPE]['recursive']['field'] = 'recursive';
+$DATA_INJECTION_MAPPING[NETWORKING_TYPE]['recursive']['name'] = $LANG["entity"][9];
+$DATA_INJECTION_MAPPING[NETWORKING_TYPE]['recursive']['type'] = 'integer';
+
 // ----------------------------------------------------------------------
 //USER MAPPING
 // ----------------------------------------------------------------------
@@ -1139,6 +1149,11 @@ $DATA_INJECTION_MAPPING[GROUP_TYPE]['ldap_group_dn']['table'] = 'glpi_groups';
 $DATA_INJECTION_MAPPING[GROUP_TYPE]['ldap_group_dn']['field'] = 'ldap_group_dn';
 $DATA_INJECTION_MAPPING[GROUP_TYPE]['ldap_group_dn']['name'] = $LANG["setup"][261];
 $DATA_INJECTION_MAPPING[GROUP_TYPE]['ldap_group_dn']['type'] = 'text';
+
+$DATA_INJECTION_MAPPING[GROUP_TYPE]['recursive']['table'] = 'glpi_groups';
+$DATA_INJECTION_MAPPING[GROUP_TYPE]['recursive']['field'] = 'recursive';
+$DATA_INJECTION_MAPPING[GROUP_TYPE]['recursive']['name'] = $LANG["entity"][9];
+$DATA_INJECTION_MAPPING[GROUP_TYPE]['recursive']['type'] = 'integer';
 
 // ----------------------------------------------------------------------
 //CONTRACT MAPPING
