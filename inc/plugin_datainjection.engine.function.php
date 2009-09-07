@@ -578,6 +578,7 @@ function addNecessaryFields($model, $mapping, $mapping_definition, $entity, $typ
 			addField($fields, "FK_entities", $entity);
 			break;
 		case GROUP_TYPE :
+         addField($fields, "FK_entities", $entity);
 			break;
 		case ENTERPRISE_TYPE :
 			addField($fields, "FK_entities", $entity);
