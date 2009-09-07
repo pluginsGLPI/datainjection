@@ -28,9 +28,16 @@
 */
 
 // ----------------------------------------------------------------------
-// Original Author of file: Walid NOUH & BALPE Dévi
+// Original Author of file: Walid NOUH & BALPE Dévi & Remi COLLET
 // Purpose of file:
 // ----------------------------------------------------------------------
+Version 1.7.0 - GLPI 0.72
+   - Plugin's migration : available on the new forge at address https://forge.indepnet.net/projects/show/datainjection
+   # 1565 Rename data_injection to datainjection
+   # 1566 Cannot import value < 1 when float type is used
+   #1661 Import group not working
+   #1662 Add recursive mapping & option in several objects
+   
 Version 1.6.0 - GLPI 0.72
    #197 Inject dropdown comments
    

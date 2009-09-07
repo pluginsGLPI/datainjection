@@ -35,4 +35,4 @@
 Possibilité d'injecter plus de types de données dans GLPI.
 Add possibility to inject more data types into GLPI.
 
-See : https://dev.indepnet.net/plugins/query?group=milestone&component=data_injection&order=priority
+See : https://forge.indepnet.net/projects/roadmap/datainjection
