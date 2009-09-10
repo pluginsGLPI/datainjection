@@ -74,8 +74,8 @@ function plugin_init_datainjection() {
 		addDeviceSpecificInfos();
 	
 		//Initialize, if active, genericobject types
-		if ($plugin->isActivated("genericobject"))
-			usePlugin("genericobject");
+		//if ($plugin->isActivated("genericobject"))
+		//	usePlugin("genericobject");
 	}
 }
 
