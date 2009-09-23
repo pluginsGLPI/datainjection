@@ -87,7 +87,7 @@ function plugin_version_datainjection() {
 		'minGlpiVersion' => '0.72',
 		'author'=>'Dévi Balpe & Walid Nouh & Remi Collet',
 		'homepage'=>'http://glpi-project.org/wiki/doku.php?id='.substr($_SESSION["glpilanguage"],0,2).':plugins:pluginslist',
-		'version' => '1.7.0'
+		'version' => '1.7.1'
 	);
 }
 

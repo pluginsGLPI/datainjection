@@ -31,6 +31,10 @@
 // Original Author of file: Walid NOUH & BALPE Dévi & Remi COLLET
 // Purpose of file:
 // ----------------------------------------------------------------------
+Version 1.7.1
+  #1670 Integration with genericobject plugin
+  #1765 When updating network port, the logical number is always set to 1
+
 Version 1.7.0 - GLPI 0.72
    - Plugin's migration : available on the new forge at address https://forge.indepnet.net/projects/show/datainjection
    # 1565 Rename data_injection to datainjection
