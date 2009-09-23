@@ -612,9 +612,6 @@ function addNecessaryFields($model, $mapping, $mapping_definition, $entity, $typ
 			addField($fields, "device_type", $model->getDeviceType());
 			break;
 		case NETPORT_TYPE :
-			if (!isset ($fields["logical_number"]) || empty ($fields["logical_number"])) {
-				$fields["logical_number"] = ($model->getDeviceType() == NETWORKING_TYPE ? 1 : 0);
-			}
 			$unsetFields = array (
 				"netpoint",
 				"vlan",
@@ -622,9 +619,6 @@ function addNecessaryFields($model, $mapping, $mapping_definition, $entity, $typ
 				"netname",
 				"netmac",
 			);
-
-			//Set the device_id
-			//addField($fields, "ifmac", $common_fields["ifmac"]);
 
 			//Set the device_id
 			addField($fields, "on_device", $common_fields["device_id"]);
