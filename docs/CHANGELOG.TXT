@@ -31,6 +31,9 @@
 // Original Author of file: Walid NOUH & BALPE Dévi & Remi COLLET
 // Purpose of file:
 // ----------------------------------------------------------------------
+Version 1.7.2
+   #1772 Import new fields in entity
+   
 Version 1.7.1
   #1670 Integration with genericobject plugin
   #1765 When updating network port, the logical number is always set to 1

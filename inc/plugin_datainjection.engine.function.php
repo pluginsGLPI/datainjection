@@ -285,7 +285,9 @@ function preAddCommonFields($common_fields, $type, $fields, $entity) {
 				"email",
 				"notes",
 				"admin_email",
-				"admin_reply"
+				"admin_reply",
+            "tag",
+            "ldap_dn"
 			);
 			break;
 		case PHONE_TYPE :
@@ -520,7 +522,9 @@ function addNecessaryFields($model, $mapping, $mapping_definition, $entity, $typ
 				"email",
 				"notes",
 				"admin_email",
-				"admin_reply"
+				"admin_reply",
+            "tag",
+            "ldap_dn"
 			);
 			break;
 		case CONTACT_TYPE :
@@ -883,7 +887,7 @@ function logAddOrUpdate($device_type, $device_id, $action_type) {
 function filterFields(& $fields, $fields_from_db, $can_overwrite, $type) {
 	//If no right to overwrite existing fields in DB -> unset the field
 	foreach ($fields as $field => $value) {
-		if ($field[0] != '_' && $fields_from_db[$field] && !$can_overwrite) {
+		if ($field[0] != '_' && (isset($fields_from_db[$field]) && $fields_from_db[$field]) && !$can_overwrite) {
 			$name = getMappingNameByTypeAndValue($type, $field);
 			if ($field == "ID" || ((isset ($DATA_INJECTION_MAPPING[$type][$name]['table_type']) && $DATA_INJECTION_MAPPING[$type][$name]['table_type'] == "dropdown") && $fields_from_db[$field] > 0) || $fields_from_db[$field] != EMPTY_VALUE)
 				unset ($fields[$field]);

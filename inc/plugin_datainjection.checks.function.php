@@ -346,16 +346,30 @@ function addEntityPostProcess($common_fields)
 	global $DB;
 	
 	$fields = array();
-	$fields_list = array("FK_entities","address","postcode","town","state","country","website","phonenumber","fax","email","notes","admin_email","admin_reply");
+	$fields_list = array("FK_entities","address","postcode","town","state","country","website","phonenumber",
+                        "fax","email","notes","admin_email","admin_reply","tag","ldap_dn");
 	foreach ($fields_list as $field)
 		if (isset($common_fields[$field]))
 			$fields[$field]=$common_fields[$field];
-	if (!empty($fields))
-	{
-		$data = new EntityData;
-		$data->add($fields);			
-	}
-
+	
+   if (!empty($fields))
+   {
+      //Check is entity data still exists
+      $query = "SELECT ID FROM `glpi_entities_data` WHERE `FK_entities`=".$common_fields["FK_entities"];
+      $result = $DB->query($query);
+      $data = new EntityData;
+      
+      //Data do not exist : create new ones
+      if (!$DB->numrows($result)) {
+         $data->add($fields);         
+      }
+      //Data exist : update
+      else {
+      	$fields["ID"] = $DB->numrows($result,0,"ID");
+         $data->update($fields);
+      }   	
+   }  
+   	
 	regenerateTreeCompleteNameUnderID("glpi_entities", $common_fields["FK_entities"]);	
 }
 

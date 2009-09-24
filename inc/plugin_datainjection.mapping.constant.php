@@ -1827,6 +1827,16 @@ $DATA_INJECTION_MAPPING[ENTITY_TYPE]['admin_reply']['field'] = 'admin_reply';
 $DATA_INJECTION_MAPPING[ENTITY_TYPE]['admin_reply']['name'] = $LANG["setup"][207];
 $DATA_INJECTION_MAPPING[ENTITY_TYPE]['admin_reply']['type'] = 'text';
 
+$DATA_INJECTION_MAPPING[ENTITY_TYPE]['tag']['table'] = 'glpi_entities_data';
+$DATA_INJECTION_MAPPING[ENTITY_TYPE]['tag']['field'] = 'tag';
+$DATA_INJECTION_MAPPING[ENTITY_TYPE]['tag']['name'] = $LANG['entity'][13];
+$DATA_INJECTION_MAPPING[ENTITY_TYPE]['tag']['type'] = 'text';
+
+$DATA_INJECTION_MAPPING[ENTITY_TYPE]['ldap_dn']['table'] = 'glpi_entities_data';
+$DATA_INJECTION_MAPPING[ENTITY_TYPE]['ldap_dn']['field'] = 'ldap_dn';
+$DATA_INJECTION_MAPPING[ENTITY_TYPE]['ldap_dn']['name'] = $LANG['entity'][12];
+$DATA_INJECTION_MAPPING[ENTITY_TYPE]['ldap_dn']['type'] = 'text';
+
 // ----------------------------------------------------------------------
 // NETPORT MAPPING
 // ----------------------------------------------------------------------

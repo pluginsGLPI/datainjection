@@ -72,10 +72,6 @@ function plugin_init_datainjection() {
 		loadDeviceSpecificTypes();
 		addDeviceSpecificMappings();
 		addDeviceSpecificInfos();
-	
-		//Initialize, if active, genericobject types
-		//if ($plugin->isActivated("genericobject"))
-		//	usePlugin("genericobject");
 	}
 }
 
@@ -86,8 +82,8 @@ function plugin_version_datainjection() {
 		'name' => $LANG["datainjection"]["name"][1],
 		'minGlpiVersion' => '0.72',
 		'author'=>'Dévi Balpe & Walid Nouh & Remi Collet',
-		'homepage'=>'http://glpi-project.org/wiki/doku.php?id='.substr($_SESSION["glpilanguage"],0,2).':plugins:pluginslist',
-		'version' => '1.7.1'
+		'homepage'=>'https://forge.indepnet.net/projects/show/datainjection',
+		'version' => '1.7.2'
 	);
 }
 
