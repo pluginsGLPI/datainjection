@@ -2136,6 +2136,56 @@ $DATA_INJECTION_MAPPING[DOCUMENT_TYPE]['mime']['name'] = $LANG['document'][4];
 $DATA_INJECTION_MAPPING[DOCUMENT_TYPE]['mime']['type'] = 'text';
 
 // ----------------------------------------------------------------------
+//KB MAPPING
+// ----------------------------------------------------------------------
+
+$DATA_INJECTION_MAPPING[KNOWBASE_TYPE]['recursive']['table'] = 'glpi_kbitems';
+$DATA_INJECTION_MAPPING[KNOWBASE_TYPE]['recursive']['field'] = 'recursive';
+$DATA_INJECTION_MAPPING[KNOWBASE_TYPE]['recursive']['name'] = $LANG["entity"][9];
+$DATA_INJECTION_MAPPING[KNOWBASE_TYPE]['recursive']['type'] = 'integer';
+
+$DATA_INJECTION_MAPPING[KNOWBASE_TYPE]['categoryID']['table'] = 'glpi_dropdown_kbcategories';
+$DATA_INJECTION_MAPPING[KNOWBASE_TYPE]['categoryID']['field'] = 'name';
+$DATA_INJECTION_MAPPING[KNOWBASE_TYPE]['categoryID']['name'] = $LANG['common'][36];
+$DATA_INJECTION_MAPPING[KNOWBASE_TYPE]['categoryID']['linkfield'] = 'categoryID';
+$DATA_INJECTION_MAPPING[KNOWBASE_TYPE]['categoryID']['type'] = 'text';
+$DATA_INJECTION_MAPPING[KNOWBASE_TYPE]['categoryID']['table_type'] = 'dropdown';
+
+$DATA_INJECTION_MAPPING[KNOWBASE_TYPE]['question']['table'] = 'glpi_kbitems';
+$DATA_INJECTION_MAPPING[KNOWBASE_TYPE]['question']['field'] = 'question';
+$DATA_INJECTION_MAPPING[KNOWBASE_TYPE]['question']['name'] = $LANG['knowbase'][3];
+$DATA_INJECTION_MAPPING[KNOWBASE_TYPE]['question']['type'] = 'text';
+$DATA_INJECTION_MAPPING[KNOWBASE_TYPE]['question']['table_type'] = 'multitext';
+
+$DATA_INJECTION_MAPPING[KNOWBASE_TYPE]['answer']['table'] = 'glpi_kbitems';
+$DATA_INJECTION_MAPPING[KNOWBASE_TYPE]['answer']['field'] = 'answer';
+$DATA_INJECTION_MAPPING[KNOWBASE_TYPE]['answer']['name'] = $LANG['knowbase'][4];
+$DATA_INJECTION_MAPPING[KNOWBASE_TYPE]['answer']['type'] = 'text';
+$DATA_INJECTION_MAPPING[KNOWBASE_TYPE]['answer']['table_type'] = 'multitext';
+
+$DATA_INJECTION_MAPPING[KNOWBASE_TYPE]['faq']['table'] = 'glpi_kbitems';
+$DATA_INJECTION_MAPPING[KNOWBASE_TYPE]['faq']['field'] = 'faq';
+$DATA_INJECTION_MAPPING[KNOWBASE_TYPE]['faq']['name'] = $LANG['knowbase'][5];
+$DATA_INJECTION_MAPPING[KNOWBASE_TYPE]['faq']['type'] = 'integer';
+
+$DATA_INJECTION_MAPPING[KNOWBASE_TYPE]['view']['table'] = 'glpi_kbitems';
+$DATA_INJECTION_MAPPING[KNOWBASE_TYPE]['view']['field'] = 'view';
+$DATA_INJECTION_MAPPING[KNOWBASE_TYPE]['view']['name'] = $LANG['knowbase'][26];
+$DATA_INJECTION_MAPPING[KNOWBASE_TYPE]['view']['type'] = 'integer';
+
+$DATA_INJECTION_MAPPING[KNOWBASE_TYPE]['author']['table'] = 'glpi_users';
+$DATA_INJECTION_MAPPING[KNOWBASE_TYPE]['author']['field'] = 'name';
+$DATA_INJECTION_MAPPING[KNOWBASE_TYPE]['author']['name'] = $LANG['common'][37];
+$DATA_INJECTION_MAPPING[KNOWBASE_TYPE]['author']['linkfield'] = 'author';
+$DATA_INJECTION_MAPPING[KNOWBASE_TYPE]['author']['type'] = 'text';
+$DATA_INJECTION_MAPPING[KNOWBASE_TYPE]['author']['table_type'] = 'user';
+
+$DATA_INJECTION_MAPPING[KNOWBASE_TYPE]['date']['table'] = 'glpi_kbitems';
+$DATA_INJECTION_MAPPING[KNOWBASE_TYPE]['date']['field'] = 'date';
+$DATA_INJECTION_MAPPING[KNOWBASE_TYPE]['date']['name'] = $LANG['cartridges'][24];
+$DATA_INJECTION_MAPPING[KNOWBASE_TYPE]['date']['type'] = 'date';
+
+// ----------------------------------------------------------------------
 //PSEUDO TYPE FOR PERIPHERAL TO COMPUTER CONNECTION
 // ----------------------------------------------------------------------
 $DATA_INJECTION_MAPPING[COMPUTER_CONNECTION_TYPE]['name']['table'] = 'glpi_computers';

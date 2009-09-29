@@ -1101,9 +1101,18 @@ function fillInfoStep($target, $error) {
 						echo "</td><td style='width:10px'></td></tr>";
 					break;
 				
+            case "dropdown_users" :
+               echo "<tr><td colspan='3'><input type='hidden' name='field[$key][0]' value='" . $value->getID() . "' /></td></tr>";
+               echo "<tr><td style='width: 200px'>" . $DATA_INJECTION_INFOS[$value->getInfosType()][$value->getValue()]["name"] . " : </td><td style='width: 130px'>";
+               dropdownUsers("field[$key][1]","","all",0,1,$_SESSION["glpiactive_entity"]);
+               if ($value->isMandatory())
+                  echo "</td><td class='fillInfoStep_mandatory'>*</td></tr>";
+               else
+                  echo "</td><td style='width:10px'></td></tr>";
+               break;
 				case "dropdown" :
-					echo "<tr><td colspan='3'><input type='hidden' name='field[$key][0]' value='" . $value->getID() . "' /></td></tr>";
-					echo "<tr><td style='width: 200px'>" . $DATA_INJECTION_INFOS[$value->getInfosType()][$value->getValue()]["name"] . " : </td><td style='width: 130px'>";
+ 					echo "<tr><td colspan='3'><input type='hidden' name='field[$key][0]' value='" . $value->getID() . "' /></td></tr>";
+  					echo "<tr><td style='width: 200px'>" . $DATA_INJECTION_INFOS[$value->getInfosType()][$value->getValue()]["name"] . " : </td><td style='width: 130px'>";
 
 					switch ($DATA_INJECTION_INFOS[$value->getInfosType()][$value->getValue()]["field"]) {
 						case "alarm" :
@@ -1127,7 +1136,7 @@ function fillInfoStep($target, $error) {
 						case "is_global" :
 							dropdownSimpleManagement("field[$key][1]");
 							break;
-						default :
+                  default :
 							dropdownValue($DATA_INJECTION_INFOS[$value->getInfosType()][$value->getValue()]["table"], "field[$key][1]", $value->getInfosText(), 1, $_SESSION["glpiactive_entity"]);
 							break;
 					}

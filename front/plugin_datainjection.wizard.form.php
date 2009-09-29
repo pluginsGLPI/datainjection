@@ -42,7 +42,7 @@ $DBCONNECTION_REQUIRED=1;
 
 $NEEDED_ITEMS=array("ocsng","user","contact","enterprise","contract","networking","group","monitor","phone","infocom","printer","profile","entity",
 	"computer","software","setup","peripheral","cartridge","consumable","rulesengine","rule.dictionnary.dropdown","rule.softwarecategories",
-	"rule.dictionnary.software","device","document");
+	"rule.dictionnary.software","device","document","knowbase");
 include (GLPI_ROOT."/inc/includes.php");
 
 plugin_datainjection_loadHook("variables");

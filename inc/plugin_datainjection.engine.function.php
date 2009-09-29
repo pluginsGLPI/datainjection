@@ -601,6 +601,9 @@ function addNecessaryFields($model, $mapping, $mapping_definition, $entity, $typ
 		case SOFTWARE_TYPE :
 			addField($fields, "FK_entities", $entity);
 			break;
+      case KNOWBASE_TYPE :
+         addField($fields, "FK_entities", $entity);
+         break;
 		case CONTRACT_TYPE :
 			addField($fields, "FK_entities", $entity);
 			break;
@@ -882,6 +885,7 @@ function keepInfo($info) {
 			return true;
 			break;
 		case "dropdown" :
+      case "dropdown_users" :
 			if ($info->getInfosText() != 0)
 				return true;
 			break;

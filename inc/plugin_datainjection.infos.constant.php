@@ -38,8 +38,7 @@
 //INFORMATIONS
 // ----------------------------------------------------------------------
 // ----------------------------------------------------------------------
-global $LANG,$DATA_INJECTION_INFOS,$INJECTION_INFOS_TYPES;
-$INJECTION_INFOS_TYPES = array(COMPUTER_TYPE, MONITOR_TYPE, PRINTER_TYPE,PHONE_TYPE, INFOCOM_TYPE, NETWORKING_TYPE, PERIPHERAL_TYPE, CONTACT_TYPE, CARTRIDGE_TYPE, CARTRIDGE_ITEM_TYPE);
+global $LANG,$DATA_INJECTION_INFOS;
 
 // ----------------------------------------------------------------------
 //INFOCOM INFOS
@@ -165,7 +164,7 @@ $DATA_INJECTION_INFOS[COMPUTER_TYPE]['tech_num']['table']='glpi_users';
 $DATA_INJECTION_INFOS[COMPUTER_TYPE]['tech_num']['field']='name';
 $DATA_INJECTION_INFOS[COMPUTER_TYPE]['tech_num']['name']=$LANG["common"][10];
 $DATA_INJECTION_INFOS[COMPUTER_TYPE]['tech_num']['linkfield']='tech_num';
-$DATA_INJECTION_INFOS[COMPUTER_TYPE]['tech_num']['input_type']='dropdown';
+$DATA_INJECTION_INFOS[COMPUTER_TYPE]['tech_num']['input_type']='dropdown_users';
 
 $DATA_INJECTION_INFOS[COMPUTER_TYPE]['comments']['table']='glpi_computers';
 $DATA_INJECTION_INFOS[COMPUTER_TYPE]['comments']['field']='comments';
@@ -225,7 +224,7 @@ $DATA_INJECTION_INFOS[MONITOR_TYPE]['tech_num']['table']='glpi_users';
 $DATA_INJECTION_INFOS[MONITOR_TYPE]['tech_num']['field']='name';
 $DATA_INJECTION_INFOS[MONITOR_TYPE]['tech_num']['name']=$LANG["common"][10];
 $DATA_INJECTION_INFOS[MONITOR_TYPE]['tech_num']['linkfield']='tech_num';
-$DATA_INJECTION_INFOS[MONITOR_TYPE]['tech_num']['input_type']='dropdown';
+$DATA_INJECTION_INFOS[MONITOR_TYPE]['tech_num']['input_type']='dropdown_users';
 
 $DATA_INJECTION_INFOS[MONITOR_TYPE]['comments']['table']='glpi_monitors';
 $DATA_INJECTION_INFOS[MONITOR_TYPE]['comments']['field']='comments';
@@ -290,7 +289,7 @@ $DATA_INJECTION_INFOS[PRINTER_TYPE]['tech_num']['table']='glpi_users';
 $DATA_INJECTION_INFOS[PRINTER_TYPE]['tech_num']['field']='name';
 $DATA_INJECTION_INFOS[PRINTER_TYPE]['tech_num']['name']=$LANG["common"][10];
 $DATA_INJECTION_INFOS[PRINTER_TYPE]['tech_num']['linkfield']='tech_num';
-$DATA_INJECTION_INFOS[PRINTER_TYPE]['tech_num']['input_type']='dropdown';
+$DATA_INJECTION_INFOS[PRINTER_TYPE]['tech_num']['input_type']='dropdown_users';
 
 $DATA_INJECTION_INFOS[PRINTER_TYPE]['comments']['table']='glpi_printers';
 $DATA_INJECTION_INFOS[PRINTER_TYPE]['comments']['field']='comments';
@@ -361,7 +360,7 @@ $DATA_INJECTION_INFOS[PHONE_TYPE]['tech_num']['table']='glpi_users';
 $DATA_INJECTION_INFOS[PHONE_TYPE]['tech_num']['field']='name';
 $DATA_INJECTION_INFOS[PHONE_TYPE]['tech_num']['name']=$LANG["common"][10];
 $DATA_INJECTION_INFOS[PHONE_TYPE]['tech_num']['linkfield']='tech_num';
-$DATA_INJECTION_INFOS[PHONE_TYPE]['tech_num']['input_type']='dropdown';
+$DATA_INJECTION_INFOS[PHONE_TYPE]['tech_num']['input_type']='dropdown_users';
 
 $DATA_INJECTION_INFOS[PHONE_TYPE]['comments']['table']='glpi_phones';
 $DATA_INJECTION_INFOS[PHONE_TYPE]['comments']['field']='comments';
@@ -728,7 +727,7 @@ $DATA_INJECTION_INFOS[CARTRIDGE_TYPE]['tech_num']['table']='glpi_users';
 $DATA_INJECTION_INFOS[CARTRIDGE_TYPE]['tech_num']['field']='name';
 $DATA_INJECTION_INFOS[CARTRIDGE_TYPE]['tech_num']['name']=$LANG["common"][10];
 $DATA_INJECTION_INFOS[CARTRIDGE_TYPE]['tech_num']['linkfield']='tech_num';
-$DATA_INJECTION_INFOS[CARTRIDGE_TYPE]['tech_num']['input_type']='dropdown';
+$DATA_INJECTION_INFOS[CARTRIDGE_TYPE]['tech_num']['input_type']='dropdown_users';
 
 $DATA_INJECTION_INFOS[CARTRIDGE_TYPE]['FK_glpi_enterprise']['table']='glpi_dropdown_manufacturer';
 $DATA_INJECTION_INFOS[CARTRIDGE_TYPE]['FK_glpi_enterprise']['field']='name';
@@ -768,7 +767,7 @@ $DATA_INJECTION_INFOS[DOCUMENT_TYPE]['FK_users']['field'] = 'name';
 $DATA_INJECTION_INFOS[DOCUMENT_TYPE]['FK_users']['name'] = $LANG["common"][34];
 $DATA_INJECTION_INFOS[DOCUMENT_TYPE]['FK_users']['linkfield'] = 'FK_users';
 $DATA_INJECTION_INFOS[DOCUMENT_TYPE]['FK_users']['type'] = 'text';
-$DATA_INJECTION_INFOS[DOCUMENT_TYPE]['FK_users']['input_type'] = 'user';
+$DATA_INJECTION_INFOS[DOCUMENT_TYPE]['FK_users']['input_type'] = 'dropdown_users';
 
 $DATA_INJECTION_INFOS[DOCUMENT_TYPE]['recursive']['table'] = 'glpi_contracts';
 $DATA_INJECTION_INFOS[DOCUMENT_TYPE]['recursive']['field'] = 'recursive';
@@ -821,7 +820,7 @@ $DATA_INJECTION_INFOS[SOFTWARE_TYPE]['tech_num']['field'] = 'name';
 $DATA_INJECTION_INFOS[SOFTWARE_TYPE]['tech_num']['name'] = $LANG["common"][10];
 $DATA_INJECTION_INFOS[SOFTWARE_TYPE]['tech_num']['linkfield'] = 'tech_num';
 $DATA_INJECTION_INFOS[SOFTWARE_TYPE]['tech_num']['type'] = 'text';
-$DATA_INJECTION_INFOS[SOFTWARE_TYPE]['tech_num']['input_type'] = 'user';
+$DATA_INJECTION_INFOS[SOFTWARE_TYPE]['tech_num']['input_type'] = 'dropdown_users';
 
 $DATA_INJECTION_INFOS[SOFTWARE_TYPE]['recursive']['table'] = 'glpi_software';
 $DATA_INJECTION_INFOS[SOFTWARE_TYPE]['recursive']['field'] = 'recursive';
@@ -864,7 +863,7 @@ $DATA_INJECTION_INFOS[SOFTWARE_TYPE]['FK_users']['field'] = 'name';
 $DATA_INJECTION_INFOS[SOFTWARE_TYPE]['FK_users']['name'] = $LANG["common"][34];
 $DATA_INJECTION_INFOS[SOFTWARE_TYPE]['FK_users']['linkfield'] = 'FK_users';
 $DATA_INJECTION_INFOS[SOFTWARE_TYPE]['FK_users']['type'] = 'text';
-$DATA_INJECTION_INFOS[SOFTWARE_TYPE]['FK_users']['input_type'] = 'user';
+$DATA_INJECTION_INFOS[SOFTWARE_TYPE]['FK_users']['input_type'] = 'dropdown_users';
 
 $DATA_INJECTION_INFOS[SOFTWARE_TYPE]['FK_groups']['table'] = 'glpi_groups';
 $DATA_INJECTION_INFOS[SOFTWARE_TYPE]['FK_groups']['field'] = 'name';
@@ -962,6 +961,48 @@ $DATA_INJECTION_INFOS[SOFTWARELICENSE_TYPE]['expire']['field'] = 'expire';
 $DATA_INJECTION_INFOS[SOFTWARELICENSE_TYPE]['expire']['name'] = $LANG['software'][32];
 $DATA_INJECTION_INFOS[SOFTWARELICENSE_TYPE]['expire']['type'] = 'date';
 $DATA_INJECTION_INFOS[SOFTWARELICENSE_TYPE]['expire']['input_type'] = 'date';
+
+// ----------------------------------------------------------------------
+//KB MAPPING
+// ----------------------------------------------------------------------
+
+$DATA_INJECTION_INFOS[KNOWBASE_TYPE]['recursive']['table'] = 'glpi_kbitems';
+$DATA_INJECTION_INFOS[KNOWBASE_TYPE]['recursive']['field'] = 'recursive';
+$DATA_INJECTION_INFOS[KNOWBASE_TYPE]['recursive']['name'] = $LANG["entity"][9];
+$DATA_INJECTION_INFOS[KNOWBASE_TYPE]['recursive']['input_type'] = 'yesno';
+$DATA_INJECTION_INFOS[KNOWBASE_TYPE]['recursive']['type'] = 'integer';
+
+$DATA_INJECTION_INFOS[KNOWBASE_TYPE]['categoryID']['table'] = 'glpi_dropdown_kbcategories';
+$DATA_INJECTION_INFOS[KNOWBASE_TYPE]['categoryID']['field'] = 'name';
+$DATA_INJECTION_INFOS[KNOWBASE_TYPE]['categoryID']['name'] = $LANG['common'][36];
+$DATA_INJECTION_INFOS[KNOWBASE_TYPE]['categoryID']['linkfield'] = 'categoryID';
+$DATA_INJECTION_INFOS[KNOWBASE_TYPE]['categoryID']['type'] = 'text';
+$DATA_INJECTION_INFOS[KNOWBASE_TYPE]['categoryID']['input_type'] = 'dropdown';
+
+$DATA_INJECTION_INFOS[KNOWBASE_TYPE]['faq']['table'] = 'glpi_kbitems';
+$DATA_INJECTION_INFOS[KNOWBASE_TYPE]['faq']['field'] = 'faq';
+$DATA_INJECTION_INFOS[KNOWBASE_TYPE]['faq']['name'] = $LANG['knowbase'][5];
+$DATA_INJECTION_INFOS[KNOWBASE_TYPE]['faq']['type'] = 'integer';
+$DATA_INJECTION_INFOS[KNOWBASE_TYPE]['faq']['input_type'] = 'yesno';
+
+$DATA_INJECTION_INFOS[KNOWBASE_TYPE]['view']['table'] = 'glpi_kbitems';
+$DATA_INJECTION_INFOS[KNOWBASE_TYPE]['view']['field'] = 'view';
+$DATA_INJECTION_INFOS[KNOWBASE_TYPE]['view']['name'] = $LANG['knowbase'][26];
+$DATA_INJECTION_INFOS[KNOWBASE_TYPE]['view']['input_type'] = 'text';
+$DATA_INJECTION_INFOS[KNOWBASE_TYPE]['view']['type'] = 'integer';
+
+$DATA_INJECTION_INFOS[KNOWBASE_TYPE]['author']['table'] = 'glpi_users';
+$DATA_INJECTION_INFOS[KNOWBASE_TYPE]['author']['field'] = 'name';
+$DATA_INJECTION_INFOS[KNOWBASE_TYPE]['author']['name'] = $LANG['common'][37];
+$DATA_INJECTION_INFOS[KNOWBASE_TYPE]['author']['linkfield'] = 'author';
+$DATA_INJECTION_INFOS[KNOWBASE_TYPE]['author']['type'] = 'text';
+$DATA_INJECTION_INFOS[KNOWBASE_TYPE]['author']['input_type'] = 'dropdown_users';
+
+$DATA_INJECTION_INFOS[KNOWBASE_TYPE]['date']['table'] = 'glpi_kbitems';
+$DATA_INJECTION_INFOS[KNOWBASE_TYPE]['date']['field'] = 'date';
+$DATA_INJECTION_INFOS[KNOWBASE_TYPE]['date']['name'] = $LANG['cartridges'][24];
+$DATA_INJECTION_INFOS[KNOWBASE_TYPE]['date']['input_type'] = 'date';
+$DATA_INJECTION_INFOS[KNOWBASE_TYPE]['date']['type'] = 'date';
 
 // ----------------------------------------------------------------------
 //PSEUDO TYPE FOR PERIPHERAL TO COMPUTER CONNECTION
