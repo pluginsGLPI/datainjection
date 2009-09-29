@@ -85,25 +85,23 @@ function lookIfSeveralMappingsForField($model, $mapping_definition, $value) {
  * @return true if the data exists, false if it doesn't already exists
  */
 function dataAlreadyInDB($type, $fields, $mapping_definition, $model) {
-	global $DB;
+	global $DB,$CFG_GLPI;
 	$where = "";
 	$mandatories = getAllMandatoriesMappings($type, $model);
 
-	if ($model->getDeviceType() == $type)
-		$primary = true;
-	else
-		$primary = false;
+   $primary = ($model->getDeviceType() == $type?true:false);
 
 	$obj = getInstance($type);
 
-	//TODO : determine when to put ' or not
 	$delimiter = "'";
 
-	if (FieldExists($obj->table, "deleted"))
+	if (in_array($type,$CFG_GLPI["deleted_tables"])) {
 		$where .= " AND deleted=0 ";
-	if (FieldExists($obj->table, "is_template"))
-		$where .= " AND is_template=0 ";
-
+	}
+   if (in_array($obj->table,$CFG_GLPI["template_tables"])) {
+      $where .= " AND is_template=0 ";
+   }
+		
 	if ($primary) {
 		foreach ($mandatories as $mapping) {
 			$mapping_definition = getMappingDefinitionByTypeAndName($type, $mapping->getValue());
@@ -111,11 +109,6 @@ function dataAlreadyInDB($type, $fields, $mapping_definition, $model) {
 		}
 
 		switch ($obj->table) {
-			case "glpi_groups" :
-				//Groups can be recursive !
-				$where_entity = getEntitiesRestrictRequest("","glpi_groups","FK_entities",$fields["FK_entities"],true);
-				break;
-
 			//Devices types
 			case "glpi_device_moboard" :
 			case "glpi_device_processor" :
@@ -145,7 +138,13 @@ function dataAlreadyInDB($type, $fields, $mapping_definition, $model) {
             $where_entity = " sID=" . $fields["sID"];
             break;
  			default :
-				$where_entity = " FK_entities=" . $fields["FK_entities"];
+            if (isset($CFG_GLPI["recursive_type"][$type])) {
+            	$where_entity = getEntitiesRestrictRequest("",$obj->table,"FK_entities",$fields["FK_entities"],true);
+            }
+            else {
+               $where_entity = " FK_entities=" . $fields["FK_entities"];	
+            }
+				
 				break;
 		}
 	} else {
