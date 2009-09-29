@@ -116,7 +116,9 @@ function checkType($type, $name, $data,$mandatory)
  */
 function checkLine($model,$line,&$res)
 {
-		//Get all mappings for a model
+		global $CONNECT_TO_SOFTWARE_TYPES;
+      
+      //Get all mappings for a model
 		for ($i=0, $mappings = $model->getMappings(); $i < count($mappings); $i++)
 		{
 			$mapping = $mappings[$i];
@@ -130,7 +132,7 @@ function checkLine($model,$line,&$res)
 			}
 			else
 			{
-				//If field exists and if field is mapped
+            //If field exists and if field is mapped
 				if (isset($line[$rank]) && $line[$rank] != "" && $mapping->getValue() != NOT_MAPPED)
 				{
 					//Check type
@@ -145,8 +147,16 @@ function checkLine($model,$line,&$res)
 			}
 		}
 
-		return $res->getStatus(true);
-	}
+      //For software's versions & licenses, check if software ID is present
+      if (in_array($model->getDeviceType(),$CONNECT_TO_SOFTWARE_TYPES)) {
+         if ($model->getMappingByValue('sID') == null) {
+            $res->addCheckMessage(ERROR_IMPORT_LINK_FIELD_MISSING,'sID');
+            return;
+         }
+      }
+
+      return $res->getStatus(true);
+}
 
 
 /**
@@ -387,7 +397,6 @@ function findTemplate($entity,$table,$value)
  * Function found on php.net page about is_float, because is_float doesn't behave correctly
  */
 function is_true_float($val){
-    //if( is_float($val) || ( (float) $val > (int) $val || strlen($val) != strlen( (int) $val) ) && (int) $val != 0  ) {
     if( is_float($val) || ( (float) $val > (int) $val || strlen($val) != strlen( (int) $val) ) ) {
        return true;
     }

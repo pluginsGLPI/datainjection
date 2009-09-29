@@ -179,6 +179,7 @@ class DataInjectionResults {
 				$this->check_status = CHECK_OK;
 //				$this->injection_status = IMPORT_OK;
 				break;
+         case ERROR_IMPORT_LINK_FIELD_MISSING:
 			case ERROR_IMPORT_WRONG_TYPE:
 			case ERROR_IMPORT_FIELD_MANDATORY:
 				$this->check_status = CHECK_NOTOK;
@@ -247,6 +248,9 @@ class DataInjectionResults {
 			case ERROR_IMPORT_FIELD_MANDATORY:
 				$message = $LANG["datainjection"]["result"][4];
 			break;
+         case ERROR_IMPORT_LINK_FIELD_MISSING:
+            $message = $LANG["datainjection"]["result"][4];
+         break;
 			case TYPE_CHECK_OK:
 				$message = $LANG["datainjection"]["result"][2];
 			break;

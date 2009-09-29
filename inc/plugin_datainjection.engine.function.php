@@ -76,7 +76,7 @@ function lookIfSeveralMappingsForField($model, $mapping_definition, $value) {
 	return ($mapping_count > 1 ? true : false);
 }
 
-/*
+/**
  * Function to check if the datas to inject already exists in DB
  * @param type the type of datas to inject
  * @param fields the datas to inject
@@ -130,14 +130,21 @@ function dataAlreadyInDB($type, $fields, $mapping_definition, $model) {
 			case "glpi_device_case" :
 			case "glpi_device_power" :
 
-			case "glpi_entities" :
+ 			case "glpi_entities" :
 				//nobreak
 			case "glpi_users" :
 				//nobreak
 			case "glpi_cartridges" :
 				$where_entity = " 1";
 				break;
-			default :
+        case "glpi_softwarelicenses" :
+            $where_entity = getEntitiesRestrictRequest("","glpi_softwarelicenses","FK_entities",$fields["FK_entities"],true);
+            $where_entity .= " AND sID=" . $fields["sID"];
+            break;
+        case "glpi_softwareversions" :
+            $where_entity = " sID=" . $fields["sID"];
+            break;
+ 			default :
 				$where_entity = " FK_entities=" . $fields["FK_entities"];
 				break;
 		}
@@ -150,9 +157,8 @@ function dataAlreadyInDB($type, $fields, $mapping_definition, $model) {
 
 			case NETPORT_TYPE :
 				$where .= " AND device_type=" . $model->getDeviceType() . " AND on_device=" . $fields["on_device"];
-				$where.= getPortUnicityRequest($model,$fields);
+				$where .= getPortUnicityRequest($model,$fields);
 				break;
-
 			default :
 				break;
 		}
@@ -169,7 +175,7 @@ function dataAlreadyInDB($type, $fields, $mapping_definition, $model) {
 		);
 }
 
-/*
+/**
  * Get an instance of the primary type
  * 
  * @param device_type the type of the primary item
@@ -220,7 +226,7 @@ function getInstance($device_type) {
 	}
 }
 
-/*
+/**
  * Get the name of a type
  * 
  * @param device_type the type of the item
@@ -238,7 +244,7 @@ function getInstanceName($device_type) {
 	return $commonitem->getType();
 }
 
-/*
+/**
  * Set fields in the common_fields array
  * @param fields the fields to write in DB
  * @param common_fields the array of all the common_fields
@@ -250,7 +256,7 @@ function setFields($fields, & $common_fields, $fields_to_set) {
 			$common_fields[$field] = $fields[$field];
 }
 
-/*
+/**
  * Set unfields in an array
  * @param fields the fields to write in DB
  * @param fields_to_unset the list of fields to unset from the fields arrary
@@ -266,7 +272,7 @@ function addField(& $array, $field, $value, $check_exists = true) {
 		$array[$field] = $value;
 	elseif (!$check_exists) $array[$field] = $value;
 }
-/*
+/**
  * Add fields to the common_fields array BEFORE add/update of the primary type
  */
 function preAddCommonFields($common_fields, $type, $fields, $entity) {
@@ -360,7 +366,7 @@ function preAddCommonFields($common_fields, $type, $fields, $entity) {
 	return $common_fields;
 }
 
-/*
+/**
  * Add new values to the array of common values
  * @param common_fields the array of common values
  * @param type the type of value
@@ -467,7 +473,13 @@ function addCommonFields(& $common_fields, $type, $fields, $entity, $ID) {
 				"FK_group"
 			);
 			break;
-		
+
+      case SOFTWARELICENSE_TYPE:
+         addField($common_fields, "device_id", $ID, true);
+         addField($common_fields, "device_type", $type, false);
+         addField($common_fields, "FK_entities", $entity, false);
+         break;	
+         	
 		//Device types
 		case PLUGIN_DATA_INJECTION_MOBOARD_DEVICE_TYPE :
 		case PLUGIN_DATA_INJECTION_PROCESSOR_DEVICE_TYPE :
@@ -490,7 +502,7 @@ function addCommonFields(& $common_fields, $type, $fields, $entity, $ID) {
 	setFields($fields, $common_fields, $setFields);
 }
 
-/*
+/**
  * Add necessary fields
  * @param model the current model
  * @param mapping the current mapping
@@ -643,6 +655,11 @@ function addNecessaryFields($model, $mapping, $mapping_definition, $entity, $typ
 			addField($fields, "FK_entities", $entity);
 			addField($fields, "device_id", $common_fields["device_id"]);
 			break;
+
+      case SOFTWARELICENSE_TYPE :
+         //Set the device_id
+         addField($fields, "FK_entities", $entity);
+         break;
 			
 		default :
 			//Add entity field for plugins
@@ -653,7 +670,7 @@ function addNecessaryFields($model, $mapping, $mapping_definition, $entity, $typ
 	unsetFields($fields, $unsetFields);
 }
 
-/*
+/**
  * Check if all value of an array are empty
  * 
  * @param fields : array to check
@@ -670,12 +687,25 @@ function isAllEmpty($fields) {
 	return true;
 }
 
+/**
+ * Get the value in database for a field
+ * @param result the array to store injection's results
+ * @param mapping the current mapping
+ * @param mapping_definition the current mapping_definition
+ * @param field_value the field value
+ * @param entity the current entity
+ * @param obj the object
+ * @param canadd can add values
+ * @param several can map several values in one field
+ * @param fields_comments the comments associated with a dropdown
+ * @return a table with the field's values
+ */
 function getFieldValue($result, $mapping, $mapping_definition, $field_value, $entity, $obj, $canadd, $several,$field_comments = EMPTY_VALUE) {
 	global $DB, $CFG_GLPI;
 
 	if (isset ($mapping_definition["table_type"])) {
 		switch ($mapping_definition["table_type"]) {
-			case "template" :
+ 			case "template" :
 				$obj[$mapping_definition["linkfield"]] = findTemplate($entity, $mapping_definition["table"], $field_value);
 				break;
 				//Read and add in a dropdown table
@@ -739,7 +769,7 @@ function getFieldValue($result, $mapping, $mapping_definition, $field_value, $en
 	return $obj;
 }
 
-/*
+/**
  * Process actions after item was imported in DB (mainly create connections)
  * 
  * @param result the result set
@@ -779,7 +809,12 @@ function processBeforeEnd($result, $model, $type, $fields, & $common_fields) {
 			addNetworkingWire($result, $common_fields, $model->getCanOverwriteIfNotEmpty());
 			break;
 		case COMPUTER_CONNECTION_TYPE :
-			connectPeripheral($result,$fields);
+			if ($model->getDeviceType() != SOFTWARELICENSE_TYPE) {
+            connectPeripheral($result,$fields);
+			}
+         else {
+         	affectLicenceToComputer($result,$fields);
+         }
 			break;
 		case ENTITY_TYPE :
 			addEntityPostProcess($common_fields);
@@ -792,7 +827,7 @@ function processBeforeEnd($result, $model, $type, $fields, & $common_fields) {
 	}
 }
 
-/*
+/**
  * Check is the user has the right to add datas in a dropdown table
  * @param table the dropdown table
  * @canadd_dropdown boolean to indicate if the model allows user to add datas in a dropdown table
@@ -810,7 +845,7 @@ function haveRightDropdown($table, $canadd_dropdown) {
 	}
 }
 
-/*
+/**
  * Add the complementary informations into the list of fields to insert in DB
  * @param fields the fields to insert into DB
  * @param infos the informations filled by the user when injecting his file
@@ -887,9 +922,17 @@ function logAddOrUpdate($device_type, $device_id, $action_type) {
 function filterFields(& $fields, $fields_from_db, $can_overwrite, $type) {
 	//If no right to overwrite existing fields in DB -> unset the field
 	foreach ($fields as $field => $value) {
-		if ($field[0] != '_' && (isset($fields_from_db[$field]) && $fields_from_db[$field]) && !$can_overwrite) {
+		if ($field[0] != '_' 
+         && (isset($fields_from_db[$field]) 
+            && $fields_from_db[$field]) 
+               && !$can_overwrite) {
 			$name = getMappingNameByTypeAndValue($type, $field);
-			if ($field == "ID" || ((isset ($DATA_INJECTION_MAPPING[$type][$name]['table_type']) && $DATA_INJECTION_MAPPING[$type][$name]['table_type'] == "dropdown") && $fields_from_db[$field] > 0) || $fields_from_db[$field] != EMPTY_VALUE)
+			if ($field == "ID" 
+            || (
+               (isset ($DATA_INJECTION_MAPPING[$type][$name]['table_type']) 
+                  && $DATA_INJECTION_MAPPING[$type][$name]['table_type'] == "dropdown") 
+                     && $fields_from_db[$field] > 0) 
+                        || $fields_from_db[$field] != EMPTY_VALUE)
 				unset ($fields[$field]);
 		}
 

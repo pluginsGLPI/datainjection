@@ -316,7 +316,7 @@ function connectPeripheral($result, $fields) {
 			case PLUGIN_DATA_INJECTION_POWER_DEVICE_TYPE :
 				compdevice_add($fields["computer_id"], getDeviceSubTypeByDataInjectionType($fields["device_type"]), $fields["device_id"]);
 				break;
-			default :
+         default :
 				//Connect everything but not devices
 				Connect($fields["device_id"], $fields["computer_id"], $fields["device_type"]);
 				break;
@@ -355,5 +355,43 @@ function connectToObjectByType($result, $fields) {
 		} else
 			$result->addInjectionMessage(WARNING_SEVERAL_VALUES_FOUND);
 	}
+}
+
+function affectLicenceToComputer($result,$fields) {
+   global $DB;
+   
+   $found = true;
+   
+   if (isset ($fields["name"]) || isset ($fields["serial"]) || isset ($fields["otherserial"])) {
+      if (!isset ($fields["computer_id"])) {
+
+         //Look for a not deleted, not template computer in the entity
+         $sql = "SELECT ID FROM glpi_computers WHERE deleted=0 AND is_template=0 AND FK_entities=" . $fields["FK_entities"];
+
+         foreach (array (
+               "name",
+               "serial",
+               "otherserial"
+            ) as $tmpfield) {
+            if (isset ($fields[$tmpfield]))
+               $sql .= " AND $tmpfield='" .
+               addslashes($fields[$tmpfield]) . "'";
+         }
+         
+         $result_sql = $DB->query($sql);
+         //If only one computer was found in the entity, perform connection
+         if ($DB->numrows($result_sql) != 1) {
+            $result->addInjectionMessage(WARNING_SEVERAL_VALUES_FOUND);
+            $found = false;
+         } else
+            $fields["computer_id"] = $DB->result($result_sql, 0, "ID");
+      }
+   }
+   if ($found) {
+   	$licence = new SoftwareLicense;
+      $input['ID'] = $fields['device_id'];
+      $input['FK_computers'] = $fields['computer_id'];
+      $licence->update($input); 
+   }
 }
 ?>

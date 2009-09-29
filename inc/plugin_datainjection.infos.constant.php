@@ -789,6 +789,181 @@ $DATA_INJECTION_INFOS[DOCUMENT_TYPE]['mime']['name'] = $LANG['document'][4];
 $DATA_INJECTION_INFOS[DOCUMENT_TYPE]['mime']['type'] = 'text';
 
 // ----------------------------------------------------------------------
+//SOFTWARE MAPPING
+// ----------------------------------------------------------------------
+$DATA_INJECTION_INFOS[SOFTWARE_TYPE]['name']['table'] = 'glpi_software';
+$DATA_INJECTION_INFOS[SOFTWARE_TYPE]['name']['field'] = 'name';
+$DATA_INJECTION_INFOS[SOFTWARE_TYPE]['name']['name'] = $LANG["common"][16];
+$DATA_INJECTION_INFOS[SOFTWARE_TYPE]['name']['type'] = 'text';
+
+$DATA_INJECTION_INFOS[SOFTWARE_TYPE]['comments']['table'] = 'glpi_software';
+$DATA_INJECTION_INFOS[SOFTWARE_TYPE]['comments']['field'] = 'comments';
+$DATA_INJECTION_INFOS[SOFTWARE_TYPE]['comments']['name'] = $LANG["common"][25];
+$DATA_INJECTION_INFOS[SOFTWARE_TYPE]['comments']['type'] = 'text';
+$DATA_INJECTION_INFOS[SOFTWARE_TYPE]['comments']['input_type'] = 'multitext';
+
+$DATA_INJECTION_INFOS[SOFTWARE_TYPE]['location']['table'] = 'glpi_dropdown_locations';
+$DATA_INJECTION_INFOS[SOFTWARE_TYPE]['location']['field'] = 'name';
+$DATA_INJECTION_INFOS[SOFTWARE_TYPE]['location']['name'] = $LANG["common"][15];
+$DATA_INJECTION_INFOS[SOFTWARE_TYPE]['location']['linkfield'] = 'location';
+$DATA_INJECTION_INFOS[SOFTWARE_TYPE]['location']['type'] = 'text';
+$DATA_INJECTION_INFOS[SOFTWARE_TYPE]['location']['input_type'] = 'dropdown';
+
+$DATA_INJECTION_INFOS[SOFTWARE_TYPE]['manufacturer']['table'] = 'glpi_dropdown_manufacturer';
+$DATA_INJECTION_INFOS[SOFTWARE_TYPE]['manufacturer']['field'] = 'name';
+$DATA_INJECTION_INFOS[SOFTWARE_TYPE]['manufacturer']['name'] = $LANG["common"][5];
+$DATA_INJECTION_INFOS[SOFTWARE_TYPE]['manufacturer']['type'] = 'text';
+$DATA_INJECTION_INFOS[SOFTWARE_TYPE]['manufacturer']['linkfield'] = 'FK_glpi_enterprise';
+$DATA_INJECTION_INFOS[SOFTWARE_TYPE]['manufacturer']['input_type'] = 'dropdown';
+
+$DATA_INJECTION_INFOS[SOFTWARE_TYPE]['tech_num']['table'] = 'glpi_users';
+$DATA_INJECTION_INFOS[SOFTWARE_TYPE]['tech_num']['field'] = 'name';
+$DATA_INJECTION_INFOS[SOFTWARE_TYPE]['tech_num']['name'] = $LANG["common"][10];
+$DATA_INJECTION_INFOS[SOFTWARE_TYPE]['tech_num']['linkfield'] = 'tech_num';
+$DATA_INJECTION_INFOS[SOFTWARE_TYPE]['tech_num']['type'] = 'text';
+$DATA_INJECTION_INFOS[SOFTWARE_TYPE]['tech_num']['input_type'] = 'user';
+
+$DATA_INJECTION_INFOS[SOFTWARE_TYPE]['recursive']['table'] = 'glpi_software';
+$DATA_INJECTION_INFOS[SOFTWARE_TYPE]['recursive']['field'] = 'recursive';
+$DATA_INJECTION_INFOS[SOFTWARE_TYPE]['recursive']['name'] = $LANG["entity"][9];
+$DATA_INJECTION_INFOS[SOFTWARE_TYPE]['recursive']['type'] = 'integer';
+$DATA_INJECTION_INFOS[SOFTWARE_TYPE]['recursive']['input_type'] = 'yesno';
+
+$DATA_INJECTION_INFOS[SOFTWARE_TYPE]['platform']['table'] = 'glpi_dropdown_os';
+$DATA_INJECTION_INFOS[SOFTWARE_TYPE]['platform']['field'] = 'name';
+$DATA_INJECTION_INFOS[SOFTWARE_TYPE]['platform']['name'] = $LANG['software'][3];
+$DATA_INJECTION_INFOS[SOFTWARE_TYPE]['platform']['linkfield'] = 'platform';
+$DATA_INJECTION_INFOS[SOFTWARE_TYPE]['platform']['input_type'] = 'dropdown';
+$DATA_INJECTION_INFOS[SOFTWARE_TYPE]['platform']['type'] = 'text';
+
+$DATA_INJECTION_INFOS[SOFTWARE_TYPE]['is_template']['table'] = 'glpi_software';
+$DATA_INJECTION_INFOS[SOFTWARE_TYPE]['is_template']['field'] = 'is_template';
+$DATA_INJECTION_INFOS[SOFTWARE_TYPE]['is_template']['name'] = $LANG["rulesengine"][0] . " " . $LANG["common"][13] . " ?";
+$DATA_INJECTION_INFOS[SOFTWARE_TYPE]['is_template']['type'] = 'integer';
+$DATA_INJECTION_INFOS[SOFTWARE_TYPE]['is_template']['input_type'] = 'yesno';
+
+$DATA_INJECTION_INFOS[SOFTWARE_TYPE]['tplname']['table'] = 'glpi_software';
+$DATA_INJECTION_INFOS[SOFTWARE_TYPE]['tplname']['field'] = 'tplname';
+$DATA_INJECTION_INFOS[SOFTWARE_TYPE]['tplname']['name'] = $LANG["common"][6];
+$DATA_INJECTION_INFOS[SOFTWARE_TYPE]['tplname']['type'] = 'text';
+
+$DATA_INJECTION_INFOS[SOFTWARE_TYPE]['notes']['table'] = 'glpi_software';
+$DATA_INJECTION_INFOS[SOFTWARE_TYPE]['notes']['field'] = 'notes';
+$DATA_INJECTION_INFOS[SOFTWARE_TYPE]['notes']['name'] = $LANG["title"][37];
+$DATA_INJECTION_INFOS[SOFTWARE_TYPE]['notes']['input_type'] = 'multitext';
+$DATA_INJECTION_INFOS[SOFTWARE_TYPE]['notes']['type'] = 'text';
+
+$DATA_INJECTION_INFOS[SOFTWARE_TYPE]['helpdesk_visible']['table'] = 'glpi_software';
+$DATA_INJECTION_INFOS[SOFTWARE_TYPE]['helpdesk_visible']['field'] = 'helpdesk_visible';
+$DATA_INJECTION_INFOS[SOFTWARE_TYPE]['helpdesk_visible']['name'] = $LANG['software'][46];
+$DATA_INJECTION_INFOS[SOFTWARE_TYPE]['helpdesk_visible']['type'] = 'integer';
+$DATA_INJECTION_INFOS[SOFTWARE_TYPE]['helpdesk_visible']['input_type'] = 'yesno';
+
+$DATA_INJECTION_INFOS[SOFTWARE_TYPE]['FK_users']['table'] = 'glpi_users';
+$DATA_INJECTION_INFOS[SOFTWARE_TYPE]['FK_users']['field'] = 'name';
+$DATA_INJECTION_INFOS[SOFTWARE_TYPE]['FK_users']['name'] = $LANG["common"][34];
+$DATA_INJECTION_INFOS[SOFTWARE_TYPE]['FK_users']['linkfield'] = 'FK_users';
+$DATA_INJECTION_INFOS[SOFTWARE_TYPE]['FK_users']['type'] = 'text';
+$DATA_INJECTION_INFOS[SOFTWARE_TYPE]['FK_users']['input_type'] = 'user';
+
+$DATA_INJECTION_INFOS[SOFTWARE_TYPE]['FK_groups']['table'] = 'glpi_groups';
+$DATA_INJECTION_INFOS[SOFTWARE_TYPE]['FK_groups']['field'] = 'name';
+$DATA_INJECTION_INFOS[SOFTWARE_TYPE]['FK_groups']['name'] = $LANG["common"][35];
+$DATA_INJECTION_INFOS[SOFTWARE_TYPE]['FK_groups']['linkfield'] = 'FK_groups';
+$DATA_INJECTION_INFOS[SOFTWARE_TYPE]['FK_groups']['type'] = 'text';
+$DATA_INJECTION_INFOS[SOFTWARE_TYPE]['FK_groups']['input_type'] = 'dropdown';
+
+$DATA_INJECTION_INFOS[SOFTWARE_TYPE]['category']['table'] = 'glpi_dropdown_software_category';
+$DATA_INJECTION_INFOS[SOFTWARE_TYPE]['category']['field'] = 'name';
+$DATA_INJECTION_INFOS[SOFTWARE_TYPE]['category']['name'] = $LANG['common'][36];
+$DATA_INJECTION_INFOS[SOFTWARE_TYPE]['category']['linkfield'] = 'category';
+$DATA_INJECTION_INFOS[SOFTWARE_TYPE]['category']['type'] = 'text';
+$DATA_INJECTION_INFOS[SOFTWARE_TYPE]['category']['input_type'] = 'dropdown';
+
+// ----------------------------------------------------------------------
+//SOFTWARE VERSION MAPPING
+// ----------------------------------------------------------------------
+$DATA_INJECTION_INFOS[SOFTWAREVERSION_TYPE]['name']['table'] = 'glpi_softwareversions';
+$DATA_INJECTION_INFOS[SOFTWAREVERSION_TYPE]['name']['field'] = 'name';
+$DATA_INJECTION_INFOS[SOFTWAREVERSION_TYPE]['name']['name'] = $LANG['rulesengine'][78];
+$DATA_INJECTION_INFOS[SOFTWAREVERSION_TYPE]['name']['type'] = 'text';
+
+$DATA_INJECTION_INFOS[SOFTWAREVERSION_TYPE]['state']['table'] = 'glpi_dropdown_state';
+$DATA_INJECTION_INFOS[SOFTWAREVERSION_TYPE]['state']['field'] = 'name';
+$DATA_INJECTION_INFOS[SOFTWAREVERSION_TYPE]['state']['name'] = $LANG["joblist"][0];
+$DATA_INJECTION_INFOS[SOFTWAREVERSION_TYPE]['state']['linkfield'] = 'state';
+$DATA_INJECTION_INFOS[SOFTWAREVERSION_TYPE]['state']['input_type'] = 'dropdown';
+$DATA_INJECTION_INFOS[SOFTWAREVERSION_TYPE]['state']['type'] = 'text';
+
+$DATA_INJECTION_INFOS[SOFTWAREVERSION_TYPE]['sID']['table'] = 'glpi_software';
+$DATA_INJECTION_INFOS[SOFTWAREVERSION_TYPE]['sID']['field'] = 'name';
+$DATA_INJECTION_INFOS[SOFTWAREVERSION_TYPE]['sID']['name'] = $LANG['help'][31];
+$DATA_INJECTION_INFOS[SOFTWAREVERSION_TYPE]['sID']['linkfield'] = 'sID';
+$DATA_INJECTION_INFOS[SOFTWAREVERSION_TYPE]['sID']['input_type'] = 'single';
+$DATA_INJECTION_INFOS[SOFTWAREVERSION_TYPE]['sID']['type'] = 'text';
+
+$DATA_INJECTION_INFOS[SOFTWAREVERSION_TYPE]['comments']['table'] = 'glpi_softwareversions';
+$DATA_INJECTION_INFOS[SOFTWAREVERSION_TYPE]['comments']['field'] = 'comments';
+$DATA_INJECTION_INFOS[SOFTWAREVERSION_TYPE]['comments']['name'] = $LANG["common"][25];
+$DATA_INJECTION_INFOS[SOFTWAREVERSION_TYPE]['comments']['type'] = 'text';
+$DATA_INJECTION_INFOS[SOFTWAREVERSION_TYPE]['comments']['input_type'] = 'multitext';
+
+// ----------------------------------------------------------------------
+//SOFTWARE LICENSE MAPPING
+// ----------------------------------------------------------------------
+$DATA_INJECTION_INFOS[SOFTWARELICENSE_TYPE]['name']['table'] = 'glpi_softwarelicenses';
+$DATA_INJECTION_INFOS[SOFTWARELICENSE_TYPE]['name']['field'] = 'name';
+$DATA_INJECTION_INFOS[SOFTWARELICENSE_TYPE]['name']['name'] = $LANG['common'][16];
+$DATA_INJECTION_INFOS[SOFTWARELICENSE_TYPE]['name']['type'] = 'text';
+
+$DATA_INJECTION_INFOS[SOFTWARELICENSE_TYPE]['sID']['table'] = 'glpi_software';
+$DATA_INJECTION_INFOS[SOFTWARELICENSE_TYPE]['sID']['field'] = 'name';
+$DATA_INJECTION_INFOS[SOFTWARELICENSE_TYPE]['sID']['name'] = $LANG['help'][31];
+$DATA_INJECTION_INFOS[SOFTWARELICENSE_TYPE]['sID']['linkfield'] = 'sID';
+$DATA_INJECTION_INFOS[SOFTWARELICENSE_TYPE]['sID']['input_type'] = 'single';
+$DATA_INJECTION_INFOS[SOFTWARELICENSE_TYPE]['sID']['type'] = 'text';
+
+$DATA_INJECTION_INFOS[SOFTWARELICENSE_TYPE]['recursive']['table'] = 'glpi_softwarelicenses';
+$DATA_INJECTION_INFOS[SOFTWARELICENSE_TYPE]['recursive']['field'] = 'recursive';
+$DATA_INJECTION_INFOS[SOFTWARELICENSE_TYPE]['recursive']['name'] = $LANG["entity"][9];
+$DATA_INJECTION_INFOS[SOFTWARELICENSE_TYPE]['recursive']['type'] = 'integer';
+$DATA_INJECTION_INFOS[SOFTWARELICENSE_TYPE]['recursive']['input_type'] = 'yesno';
+
+$DATA_INJECTION_INFOS[SOFTWARELICENSE_TYPE]['comments']['table'] = 'glpi_softwarelicenses';
+$DATA_INJECTION_INFOS[SOFTWARELICENSE_TYPE]['comments']['field'] = 'comments';
+$DATA_INJECTION_INFOS[SOFTWARELICENSE_TYPE]['comments']['name'] = $LANG["common"][25];
+$DATA_INJECTION_INFOS[SOFTWARELICENSE_TYPE]['comments']['type'] = 'text';
+$DATA_INJECTION_INFOS[SOFTWARELICENSE_TYPE]['comments']['input_type'] = 'multitext';
+
+$DATA_INJECTION_INFOS[SOFTWARELICENSE_TYPE]['type']['table'] = 'glpi_dropdown_licensetypes';
+$DATA_INJECTION_INFOS[SOFTWARELICENSE_TYPE]['type']['field'] = 'name';
+$DATA_INJECTION_INFOS[SOFTWARELICENSE_TYPE]['type']['name'] = $LANG['common'][17];
+$DATA_INJECTION_INFOS[SOFTWARELICENSE_TYPE]['type']['linkfield'] = 'type';
+$DATA_INJECTION_INFOS[SOFTWARELICENSE_TYPE]['type']['input_type'] = 'dropdown';
+$DATA_INJECTION_INFOS[SOFTWARELICENSE_TYPE]['type']['type'] = 'text';
+
+$DATA_INJECTION_INFOS[SOFTWARELICENSE_TYPE]['number']['table'] = 'glpi_softwarelicenses';
+$DATA_INJECTION_INFOS[SOFTWARELICENSE_TYPE]['number']['field'] = 'number';
+$DATA_INJECTION_INFOS[SOFTWARELICENSE_TYPE]['number']['name'] = $LANG['tracking'][29];
+$DATA_INJECTION_INFOS[SOFTWARELICENSE_TYPE]['number']['type'] = 'integer';
+
+$DATA_INJECTION_INFOS[SOFTWARELICENSE_TYPE]['serial']['table'] = 'glpi_softwarelicenses';
+$DATA_INJECTION_INFOS[SOFTWARELICENSE_TYPE]['serial']['field'] = 'serial';
+$DATA_INJECTION_INFOS[SOFTWARELICENSE_TYPE]['serial']['name'] = $LANG["common"][19];
+$DATA_INJECTION_INFOS[SOFTWARELICENSE_TYPE]['serial']['type'] = 'text';
+
+$DATA_INJECTION_INFOS[SOFTWARELICENSE_TYPE]['otherserial']['table'] = 'glpi_softwarelicenses';
+$DATA_INJECTION_INFOS[SOFTWARELICENSE_TYPE]['otherserial']['field'] = 'otherserial';
+$DATA_INJECTION_INFOS[SOFTWARELICENSE_TYPE]['otherserial']['name'] = $LANG["common"][20];
+$DATA_INJECTION_INFOS[SOFTWARELICENSE_TYPE]['otherserial']['type'] = 'text';
+
+$DATA_INJECTION_INFOS[SOFTWARELICENSE_TYPE]['expire']['table'] = 'glpi_softwarelicenses';
+$DATA_INJECTION_INFOS[SOFTWARELICENSE_TYPE]['expire']['field'] = 'expire';
+$DATA_INJECTION_INFOS[SOFTWARELICENSE_TYPE]['expire']['name'] = $LANG['software'][32];
+$DATA_INJECTION_INFOS[SOFTWARELICENSE_TYPE]['expire']['type'] = 'date';
+$DATA_INJECTION_INFOS[SOFTWARELICENSE_TYPE]['expire']['input_type'] = 'date';
+
+// ----------------------------------------------------------------------
 //PSEUDO TYPE FOR PERIPHERAL TO COMPUTER CONNECTION
 // ----------------------------------------------------------------------
 $DATA_INJECTION_INFOS[COMPUTER_CONNECTION_TYPE]['computer_id']['table']='glpi_computers';

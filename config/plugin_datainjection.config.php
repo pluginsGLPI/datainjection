@@ -52,6 +52,8 @@ define ("CHECK_NOTOK",1);
 define ("TYPE_CHECK_OK",1);
 define ("ERROR_IMPORT_WRONG_TYPE",2);
 define ("ERROR_IMPORT_FIELD_MANDATORY",3);
+define ("ERROR_IMPORT_LINK_FIELD_MISSING",4);
+
 // Injection status
 define ("IMPORT_OK",0);
 define ("NOT_IMPORTED",1);
