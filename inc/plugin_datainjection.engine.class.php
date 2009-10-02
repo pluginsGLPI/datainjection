@@ -86,7 +86,7 @@ class DataInjectionEngine {
 				if (!isset ($db_fields[$mapping->getMappingType()]))
 					$db_fields[$mapping->getMappingType()] = array ();
 
-				$field = getFieldValue($result, $mapping, $mapping_definition, $line[$i], $this->getEntity(), $db_fields[$mapping->getMappingType()], $this->getModel()->getCanAddDropdown(), lookIfSeveralMappingsForField($this->getModel(), $mapping_definition, $mapping->getValue(), $line), getFieldCommentsIfExists($this->getModel(), $line, $mapping));
+				$field = getFieldValue($result, $this->getModel()->getDeviceType(), $mapping, $mapping_definition, $line[$i], $this->getEntity(), $db_fields[$mapping->getMappingType()], $this->getModel()->getCanAddDropdown(), lookIfSeveralMappingsForField($this->getModel(), $mapping_definition, $mapping->getValue(), $line), getFieldCommentsIfExists($this->getModel(), $line, $mapping));
 				if (!empty ($field)) {
 					$db_fields[$mapping->getMappingType()] = $field;
 				}

@@ -110,6 +110,7 @@ function dataAlreadyInDB($type, $fields, $mapping_definition, $model) {
 
 		switch ($obj->table) {
 			//Devices types
+         case "glpi_profiles" :
 			case "glpi_device_moboard" :
 			case "glpi_device_processor" :
 			case "glpi_device_ram" :
@@ -275,7 +276,8 @@ function addField(& $array, $field, $value, $check_exists = true) {
  * Add fields to the common_fields array BEFORE add/update of the primary type
  */
 function preAddCommonFields($common_fields, $type, $fields, $entity) {
-	$setFields = array ();
+	global $PLUGIN_HOOKS;
+   $setFields = array ();
 	switch ($type) {
 		case ENTITY_TYPE :
 			$setFields = array (
@@ -359,6 +361,11 @@ function preAddCommonFields($common_fields, $type, $fields, $entity) {
 			);
 			break;				
 		default :
+            if ($type >= 1000) {
+                  $params = array();
+                  $setFields = doOneHook($PLUGIN_HOOKS['plugin_types'][$type],"datainjection_preAddCommonFields",$params);
+            }
+
 			break;
 	}
 	setFields($fields, $common_fields, $setFields);
@@ -375,7 +382,8 @@ function preAddCommonFields($common_fields, $type, $fields, $entity) {
  * @return the update common values array
  */
 function addCommonFields(& $common_fields, $type, $fields, $entity, $ID) {
-	$setFields = array ();
+	global $PLUGIN_HOOKS;
+   $setFields = array ();
 	switch ($type) {
 		//Copy/paste is voluntary in order to know exactly which fields are included or not
 		case NETPORT_TYPE :
@@ -495,6 +503,13 @@ function addCommonFields(& $common_fields, $type, $fields, $entity, $ID) {
 			addField($common_fields, "device_id", $ID, true);
 			addField($common_fields, "device_type", $type, false);
 		default :
+            if ($type >= 1000) {
+                  $params = array("fields"=>$fields,"ID"=>$ID, "entity"=>$entity,"common_fields"=>$common_fields);
+                  $hook_result = doOneHook($PLUGIN_HOOKS['plugin_types'][$type],"datainjection_addCommonFields",$params);
+                  $common_fields = $hook_result["common_fields"];
+                  $setFields = $hook_result["setfields"];
+            }
+
 			break;
 	}
 
@@ -513,7 +528,7 @@ function addCommonFields(& $common_fields, $type, $fields, $entity, $ID) {
  * @return the fields modified
  */
 function addNecessaryFields($model, $mapping, $mapping_definition, $entity, $type, & $fields, $common_fields) {
-	global $DB;
+	global $DB,$PLUGIN_HOOKS;
 
 	//Internal field to identify object injected with datainjection
 	addField($fields, "_from_datainjection", 1);
@@ -664,9 +679,17 @@ function addNecessaryFields($model, $mapping, $mapping_definition, $entity, $typ
          break;
 			
 		default :
-			//Add entity field for plugins
-			if ($type > 1000)
-				addField($fields, "FK_entities", $entity);
+            if ($type >= 1000) {
+                  //Add entity field for plugins
+                  addField($fields, "FK_entities", $entity);
+                  
+                  $params = array("fields"=>$fields,
+                                    "common_fields"=>$common_fields);
+                  $fields_to_add = doOneHook($PLUGIN_HOOKS['plugin_types'][$type],"datainjection_addNecessaryFields",$params);
+                  foreach ($fields_to_add as $field_to_add => $value_to_add) {
+                  	addField($fields,$field_to_add,$value_to_add);
+                  }
+            }
 			break;
 	}
 	unsetFields($fields, $unsetFields);
@@ -702,8 +725,8 @@ function isAllEmpty($fields) {
  * @param fields_comments the comments associated with a dropdown
  * @return a table with the field's values
  */
-function getFieldValue($result, $mapping, $mapping_definition, $field_value, $entity, $obj, $canadd, $several,$field_comments = EMPTY_VALUE) {
-	global $DB, $CFG_GLPI;
+function getFieldValue($result, $type, $mapping, $mapping_definition, $field_value, $entity, $obj, $canadd, $several,$field_comments = EMPTY_VALUE) {
+	global $DB, $CFG_GLPI,$PLUGIN_HOOKS;
 
 	if (isset ($mapping_definition["table_type"])) {
 		switch ($mapping_definition["table_type"]) {
@@ -762,12 +785,20 @@ function getFieldValue($result, $mapping, $mapping_definition, $field_value, $en
 			case "virtual" :
 				//nobreak
 			default :
-				$obj[$mapping_definition["field"]] = $field_value;
+				if ($type >= 1000) {
+                  $params = array("mapping"=>$mapping, "mapping_definition"=>$mapping_definition,"entity"=>$entity,
+                                    "field_value"=>$field_value);
+                  $obj[$mapping_definition["field"]] = doOneHook($PLUGIN_HOOKS['plugin_types'][$type],"datainjection_getFieldValue",$params);
+            }
+            else {
+               $obj[$mapping_definition["field"]] = $field_value;	
+            }
 				break;
 		}
-	} else
+	} else {
 		$obj[$mapping_definition["field"]] = $field_value;
-
+	}
+		
 	return $obj;
 }
 
@@ -782,7 +813,8 @@ function getFieldValue($result, $mapping, $mapping_definition, $field_value, $en
  * @return the common_fields
  */
 function processBeforeEnd($result, $model, $type, $fields, & $common_fields) {
-	switch ($type) {
+	global $PLUGIN_HOOKS;
+   switch ($type) {
 		case ENTERPRISE_TYPE :
 			addContractToItem($common_fields,$type);
 			addContact($common_fields);
@@ -825,6 +857,12 @@ function processBeforeEnd($result, $model, $type, $fields, & $common_fields) {
 			connectToObjectByType($result,$fields);
 			break;
 		default :
+            if ($type >= 1000) {
+                  $params = array("result"=>$result, "model"=>$model,"fields"=>$fields,
+                                    "common_fields"=>$common_fields);
+                  doOneHook($PLUGIN_HOOKS['plugin_types'][$type],"datainjection_getFieldValue",$params);
+            }
+
 			break;
 	}
 }
