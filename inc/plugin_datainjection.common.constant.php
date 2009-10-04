@@ -43,6 +43,7 @@ define("COMPUTER_CONNECTION_TYPE", 998);
 define("NETPORT_TYPE", 999);
 define("SOFTWARE_CONNECTION_TYPE", 997);
 define("CONNECTION_ALL_TYPES", 996);
+define("PROFILE_USER_TYPE", 995);
 
 //Store all the type of items that could be imported
 $IMPORT_TYPES = array (

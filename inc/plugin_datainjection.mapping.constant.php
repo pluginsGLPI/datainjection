@@ -1122,6 +1122,29 @@ $DATA_INJECTION_MAPPING[USER_TYPE]['FK_group']['type'] = 'text';
 $DATA_INJECTION_MAPPING[USER_TYPE]['FK_group']['table_type'] = 'single';
 $DATA_INJECTION_MAPPING[USER_TYPE]['FK_group']['linkfield'] = 'FK_group';
 
+//This mapping needs post processing
+$DATA_INJECTION_MAPPING[PROFILE_USER_TYPE]['FK_profiles']['table'] = 'glpi_profiles';
+$DATA_INJECTION_MAPPING[PROFILE_USER_TYPE]['FK_profiles']['field'] = 'name';
+$DATA_INJECTION_MAPPING[PROFILE_USER_TYPE]['FK_profiles']['name'] = $LANG['profiles'][22];
+$DATA_INJECTION_MAPPING[PROFILE_USER_TYPE]['FK_profiles']['linkfield'] = '';
+$DATA_INJECTION_MAPPING[PROFILE_USER_TYPE]['FK_profiles']['table_type'] = 'single';
+$DATA_INJECTION_MAPPING[PROFILE_USER_TYPE]['FK_profiles']['type'] = 'text';
+
+$DATA_INJECTION_MAPPING[PROFILE_USER_TYPE]['FK_entities']['table'] = 'glpi_profiles';
+$DATA_INJECTION_MAPPING[PROFILE_USER_TYPE]['FK_entities']['field'] = 'name';
+$DATA_INJECTION_MAPPING[PROFILE_USER_TYPE]['FK_entities']['linkfield'] = '';
+$DATA_INJECTION_MAPPING[PROFILE_USER_TYPE]['FK_entities']['name'] = $LANG['entity'][0];
+$DATA_INJECTION_MAPPING[PROFILE_USER_TYPE]['FK_entities']['type'] = 'text';
+$DATA_INJECTION_MAPPING[PROFILE_USER_TYPE]['FK_entities']['table_type'] = 'virtual';
+
+$DATA_INJECTION_MAPPING[PROFILE_USER_TYPE]['recursive']['table'] = 'glpi_profiles';
+$DATA_INJECTION_MAPPING[PROFILE_USER_TYPE]['recursive']['field'] = 'name';
+$DATA_INJECTION_MAPPING[PROFILE_USER_TYPE]['recursive']['field'] = '';
+$DATA_INJECTION_MAPPING[PROFILE_USER_TYPE]['recursive']['name'] = $LANG['profiles'][28];
+$DATA_INJECTION_MAPPING[PROFILE_USER_TYPE]['recursive']['type'] = 'text';
+$DATA_INJECTION_MAPPING[PROFILE_USER_TYPE]['recursive']['table_type'] = 'virtual';
+
+
 // ----------------------------------------------------------------------
 //GROUP MAPPING
 // ----------------------------------------------------------------------

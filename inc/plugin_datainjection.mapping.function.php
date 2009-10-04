@@ -65,6 +65,10 @@ function getAllMappingsDefinitionsTypes($primary_type)
 		$types[] = array(CONNECTION_ALL_TYPES,$LANG["datainjection"]["associate"][0]);		
 	}
 	
+	if ($primary_type == USER_TYPE) {
+		$types[] = array(PROFILE_USER_TYPE,$LANG["profiles"][22]);		
+	}
+	
 	asort($types);
 	return $types;
 }

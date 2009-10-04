@@ -481,12 +481,15 @@ function addCommonFields(& $common_fields, $type, $fields, $entity, $ID) {
 			);
 			break;
 
-      case SOFTWARELICENSE_TYPE:
-         addField($common_fields, "device_id", $ID, true);
-         addField($common_fields, "device_type", $type, false);
-         addField($common_fields, "FK_entities", $entity, false);
-         break;	
-         	
+      		case SOFTWARELICENSE_TYPE:
+         		addField($common_fields, "device_id", $ID, true);
+         		addField($common_fields, "device_type", $type, false);
+         		addField($common_fields, "FK_entities", $entity, false);
+         		break;
+		case PROFILE_USER_TYPE:
+			addField($common_fields, "FK_users", $ID, true);	
+         		break;	
+
 		//Device types
 		case PLUGIN_DATA_INJECTION_MOBOARD_DEVICE_TYPE :
 		case PLUGIN_DATA_INJECTION_PROCESSOR_DEVICE_TYPE :
@@ -528,7 +531,7 @@ function addCommonFields(& $common_fields, $type, $fields, $entity, $ID) {
  * @return the fields modified
  */
 function addNecessaryFields($model, $mapping, $mapping_definition, $entity, $type, & $fields, $common_fields) {
-	global $DB,$PLUGIN_HOOKS;
+	global $DB,$PLUGIN_HOOKS,$CFG_GLPI;
 
 	//Internal field to identify object injected with datainjection
 	addField($fields, "_from_datainjection", 1);
@@ -549,9 +552,9 @@ function addNecessaryFields($model, $mapping, $mapping_definition, $entity, $typ
 				"notes",
 				"admin_email",
 				"admin_reply",
-            "tag",
-            "ldap_dn"
-			);
+            			"tag",
+            			"ldap_dn"
+				);
 			break;
 		case CONTACT_TYPE :
 			addField($fields, "FK_entities", $entity);
@@ -608,7 +611,7 @@ function addNecessaryFields($model, $mapping, $mapping_definition, $entity, $typ
 			addField($fields, "FK_entities", $entity);
 			break;
 		case GROUP_TYPE :
-         addField($fields, "FK_entities", $entity);
+         		addField($fields, "FK_entities", $entity);
 			break;
 		case ENTERPRISE_TYPE :
 			addField($fields, "FK_entities", $entity);
@@ -616,13 +619,15 @@ function addNecessaryFields($model, $mapping, $mapping_definition, $entity, $typ
 		case SOFTWARE_TYPE :
 			addField($fields, "FK_entities", $entity);
 			break;
-      case KNOWBASE_TYPE :
-         addField($fields, "FK_entities", $entity);
-         break;
+      		case KNOWBASE_TYPE :
+         		addField($fields, "FK_entities", $entity);
+         		break;
 		case CONTRACT_TYPE :
 			addField($fields, "FK_entities", $entity);
 			break;
 		case USER_TYPE :
+			$unsetFields = array ("FK_profiles", "recursive","FK_entities");
+
 			addField($fields, "FK_entities", $entity);
 			if (isset ($fields["password"])) {
 				if (empty ($fields["password"])) {
@@ -658,6 +663,17 @@ function addNecessaryFields($model, $mapping, $mapping_definition, $entity, $typ
 
 			//Set the device type
 			addField($fields, "device_type", $model->getDeviceType());
+			break;
+		case PROFILE_TYPE:
+			if (isset($fields['helpdesk_hardware_type'])) {
+				$hardware_types = array();
+				foreach($CFG_GLPI["helpdesk_types"] as $type){
+                        	   if ($fields["helpdesk_hardware_type"]&pow(2,$type)) {
+                	              array_push($hardware_types,$type);
+				   }
+				}
+			   $fields["helpdesk_hardware_type"]=$hardware_types;
+			}
 			break;
 
 		//Object connections
@@ -844,25 +860,27 @@ function processBeforeEnd($result, $model, $type, $fields, & $common_fields) {
 			break;
 		case COMPUTER_CONNECTION_TYPE :
 			if ($model->getDeviceType() != SOFTWARELICENSE_TYPE) {
-            connectPeripheral($result,$fields);
+            			connectPeripheral($result,$fields);
 			}
-         else {
-         	affectLicenceToComputer($result,$fields);
-         }
+         		else {
+         			affectLicenceToComputer($result,$fields);
+         		}
 			break;
 		case ENTITY_TYPE :
 			addEntityPostProcess($common_fields);
+			break;
+		case PROFILE_USER_TYPE:
+			addUserProfileEntity($common_fields);
 			break;
 		case CONNECTION_ALL_TYPES:
 			connectToObjectByType($result,$fields);
 			break;
 		default :
-            if ($type >= 1000) {
-                  $params = array("result"=>$result, "model"=>$model,"fields"=>$fields,
+            		if ($type >= 1000) {
+                  		$params = array("result"=>$result, "model"=>$model,"fields"=>$fields,
                                     "common_fields"=>$common_fields);
-                  doOneHook($PLUGIN_HOOKS['plugin_types'][$type],"datainjection_getFieldValue",$params);
-            }
-
+                  	doOneHook($PLUGIN_HOOKS['plugin_types'][$type],"datainjection_getFieldValue",$params);
+            		}
 			break;
 	}
 }
