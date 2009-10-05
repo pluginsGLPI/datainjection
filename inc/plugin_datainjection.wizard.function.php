@@ -1136,6 +1136,9 @@ function fillInfoStep($target, $error) {
 						case "is_global" :
 							dropdownSimpleManagement("field[$key][1]");
 							break;
+                  case "FK_entities":
+                     dropdownValue($DATA_INJECTION_INFOS[$value->getInfosType()][$value->getValue()]["table"], "field[$key][1]", $value->getInfosText(), 1, getEntitySons($_SESSION["glpiactive_entity"]));
+                     break;   
                   default :
 							dropdownValue($DATA_INJECTION_INFOS[$value->getInfosType()][$value->getValue()]["table"], "field[$key][1]", $value->getInfosText(), 1, $_SESSION["glpiactive_entity"]);
 							break;

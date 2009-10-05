@@ -405,6 +405,9 @@ function is_true_float($val){
     }
 }
 
+/**
+ * Check if a document is already associated with an item
+ */
 function isDocumentAssociatedWithObject($document_id,$device_type,$device_id)
 {
 	global $DB;

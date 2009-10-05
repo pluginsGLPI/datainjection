@@ -46,6 +46,10 @@ function getAllInfosDefinitionsTypes($primary_type)
 		$types[] = array(COMPUTER_CONNECTION_TYPE,$LANG["datainjection"]["mappings"][5]);		
 	}
 
+   if ($primary_type == USER_TYPE) {
+      $types[] = array(PROFILE_USER_TYPE,$LANG["profiles"][22]);     
+   }
+
 	asort($types);
 	return $types;
 }

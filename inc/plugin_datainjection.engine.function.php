@@ -475,7 +475,7 @@ function addCommonFields(& $common_fields, $type, $fields, $entity, $ID) {
 			addField($common_fields, "FK_entities", $entity, false);
 			break;
 		case USER_TYPE :
-			addField($common_fields, "FK_user", $ID, false);
+			addField($common_fields, "FK_users", $ID, false);
 			$setFields = array (
 				"FK_group"
 			);
@@ -552,8 +552,8 @@ function addNecessaryFields($model, $mapping, $mapping_definition, $entity, $typ
 				"notes",
 				"admin_email",
 				"admin_reply",
-            			"tag",
-            			"ldap_dn"
+            "tag",
+            "ldap_dn"
 				);
 			break;
 		case CONTACT_TYPE :
@@ -626,7 +626,7 @@ function addNecessaryFields($model, $mapping, $mapping_definition, $entity, $typ
 			addField($fields, "FK_entities", $entity);
 			break;
 		case USER_TYPE :
-			$unsetFields = array ("FK_profiles", "recursive","FK_entities");
+			$unsetFields = array ("FK_users");
 
 			addField($fields, "FK_entities", $entity);
 			if (isset ($fields["password"])) {
@@ -676,6 +676,9 @@ function addNecessaryFields($model, $mapping, $mapping_definition, $entity, $typ
 			}
 			break;
 
+      case PROFILE_USER_TYPE:
+         addField($fields,"FK_users",$common_fields["FK_users"]);
+         break;
 		//Object connections
 		case COMPUTER_CONNECTION_TYPE :
 			//Set the device_id
@@ -837,8 +840,8 @@ function processBeforeEnd($result, $model, $type, $fields, & $common_fields) {
 			break;
 		case USER_TYPE :
 			//If user ID is given, add the user in this group
-			if (isset ($common_fields["FK_user"]) && isset ($common_fields["FK_group"]))
-				addUserGroup($common_fields["FK_user"], $common_fields["FK_group"]);
+			if (isset ($common_fields["FK_users"]) && isset ($common_fields["FK_group"]))
+				addUserGroup($common_fields["FK_users"], $common_fields["FK_group"]);
 			break;
 		case NETWORKING_TYPE :
 			addNetworkPorts($common_fields);
@@ -870,7 +873,7 @@ function processBeforeEnd($result, $model, $type, $fields, & $common_fields) {
 			addEntityPostProcess($common_fields);
 			break;
 		case PROFILE_USER_TYPE:
-			addUserProfileEntity($common_fields);
+         addUserProfileEntity($fields);
 			break;
 		case CONNECTION_ALL_TYPES:
 			connectToObjectByType($result,$fields);
