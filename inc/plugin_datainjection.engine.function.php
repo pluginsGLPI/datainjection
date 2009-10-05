@@ -843,17 +843,18 @@ function processBeforeEnd($result, $model, $type, $fields, & $common_fields) {
 			if (isset ($common_fields["FK_users"]) && isset ($common_fields["FK_group"]))
 				addUserGroup($common_fields["FK_users"], $common_fields["FK_group"]);
 			break;
-		case NETWORKING_TYPE :
+      case NETWORKING_TYPE :
+         addNetworkPorts($common_fields);
+         addContractToItem($common_fields,$type);
+         break;
 			addNetworkPorts($common_fields);
 			addContractToItem($common_fields,$type);
 			break;
+      case PHONE_TYPE :
+      case PERIPHERAL_TYPE :
+      case MONITOR_TYPE :
 		case PRINTER_TYPE :
-			addContractToItem($common_fields,$type);
-			break;
 		case COMPUTER_TYPE :
-			addContractToItem($common_fields,$type);
-			break;
-		case PHONE_TYPE :
 			addContractToItem($common_fields,$type);
 			break;
 		case NETPORT_TYPE :
