@@ -1,5 +1,6 @@
 <?php
 
+
 /*
  ----------------------------------------------------------------------
  GLPI - Gestionnaire Libre de Parc Informatique
@@ -85,23 +86,23 @@ function lookIfSeveralMappingsForField($model, $mapping_definition, $value) {
  * @return true if the data exists, false if it doesn't already exists
  */
 function dataAlreadyInDB($type, $fields, $mapping_definition, $model) {
-	global $DB,$CFG_GLPI;
+	global $DB, $CFG_GLPI;
 	$where = "";
 	$mandatories = getAllMandatoriesMappings($type, $model);
 
-   $primary = ($model->getDeviceType() == $type?true:false);
+	$primary = ($model->getDeviceType() == $type ? true : false);
 
 	$obj = getInstance($type);
 
 	$delimiter = "'";
 
-	if (in_array($type,$CFG_GLPI["deleted_tables"])) {
+	if (in_array($type, $CFG_GLPI["deleted_tables"])) {
 		$where .= " AND deleted=0 ";
 	}
-   if (in_array($obj->table,$CFG_GLPI["template_tables"])) {
-      $where .= " AND is_template=0 ";
-   }
-		
+	if (in_array($obj->table, $CFG_GLPI["template_tables"])) {
+		$where .= " AND is_template=0 ";
+	}
+
 	if ($primary) {
 		foreach ($mandatories as $mapping) {
 			$mapping_definition = getMappingDefinitionByTypeAndName($type, $mapping->getValue());
@@ -110,7 +111,7 @@ function dataAlreadyInDB($type, $fields, $mapping_definition, $model) {
 
 		switch ($obj->table) {
 			//Devices types
-         case "glpi_profiles" :
+			case "glpi_profiles" :
 			case "glpi_device_moboard" :
 			case "glpi_device_processor" :
 			case "glpi_device_ram" :
@@ -124,28 +125,27 @@ function dataAlreadyInDB($type, $fields, $mapping_definition, $model) {
 			case "glpi_device_case" :
 			case "glpi_device_power" :
 
- 			case "glpi_entities" :
+			case "glpi_entities" :
 				//nobreak
 			case "glpi_users" :
 				//nobreak
 			case "glpi_cartridges" :
 				$where_entity = " 1";
 				break;
-        case "glpi_softwarelicenses" :
-            $where_entity = getEntitiesRestrictRequest("","glpi_softwarelicenses","FK_entities",$fields["FK_entities"],true);
-            $where_entity .= " AND sID=" . $fields["sID"];
-            break;
-        case "glpi_softwareversions" :
-            $where_entity = " sID=" . $fields["sID"];
-            break;
- 			default :
-            if (isset($CFG_GLPI["recursive_type"][$type])) {
-            	$where_entity = getEntitiesRestrictRequest("",$obj->table,"FK_entities",$fields["FK_entities"],true);
-            }
-            else {
-               $where_entity = " FK_entities=" . $fields["FK_entities"];	
-            }
-				
+			case "glpi_softwarelicenses" :
+				$where_entity = getEntitiesRestrictRequest("", "glpi_softwarelicenses", "FK_entities", $fields["FK_entities"], true);
+				$where_entity .= " AND sID=" . $fields["sID"];
+				break;
+			case "glpi_softwareversions" :
+				$where_entity = " sID=" . $fields["sID"];
+				break;
+			default :
+				if (isset ($CFG_GLPI["recursive_type"][$type])) {
+					$where_entity = getEntitiesRestrictRequest("", $obj->table, "FK_entities", $fields["FK_entities"], true);
+				} else {
+					$where_entity = " FK_entities=" . $fields["FK_entities"];
+				}
+
 				break;
 		}
 	} else {
@@ -157,7 +157,7 @@ function dataAlreadyInDB($type, $fields, $mapping_definition, $model) {
 
 			case NETPORT_TYPE :
 				$where .= " AND device_type=" . $model->getDeviceType() . " AND on_device=" . $fields["on_device"];
-				$where .= getPortUnicityRequest($model,$fields);
+				$where .= getPortUnicityRequest($model, $fields);
 				break;
 			default :
 				break;
@@ -277,7 +277,7 @@ function addField(& $array, $field, $value, $check_exists = true) {
  */
 function preAddCommonFields($common_fields, $type, $fields, $entity) {
 	global $PLUGIN_HOOKS;
-   $setFields = array ();
+	$setFields = array ();
 	switch ($type) {
 		case ENTITY_TYPE :
 			$setFields = array (
@@ -293,8 +293,8 @@ function preAddCommonFields($common_fields, $type, $fields, $entity) {
 				"notes",
 				"admin_email",
 				"admin_reply",
-            "tag",
-            "ldap_dn"
+				"tag",
+				"ldap_dn"
 			);
 			break;
 		case PHONE_TYPE :
@@ -321,6 +321,11 @@ function preAddCommonFields($common_fields, $type, $fields, $entity) {
 				"name"
 			);
 			break;
+      case PERIPHERAL_TYPE :
+         $setFields = array (
+            "contract"
+         );
+         break;
 		case PRINTER_TYPE :
 			$setFields = array (
 				"contract"
@@ -349,22 +354,23 @@ function preAddCommonFields($common_fields, $type, $fields, $entity) {
 				"ifmac"
 			);
 			break;
-		case COMPUTER_CONNECTION_TYPE:
+		case COMPUTER_CONNECTION_TYPE :
 			$setFields = array (
 				"device_id",
+				
 			);
-		case CONNECTION_ALL_TYPES:
+		case CONNECTION_ALL_TYPES :
 			$setFields = array (
 				"device_type",
 				"name",
 				"ID"
 			);
-			break;				
+			break;
 		default :
-            if ($type >= 1000) {
-                  $params = array();
-                  $setFields = doOneHook($PLUGIN_HOOKS['plugin_types'][$type],"datainjection_preAddCommonFields",$params);
-            }
+			if ($type >= 1000) {
+				$params = array ();
+				$setFields = doOneHook($PLUGIN_HOOKS['plugin_types'][$type], "datainjection_preAddCommonFields", $params);
+			}
 
 			break;
 	}
@@ -383,7 +389,7 @@ function preAddCommonFields($common_fields, $type, $fields, $entity) {
  */
 function addCommonFields(& $common_fields, $type, $fields, $entity, $ID) {
 	global $PLUGIN_HOOKS;
-   $setFields = array ();
+	$setFields = array ();
 	switch ($type) {
 		//Copy/paste is voluntary in order to know exactly which fields are included or not
 		case NETPORT_TYPE :
@@ -425,10 +431,10 @@ function addCommonFields(& $common_fields, $type, $fields, $entity, $ID) {
 			addField($common_fields, "device_id", $ID, true);
 			addField($common_fields, "FK_entities", $entity, false);
 			break;
-        case DOCUMENT_TYPE : 
-            addField($common_fields, "FK_entities", $entity, false); 
+		case DOCUMENT_TYPE :
+			addField($common_fields, "FK_entities", $entity, false);
 			addField($common_fields, "device_id", $ID, true);
-            break; 
+			break;
 		case MONITOR_TYPE :
 			$setFields = array (
 				"location"
@@ -481,16 +487,16 @@ function addCommonFields(& $common_fields, $type, $fields, $entity, $ID) {
 			);
 			break;
 
-      		case SOFTWARELICENSE_TYPE:
-         		addField($common_fields, "device_id", $ID, true);
-         		addField($common_fields, "device_type", $type, false);
-         		addField($common_fields, "FK_entities", $entity, false);
-         		break;
-		case PROFILE_USER_TYPE:
-			addField($common_fields, "FK_users", $ID, true);	
-         		break;	
+		case SOFTWARELICENSE_TYPE :
+			addField($common_fields, "device_id", $ID, true);
+			addField($common_fields, "device_type", $type, false);
+			addField($common_fields, "FK_entities", $entity, false);
+			break;
+		case PROFILE_USER_TYPE :
+			addField($common_fields, "FK_users", $ID, true);
+			break;
 
-		//Device types
+			//Device types
 		case PLUGIN_DATA_INJECTION_MOBOARD_DEVICE_TYPE :
 		case PLUGIN_DATA_INJECTION_PROCESSOR_DEVICE_TYPE :
 		case PLUGIN_DATA_INJECTION_RAM_DEVICE_TYPE :
@@ -506,12 +512,17 @@ function addCommonFields(& $common_fields, $type, $fields, $entity, $ID) {
 			addField($common_fields, "device_id", $ID, true);
 			addField($common_fields, "device_type", $type, false);
 		default :
-            if ($type >= 1000) {
-                  $params = array("fields"=>$fields,"ID"=>$ID, "entity"=>$entity,"common_fields"=>$common_fields);
-                  $hook_result = doOneHook($PLUGIN_HOOKS['plugin_types'][$type],"datainjection_addCommonFields",$params);
-                  $common_fields = $hook_result["common_fields"];
-                  $setFields = $hook_result["setfields"];
-            }
+			if ($type >= 1000) {
+				$params = array (
+					"fields" => $fields,
+					"ID" => $ID,
+					"entity" => $entity,
+					"common_fields" => $common_fields
+				);
+				$hook_result = doOneHook($PLUGIN_HOOKS['plugin_types'][$type], "datainjection_addCommonFields", $params);
+				$common_fields = $hook_result["common_fields"];
+				$setFields = $hook_result["setfields"];
+			}
 
 			break;
 	}
@@ -531,7 +542,7 @@ function addCommonFields(& $common_fields, $type, $fields, $entity, $ID) {
  * @return the fields modified
  */
 function addNecessaryFields($model, $mapping, $mapping_definition, $entity, $type, & $fields, $common_fields) {
-	global $DB,$PLUGIN_HOOKS,$CFG_GLPI;
+	global $DB, $PLUGIN_HOOKS, $CFG_GLPI;
 
 	//Internal field to identify object injected with datainjection
 	addField($fields, "_from_datainjection", 1);
@@ -552,16 +563,16 @@ function addNecessaryFields($model, $mapping, $mapping_definition, $entity, $typ
 				"notes",
 				"admin_email",
 				"admin_reply",
-            "tag",
-            "ldap_dn"
-				);
+				"tag",
+				"ldap_dn"
+			);
 			break;
 		case CONTACT_TYPE :
 			addField($fields, "FK_entities", $entity);
 			break;
-		case DOCUMENT_TYPE : 
-            addField($fields, "FK_entities", $entity); 
-            break; 
+		case DOCUMENT_TYPE :
+			addField($fields, "FK_entities", $entity);
+			break;
 		case CONSUMABLE_TYPE :
 			addField($fields, "FK_entities", $entity);
 			break;
@@ -611,7 +622,7 @@ function addNecessaryFields($model, $mapping, $mapping_definition, $entity, $typ
 			addField($fields, "FK_entities", $entity);
 			break;
 		case GROUP_TYPE :
-         		addField($fields, "FK_entities", $entity);
+			addField($fields, "FK_entities", $entity);
 			break;
 		case ENTERPRISE_TYPE :
 			addField($fields, "FK_entities", $entity);
@@ -619,14 +630,16 @@ function addNecessaryFields($model, $mapping, $mapping_definition, $entity, $typ
 		case SOFTWARE_TYPE :
 			addField($fields, "FK_entities", $entity);
 			break;
-      		case KNOWBASE_TYPE :
-         		addField($fields, "FK_entities", $entity);
-         		break;
+		case KNOWBASE_TYPE :
+			addField($fields, "FK_entities", $entity);
+			break;
 		case CONTRACT_TYPE :
 			addField($fields, "FK_entities", $entity);
 			break;
 		case USER_TYPE :
-			$unsetFields = array ("FK_users");
+			$unsetFields = array (
+				"FK_users"
+			);
 
 			addField($fields, "FK_entities", $entity);
 			if (isset ($fields["password"])) {
@@ -656,6 +669,7 @@ function addNecessaryFields($model, $mapping, $mapping_definition, $entity, $typ
 				"netport",
 				"netname",
 				"netmac",
+				
 			);
 
 			//Set the device_id
@@ -664,22 +678,22 @@ function addNecessaryFields($model, $mapping, $mapping_definition, $entity, $typ
 			//Set the device type
 			addField($fields, "device_type", $model->getDeviceType());
 			break;
-		case PROFILE_TYPE:
-			if (isset($fields['helpdesk_hardware_type'])) {
-				$hardware_types = array();
-				foreach($CFG_GLPI["helpdesk_types"] as $type){
-                        	   if ($fields["helpdesk_hardware_type"]&pow(2,$type)) {
-                	              array_push($hardware_types,$type);
-				   }
+		case PROFILE_TYPE :
+			if (isset ($fields['helpdesk_hardware_type'])) {
+				$hardware_types = array ();
+				foreach ($CFG_GLPI["helpdesk_types"] as $type) {
+					if ($fields["helpdesk_hardware_type"] & pow(2, $type)) {
+						array_push($hardware_types, $type);
+					}
 				}
-			   $fields["helpdesk_hardware_type"]=$hardware_types;
+				$fields["helpdesk_hardware_type"] = $hardware_types;
 			}
 			break;
 
-      case PROFILE_USER_TYPE:
-         addField($fields,"FK_users",$common_fields["FK_users"]);
-         break;
-		//Object connections
+		case PROFILE_USER_TYPE :
+			addField($fields, "FK_users", $common_fields["FK_users"]);
+			break;
+			//Object connections
 		case COMPUTER_CONNECTION_TYPE :
 			//Set the device_id
 			addField($fields, "FK_entities", $entity);
@@ -692,23 +706,25 @@ function addNecessaryFields($model, $mapping, $mapping_definition, $entity, $typ
 			addField($fields, "device_id", $common_fields["device_id"]);
 			break;
 
-      case SOFTWARELICENSE_TYPE :
-         //Set the device_id
-         addField($fields, "FK_entities", $entity);
-         break;
-			
+		case SOFTWARELICENSE_TYPE :
+			//Set the device_id
+			addField($fields, "FK_entities", $entity);
+			break;
+
 		default :
-            if ($type >= 1000) {
-                  //Add entity field for plugins
-                  addField($fields, "FK_entities", $entity);
-                  
-                  $params = array("fields"=>$fields,
-                                    "common_fields"=>$common_fields);
-                  $fields_to_add = doOneHook($PLUGIN_HOOKS['plugin_types'][$type],"datainjection_addNecessaryFields",$params);
-                  foreach ($fields_to_add as $field_to_add => $value_to_add) {
-                  	addField($fields,$field_to_add,$value_to_add);
-                  }
-            }
+			if ($type >= 1000) {
+				//Add entity field for plugins
+				addField($fields, "FK_entities", $entity);
+
+				$params = array (
+					"fields" => $fields,
+					"common_fields" => $common_fields
+				);
+				$fields_to_add = doOneHook($PLUGIN_HOOKS['plugin_types'][$type], "datainjection_addNecessaryFields", $params);
+				foreach ($fields_to_add as $field_to_add => $value_to_add) {
+					addField($fields, $field_to_add, $value_to_add);
+				}
+			}
 			break;
 	}
 	unsetFields($fields, $unsetFields);
@@ -744,17 +760,17 @@ function isAllEmpty($fields) {
  * @param fields_comments the comments associated with a dropdown
  * @return a table with the field's values
  */
-function getFieldValue($result, $type, $mapping, $mapping_definition, $field_value, $entity, $obj, $canadd, $several,$field_comments = EMPTY_VALUE) {
-	global $DB, $CFG_GLPI,$PLUGIN_HOOKS;
+function getFieldValue($result, $type, $mapping, $mapping_definition, $field_value, $entity, $obj, $canadd, $several, $field_comments = EMPTY_VALUE) {
+	global $DB, $CFG_GLPI, $PLUGIN_HOOKS;
 
 	if (isset ($mapping_definition["table_type"])) {
 		switch ($mapping_definition["table_type"]) {
- 			case "template" :
+			case "template" :
 				$obj[$mapping_definition["linkfield"]] = findTemplate($entity, $mapping_definition["table"], $field_value);
 				break;
 				//Read and add in a dropdown table
 			case "dropdown" :
-				$val = getDropdownValue($mapping, $mapping_definition, $field_value, $entity, $canadd,$field_comments);
+				$val = getDropdownValue($mapping, $mapping_definition, $field_value, $entity, $canadd, $field_comments);
 				if ($val > 0) {
 					$obj[$mapping_definition["linkfield"]] = $val;
 				} else
@@ -805,19 +821,22 @@ function getFieldValue($result, $type, $mapping, $mapping_definition, $field_val
 				//nobreak
 			default :
 				if ($type >= 1000) {
-                  $params = array("mapping"=>$mapping, "mapping_definition"=>$mapping_definition,"entity"=>$entity,
-                                    "field_value"=>$field_value);
-                  $obj[$mapping_definition["field"]] = doOneHook($PLUGIN_HOOKS['plugin_types'][$type],"datainjection_getFieldValue",$params);
-            }
-            else {
-               $obj[$mapping_definition["field"]] = $field_value;	
-            }
+					$params = array (
+						"mapping" => $mapping,
+						"mapping_definition" => $mapping_definition,
+						"entity" => $entity,
+						"field_value" => $field_value
+					);
+					$obj[$mapping_definition["field"]] = doOneHook($PLUGIN_HOOKS['plugin_types'][$type], "datainjection_getFieldValue", $params);
+				} else {
+					$obj[$mapping_definition["field"]] = $field_value;
+				}
 				break;
 		}
 	} else {
 		$obj[$mapping_definition["field"]] = $field_value;
 	}
-		
+
 	return $obj;
 }
 
@@ -833,9 +852,9 @@ function getFieldValue($result, $type, $mapping, $mapping_definition, $field_val
  */
 function processBeforeEnd($result, $model, $type, $fields, & $common_fields) {
 	global $PLUGIN_HOOKS;
-   switch ($type) {
+	switch ($type) {
 		case ENTERPRISE_TYPE :
-			addContractToItem($common_fields,$type);
+			addContractToItem($common_fields, $type);
 			addContact($common_fields);
 			break;
 		case USER_TYPE :
@@ -843,48 +862,51 @@ function processBeforeEnd($result, $model, $type, $fields, & $common_fields) {
 			if (isset ($common_fields["FK_users"]) && isset ($common_fields["FK_group"]))
 				addUserGroup($common_fields["FK_users"], $common_fields["FK_group"]);
 			break;
-      case NETWORKING_TYPE :
-         addNetworkPorts($common_fields);
-         addContractToItem($common_fields,$type);
-         break;
+		case NETWORKING_TYPE :
 			addNetworkPorts($common_fields);
-			addContractToItem($common_fields,$type);
+			addContractToItem($common_fields, $type);
 			break;
-      case PHONE_TYPE :
-      case PERIPHERAL_TYPE :
-      case MONITOR_TYPE :
+			addNetworkPorts($common_fields);
+			addContractToItem($common_fields, $type);
+			break;
+		case PHONE_TYPE :
+		case PERIPHERAL_TYPE :
+		case MONITOR_TYPE :
 		case PRINTER_TYPE :
 		case COMPUTER_TYPE :
-			addContractToItem($common_fields,$type);
+			addContractToItem($common_fields, $type);
 			break;
 		case NETPORT_TYPE :
-			addVlan($result,$common_fields, $model->getCanAddDropdown());
+			addVlan($result, $common_fields, $model->getCanAddDropdown());
 			addNetPoint($result, $common_fields, $model->getCanAddDropdown());
 			addNetworkingWire($result, $common_fields, $model->getCanOverwriteIfNotEmpty());
 			break;
 		case COMPUTER_CONNECTION_TYPE :
 			if ($model->getDeviceType() != SOFTWARELICENSE_TYPE) {
-            			connectPeripheral($result,$fields);
+				connectPeripheral($result, $fields);
+			} else {
+				affectLicenceToComputer($result, $fields);
 			}
-         		else {
-         			affectLicenceToComputer($result,$fields);
-         		}
 			break;
 		case ENTITY_TYPE :
 			addEntityPostProcess($common_fields);
 			break;
-		case PROFILE_USER_TYPE:
-         addUserProfileEntity($fields);
+		case PROFILE_USER_TYPE :
+			addUserProfileEntity($fields);
 			break;
-		case CONNECTION_ALL_TYPES:
-			connectToObjectByType($result,$fields);
+		case CONNECTION_ALL_TYPES :
+			connectToObjectByType($result, $fields);
 			break;
 		default :
-            		if ($type >= 1000) {
-                  		$params = array("result"=>$result, "model"=>$model,"fields"=>$fields,
-                                    "common_fields"=>$common_fields);
-                  	doOneHook($PLUGIN_HOOKS['plugin_types'][$type],"datainjection_getFieldValue",$params);
-            		}
+			if ($type >= 1000) {
+				$params = array (
+					"result" => $result,
+					"model" => $model,
+					"fields" => $fields,
+					"common_fields" => $common_fields
+				);
+				doOneHook($PLUGIN_HOOKS['plugin_types'][$type], "datainjection_getFieldValue", $params);
+			}
 			break;
 	}
 }
@@ -941,11 +963,11 @@ function keepInfo($info) {
 			if ($info->getInfosText() != NULL && $info->getInfosText() != EMPTY_VALUE)
 				return true;
 			break;
-		case "yesno":
+		case "yesno" :
 			return true;
 			break;
 		case "dropdown" :
-      case "dropdown_users" :
+		case "dropdown_users" :
 			if ($info->getInfosText() != 0)
 				return true;
 			break;
@@ -985,17 +1007,9 @@ function logAddOrUpdate($device_type, $device_id, $action_type) {
 function filterFields(& $fields, $fields_from_db, $can_overwrite, $type) {
 	//If no right to overwrite existing fields in DB -> unset the field
 	foreach ($fields as $field => $value) {
-		if ($field[0] != '_' 
-         && (isset($fields_from_db[$field]) 
-            && $fields_from_db[$field]) 
-               && !$can_overwrite) {
+		if ($field[0] != '_' && (isset ($fields_from_db[$field]) && $fields_from_db[$field]) && !$can_overwrite) {
 			$name = getMappingNameByTypeAndValue($type, $field);
-			if ($field == "ID" 
-            || (
-               (isset ($DATA_INJECTION_MAPPING[$type][$name]['table_type']) 
-                  && $DATA_INJECTION_MAPPING[$type][$name]['table_type'] == "dropdown") 
-                     && $fields_from_db[$field] > 0) 
-                        || $fields_from_db[$field] != EMPTY_VALUE)
+			if ($field == "ID" || ((isset ($DATA_INJECTION_MAPPING[$type][$name]['table_type']) && $DATA_INJECTION_MAPPING[$type][$name]['table_type'] == "dropdown") && $fields_from_db[$field] > 0) || $fields_from_db[$field] != EMPTY_VALUE)
 				unset ($fields[$field]);
 		}
 
@@ -1009,34 +1023,32 @@ function filterFields(& $fields, $fields_from_db, $can_overwrite, $type) {
  * 
  * @return the sql where clause
  */
-function getPortUnicityRequest($model,$fields)
-{
+function getPortUnicityRequest($model, $fields) {
 	$where = "";
-	switch ($model->getPortUnicity())
-	{
-		case MODEL_NETPORT_LOGICAL_NUMER:
-			$where .= " AND logical_number='" . (isset($fields["logical_number"])?$fields["logical_number"]:'')."'";
-		break;
-		case MODEL_NETPORT_LOGICAL_NUMER_MAC:
-			$where .= " AND logical_number='" . (isset($fields["logical_number"])?$fields["logical_number"]:'')."'";
-			$where .= " AND name='" . (isset($fields["name"])?$fields["name"]:'')."'";
-			$where .= " AND ifmac='" . (isset($fields["ifmac"])?$fields["ifmac"]:'')."'";
-		break;
-		case MODEL_NETPORT_LOGICAL_NUMER_NAME:
-			$where .= " AND logical_number='" . (isset($fields["logical_number"])?$fields["logical_number"]:'')."'";
-			$where .= " AND name='" . (isset($fields["name"])?$fields["name"]:'')."'";
-		break;
-		case MODEL_NETPORT_LOGICAL_NUMER_NAME_MAC:
-			$where .= " AND logical_number='" . (isset($fields["logical_number"])?$fields["logical_number"]:'')."'";
-			$where .= " AND name='" . (isset($fields["name"])?$fields["name"]:'')."'";
-			$where .= " AND ifmac='" . (isset($fields["ifmac"])?$fields["ifmac"]:'')."'";
-		break;
-		case MODEL_NETPORT_MACADDRESS:
-			$where .= " AND ifmac='" . (isset($fields["ifmac"])?$fields["ifmac"]:'')."'";
-		break;
-		case MODEL_NETPORT_NAME:
-			$where .= " AND name='" . (isset($fields["name"])?$fields["name"]:'')."'";
-		break;
+	switch ($model->getPortUnicity()) {
+		case MODEL_NETPORT_LOGICAL_NUMER :
+			$where .= " AND logical_number='" . (isset ($fields["logical_number"]) ? $fields["logical_number"] : '') . "'";
+			break;
+		case MODEL_NETPORT_LOGICAL_NUMER_MAC :
+			$where .= " AND logical_number='" . (isset ($fields["logical_number"]) ? $fields["logical_number"] : '') . "'";
+			$where .= " AND name='" . (isset ($fields["name"]) ? $fields["name"] : '') . "'";
+			$where .= " AND ifmac='" . (isset ($fields["ifmac"]) ? $fields["ifmac"] : '') . "'";
+			break;
+		case MODEL_NETPORT_LOGICAL_NUMER_NAME :
+			$where .= " AND logical_number='" . (isset ($fields["logical_number"]) ? $fields["logical_number"] : '') . "'";
+			$where .= " AND name='" . (isset ($fields["name"]) ? $fields["name"] : '') . "'";
+			break;
+		case MODEL_NETPORT_LOGICAL_NUMER_NAME_MAC :
+			$where .= " AND logical_number='" . (isset ($fields["logical_number"]) ? $fields["logical_number"] : '') . "'";
+			$where .= " AND name='" . (isset ($fields["name"]) ? $fields["name"] : '') . "'";
+			$where .= " AND ifmac='" . (isset ($fields["ifmac"]) ? $fields["ifmac"] : '') . "'";
+			break;
+		case MODEL_NETPORT_MACADDRESS :
+			$where .= " AND ifmac='" . (isset ($fields["ifmac"]) ? $fields["ifmac"] : '') . "'";
+			break;
+		case MODEL_NETPORT_NAME :
+			$where .= " AND name='" . (isset ($fields["name"]) ? $fields["name"] : '') . "'";
+			break;
 	}
 	return $where;
 }
@@ -1047,15 +1059,14 @@ function getPortUnicityRequest($model,$fields)
  * @line the line of datas to inject
  * @mapping the mapping
  */
-function getFieldCommentsIfExists($model,$line,$mapping)
-{
+function getFieldCommentsIfExists($model, $line, $mapping) {
 	$field_name = $mapping->getValue();
-	$field_comments_mapping = $model->getMappingByValue("_".$field_name."_comments");
+	$field_comments_mapping = $model->getMappingByValue("_" . $field_name . "_comments");
 
 	if ($field_comments_mapping != null)
 		return $line[$field_comments_mapping->getRank()];
 	else
-		return EMPTY_VALUE;	
-	
+		return EMPTY_VALUE;
+
 }
 ?>
