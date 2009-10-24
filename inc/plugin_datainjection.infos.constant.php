@@ -1046,6 +1046,14 @@ $DATA_INJECTION_INFOS[KNOWBASE_TYPE]['date']['type'] = 'date';
 // ----------------------------------------------------------------------
 //PSEUDO TYPE FOR PERIPHERAL TO COMPUTER CONNECTION
 // ----------------------------------------------------------------------
+$DATA_INJECTION_INFOS[DOCUMENT_CONNECTION_TYPE]['name']['table']='glpi_docs';
+$DATA_INJECTION_INFOS[DOCUMENT_CONNECTION_TYPE]['name']['field']='name';
+$DATA_INJECTION_INFOS[DOCUMENT_CONNECTION_TYPE]['name']['name']=$LANG['Menu'][27];
+$DATA_INJECTION_INFOS[DOCUMENT_CONNECTION_TYPE]['name']['input_type']='dropdown';
+
+// ----------------------------------------------------------------------
+//PSEUDO TYPE FOR PERIPHERAL TO COMPUTER CONNECTION
+// ----------------------------------------------------------------------
 $DATA_INJECTION_INFOS[COMPUTER_CONNECTION_TYPE]['computer_id']['table']='glpi_computers';
 $DATA_INJECTION_INFOS[COMPUTER_CONNECTION_TYPE]['computer_id']['field']='name';
 $DATA_INJECTION_INFOS[COMPUTER_CONNECTION_TYPE]['computer_id']['name']=$LANG["common"][16];

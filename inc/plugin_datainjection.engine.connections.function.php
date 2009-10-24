@@ -394,4 +394,23 @@ function affectLicenceToComputer($result,$fields) {
       $licence->update($input); 
    }
 }
+
+function addDocumentToObject($fields) {
+	global $DB;
+   $query = "SELECT ID FROM glpi_docs WHERE name='".$fields['name']."'".
+      getEntitiesRestrictRequest(" AND","glpi_docs","FK_entities",$fields['FK_entities'],true);
+   $result = $DB->query($query);
+   if ($DB->numrows($result) == 1) {
+      $ID = $DB->result($result,0,"ID");
+
+      $query = "SELECT glpi_doc_device.ID FROM glpi_doc_device
+            WHERE FK_device = '".$fields['device_id']."'
+            AND device_type = '".$fields['device_type']."'
+            AND FK_doc='".$ID."'";
+      $result = $DB->query($query);
+      if (!$DB->numrows($result)) {
+         addDeviceDocument($ID,$fields['device_type'],$fields['device_id']);  
+      }     
+   }      
+}
 ?>

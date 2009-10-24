@@ -2593,6 +2593,14 @@ $DATA_INJECTION_MAPPING[PROFILE_TYPE]['rule_dictionnary_dropdown']['name'] = $LA
 $DATA_INJECTION_MAPPING[PROFILE_TYPE]['rule_dictionnary_dropdown']['type'] = 'right_rw';
 
 // ----------------------------------------------------------------------
+//PSEUDO TYPE FOR DOCUMENT ASSOCIATION
+// ----------------------------------------------------------------------
+$DATA_INJECTION_MAPPING[DOCUMENT_CONNECTION_TYPE]['name']['table'] = 'glpi_docs';
+$DATA_INJECTION_MAPPING[DOCUMENT_CONNECTION_TYPE]['name']['field'] = 'name';
+$DATA_INJECTION_MAPPING[DOCUMENT_CONNECTION_TYPE]['name']['name'] = $LANG["common"][16];
+$DATA_INJECTION_MAPPING[DOCUMENT_CONNECTION_TYPE]['name']['type'] = 'text';
+
+// ----------------------------------------------------------------------
 //PSEUDO TYPE FOR PERIPHERAL TO COMPUTER CONNECTION
 // ----------------------------------------------------------------------
 $DATA_INJECTION_MAPPING[COMPUTER_CONNECTION_TYPE]['name']['table'] = 'glpi_computers';

@@ -359,6 +359,12 @@ function preAddCommonFields($common_fields, $type, $fields, $entity) {
 				"device_id",
 				
 			);
+      case DOCUMENT_CONNECTION_TYPE :
+         $setFields = array (
+            "device_type",
+            "device_id"
+         );
+         break;
 		case CONNECTION_ALL_TYPES :
 			$setFields = array (
 				"device_type",
@@ -388,9 +394,10 @@ function preAddCommonFields($common_fields, $type, $fields, $entity) {
  * @return the update common values array
  */
 function addCommonFields(& $common_fields, $type, $fields, $entity, $ID) {
-	global $PLUGIN_HOOKS;
+	global $PLUGIN_HOOKS, $CFG_GLPI;
 	$setFields = array ();
-	switch ($type) {
+	
+   switch ($type) {
 		//Copy/paste is voluntary in order to know exactly which fields are included or not
 		case NETPORT_TYPE :
 			addField($common_fields, "network_port_id", $ID, true);
@@ -401,6 +408,10 @@ function addCommonFields(& $common_fields, $type, $fields, $entity, $ID) {
 		case CONTACT_TYPE :
 			addField($common_fields, "FK_entities", $entity, false);
 			break;
+      case KNOWBASE_TYPE :
+         addField($common_fields, "device_id", $ID, true);
+         addField($common_fields, "device_type", $type, false);
+         addField($common_fields, "FK_entities", $entity, false);
 		case CARTRIDGE_TYPE :
 			addField($common_fields, "device_id", $ID, true);
 			addField($common_fields, "device_type", $type, false);
@@ -429,6 +440,7 @@ function addCommonFields(& $common_fields, $type, $fields, $entity, $ID) {
 				"location"
 			);
 			addField($common_fields, "device_id", $ID, true);
+         addField($common_fields, "device_type", $type, false);
 			addField($common_fields, "FK_entities", $entity, false);
 			break;
 		case DOCUMENT_TYPE :
@@ -479,6 +491,8 @@ function addCommonFields(& $common_fields, $type, $fields, $entity, $ID) {
 			break;
 		case CONTRACT_TYPE :
 			addField($common_fields, "FK_entities", $entity, false);
+         addField($common_fields, "device_id", $ID, true);
+         addField($common_fields, "device_type", $type, false);
 			break;
 		case USER_TYPE :
 			addField($common_fields, "FK_users", $ID, false);
@@ -705,6 +719,12 @@ function addNecessaryFields($model, $mapping, $mapping_definition, $entity, $typ
 			addField($fields, "FK_entities", $entity);
 			addField($fields, "device_id", $common_fields["device_id"]);
 			break;
+      case DOCUMENT_CONNECTION_TYPE :
+         //Set the device_id
+         addField($fields, "FK_entities", $entity);
+         addField($fields, "device_type", $common_fields["device_type"]);
+         addField($fields, "device_id", $common_fields["device_id"]);
+         break;
 
 		case SOFTWARELICENSE_TYPE :
 			//Set the device_id
@@ -897,6 +917,9 @@ function processBeforeEnd($result, $model, $type, $fields, & $common_fields) {
 		case CONNECTION_ALL_TYPES :
 			connectToObjectByType($result, $fields);
 			break;
+      case DOCUMENT_CONNECTION_TYPE :
+         addDocumentToObject($fields);
+         break;
 		default :
 			if ($type >= 1000) {
 				$params = array (

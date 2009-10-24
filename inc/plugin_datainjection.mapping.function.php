@@ -68,7 +68,11 @@ function getAllMappingsDefinitionsTypes($primary_type)
 	if ($primary_type == USER_TYPE) {
 		$types[] = array(PROFILE_USER_TYPE,$LANG["profiles"][22]);		
 	}
-	
+
+   if (in_array($primary_type,$CFG_GLPI["doc_types"])
+    || $primary_type == KNOWBASE_TYPE) {
+      $types[] = array(DOCUMENT_CONNECTION_TYPE,$LANG['Menu'][27]);     
+   }	
 	asort($types);
 	return $types;
 }
