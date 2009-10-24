@@ -96,7 +96,44 @@ function checkType($type, $name, $data,$mandatory)
 				else
 					return ERROR_IMPORT_WRONG_TYPE;
 			break;
-			default :
+         case 'yesno':
+            logInFile("debug",$DATA_INJECTION_MAPPING[$type][$name]['name']."=".$data."\n");
+            if ($data == 0 || $data == 1)
+               return TYPE_CHECK_OK;
+            else
+               return ERROR_IMPORT_WRONG_TYPE;
+         break;     
+         case 'right_rw':
+            if (in_array($data,array('r','w')))
+               return TYPE_CHECK_OK;
+            else
+               return ERROR_IMPORT_WRONG_TYPE;
+         break;     
+         case 'right_r':
+            if ($data=='r')
+               return TYPE_CHECK_OK;
+            else
+               return ERROR_IMPORT_WRONG_TYPE;
+         break;     
+         case 'right_w':
+            if ($data=='w')
+               return TYPE_CHECK_OK;
+            else
+               return ERROR_IMPORT_WRONG_TYPE;
+         break;     
+         case 'interface':
+            if (in_array($data,array('helpdesk','central')))
+               return TYPE_CHECK_OK;
+            else
+               return ERROR_IMPORT_WRONG_TYPE;
+         break;     
+         case 'auth_method':
+            if (in_array($data,array(AUTH_CAS, AUTH_DB_GLPI, AUTH_EXTERNAL, AUTH_LDAP, AUTH_MAIL, AUTH_X509)))
+               return TYPE_CHECK_OK;
+            else
+               return ERROR_IMPORT_WRONG_TYPE;
+         break;     
+         default :
 				return ERROR_IMPORT_WRONG_TYPE;
 		}
 	}

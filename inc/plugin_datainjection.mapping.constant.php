@@ -48,6 +48,9 @@
 // - ip : an ip address
 // - mac : a mac address
 // - multitext : can add more than one value in the same field : values will be added one per line, with template : mapping=value
+// - auth_method : one of the allowed authentication method
+// - yesno : O or 1 only
+// - right : NULL, 'r' or 'w' only
 
 //Table type :
 // - no table type present : standard text data
@@ -1127,6 +1130,16 @@ $DATA_INJECTION_MAPPING[USER_TYPE]['type']['name'] = $LANG['users'][2];
 $DATA_INJECTION_MAPPING[USER_TYPE]['type']['linkfield'] = 'type';
 $DATA_INJECTION_MAPPING[USER_TYPE]['type']['type'] = 'text';
 $DATA_INJECTION_MAPPING[USER_TYPE]['type']['table_type'] = 'dropdown';
+
+$DATA_INJECTION_MAPPING[USER_TYPE]['auth_method']['table'] = 'glpi_users';
+$DATA_INJECTION_MAPPING[USER_TYPE]['auth_method']['field'] = 'auth_method';
+$DATA_INJECTION_MAPPING[USER_TYPE]['auth_method']['name'] = $LANG['login'][10];
+$DATA_INJECTION_MAPPING[USER_TYPE]['auth_method']['type'] = 'auth_method';
+
+$DATA_INJECTION_MAPPING[USER_TYPE]['id_auth']['table'] = 'glpi_users';
+$DATA_INJECTION_MAPPING[USER_TYPE]['id_auth']['field'] = 'id_auth';
+$DATA_INJECTION_MAPPING[USER_TYPE]['id_auth']['name'] = $LANG['login'][10].' - '.$LANG['common'][52];
+$DATA_INJECTION_MAPPING[USER_TYPE]['id_auth']['type'] = 'integer';
 
 //This mapping needs post processing
 $DATA_INJECTION_MAPPING[USER_TYPE]['FK_group']['table'] = 'glpi_groups';
@@ -2232,322 +2245,322 @@ $DATA_INJECTION_MAPPING[PROFILE_TYPE]['name']['type'] = 'text';
 $DATA_INJECTION_MAPPING[PROFILE_TYPE]['interface']['table'] = 'glpi_profiles';
 $DATA_INJECTION_MAPPING[PROFILE_TYPE]['interface']['field'] = 'interface';
 $DATA_INJECTION_MAPPING[PROFILE_TYPE]['interface']['name'] = $LANG['profiles'][2];
-$DATA_INJECTION_MAPPING[PROFILE_TYPE]['interface']['type'] = 'text';
+$DATA_INJECTION_MAPPING[PROFILE_TYPE]['interface']['type'] = 'interface';
 
 $DATA_INJECTION_MAPPING[PROFILE_TYPE]['is_default']['table'] = 'glpi_profiles';
 $DATA_INJECTION_MAPPING[PROFILE_TYPE]['is_default']['field'] = 'is_default';
 $DATA_INJECTION_MAPPING[PROFILE_TYPE]['is_default']['name'] = $LANG['profiles'][13];
-$DATA_INJECTION_MAPPING[PROFILE_TYPE]['is_default']['type'] = 'integer';
+$DATA_INJECTION_MAPPING[PROFILE_TYPE]['is_default']['type'] = 'yesno';
 
 $DATA_INJECTION_MAPPING[PROFILE_TYPE]['computer']['table'] = 'glpi_profiles';
 $DATA_INJECTION_MAPPING[PROFILE_TYPE]['computer']['field'] = 'computer';
 $DATA_INJECTION_MAPPING[PROFILE_TYPE]['computer']['name'] = $LANG['Menu'][0];
-$DATA_INJECTION_MAPPING[PROFILE_TYPE]['computer']['type'] = 'text';
+$DATA_INJECTION_MAPPING[PROFILE_TYPE]['computer']['type'] = 'right_rw';
 
 $DATA_INJECTION_MAPPING[PROFILE_TYPE]['monitor']['table'] = 'glpi_profiles';
 $DATA_INJECTION_MAPPING[PROFILE_TYPE]['monitor']['field'] = 'monitor';
 $DATA_INJECTION_MAPPING[PROFILE_TYPE]['monitor']['name'] = $LANG['Menu'][3];
-$DATA_INJECTION_MAPPING[PROFILE_TYPE]['monitor']['type'] = 'text';
+$DATA_INJECTION_MAPPING[PROFILE_TYPE]['monitor']['type'] = 'right_rw';
 
 $DATA_INJECTION_MAPPING[PROFILE_TYPE]['software']['table'] = 'glpi_profiles';
 $DATA_INJECTION_MAPPING[PROFILE_TYPE]['software']['field'] = 'software';
 $DATA_INJECTION_MAPPING[PROFILE_TYPE]['software']['name'] = $LANG['Menu'][4];
-$DATA_INJECTION_MAPPING[PROFILE_TYPE]['software']['type'] = 'text';
+$DATA_INJECTION_MAPPING[PROFILE_TYPE]['software']['type'] = 'right_rw';
 
 $DATA_INJECTION_MAPPING[PROFILE_TYPE]['networking']['table'] = 'glpi_profiles';
 $DATA_INJECTION_MAPPING[PROFILE_TYPE]['networking']['field'] = 'networking';
 $DATA_INJECTION_MAPPING[PROFILE_TYPE]['networking']['name'] = $LANG['Menu'][1];
-$DATA_INJECTION_MAPPING[PROFILE_TYPE]['networking']['type'] = 'text';
+$DATA_INJECTION_MAPPING[PROFILE_TYPE]['networking']['type'] = 'right_rw';
 
 $DATA_INJECTION_MAPPING[PROFILE_TYPE]['printer']['table'] = 'glpi_profiles';
 $DATA_INJECTION_MAPPING[PROFILE_TYPE]['printer']['field'] = 'printer';
 $DATA_INJECTION_MAPPING[PROFILE_TYPE]['printer']['name'] = $LANG['Menu'][2];
-$DATA_INJECTION_MAPPING[PROFILE_TYPE]['printer']['type'] = 'text';
+$DATA_INJECTION_MAPPING[PROFILE_TYPE]['printer']['type'] = 'right_rw';
 
 $DATA_INJECTION_MAPPING[PROFILE_TYPE]['peripheral']['table'] = 'glpi_profiles';
 $DATA_INJECTION_MAPPING[PROFILE_TYPE]['peripheral']['field'] = 'peripheral';
 $DATA_INJECTION_MAPPING[PROFILE_TYPE]['peripheral']['name'] = $LANG['Menu'][16];
-$DATA_INJECTION_MAPPING[PROFILE_TYPE]['peripheral']['type'] = 'text';
+$DATA_INJECTION_MAPPING[PROFILE_TYPE]['peripheral']['type'] = 'right_rw';
 
 $DATA_INJECTION_MAPPING[PROFILE_TYPE]['cartridge']['table'] = 'glpi_profiles';
 $DATA_INJECTION_MAPPING[PROFILE_TYPE]['cartridge']['field'] = 'cartridge';
 $DATA_INJECTION_MAPPING[PROFILE_TYPE]['cartridge']['name'] = $LANG['Menu'][21];
-$DATA_INJECTION_MAPPING[PROFILE_TYPE]['cartridge']['type'] = 'text';
+$DATA_INJECTION_MAPPING[PROFILE_TYPE]['cartridge']['type'] = 'right_rw';
 
 $DATA_INJECTION_MAPPING[PROFILE_TYPE]['consumable']['table'] = 'glpi_profiles';
 $DATA_INJECTION_MAPPING[PROFILE_TYPE]['consumable']['field'] = 'consumable';
 $DATA_INJECTION_MAPPING[PROFILE_TYPE]['consumable']['name'] = $LANG['Menu'][32];
-$DATA_INJECTION_MAPPING[PROFILE_TYPE]['consumable']['type'] = 'text';
+$DATA_INJECTION_MAPPING[PROFILE_TYPE]['consumable']['type'] = 'right_rw';
 
 $DATA_INJECTION_MAPPING[PROFILE_TYPE]['phone']['table'] = 'glpi_profiles';
 $DATA_INJECTION_MAPPING[PROFILE_TYPE]['phone']['field'] = 'phone';
 $DATA_INJECTION_MAPPING[PROFILE_TYPE]['phone']['name'] = $LANG['Menu'][34];
-$DATA_INJECTION_MAPPING[PROFILE_TYPE]['phone']['type'] = 'text';
+$DATA_INJECTION_MAPPING[PROFILE_TYPE]['phone']['type'] = 'right_rw';
 
 $DATA_INJECTION_MAPPING[PROFILE_TYPE]['notes']['table'] = 'glpi_profiles';
 $DATA_INJECTION_MAPPING[PROFILE_TYPE]['notes']['field'] = 'notes';
 $DATA_INJECTION_MAPPING[PROFILE_TYPE]['notes']['name'] = $LANG['title'][37];
-$DATA_INJECTION_MAPPING[PROFILE_TYPE]['notes']['type'] = 'text';
+$DATA_INJECTION_MAPPING[PROFILE_TYPE]['notes']['type'] = 'right_rw';
 
 $DATA_INJECTION_MAPPING[PROFILE_TYPE]['contact_enterprise']['table'] = 'glpi_profiles';
 $DATA_INJECTION_MAPPING[PROFILE_TYPE]['contact_enterprise']['field'] = 'contact_enterprise';
 $DATA_INJECTION_MAPPING[PROFILE_TYPE]['contact_enterprise']['name'] = $LANG['common'][18]." / ".$LANG['financial'][26];
-$DATA_INJECTION_MAPPING[PROFILE_TYPE]['contact_enterprise']['type'] = 'text';
+$DATA_INJECTION_MAPPING[PROFILE_TYPE]['contact_enterprise']['type'] = 'right_rw';
 
 $DATA_INJECTION_MAPPING[PROFILE_TYPE]['document']['table'] = 'glpi_profiles';
 $DATA_INJECTION_MAPPING[PROFILE_TYPE]['document']['field'] = 'document';
 $DATA_INJECTION_MAPPING[PROFILE_TYPE]['document']['name'] = $LANG['Menu'][27];
-$DATA_INJECTION_MAPPING[PROFILE_TYPE]['document']['type'] = 'text';
+$DATA_INJECTION_MAPPING[PROFILE_TYPE]['document']['type'] = 'right_rw';
 
 $DATA_INJECTION_MAPPING[PROFILE_TYPE]['contract']['table'] = 'glpi_profiles';
 $DATA_INJECTION_MAPPING[PROFILE_TYPE]['contract']['field'] = 'contract';
 $DATA_INJECTION_MAPPING[PROFILE_TYPE]['contract']['name'] = $LANG['Menu'][25];
-$DATA_INJECTION_MAPPING[PROFILE_TYPE]['contract']['type'] = 'text';
+$DATA_INJECTION_MAPPING[PROFILE_TYPE]['contract']['type'] = 'right_rw';
 
 $DATA_INJECTION_MAPPING[PROFILE_TYPE]['infocom']['table'] = 'glpi_profiles';
 $DATA_INJECTION_MAPPING[PROFILE_TYPE]['infocom']['field'] = 'infocom';
 $DATA_INJECTION_MAPPING[PROFILE_TYPE]['infocom']['name'] = $LANG['Menu'][24];
-$DATA_INJECTION_MAPPING[PROFILE_TYPE]['infocom']['type'] = 'text';
+$DATA_INJECTION_MAPPING[PROFILE_TYPE]['infocom']['type'] = 'right_rw';
 
 $DATA_INJECTION_MAPPING[PROFILE_TYPE]['knowbase']['table'] = 'glpi_profiles';
 $DATA_INJECTION_MAPPING[PROFILE_TYPE]['knowbase']['field'] = 'knowbase';
 $DATA_INJECTION_MAPPING[PROFILE_TYPE]['knowbase']['name'] = $LANG['Menu'][19];
-$DATA_INJECTION_MAPPING[PROFILE_TYPE]['knowbase']['type'] = 'text';
+$DATA_INJECTION_MAPPING[PROFILE_TYPE]['knowbase']['type'] = 'right_rw';
 
 $DATA_INJECTION_MAPPING[PROFILE_TYPE]['faq']['table'] = 'glpi_profiles';
 $DATA_INJECTION_MAPPING[PROFILE_TYPE]['faq']['field'] = 'faq';
 $DATA_INJECTION_MAPPING[PROFILE_TYPE]['faq']['name'] = $LANG['Menu'][20];
-$DATA_INJECTION_MAPPING[PROFILE_TYPE]['faq']['type'] = 'text';
+$DATA_INJECTION_MAPPING[PROFILE_TYPE]['faq']['type'] = 'right_rw';
 
 $DATA_INJECTION_MAPPING[PROFILE_TYPE]['reservation_helpdesk']['table'] = 'glpi_profiles';
 $DATA_INJECTION_MAPPING[PROFILE_TYPE]['reservation_helpdesk']['field'] = 'reservation_helpdesk';
 $DATA_INJECTION_MAPPING[PROFILE_TYPE]['reservation_helpdesk']['name'] = $LANG['Menu'][17];
-$DATA_INJECTION_MAPPING[PROFILE_TYPE]['reservation_helpdesk']['type'] = 'text';
+$DATA_INJECTION_MAPPING[PROFILE_TYPE]['reservation_helpdesk']['type'] = 'yesno';
 
 $DATA_INJECTION_MAPPING[PROFILE_TYPE]['reservation_central']['table'] = 'glpi_profiles';
 $DATA_INJECTION_MAPPING[PROFILE_TYPE]['reservation_central']['field'] = 'reservation_central';
 $DATA_INJECTION_MAPPING[PROFILE_TYPE]['reservation_central']['name'] = $LANG['profiles'][23];
-$DATA_INJECTION_MAPPING[PROFILE_TYPE]['reservation_central']['type'] = 'text';
+$DATA_INJECTION_MAPPING[PROFILE_TYPE]['reservation_central']['type'] = 'yesno';
 
 $DATA_INJECTION_MAPPING[PROFILE_TYPE]['reports']['table'] = 'glpi_profiles';
 $DATA_INJECTION_MAPPING[PROFILE_TYPE]['reports']['field'] = 'reports';
 $DATA_INJECTION_MAPPING[PROFILE_TYPE]['reports']['name'] = $LANG['Menu'][6];
-$DATA_INJECTION_MAPPING[PROFILE_TYPE]['reports']['type'] = 'text';
+$DATA_INJECTION_MAPPING[PROFILE_TYPE]['reports']['type'] = 'right_r';
 
 $DATA_INJECTION_MAPPING[PROFILE_TYPE]['ocsng']['table'] = 'glpi_profiles';
 $DATA_INJECTION_MAPPING[PROFILE_TYPE]['ocsng']['field'] = 'ocsng';
 $DATA_INJECTION_MAPPING[PROFILE_TYPE]['ocsng']['name'] = $LANG['Menu'][33];
-$DATA_INJECTION_MAPPING[PROFILE_TYPE]['ocsng']['type'] = 'text';
+$DATA_INJECTION_MAPPING[PROFILE_TYPE]['ocsng']['type'] = 'right_w';
 
 $DATA_INJECTION_MAPPING[PROFILE_TYPE]['view_ocsng']['table'] = 'glpi_profiles';
 $DATA_INJECTION_MAPPING[PROFILE_TYPE]['view_ocsng']['field'] = 'view_ocsng';
 $DATA_INJECTION_MAPPING[PROFILE_TYPE]['view_ocsng']['name'] = $LANG['profiles'][30];
-$DATA_INJECTION_MAPPING[PROFILE_TYPE]['view_ocsng']['type'] = 'text';
+$DATA_INJECTION_MAPPING[PROFILE_TYPE]['view_ocsng']['type'] = 'right_r';
 
 $DATA_INJECTION_MAPPING[PROFILE_TYPE]['sync_ocsng']['table'] = 'glpi_profiles';
 $DATA_INJECTION_MAPPING[PROFILE_TYPE]['sync_ocsng']['field'] = 'sync_ocsng';
 $DATA_INJECTION_MAPPING[PROFILE_TYPE]['sync_ocsng']['name'] = $LANG['profiles'][31];
-$DATA_INJECTION_MAPPING[PROFILE_TYPE]['sync_ocsng']['type'] = 'text';
+$DATA_INJECTION_MAPPING[PROFILE_TYPE]['sync_ocsng']['type'] = 'right_w';
 
 $DATA_INJECTION_MAPPING[PROFILE_TYPE]['dropdown']['table'] = 'glpi_profiles';
 $DATA_INJECTION_MAPPING[PROFILE_TYPE]['dropdown']['field'] = 'dropdown';
 $DATA_INJECTION_MAPPING[PROFILE_TYPE]['dropdown']['name'] = $LANG['setup'][0];
-$DATA_INJECTION_MAPPING[PROFILE_TYPE]['dropdown']['type'] = 'text';
+$DATA_INJECTION_MAPPING[PROFILE_TYPE]['dropdown']['type'] = 'right_rw';
 
 $DATA_INJECTION_MAPPING[PROFILE_TYPE]['entity_dropdown']['table'] = 'glpi_profiles';
 $DATA_INJECTION_MAPPING[PROFILE_TYPE]['entity_dropdown']['field'] = 'entity_dropdown';
 $DATA_INJECTION_MAPPING[PROFILE_TYPE]['entity_dropdown']['name'] = $LANG['setup'][0]."(".$LANG['Menu'][37].")";
-$DATA_INJECTION_MAPPING[PROFILE_TYPE]['entity_dropdown']['type'] = 'text';
+$DATA_INJECTION_MAPPING[PROFILE_TYPE]['entity_dropdown']['type'] = 'right_rw';
 
 $DATA_INJECTION_MAPPING[PROFILE_TYPE]['device']['table'] = 'glpi_profiles';
 $DATA_INJECTION_MAPPING[PROFILE_TYPE]['device']['field'] = 'device';
 $DATA_INJECTION_MAPPING[PROFILE_TYPE]['device']['name'] = $LANG['title'][30];
-$DATA_INJECTION_MAPPING[PROFILE_TYPE]['device']['type'] = 'text';
+$DATA_INJECTION_MAPPING[PROFILE_TYPE]['device']['type'] = 'right_rw';
 
 $DATA_INJECTION_MAPPING[PROFILE_TYPE]['typedoc']['table'] = 'glpi_profiles';
 $DATA_INJECTION_MAPPING[PROFILE_TYPE]['typedoc']['field'] = 'typedoc';
 $DATA_INJECTION_MAPPING[PROFILE_TYPE]['typedoc']['name'] = $LANG['document'][7];
-$DATA_INJECTION_MAPPING[PROFILE_TYPE]['typedoc']['type'] = 'text';
+$DATA_INJECTION_MAPPING[PROFILE_TYPE]['typedoc']['type'] = 'right_rw';
 
 $DATA_INJECTION_MAPPING[PROFILE_TYPE]['link']['table'] = 'glpi_profiles';
 $DATA_INJECTION_MAPPING[PROFILE_TYPE]['link']['field'] = 'link';
 $DATA_INJECTION_MAPPING[PROFILE_TYPE]['link']['name'] = $LANG['setup'][87];
-$DATA_INJECTION_MAPPING[PROFILE_TYPE]['link']['type'] = 'text';
+$DATA_INJECTION_MAPPING[PROFILE_TYPE]['link']['type'] = 'right_rw';
 
 $DATA_INJECTION_MAPPING[PROFILE_TYPE]['config']['table'] = 'glpi_profiles';
 $DATA_INJECTION_MAPPING[PROFILE_TYPE]['config']['field'] = 'config';
 $DATA_INJECTION_MAPPING[PROFILE_TYPE]['config']['name'] = $LANG['common'][12];
-$DATA_INJECTION_MAPPING[PROFILE_TYPE]['config']['type'] = 'text';
+$DATA_INJECTION_MAPPING[PROFILE_TYPE]['config']['type'] = 'right_rw';
 
 $DATA_INJECTION_MAPPING[PROFILE_TYPE]['rule_tracking']['table'] = 'glpi_profiles';
 $DATA_INJECTION_MAPPING[PROFILE_TYPE]['rule_tracking']['field'] = 'rule_tracking';
 $DATA_INJECTION_MAPPING[PROFILE_TYPE]['rule_tracking']['name'] = $LANG['rulesengine'][28];
-$DATA_INJECTION_MAPPING[PROFILE_TYPE]['rule_tracking']['type'] = 'text';
+$DATA_INJECTION_MAPPING[PROFILE_TYPE]['rule_tracking']['type'] = 'right_rw';
 
 $DATA_INJECTION_MAPPING[PROFILE_TYPE]['rule_ocs']['table'] = 'glpi_profiles';
 $DATA_INJECTION_MAPPING[PROFILE_TYPE]['rule_ocs']['field'] = 'rule_ocs';
 $DATA_INJECTION_MAPPING[PROFILE_TYPE]['rule_ocs']['name'] = $LANG['rulesengine'][18];
-$DATA_INJECTION_MAPPING[PROFILE_TYPE]['rule_ocs']['type'] = 'text';
+$DATA_INJECTION_MAPPING[PROFILE_TYPE]['rule_ocs']['type'] = 'right_rw';
 
 $DATA_INJECTION_MAPPING[PROFILE_TYPE]['rule_right']['table'] = 'glpi_profiles';
 $DATA_INJECTION_MAPPING[PROFILE_TYPE]['rule_right']['field'] = 'rule_right';
 $DATA_INJECTION_MAPPING[PROFILE_TYPE]['rule_right']['name'] = $LANG['rulesengine'][19];
-$DATA_INJECTION_MAPPING[PROFILE_TYPE]['rule_right']['type'] = 'text';
+$DATA_INJECTION_MAPPING[PROFILE_TYPE]['rule_right']['type'] = 'right_rw';
 
 $DATA_INJECTION_MAPPING[PROFILE_TYPE]['rule_softwarecategories']['table'] = 'glpi_profiles';
 $DATA_INJECTION_MAPPING[PROFILE_TYPE]['rule_softwarecategories']['field'] = 'rule_softwarecategories';
 $DATA_INJECTION_MAPPING[PROFILE_TYPE]['rule_softwarecategories']['name'] = $LANG['rulesengine'][37];
-$DATA_INJECTION_MAPPING[PROFILE_TYPE]['rule_softwarecategories']['type'] = 'text';
+$DATA_INJECTION_MAPPING[PROFILE_TYPE]['rule_softwarecategories']['type'] = 'right_rw';
 
 $DATA_INJECTION_MAPPING[PROFILE_TYPE]['search_config']['table'] = 'glpi_profiles';
 $DATA_INJECTION_MAPPING[PROFILE_TYPE]['search_config']['field'] = 'search_config';
 $DATA_INJECTION_MAPPING[PROFILE_TYPE]['search_config']['name'] = $LANG['setup'][250]."(".$LANG['common'][34].")";
-$DATA_INJECTION_MAPPING[PROFILE_TYPE]['search_config']['type'] = 'text';
+$DATA_INJECTION_MAPPING[PROFILE_TYPE]['search_config']['type'] = 'right_rw';
 
 $DATA_INJECTION_MAPPING[PROFILE_TYPE]['search_config_global']['table'] = 'glpi_profiles';
 $DATA_INJECTION_MAPPING[PROFILE_TYPE]['search_config_global']['field'] = 'search_config_global';
 $DATA_INJECTION_MAPPING[PROFILE_TYPE]['search_config_global']['name'] = $LANG['setup'][250];
-$DATA_INJECTION_MAPPING[PROFILE_TYPE]['search_config_global']['type'] = 'text';
+$DATA_INJECTION_MAPPING[PROFILE_TYPE]['search_config_global']['type'] = 'right_rw';
 
 $DATA_INJECTION_MAPPING[PROFILE_TYPE]['check_update']['table'] = 'glpi_profiles';
 $DATA_INJECTION_MAPPING[PROFILE_TYPE]['check_update']['field'] = 'check_update';
 $DATA_INJECTION_MAPPING[PROFILE_TYPE]['check_update']['name'] = $LANG['setup'][306];
-$DATA_INJECTION_MAPPING[PROFILE_TYPE]['check_update']['type'] = 'text';
+$DATA_INJECTION_MAPPING[PROFILE_TYPE]['check_update']['type'] = 'yesno';
 
 $DATA_INJECTION_MAPPING[PROFILE_TYPE]['profile']['table'] = 'glpi_profiles';
 $DATA_INJECTION_MAPPING[PROFILE_TYPE]['profile']['field'] = 'profile';
 $DATA_INJECTION_MAPPING[PROFILE_TYPE]['profile']['name'] = $LANG['Menu'][35];
-$DATA_INJECTION_MAPPING[PROFILE_TYPE]['profile']['type'] = 'text';
+$DATA_INJECTION_MAPPING[PROFILE_TYPE]['profile']['type'] = 'right_rw';
 
 $DATA_INJECTION_MAPPING[PROFILE_TYPE]['user']['table'] = 'glpi_profiles';
 $DATA_INJECTION_MAPPING[PROFILE_TYPE]['user']['field'] = 'user';
 $DATA_INJECTION_MAPPING[PROFILE_TYPE]['user']['name'] = $LANG['Menu'][14];
-$DATA_INJECTION_MAPPING[PROFILE_TYPE]['user']['type'] = 'text';
+$DATA_INJECTION_MAPPING[PROFILE_TYPE]['user']['type'] = 'right_rw';
 
 $DATA_INJECTION_MAPPING[PROFILE_TYPE]['user_auth_method']['table'] = 'glpi_profiles';
 $DATA_INJECTION_MAPPING[PROFILE_TYPE]['user_auth_method']['field'] = 'user_auth_method';
 $DATA_INJECTION_MAPPING[PROFILE_TYPE]['user_auth_method']['name'] = $LANG['profiles'][43];
-$DATA_INJECTION_MAPPING[PROFILE_TYPE]['user_auth_method']['type'] = 'text';
+$DATA_INJECTION_MAPPING[PROFILE_TYPE]['user_auth_method']['type'] = 'right_rw';
 
 $DATA_INJECTION_MAPPING[PROFILE_TYPE]['group']['table'] = 'glpi_profiles';
 $DATA_INJECTION_MAPPING[PROFILE_TYPE]['group']['field'] = 'group';
 $DATA_INJECTION_MAPPING[PROFILE_TYPE]['group']['name'] = $LANG['Menu'][36];
-$DATA_INJECTION_MAPPING[PROFILE_TYPE]['group']['type'] = 'text';
+$DATA_INJECTION_MAPPING[PROFILE_TYPE]['group']['type'] = 'right_rw';
 
 $DATA_INJECTION_MAPPING[PROFILE_TYPE]['entity']['table'] = 'glpi_profiles';
 $DATA_INJECTION_MAPPING[PROFILE_TYPE]['entity']['field'] = 'entity';
 $DATA_INJECTION_MAPPING[PROFILE_TYPE]['entity']['name'] = $LANG['Menu'][37];
-$DATA_INJECTION_MAPPING[PROFILE_TYPE]['entity']['type'] = 'text';
+$DATA_INJECTION_MAPPING[PROFILE_TYPE]['entity']['type'] = 'right_rw';
 
 $DATA_INJECTION_MAPPING[PROFILE_TYPE]['transfer']['table'] = 'glpi_profiles';
 $DATA_INJECTION_MAPPING[PROFILE_TYPE]['transfer']['field'] = 'transfer';
 $DATA_INJECTION_MAPPING[PROFILE_TYPE]['transfer']['name'] = $LANG['transfer'][1];
-$DATA_INJECTION_MAPPING[PROFILE_TYPE]['transfer']['type'] = 'text';
+$DATA_INJECTION_MAPPING[PROFILE_TYPE]['transfer']['type'] = 'right_rw';
 
 $DATA_INJECTION_MAPPING[PROFILE_TYPE]['logs']['table'] = 'glpi_profiles';
 $DATA_INJECTION_MAPPING[PROFILE_TYPE]['logs']['field'] = 'logs';
 $DATA_INJECTION_MAPPING[PROFILE_TYPE]['logs']['name'] = $LANG['Menu'][30];
-$DATA_INJECTION_MAPPING[PROFILE_TYPE]['logs']['type'] = 'text';
+$DATA_INJECTION_MAPPING[PROFILE_TYPE]['logs']['type'] = 'right_r';
 
 $DATA_INJECTION_MAPPING[PROFILE_TYPE]['backup']['table'] = 'glpi_profiles';
 $DATA_INJECTION_MAPPING[PROFILE_TYPE]['backup']['field'] = 'backup';
 $DATA_INJECTION_MAPPING[PROFILE_TYPE]['backup']['name'] = $LANG['Menu'][12];
-$DATA_INJECTION_MAPPING[PROFILE_TYPE]['backup']['type'] = 'text';
+$DATA_INJECTION_MAPPING[PROFILE_TYPE]['backup']['type'] = 'right_w';
 
 $DATA_INJECTION_MAPPING[PROFILE_TYPE]['reminder_public']['table'] = 'glpi_profiles';
 $DATA_INJECTION_MAPPING[PROFILE_TYPE]['reminder_public']['field'] = 'reminder_public';
 $DATA_INJECTION_MAPPING[PROFILE_TYPE]['reminder_public']['name'] = $LANG['reminder'][1];
-$DATA_INJECTION_MAPPING[PROFILE_TYPE]['reminder_public']['type'] = 'text';
+$DATA_INJECTION_MAPPING[PROFILE_TYPE]['reminder_public']['type'] = 'right_rw';
 
 $DATA_INJECTION_MAPPING[PROFILE_TYPE]['bookmark_public']['table'] = 'glpi_profiles';
 $DATA_INJECTION_MAPPING[PROFILE_TYPE]['bookmark_public']['field'] = 'bookmark_public';
 $DATA_INJECTION_MAPPING[PROFILE_TYPE]['bookmark_public']['name'] = $LANG['bookmark'][5];
-$DATA_INJECTION_MAPPING[PROFILE_TYPE]['bookmark_public']['type'] = 'text';
+$DATA_INJECTION_MAPPING[PROFILE_TYPE]['bookmark_public']['type'] = 'right_rw';
 
 $DATA_INJECTION_MAPPING[PROFILE_TYPE]['delete_ticket']['table'] = 'glpi_profiles';
 $DATA_INJECTION_MAPPING[PROFILE_TYPE]['delete_ticket']['field'] = 'delete_ticket';
 $DATA_INJECTION_MAPPING[PROFILE_TYPE]['delete_ticket']['name'] = $LANG['profiles'][14];
-$DATA_INJECTION_MAPPING[PROFILE_TYPE]['delete_ticket']['type'] = 'text';
+$DATA_INJECTION_MAPPING[PROFILE_TYPE]['delete_ticket']['type'] = 'yesno';
 
 $DATA_INJECTION_MAPPING[PROFILE_TYPE]['comment_ticket']['table'] = 'glpi_profiles';
 $DATA_INJECTION_MAPPING[PROFILE_TYPE]['comment_ticket']['field'] = 'comment_ticket';
 $DATA_INJECTION_MAPPING[PROFILE_TYPE]['comment_ticket']['name'] = $LANG['profiles'][6];
-$DATA_INJECTION_MAPPING[PROFILE_TYPE]['comment_ticket']['type'] = 'text';
+$DATA_INJECTION_MAPPING[PROFILE_TYPE]['comment_ticket']['type'] = 'yesno';
 
 $DATA_INJECTION_MAPPING[PROFILE_TYPE]['comment_all_ticket']['table'] = 'glpi_profiles';
 $DATA_INJECTION_MAPPING[PROFILE_TYPE]['comment_all_ticket']['field'] = 'comment_all_ticket';
 $DATA_INJECTION_MAPPING[PROFILE_TYPE]['comment_all_ticket']['name'] = $LANG['profiles'][15];
-$DATA_INJECTION_MAPPING[PROFILE_TYPE]['comment_all_ticket']['type'] = 'text';
+$DATA_INJECTION_MAPPING[PROFILE_TYPE]['comment_all_ticket']['type'] = 'yesno';
 
 $DATA_INJECTION_MAPPING[PROFILE_TYPE]['update_ticket']['table'] = 'glpi_profiles';
 $DATA_INJECTION_MAPPING[PROFILE_TYPE]['update_ticket']['field'] = 'update_ticket';
 $DATA_INJECTION_MAPPING[PROFILE_TYPE]['update_ticket']['name'] = $LANG['profiles'][18];
-$DATA_INJECTION_MAPPING[PROFILE_TYPE]['update_ticket']['type'] = 'text';
+$DATA_INJECTION_MAPPING[PROFILE_TYPE]['update_ticket']['type'] = 'yesno';
 
 $DATA_INJECTION_MAPPING[PROFILE_TYPE]['own_ticket']['table'] = 'glpi_profiles';
 $DATA_INJECTION_MAPPING[PROFILE_TYPE]['own_ticket']['field'] = 'own_ticket';
 $DATA_INJECTION_MAPPING[PROFILE_TYPE]['own_ticket']['name'] = $LANG['profiles'][16];
-$DATA_INJECTION_MAPPING[PROFILE_TYPE]['own_ticket']['type'] = 'text';
+$DATA_INJECTION_MAPPING[PROFILE_TYPE]['own_ticket']['type'] = 'yesno';
 
 $DATA_INJECTION_MAPPING[PROFILE_TYPE]['steal_ticket']['table'] = 'glpi_profiles';
 $DATA_INJECTION_MAPPING[PROFILE_TYPE]['steal_ticket']['field'] = 'steal_ticket';
 $DATA_INJECTION_MAPPING[PROFILE_TYPE]['steal_ticket']['name'] = $LANG['profiles'][17];
-$DATA_INJECTION_MAPPING[PROFILE_TYPE]['steal_ticket']['type'] = 'text';
+$DATA_INJECTION_MAPPING[PROFILE_TYPE]['steal_ticket']['type'] = 'yesno';
 
 $DATA_INJECTION_MAPPING[PROFILE_TYPE]['assign_ticket']['table'] = 'glpi_profiles';
 $DATA_INJECTION_MAPPING[PROFILE_TYPE]['assign_ticket']['field'] = 'assign_ticket';
 $DATA_INJECTION_MAPPING[PROFILE_TYPE]['assign_ticket']['name'] = $LANG['profiles'][19];
-$DATA_INJECTION_MAPPING[PROFILE_TYPE]['assign_ticket']['type'] = 'text';
+$DATA_INJECTION_MAPPING[PROFILE_TYPE]['assign_ticket']['type'] = 'yesno';
 
 $DATA_INJECTION_MAPPING[PROFILE_TYPE]['show_all_ticket']['table'] = 'glpi_profiles';
 $DATA_INJECTION_MAPPING[PROFILE_TYPE]['show_all_ticket']['field'] = 'show_all_ticket';
 $DATA_INJECTION_MAPPING[PROFILE_TYPE]['show_all_ticket']['name'] = $LANG['profiles'][7];
-$DATA_INJECTION_MAPPING[PROFILE_TYPE]['show_all_ticket']['type'] = 'text';
+$DATA_INJECTION_MAPPING[PROFILE_TYPE]['show_all_ticket']['type'] = 'yesno';
 
 $DATA_INJECTION_MAPPING[PROFILE_TYPE]['show_assign_ticket']['table'] = 'glpi_profiles';
 $DATA_INJECTION_MAPPING[PROFILE_TYPE]['show_assign_ticket']['field'] = 'show_assign_ticket';
 $DATA_INJECTION_MAPPING[PROFILE_TYPE]['show_assign_ticket']['name'] = $LANG['profiles'][32];
-$DATA_INJECTION_MAPPING[PROFILE_TYPE]['show_assign_ticket']['type'] = 'text';
+$DATA_INJECTION_MAPPING[PROFILE_TYPE]['show_assign_ticket']['type'] = 'yesno';
 
 $DATA_INJECTION_MAPPING[PROFILE_TYPE]['show_full_ticket']['table'] = 'glpi_profiles';
 $DATA_INJECTION_MAPPING[PROFILE_TYPE]['show_full_ticket']['field'] = 'show_full_ticket';
 $DATA_INJECTION_MAPPING[PROFILE_TYPE]['show_full_ticket']['name'] = $LANG['profiles'][8];
-$DATA_INJECTION_MAPPING[PROFILE_TYPE]['show_full_ticket']['type'] = 'text';
+$DATA_INJECTION_MAPPING[PROFILE_TYPE]['show_full_ticket']['type'] = 'yesno';
 
 $DATA_INJECTION_MAPPING[PROFILE_TYPE]['observe_ticket']['table'] = 'glpi_profiles';
 $DATA_INJECTION_MAPPING[PROFILE_TYPE]['observe_ticket']['field'] = 'observe_ticket';
 $DATA_INJECTION_MAPPING[PROFILE_TYPE]['observe_ticket']['name'] = $LANG['profiles'][9];
-$DATA_INJECTION_MAPPING[PROFILE_TYPE]['observe_ticket']['type'] = 'text';
+$DATA_INJECTION_MAPPING[PROFILE_TYPE]['observe_ticket']['type'] = 'yesno';
 
 $DATA_INJECTION_MAPPING[PROFILE_TYPE]['update_followup']['table'] = 'glpi_profiles';
 $DATA_INJECTION_MAPPING[PROFILE_TYPE]['update_followup']['field'] = 'update_followup';
 $DATA_INJECTION_MAPPING[PROFILE_TYPE]['update_followup']['name'] = $LANG['profiles'][9];
-$DATA_INJECTION_MAPPING[PROFILE_TYPE]['update_followup']['type'] = 'text';
+$DATA_INJECTION_MAPPING[PROFILE_TYPE]['update_followup']['type'] = 'yesno';
 
 $DATA_INJECTION_MAPPING[PROFILE_TYPE]['show_planning']['table'] = 'glpi_profiles';
 $DATA_INJECTION_MAPPING[PROFILE_TYPE]['show_planning']['field'] = 'show_planning';
 $DATA_INJECTION_MAPPING[PROFILE_TYPE]['show_planning']['name'] = $LANG['profiles'][20];
-$DATA_INJECTION_MAPPING[PROFILE_TYPE]['show_planning']['type'] = 'text';
+$DATA_INJECTION_MAPPING[PROFILE_TYPE]['show_planning']['type'] = 'yesno';
 
 $DATA_INJECTION_MAPPING[PROFILE_TYPE]['show_group_planning']['table'] = 'glpi_profiles';
 $DATA_INJECTION_MAPPING[PROFILE_TYPE]['show_group_planning']['field'] = 'show_group_planning';
 $DATA_INJECTION_MAPPING[PROFILE_TYPE]['show_group_planning']['name'] = $LANG['profiles'][36];
-$DATA_INJECTION_MAPPING[PROFILE_TYPE]['show_group_planning']['type'] = 'text';
+$DATA_INJECTION_MAPPING[PROFILE_TYPE]['show_group_planning']['type'] = 'yesno';
 
 $DATA_INJECTION_MAPPING[PROFILE_TYPE]['show_all_planning']['table'] = 'glpi_profiles';
 $DATA_INJECTION_MAPPING[PROFILE_TYPE]['show_all_planning']['field'] = 'show_all_planning';
 $DATA_INJECTION_MAPPING[PROFILE_TYPE]['show_all_planning']['name'] = $LANG['profiles'][21];
-$DATA_INJECTION_MAPPING[PROFILE_TYPE]['show_all_planning']['type'] = 'text';
+$DATA_INJECTION_MAPPING[PROFILE_TYPE]['show_all_planning']['type'] = 'yesno';
 
 $DATA_INJECTION_MAPPING[PROFILE_TYPE]['statistic']['table'] = 'glpi_profiles';
 $DATA_INJECTION_MAPPING[PROFILE_TYPE]['statistic']['field'] = 'statistic';
 $DATA_INJECTION_MAPPING[PROFILE_TYPE]['statistic']['name'] = $LANG['Menu'][13];
-$DATA_INJECTION_MAPPING[PROFILE_TYPE]['statistic']['type'] = 'text';
+$DATA_INJECTION_MAPPING[PROFILE_TYPE]['statistic']['type'] = 'right_r';
 
 $DATA_INJECTION_MAPPING[PROFILE_TYPE]['password_update']['table'] = 'glpi_profiles';
 $DATA_INJECTION_MAPPING[PROFILE_TYPE]['password_update']['field'] = 'password_update';
 $DATA_INJECTION_MAPPING[PROFILE_TYPE]['password_update']['name'] = $LANG['profiles'][24];
-$DATA_INJECTION_MAPPING[PROFILE_TYPE]['password_update']['type'] = 'text';
+$DATA_INJECTION_MAPPING[PROFILE_TYPE]['password_update']['type'] = 'yesno';
 
 $DATA_INJECTION_MAPPING[PROFILE_TYPE]['helpdesk_hardware']['table'] = 'glpi_profiles';
 $DATA_INJECTION_MAPPING[PROFILE_TYPE]['helpdesk_hardware']['field'] = 'helpdesk_hardware';
@@ -2562,22 +2575,22 @@ $DATA_INJECTION_MAPPING[PROFILE_TYPE]['helpdesk_hardware_type']['type'] = 'integ
 $DATA_INJECTION_MAPPING[PROFILE_TYPE]['show_group_ticket']['table'] = 'glpi_profiles';
 $DATA_INJECTION_MAPPING[PROFILE_TYPE]['show_group_ticket']['field'] = 'show_group_ticket';
 $DATA_INJECTION_MAPPING[PROFILE_TYPE]['show_group_ticket']['name'] = $LANG['profiles'][26];
-$DATA_INJECTION_MAPPING[PROFILE_TYPE]['show_group_ticket']['type'] = 'text';
+$DATA_INJECTION_MAPPING[PROFILE_TYPE]['show_group_ticket']['type'] = 'yesno';
 
 $DATA_INJECTION_MAPPING[PROFILE_TYPE]['show_group_hardware']['table'] = 'glpi_profiles';
 $DATA_INJECTION_MAPPING[PROFILE_TYPE]['show_group_hardware']['field'] = 'show_group_hardware';
 $DATA_INJECTION_MAPPING[PROFILE_TYPE]['show_group_hardware']['name'] = $LANG['profiles'][27];
-$DATA_INJECTION_MAPPING[PROFILE_TYPE]['show_group_hardware']['type'] = 'text';
+$DATA_INJECTION_MAPPING[PROFILE_TYPE]['show_group_hardware']['type'] = 'yesno';
 
 $DATA_INJECTION_MAPPING[PROFILE_TYPE]['rule_dictionnary_software']['table'] = 'glpi_profiles';
 $DATA_INJECTION_MAPPING[PROFILE_TYPE]['rule_dictionnary_software']['field'] = 'rule_dictionnary_software';
 $DATA_INJECTION_MAPPING[PROFILE_TYPE]['rule_dictionnary_software']['name'] = $LANG['rulesengine'][35];
-$DATA_INJECTION_MAPPING[PROFILE_TYPE]['rule_dictionnary_software']['type'] = 'intetextger';
+$DATA_INJECTION_MAPPING[PROFILE_TYPE]['rule_dictionnary_software']['type'] = 'right_rw';
 
 $DATA_INJECTION_MAPPING[PROFILE_TYPE]['rule_dictionnary_dropdown']['table'] = 'glpi_profiles';
 $DATA_INJECTION_MAPPING[PROFILE_TYPE]['rule_dictionnary_dropdown']['field'] = 'rule_dictionnary_dropdown';
 $DATA_INJECTION_MAPPING[PROFILE_TYPE]['rule_dictionnary_dropdown']['name'] = $LANG['rulesengine'][33];
-$DATA_INJECTION_MAPPING[PROFILE_TYPE]['rule_dictionnary_dropdown']['type'] = 'text';
+$DATA_INJECTION_MAPPING[PROFILE_TYPE]['rule_dictionnary_dropdown']['type'] = 'right_rw';
 
 // ----------------------------------------------------------------------
 //PSEUDO TYPE FOR PERIPHERAL TO COMPUTER CONNECTION
