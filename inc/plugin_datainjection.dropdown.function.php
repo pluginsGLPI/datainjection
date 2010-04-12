@@ -32,7 +32,7 @@
 // ----------------------------------------------------------------------
 
 
-function getDropdownMinimalName ($table, $id) 
+function getDropdownMinimalName ($table, $id)
 {
 	global $DB,$LANG;
 
@@ -41,10 +41,10 @@ function getDropdownMinimalName ($table, $id)
 		if ($id==0)
 			return $LANG["entity"][2];
 		elseif ($id==-1)
-			return $LANG["common"][77];	
+			return $LANG["common"][77];
 	}
-	
-	$name = EMPTY_VALUE;	
+
+	$name = EMPTY_VALUE;
 	if ($id>0){
 		$query = "SELECT name FROM ". $table ." WHERE ID=$id";
 		if ($result = $DB->query($query)){
@@ -54,7 +54,7 @@ function getDropdownMinimalName ($table, $id)
 			}
 		}
 	}
-	return addslashes($name); 
+	return addslashes($name);
 }
 
 /*
@@ -64,7 +64,7 @@ function getDropdownMinimalName ($table, $id)
  * @param value the value to add
  * @param entity the active entity
  * @return the ID of the insert value in the dropdown table
- */	
+ */
 function getDropdownValue($mapping, $mapping_definition,$value,$entity,$canadd=0,$dropdown_comments=EMPTY_VALUE)
 {
 	global $DB, $CFG_GLPI;
@@ -81,7 +81,7 @@ function getDropdownValue($mapping, $mapping_definition,$value,$entity,$canadd=0
 				return checkLocation($value,$entity,$rightToAdd,$dropdown_comments);
 			case "glpi_dropdown_netpoint":
 				// not handle here !
-				return EMPTY_VALUE;	
+				return EMPTY_VALUE;
 			break;
 			default:
 				$input["value2"] = EMPTY_VALUE;
@@ -93,21 +93,21 @@ function getDropdownValue($mapping, $mapping_definition,$value,$entity,$canadd=0
 		$input["FK_entities"] = $entity;
 		$input["type"] = EMPTY_VALUE;
 		$input["comments"] = $dropdown_comments;
-		
+
 		$ID = getDropdownID($input);
 		if ($ID != -1)
 			return $ID;
-		else if ($rightToAdd)	
+		else if ($rightToAdd)
 			return addDropdown($input);
 		else
-			return EMPTY_VALUE;	
+			return EMPTY_VALUE;
 }
 
 function dropdownTemplate($name,$entity,$table,$value='')
 {
 	global $DB;
 	$result = $DB->query("SELECT tplname, ID FROM ".$table." WHERE FK_entities=".$entity." AND tplname <> '' GROUP BY tplname ORDER BY tplname");
-	
+
 	$rand=mt_rand();
 	echo "<select name='$name' id='dropdown_".$name.$rand."'>";
 
@@ -116,7 +116,7 @@ function dropdownTemplate($name,$entity,$table,$value='')
 	while ($data = $DB->fetch_array($result))
 		echo "<option value='".$data["ID"]."'".($value==$data["tplname"]?" selected ":"").">".$data["tplname"]."</option>";
 
-	echo "</select>";	
+	echo "</select>";
 	return $rand;
 }
 
@@ -143,18 +143,18 @@ function dropdownFloatFormat($name,$format)
 function dropdownPrimaryTypeSelection($name,$model=null,$disable=false)
 {
 	echo "<select name='$name' ".($disable?"style='background-color:#e6e6e6' disabled":"").">";
-	
+
 	$default_value=($model==null?0:$model->getDeviceType());
-		
+
 	foreach(getAllPrimaryTypes() as $type)
 		echo "<option value='".$type[1]."' ".(($default_value == $type[1])?"selected":"").">".$type[0]."</option>";
-	
+
 	echo "</select>";
 }
 
 function dropdownFileTypes($name,$model=null,$disable=false)
 {
-	
+
 	if($_SESSION["plugin_datainjection"]["choice"]==1)
 		{
 		$id=0;
@@ -165,10 +165,10 @@ function dropdownFileTypes($name,$model=null,$disable=false)
 		echo "<td><select name='dropdown_type' style='background-color:#e6e6e6' disabled>";
 		$id=$model->getModelType();
 		}
-	
-		
+
+
 	$types = getAllTypes();
-	
+
 	foreach($types as $key => $type)
 		{
 		if(isset($model))
@@ -181,9 +181,9 @@ function dropdownFileTypes($name,$model=null,$disable=false)
 		else
 			echo "<option value='".$type->getBackendID()."'>".$type->getBackendName()."</option>";
 		}
-		
+
 	echo "</select></td></tr>";
-	
+
 }
 
 function dropdownModels($disable=false,$models,$with_select=true)
@@ -191,14 +191,14 @@ function dropdownModels($disable=false,$models,$with_select=true)
 		$nbmodel = count($models);
 		if ($with_select)
 		{
-			if ($disable)	
+			if ($disable)
 				echo "\n<select style='background-color:#e6e6e6' disabled name='dropdown' id='dropdown' onchange='show_comments($nbmodel)'>";
-			else			
+			else
 				echo "\n<select name='dropdown' id='dropdown' onchange='show_comments($nbmodel)'>";
 		}
 
 		$prev = -2;
-			
+
 		foreach($models as $model)
 		{
 			if ($model->getEntity() != $prev) {
@@ -210,15 +210,15 @@ function dropdownModels($disable=false,$models,$with_select=true)
 			}
 			echo "\n<option value='".$model->getModelID()."'>".$model->getModelName()." , ".getDropdownName('glpi_plugin_datainjection_filetype',$model->getModelType())."</option>";
 		}
-		
+
 		if ($prev >= -1) {
 			echo "</optgroup>";
 		}
-	
+
 
 		if ($with_select)
 			echo "</select>\n";
-	
+
 }
 
 function dropdownFileEncoding($name)

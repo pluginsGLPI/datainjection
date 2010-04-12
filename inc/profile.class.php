@@ -32,35 +32,49 @@
 // Purpose of file:
 // ----------------------------------------------------------------------
 
-define('GLPI_ROOT', '../../..');
-include (GLPI_ROOT."/inc/includes.php");
+class PluginDatainjectionProfile extends CommonDBTM {
 
-global $LANG;
+   //if profile deleted
+   function cleanProfiles($ID) {
 
-plugin_datainjection_loadHook("variables");
-
-if(isset($_POST['id']))
-   {
-
-   echo "<select name='field[".$_POST['id']."][2]' style='width: 150px'>";
-
-   if(isset($_POST['idMapping']))
-      {
-         if($_POST['idMapping'] == NOT_MAPPED)
-            echo "<option value='-1'>".$LANG["datainjection"]["mappingStep"][7]."</option>";
-         else
-            {
-               $values = getAllMappingsDefinitionsByType($_POST['idMapping']);
-
-               foreach($values as $key => $value) {
-                  $sel = (isset($_POST['name']) &&
-                      (strtolower(stripslashes($_POST['name']))==strtolower(addslashes($value)) ||
-                      strtolower(stripslashes($_POST['name'])) == strtolower($key)) ? 'selected' : '');
-                  echo "<option value='$key' $sel>".$value."</option>";
-               }
-            }
-      }
-
-   echo "</select>";
+      global $DB;
+      $query = "DELETE FROM `glpi_plugin_datainjectionprofiles` WHERE `id`='$ID' ";
+      $DB->query($query);
    }
+
+   function showForm($target,$ID){
+      global $LANG;
+
+      if (!haveRight("profile","r")) return false;
+      $canedit=haveRight("profile","w");
+      if ($ID)
+         $this->getFromDB($ID);
+
+      $profile = new Profile;
+      $profile->getFromDB($ID);
+
+      echo "<form action='".$target."' method='post'>";
+      echo "<table class='tab_cadre_fixe'>";
+
+      echo "<tr><th colspan='2' align='center'><strong>".
+             $LANG["datainjection"]["setup"][1]." ".$profile->fields["name"]."</strong></th></tr>";
+
+      echo "<tr class='tab_bg_2'>";
+      echo "<td>".$LANG["datainjection"]["profiles"][1].":</td><td>";
+      Dropdown::dropdownNoneReadWrite("model",$this->fields["model"],1,1,1);
+      echo "</td>";
+      echo "</tr>";
+
+      if ($canedit){
+         echo "<tr class='tab_bg_1'>";
+         echo "<td align='center' colspan='2'>";
+         echo "<input type='hidden' name='id' value=$ID>";
+         echo "<input type='submit' name='update_user_profile' value=\"".$LANG['buttons'][7]."\" class='submit'>";
+         echo "</td></tr>";
+      }
+      echo "</table></form>";
+
+   }
+}
+
 ?>

@@ -62,7 +62,7 @@ foreach($_POST as $key => $val)
 
 
 if($load)
-	{		
+	{
 	/***********************Global Step****************************/
 	if(isset($_POST["next_choiceStep"]))
 		{
@@ -73,9 +73,9 @@ if($load)
 				$_SESSION["plugin_datainjection"]["choice"] = 1;
 			break;
 			case 2:
-				$model = getModelInstanceByID($_POST["dropdown"]);
+				$model = PluginDatainjectionModel::getInstanceByID($_POST["dropdown"]);
 				$model->loadAll($_POST["dropdown"]);
-				
+
 				$_SESSION["plugin_datainjection"]["nbonglet"] = 5;
 				$_SESSION["plugin_datainjection"]["choice"] = 2;
 				$_SESSION["plugin_datainjection"]["model"] = serialize($model);
@@ -86,9 +86,9 @@ if($load)
 				$_SESSION["plugin_datainjection"]["idmodel"] = $_POST["dropdown"];
 			break;
 			case 4:
-				$model = getModelInstanceByID($_POST["dropdown"]);
+				$model = PluginDatainjectionModel::getInstanceByID($_POST["dropdown"]);
 				$model->loadAll($_POST["dropdown"]);
-				
+
 				$_SESSION["plugin_datainjection"]["nbonglet"] = 5;
 				$_SESSION["plugin_datainjection"]["choice"] = 4;
 				$_SESSION["plugin_datainjection"]["model"] = serialize($model);
@@ -98,82 +98,82 @@ if($load)
 		$_SESSION["plugin_datainjection"]["load"] = "next_choiceStep";
 		}
 	/**************************************************************/
-	
-	
+
+
 	/************************Model Step****************************/
 	else if(isset($_POST["preview_modelStep"]))
 		{
 		$_SESSION["plugin_datainjection"]["step"]--;
 		$_SESSION["plugin_datainjection"]["load"] = "preview_modelStep";
 		}
-		
+
 	else if(isset($_POST["next_modelStep"]))
-		{	
+		{
 		if(isset($_SESSION["plugin_datainjection"]["model"]))
 			{
 			$model = unserialize($_SESSION["plugin_datainjection"]["model"]);
-			
+
 			if($_SESSION["plugin_datainjection"]["choice"] == 1)
 				{
 				if($model->getModelType()!=$_POST["dropdown_type"])
-					$model = getModelInstanceByType($_POST["dropdown_type"]);
+					$model = PluginDatainjectionModel::getInstanceByType($_POST["dropdown_type"]);
 				}
 			}
-		else		
-			$model = getModelInstanceByType($_POST["dropdown_type"]);
-			
+		else
+			$model = PluginDatainjectionModel::getInstanceByType($_POST["dropdown_type"]);
+
 		$model->setFields($_POST,0,$_SESSION["glpiID"]);
-				
+
 		$_SESSION["plugin_datainjection"]["model"] = serialize($model);
-		
+
 		$_SESSION["plugin_datainjection"]["step"]++;
 		$_SESSION["plugin_datainjection"]["load"] = "next_modelStep";
 		}
-	/**************************************************************/	
-	
-	
+	/**************************************************************/
+
+
 	/************************Delete Step***************************/
 	else if(isset($_POST["yes_deleteStep"]))
 		$suppr=1;
-	
+
 	else if(isset($_POST["no_deleteStep"]))
 		{
 		$_SESSION["plugin_datainjection"]["step"]--;
 		$_SESSION["plugin_datainjection"]["load"] = "no_deleteStep";
 		}
-		
+
 	else if(isset($_POST["next_deleteStep"]))
 		{
 		$_SESSION["plugin_datainjection"]["step"]--;
 		$_SESSION["plugin_datainjection"]["load"] = "next_deleteStep";
 		}
 	/**************************************************************/
-	
-	
+
+
 	/**************************File Step***************************/
 	else if(isset($_POST["preview_fileStep"]))
 		{
 		$_SESSION["plugin_datainjection"]["step"]--;
 		$_SESSION["plugin_datainjection"]["load"] = "preview_fileStep";
 		}
-		
+
 	else if(isset($_POST["next_fileStep"]))
 		{
 	    $tmp_file = $_FILES["file"]["tmp_name"];
-	
+
 	    if( !is_uploaded_file($tmp_file) )
 	        $error = $LANG["datainjection"]["fileStep"][4];
 	    else
 	    	{
 			$model = unserialize($_SESSION["plugin_datainjection"]["model"]);
-			$type = new BackendType();
+			$type = new PluginDatainjectionBackendType();
 			$type->getFromDB($model->getModelType());
 			$extension = $type->getBackendName();
-			
+
 			$name_file = $_FILES["file"]["name"];
-			
+
 			$tmpfname = tempnam (realpath(PLUGIN_DATAINJECTION_UPLOAD_DIR), "Tmp");
-			
+
 	    	if( !strstr(strtolower(substr($name_file,strlen($name_file)-4)), strtolower($extension)) )
 	        	$error = $LANG["datainjection"]["fileStep"][5]."<br />".$LANG["datainjection"]["fileStep"][6]." ".$extension." ".$LANG["datainjection"]["fileStep"][7];
 	    	else
@@ -183,17 +183,17 @@ if($load)
 	    		else
 	    			{
 	    			$_SESSION["plugin_datainjection"]["file"] = basename($tmpfname);
-	    			
-	    			$file=getBackend($model->getModelType());
-					$file->initBackend(PLUGIN_DATAINJECTION_UPLOAD_DIR.$_SESSION["plugin_datainjection"]["file"],$model->getDelimiter(),$_POST["dropdown_encoding"]);
+
+	    			$file=PluginDatainjectionBackend::getInstance($model->getModelType());
+					$file->initPluginDatainjectionBackend(PLUGIN_DATAINJECTION_UPLOAD_DIR.$_SESSION["plugin_datainjection"]["file"],$model->getDelimiter(),$_POST["dropdown_encoding"]);
 					$file->read();
 					$file->deleteFile();
-					
+
 					if(($_SESSION["plugin_datainjection"]["choice"]!=4))
 						$ok = 0;
 					else
 					 	$ok = $file->isFileCorrect($model);
-					 
+
 					if (!$ok)
 						{
 						$_SESSION["plugin_datainjection"]["step"]++;
@@ -201,7 +201,7 @@ if($load)
 						$_SESSION["plugin_datainjection"]["backend"] = serialize($file);
 	    				$_SESSION["plugin_datainjection"]["file_name"] = $name_file;
 	    				$_SESSION["plugin_datainjection"]["encoding"] = $_POST["dropdown_encoding"];
-	    				
+
 	    				if($_SESSION["plugin_datainjection"]["choice"]==1)
 	    					$_SESSION["plugin_datainjection"]["remember"] = 0;
 						}
@@ -210,8 +210,8 @@ if($load)
 						if ($ok==1)
 							$error=$LANG["datainjection"]["saveStep"][11];
 						else
-							$error=$LANG["datainjection"]["saveStep"][12];	
-						
+							$error=$LANG["datainjection"]["saveStep"][12];
+
 						$error .= "<br><br><center>" . $file->getError(true) . "<center>";
 						unset($_SESSION["plugin_datainjection"]["file"]);
 						}
@@ -220,25 +220,25 @@ if($load)
 	    	}
 		}
 	/**************************************************************/
-		
-		
-	/*************************Mapping Step*************************/	
+
+
+	/*************************Mapping Step*************************/
 	else if(isset($_POST["preview_mappingStep"]))
 		{
 		$_SESSION["plugin_datainjection"]["step"]--;
 		$_SESSION["plugin_datainjection"]["load"] = "preview_mappingStep";
 		}
-		
+
 	else if(isset($_POST["next_mappingStep"]))
 		{
 		$model = unserialize($_SESSION["plugin_datainjection"]["model"]);
-			
+
 		$index= 0;
-		$mappingcollection = new MappingCollection;
-			
+		$mappingcollection = new PluginPluginDatainjectionMappingCollection;
+
 		foreach($_POST["field"] as $field)
 			{
-			$mapping = new DataInjectionMapping;
+			$mapping = new PluginDatainjectionMapping;
 			$mapping->setName(stripslashes($field[0]));
 			$mapping->setMappingType($field[1]);
 			$mapping->setValue($field[2]);
@@ -247,98 +247,98 @@ if($load)
 				$mapping->setMandatory(1);
 			else
 				$mapping->setMandatory(0);
-				
+
 			$mappingcollection->addNewMapping($mapping);
 			$index++;
 			}
-				
+
 			$model->setMappings($mappingcollection);
-				
+
 		$_SESSION["plugin_datainjection"]["model"] = serialize($model);
-		
+
 		$_SESSION["plugin_datainjection"]["step"]++;
 		$_SESSION["plugin_datainjection"]["load"] = "next_mappingStep";
-		
+
 		if($_SESSION["plugin_datainjection"]["choice"]==1)
 	    				$_SESSION["plugin_datainjection"]["remember"] = 1;
-		}	
+		}
 	/**************************************************************/
-	
-	
+
+
 	/***************************Info Step**************************/
 	else if(isset($_POST["preview_infoStep"]))
 		{
-		$_SESSION["plugin_datainjection"]["step"]--;	
+		$_SESSION["plugin_datainjection"]["step"]--;
 		$_SESSION["plugin_datainjection"]["load"] = "preview_infoStep";
 		}
-		
+
 	else if(isset($_POST["next_infoStep"]))
 		{
 		$model = unserialize($_SESSION["plugin_datainjection"]["model"]);
-		
-		$infoscollection = new InfosCollection;
-		
+
+		$infoscollection = new PluginDatainjectionInfosCollection;
+
 		foreach($_POST["field"] as $field)
 			if($field[0]!=-1)
 				{
-				$infos = new DataInjectionInfos;
+				$infos = new PluginDatainjectionInfos;
 				$infos->setInfosType($field[0]);
 				$infos->setValue($field[1]);
 				if(isset($field[2]))
 					$infos->setMandatory(1);
 				else
 					$infos->setMandatory(0);
-			
+
 				$infoscollection->addNewInfos($infos);
 				}
-			
+
 		$model->setInfos($infoscollection);
-			
+
 		$_SESSION["plugin_datainjection"]["model"] = serialize($model);
-		
+
 		$_SESSION["plugin_datainjection"]["step"]++;
 		$_SESSION["plugin_datainjection"]["load"] = "next_infoStep";
-		
+
 		if($_SESSION["plugin_datainjection"]["choice"]==1)
 	    				$_SESSION["plugin_datainjection"]["remember"] = 2;
 		}
 	/**************************************************************/
-	
-	
+
+
 	/***************************Save Step**************************/
 	else if(isset($_POST["preview_saveStep"]))
 		{
 		$_SESSION["plugin_datainjection"]["step"]--;
 		$_SESSION["plugin_datainjection"]["load"] = "preview_saveStep";
 		}
-		
+
 	else if(isset($_POST["next_saveStep"]))
 		{
 		$model = unserialize($_SESSION["plugin_datainjection"]["model"]);
-		
+
 		if(isset($_POST["model_name"]))
 			$model->setName($_POST["model_name"]);
 		if(isset($_POST["comments"]))
 			$model->setComments($_POST["comments"]);
-		
+
 		if($_SESSION["plugin_datainjection"]["choice"]==1)
 			$model->saveModel();
 		else
 			$model->updateModel();
-			
+
 		$_SESSION["plugin_datainjection"]["model"] = serialize($model);
-		
-		$save=3;		
+
+		$save=3;
 		}
-	
+
 	else if(isset($_POST["yes1_saveStep"]))
 		$save=1;
-		
+
 	else if(isset($_POST["no1_saveStep"]))
-		$save=2;		
-	
+		$save=2;
+
 	else if(isset($_POST["yes2_saveStep"]))
-		{	
+		{
 		if($_SESSION["plugin_datainjection"]["choice"]==1)
 			{
 			$_SESSION["plugin_datainjection"]["step"] = 3;
@@ -349,57 +349,57 @@ if($load)
 		$_SESSION["plugin_datainjection"]["choice"] = 4;
 		$_SESSION["plugin_datainjection"]["nbonglet"] = 5;
 		}
-		
+
 	else if(isset($_POST["no2_saveStep"]))
 		$_SESSION["plugin_datainjection"]["step"] = 1;
 	/**************************************************************/
-	
-	
+
+
 	/***********************Fill Infos Step************************/
 	else if(isset($_POST["preview1_fillInfoStep"]))
 		{
 		$_SESSION["plugin_datainjection"]["step"]--;
 		$_SESSION["plugin_datainjection"]["load"] = "preview1_fillInfoStep";
 		}
-		
+
 	else if(isset($_POST["preview2_fillInfoStep"]))
 		$_SESSION["plugin_datainjection"]["load"] = "preview2_fillInfoStep";
-	
+
 	else if(isset($_POST["next_fillInfoStep"]))
 		{
 		$model = unserialize($_SESSION["plugin_datainjection"]["model"]);
-		
+
 		foreach($_POST["field"] as $field)
 			foreach($model->getInfos() as $info)
 				if($info->getID() == $field[0])
 					{
 					$info->setInfosText($field[1]);
-					
+
 					if($info->isMandatory() && (empty($field[1]) || empty($field[1])))
 						{
 						$error = $LANG["datainjection"]["fillInfoStep"][4];
 						$_SESSION["plugin_datainjection"]["load"] = "next_fileStep";
 						}
 					}
-		
+
 		$_SESSION["plugin_datainjection"]["model"] = serialize($model);
-		
+
 		if(empty($error))
 			$_SESSION["plugin_datainjection"]["load"] = "next_fillInfoStep";
 		}
-		
+
 	else if(isset($_POST["yes_fillInfoStep"]))
 		{
 		$_SESSION["plugin_datainjection"]["step"]++;
 		$_SESSION["plugin_datainjection"]["load"] = "yes_fillInfoStep";
 		initImport();
 		}
-		
+
 	else if(isset($_POST["no_fillInfoStep"]))
 		$_SESSION["plugin_datainjection"]["step"] = 1;
 	/**************************************************************/
-	
-	
+
+
 	/**************************Import Step*************************/
 	else if(isset($_POST["next_importStep"]))
 		{
@@ -407,8 +407,8 @@ if($load)
 		$_SESSION["plugin_datainjection"]["load"] = "next_importStep";
 		}
 	/**************************************************************/
-	
-	
+
+
 	/****************************Log Step**************************/
 	else if(isset($_POST["next_logStep"]))
 		$_SESSION["plugin_datainjection"]["step"] = 1;

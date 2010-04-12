@@ -37,7 +37,7 @@ $pdf->addObject($id_pdf,'all');
 $model = unserialize($_SESSION["plugin_datainjection"]["model"]);
 $tab_result = unserialize($_SESSION["plugin_datainjection"]["import"]["tab_result"]);
 
-$tab_result = sortAllResults($tab_result);
+$tab_result = PluginDatainjectionResult::sort($tab_result);
 
 $i=0;
 

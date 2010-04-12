@@ -64,7 +64,7 @@ echo "<body>";
 $model = unserialize($_SESSION["plugin_datainjection"]["model"]);
 $tab_result = unserialize($_SESSION["plugin_datainjection"]["import"]["tab_result"]);
 
-$tab_result = sortAllResults($tab_result);
+$tab_result = PluginDatainjectionResult::sort($tab_result);
 
 if(count($tab_result[1])>0)
 	{

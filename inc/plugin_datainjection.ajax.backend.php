@@ -41,7 +41,7 @@ global $LANG;
 
 if(isset($_POST['id']))
 	{
-	$model = getModelInstanceByType($_POST["id"]);
+	$model = PluginDatainjectionModel::getInstanceByType($_POST["id"]);
 	
 	$model->showForm();
 	}

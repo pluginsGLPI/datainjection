@@ -37,7 +37,7 @@ define('GLPI_ROOT', '../../..');
 include (GLPI_ROOT."/inc/includes.php");
 checkRight("profile","r");
 
-$prof=new DataInjectionProfile();
+$prof=new PluginDatainjectionProfile();
 
 //Save profile
 if (isset ($_POST['update_user_profile'])) {

@@ -40,7 +40,7 @@ header_nocache();
 
 checkRight("profile","r");
 
-$prof=new DataInjectionProfile();
+$prof=new PluginDatainjectionProfile();
 $prof->showDataInjectionForm($_POST["ID"]);
 
 ?>

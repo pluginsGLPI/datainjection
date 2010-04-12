@@ -4,24 +4,24 @@
   ----------------------------------------------------------------------
   GLPI - Gestionnaire Libre de Parc Informatique
   Copyright (C) 2003-2008 by the INDEPNET Development Team.
-  
+
   http://indepnet.net/   http://glpi-project.org/
   ----------------------------------------------------------------------
-  
+
   LICENSE
-  
+
   This file is part of GLPI.
-  
+
   GLPI is free software; you can redistribute it and/or modify
   it under the terms of the GNU General Public License as published by
   the Free Software Foundation; either version 2 of the License, or
   (at your option) any later version.
-  
+
   GLPI is distributed in the hope that it will be useful,
   but WITHOUT ANY WARRANTY; without even the implied warranty of
   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
   GNU General Public License for more details.
-  
+
   You should have received a copy of the GNU General Public License
   along with GLPI; if not, write to the Free Software
   Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
@@ -40,7 +40,7 @@ if (!defined('GLPI_ROOT')) {
 function choiceStep($target) {
 	global $LANG, $LANG;
 
-	$models = getAllModels($_SESSION["glpiID"], "name", $_SESSION["glpiactive_entity"]);
+	$models = PluginDatainjectionModel::getModels($_SESSION["glpiID"], "name", $_SESSION["glpiactive_entity"]);
 
 	$nbmodel = count($models);
 
@@ -328,7 +328,7 @@ function modelStep($target) {
 function deleteStep($target, $suppr) {
 	global $LANG, $LANG;
 
-	$model = getModelInstanceByID($_SESSION["plugin_datainjection"]["idmodel"]);
+	$model = PluginDatainjectionModel::getInstanceByID($_SESSION["plugin_datainjection"]["idmodel"]);
 	$name = $model->getModelName();
 
 	echo "<form action='" . $target . "' method='post'>";
@@ -1100,7 +1100,7 @@ function fillInfoStep($target, $error) {
 					else
 						echo "</td><td style='width:10px'></td></tr>";
 					break;
-				
+
             case "dropdown_users" :
                echo "<tr><td colspan='3'><input type='hidden' name='field[$key][0]' value='" . $value->getID() . "' /></td></tr>";
                echo "<tr><td style='width: 200px'>" . $DATA_INJECTION_INFOS[$value->getInfosType()][$value->getValue()]["name"] . " : </td><td style='width: 130px'>";
@@ -1138,7 +1138,7 @@ function fillInfoStep($target, $error) {
 							break;
                   case "FK_entities":
                      dropdownValue($DATA_INJECTION_INFOS[$value->getInfosType()][$value->getValue()]["table"], "field[$key][1]", $value->getInfosText(), 1, getEntitySons($_SESSION["glpiactive_entity"]));
-                     break;   
+                     break;
                   default :
 							dropdownValue($DATA_INJECTION_INFOS[$value->getInfosType()][$value->getValue()]["table"], "field[$key][1]", $value->getInfosText(), 1, $_SESSION["glpiactive_entity"]);
 							break;
@@ -1232,16 +1232,16 @@ function importStep($target) {
 	echo "</div>";
 
 	while ($_SESSION["plugin_datainjection"]["import"]["i"] < $_SESSION["plugin_datainjection"]["import"]["i_stop"]) {
-		traitement();		
+		traitement();
 		changeProgressBarPosition(
 			$_SESSION["plugin_datainjection"]["import"]["i"],
 			$_SESSION["plugin_datainjection"]["import"]["nbline"],
 			$LANG["datainjection"]["importStep"][1]."... ".
-			number_format($_SESSION["plugin_datainjection"]["import"]["i"]*100/$_SESSION["plugin_datainjection"]["import"]["nbline"],1).'%');	
+			number_format($_SESSION["plugin_datainjection"]["import"]["i"]*100/$_SESSION["plugin_datainjection"]["import"]["nbline"],1).'%');
 
 	}
 	changeProgressBarMessage($LANG["datainjection"]["importStep"][3]);
-	
+
 	$model = unserialize($_SESSION["plugin_datainjection"]["model"]);
 	logEvent(0, getLogItemType($model->getDeviceType()), 4, "plugin", $_SESSION["glpiname"] . " " . $LANG["datainjection"]["logevent"][1]);
 
@@ -1268,7 +1268,7 @@ function logStep($target) {
 	$backend = unserialize($_SESSION["plugin_datainjection"]["backend"]);
 	$tab_result = unserialize($_SESSION["plugin_datainjection"]["import"]["tab_result"]);
 
-	$tab_result = sortAllResults($tab_result);
+	$tab_result = PluginDatainjectionResult::sort($tab_result);
 
 	echo "<form action='" . $target . "' method='post'>";
 	echo "<table class='wizard'>";
@@ -1352,12 +1352,12 @@ function traitement() {
 	$tab_result[] = $global_result;
 	$i++;
 	$datas = $engine->getDatas();
-	
+
 	$_SESSION["plugin_datainjection"]["import"]["tab_result"] = serialize($tab_result);
 	$_SESSION["plugin_datainjection"]["import"]["global_result"] = serialize($global_result);
 	$_SESSION["plugin_datainjection"]["import"]["i"] = $i;
 	$_SESSION["plugin_datainjection"]["import"]["datas"] = $datas;
-	
+
 	if (isset($_SESSION["MESSAGE_AFTER_REDIRECT"]))
 		$_SESSION["MESSAGE_AFTER_REDIRECT"] = '';
 }
@@ -1368,9 +1368,9 @@ function initImport() {
 
 	$tab_result = array ();
 
-	$global_result = new DataInjectionResults;
+	$global_result = new PluginDatainjectionResult;
 
-	$engine = new DataInjectionEngine($model, PLUGIN_DATAINJECTION_UPLOAD_DIR .
+	$engine = new PluginDatainjectionEngine($model, PLUGIN_DATAINJECTION_UPLOAD_DIR .
 	$_SESSION["plugin_datainjection"]["file"], $file, $_SESSION["glpiactive_entity"]);
 
 	if ($engine->getModel()->isHeaderPresent()) {
