@@ -101,13 +101,13 @@ if($load)
 
 
 	/************************Model Step****************************/
-	else if(isset($_POST["preview_modelStep"]))
+	else if(isset($_POST["preview_model"]))
 		{
 		$_SESSION["plugin_datainjection"]["step"]--;
-		$_SESSION["plugin_datainjection"]["load"] = "preview_modelStep";
+		$_SESSION["plugin_datainjection"]["load"] = "preview_model";
 		}
 
-	else if(isset($_POST["next_modelStep"]))
+	else if(isset($_POST["next_model"]))
 		{
 		if(isset($_SESSION["plugin_datainjection"]["model"]))
 			{
@@ -127,7 +127,7 @@ if($load)
 		$_SESSION["plugin_datainjection"]["model"] = serialize($model);
 
 		$_SESSION["plugin_datainjection"]["step"]++;
-		$_SESSION["plugin_datainjection"]["load"] = "next_modelStep";
+		$_SESSION["plugin_datainjection"]["load"] = "next_model";
 		}
 	/**************************************************************/
 
@@ -452,7 +452,7 @@ else
 			switch($_SESSION["plugin_datainjection"]["step"])
 				{
 				case 2:
-					modelStep($_SERVER["PHP_SELF"]);
+					model($_SERVER["PHP_SELF"]);
 				break;
 				case 3:
 					fileStep($_SERVER["PHP_SELF"],$error);
@@ -472,7 +472,7 @@ else
 			switch($_SESSION["plugin_datainjection"]["step"])
 				{
 				case 2:
-					modelStep($_SERVER["PHP_SELF"]);
+					model($_SERVER["PHP_SELF"]);
 				break;
 				case 3:
 					mappingStep($_SERVER["PHP_SELF"]);

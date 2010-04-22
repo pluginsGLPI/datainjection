@@ -347,7 +347,7 @@ function connectToObjectByType($result, $fields) {
 			else {
 				$ID = $DB->result($result_sql, 0, "ID");
 				//If document is not already linked to the object
-				if (!isDocumentAssociatedWithObject($fields["device_id"], $type, $ID))
+				if (!PluginDatainjectionCheck::isDocumentAssociatedWithObject($fields["device_id"], $type, $ID))
 					addDeviceDocument($fields["device_id"], $type, $ID);
 				else
 					$result->addInjectionMessage(WARNING_ALREADY_LINKED);

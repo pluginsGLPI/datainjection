@@ -130,7 +130,7 @@ function plugin_datainjection_install() {
                           `name` varchar(255) NOT NULL,
                           `comment` text NULL,
                           `date_mod` datetime NOT NULL default '0000-00-00 00:00:00',
-                          `filetypes_id` int(11) NOT NULL default '1',
+                          `filetype` varchar(255) NOT NULL default 'csv',
                           `itemtype` varchar(255) NOT NULL default '',
                           `entities_id` int(11) NOT NULL default '-1',
                           `behavior_add` tinyint(1) NOT NULL default '1',
@@ -149,7 +149,7 @@ function plugin_datainjection_install() {
 
       $DB->query($query) or die($DB->error());
 
-      $query = "CREATE TABLE IF NOT EXISTS `glpi_plugin_datainjection_models_csv` (
+      $query = "CREATE TABLE IF NOT EXISTS `glpi_plugin_datainjection_modelcsvs` (
                           `id` int(11) NOT NULL auto_increment,
                           `models_id` int(11) NOT NULL,
                           `itemtype` varchar(255) NOT NULL default '',
@@ -191,10 +191,6 @@ function plugin_datainjection_install() {
                         ";
       $DB->query($query) or die($DB->error());
 
-      $query = "REPLACE INTO `glpi_plugin_datainjection_filetype`
-                        (`id`, `name`, `value`, `backend_classname`, `model_classname`) VALUES
-                     (1, 'CSV', 1, 'PluginDatainjectionBackendcsv', 'PluginDatainjectionModelCSV');";
-      $DB->query($query) or die($DB->error());
 
       $query = "CREATE TABLE IF NOT EXISTS `glpi_plugin_datainjection_profiles` (
                           `id` int(11) NOT NULL auto_increment,
@@ -336,6 +332,14 @@ function plugin_datainjection_update15_170() {
 
 }
 
+function plugin_datainjection_update170_20() {
+   global $DB;
+   $query = "ALTER TABLE `glpi_plugin_datainjection_models`
+             CHANGE `filetypes_id` `filetype` VARCHAR( 255 ) NOT NULL DEFAULT 'csv'";
+   $query = "DROP TABLE `glpi_plugin_datainjection_filetype`";
+   $query = "RENAME TABLE `glpi_plugin_datainjection_models_csv`
+             TO `glpi_plugin_datainjection_modelcsvs`  ;";
+}
 function plugin_datainjection_createaccess($ID) {
    global $DB;
 
@@ -408,4 +412,21 @@ function plugin_datainjection_needUpdateOrInstall()
       return 1;
    }
 }
+
+function plugin_datainjection_giveItem($type,$ID,$data,$num) {
+   global $DB, $CFG_GLPI, $LANG;
+
+   $searchopt = &Search::getOptions($type);
+   $table = $searchopt[$ID]["table"];
+   $field = $searchopt[$ID]["field"];
+
+   switch ($table.'.'.$field) {
+      case "glpi_plugin_datainjection_models.port_unicity" :
+         return PluginDatainjectionDropdown::getPortUnitictyValues($data['ITEM_'.$num]);
+      case "glpi_plugin_datainjection_models.float_format":
+         return PluginDatainjectionDropdown::getFloatFormat($data['ITEM_'.$num]);
+   }
+   return "";
+}
+
 ?>

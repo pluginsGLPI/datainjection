@@ -45,13 +45,13 @@ class PluginDatainjectionBackendcsv extends PluginDatainjectionBackend{
                switch ($encoding)
                {
                   //If file is ISO8859-1 : encode the datas in utf8
-                  case ENCODING_ISO8859_1:
+                  case PluginDatainjectionBackend::ENCODING_ISO8859_1:
                      $csv[0][]=utf8_encode(addslashes($data[$c]));
                      break;
-                  case ENCODING_UFT8:
+                  case PluginDatainjectionBackend::ENCODING_UFT8:
                      $csv[0][]=addslashes($data[$c]);
                      break;
-                  case ENCODING_AUTO:
+                  case PluginDatainjectionBackend::ENCODING_AUTO:
                      $csv[0][]=PluginDatainjectionBackend::toUTF8(addslashes($data[$c]));
                      break;
                }
@@ -138,7 +138,9 @@ class PluginDatainjectionBackendcsv extends PluginDatainjectionBackend{
       $header = $this->getHeader($model->isHeaderPresent());
 
       if (count($model->getMappings()) != count($header)) {
-         $this->setError(count($model->getMappings()) ." ".$LANG["datainjection"]["saveStep"][16]."\n" . count($header)." ".$LANG["datainjection"]["saveStep"][17]);
+         $this->setError(count($model->getMappings()) ." ".
+               $LANG["datainjection"]["saveStep"][16]."\n" .
+               count($header)." ".$LANG["datainjection"]["saveStep"][17]);
          return 1;
       }
 
@@ -153,13 +155,17 @@ class PluginDatainjectionBackendcsv extends PluginDatainjectionBackend{
             $this->setError($key);
             $check = 2;
          }
-         else if (trim(strtoupper(stripslashes($header[$mapping->getRank()]))) != trim(strtoupper(stripslashes($mapping->getName())))) {
-            $this->setError($LANG["datainjection"]["saveStep"][18].stripslashes($header[$mapping->getRank()])."\n". $LANG["datainjection"]["saveStep"][19].stripslashes($mapping->getName()));
+         elseif (trim(strtoupper(stripslashes($header[$mapping->getRank()]))) != trim(strtoupper(stripslashes($mapping->getName())))) {
+            $this->setError($LANG["datainjection"]["saveStep"][18].
+                            stripslashes($header[$mapping->getRank()])."\n".
+                            $LANG["datainjection"]["saveStep"][19].
+                            stripslashes($mapping->getName()));
             $check = 2;
          }
       }
       return $check;
    }
+
 }
 
 ?>

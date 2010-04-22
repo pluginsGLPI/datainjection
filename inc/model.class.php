@@ -32,22 +32,46 @@ class PluginDatainjectionModel extends CommonDBTM {
    private $mappings;
    private $backend;
    protected $infos;
+   public $dohistory = true;
+
+   const DATE_TYPE_DDMMYYYY = "dd-mm-yyyy";
+   const DATE_TYPE_MMDDYYYY = "mm-dd-yyyy";
+   const DATE_TYPE_YYYYMMDD = "yyyy-mm-dd";
+
+   const FLOAT_TYPE_DOT          = 0;
+   const FLOAT_TYPE_COMMA        = 1;
+   const FLOAT_TYPE_DOT_AND_COM  = 2;
+
+   const UNICITY_NETPORT_LOGICAL_NUMBER = 0;
+   const UNICITY_NETPORT_NAME = 1;
+   const UNICITY_NETPORT_MACADDRESS = 2;
+   const UNICITY_NETPORT_LOGICAL_NUMBER_NAME = 3;
+   const UNICITY_NETPORT_LOGICAL_NUMBER_MAC = 4;
+   const UNICITY_NETPORT_LOGICAL_NUMBER_NAME_MAC = 5;
 
    function __construct()
    {
-      $this->mappings = new PluginPluginDatainjectionMappingCollection;
-      $this->infos = new PluginDatainjectionInfosCollection;
-      $this->init();
-      $this->may_be_private=true;
-      $this->may_be_recursive=true;
-      $this->entity_assign=true;
+      //$this->mappings = new PluginPluginDatainjectionMappingCollection;
+      //$this->infos = new PluginDatainjectionInfosCollection;
+      //$this->init();
+      //$this->may_be_private=true;
+      //$this->may_be_recursive=true;
+      //$this->entity_assign=true;
+   }
+
+   function canCreate() {
+      return plugin_datainjection_haveRight('model','w');
+   }
+
+   function canView() {
+      return plugin_datainjection_haveRight('model','r');
    }
 
    function init()
    {
 
    }
-
+/*
    //To be implemented
    function saveSpecificFields()
    {
@@ -143,7 +167,7 @@ class PluginDatainjectionModel extends CommonDBTM {
       $this->infos->deleteInfosFromDB($this->fields["ID"]);
       $this->infos->saveAllInfos($this->fields["ID"]);
    }
-
+*/
    //---- Getters -----//
    function getMappings()
    {
@@ -212,12 +236,12 @@ class PluginDatainjectionModel extends CommonDBTM {
 
    function getDeviceType()
    {
-      return $this->fields["device_type"];
+      return $this->fields["itemtype"];
    }
 
    function getEntity()
    {
-      return $this->fields["FK_entities"];
+      return $this->fields["entities_id"];
    }
 
    function getCanAddDropdown()
@@ -232,7 +256,7 @@ class PluginDatainjectionModel extends CommonDBTM {
 
    function getUserID()
    {
-      return $this->fields["FK_users"];
+      return $this->fields["users_id"];
    }
 
    function getPerformNetworkConnection()
@@ -487,6 +511,205 @@ class PluginDatainjectionModel extends CommonDBTM {
       return $model;
    }
 
+   //Standard functions
+   function getSearchOptions() {
+      global $LANG;
 
+      $tab = array();
+      $tab['common'] = $LANG["datainjection"]["model"][0];
+
+      $tab[1]['table']     = $this->getTable();
+      $tab[1]['field']     = 'name';
+      $tab[1]['linkfield'] = 'name';
+      $tab[1]['name']      = $LANG['common'][16];
+      $tab[1]['datatype']      = 'itemlink';
+      $tab[1]['itemlink_type'] = $this->getType();
+
+      $tab[2]['table']        = $this->getTable();
+      $tab[2]['field']        = 'id';
+      $tab[2]['linkfield']    = '';
+      $tab[2]['name']         = $LANG['common'][2];
+
+      $tab[3]['table']     = $this->getTable();
+      $tab[3]['field']     = 'behavior_add';
+      $tab[3]['linkfield'] = '';
+      $tab[3]['name']      = $LANG["datainjection"]["model"][6];
+      $tab[3]['datatype'] = 'bool';
+
+      $tab[4]['table']     = $this->getTable();
+      $tab[4]['field']     = 'behavior_update';
+      $tab[4]['linkfield'] = '';
+      $tab[4]['name']      = $LANG["datainjection"]["model"][7];
+      $tab[4]['datatype'] = 'bool';
+
+      $tab[5]['table']     = $this->getTable();
+      $tab[5]['field']     = 'itemtype';
+      $tab[5]['linkfield'] = '';
+      $tab[5]['name']      = $LANG["common"][17];
+      $tab[5]['datatype'] = 'itemtypename';
+
+      $tab[6]['table']     = $this->getTable();
+      $tab[6]['field']     = 'can_add_dropdown';
+      $tab[6]['linkfield'] = '';
+      $tab[6]['name']      = $LANG["datainjection"]["model"][8];
+      $tab[6]['datatype'] = 'bool';
+
+      $tab[7]['table']     = $this->getTable();
+      $tab[7]['field']     = 'date_format';
+      $tab[7]['linkfield'] = 'date_format';
+      $tab[7]['name']      = $LANG["datainjection"]["model"][21];
+      $tab[7]['datatype'] = 'text';
+
+      $tab[8]['table']     = $this->getTable();
+      $tab[8]['field']     = 'float_format';
+      $tab[8]['linkfield'] = 'float_format';
+      $tab[8]['name']      = $LANG["datainjection"]["model"][28];
+      $tab[8]['datatype'] = 'text';
+
+      $tab[9]['table']     = $this->getTable();
+      $tab[9]['field']     = 'perform_network_connection';
+      $tab[9]['linkfield'] = 'perform_network_connection';
+      $tab[9]['name']      = $LANG["datainjection"]["model"][20];
+      $tab[9]['datatype'] = 'bool';
+
+      $tab[10]['table']     = $this->getTable();
+      $tab[10]['field']     = 'port_unicity';
+      $tab[10]['linkfield'] = 'port_unicity';
+      $tab[10]['name']      = $LANG["datainjection"]["mappings"][7];
+      $tab[10]['datatype'] = 'text';
+
+      $tab[16]['table']     = $this->getTable();
+      $tab[16]['field']     = 'comment';
+      $tab[16]['linkfield'] = 'comment';
+      $tab[16]['name']      = $LANG['common'][25];
+      $tab[16]['datatype']  = 'text';
+
+
+      $tab[80]['table']     = 'glpi_entities';
+      $tab[80]['field']     = 'completename';
+      $tab[80]['linkfield'] = 'entities_id';
+      $tab[80]['name']      = $LANG['entity'][0];
+
+      $tab[86]['table']     = $this->getTable();
+      $tab[86]['field']     = 'is_recursive';
+      $tab[86]['linkfield'] = 'is_recursive';
+      $tab[86]['name']      = $LANG['entity'][9];
+      $tab[86]['datatype']  = 'bool';
+      return $tab;
+   }
+
+   function showForm($ID=0, $options = array()) {
+      global $DB,$LANG;
+      if ($ID > 0) {
+         $this->check($ID,'r');
+      } else {
+         // Create item
+         $this->check(-1,'w');
+         $this->getEmpty();
+      }
+      $this->showTabs($options);
+      $this->showFormHeader($options);
+
+      echo "<tr class='tab_bg_1'>";
+
+      echo "<td>".$LANG['common'][16].": </td>";
+      echo "<td>";
+      autocompletionTextField($this,"name");
+      echo "</td>";
+      echo "<td>".$LANG["datainjection"]["model"][18].": </td>";
+      echo "<td>";
+      Dropdown::showYesNo("is_private",$this->fields['is_private']);
+      echo "</td>";
+      echo "</tr>";
+
+      echo "<tr class='tab_bg_1'>";
+      echo "<td>".$LANG["datainjection"]["model"][6].": </td>";
+      echo "<td>";
+      Dropdown::showYesNo("behavior_add",$this->fields['behavior_add']);
+      echo "</td>";
+      echo "<td>".$LANG["datainjection"]["model"][7].": </td>";
+      echo "<td>";
+      Dropdown::showYesNo("behavior_update",$this->fields['behavior_update']);
+      echo "</td>";
+      echo "</tr>";
+
+      echo "<tr class='tab_bg_1'>";
+      echo "<td>".$LANG["datainjection"]["model"][4].": </td>";
+      echo "<td>";
+      PluginDatainjectionInjectionType::dropdown($this->fields['itemtype']);
+      echo "</td>";
+      echo "<td>".$LANG["datainjection"]["model"][12].": </td>";
+      echo "<td>";
+      Dropdown::showYesNo("can_overwrite_if_not_empty",$this->fields['can_overwrite_if_not_empty']);
+      echo "</td>";
+      echo "</tr>";
+
+      echo "<tr class='tab_bg_1'>";
+      echo "<td>".$LANG["datainjection"]["model"][20].": </td>";
+      echo "<td>";
+      Dropdown::showYesNo("perform_network_connection",$this->fields['perform_network_connection']);
+      echo "</td>";
+      echo "<td>".$LANG["datainjection"]["model"][21].": </td>";
+      echo "<td>";
+      PluginDatainjectionDropdown::dropdownDateFormat($this->fields['date_format']);
+      echo "</td>";
+      echo "</tr>";
+
+      echo "<tr class='tab_bg_1'>";
+      echo "<td>".$LANG["datainjection"]["model"][28].": </td>";
+      echo "<td>";
+      PluginDatainjectionDropdown::dropdownFloatFormat($this->fields['float_format']);
+      echo "</td>";
+      echo "<td>".$LANG["datainjection"]["model"][5].": </td>";
+      echo "<td>";
+      PluginDatainjectionDropdown::dropdownFileTypes($this->fields['filetype']);
+      echo "</td>";
+      echo "</td>";
+      echo "</tr>";
+
+      echo "<tr class='tab_bg_1'>";
+      echo "<td>".$LANG["datainjection"]["mappings"][7].": </td>";
+      echo "<td>";
+      PluginDatainjectionDropdown::dropdownPortUnicity($this->fields['port_unicity']);
+      echo "</td>";
+      echo "<td colspan='2'></td>";
+      echo "</tr>";
+
+      $this->showFormButtons($options);
+      $this->addDivForTabs();
+
+      return true;
+   }
+
+   function defineTabs($options=array()) {
+      global $LANG;
+
+      $ong[1] = $LANG['title'][26];
+      if ($this->fields['id'] > 0) {
+         $ong[2] = $LANG["datainjection"]["tabs"][0];
+         $ong[3] = $LANG["datainjection"]["tabs"][1];
+         $ong[4] = $LANG["datainjection"]["tabs"][2];
+         $ong[12] = $LANG['title'][38];
+      }
+      return $ong;
+   }
+
+   static function addObject($params=array()) {
+
+   }
+
+   /*
+    * Get the backend implementation by type
+    */
+   static function getInstance($type)
+   {
+      $class = 'PluginDatainjectionModel'.$type;
+      if (class_exists($class)) {
+         return new $class();
+      }
+      else {
+         return false;
+      }
+   }
 }
 ?>

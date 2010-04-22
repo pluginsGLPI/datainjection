@@ -43,8 +43,13 @@ function plugin_init_datainjection() {
       $PLUGIN_HOOKS['headings']['datainjection'] = 'plugin_get_headings_datainjection';
       $PLUGIN_HOOKS['headings_action']['datainjection'] = 'plugin_headings_actions_datainjection';
 
-      if (plugin_datainjection_haveRight("model", "r"))
+      if (plugin_datainjection_haveRight("model", "r")) {
          $PLUGIN_HOOKS['menu_entry']['datainjection'] = true;
+         $PLUGIN_HOOKS['submenu_entry']['datainjection']['search']  =
+                                                           'front/model.php';
+         $PLUGIN_HOOKS['submenu_entry']['datainjection']['add'] =
+                                                      'front/model.form.php';
+      }
 
       $PLUGIN_HOOKS['pre_item_delete']['datainjection'] = 'plugin_pre_item_delete_datainjection';
 
@@ -54,15 +59,13 @@ function plugin_init_datainjection() {
       // Javascript file
       $PLUGIN_HOOKS['add_javascript']['datainjection'] = 'javascript/datainjection.js';
 
-      // Import webservice
+      // Inbtegration with Webservices plugin
       $PLUGIN_HOOKS['webservices']['datainjection'] = 'plugin_datainjection_registerMethods';
 
-      //Need to load mappings when all the other files are loaded...
-      //TODO : check with it cannot be included at the same at as the other files...
-      $classes = array ('Model', 'ModelCSV', 'Backend', 'BackendCSV', 'Infos', 'InfosCollections',
+      $classes = array ('Model', 'Modelcsv', 'Backend', 'Backendcsv', 'Infos', 'InfosCollections',
                         'Mapping','MappingCollection', 'Profile');
       foreach ($classes as $value) {
-         Plugin::registerClass('PluginDataInjection'.$value);
+         Plugin::registerClass('PluginDatainjection'.$value);
       }
 
       /*
@@ -89,40 +92,27 @@ function plugin_version_datainjection() {
    return array (
       'name' => $LANG["datainjection"]["name"][1],
       'minGlpiVersion' => '0.78',
-      'author'=>'Dévi Balpe & Walid Nouh & Remi Collet',
+      'author'=>'Walid Nouh & Remi Collet',
       'homepage'=>'https://forge.indepnet.net/projects/show/datainjection',
       'version' => '2.0.0'
    );
 }
 
 function plugin_datainjection_haveRight($module, $right) {
-   $matches = array (
-      "" => array (
-         "",
-         "r",
-         "w"
-      ), // ne doit pas arriver normalement
-   "r" => array (
-         "r",
-         "w"
-      ),
-      "w" => array (
-         "w"
-      ),
-      "1" => array (
-         "1"
-      ),
-      "0" => array (
-         "0",
-         "1"
-      ), // ne doit pas arriver non plus
-
-
+   $matches = array ("" => array ("", "r","w"), // ne doit pas arriver normalement
+   "r" => array ("r","w"),
+      "w" => array ("w"),
+      "1" => array ("1"),
+      "0" => array ("0","1"), // ne doit pas arriver non plus
    );
-   if (isset ($_SESSION["glpi_plugin_datainjection_profile"][$module]) && in_array($_SESSION["glpi_plugin_datainjection_profile"][$module], $matches[$right]))
-   return true;
-   else
-   return false;
+   if (isset ($_SESSION["glpi_plugin_datainjection_profile"][$module])
+         && in_array($_SESSION["glpi_plugin_datainjection_profile"][$module],
+                     $matches[$right])) {
+      return true;
+   }
+   else {
+      return false;
+   }
 }
 function plugin_datainjection_check_prerequisites() {
    if (GLPI_VERSION >= 0.78) {

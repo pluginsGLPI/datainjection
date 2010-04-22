@@ -160,7 +160,7 @@ function choiceStep($target) {
 	echo "</form>";
 }
 
-function modelStep($target) {
+function model($target) {
 	global $LANG, $LANG;
 
 	if (isset ($_SESSION["plugin_datainjection"]["model"]))
@@ -174,29 +174,29 @@ function modelStep($target) {
 
 	/************************Title Step****************************/
 	if ($_SESSION["plugin_datainjection"]["choice"] == 1)
-		echo "<div class='wizard_title' valign='bottom'>" . $LANG["datainjection"]["step"][2] . $LANG["datainjection"]["modelStep"][1] . "</div>";
+		echo "<div class='wizard_title' valign='bottom'>" . $LANG["datainjection"]["step"][2] . $LANG["datainjection"]["model"][1] . "</div>";
 	else
-		echo "<div class='wizard_title' valign='bottom'>" . $LANG["datainjection"]["step"][2] . $LANG["datainjection"]["modelStep"][2] . "</div>";
+		echo "<div class='wizard_title' valign='bottom'>" . $LANG["datainjection"]["step"][2] . $LANG["datainjection"]["model"][2] . "</div>";
 	/**************************************************************/
 
 	/***********************Explain Step***************************/
-	echo "<div class='wizard_explain'>" . $LANG["datainjection"]["modelStep"][3] . "</div>";
-	echo "<div class='wizard_explain'>" . $LANG["datainjection"]["modelStep"][19] . "</div>";
+	echo "<div class='wizard_explain'>" . $LANG["datainjection"]["model"][3] . "</div>";
+	echo "<div class='wizard_explain'>" . $LANG["datainjection"]["model"][19] . "</div>";
 	/**************************************************************/
 
 	echo "</td>";
 
 	echo "<td class='wizard_right_area' style='width:400px' valign='top'>";
-	echo "<fieldset class='modelStep_selection'>";
-	echo "<legend>" . $LANG["datainjection"]["modelStep"][13] . "</legend>";
-	echo "<table class='modelStep_table'>";
+	echo "<fieldset class='model_selection'>";
+	echo "<legend>" . $LANG["datainjection"]["model"][13] . "</legend>";
+	echo "<table class='model_table'>";
 
 	echo "<tr><td colspan=2>";
 	privatePublicSwitch((isset ($model->fields["private"]) ? $model->fields["private"] : 1), (isset ($model->fields["FK_entities"]) ? $model->fields["FK_entities"] : 0), (isset ($model->fields["recursive"]) ? $model->fields["recursive"] : 0));
 	echo "</tr></td>";
 
 	/***********************Device Type****************************/
-	echo "<tr><td style='width:250px'>" . $LANG["datainjection"]["modelStep"][4] . "</td>";
+	echo "<tr><td style='width:250px'>" . $LANG["datainjection"]["model"][4] . "</td>";
 	echo "<td style='width:150px'>";
 	dropdownPrimaryTypeSelection("dropdown_device_type", (isset ($model) ? $model : null), (($_SESSION["plugin_datainjection"]["choice"] == 1) ? false : true));
 	echo "</td></tr>";
@@ -204,7 +204,7 @@ function modelStep($target) {
 	/**************************************************************/
 
 	/**************************Type********************************/
-	echo "<tr><td>" . $LANG["datainjection"]["modelStep"][5] . "</td>";
+	echo "<tr><td>" . $LANG["datainjection"]["model"][5] . "</td>";
 	if ($_SESSION["plugin_datainjection"]["choice"] == 1) {
 		$id = 0;
 		echo "<td><select id='dropdown_type' name='dropdown_type' onchange='show_backend($id)'>";
@@ -230,7 +230,7 @@ function modelStep($target) {
 	/**************************************************************/
 
 	/***********************Behavior add***************************/
-	echo "<tr><td>" . $LANG["datainjection"]["modelStep"][6] . "</td>";
+	echo "<tr><td>" . $LANG["datainjection"]["model"][6] . "</td>";
 	echo "<td>";
 	dropdownYesNo("dropdown_create", (isset ($model)?$model->getBehaviorAdd():1));
 	echo "</td></tr>";
@@ -238,7 +238,7 @@ function modelStep($target) {
 	/**************************************************************/
 
 	/**********************Behavior update*************************/
-	echo "<tr><td>" . $LANG["datainjection"]["modelStep"][7] . "</td>";
+	echo "<tr><td>" . $LANG["datainjection"]["model"][7] . "</td>";
 
 	echo "<td>";
 	dropdownYesNo("dropdown_update", (isset ($model)?$model->getBehaviorUpdate():0));
@@ -249,31 +249,31 @@ function modelStep($target) {
 	echo "</table>";
 	echo "</fieldset>";
 
-	echo "<fieldset id='option_backend' class='modelStep_selection'>";
+	echo "<fieldset id='option_backend' class='model_selection'>";
 
 	echo "</fieldset>";
 
 	echo "<script type='text/javascript'>show_backend($id)</script>";
 
-	echo "<fieldset class='modelStep_selection'>";
-	echo "<legend><a href='javascript:show_option()'><img src='../pics/plus.png' alt='plus' id='option_img' style='width:20px;float:left' /></a>" . $LANG["datainjection"]["modelStep"][15] . "</legend>";
-	echo "<table class='modelStep_table' id='option' style='display:none'>";
+	echo "<fieldset class='model_selection'>";
+	echo "<legend><a href='javascript:show_option()'><img src='../pics/plus.png' alt='plus' id='option_img' style='width:20px;float:left' /></a>" . $LANG["datainjection"]["model"][15] . "</legend>";
+	echo "<table class='model_table' id='option' style='display:none'>";
 
 	/**********************Can add dropdown************************/
-	echo "<tr><td style='width:250px'>" . $LANG["datainjection"]["modelStep"][8] . "</td>";
+	echo "<tr><td style='width:250px'>" . $LANG["datainjection"]["model"][8] . "</td>";
 	echo "<td style='width:150px'>";
 	dropdownYesNo("dropdown_canadd", (isset ($model)?$model->getCanAddDropdown():0));
 	echo "</td></tr>";
 	/**************************************************************/
 
 	/***************Can overwrite if not empty*********************/
-	echo "<tr><td>" . $LANG["datainjection"]["modelStep"][12] . "</td><td>";
+	echo "<tr><td>" . $LANG["datainjection"]["model"][12] . "</td><td>";
 	dropdownYesNo("can_overwrite_if_not_empty", (isset ($model)?$model->getCanOverwriteIfNotEmpty():1));
 	echo "</td></tr>";
 	/**************************************************************/
 
 	/***************Date format*********************/
-	echo "<tr><td>" . $LANG["datainjection"]["modelStep"][21] . "</td><td>";
+	echo "<tr><td>" . $LANG["datainjection"]["model"][21] . "</td><td>";
 	dropdownDateFormat("date_format", (isset ($model) ? $model->getDateFormat() : DATE_TYPE_YYYYMMDD));
 	echo "</td></tr>";
 	/**************************************************************/
@@ -285,7 +285,7 @@ function modelStep($target) {
 	/**************************************************************/
 
 	/***************Can add network connections*********************/
-	echo "<tr><td>" . $LANG["datainjection"]["modelStep"][20] . "</td><td>";
+	echo "<tr><td>" . $LANG["datainjection"]["model"][20] . "</td><td>";
 	dropdownYesNo("perform_network_connection", (isset ($model)?$model->getPerformNetworkConnection():0));
 	echo "</td></tr>";
 
@@ -293,7 +293,7 @@ function modelStep($target) {
 
 	/***************Port existance*********************/
 	echo "<tr><td>" . $LANG["datainjection"]["mappings"][7] . "</td><td>";
-	dropdownPortUnicity("port_unicity", (isset ($model) ? $model->getPortUnicity() : MODEL_NETPORT_LOGICAL_NUMER));
+	dropdownPortUnicity("port_unicity", (isset ($model) ? $model->getPortUnicity() : PluginDatainjectionModel::UNICITY_NETPORT_LOGICAL_NUMBER));
 	echo "</td></tr>";
 	/**************************************************************/
 
@@ -302,7 +302,7 @@ function modelStep($target) {
 	echo "</fieldset>";
 
 	/*********************Delimiter Error**************************/
-	echo "<div id='delimiter_error' class='delimiter' >" . $LANG["datainjection"]["modelStep"][11] . "</div>";
+	echo "<div id='delimiter_error' class='delimiter' >" . $LANG["datainjection"]["model"][11] . "</div>";
 	/**************************************************************/
 
 	echo "</td></tr>";
@@ -312,11 +312,11 @@ function modelStep($target) {
 	/**************************Button******************************/
 	echo "<tr><td class='wizard_button' colspan='2'>";
 	echo "<div class='preview'>";
-	echo "<input type='submit' name='preview_modelStep' value='" . $LANG["datainjection"]["button"][1] . "' class='submit' />";
+	echo "<input type='submit' name='preview_model' value='" . $LANG["datainjection"]["button"][1] . "' class='submit' />";
 	echo "</div>";
 
 	echo "<div class='next'>";
-	echo "<input type='submit' name='next_modelStep' value='" . $LANG["datainjection"]["button"][2] . "' class='submit' onclick='return verif_delimiter()' />";
+	echo "<input type='submit' name='next_model' value='" . $LANG["datainjection"]["button"][2] . "' class='submit' onclick='return verif_delimiter()' />";
 	echo "</div>";
 	echo "</td></tr>";
 	/**************************************************************/

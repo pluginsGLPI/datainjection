@@ -42,29 +42,19 @@ abstract class PluginDatainjectionBackend {
    private $encoding;
    private $errmsg;
 
+   const ENCODING_ISO8859_1 = 0;
+   const ENCODING_UFT8      = 1;
+   const ENCODING_AUTO      = 2;
    /*
     * Constructor
     * @param file input file to read
     */
 
-    /*function PluginDatainjectionBackend($file) {
-    }*/
-
-   function getInstance($type)
-   {
-      switch ($type)
-      {
-         case CSV_TYPE :
-            return new PluginDatainjectionBackendcsv;
-         default :
-            return new PluginDatainjectionBackend;
-      }
-   }
-
    function getError($html=0)
    {
       return ($html ? nl2br($this->errmsg) : $this->errmsg);
    }
+
    function setError($msg)
    {
       if (!empty($this->errmsg))
@@ -146,18 +136,8 @@ abstract class PluginDatainjectionBackend {
     */
    static function getInstance($type)
    {
-      global $DB;
-      $sql="SELECT `backend_classname`
-            FROM `glpi_plugin_datainjection_filetype`
-            WHERE `value`='$type'";
-      $res = $DB->query($sql);
-      if ($DB->numrows($res) > 0)
-      {
-         $backend_infos = $DB->fetch_array($res);
-         return new $backend_infos["backend_class_name"];
-      }
-      else
-         return null;
+      $class = 'PluginDatainjectionBackend'.$type;
+      return new $class();
    }
 
    static function is_utf8($string) {
@@ -182,6 +162,8 @@ abstract class PluginDatainjectionBackend {
       else
          return $string;
    }
+
+   abstract function showForm($ID, $options=array());
 }
 
 ?>

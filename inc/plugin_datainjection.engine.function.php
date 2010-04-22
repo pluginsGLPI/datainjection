@@ -177,7 +177,7 @@ function dataAlreadyInDB($type, $fields, $mapping_definition, $model) {
 
 /**
  * Get an instance of the primary type
- * 
+ *
  * @param device_type the type of the primary item
  * @return an instance of the primary item
  */
@@ -210,7 +210,7 @@ function getInstance($device_type) {
 		case PLUGIN_DATA_INJECTION_PCI_DEVICE_TYPE :
 			return new Device(PCI_DEVICE);
 
-			//Network ports	
+			//Network ports
 		case NETPORT_TYPE :
 			return new Netport;
 
@@ -228,9 +228,9 @@ function getInstance($device_type) {
 
 /**
  * Get the name of a type
- * 
+ *
  * @param device_type the type of the item
- * 
+ *
  * @return a string
  */
 function getInstanceName($device_type) {
@@ -357,7 +357,7 @@ function preAddCommonFields($common_fields, $type, $fields, $entity) {
 		case COMPUTER_CONNECTION_TYPE :
 			$setFields = array (
 				"device_id",
-				
+
 			);
       case DOCUMENT_CONNECTION_TYPE :
          $setFields = array (
@@ -396,7 +396,7 @@ function preAddCommonFields($common_fields, $type, $fields, $entity) {
 function addCommonFields(& $common_fields, $type, $fields, $entity, $ID) {
 	global $PLUGIN_HOOKS, $CFG_GLPI;
 	$setFields = array ();
-	
+
    switch ($type) {
 		//Copy/paste is voluntary in order to know exactly which fields are included or not
 		case NETPORT_TYPE :
@@ -665,7 +665,7 @@ function addNecessaryFields($model, $mapping, $mapping_definition, $entity, $typ
 				}
 			}
 
-			//Add auth and profiles fields	
+			//Add auth and profiles fields
 			addField($fields, "auth_method", AUTH_DB_GLPI);
 
 			break;
@@ -683,7 +683,7 @@ function addNecessaryFields($model, $mapping, $mapping_definition, $entity, $typ
 				"netport",
 				"netname",
 				"netmac",
-				
+
 			);
 
 			//Set the device_id
@@ -752,11 +752,11 @@ function addNecessaryFields($model, $mapping, $mapping_definition, $entity, $typ
 
 /**
  * Check if all value of an array are empty
- * 
+ *
  * @param fields : array to check
- * 
+ *
  * @return boolean
- * 
+ *
  */
 function isAllEmpty($fields) {
 	foreach ($fields as $key => $val) {
@@ -786,7 +786,7 @@ function getFieldValue($result, $type, $mapping, $mapping_definition, $field_val
 	if (isset ($mapping_definition["table_type"])) {
 		switch ($mapping_definition["table_type"]) {
 			case "template" :
-				$obj[$mapping_definition["linkfield"]] = findTemplate($entity, $mapping_definition["table"], $field_value);
+				$obj[$mapping_definition["linkfield"]] = PluginDatainjectionCheck::findTemplate($entity, $mapping_definition["table"], $field_value);
 				break;
 				//Read and add in a dropdown table
 			case "dropdown" :
@@ -807,7 +807,7 @@ function getFieldValue($result, $type, $mapping, $mapping_definition, $field_val
 				$obj[$mapping_definition["linkfield"]] = findUser($field_value, $entity);
 				break;
 
-				//Read in a single table	
+				//Read in a single table
 			case "single" :
 				$sql = "SELECT ID FROM " . $mapping_definition["table"] . " WHERE " . $mapping_definition["field"] . "='" . $field_value . "'";
 
@@ -862,7 +862,7 @@ function getFieldValue($result, $type, $mapping, $mapping_definition, $field_val
 
 /**
  * Process actions after item was imported in DB (mainly create connections)
- * 
+ *
  * @param result the result set
  * @param model the model
  * @param type the type of the item inserted
@@ -909,7 +909,7 @@ function processBeforeEnd($result, $model, $type, $fields, & $common_fields) {
 			}
 			break;
 		case ENTITY_TYPE :
-			addEntityPostProcess($common_fields);
+			PluginDatainjectionCheck::addEntityPostProcess($common_fields);
 			break;
 		case PROFILE_USER_TYPE :
 			addUserProfileEntity($fields);
@@ -938,7 +938,7 @@ function processBeforeEnd($result, $model, $type, $fields, & $common_fields) {
  * Check is the user has the right to add datas in a dropdown table
  * @param table the dropdown table
  * @canadd_dropdown boolean to indicate if the model allows user to add datas in a dropdown table
- * @return true if the user can add, false if he can't 
+ * @return true if the user can add, false if he can't
  */
 function haveRightDropdown($table, $canadd_dropdown) {
 	global $CFG_GLPI;
@@ -1043,33 +1043,33 @@ function filterFields(& $fields, $fields_from_db, $can_overwrite, $type) {
  * Build where sql request to look for a network port
  * @param model the model
  * @param fields the fields to insert into DB
- * 
+ *
  * @return the sql where clause
  */
 function getPortUnicityRequest($model, $fields) {
 	$where = "";
 	switch ($model->getPortUnicity()) {
-		case MODEL_NETPORT_LOGICAL_NUMER :
+		case PluginDatainjectionModel::UNICITY_NETPORT_LOGICAL_NUMBER :
 			$where .= " AND logical_number='" . (isset ($fields["logical_number"]) ? $fields["logical_number"] : '') . "'";
 			break;
-		case MODEL_NETPORT_LOGICAL_NUMER_MAC :
-			$where .= " AND logical_number='" . (isset ($fields["logical_number"]) ? $fields["logical_number"] : '') . "'";
-			$where .= " AND name='" . (isset ($fields["name"]) ? $fields["name"] : '') . "'";
-			$where .= " AND ifmac='" . (isset ($fields["ifmac"]) ? $fields["ifmac"] : '') . "'";
-			break;
-		case MODEL_NETPORT_LOGICAL_NUMER_NAME :
-			$where .= " AND logical_number='" . (isset ($fields["logical_number"]) ? $fields["logical_number"] : '') . "'";
-			$where .= " AND name='" . (isset ($fields["name"]) ? $fields["name"] : '') . "'";
-			break;
-		case MODEL_NETPORT_LOGICAL_NUMER_NAME_MAC :
+		case PluginDatainjectionModel::UNICITY_NETPORT_LOGICAL_NUMBER_MAC :
 			$where .= " AND logical_number='" . (isset ($fields["logical_number"]) ? $fields["logical_number"] : '') . "'";
 			$where .= " AND name='" . (isset ($fields["name"]) ? $fields["name"] : '') . "'";
 			$where .= " AND ifmac='" . (isset ($fields["ifmac"]) ? $fields["ifmac"] : '') . "'";
 			break;
-		case MODEL_NETPORT_MACADDRESS :
+		case PluginDatainjectionModel::UNICITY_NETPORT_LOGICAL_NUMBER_NAME :
+			$where .= " AND logical_number='" . (isset ($fields["logical_number"]) ? $fields["logical_number"] : '') . "'";
+			$where .= " AND name='" . (isset ($fields["name"]) ? $fields["name"] : '') . "'";
+			break;
+		case PluginDatainjectionModel::UNICITY_NETPORT_LOGICAL_NUMBER_NAME_MAC :
+			$where .= " AND logical_number='" . (isset ($fields["logical_number"]) ? $fields["logical_number"] : '') . "'";
+			$where .= " AND name='" . (isset ($fields["name"]) ? $fields["name"] : '') . "'";
 			$where .= " AND ifmac='" . (isset ($fields["ifmac"]) ? $fields["ifmac"] : '') . "'";
 			break;
-		case MODEL_NETPORT_NAME :
+		case PluginDatainjectionModel::UNICITY_NETPORT_MACADDRESS :
+			$where .= " AND ifmac='" . (isset ($fields["ifmac"]) ? $fields["ifmac"] : '') . "'";
+			break;
+		case PluginDatainjectionModel::UNICITY_NETPORT_NAME :
 			$where .= " AND name='" . (isset ($fields["name"]) ? $fields["name"] : '') . "'";
 			break;
 	}
