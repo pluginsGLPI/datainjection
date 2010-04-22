@@ -59,6 +59,7 @@ if ($_POST["id"] >0 && $model->can($_POST["id"],'r')) {
       case 1:
          $tmp = PluginDatainjectionModel::getInstance($model->fields['filetype']);
          $tmp->showForm($_POST['glpi_tab']);
+         $model->showUploadForm();
       case 2 :
          break;
 

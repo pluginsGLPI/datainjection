@@ -61,11 +61,11 @@ class PluginDatainjectionBackendcsv extends PluginDatainjectionBackend{
    }
 
     function PluginDatainjectionBackendcsv() {
-      $this->injectionDatas = new PluginDatainjectionInjectionDatas;
+      $this->injectionDatas = new PluginDatainjectionData;
       $this->errmsg = "";
     }
 
-   function initPluginDatainjectionBackend($newfile,$delimiter,$encoding)
+   function init($newfile,$delimiter,$encoding)
    {
       $this->file = $newfile;
       $this->delimiter = $delimiter;

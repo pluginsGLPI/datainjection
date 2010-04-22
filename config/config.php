@@ -32,9 +32,7 @@
 // ----------------------------------------------------------------------
 
 // Default location for file upload
-if (!defined("PLUGIN_DATAINJECTION_UPLOAD_DIR")){
-	define("PLUGIN_DATAINJECTION_UPLOAD_DIR",GLPI_PLUGIN_DOC_DIR."/datainjection/");
-}
+
 
 define ("CSV_TYPE",1);
 
@@ -49,10 +47,6 @@ define ("COMMON_FIELDS","common");
 
 define ("INJECTION_ADD",0);
 define ("INJECTION_UPDATE",1);
-
-define ("MODEL_PRIVATE",1);
-define ("MODEL_PUBLIC",0);
-
 
 
 

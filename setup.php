@@ -31,6 +31,9 @@
 // Original Author of file: Walid Nouh
 // Purpose of file:
 // ----------------------------------------------------------------------
+if (!defined("PLUGIN_DATAINJECTION_UPLOAD_DIR")){
+   define("PLUGIN_DATAINJECTION_UPLOAD_DIR",GLPI_PLUGIN_DOC_DIR."/datainjection/");
+}
 
 function plugin_init_datainjection() {
    global $PLUGIN_HOOKS, $CFG_GLPI, $LANG;
@@ -63,7 +66,7 @@ function plugin_init_datainjection() {
       $PLUGIN_HOOKS['webservices']['datainjection'] = 'plugin_datainjection_registerMethods';
 
       $classes = array ('Model', 'Modelcsv', 'Backend', 'Backendcsv', 'Infos', 'InfosCollections',
-                        'Mapping','MappingCollection', 'Profile');
+                        'Mapping','MappingCollection', 'Profile','Data');
       foreach ($classes as $value) {
          Plugin::registerClass('PluginDatainjection'.$value);
       }

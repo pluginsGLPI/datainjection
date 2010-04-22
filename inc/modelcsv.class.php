@@ -27,13 +27,13 @@
  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  --------------------------------------------------------------------------
  */
-class PluginDatainjectionModelcsv extends CommonDBChild {
+class PluginDatainjectionModelcsv extends PluginDatainjectionModel {
    var $specific_fields;
 
-   // From CommonDBChild
-   public $itemtype  = 'PluginDatainjectionModel';
-   public $items_id  = 'models_id';
-   public $dohistory = true;
+   function getEmpty() {
+      $this->fields['delimiter'] = ';';
+      $this->fields['header_present'] = 1;
+   }
 
    function canCreate() {
       return plugin_datainjection_haveRight('model','w');
@@ -146,7 +146,7 @@ class PluginDatainjectionModelcsv extends CommonDBChild {
       }
    }
 
-   function showForm($models_id) {
+   function showForm($models_id,$options=array()) {
       global $LANG;
 
       $id = $this->getFromDBByModelID($models_id);
@@ -164,7 +164,7 @@ class PluginDatainjectionModelcsv extends CommonDBChild {
       echo "</td>";
       echo "<td>".$LANG["datainjection"]["model"][10].": </td>";
       echo "<td>";
-      Dropdown::showYesNo("delimiter",$this->getDelimiter());
+      echo "<input type='text' size='1' name='delimiter' value='".$this->getDelimiter()."'";
       echo "</td>";
       echo "</tr>";
 
@@ -177,6 +177,35 @@ class PluginDatainjectionModelcsv extends CommonDBChild {
          echo "</table></form>";
       } else {
          echo "</table>";
+      }
+   }
+
+   function checkUploadedFile($file_encoding) {
+      global $LANG;
+      $name_file = $_FILES["file"]["name"];
+      $tmpfname = tempnam (realpath(PLUGIN_DATAINJECTION_UPLOAD_DIR), "Tmp");
+      $tmp_file = $_FILES["file"]["tmp_name"];
+
+      if( !strstr(strtolower(substr($name_file,strlen($name_file)-4)), '.csv') ) {
+         $message = $LANG["datainjection"]["fileStep"][5];
+         $message.="<br />".$LANG["datainjection"]["fileStep"][6]." csv ";
+         $message.=$LANG["datainjection"]["fileStep"][7];
+         addMessageAfterRedirect($message,true,ERROR,false);
+         unlink($tmpfname);
+      }
+      else {
+         if( !move_uploaded_file($tmp_file, $tmpfname) ) {
+            addMessageAfterRedirect($LANG["datainjection"]["fileStep"][8],true,ERROR,false);
+            unlink($tmpfname);
+         }
+         else {
+               $backend = new PluginDatainjectionBackendcsv;
+               $backend->init($tmpfname,$this->getDelimiter(),$file_encoding);
+               $backend->read();
+               $backend->deleteFile();
+               logDebug($backend);
+               //$ok = $backend->isFileCorrect($this);
+         }
       }
    }
 }

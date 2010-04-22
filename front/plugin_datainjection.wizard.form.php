@@ -185,7 +185,7 @@ if($load)
 	    			$_SESSION["plugin_datainjection"]["file"] = basename($tmpfname);
 
 	    			$file=PluginDatainjectionBackend::getInstance($model->getModelType());
-					$file->initPluginDatainjectionBackend(PLUGIN_DATAINJECTION_UPLOAD_DIR.$_SESSION["plugin_datainjection"]["file"],$model->getDelimiter(),$_POST["dropdown_encoding"]);
+					$file->init(PLUGIN_DATAINJECTION_UPLOAD_DIR.$_SESSION["plugin_datainjection"]["file"],$model->getDelimiter(),$_POST["dropdown_encoding"]);
 					$file->read();
 					$file->deleteFile();
 

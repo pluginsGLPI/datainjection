@@ -162,8 +162,6 @@ abstract class PluginDatainjectionBackend {
       else
          return $string;
    }
-
-   abstract function showForm($ID, $options=array());
 }
 
 ?>

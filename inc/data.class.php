@@ -34,7 +34,7 @@
 /*
  * Class to map datas from the import file
  */
-class PluginDatainjectionDatas
+class PluginDatainjectionData
 {
 	private $injectionDatas;
 

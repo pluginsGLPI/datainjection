@@ -211,13 +211,13 @@ class PluginDatainjectionDropdown {
 
    }
 */
-   static function dropdownFileEncoding($name)
+   static function dropdownFileEncoding()
    {
       global $LANG;
       $values[PluginDatainjectionBackend::ENCODING_AUTO]=$LANG["datainjection"]["fileStep"][10];
       $values[PluginDatainjectionBackend::ENCODING_UFT8]=$LANG["datainjection"]["fileStep"][11];
       $values[PluginDatainjectionBackend::ENCODING_ISO8859_1]=$LANG["datainjection"]["fileStep"][12];
-      Dropdown::showFromArray($name,$values,array('value'=>PluginDatainjectionBackend::ENCODING_AUTO));
+      Dropdown::showFromArray('file_encoding',$values,array('value'=>PluginDatainjectionBackend::ENCODING_AUTO));
    }
 
    static function portUnicityValues() {

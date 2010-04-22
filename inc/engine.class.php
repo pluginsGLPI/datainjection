@@ -52,7 +52,7 @@ class PluginDatainjectionEngine {
 
       $this->entity = $entity;
 
-      $datas = new PluginDatainjectionInjectionDatas;
+      $datas = new PluginDatainjectionData;
 
       $this->backend = $backend;
    }

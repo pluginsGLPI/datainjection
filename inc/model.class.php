@@ -49,6 +49,9 @@ class PluginDatainjectionModel extends CommonDBTM {
    const UNICITY_NETPORT_LOGICAL_NUMBER_MAC = 4;
    const UNICITY_NETPORT_LOGICAL_NUMBER_NAME_MAC = 5;
 
+   const MODEL_PRIVATE = 1;
+   const MODEL_PUBLIC = 0;
+
    function __construct()
    {
       //$this->mappings = new PluginPluginDatainjectionMappingCollection;
@@ -211,12 +214,12 @@ class PluginDatainjectionModel extends CommonDBTM {
 
    function getModelType()
    {
-      return $this->fields["type"];
+      return $this->fields["filetype"];
    }
 
    function getModelComments()
    {
-      return $this->fields["comments"];
+      return $this->fields["comment"];
    }
 
    function getBehaviorAdd()
@@ -231,7 +234,7 @@ class PluginDatainjectionModel extends CommonDBTM {
 
    function getModelID()
    {
-      return $this->fields["ID"];
+      return $this->fields["id"];
    }
 
    function getDeviceType()
@@ -276,12 +279,12 @@ class PluginDatainjectionModel extends CommonDBTM {
 
    function getRecursive()
    {
-      return $this->fields["recursive"];
+      return $this->fields["is_recursive"];
    }
 
    function getPrivate()
    {
-      return $this->fields["private"];
+      return $this->fields["is_private"];
    }
 
    function getPortUnicity()
@@ -292,7 +295,7 @@ class PluginDatainjectionModel extends CommonDBTM {
    //---- Save -----//
    function setModelType($type)
    {
-      $this->fields["type"] = $type;
+      $this->fields["filetype"] = $type;
    }
 
    function setName($name)
@@ -302,7 +305,7 @@ class PluginDatainjectionModel extends CommonDBTM {
 
    function setComments($comments)
    {
-      $this->fields["comments"] = $comments;
+      $this->fields["comment"] = $comments;
    }
 
    function setBehaviorAdd($add)
@@ -317,7 +320,7 @@ class PluginDatainjectionModel extends CommonDBTM {
 
    function setModelID($ID)
    {
-      $this->fields["ID"] = $ID;
+      $this->fields["id"] = $ID;
    }
 
    function setMappings($mappings)
@@ -337,12 +340,12 @@ class PluginDatainjectionModel extends CommonDBTM {
 
    function setDeviceType($device_type)
    {
-      $this->fields["device_type"] = $device_type;
+      $this->fields["itemtype"] = $device_type;
    }
 
    function setEntity($entity)
    {
-      $this->fields["FK_entities"] = $entity;
+      $this->fields["entities_id"] = $entity;
    }
 
    function setCanAddDropdown($canadd)
@@ -357,12 +360,12 @@ class PluginDatainjectionModel extends CommonDBTM {
 
    function setPrivate($private)
    {
-      $this->fields["private"] = $private;
+      $this->fields["is_private"] = $private;
    }
 
    function setUserID($user)
    {
-      $this->fields["FK_users"] = $user;
+      $this->fields["users_id"] = $user;
    }
 
    function setDateFormat($df)
@@ -382,13 +385,13 @@ class PluginDatainjectionModel extends CommonDBTM {
 
    function setRecursive($recursive)
    {
-      $this->fields["recursive"] = $recursive;
+      $this->fields["is_recursive"] = $recursive;
    }
-
+/*
    function setFields($fields,$entity,$user_id)
    {
       //$this->setEntity($entity);
-      $this->setEntity($fields["FK_entities"]);
+      $this->setEntity($fields["entities_id"]);
 
       $this->setUserID($user_id);
 
@@ -429,6 +432,7 @@ class PluginDatainjectionModel extends CommonDBTM {
          $this->setPortUnicity($fields["port_unicity"]);
 
    }
+*/
 
    function setPortUnicity($unicity)
    {
@@ -471,12 +475,12 @@ class PluginDatainjectionModel extends CommonDBTM {
       global $DB;
 
       $models = array ();
-      $sql = "SELECT * FROM glpi_plugin_datainjection_models WHERE" .
-      " (private=" . MODEL_PUBLIC . getEntitiesRestrictRequest(" AND",
+      $sql = "SELECT * FROM `glpi_plugin_datainjection_models` WHERE" .
+      " (`private`=" . PluginDatainjectionModel::MODEL_PUBLIC . getEntitiesRestrictRequest(" AND",
                                                                "glpi_plugin_datainjection_models",
                                                                "entities_id", $entity,true) . ")
-       OR (private=" . MODEL_PRIVATE . " AND users_id=$user_id)" .
-      " ORDER BY entities_id, " . ($order == "name" ? "name" : $order);
+       OR (private=" . PluginDatainjectionModel::MODEL_PRIVATE . " AND `users_id`=$user_id)" .
+      " ORDER BY `entities_id`, " . ($order == "`name`" ? "`name`" : $order);
       $result = $DB->query($sql);
 
       while ($data = $DB->fetch_array($result)) {
@@ -490,23 +494,10 @@ class PluginDatainjectionModel extends CommonDBTM {
       return $models;
    }
 
-   static function getInstanceByType($type) {
-      global $DB;
-      $sql = "SELECT `model_class_name`
-              FROM `glpi_plugin_datainjection_filetype`
-              WHERE `value`='$type'";
-      $res = $DB->query($sql);
-      if ($DB->numrows($res) > 0) {
-         $backend_infos = $DB->fetch_array($res);
-         return new $backend_infos["model_classname"];
-      } else
-         return null;
-   }
-
    static function getInstanceByID($model_id) {
       $model = new PluginDatainjectionModel;
       $model->getFromDB($model_id);
-      $model = PluginDatainjectionModel::getInstanceByType($model->getModelType());
+      $model = PluginDatainjectionModel::getInstance($model->getModelType());
       $model->getFromDB($model_id);
       return $model;
    }
@@ -598,7 +589,7 @@ class PluginDatainjectionModel extends CommonDBTM {
       return $tab;
    }
 
-   function showForm($ID=0, $options = array()) {
+   function showForm($ID, $options = array()) {
       global $DB,$LANG;
       if ($ID > 0) {
          $this->check($ID,'r');
@@ -694,8 +685,31 @@ class PluginDatainjectionModel extends CommonDBTM {
       return $ong;
    }
 
-   static function addObject($params=array()) {
+   function showUploadForm() {
+      global $LANG;
+      if ($this->can($this->fields['id'],'w')) {
+         echo "<form method='post' name=form action='".getItemTypeFormURL(__CLASS__)."'".
+               "enctype='multipart/form-data'>";
+         echo "<table class='tab_cadre_fixe'>";
+         echo "<tr><th colspan='2'>".$LANG["datainjection"]["model"][29]."</th></tr>";
+         echo "<tr class='tab_bg_1'>";
+         echo "<td>" . $LANG["datainjection"]["fileStep"][3] . "</td>";
+         echo "<td><input type='file' name='file' /></td>";
+         echo "</tr>";
 
+         echo "<tr class='tab_bg_1'>";
+         echo "<td>" . $LANG["datainjection"]["fileStep"][9] . "</td>";
+         echo "<td>";
+         PluginDatainjectionDropdown::dropdownFileEncoding();
+         echo "</td>";
+         echo "</tr>";
+         echo "<tr class='tab_bg_2'>";
+         echo "<td align='center' colspan='2'>";
+         echo "<input type='hidden' name='id' value='".$this->fields['id']."'>";
+         echo "<input type='submit' name='upload' value=\"".$LANG['buttons'][7]."\" class='submit' >";
+         echo "</td></tr>";
+         echo "</table></form>";
+      }
    }
 
    /*

@@ -40,7 +40,7 @@ if (!isset ($_GET["id"]))
 if (!isset ($_GET["withtemplate"]))
    $_GET["withtemplate"] = "";
 
-$model = new PluginDatainjectionModel;
+$model = new PluginDatainjectionModel();
 
 /* add order */
 if (isset ($_POST["add"])) {
@@ -49,19 +49,19 @@ if (isset ($_POST["add"])) {
    glpi_header($_SERVER['HTTP_REFERER']);
 }
 /* delete order */
-else if (isset ($_POST["delete"])) {
+elseif (isset ($_POST["delete"])) {
    $model->check($_POST['id'],'w');
    $model->delete($_POST);
    glpi_header(getItemTypeSearchURL('PluginDatainjectionModel'));
 }
 /* restore order */
-else if (isset ($_POST["restore"])) {
+elseif (isset ($_POST["restore"])) {
    $model->check($_POST['id'],'w');
    $model->restore($_POST);
    glpi_header(getItemTypeSearchURL('PluginDatainjectionModel'));
 }
 /* purge order */
-else if (isset ($_POST["purge"])) {
+elseif (isset ($_POST["purge"])) {
    $model->check($_POST['id'],'w');
    $model->delete($_POST, 1);
    glpi_header(getItemTypeSearchURL('PluginDatainjectionModel'));
@@ -72,13 +72,19 @@ else if (isset ($_POST["update"])) {
    $model->update($_POST);
    glpi_header($_SERVER['HTTP_REFERER']);
 }
+elseif (isset($_POST['upload'])) {
+   $model_spe = PluginDatainjectionModel::getInstanceByID($_REQUEST['id']);
+   $model_spe->check($_POST['id'],'w');
+   $model_spe->checkUploadedFile($_POST['file_encoding']);
+   glpi_header($_SERVER['HTTP_REFERER']);
+}
 
-   if (!isset($_SESSION['glpi_tab'])) {
-      $_SESSION['glpi_tab'] = 1;
-   }
-   if (isset($_GET['onglet'])) {
-      $_SESSION['glpi_tab'] = $_GET['onglet'];
-   }
+if (!isset($_SESSION['glpi_tab'])) {
+   $_SESSION['glpi_tab'] = 1;
+}
+if (isset($_GET['onglet'])) {
+   $_SESSION['glpi_tab'] = $_GET['onglet'];
+}
 
 commonHeader($LANG["datainjection"]["profiles"][1], '', "plugins", "datainjection", "budget");
 
