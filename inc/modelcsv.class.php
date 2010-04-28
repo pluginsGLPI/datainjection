@@ -27,12 +27,18 @@
  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  --------------------------------------------------------------------------
  */
-class PluginDatainjectionModelcsv extends PluginDatainjectionModel {
+class PluginDatainjectionModelcsv extends CommonDBChild {
    var $specific_fields;
+
+   // From CommonDBChild
+   public $itemtype = 'PluginDatainjectionModel';
+   public $items_id = 'models_id';
+   public $dohistory = true;
+   public $model = null;
 
    function getEmpty() {
       $this->fields['delimiter'] = ';';
-      $this->fields['header_present'] = 1;
+      $this->fields['is_header_present'] = 1;
    }
 
    function canCreate() {
@@ -43,55 +49,9 @@ class PluginDatainjectionModelcsv extends PluginDatainjectionModel {
       return plugin_datainjection_haveRight('model','r');
    }
 
-   function init()
-   {
-      $this->specific_fields = array();
-   }
-/*
-   //---- Load -----//
-   function loadSpecificfields()
-   {
-      global $DB;
-      $sql = "SELECT * FROM glpi_plugin_datainjection_modelcsvs WHERE model_id = ".$this->fields["ID"];
-      $result = $DB->query($sql);
-      if ($DB->numrows($result) > 0)
-         $this->specific_fields = $DB->fetch_array($result);
-      else
-         $this->specific_fields = array();
+   function init() {
    }
 
-   //---- Save -----//
-   function updateSpecificFields()
-   {
-      global $DB;
-
-      $sql = "UPDATE glpi_plugin_datainjection_modelcsvs SET delimiter='".$this->specific_fields["delimiter"]
-      ."' , header_present=".$this->specific_fields["header_present"]." WHERE model_id=".$this->fields["ID"];
-      $DB->query($sql);
-   }
-
-
-   //---- Save -----//
-   function saveSpecificFields()
-   {
-      global $DB;
-      $sql = "INSERT INTO glpi_plugin_datainjection_modelcsvs (`delimiter`,`header_present`,`model_id`) VALUES ('".$this->specific_fields["delimiter"]
-      ."',".$this->specific_fields["header_present"].",".$this->fields["ID"].")";
-
-      $DB->query($sql);
-
-      //Reload specific_fields with the ID set
-      $this->loadSpecificfields();
-   }
-
-
-   function deleteSpecificFields()
-   {
-      global $DB;
-      $sql = "DELETE FROM glpi_plugin_datainjection_modelcsvs WHERE model_id=".$this->fields["ID"];
-      $DB->query($sql);
-   }
-*/
    //---- Getters -----//
 
    function getDelimiter()
@@ -114,36 +74,45 @@ class PluginDatainjectionModelcsv extends PluginDatainjectionModel {
    {
       $this->fields["is_header_present"] = $present;
    }
-/*
-   function setFields($fields,$entity,$user_id)
-   {
-      parent::setFields($fields,$entity,$user_id);
-      if(isset($fields["dropdown_header"]))
-         $this->setHeaderPresent($fields["dropdown_header"]);
 
-      if(isset($_POST["delimiter"]))
-         $this->setDelimiter(stripslashes($fields["delimiter"]));
+   /**
+    * Check if filename ends with .csv
+    * @param the filename
+    * @return boolean true if name is correct, false is not
+    */
+   function checkFileName($filename) {
+      return ( !strstr(strtolower(substr($filename,strlen($filename)-4)), '.csv'));
    }
-*/
 
-   /*
+   /**
     * Get CSV's specific ID for a model
     * If row doesn't exists, it creates it
     * @param models_id the model ID
     * @return the ID of the row in glpi_plugin_datainjection_modelcsv
     */
-   function getFromDBByModelID($models_id) {
+   function getFromDBByModelID($models_id,$store_model=false) {
       global $DB;
       $query = "SELECT `id` FROM `".$this->getTable()."` WHERE `models_id`='$models_id'";
       $results = $DB->query($query);
+      $id = 0;
       if ($DB->numrows($results) > 0) {
-         return $DB->result($results,0,'id');
+         $id = $DB->result($results,0,'id');
+         $this->getFromDB($id);
       }
       else {
-         $csv = new PluginDatainjectionModelcsv;
+         $this->getEmpty();
+         $tmp = $this->fields;
          $tmp['models_id'] = $models_id;
-         return $csv->add($tmp);
+         $id = $this->add($tmp);
+         $this->getFromDB($id);
       }
+
+      if ($store_model) {
+         $model = new PluginDatainjectionModel;
+         $model->getFromDB($models_id);
+         $this->model = $model;
+      }
+      return $id;
    }
 
    function showForm($models_id,$options=array()) {
@@ -172,6 +141,7 @@ class PluginDatainjectionModelcsv extends PluginDatainjectionModel {
          echo "<tr>";
          echo "<td class='tab_bg_2 center' colspan='4'>";
          echo "<input type='hidden' name='id' value='$id'>";
+         echo "<input type='hidden' name='models_id' value='$models_id'>";
          echo "<input type='submit' name='update' value=\"".$LANG['buttons'][7]."\" class='submit' >";
          echo "</td></tr>";
          echo "</table></form>";
@@ -180,33 +150,6 @@ class PluginDatainjectionModelcsv extends PluginDatainjectionModel {
       }
    }
 
-   function checkUploadedFile($file_encoding) {
-      global $LANG;
-      $name_file = $_FILES["file"]["name"];
-      $tmpfname = tempnam (realpath(PLUGIN_DATAINJECTION_UPLOAD_DIR), "Tmp");
-      $tmp_file = $_FILES["file"]["tmp_name"];
 
-      if( !strstr(strtolower(substr($name_file,strlen($name_file)-4)), '.csv') ) {
-         $message = $LANG["datainjection"]["fileStep"][5];
-         $message.="<br />".$LANG["datainjection"]["fileStep"][6]." csv ";
-         $message.=$LANG["datainjection"]["fileStep"][7];
-         addMessageAfterRedirect($message,true,ERROR,false);
-         unlink($tmpfname);
-      }
-      else {
-         if( !move_uploaded_file($tmp_file, $tmpfname) ) {
-            addMessageAfterRedirect($LANG["datainjection"]["fileStep"][8],true,ERROR,false);
-            unlink($tmpfname);
-         }
-         else {
-               $backend = new PluginDatainjectionBackendcsv;
-               $backend->init($tmpfname,$this->getDelimiter(),$file_encoding);
-               $backend->read();
-               $backend->deleteFile();
-               logDebug($backend);
-               //$ok = $backend->isFileCorrect($this);
-         }
-      }
-   }
 }
 ?>

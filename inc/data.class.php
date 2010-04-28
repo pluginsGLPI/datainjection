@@ -9,7 +9,7 @@
 
  LICENSE
 
-	This file is part of GLPI.
+   This file is part of GLPI.
 
     GLPI is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -36,35 +36,35 @@
  */
 class PluginDatainjectionData
 {
-	private $injectionDatas;
+   private $injectionDatas;
 
-	function __construct()
-	{
-		$injectionDatas = array();
-	}
+   function __construct()
+   {
+      $injectionDatas = array();
+   }
 
-	function setDatas($newDatas)
-	{
-		$this->injectionDatas = $newDatas;
-	}
+   function setDatas($newDatas)
+   {
+      $this->injectionDatas = $newDatas;
+   }
 
-	function addToDatas($newData)
-	{
-		$this->injectionDatas[] = $newData;
-	}
+   function addToDatas($newData)
+   {
+      $this->injectionDatas[] = $newData;
+   }
 
-	function getDatas()
-	{
-		return $this->injectionDatas;
-	}
+   function getDatas()
+   {
+      return $this->injectionDatas;
+   }
 
-	function getDataAtLine($line_id)
-	{
-		if (count($this->injectionDatas) >= $line_id)
-			return $this->injectionDatas[$line_id][0];
-		else
-			return array();
-	}
+   function getDataAtLine($line_id)
+   {
+      if (count($this->injectionDatas) >= $line_id)
+         return $this->injectionDatas[$line_id][0];
+      else
+         return array();
+   }
 
 }
 ?>

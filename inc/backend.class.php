@@ -37,7 +37,6 @@
 abstract class PluginDatainjectionBackend {
 
    private $file = "";
-   protected $injectionDatas;
    private $delimiter;
    private $encoding;
    private $errmsg;
@@ -76,25 +75,16 @@ abstract class PluginDatainjectionBackend {
    abstract protected function readLinesFromTo($start_line, $end_line);
 
    /*
-    * Get datas read from the input file
-    * @return array with all the datas from the file
-    */
-   function getDatas()
-   {
-      return $this->injectionDatas->getDatas();
-   }
-
-   /*
     * Get header of the file
     * @return array with the datas from the header
     */
-   function getHeader($header_present)
+   static function getHeader(PluginDatainjectionData $injectionData, $header_present)
    {
       if ($header_present)
-         return $this->injectionDatas->getDataAtLine(0);
+         return $injectionData->getDataAtLine(0);
       else
       {
-         $nb = count($this->injectionDatas->getDataAtLine(0));
+         $nb = count($injectionData->getDataAtLine(0));
          for ($i=0; $i < $nb;$i++)
             $header[] = $i;
 
@@ -107,24 +97,17 @@ abstract class PluginDatainjectionBackend {
     * @param line_id the id of the line
     * @return array with datas from this line
     */
-   function getDataAtLine($line_id)
+   function getDataAtLine(PluginDatainjectionData $injectionData, $line_id)
    {
-      return $this->injectionDatas->getDataAtLine($line_id);
+      return $injectionData->getDataAtLine($line_id);
    }
 
-   function getDatasFromLineToLine($start_line,$end_line)
+   function getDatasFromLineToLine(PluginDatainjectionData $injectionData,$start_line,$end_line)
    {
       $tmp = array();
-      for ($i=$start_line;$i < $this->getNumberOfLine() && $i <= $end_line;$i++)
-         $tmp[] = $this->injectionDatas->getDataAtLine($i);
+      for ($i=$start_line;$i < count($injectionData) && $i <= $end_line;$i++)
+         $tmp[] = $injectionData->getDataAtLine($i);
       return $tmp;
-   }
-
-   abstract protected function isFileCorrect($model);
-
-   function getNumberOfLine()
-   {
-      return count ($this->injectionDatas->getDatas());
    }
 
    abstract protected function deleteFile();

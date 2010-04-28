@@ -36,7 +36,7 @@ if (!defined("PLUGIN_DATAINJECTION_UPLOAD_DIR")){
 }
 
 function plugin_init_datainjection() {
-   global $PLUGIN_HOOKS, $CFG_GLPI, $LANG;
+   global $PLUGIN_HOOKS, $CFG_GLPI, $LANG, $INJECTABLE_TYPES;
    include_once("config/config.php");
    $plugin = new Plugin;
    $PLUGIN_HOOKS['change_profile']['datainjection'] = 'plugin_datainjection_changeprofile';
@@ -65,11 +65,39 @@ function plugin_init_datainjection() {
       // Inbtegration with Webservices plugin
       $PLUGIN_HOOKS['webservices']['datainjection'] = 'plugin_datainjection_registerMethods';
 
-      $classes = array ('Model', 'Modelcsv', 'Backend', 'Backendcsv', 'Infos', 'InfosCollections',
-                        'Mapping','MappingCollection', 'Profile','Data');
+      $classes = array ('Model', 'Modelcsv', 'Backend', 'Backendcsv', 'Infos', 'InfosCollection',
+                        'Mapping','MappingCollection', 'Profile','Data','Check',
+                        'InjectionInterface');
       foreach ($classes as $value) {
          Plugin::registerClass('PluginDatainjection'.$value);
       }
+
+      $INJECTABLE_TYPES = array('PluginDatainjectionCartridgeItemInjection'      =>'datainjection',
+                                'PluginDatainjectionCartridgeInjection'          =>'datainjection',
+                                'PluginDatainjectionComputerInjection'           =>'datainjection',
+                                'PluginDatainjectionConsumableInjection'         =>'datainjection',
+                                'PluginDatainjectionConsumableItemInjection'     =>'datainjection',
+                                'PluginDatainjectionContactInjection'            =>'datainjection',
+                                'PluginDatainjectionContractInjection'           =>'datainjection',
+                                'PluginDatainjectionDocumentInjection'           =>'datainjection',
+                                'PluginDatainjectionEntityInjection'             =>'datainjection',
+                                'PluginDatainjectionGroupInjection'              =>'datainjection',
+                                'PluginDatainjectionInfocomInjection'            =>'datainjection',
+                                'PluginDatainjectionLocationInjection'           =>'datainjection',
+                                'PluginDatainjectionMonitorInjection'            =>'datainjection',
+                                'PluginDatainjectionNetworkequipmentInjection'   =>'datainjection',
+                                'PluginDatainjectionPeripheralInjection'         =>'datainjection',
+                                'PluginDatainjectionPhoneInjection'              =>'datainjection',
+                                'PluginDatainjectionPrinterInjection'            =>'datainjection',
+                                'PluginDatainjectionProfileInjection'            =>'datainjection',
+                                'PluginDatainjectionSoftwareInjection'           =>'datainjection',
+                                'PluginDatainjectionSoftwareLicenseInjection'    =>'datainjection',
+                                'PluginDatainjectionSupplierInjection'           =>'datainjection',
+                                'PluginDatainjectionUserInjection'               =>'datainjection');
+      foreach ($INJECTABLE_TYPES as $type => $plugname) {
+         Plugin::registerClass($type);
+      }
+      //TODO : hook for other plugins types
 
       /*
       include_once("inc/plugin_datainjection.mapping.constant.php");

@@ -144,6 +144,7 @@ function plugin_datainjection_install() {
                           `date_format` varchar(11) NOT NULL default 'yyyy-mm-dd',
                           `float_format` tinyint( 1 ) NOT NULL DEFAULT '0',
                           `port_unicity` tinyint( 1 ) NOT NULL DEFAULT '0',
+                          `step` tinyint( 1 ) NOT NULL DEFAULT '0',
                           PRIMARY KEY  (`id`)
                         ) ENGINE=MyISAM CHARSET=utf8 COLLATE=utf8_unicode_ci;";
 
@@ -167,7 +168,7 @@ function plugin_datainjection_install() {
                            `rank` INT( 11 ) NOT NULL ,
                            `name` VARCHAR( 255 ) NOT NULL ,
                            `value` VARCHAR( 255 ) NOT NULL ,
-                           `mandatory` INT( 1 ) NOT NULL DEFAULT '0'
+                           `is_mandatory` INT( 1 ) NOT NULL DEFAULT '0'
                            ) ENGINE = MYISAM CHARSET=utf8 COLLATE=utf8_unicode_ci ;";
       $DB->query($query) or die($DB->error());
 
@@ -339,6 +340,10 @@ function plugin_datainjection_update170_20() {
    $query = "DROP TABLE `glpi_plugin_datainjection_filetype`";
    $query = "RENAME TABLE `glpi_plugin_datainjection_models_csv`
              TO `glpi_plugin_datainjection_modelcsvs`  ;";
+   $query = "ALTER TABLE `glpi_plugin_datainjection_models`
+             ADD `step` TINYINT( 1 ) NOT NULL DEFAULT '0'";
+   $qery = "ALTER TABLE `glpi_plugin_datainjection_mappings`
+             CHANGE `mandatory` `is_mandatory` TINYINT( 1 ) NOT NULL DEFAULT '0'";
 }
 function plugin_datainjection_createaccess($ID) {
    global $DB;

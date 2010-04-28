@@ -32,22 +32,6 @@
 // ----------------------------
 
 $LANG["datainjection"]["name"][1] = "Injection de fichiers";
-$title = $LANG["datainjection"]["name"][1] ;
-
-$LANG["datainjection"]["config"][1]="Configuration du plugin ".$title;
-
-$LANG["datainjection"]["setup"][1] = "Configuration du plugin ".$title."";
-$LANG["datainjection"]["setup"][3] = "Installer le plugin $title";
-$LANG["datainjection"]["setup"][4] = "Mettre à jour le plugin $title";
-$LANG["datainjection"]["setup"][5] = "Désinstaller le plugin $title";
-$LANG["datainjection"]["setup"][9] = "Gestion des droits";
-$LANG["datainjection"]["setup"][10] = "Ce plugin est compatible avec PHP 5 ou supérieur";
-$LANG["datainjection"]["setup"][11] = "Mode d'emploi";
-
-
-$LANG["datainjection"]["presentation"][1] = "Bienvenue dans l'assistant d'importation de fichiers";
-$LANG["datainjection"]["presentation"][2] = "Cet assistant permet d'importer des fichiers au format CSV.";
-$LANG["datainjection"]["presentation"][3] = "Pour commencer, cliquez sur Suivant.";
 
 $LANG["datainjection"]["step"][1] = "Etape 1 : ";
 $LANG["datainjection"]["step"][2] = "Etape 2 : ";
@@ -98,6 +82,11 @@ $LANG["datainjection"]["model"][27] = "1,234.56";
 $LANG["datainjection"]["model"][28] = "Format des nombres flottants";
 $LANG["datainjection"]["model"][29] = "Options spécifiques au format de fichier";
 
+$LANG["datainjection"]["model"][30] = "Vous devez spécifier un nom de modèle";
+$LANG["datainjection"]["model"][31] = "Votre modèle doit permettre l'import et/ou la mise à jour de données";
+$LANG["datainjection"]["model"][32] = "Le fichier est correct.".
+                     "<br>Vous pouvez à présent faire les correspondances avec les champs de GLPI";
+
 $LANG["datainjection"]["deleteStep"][1] = "Confirmation de la suppression";
 $LANG["datainjection"]["deleteStep"][2] = "Attention si vous supprimez le modèle, les mappings et les informations complémentaires seront supprimés également.";
 $LANG["datainjection"]["deleteStep"][3] = "Voulez-vous supprimer";
@@ -119,18 +108,18 @@ $LANG["datainjection"]["fileStep"][10] = "Détection automatique";
 $LANG["datainjection"]["fileStep"][11] = "UTF-8";
 $LANG["datainjection"]["fileStep"][12] = "ISO8859-1";
 
-$LANG["datainjection"]["mappingStep"][1] = "colonnes trouvées";
-$LANG["datainjection"]["mappingStep"][2] = "En-tête du fichier";
-$LANG["datainjection"]["mappingStep"][3] = "Tables";
-$LANG["datainjection"]["mappingStep"][4] = "Champs";
-$LANG["datainjection"]["mappingStep"][5] = "Champs de liaison";
-$LANG["datainjection"]["mappingStep"][6] = "-------Choisir une table-------";
-$LANG["datainjection"]["mappingStep"][7] = "-------Choisir un champ-------";
-$LANG["datainjection"]["mappingStep"][8] = "Au moins un champ de liaison doit être défini";
-$LANG["datainjection"]["mappingStep"][9] = "Dans cette étape vous allez mettre en relation les champs du fichier et de la base de données.";
-$LANG["datainjection"]["mappingStep"][10] = "La colonne en-tête correspond aux en-têtes du fichier";
-$LANG["datainjection"]["mappingStep"][11] = "Au moins un champs de liaison doit être renseigné : il permet de rechercher si les données à insérer existent déjà en base";
-$LANG["datainjection"]["mappingStep"][12] = "Nombre de lignes";
+$LANG["datainjection"]["mapping"][1] = "colonnes trouvées";
+$LANG["datainjection"]["mapping"][2] = "En-tête du fichier";
+$LANG["datainjection"]["mapping"][3] = "Tables";
+$LANG["datainjection"]["mapping"][4] = "Champs";
+$LANG["datainjection"]["mapping"][5] = "Champs de liaison";
+$LANG["datainjection"]["mapping"][6] = "-------Choisir une table-------";
+$LANG["datainjection"]["mapping"][7] = "-------Choisir un champ-------";
+$LANG["datainjection"]["mapping"][8] = "Au moins un champ de liaison doit être défini";
+$LANG["datainjection"]["mapping"][9] = "Dans cette étape vous allez mettre en relation les champs du fichier et de la base de données.";
+$LANG["datainjection"]["mapping"][10] = "La colonne en-tête correspond aux en-têtes du fichier";
+$LANG["datainjection"]["mapping"][11] = "Au moins un champs de liaison doit être renseigné : il permet de rechercher si les données à insérer existent déjà en base";
+$LANG["datainjection"]["mapping"][12] = "Nombre de lignes";
 
 $LANG["datainjection"]["infoStep"][1] = "Informations complémentaires";
 $LANG["datainjection"]["infoStep"][2] = "Modification des informations complémentaires";
@@ -232,4 +221,5 @@ $LANG["datainjection"]["model"][0] = "Modèle";
 $LANG["datainjection"]["tabs"][0] = "Correspondances";
 $LANG["datainjection"]["tabs"][1] = "Infos complémentaires";
 $LANG["datainjection"]["tabs"][2] = "Valeurs fixées";
+$LANG["datainjection"]["tabs"][3] = "Fichier à injecter";
 ?>

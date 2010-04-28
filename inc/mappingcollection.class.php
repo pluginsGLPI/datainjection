@@ -28,133 +28,128 @@
  --------------------------------------------------------------------------
  */
 
-class PluginPluginDatainjectionMappingCollection {
+class PluginDatainjectionMappingCollection {
 
-	private $mappingCollection;
+   private $mappingCollection;
 
-	function __construct()
-	{
-		$this->mappingCollection = array();
-	}
+   function __construct()
+   {
+      $this->mappingCollection = array();
+   }
 
-	//---- Getter ----//
+   //---- Getter ----//
 
-	/*
-	 * Load all the mappings for a specified model
-	 * @param model_id the model ID
-	 */
-	function getAllMappingsByModelID($model_id)
-	{
-		global $DB;
+   /*
+    * Load all the mappings for a specified model
+    * @param model_ids the model ID
+    */
+   function loadMappingsFromDB($models_id)
+   {
+      global $DB;
 
-		$sql = "SELECT * FROM glpi_plugin_datainjection_mappings WHERE model_id=".$model_id." ORDER BY rank ASC";
-		$result = $DB->query($sql);
-		$this->mappingCollection = array();
-		while  ($data = $DB->fetch_array($result))
-		{
-			// Addslashes to conform to value return by PluginDatainjectionBackendcsv::parseLine
-			$data["name"] = addslashes($data["name"]);
+      $sql = "SELECT * FROM `glpi_plugin_datainjection_mappings`
+              WHERE `models_id`='".$models_id."' ORDER BY `rank` ASC";
+      $this->mappingCollection = array();
+      foreach  ($data = $DB->request($sql) as $data)
+      {
+         // Addslashes to conform to value return by PluginDatainjectionBackendcsv::parseLine
+         $data["name"] = addslashes($data["name"]);
 
-			$mapping = new PluginDatainjectionMapping;
-			$mapping->fields = $data;
-			$this->mappingCollection[] = $mapping;
-		}
-	}
+         $mapping = new PluginDatainjectionMapping;
+         $mapping->fields = $data;
+         $this->mappingCollection[] = $mapping;
+      }
+   }
 
-	/*
-	 * Return all the mappings for this model
-	 * @return the list of all the mappings for this model
-	 */
-	function getAllMappings()
-	{
-		return $this->mappingCollection;
-	}
+   /*
+    * Return all the mappings for this model
+    * @return the list of all the mappings for this model
+    */
+   function getAllMappings()
+   {
+      return $this->mappingCollection;
+   }
 
-	/*
-	 * Get a PluginDatainjectionMapping by giving the mapping name
-	 * @param name
-	 * @return the PluginDatainjectionMapping object associated or null
-	 */
-	function getMappingByName($name)
-	{
-		return $this->getMappingsByField("name",$name);
-	}
+   /*
+    * Get a PluginDatainjectionMapping by giving the mapping name
+    * @param name
+    * @return the PluginDatainjectionMapping object associated or null
+    */
+   function getMappingByName($name)
+   {
+      return $this->getMappingsByField("name",$name);
+   }
 
-	/*
-	 * Get a PluginDatainjectionMapping by giving the mapping rank
-	 * @param rank
-	 * @return the PluginDatainjectionMapping object associated or null
-	 */
-	function getMappingByRank($rank)
-	{
-		return $this->getMappingsByField("rank",$rank);
-	}
+   /*
+    * Get a PluginDatainjectionMapping by giving the mapping rank
+    * @param rank
+    * @return the PluginDatainjectionMapping object associated or null
+    */
+   function getMappingByRank($rank)
+   {
+      return $this->getMappingsByField("rank",$rank);
+   }
 
-	/*
-	 * Find a mapping by looking for a specific field
-	 * @param field the field to look for
-	 * @param the value of the field
-	 * @return the PluginDatainjectionMapping object associated or null
-	 */
-	function getMappingsByField($field,$value)
-	{
-		foreach ($this->mappingCollection as $mapping)
-		{
-			if ($mapping->equal($field,$value))
-				return $mapping;
-		}
-		return null;
-	}
+   /*
+    * Find a mapping by looking for a specific field
+    * @param field the field to look for
+    * @param the value of the field
+    * @return the PluginDatainjectionMapping object associated or null
+    */
+   function getMappingsByField($field,$value)
+   {
+      foreach ($this->mappingCollection as $mapping)
+      {
+         if ($mapping->equal($field,$value))
+            return $mapping;
+      }
+      return null;
+   }
 
-	//---- Save ----//
+   //---- Save ----//
 
-	/*
-	 * Save in database the model and all his associated mappings
-	 */
-	function saveAllMappings($model_id)
-	{
-		foreach ($this->mappingCollection as $mapping)
-		{
-			$mapping->setModelID($model_id);
+   /*
+    * Save in database the model and all his associated mappings
+    */
+   function saveAllMappings()
+   {
+      foreach ($this->mappingCollection as $mapping)
+      {
+         if (isset($mapping->fields["id"]))
+            $mapping->update($mapping->fields);
+         else
+            $mapping->fields["id"] = $mapping->add($mapping->fields);
+      }
+   }
 
-			if (isset($mapping->fields["ID"]))
-				$mapping->update($mapping->fields);
-			else
-				$mapping->fields["ID"] = $mapping->add($mapping->fields);
-		}
-	}
+   //---- Delete ----//
 
-	//---- Delete ----//
+   function deleteMappingsFromDB($model_id)
+   {
+      global $DB;
 
-	function deleteMappingsFromDB($model_id)
-	{
-		global $DB;
+      $sql = "DELETE FROM `glpi_plugin_datainjection_mappings` WHERE `models_id` ='$model_id'";
+      return $DB->query($sql);
+   }
 
-		$sql = "DELETE from glpi_plugin_datainjection_mappings WHERE model_id =".$model_id;
-		if ($result = $DB->query($sql))
-			return true;
-		else
-			return false;
-	}
+   //---- Add ----//
 
-	//---- Add ----//
+   /*
+    * Add a new mapping to this model (don't write in to DB)
+    * @param mapping the new PluginDatainjectionMapping to add
+    */
+   function addNewMapping($mapping)
+   {
+      $this->mappingCollection[] = $mapping;
+   }
 
-	/*
-	 * Add a new mapping to this model (don't write in to DB)
-	 * @param mapping the new PluginDatainjectionMapping to add
-	 */
-	function addNewMapping($mapping)
-	{
-		$this->mappingCollection[] = $mapping;
-	}
-
-	/*
-	 * Replace all the mappings for a model
-	 * @mappins the array of PluginDatainjectionMapping objects
-	 */
-	function replaceMappings($mappings)
-	{
-		$this->mappingCollection = $mappings;
-	}
+   /*
+    * Replace all the mappings for a model
+    * @mappins the array of PluginDatainjectionMapping objects
+    */
+   function replaceMappings($mappings)
+   {
+      $this->mappingCollection = $mappings;
+   }
 }
 ?>

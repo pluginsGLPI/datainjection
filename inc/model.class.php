@@ -33,6 +33,7 @@ class PluginDatainjectionModel extends CommonDBTM {
    private $backend;
    protected $infos;
    public $dohistory = true;
+   public $specific_model;
 
    const DATE_TYPE_DDMMYYYY = "dd-mm-yyyy";
    const DATE_TYPE_MMDDYYYY = "mm-dd-yyyy";
@@ -52,14 +53,15 @@ class PluginDatainjectionModel extends CommonDBTM {
    const MODEL_PRIVATE = 1;
    const MODEL_PUBLIC = 0;
 
+   const INITIAL_STEP = 1;
+   const FILE_STEP = 2;
+   const EDIT_STEP = 3;
+   const READY_TO_USE = 4;
+
    function __construct()
    {
-      //$this->mappings = new PluginPluginDatainjectionMappingCollection;
-      //$this->infos = new PluginDatainjectionInfosCollection;
-      //$this->init();
-      //$this->may_be_private=true;
-      //$this->may_be_recursive=true;
-      //$this->entity_assign=true;
+      $this->mappings = new PluginDatainjectionMappingCollection;
+      $this->infos = new PluginDatainjectionInfosCollection;
    }
 
    function canCreate() {
@@ -70,107 +72,10 @@ class PluginDatainjectionModel extends CommonDBTM {
       return plugin_datainjection_haveRight('model','r');
    }
 
-   function init()
-   {
-
-   }
-/*
-   //To be implemented
-   function saveSpecificFields()
-   {
-
+   function saveMappings() {
+      $this->mappings->saveAllMappings($this->fields["id"]);
    }
 
-   function deleteSpecificFields()
-   {
-   }
-
-   function updateSpecificFields()
-   {
-
-   }
-
-   function loadSpecificfields()
-   {
-
-   }
-
-   //---- Load -----//
-
-
-   function loadAll($model_id)
-   {
-      if ($this->getFromDB($model_id))
-      {
-         $this->loadSpecificfields();
-         $this->loadMappings($model_id);
-         $this->loadInfos($model_id);
-         return true;
-      }
-      else
-         return false;
-   }
-   function loadMappings($model_id)
-   {
-      $this->mappings->getAllMappingsByModelID($model_id);
-   }
-
-   function loadInfos($model_id)
-   {
-      $this->infos->getAllInfosByModelID($model_id);
-   }
-
-   //---- Add -----//
-   function addMappingToModel($mapping)
-   {
-      $this->mappings->addNewMapping($mapping);
-   }
-
-   function addInfosToModel($infos)
-   {
-      $this->infos->addNewInfos($infos);
-   }
-
-   //---- Save -----//
-   function saveModel()
-   {
-      //Save or add model
-      if (!isset($this->fields["ID"]))
-         $this->fields["ID"] = $this->add($this->fields);
-      else
-         $this->update($this->fields);
-
-      $this->saveSpecificFields();
-
-      //Save or add mappings
-      $this->mappings->saveAllMappings($this->fields["ID"]);
-      $this->infos->saveAllInfos($this->fields["ID"]);
-   }
-
-   function deleteModel()
-   {
-      if($this->mappings->deleteMappingsFromDB($this->fields["ID"]) && $this->infos->deleteInfosFromDB($this->fields["ID"]))
-         {
-         $this->deleteSpecificFields();
-         if($this->deleteFromDB($this->fields["ID"]))
-            return true;
-         else
-            return false;
-         }
-      else
-         return false;
-   }
-
-   function updateModel()
-   {
-      $this->update($this->fields);
-      $this->updateSpecificFields();
-      $this->mappings->deleteMappingsFromDB($this->fields["ID"]);
-      $this->mappings->saveAllMappings($this->fields["ID"]);
-      $this->infos->deleteInfosFromDB($this->fields["ID"]);
-      $this->infos->saveAllInfos($this->fields["ID"]);
-   }
-*/
    //---- Getters -----//
    function getMappings()
    {
@@ -333,7 +238,7 @@ class PluginDatainjectionModel extends CommonDBTM {
       $this->infos = $infos;
    }
 
-   function setPluginDatainjectionBackend($backend)
+   function setBackend($backend)
    {
       $this->backend = $backend;
    }
@@ -387,88 +292,18 @@ class PluginDatainjectionModel extends CommonDBTM {
    {
       $this->fields["is_recursive"] = $recursive;
    }
-/*
-   function setFields($fields,$entity,$user_id)
-   {
-      //$this->setEntity($entity);
-      $this->setEntity($fields["entities_id"]);
 
-      $this->setUserID($user_id);
-
-      if(isset($fields["dropdown_device_type"]))
-         $this->setDeviceType($fields["dropdown_device_type"]);
-
-      if(isset($fields["dropdown_type"]))
-         $this->setModelType($fields["dropdown_type"]);
-
-      if(isset($fields["dropdown_create"]))
-         $this->setBehaviorAdd($fields["dropdown_create"]);
-
-      if(isset($fields["dropdown_update"]))
-         $this->setBehaviorUpdate($fields["dropdown_update"]);
-
-      if(isset($fields["dropdown_canadd"]))
-         $this->setCanAddDropdown($fields["dropdown_canadd"]);
-
-      if(isset($fields["can_overwrite_if_not_empty"]))
-         $this->setCanOverwriteIfNotEmpty($fields["can_overwrite_if_not_empty"]);
-
-      if(isset($fields["private"]))
-         $this->setPrivate($fields["private"]);
-
-      if(isset($fields["perform_network_connection"]))
-         $this->setPerformNetworkConnection($fields["perform_network_connection"]);
-
-      if(isset($fields["date_format"]))
-         $this->setDateFormat($fields["date_format"]);
-
-      if(isset($fields["float_format"]))
-         $this->setFloatFormat($fields["float_format"]);
-
-      if(isset($fields["recursive"]))
-         $this->setRecursive($fields["recursive"]);
-
-      if(isset($fields["port_unicity"]))
-         $this->setPortUnicity($fields["port_unicity"]);
-
+   function setSpecificModel($specific_model) {
+      $this->specific_model = $specific_model;
    }
-*/
 
    function setPortUnicity($unicity)
    {
       $this->fields["port_unicity"]=$unicity;
    }
 
-   //Webservices functions
-   static function methodGetModel($params,$protocol) {
-
-      if (isset ($params['help'])) {
-         return array('help' => 'bool,optional');
-      }
-
-      if (!isset ($_SESSION['glpiID'])) {
-         return self::Error($protocol, WEBSERVICES_ERROR_NOTAUTHENTICATED);
-      }
-
-      $model = new PluginPluginDatainjectionModel;
-      if ($model->getFromDB($params['id'])) {
-         return $model->fields;
-      }
-      else {
-         return array();
-      }
-   }
-
-   static function methodListModels($params,$protocol) {
-      if (isset ($params['help'])) {
-         return array('help' => 'bool,optional');
-      }
-
-      if (!isset ($_SESSION['glpiID'])) {
-         return self::Error($protocol, WEBSERVICES_ERROR_NOTAUTHENTICATED);
-      }
-
-      return getAllDatasFromTable('glpi_plugin_datainjection_models');
+   function getSpecificModel() {
+      $this->specific_model;
    }
 
    static function getModels($user_id, $order = "name", $entity = -1, $can_write = false) {
@@ -597,12 +432,14 @@ class PluginDatainjectionModel extends CommonDBTM {
          // Create item
          $this->check(-1,'w');
          $this->getEmpty();
+         echo "<input type='hidden' name='step' value='1'>";
       }
       $this->showTabs($options);
       $this->showFormHeader($options);
 
       echo "<tr class='tab_bg_1'>";
 
+      echo "<input type='hidden' name='users_id' value='".getLoginUserID()."'>";
       echo "<td>".$LANG['common'][16].": </td>";
       echo "<td>";
       autocompletionTextField($this,"name");
@@ -627,7 +464,8 @@ class PluginDatainjectionModel extends CommonDBTM {
       echo "<tr class='tab_bg_1'>";
       echo "<td>".$LANG["datainjection"]["model"][4].": </td>";
       echo "<td>";
-      PluginDatainjectionInjectionType::dropdown($this->fields['itemtype']);
+      //Get only the primary types
+      PluginDatainjectionInjectionType::dropdown($this->fields['itemtype'],true);
       echo "</td>";
       echo "<td>".$LANG["datainjection"]["model"][12].": </td>";
       echo "<td>";
@@ -636,9 +474,20 @@ class PluginDatainjectionModel extends CommonDBTM {
       echo "</tr>";
 
       echo "<tr class='tab_bg_1'>";
-      echo "<td>".$LANG["datainjection"]["model"][20].": </td>";
+      echo "<td>".$LANG["datainjection"]["model"][5].": </td>";
       echo "<td>";
-      Dropdown::showYesNo("perform_network_connection",$this->fields['perform_network_connection']);
+      PluginDatainjectionDropdown::dropdownFileTypes($this->fields['filetype']);
+      echo "</td>";
+      echo "<td colspan='2'>";
+      echo "</td>";
+      echo "</tr>";
+
+
+      echo "<tr class='tab_bg_1'><th colspan='4'>".$LANG["datainjection"]["model"][15]."</th></tr>";
+      echo "<tr class='tab_bg_1'>";
+      echo "<td>".$LANG["datainjection"]["model"][28].": </td>";
+      echo "<td>";
+      PluginDatainjectionDropdown::dropdownFloatFormat($this->fields['float_format']);
       echo "</td>";
       echo "<td>".$LANG["datainjection"]["model"][21].": </td>";
       echo "<td>";
@@ -647,23 +496,14 @@ class PluginDatainjectionModel extends CommonDBTM {
       echo "</tr>";
 
       echo "<tr class='tab_bg_1'>";
-      echo "<td>".$LANG["datainjection"]["model"][28].": </td>";
+      echo "<td>".$LANG["datainjection"]["model"][20].": </td>";
       echo "<td>";
-      PluginDatainjectionDropdown::dropdownFloatFormat($this->fields['float_format']);
+      Dropdown::showYesNo("perform_network_connection",$this->fields['perform_network_connection']);
       echo "</td>";
-      echo "<td>".$LANG["datainjection"]["model"][5].": </td>";
-      echo "<td>";
-      PluginDatainjectionDropdown::dropdownFileTypes($this->fields['filetype']);
-      echo "</td>";
-      echo "</td>";
-      echo "</tr>";
-
-      echo "<tr class='tab_bg_1'>";
       echo "<td>".$LANG["datainjection"]["mappings"][7].": </td>";
       echo "<td>";
       PluginDatainjectionDropdown::dropdownPortUnicity($this->fields['port_unicity']);
       echo "</td>";
-      echo "<td colspan='2'></td>";
       echo "</tr>";
 
       $this->showFormButtons($options);
@@ -677,12 +517,22 @@ class PluginDatainjectionModel extends CommonDBTM {
 
       $ong[1] = $LANG['title'][26];
       if ($this->fields['id'] > 0) {
-         $ong[2] = $LANG["datainjection"]["tabs"][0];
-         $ong[3] = $LANG["datainjection"]["tabs"][1];
-         $ong[4] = $LANG["datainjection"]["tabs"][2];
+         $ong[2] = $LANG["datainjection"]["tabs"][3];
+         if ($this->fields['step'] > 1) {
+            $ong[3] = $LANG["datainjection"]["tabs"][0];
+            $ong[4] = $LANG["datainjection"]["tabs"][1];
+            $ong[5] = $LANG["datainjection"]["tabs"][2];
+         }
          $ong[12] = $LANG['title'][38];
       }
       return $ong;
+   }
+
+   function cleanDBonPurge() {
+      global $DB;
+      $query = "DELETE FROM `glpi_plugin_datainjection_modelcsvs`
+                WHERE `models_id`='".$this->fields['id']."'";
+      $DB->query($query);
    }
 
    function showUploadForm() {
@@ -712,6 +562,31 @@ class PluginDatainjectionModel extends CommonDBTM {
       }
    }
 
+   static function changeStep($models_id,$step) {
+      $model = new PluginDatainjectionModel;
+      if ($model->getFromDB($models_id)) {
+         $model->dohistory = false;
+         $tmp['id'] = $models_id;
+         $tmp['step'] = $step;
+         $model->update($tmp);
+         $model->dohistory = false;
+      }
+   }
+
+   function prepareInputForAdd($input) {
+      global $LANG;
+      //If no behavior selected
+      if (!isset($input['name']) || $input['name'] == '') {
+         addMessageAfterRedirect($LANG["datainjection"]["model"][30],true,ERROR,true);
+         return false;
+      }
+      if (!$input['behavior_add'] && !$input['behavior_update']) {
+         addMessageAfterRedirect($LANG["datainjection"]["model"][31],true,ERROR,true);
+         return false;
+      }
+      return $input;
+   }
+
    /*
     * Get the backend implementation by type
     */
@@ -724,6 +599,173 @@ class PluginDatainjectionModel extends CommonDBTM {
       else {
          return false;
       }
+   }
+
+   //Webservices methods
+   static function methodGetModel($params,$protocol) {
+
+      if (isset ($params['help'])) {
+         return array('help' => 'bool,optional');
+      }
+
+      if (!isset ($_SESSION['glpiID'])) {
+         return self::Error($protocol, WEBSERVICES_ERROR_NOTAUTHENTICATED);
+      }
+
+      $model = new PluginPluginDatainjectionModel;
+      if ($model->getFromDB($params['id'])) {
+         return $model->fields;
+      }
+      else {
+         return array();
+      }
+   }
+
+   static function methodListModels($params,$protocol) {
+      if (isset ($params['help'])) {
+         return array('help' => 'bool,optional');
+      }
+
+      if (!isset ($_SESSION['glpiID'])) {
+         return self::Error($protocol, WEBSERVICES_ERROR_NOTAUTHENTICATED);
+      }
+
+      return getAllDatasFromTable('glpi_plugin_datainjection_models');
+   }
+
+   function processUploadedFile($models_id,$file_encoding) {
+      global $LANG;
+
+      $injectionData = false;
+
+      //Get model & model specific fields
+      $this->getFromDB($models_id);
+      $specific_model = PluginDatainjectionModel::getInstance($this->fields['filetype']);
+      $specific_model->getFromDBByModelID($models_id,true);
+      $this->setSpecificModel($specific_model);
+
+      //Get and store uploaded file
+      $original_filename = $_FILES["file"]["name"];
+      $temporary_uniquefilename = tempnam (realpath(PLUGIN_DATAINJECTION_UPLOAD_DIR), "Tmp");
+      $temporary_name = $_FILES["file"]["tmp_name"];
+
+      //If file has not the right extension, reject it and delete if
+      if($specific_model->checkFileName($original_filename)) {
+         $message = $LANG["datainjection"]["fileStep"][5];
+         $message.="<br />".$LANG["datainjection"]["fileStep"][6]." csv ";
+         $message.=$LANG["datainjection"]["fileStep"][7];
+         addMessageAfterRedirect($message,true,ERROR,false);
+         unlink($temporary_uniquefilename);
+      }
+      else {
+         if( !move_uploaded_file($temporary_name, $temporary_uniquefilename) ) {
+            addMessageAfterRedirect($LANG["datainjection"]["fileStep"][8],true,ERROR,false);
+            unlink($temporary_uniquefilename);
+         }
+         else {
+            //Initialise a new backend
+            $backend = PluginDatainjectionBackend::getInstance($this->fields['filetype']);
+            //Init backend with needed values
+            $backend->init($temporary_uniquefilename,$file_encoding);
+            $backend->setHeaderPresent($specific_model->fields['is_header_present']);
+            $backend->setDelimiter($specific_model->fields['delimiter']);
+
+            //Read file
+            $injectionData = $backend->read();
+            logDebug($injectionData);
+            $backend->deleteFile();
+            $this->setBackend($backend);
+            $check = $this->isFileCorrect($injectionData);
+            //There's an error
+            if ($check['status'] != PluginDatainjectionCheck::CHECK_OK) {
+               addMessageAfterRedirect($check['error_message'],true,ERROR,true);
+            }
+            else {
+               $mappingCollection = new PluginDatainjectionMappingCollection;
+
+               //If mapping still exists in DB, delete all of them !
+               $mappingCollection->deleteMappingsFromDB($this->fields['id']);
+
+               $rank = 0;
+               //Build the mappings list
+               foreach (PluginDatainjectionBackend::getHeader($injectionData,
+                                                              $specific_model->isHeaderPresent()
+                                                              ) as $data) {
+                  $mapping = new PluginDatainjectionMapping;
+                  $mapping->fields['models_id'] = $this->fields['id'];
+                  $mapping->fields['rank'] = $rank;
+                  $mapping->fields['name'] = $data;
+                  $mapping->fields['value'] = '';
+                  $mappingCollection->addNewMapping($mapping);
+                  $rank++;
+               }
+               //Save the mapping list in DB
+               $mappingCollection->saveAllMappings();
+               PluginDatainjectionModel::changeStep($this->fields['id'],
+                                                    PluginDatainjectionModel::EDIT_STEP);
+
+               //Add redirect message
+               addMessageAfterRedirect($LANG["datainjection"]["model"][32],true,INFO,true);
+            }
+         }
+      }
+   }
+
+   /*
+    * Try to parse an input file
+    * @return true if the file is a CSV file
+    */
+   function isFileCorrect(PluginDatainjectionData $injectionData) {
+      global $LANG;
+
+      $field_in_error = false;
+
+      //Get CSV file first line
+      $header= PluginDatainjectionBackend::getHeader($injectionData,
+                                                     $this->specific_model->isHeaderPresent());
+
+      //If file columns don't match number of mappings in DB
+      if(count($this->getMappings()) != count($header)) {
+         $error_message = count($this->getMappings())." ";
+         $error_message.=$LANG["datainjection"]["saveStep"][16]."\n";
+         $error_message.=count($header)." ".$LANG["datainjection"]["saveStep"][17];
+         return array('status'=>1,'field_in_error'=>false,'error_message'=>$error_message);
+      }
+
+      //If no header in the CSV file, exit method
+      if(!$specific_model->isHeaderPresent()) {
+         return array('status'=>0,'field_in_error'=>false,'error_message'=>'');
+      }
+
+      $error = array('status'=>0,'field_in_error'=>false,'error_message'=>'');
+
+      //Check each mapping to be sure it has exactly the same name
+      foreach($this->getMappings() as $key => $mapping) {
+         if(!isset($header[$key])) {
+            $error['status'] = 2;
+            $error['field_in_error'] = $key;
+            $check= 2;
+         }
+         else {
+            //If name of the mapping is not equal in the csv file header and in the DB
+            $name_from_file = trim(strtoupper(stripslashes($header[$mapping->getRank()])));
+            $name_from_db = trim(strtoupper(stripslashes($mapping->getName())));
+            if($name_from_db != $name_from_file) {
+               $error['status'] = 2;
+               $error['field_in_error'] = false;
+               $error_message = $LANG["datainjection"]["saveStep"][18];
+               $error_message.= $name_from_file."\n";
+               $error_message.=$LANG["datainjection"]["saveStep"][19];
+               $error_message.= $name_from_db;
+               $error['error_message'] = $error_message;
+            }
+         }
+      }
+      return $error;
+   }
+
+   function loadMappings() {
+      $this->mappings->loadMappingsFromDB($this->fields['id']);
    }
 }
 ?>

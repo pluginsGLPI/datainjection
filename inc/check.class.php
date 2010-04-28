@@ -34,7 +34,10 @@
 /*
  * Checks before injection
  */
-class PluginDatainectionCheck {
+class PluginDatainjectionCheck {
+
+   const CHECK_OK = 1;
+   const CHECK_ERROR = 2;
 
    /**
     * check one line of data to import

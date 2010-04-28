@@ -480,9 +480,9 @@ function mappingStep($target) {
 
 	/************************Title Step****************************/
 	if ($_SESSION["plugin_datainjection"]["choice"] == 1)
-		echo "<div class='wizard_title' valign='bottom'>" . $LANG["datainjection"]["step"][4] . " " . $num . " " . $LANG["datainjection"]["mappingStep"][1] . "</div>";
+		echo "<div class='wizard_title' valign='bottom'>" . $LANG["datainjection"]["step"][4] . " " . $num . " " . $LANG["datainjection"]["mapping"][1] . "</div>";
 	else
-		echo "<div class='wizard_title' valign='bottom'>" . $LANG["datainjection"]["step"][3] . " " . $num . " " . $LANG["datainjection"]["mappingStep"][1] . "</div>";
+		echo "<div class='wizard_title' valign='bottom'>" . $LANG["datainjection"]["step"][3] . " " . $num . " " . $LANG["datainjection"]["mapping"][1] . "</div>";
 	/**************************************************************/
 
 	/***********************Explain Step***************************/

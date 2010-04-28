@@ -51,16 +51,26 @@ if (!isset($_POST["order"])) {
 $model = new PluginDatainjectionModel;
 
 if ($_POST["id"] >0 && $model->can($_POST["id"],'r')) {
+   $tmp = PluginDatainjectionModel::getInstance($model->fields['filetype']);
 
    switch($_POST['glpi_tab']) {
       case -1 :
          Plugin::displayAction($model,$_POST['glpi_tab']);
-         break;
-      case 1:
-         $tmp = PluginDatainjectionModel::getInstance($model->fields['filetype']);
          $tmp->showForm($_POST['glpi_tab']);
          $model->showUploadForm();
+         break;
+      case 1:
+         $tmp->showForm($_POST["id"],$_POST['glpi_tab']);
+         break;
       case 2 :
+         $model->showUploadForm();
+         break;
+      case 3 :
+         PluginDatainjectionMapping::showFormMappings($_POST["id"]);
+         break;
+      case 4 :
+         break;
+      case 5 :
          break;
 
       case 12 :

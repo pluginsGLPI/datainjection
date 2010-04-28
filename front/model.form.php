@@ -73,9 +73,7 @@ else if (isset ($_POST["update"])) {
    glpi_header($_SERVER['HTTP_REFERER']);
 }
 elseif (isset($_POST['upload'])) {
-   $model_spe = PluginDatainjectionModel::getInstanceByID($_REQUEST['id']);
-   $model_spe->check($_POST['id'],'w');
-   $model_spe->checkUploadedFile($_POST['file_encoding']);
+   $model->processUploadedFile($_POST['id'],$_POST['file_encoding']);
    glpi_header($_SERVER['HTTP_REFERER']);
 }
 

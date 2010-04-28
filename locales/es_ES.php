@@ -117,7 +117,7 @@ $LANG["datainjection"]["fileStep"][10] = "Detección automática";
 $LANG["datainjection"]["fileStep"][11] = "UTF-8";
 $LANG["datainjection"]["fileStep"][12] = "ISO8859-1";
 
-$LANG["datainjection"]["mappingStep"][1] = "Se han encontrado campos a mapear";
+$LANG["datainjection"]["mapping"][1] = "Se han encontrado campos a mapear";
 $LANG["datainjection"]["mappingStep"][2] = "Cabecera del archivo";
 $LANG["datainjection"]["mappingStep"][3] = "Tabla";
 $LANG["datainjection"]["mappingStep"][4] = "Columna";

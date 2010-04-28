@@ -35,6 +35,14 @@ class PluginDatainjectionMapping extends CommonDBTM {
       $this->type=-1;
    }
 
+   function canCreate() {
+      return plugin_datainjection_haveRight('model','w');
+   }
+
+   function canView() {
+      return plugin_datainjection_haveRight('model','r');
+   }
+
    /*
     *
     */
@@ -51,10 +59,10 @@ class PluginDatainjectionMapping extends CommonDBTM {
 
    function isMandatory()
    {
-      return $this->fields["mandatory"];
+      return $this->fields["is_mandatory"];
    }
 
-   function getName()
+   function getMappingName()
    {
       return $this->fields["name"];
    }
@@ -71,22 +79,22 @@ class PluginDatainjectionMapping extends CommonDBTM {
 
    function getID()
    {
-      return $this->fields["ID"];
+      return $this->fields["id"];
    }
 
    function getModelID()
    {
-      return $this->fields["model_id"];
+      return $this->fields["models_id"];
    }
 
    function getMappingType()
    {
-      return $this->fields["type"];
+      return $this->fields["itemtype"];
    }
 
    function setMandatory($mandatory)
    {
-      $this->fields["mandatory"] = $mandatory;
+      $this->fields["is_mandatory"] = $mandatory;
    }
 
    function setName($name)
@@ -106,17 +114,60 @@ class PluginDatainjectionMapping extends CommonDBTM {
 
    function setID($ID)
    {
-      $this->fields["ID"] = $ID;
+      $this->fields["id"] = $ID;
    }
 
    function setModelID($model_id)
    {
-      $this->fields["model_id"] = $model_id;
+      $this->fields["models_id"] = $model_id;
    }
 
    function setMappingType($type)
    {
-      $this->fields["type"] = $type;
+      $this->fields["itemtype"] = $type;
+   }
+
+   static function showFormMappings($models_id) {
+      global $LANG, $DB;
+
+      $model = new PluginDatainjectionModel;
+      $canedit=$model->can($models_id,'w');
+
+      echo "<form method='post' name=form action='".getItemTypeFormURL(__CLASS__)."'>";
+      echo "<table class='tab_cadre_fixe'>";
+      echo "<tr>";
+      echo "<th>" . $LANG["datainjection"]["mapping"][2] . "</th>";
+      echo "<th>" . $LANG["datainjection"]["mapping"][3] . "</th>";
+      echo "<th>" . $LANG["datainjection"]["mapping"][4] . "</th>";
+      echo "<th>" . $LANG["datainjection"]["mapping"][5] . "</th>";
+      echo "</tr>";
+
+      $model = new PluginDatainjectionModel;
+      $model->getFromDB($models_id);
+      $model->loadMappings();
+
+      foreach ($model->getMappings() as $mapping) {
+         $mappings_id = $mapping->getID();
+         echo "<tr class='tab_bg_1'>";
+         echo "<td align='center'>".$mapping->fields['name']."</td>";
+         echo "<td align='center'>";
+         $rand = PluginDatainjectionInjectionType::dropdownLinkedTypes($mapping,
+                                                                       $model->fields['itemtype'],
+                                                                       $mapping->fields['itemtype']);
+         echo "</td>";
+         echo "<td align='center'><span id='span_field_$mappings_id'></span></td>";
+         echo "<td align='center'><span id='span_mandatory_$mappings_id'></span></td>";
+         echo "</tr>";
+      }
+
+      if ($canedit) {
+         echo "<tr>";
+         echo "<td class='tab_bg_2 center' colspan='4'>";
+         echo "<input type='hidden' name='models_id' value='$models_id'>";
+         echo "<input type='submit' name='update' value=\"".$LANG['buttons'][7]."\" class='submit' >";
+         echo "</td></tr>";
+      }
+      echo "</table></form>";
    }
 }
 ?>

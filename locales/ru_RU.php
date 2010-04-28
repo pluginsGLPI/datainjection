@@ -117,7 +117,7 @@ $LANG["datainjection"]["fileStep"][10] = "Определить автомати�
 $LANG["datainjection"]["fileStep"][11] = "UTF-8";
 $LANG["datainjection"]["fileStep"][12] = "ISO8859-1";
 
-$LANG["datainjection"]["mappingStep"][1] = "колонок было распознано";
+$LANG["datainjection"]["mapping"][1] = "колонок было распознано";
 $LANG["datainjection"]["mappingStep"][2] = "Названия столбцов";
 $LANG["datainjection"]["mappingStep"][3] = "Таблица";
 $LANG["datainjection"]["mappingStep"][4] = "Поле";
