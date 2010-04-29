@@ -41,6 +41,9 @@ if (!defined('GLPI_ROOT')){
 class PluginDatainjectionComputerInjection extends Computer
    implements PluginDatainjectionInjectionInterface {
 
+   function __construct() {
+      $this->table = getTableForItemType('Computer');
+   }
    function isPrimaryType() {
       return true;
    }

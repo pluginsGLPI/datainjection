@@ -27,8 +27,8 @@
  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  --------------------------------------------------------------------------
 // ----------------------------------------------------------------------
-// Original Author of file: CAILLAUD Xavier
-// Purpose of file: plugin accounts v1.6.0 - GLPI 0.78
+// Original Author of file: Walid Nouh
+// Purpose of file:
 // ----------------------------------------------------------------------
  */
 
@@ -45,27 +45,5 @@ if (!defined('GLPI_ROOT')) {
 }
 
 checkCentralAccess();
-
-if (isset($_POST['mappings_id']) && isset($_POST['primary_type']) && isset($_POST['itemtype'])) {
-   if ($_POST['primary_type'] == $_POST['itemtype']) {
-      if ($_POST['field'] == 'NULL' || !$_POST['mandatory']) {
-         $selected = '';
-      }
-      else {
-         $selected = 'checked';
-      }
-
-      if ($_POST['field'] == 'NULL') {
-         $state = 'disabled';
-      }
-      else {
-         $state = '';
-      }
-      echo "<input type='checkbox' name='data[mandatory[".$_POST['mappings_id']."]]' $selected $state>";
-   }
-   else {
-      echo "<input type='hidden' name='data[mandatory[".$_POST['mappings_id']."]]' value='0'>";
-   }
-}
-
+PluginDatainjectionInjectionType::showMandatoryCheckBox($_POST);
 ?>

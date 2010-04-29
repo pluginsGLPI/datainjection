@@ -73,7 +73,9 @@ else if (isset ($_POST["update"])) {
    glpi_header($_SERVER['HTTP_REFERER']);
 }
 elseif (isset($_POST['upload'])) {
-   $model->processUploadedFile($_POST['id'],$_POST['file_encoding']);
+   if (!empty($_FILES)) {
+      $model->processUploadedFile($_POST['id'],$_POST['file_encoding']);
+   }
    glpi_header($_SERVER['HTTP_REFERER']);
 }
 

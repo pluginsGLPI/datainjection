@@ -27,15 +27,14 @@
  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  --------------------------------------------------------------------------
 // ----------------------------------------------------------------------
-// Original Author of file: CAILLAUD Xavier
-// Purpose of file: plugin accounts v1.6.0 - GLPI 0.78
+// Original Author of file: Walid Nouh
+// Purpose of file:
 // ----------------------------------------------------------------------
  */
 
 // Direct access to file
 if (strpos($_SERVER['PHP_SELF'],"dropdownChooseField.php")) {
    define('GLPI_ROOT', '../../..');
-   $AJAX_INCLUDE=1;
    include (GLPI_ROOT."/inc/includes.php");
    header("Content-Type: text/html; charset=UTF-8");
    header_nocache();
@@ -45,12 +44,5 @@ if (!defined('GLPI_ROOT')) {
 }
 
 checkCentralAccess();
-logDebug($_POST);
-if (isset($_POST['mappings_id']) && $_POST['itemtype']) {
-   PluginDatainjectionInjectionType::dropdownFields($_POST);
-   echo "<input type='hidden' name='mappings_id' value='".$_POST['mappings_id']."'>";
-   echo "<input type='hidden' name='itemtype' value='".$_POST['itemtype']."'>";
-   echo "<input type='hidden' name='primary_type' value='".$_POST['primary_type']."'>";
-}
-
+PluginDatainjectionInjectionType::dropdownFields($_POST);
 ?>

@@ -556,7 +556,10 @@ class PluginDatainjectionModel extends CommonDBTM {
          echo "<tr class='tab_bg_2'>";
          echo "<td align='center' colspan='2'>";
          echo "<input type='hidden' name='id' value='".$this->fields['id']."'>";
-         echo "<input type='submit' name='upload' value=\"".$LANG['buttons'][7]."\" class='submit' >";
+         $alert ="";
+                  echo "<input type='submit' name='upload' value=\"" . $LANG['buttons'][7] .
+                         "\" class='submit' OnClick='return window.confirm(\"" .
+                         addslashes($LANG["datainjection"]["mapping"][13]). "\");'>";
          echo "</td></tr>";
          echo "</table></form>";
       }
@@ -672,7 +675,6 @@ class PluginDatainjectionModel extends CommonDBTM {
 
             //Read file
             $injectionData = $backend->read();
-            logDebug($injectionData);
             $backend->deleteFile();
             $this->setBackend($backend);
             $check = $this->isFileCorrect($injectionData);
@@ -695,7 +697,8 @@ class PluginDatainjectionModel extends CommonDBTM {
                   $mapping->fields['models_id'] = $this->fields['id'];
                   $mapping->fields['rank'] = $rank;
                   $mapping->fields['name'] = $data;
-                  $mapping->fields['value'] = '';
+                  $mapping->fields['value'] = PluginDatainjectionInjectionType::NO_VALUE;
+                  $mapping->fields['itemtype'] = PluginDatainjectionInjectionType::NO_VALUE;
                   $mappingCollection->addNewMapping($mapping);
                   $rank++;
                }

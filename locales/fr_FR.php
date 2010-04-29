@@ -120,6 +120,7 @@ $LANG["datainjection"]["mapping"][9] = "Dans cette étape vous allez mettre en r
 $LANG["datainjection"]["mapping"][10] = "La colonne en-tête correspond aux en-têtes du fichier";
 $LANG["datainjection"]["mapping"][11] = "Au moins un champs de liaison doit être renseigné : il permet de rechercher si les données à insérer existent déjà en base";
 $LANG["datainjection"]["mapping"][12] = "Nombre de lignes";
+$LANG["datainjection"]["mapping"][13] = "Attention : Les données existantes seront écrasées !";
 
 $LANG["datainjection"]["infoStep"][1] = "Informations complémentaires";
 $LANG["datainjection"]["infoStep"][2] = "Modification des informations complémentaires";

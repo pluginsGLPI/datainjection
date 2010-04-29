@@ -128,7 +128,7 @@ class PluginDatainjectionMapping extends CommonDBTM {
    }
 
    static function showFormMappings($models_id) {
-      global $LANG, $DB;
+      global $LANG, $DB,$CFG_GLPI;
 
       $model = new PluginDatainjectionModel;
       $canedit=$model->can($models_id,'w');
@@ -147,17 +147,18 @@ class PluginDatainjectionMapping extends CommonDBTM {
       $model->loadMappings();
 
       foreach ($model->getMappings() as $mapping) {
-         $mappings_id = $mapping->getID();
+         $mapping->fields = stripslashes_deep($mapping->fields);
+         $mappings_id = $mapping->fields['id'];
          echo "<tr class='tab_bg_1'>";
          echo "<td align='center'>".$mapping->fields['name']."</td>";
          echo "<td align='center'>";
          $rand = PluginDatainjectionInjectionType::dropdownLinkedTypes($mapping,
-                                                                       $model->fields['itemtype'],
-                                                                       $mapping->fields['itemtype']);
+                                                                       array('primary_type'=>
+                                                                       $model->fields['itemtype'])
+                                                                       );
          echo "</td>";
          echo "<td align='center'><span id='span_field_$mappings_id'></span></td>";
          echo "<td align='center'><span id='span_mandatory_$mappings_id'></span></td>";
-         echo "</tr>";
       }
 
       if ($canedit) {

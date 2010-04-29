@@ -29,6 +29,7 @@
  */
 class PluginDatainjectionInjectionType {
 
+   const NO_VALUE = 'none';
    /**
     * Display a list of all importable types using datainjection plugin
     * @param value the selected value
@@ -54,41 +55,54 @@ class PluginDatainjectionInjectionType {
     * @param primary_type
     * @param value
     */
-   static function dropdownLinkedTypes(PluginDatainjectionMapping $mapping, $primary_type,$value='') {
+   static function dropdownLinkedTypes(PluginDatainjectionMapping $mapping,$options=array()) {
       global $INJECTABLE_TYPES,$LANG,$CFG_GLPI;
 
+      $p['primary_type'] = '';
+      $p['itemtype'] = PluginDatainjectionInjectionType::NO_VALUE;
+      $p['mapping'] = json_encode($mapping->fields);
+
+      foreach ($options as $key => $value) {
+         $p[$key] = $value;
+      }
       $mappings_id = $mapping->fields['id'];
       $values = array();
 
+      if ($p['itemtype'] == PluginDatainjectionInjectionType::NO_VALUE
+            && $mapping->fields['itemtype'] != PluginDatainjectionInjectionType::NO_VALUE) {
+         $p['itemtype'] = $mapping->fields['itemtype'];
+      }
+
       //Add null value
-      $values['NULL'] = $LANG["datainjection"]["mapping"][6];
+      $values[PluginDatainjectionInjectionType::NO_VALUE] = $LANG["datainjection"]["mapping"][6];
 
       //Add primary_type to the list of availables types
-      $type = new $primary_type;
-      $values[$primary_type] = $type->getTypeName();
+      $type = new $p['primary_type']();
+      $values[$p['primary_type']] = $type->getTypeName();
 
       foreach ($INJECTABLE_TYPES as $type => $plugin) {
          $injectionclass = new $type();
          $connected_to = $injectionclass->connectedTo();
-         if (in_array($primary_type,$connected_to)) {
+         if (in_array($p['primary_type'],$connected_to)) {
             $typename = PluginDatainjectionInjectionType::getParentObjectName($type);
             $values[$typename] = call_user_func(array($type,'getTypeName'));
          }
       }
       asort($values);
 
-      $rand = Dropdown::showFromArray("data[itemtype[$mappings_id]]",
+
+      $rand = Dropdown::showFromArray("data[".$mapping->fields['id']."][itemtype]",
                                       $values,
-                                      array('value'=>$value));
-      $params=array('itemtype'=>'__VALUE__',
-                    'primary_type'=>$primary_type,
-                    'value'=>$mapping->getValue(),
-                    'mappings_id'=>$mappings_id,
-                    'mandatory'=>$mapping->isMandatory());
+                                      array('value'=>$p['itemtype']));
+
+      $p['itemtype'] = '__VALUE__';
+
       $url = $CFG_GLPI["root_doc"]."/plugins/datainjection/ajax/dropdownChooseField.php";
-      ajaxUpdateItemOnSelectEvent("dropdown_data[itemtype[$mappings_id]]$rand",
-                                  "span_field_$mappings_id",
-                                  $url,$params);
+      ajaxUpdateItemOnSelectEvent("dropdown_data[".$mapping->fields['id']."][itemtype]$rand",
+                                  "span_field_".$mapping->fields['id'],
+                                  $url,$p);
+      ajaxUpdateItem("span_field_".$mapping->fields['id'],$url,$p,false,
+                     "dropdown_data[".$mapping->fields['id']."][itemtype]$rand");
       return $rand;
    }
 
@@ -97,50 +111,104 @@ class PluginDatainjectionInjectionType {
       return ucfirst($results[1]);
    }
 
-   static function dropdownFields($options=array()) {
+   static function dropdownFields($options = array()) {
       global $LANG,$CFG_GLPI;
 
       $blacklisted_fields = array('id','date_mod');
 
-      //logDebug($options);
-      $p['itemtype'] = false;
-      $p['value'] = '';
-      $p['mappings_id'] = 0;
-      $p['mandatory'] = 0;
+      $p['itemtype'] = null;
       $p['primary_type'] = '';
+      $p['mapping'] = array();
       foreach ($options as $key => $value) {
          $p[$key] = $value;
       }
+      $mapping = json_decode(stripslashes_deep($options['mapping']),true);
 
-      if ($p['itemtype'] != 'NULL') {
+      $fields = array();
+      $fields[PluginDatainjectionInjectionType::NO_VALUE] = $LANG["datainjection"]["mapping"][7];
+
+      //By default field has no default value
+      $mapping_value = PluginDatainjectionInjectionType::NO_VALUE;
+
+      if ($p['itemtype'] != PluginDatainjectionInjectionType::NO_VALUE) {
+
+         //If a value is still present for this mapping
+         if($mapping['value'] != PluginDatainjectionInjectionType::NO_VALUE) {
+            $mapping_value = $mapping['value'];
+         }
          $search_options = array();
          $typename = 'PluginDatainjection'.$p['itemtype'].'Injection';
          $type = new $typename();
          $search_options = $type->getOptions();
 
-         $fields = array();
-         $fields['NULL'] = $LANG["datainjection"]["mapping"][7];
-
          foreach ($search_options as $option) {
             //If it's a real option (not a group label) and if field is not blacklisted
-            if (is_array($option) && !in_array($option['field'],$blacklisted_fields)) {
-               $fields[$option['field']] = $option['name'];
+            //and if a linkfield is defined (meaning that the field can be updated)
+            if (is_array($option)
+                  && !in_array($option['linkfield'],$blacklisted_fields)
+                     && $option['linkfield'] != '') {
+               $fields[$option['linkfield']] = $option['name'];
+               if ($mapping_value == PluginDatainjectionInjectionType::NO_VALUE
+                     && PluginDatainjectionInjectionType::isEqual($option,$mapping)) {
+                  $mapping_value = $option['linkfield'];
+               }
             }
          }
+      }
+      asort($fields);
 
-         asort($fields);
-         $rand = Dropdown::showFromArray("data[field[".$p['mappings_id']."]]",
-                                         $fields,
-                                         array('value'=>$value));
-         $params=array('field'=>'__VALUE__',
-                       'mappings_id'=>$p['mappings_id'],
-                       'mandatory'=>$p['mandatory'],
-                       'itemtype'=>$p['itemtype'],
-                       'primary_type'=>$p['primary_type']);
-         $url = $CFG_GLPI["root_doc"]."/plugins/datainjection/ajax/dropdownMandatory.php";
-         ajaxUpdateItemOnSelectEvent("dropdown_data[field[".$p['mappings_id']."]]$rand",
-                                     "span_mandatory_".$p['mappings_id'],
-                                     $url,$params);
+      $rand = Dropdown::showFromArray("data[".$mapping['id']."][value]",
+                                      $fields,
+                                      array('value'=>$mapping_value));
+     $url = $CFG_GLPI["root_doc"]."/plugins/datainjection/ajax/dropdownMandatory.php";
+      ajaxUpdateItemOnSelectEvent("dropdown_data[".$mapping['id']."][value]$rand",
+                                  "span_mandatory_".$mapping['id'],
+                                  $url,$p);
+      ajaxUpdateItem("span_mandatory_".$mapping['id'],$url,$p,false,
+                     "dropdown_data[".$mapping['id']."][value]$rand");
+   }
+
+   /**
+    * Incidates if the name given corresponds to the current searchOption
+    * @param option the current searchOption (field definition)
+    * @param mapping
+    * @return boolean the value matches the searchOption or not
+    */
+   static function isEqual($option = array(), $mapping) {
+      if ( $option['field'] == $mapping['name']
+            || $option['name'] == $mapping['name']
+               || $option['linkfield'] == $mapping['name']) {
+               return true;
+            }
+      else {
+         return false;
+      }
+   }
+
+   static function showMandatoryCheckbox($options = array()) {
+      $mapping = json_decode(stripslashes_deep($options['mapping']),true);
+
+      //TODO : to improve
+      $checked = '';
+      if ($mapping['is_mandatory']) {
+         $checked = 'checked';
+      }
+      if ($options['primary_type'] == $options['itemtype']) {
+         echo "<input type='checkbox' name='data[".$mapping['id']."][is_mandatory]' $checked>";
+      }
+   }
+
+   /**
+    * Try to guess the itemtype associated with the field
+    */
+   static function tryToGuessItemType($field = '') {
+      $infocom = new Infocom;
+      $searchOptions = $infocom->getSearchOptions();
+      if (isset($searchOptions[$field])) {
+         return 'Infocom';
+      }
+      else {
+         return false;
       }
    }
 }
