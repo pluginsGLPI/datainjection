@@ -31,13 +31,15 @@
 // Purpose of file:
 // ----------------------------------------------------------------------
 if (!defined('GLPI_ROOT')) {
-	define('GLPI_ROOT', '../..');
+   define('GLPI_ROOT', '../..');
 }
 include (GLPI_ROOT."/inc/includes.php");
 
 commonHeader($LANG["datainjection"]["name"][1], $_SERVER["PHP_SELF"],"plugins","datainjection");
-echo "<script type=\"text/javascript\" src='ajax/interface.php'></script>";
-echo "<div id='interfaceForm'>";
-echo "</div>";
+
+$clientInjection = new PluginDatainjectionClientInjection;
+$clientInjection->title();
+$clientInjection->showForm(1);
+
 commonFooter();
 ?>

@@ -130,11 +130,11 @@ $LANG["datainjection"]["mappingStep"][10] = "The column headers corresponds to t
 $LANG["datainjection"]["mappingStep"][11] = "La notion obligatoire correspond à un champ qui devra absolument être connue dans le fichier, vous devez avoir au moins un mapping obligatoire avant de continuer l'assistant";
 $LANG["datainjection"]["mappingStep"][12] = "Number of lines";
 
-$LANG["datainjection"]["infoStep"][1] = "Complementary informations";
-$LANG["datainjection"]["infoStep"][2] = "Modification of complementary informations";
-$LANG["datainjection"]["infoStep"][3] = "This step allows you to add informations not present in the file. You'll be asked for theses informations while using the model.";
-$LANG["datainjection"]["infoStep"][4] = "The are common to all the imported objects.";
-$LANG["datainjection"]["infoStep"][5] = "Mandatory information";
+$LANG["datainjection"]["info"][1] = "Complementary informations";
+$LANG["datainjection"]["info"][2] = "Modification of complementary informations";
+$LANG["datainjection"]["info"][3] = "This step allows you to add informations not present in the file. You'll be asked for theses informations while using the model.";
+$LANG["datainjection"]["info"][4] = "The are common to all the imported objects.";
+$LANG["datainjection"]["info"][5] = "Mandatory information";
 
 $LANG["datainjection"]["saveStep"][1] = "Save the model";
 $LANG["datainjection"]["saveStep"][2] = "Do you want to save the model ?";

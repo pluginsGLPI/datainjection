@@ -130,11 +130,11 @@ $LANG["datainjection"]["mappingStep"][10] = "La cabecera del archivo le permite 
 $LANG["datainjection"]["mappingStep"][11] = "Un mapeo requerido corresponde a un campo que debe tener valor obligatoriamente a lo largo de todo el archivo. No podá continuar sin marcar un mapeo como requerido";
 $LANG["datainjection"]["mappingStep"][12] = "Número de línea";
 
-$LANG["datainjection"]["infoStep"][1] = "Informaciones complementarias";
-$LANG["datainjection"]["infoStep"][2] = "Modificación de las informaciones complementarias";
-$LANG["datainjection"]["infoStep"][3] = "Este paso le permite añadir datos que no se incluyen en el archivo. Se le pedirá esa información cuando use el modelo";
-$LANG["datainjection"]["infoStep"][4] = "Esta información es común a todos los objetos importados";
-$LANG["datainjection"]["infoStep"][5] = "Información obligatoria";
+$LANG["datainjection"]["info"][1] = "Informaciones complementarias";
+$LANG["datainjection"]["info"][2] = "Modificación de las informaciones complementarias";
+$LANG["datainjection"]["info"][3] = "Este paso le permite añadir datos que no se incluyen en el archivo. Se le pedirá esa información cuando use el modelo";
+$LANG["datainjection"]["info"][4] = "Esta información es común a todos los objetos importados";
+$LANG["datainjection"]["info"][5] = "Información obligatoria";
 
 $LANG["datainjection"]["saveStep"][1] = "Guardar el modelo";
 $LANG["datainjection"]["saveStep"][2] = "¿Desea guardar el modelo?";

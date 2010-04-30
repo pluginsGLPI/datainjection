@@ -118,15 +118,15 @@ $LANG["datainjection"]["mapping"][7] = "-------Choisir un champ-------";
 $LANG["datainjection"]["mapping"][8] = "Au moins un champ de liaison doit être défini";
 $LANG["datainjection"]["mapping"][9] = "Dans cette étape vous allez mettre en relation les champs du fichier et de la base de données.";
 $LANG["datainjection"]["mapping"][10] = "La colonne en-tête correspond aux en-têtes du fichier";
-$LANG["datainjection"]["mapping"][11] = "Au moins un champs de liaison doit être renseigné : il permet de rechercher si les données à insérer existent déjà en base";
+$LANG["datainjection"]["mapping"][11] = "Au moins un champs de liaison doit être renseigné :<br> il permet de rechercher si les données à insérer existent déjà en base";
 $LANG["datainjection"]["mapping"][12] = "Nombre de lignes";
 $LANG["datainjection"]["mapping"][13] = "Attention : Les données existantes seront écrasées !";
 
-$LANG["datainjection"]["infoStep"][1] = "Informations complémentaires";
-$LANG["datainjection"]["infoStep"][2] = "Modification des informations complémentaires";
-$LANG["datainjection"]["infoStep"][3] = "Vous pouvez définir des données qui devront être saisies manuellement au moment de l'import.";
-$LANG["datainjection"]["infoStep"][4] = "Celles-ci seront communes à tous les objets importés.";
-$LANG["datainjection"]["infoStep"][5] = "Information obligatoire";
+$LANG["datainjection"]["info"][1] = "Informations complémentaires";
+$LANG["datainjection"]["info"][2] = "Modification des informations complémentaires";
+$LANG["datainjection"]["info"][3] = "Vous pouvez à présent définir des données qui devront être saisies manuellement au moment de l'import.";
+$LANG["datainjection"]["info"][4] = "Celles-ci seront communes à tous les objets importés.";
+$LANG["datainjection"]["info"][5] = "Information obligatoire";
 
 $LANG["datainjection"]["saveStep"][1] = "Enregistrement du modèle";
 $LANG["datainjection"]["saveStep"][2] = "Voulez-vous enregistrer le modèle ?";

@@ -26,23 +26,41 @@
  along with GLPI; if not, write to the Free Software
  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  --------------------------------------------------------------------------
- */
+
+// ----------------------------------------------------------------------
+// Original Author of file: Walid Nouh
+// Purpose of file:
+// ----------------------------------------------------------------------
+*/
+
 class PluginDatainjectionModel extends CommonDBTM {
 
+   //Store mappings informations
    private $mappings;
+
+   //Store backend used to collect informations
    private $backend;
+
+   //Store informations related to the model
    protected $infos;
+
+   //Do history (CommonDBTM)
    public $dohistory = true;
+
+   //Store specific backend parameters
    public $specific_model;
 
+   //Date management constants
    const DATE_TYPE_DDMMYYYY = "dd-mm-yyyy";
    const DATE_TYPE_MMDDYYYY = "mm-dd-yyyy";
    const DATE_TYPE_YYYYMMDD = "yyyy-mm-dd";
 
+   //Float management constants
    const FLOAT_TYPE_DOT          = 0;
    const FLOAT_TYPE_COMMA        = 1;
    const FLOAT_TYPE_DOT_AND_COM  = 2;
 
+   //Port unicity constants
    const UNICITY_NETPORT_LOGICAL_NUMBER = 0;
    const UNICITY_NETPORT_NAME = 1;
    const UNICITY_NETPORT_MACADDRESS = 2;
@@ -50,13 +68,16 @@ class PluginDatainjectionModel extends CommonDBTM {
    const UNICITY_NETPORT_LOGICAL_NUMBER_MAC = 4;
    const UNICITY_NETPORT_LOGICAL_NUMBER_NAME_MAC = 5;
 
+   //Private or public model
    const MODEL_PRIVATE = 1;
    const MODEL_PUBLIC = 0;
 
+   //Step constants
    const INITIAL_STEP = 1;
    const FILE_STEP = 2;
-   const EDIT_STEP = 3;
-   const READY_TO_USE = 4;
+   const MAPPING_STEP = 3;
+   const OTHERS_STEP = 4;
+   const READY_TO_USE = 5;
 
    function __construct()
    {
@@ -73,7 +94,17 @@ class PluginDatainjectionModel extends CommonDBTM {
    }
 
    function saveMappings() {
-      $this->mappings->saveAllMappings($this->fields["id"]);
+      $this->mappings->saveAllMappings($this->fields['id']);
+   }
+
+   //Loading methods
+   function loadMappings() {
+      $this->mappings->loadMappingsFromDB($this->fields['id']);
+   }
+
+   //Loading methods
+   function loadInfos() {
+      $this->infos->load($this->fields['id']);
    }
 
    //---- Getters -----//
@@ -329,14 +360,6 @@ class PluginDatainjectionModel extends CommonDBTM {
       return $models;
    }
 
-   static function getInstanceByID($model_id) {
-      $model = new PluginDatainjectionModel;
-      $model->getFromDB($model_id);
-      $model = PluginDatainjectionModel::getInstance($model->getModelType());
-      $model->getFromDB($model_id);
-      return $model;
-   }
-
    //Standard functions
    function getSearchOptions() {
       global $LANG;
@@ -482,6 +505,11 @@ class PluginDatainjectionModel extends CommonDBTM {
       echo "</td>";
       echo "</tr>";
 
+      echo "<tr class='tab_bg_1'>";
+      echo "<td>".$LANG['common'][25]."&nbsp;:</td>";
+      echo "<td colspan='3' class='middle'>";
+      echo "<textarea cols='45' rows='5' name='comment' >".$this->fields["comment"]."</textarea>";
+      echo "</td></tr>";
 
       echo "<tr class='tab_bg_1'><th colspan='4'>".$LANG["datainjection"]["model"][15]."</th></tr>";
       echo "<tr class='tab_bg_1'>";
@@ -518,8 +546,8 @@ class PluginDatainjectionModel extends CommonDBTM {
       $ong[1] = $LANG['title'][26];
       if ($this->fields['id'] > 0) {
          $ong[2] = $LANG["datainjection"]["tabs"][3];
-         if ($this->fields['step'] > 1) {
-            $ong[3] = $LANG["datainjection"]["tabs"][0];
+         $ong[3] = $LANG["datainjection"]["tabs"][0];
+         if ($this->fields['step'] > PluginDatainjectionModel::MAPPING_STEP) {
             $ong[4] = $LANG["datainjection"]["tabs"][1];
             $ong[5] = $LANG["datainjection"]["tabs"][2];
          }
@@ -557,9 +585,13 @@ class PluginDatainjectionModel extends CommonDBTM {
          echo "<td align='center' colspan='2'>";
          echo "<input type='hidden' name='id' value='".$this->fields['id']."'>";
          $alert ="";
-                  echo "<input type='submit' name='upload' value=\"" . $LANG['buttons'][7] .
-                         "\" class='submit' OnClick='return window.confirm(\"" .
-                         addslashes($LANG["datainjection"]["mapping"][13]). "\");'>";
+         if ($this->fields['step'] != PluginDatainjectionModel::FILE_STEP) {
+            $alert = "OnClick='return window.confirm(\"" .
+                      addslashes($LANG["datainjection"]["mapping"][13]). "\");'";
+         }
+
+         echo "<input type='submit' name='upload' value=\"" . $LANG['buttons'][7] .
+                    "\" class='submit' $alert>";
          echo "</td></tr>";
          echo "</table></form>";
       }
@@ -604,26 +636,6 @@ class PluginDatainjectionModel extends CommonDBTM {
       }
    }
 
-   //Webservices methods
-   static function methodGetModel($params,$protocol) {
-
-      if (isset ($params['help'])) {
-         return array('help' => 'bool,optional');
-      }
-
-      if (!isset ($_SESSION['glpiID'])) {
-         return self::Error($protocol, WEBSERVICES_ERROR_NOTAUTHENTICATED);
-      }
-
-      $model = new PluginPluginDatainjectionModel;
-      if ($model->getFromDB($params['id'])) {
-         return $model->fields;
-      }
-      else {
-         return array();
-      }
-   }
-
    static function methodListModels($params,$protocol) {
       if (isset ($params['help'])) {
          return array('help' => 'bool,optional');
@@ -640,6 +652,7 @@ class PluginDatainjectionModel extends CommonDBTM {
       global $LANG;
 
       $injectionData = false;
+      $return_status = true;
 
       //Get model & model specific fields
       $this->getFromDB($models_id);
@@ -659,11 +672,13 @@ class PluginDatainjectionModel extends CommonDBTM {
          $message.=$LANG["datainjection"]["fileStep"][7];
          addMessageAfterRedirect($message,true,ERROR,false);
          unlink($temporary_uniquefilename);
+         $return_status = false;
       }
       else {
          if( !move_uploaded_file($temporary_name, $temporary_uniquefilename) ) {
             addMessageAfterRedirect($LANG["datainjection"]["fileStep"][8],true,ERROR,false);
             unlink($temporary_uniquefilename);
+            $return_status = false;
          }
          else {
             //Initialise a new backend
@@ -681,6 +696,7 @@ class PluginDatainjectionModel extends CommonDBTM {
             //There's an error
             if ($check['status'] != PluginDatainjectionCheck::CHECK_OK) {
                addMessageAfterRedirect($check['error_message'],true,ERROR,true);
+               $return_status = false;
             }
             else {
                $mappingCollection = new PluginDatainjectionMappingCollection;
@@ -705,13 +721,14 @@ class PluginDatainjectionModel extends CommonDBTM {
                //Save the mapping list in DB
                $mappingCollection->saveAllMappings();
                PluginDatainjectionModel::changeStep($this->fields['id'],
-                                                    PluginDatainjectionModel::EDIT_STEP);
+                                                    PluginDatainjectionModel::MAPPING_STEP);
 
                //Add redirect message
                addMessageAfterRedirect($LANG["datainjection"]["model"][32],true,INFO,true);
             }
          }
       }
+      return $return_status;
    }
 
    /*
@@ -767,8 +784,24 @@ class PluginDatainjectionModel extends CommonDBTM {
       return $error;
    }
 
-   function loadMappings() {
-      $this->mappings->loadMappingsFromDB($this->fields['id']);
+   //Webservices methods
+   static function methodGetModel($params,$protocol) {
+
+      if (isset ($params['help'])) {
+         return array('help' => 'bool,optional');
+      }
+
+      if (!isset ($_SESSION['glpiID'])) {
+         return self::Error($protocol, WEBSERVICES_ERROR_NOTAUTHENTICATED);
+      }
+
+      $model = new PluginPluginDatainjectionModel;
+      if ($model->getFromDB($params['id'])) {
+         return $model->fields;
+      }
+      else {
+         return array();
+      }
    }
 }
 ?>

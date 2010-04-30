@@ -116,7 +116,7 @@ class PluginDatainjectionInjectionType {
 
       $blacklisted_fields = array('id','date_mod');
 
-      $p['itemtype'] = null;
+      $p['itemtype'] = PluginDatainjectionInjectionType::NO_VALUE;
       $p['primary_type'] = '';
       $p['mapping'] = array();
       foreach ($options as $key => $value) {
@@ -175,9 +175,10 @@ class PluginDatainjectionInjectionType {
     * @return boolean the value matches the searchOption or not
     */
    static function isEqual($option = array(), $mapping) {
-      if ( $option['field'] == $mapping['name']
-            || $option['name'] == $mapping['name']
-               || $option['linkfield'] == $mapping['name']) {
+      $name = strtolower($mapping['name']);
+      if ( strtolower($option['field']) == $name
+            || strtolower($option['name']) == $name
+               || strtolower($option['linkfield']) == $name) {
                return true;
             }
       else {

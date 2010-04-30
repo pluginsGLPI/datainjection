@@ -665,14 +665,14 @@ function infoStep($target) {
 
 	/************************Title Step****************************/
 	if ($_SESSION["plugin_datainjection"]["choice"] == 1)
-		echo "<div class='wizard_title' valign='bottom'>" . $LANG["datainjection"]["step"][5] . $LANG["datainjection"]["infoStep"][1] . "</div>";
+		echo "<div class='wizard_title' valign='bottom'>" . $LANG["datainjection"]["step"][5] . $LANG["datainjection"]["info"][1] . "</div>";
 	else
-		echo "<div class='wizard_title' valign='bottom'>" . $LANG["datainjection"]["step"][4] . $LANG["datainjection"]["infoStep"][2] . "</div>";
+		echo "<div class='wizard_title' valign='bottom'>" . $LANG["datainjection"]["step"][4] . $LANG["datainjection"]["info"][2] . "</div>";
 	/**************************************************************/
 
 	/***********************Explain Step***************************/
-	echo "<div class='wizard_explain'>" . $LANG["datainjection"]["infoStep"][3] . "</div>";
-	echo "<div class='wizard_explain'>" . $LANG["datainjection"]["infoStep"][4] . "</div>";
+	echo "<div class='wizard_explain'>" . $LANG["datainjection"]["info"][3] . "</div>";
+	echo "<div class='wizard_explain'>" . $LANG["datainjection"]["info"][4] . "</div>";
 	/**************************************************************/
 
 	echo "</td>";
@@ -684,7 +684,7 @@ function infoStep($target) {
 	echo "<tr style='text-align:center'>";
 	echo "<th style='width:150px;'>" . $LANG["datainjection"]["mappingStep"][3] . "</th>";
 	echo "<th style='width:150px;'>" . $LANG["datainjection"]["mappingStep"][4] . "</th>";
-	echo "<th >" . $LANG["datainjection"]["infoStep"][5] . "</th>";
+	echo "<th >" . $LANG["datainjection"]["info"][5] . "</th>";
 	echo "</tr>";
 	/**************************************************************/
 
@@ -1022,7 +1022,7 @@ function fillInfoStep($target, $error) {
 	echo "<td class='wizard_left_area' valign='top'>";
 
 	/************************Title Step****************************/
-	echo "<div class='wizard_title' valign='bottom'>" . $LANG["datainjection"]["step"][3] . $LANG["datainjection"]["infoStep"][1] . "</div>";
+	echo "<div class='wizard_title' valign='bottom'>" . $LANG["datainjection"]["step"][3] . $LANG["datainjection"]["info"][1] . "</div>";
 	/**************************************************************/
 
 	/***********************Explain Step***************************/

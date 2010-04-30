@@ -46,7 +46,7 @@ $model = new PluginDatainjectionModel();
 if (isset ($_POST["add"])) {
    $model->check(-1,'w',$_POST);
    $newID = $model->add($_POST);
-   glpi_header($_SERVER['HTTP_REFERER']);
+   glpi_header($_SERVER['HTTP_REFERER']."?id=$newID");
 }
 /* delete order */
 elseif (isset ($_POST["delete"])) {
@@ -74,17 +74,13 @@ else if (isset ($_POST["update"])) {
 }
 elseif (isset($_POST['upload'])) {
    if (!empty($_FILES)) {
-      $model->processUploadedFile($_POST['id'],$_POST['file_encoding']);
+      if ($model->processUploadedFile($_POST['id'],$_POST['file_encoding'])) {
+         setActiveTab('PluginDatainjectionModel', 3);
+      }
    }
    glpi_header($_SERVER['HTTP_REFERER']);
 }
 
-if (!isset($_SESSION['glpi_tab'])) {
-   $_SESSION['glpi_tab'] = 1;
-}
-if (isset($_GET['onglet'])) {
-   $_SESSION['glpi_tab'] = $_GET['onglet'];
-}
 
 commonHeader($LANG["datainjection"]["profiles"][1], '', "plugins", "datainjection", "budget");
 

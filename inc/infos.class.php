@@ -97,5 +97,47 @@ class PluginDatainjectionInfos extends CommonDBTM {
    {
       $this->fields["type"] = $type;
    }
+
+   static function showFormInfos($models_id) {
+      global $LANG, $DB,$CFG_GLPI;
+
+      $model = new PluginDatainjectionModel;
+      $canedit=$model->can($models_id,'w');
+
+      echo "<form method='post' name=form action='".getItemTypeFormURL(__CLASS__)."'>";
+      echo "<table class='tab_cadre_fixe'>";
+      echo "<tr>";
+      echo "<th>" . $LANG["datainjection"]["mapping"][3] . "</th>";
+      echo "<th>" . $LANG["datainjection"]["mapping"][4] . "</th>";
+      echo "<th>" . $LANG["datainjection"]["mapping"][5] . "</th>";
+      echo "</tr>";
+
+      $model = new PluginDatainjectionModel;
+      $model->getFromDB($models_id);
+      $model->loadInfos();
+
+      foreach ($model->getInfos() as $info) {
+         $$info->fields = stripslashes_deep($info->fields);
+         $$infos_id = $$info->fields['id'];
+         echo "<tr class='tab_bg_1'>";
+         echo "<td align='center'>";
+         $rand = PluginDatainjectionInjectionType::dropdownLinkedTypes($info,
+                                                                       array('primary_type'=>
+                                                                       $model->fields['itemtype'])
+                                                                       );
+         echo "</td>";
+         echo "<td align='center'><span id='span_field_$infos_id'></span></td>";
+         echo "<td align='center'><span id='span_mandatory_$infos_id'></span></td>";
+      }
+
+      if ($canedit) {
+         echo "<tr>";
+         echo "<td class='tab_bg_2 center' colspan='4'>";
+         echo "<input type='hidden' name='models_id' value='$models_id'>";
+         echo "<input type='submit' name='update' value=\"".$LANG['buttons'][7]."\" class='submit' >";
+         echo "</td></tr>";
+      }
+      echo "</table></form>";
+   }
 }
 ?>

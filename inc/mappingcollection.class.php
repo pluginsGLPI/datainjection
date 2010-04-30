@@ -151,5 +151,12 @@ class PluginDatainjectionMappingCollection {
    {
       $this->mappingCollection = $mappings;
    }
+
+   /**
+    * Check if at least one mapping is defined, and if one mandatory field
+    */
+   static function checkMappings($models_id) {
+
+   }
 }
 ?>
