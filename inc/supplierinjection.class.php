@@ -53,6 +53,10 @@ class PluginDatainjectionSupplierInjection extends Supplier
       return parent::getSearchOptions();
    }
 
+   function showAdditionalInformation($info = array()) {
+
+   }
+
 }
 
 ?>

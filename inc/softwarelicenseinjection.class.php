@@ -46,11 +46,15 @@ class PluginDatainjectionSoftwareLicenseInjection extends SoftwareLicense
    }
 
    function connectedTo() {
-      return array();
+      return array('Software');
    }
 
    function getOptions() {
       return parent::getSearchOptions();
+   }
+
+   function showAdditionalInformation($info = array()) {
+
    }
 
 }

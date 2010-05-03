@@ -53,6 +53,10 @@ class PluginDatainjectionProfileInjection extends Profile
       return parent::getSearchOptions();
    }
 
+   function showAdditionalInformation($info = array()) {
+
+   }
+
 }
 
 ?>

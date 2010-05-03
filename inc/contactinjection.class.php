@@ -46,11 +46,15 @@ class PluginDatainjectionContactInjection extends Contact
    }
 
    function connectedTo() {
-      return array();
+      return array('Supplier','Document');
    }
 
    function getOptions() {
       return parent::getSearchOptions();
+   }
+
+   function showAdditionalInformation($info = array()) {
+
    }
 
 }

@@ -27,7 +27,7 @@
  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  --------------------------------------------------------------------------
  */
-class PluginDatainjectionCommonInjection {
+class PluginDatainjectionInjectionCommon {
 
    // Check Status
    const CHECK_OK = 0;
@@ -49,6 +49,10 @@ class PluginDatainjectionCommonInjection {
    //Model to use for injection
    var $model = false;
 
+   static function getInstance($itemtype) {
+      $injectionClass = 'PluginDatainjection'.ucfirst($itemtype).'Injection';
+      return new $injectionClass();
+   }
    function __construct(PluginDatainjectionModel $model, $data_to_inject=array()) {
       $this->model = $model;
       $this->data_to_inject = $data_to_inject;
@@ -97,101 +101,149 @@ class PluginDatainjectionCommonInjection {
 
          //If no data provided AND this mapping is not mandatory
          if (!$mandatory && ($data == null || $data == "NULL" || $data == EMPTY_VALUE))
-            return PluginDatainjectionCommonInjection::TYPE_CHECK_OK;
+            return self::TYPE_CHECK_OK;
 
          switch($field_type)
          {
             case 'text' :
-               return PluginDatainjectionCommonInjection::TYPE_CHECK_OK;
+               return self::TYPE_CHECK_OK;
             break;
             case 'integer' :
                if (is_numeric($data))
-                  return PluginDatainjectionCommonInjection::TYPE_CHECK_OK;
+                  return self::TYPE_CHECK_OK;
                else
-                  return PluginDatainjectionCommonInjection::ERROR_IMPORT_WRONG_TYPE;
+                  return self::ERROR_IMPORT_WRONG_TYPE;
             break;
             case 'float':
                if (PluginDatainjectionCheck::isTrueFloat($data))
-                  return PluginDatainjectionCommonInjection::TYPE_CHECK_OK;
+                  return self::TYPE_CHECK_OK;
                else
-                  return PluginDatainjectionCommonInjection::ERROR_IMPORT_WRONG_TYPE;
+                  return self::ERROR_IMPORT_WRONG_TYPE;
             break;
             case 'date' :
                preg_match("/([0-9]{4})[\-]([0-9]{2})[\-]([0-9]{2})/",$data,$regs);
                if (count($regs) > 0)
-                  return PluginDatainjectionCommonInjection::TYPE_CHECK_OK;
+                  return self::TYPE_CHECK_OK;
                else
-                  return PluginDatainjectionCommonInjection::ERROR_IMPORT_WRONG_TYPE;
+                  return self::ERROR_IMPORT_WRONG_TYPE;
             break;
             case 'ip':
                preg_match("/([0-9]{1,3})\.([0-9]{1,3})\.([0-9]{1,3})\.([0-9]{1,3})/",$data,$regs);
                if (count($regs) > 0)
-                  return PluginDatainjectionCommonInjection::TYPE_CHECK_OK;
+                  return self::TYPE_CHECK_OK;
                else
-                  return PluginDatainjectionCommonInjection::ERROR_IMPORT_WRONG_TYPE;
+                  return self::ERROR_IMPORT_WRONG_TYPE;
             break;
             case 'mac':
                preg_match("/([0-9a-fA-F]{2}([:-]|$)){6}$/",$data,$regs);
                if (count($regs) > 0)
-                  return PluginDatainjectionCommonInjection::TYPE_CHECK_OK;
+                  return self::TYPE_CHECK_OK;
                else
-                  return PluginDatainjectionCommonInjection::ERROR_IMPORT_WRONG_TYPE;
+                  return self::ERROR_IMPORT_WRONG_TYPE;
             break;
             //TODO remove this type
             case 'glpi_type':
                $commonitem = new Commonitem;
                $commonitem->setType($data);
                if($commonitem->obj != null)
-                  return PluginDatainjectionCommonInjection::TYPE_CHECK_OK;
+                  return self::TYPE_CHECK_OK;
                else
-                  return PluginDatainjectionCommonInjection::ERROR_IMPORT_WRONG_TYPE;
+                  return self::ERROR_IMPORT_WRONG_TYPE;
             break;
             case 'yesno':
                logInFile("debug",$DATA_INJECTION_MAPPING[$type][$name]['name']."=".$data."\n");
                if ($data == 0 || $data == 1)
-                  return PluginDatainjectionCommonInjection::TYPE_CHECK_OK;
+                  return self::TYPE_CHECK_OK;
                else
-                  return PluginDatainjectionCommonInjection::ERROR_IMPORT_WRONG_TYPE;
+                  return self::ERROR_IMPORT_WRONG_TYPE;
             break;
             case 'right_rw':
                if (in_array($data,array('r','w')))
-                  return PluginDatainjectionCommonInjection::TYPE_CHECK_OK;
+                  return self::TYPE_CHECK_OK;
                else
-                  return PluginDatainjectionCommonInjection::ERROR_IMPORT_WRONG_TYPE;
+                  return self::ERROR_IMPORT_WRONG_TYPE;
             break;
             case 'right_r':
                if ($data=='r')
-                  return PluginDatainjectionCommonInjection::TYPE_CHECK_OK;
+                  return self::TYPE_CHECK_OK;
                else
-                  return PluginDatainjectionCommonInjection::ERROR_IMPORT_WRONG_TYPE;
+                  return self::ERROR_IMPORT_WRONG_TYPE;
             break;
             case 'right_w':
                if ($data=='w')
-                  return PluginDatainjectionCommonInjection::TYPE_CHECK_OK;
+                  return self::TYPE_CHECK_OK;
                else
-                  return PluginDatainjectionCommonInjection::ERROR_IMPORT_WRONG_TYPE;
+                  return self::ERROR_IMPORT_WRONG_TYPE;
             break;
             case 'interface':
                if (in_array($data,array('helpdesk','central')))
-                  return PluginDatainjectionCommonInjection::TYPE_CHECK_OK;
+                  return self::TYPE_CHECK_OK;
                else
-                  return PluginDatainjectionCommonInjection::ERROR_IMPORT_WRONG_TYPE;
+                  return self::ERROR_IMPORT_WRONG_TYPE;
             break;
             case 'auth_method':
                if (in_array($data,array(Auth::AUTH_CAS, Auth::AUTH_DB_GLPI, Auth::AUTH_EXTERNAL,
                                         Auth::AUTH_LDAP, Auth::AUTH_MAIL, Auth::AUTH_X509)))
-                  return PluginDatainjectionCommonInjection::TYPE_CHECK_OK;
+                  return self::TYPE_CHECK_OK;
                else
-                  return PluginDatainjectionCommonInjection::ERROR_IMPORT_WRONG_TYPE;
+                  return self::ERROR_IMPORT_WRONG_TYPE;
             break;
             default :
                if (!$this->checkSpecificTypes()) {
-                  return PluginDatainjectionCommonInjection::ERROR_IMPORT_WRONG_TYPE;
+                  return self::ERROR_IMPORT_WRONG_TYPE;
                }
          }
       }
       else
-         return PluginDatainjectionCommonInjection::ERROR_IMPORT_WRONG_TYPE;
+         return self::ERROR_IMPORT_WRONG_TYPE;
+   }
+
+   static function findSearchOption($options, $lookfor) {
+      $found = false;
+      foreach ($options as $option) {
+         if (isset($option['linkfield']) && $option['linkfield'] == $lookfor) {
+            $found = $option;
+         }
+      }
+      return $found;
+   }
+
+   static function displayAdditionalInformation(PluginDatainjectionInfo $info) {
+      $injectionClass = PluginDatainjectionInjectionCommon::getInstance($info->fields['itemtype']);
+      $option = self::findSearchOption($injectionClass->getOptions(),$info->fields['value']);
+      if ($option) {
+         echo "<td>";
+         echo $option['name'];
+         echo "</td>";
+         echo "<td>";
+         self::showAdditionalInformation($info,$option,$injectionClass);
+         echo "</td>";
+      }
+   }
+
+   static function showAdditionalInformation(PluginDatainjectionInfo $info, $option = array(),
+                                             $injectionClass) {
+      switch ($option['displaytype']) {
+         case 'text' :
+            echo "<input type='text' name='".$option['linkfield']."'>";
+         break;
+         case 'dropdown':
+            Dropdown::show(getItemTypeForTable($option['table']));
+            break;
+         case 'yesno':
+            Dropdown::showYesNo($option['linkfield'],0);
+            break;
+         case 'user':
+            User::dropdown(array('name'=>$option['linkfield']));
+            break;
+         default:
+            //If type is not a standard type, must be treated by specific injection class
+            $injectionClass->showAdditionalInformation($info,$option);
+            break;
+      }
+      if ($info->isMandatory()) {
+         echo "&nbsp;*";
+      }
    }
 }
 ?>

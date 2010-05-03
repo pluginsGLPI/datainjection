@@ -53,6 +53,10 @@ class PluginDatainjectionCartridgeInjection extends Cartridge
       return parent::getSearchOptions();
    }
 
+   function showAdditionalInformation($info = array()) {
+
+   }
+
 }
 
 ?>

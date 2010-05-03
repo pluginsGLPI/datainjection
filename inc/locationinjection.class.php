@@ -46,11 +46,15 @@ class PluginDatainjectionLocationInjection extends Location
    }
 
    function connectedTo() {
-      return array();
+      return array('Computer','Monitor','Phone','Printer','Peripheral','User','NetworkEquipment');
    }
 
    function getOptions() {
       return parent::getSearchOptions();
+   }
+
+   function showAdditionalInformation($info = array()) {
+
    }
 
 }

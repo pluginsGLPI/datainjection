@@ -26,37 +26,44 @@
  along with GLPI; if not, write to the Free Software
  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  --------------------------------------------------------------------------
- */
-
 // ----------------------------------------------------------------------
-// Original Author of file: Remi Collet
+// Original Author of file: NOUH Walid
 // Purpose of file:
 // ----------------------------------------------------------------------
+ */
 
-if (!defined('GLPI_ROOT')){
-   die("Sorry. You can't access directly to this file");
+define('GLPI_ROOT', '../../..');
+include (GLPI_ROOT . "/inc/includes.php");
+
+/* Update mappings */
+if (isset ($_POST["update"])) {
+   $at_least_one_mandatory = false;
+   $mapping = new PluginDatainjectionMapping;
+   foreach ($_POST['data'] as $id => $mapping_infos) {
+      $mapping_infos['id'] = $id;
+
+      //If no field selected, reset other values
+      if ($mapping_infos['value'] == PluginDatainjectionInjectionType::NO_VALUE) {
+         $mapping_infos['itemtype'] = PluginDatainjectionInjectionType::NO_VALUE;
+         $mapping_infos['is_mandatory'] = 0;
+      }
+      else {
+         $mapping_infos['is_mandatory'] = (isset($mapping_infos['is_mandatory'])?1:0);
+      }
+      if ($mapping_infos['is_mandatory']) {
+         $at_least_one_mandatory = true;
+      }
+      $mapping->update($mapping_infos);
+   }
+   if (!$at_least_one_mandatory) {
+      addMessageAfterRedirect($LANG["datainjection"]["mapping"][11],true,ERROR,true);
+   }
+   else {
+      PluginDatainjectionModel::changeStep($_POST['models_id'],
+                                           PluginDatainjectionModel::OTHERS_STEP);
+      setActiveTab('PluginDatainjectionModel',4);
+      addMessageAfterRedirect($LANG["datainjection"]["info"][3]);
+   }
 }
-
-/// Location class
-class PluginDatainjectionVlanInjection extends Vlan
-   implements PluginDatainjectionInjectionInterface {
-
-   function isPrimaryType() {
-      return true;
-   }
-
-   function connectedTo() {
-      return array('NetworkEquipment','Computer','Peripheral','Phone');
-   }
-
-   function getOptions() {
-      return parent::getSearchOptions();
-   }
-
-   function showAdditionalInformation($info = array()) {
-
-   }
-
-}
-
+glpi_header($_SERVER['HTTP_REFERER']);
 ?>

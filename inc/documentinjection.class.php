@@ -53,6 +53,10 @@ class PluginDatainjectionDocumentInjection extends Document
       return parent::getSearchOptions();
    }
 
+   function showAdditionalInformation($info = array()) {
+
+   }
+
 }
 
 ?>

@@ -46,11 +46,15 @@ class PluginDatainjectionEntityInjection extends Entity
    }
 
    function connectedTo() {
-      return array();
+      return array('Document');
    }
 
    function getOptions() {
       return parent::getSearchOptions();
+   }
+
+   function showAdditionalInformation($info = array()) {
+
    }
 
 }

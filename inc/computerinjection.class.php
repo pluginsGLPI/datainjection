@@ -41,9 +41,6 @@ if (!defined('GLPI_ROOT')){
 class PluginDatainjectionComputerInjection extends Computer
    implements PluginDatainjectionInjectionInterface {
 
-   function __construct() {
-      $this->table = getTableForItemType('Computer');
-   }
    function isPrimaryType() {
       return true;
    }
@@ -53,8 +50,31 @@ class PluginDatainjectionComputerInjection extends Computer
    }
 
    function getOptions() {
-      return parent::getSearchOptions();
+      $tab = parent::getSearchOptions();
+
+      //Add displaytype value
+      $dropdown = array("dropdown"      => array(4,40,31, 45, 46, 41, 71, 32, 33, 23),
+                        "yesno"          => array(42),
+                        "dropdown_users" => array(70, 24),
+                        "multiline_text" => array(16,90));
+      foreach ($dropdown as $type => $tabsID) {
+         foreach ($tabsID as $tabID) {
+            $tab[$tabID]['displaytype'] = $type;
+         }
+      }
+
+      foreach ($tab as $id => $tmp) {
+         if (isset($tmp['linkfield']) && !isset($tmp['displaytype'])) {
+            $tab[$id]['displaytype'] = 'text';
+         }
+      }
+      return $tab;
    }
+
+   function showAdditionalInformation($info = array()) {
+
+   }
+
 }
 
 ?>

@@ -53,6 +53,10 @@ class PluginDatainjectionConsumableItemInjection extends ConsumableItem
       return parent::getSearchOptions();
    }
 
+   function showAdditionalInformation($info = array()) {
+
+   }
+
 }
 
 ?>

@@ -53,6 +53,10 @@ class PluginDatainjectionMonitorInjection extends Monitor
       return parent::getSearchOptions();
    }
 
+   function showAdditionalInformation($info = array()) {
+
+   }
+
 }
 
 ?>

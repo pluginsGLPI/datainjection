@@ -53,6 +53,10 @@ class PluginDatainjectionGroupInjection extends Group
       return parent::getSearchOptions();
    }
 
+   function showAdditionalInformation($info = array()) {
+
+   }
+
 }
 
 ?>

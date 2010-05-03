@@ -53,6 +53,10 @@ class PluginDatainjectionUserInjection extends User
       return parent::getSearchOptions();
    }
 
+   function showAdditionalInformation($info = array()) {
+
+   }
+
 }
 
 ?>

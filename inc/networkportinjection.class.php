@@ -53,6 +53,10 @@ class PluginDatainjectionNetworkportInjection extends NetworkPort
       return parent::getSearchOptions();
    }
 
+   function showAdditionalInformation($info = array()) {
+
+   }
+
 }
 
 ?>

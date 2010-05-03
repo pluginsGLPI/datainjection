@@ -26,37 +26,23 @@
  along with GLPI; if not, write to the Free Software
  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  --------------------------------------------------------------------------
- */
-
 // ----------------------------------------------------------------------
-// Original Author of file: Remi Collet
+// Original Author of file: Walid Nouh
 // Purpose of file:
 // ----------------------------------------------------------------------
+ */
 
-if (!defined('GLPI_ROOT')){
-   die("Sorry. You can't access directly to this file");
+// Direct access to file
+if (strpos($_SERVER['PHP_SELF'],"dropdownSelectModel.php")) {
+   define('GLPI_ROOT', '../../..');
+   include (GLPI_ROOT."/inc/includes.php");
+   header("Content-Type: text/html; charset=UTF-8");
+   header_nocache();
+}
+if (!defined('GLPI_ROOT')) {
+   die("Can not acces directly to this file");
 }
 
-/// Location class
-class PluginDatainjectionVlanInjection extends Vlan
-   implements PluginDatainjectionInjectionInterface {
-
-   function isPrimaryType() {
-      return true;
-   }
-
-   function connectedTo() {
-      return array('NetworkEquipment','Computer','Peripheral','Phone');
-   }
-
-   function getOptions() {
-      return parent::getSearchOptions();
-   }
-
-   function showAdditionalInformation($info = array()) {
-
-   }
-
-}
-
+checkCentralAccess();
+PluginDatainjectionInfo::showAdditionalInformationsForm($_POST);
 ?>

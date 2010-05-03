@@ -337,24 +337,31 @@ class PluginDatainjectionModel extends CommonDBTM {
       $this->specific_model;
    }
 
+   static function dropdown($options = array()) {
+      global $CFG_GLPI;
+      $models = self::getModels(getLoginUserID(),'name',$_SESSION['glpiactive_entity'],false);
+      $models[0] = '-----';
+      $p = array('models_id' => '__VALUE__');
+      $rand = Dropdown::showFromArray('models',$models,array('value'=>0));
+      $url = $CFG_GLPI["root_doc"]."/plugins/datainjection/ajax/dropdownSelectModel.php";
+      ajaxUpdateItemOnSelectEvent("dropdown_models$rand",
+                                  "span_injection",
+                                  $url,$p);
+   }
+
    static function getModels($user_id, $order = "name", $entity = -1, $can_write = false) {
       global $DB;
 
       $models = array ();
-      $sql = "SELECT * FROM `glpi_plugin_datainjection_models` WHERE" .
-      " (`private`=" . PluginDatainjectionModel::MODEL_PUBLIC . getEntitiesRestrictRequest(" AND",
+      $query = "SELECT `id`, `name` FROM `glpi_plugin_datainjection_models` WHERE" .
+      " (`is_private`=" . PluginDatainjectionModel::MODEL_PUBLIC . getEntitiesRestrictRequest(" AND",
                                                                "glpi_plugin_datainjection_models",
                                                                "entities_id", $entity,true) . ")
-       OR (private=" . PluginDatainjectionModel::MODEL_PRIVATE . " AND `users_id`=$user_id)" .
+       OR (`is_private`='" . PluginDatainjectionModel::MODEL_PRIVATE . "' AND `users_id`='$user_id')" .
       " ORDER BY `entities_id`, " . ($order == "`name`" ? "`name`" : $order);
-      $result = $DB->query($sql);
 
-      while ($data = $DB->fetch_array($result)) {
-         $model = new PluginDatainjectionModel();
-         if ($model->can($data["id"], ($can_write ? "w" : "r"))) {
-            $model->fields = $data;
-            $models[] = $model;
-         }
+      foreach ($DB->request($query) as $data) {
+         $models[$data['id']] = $data['name'];
       }
 
       return $models;

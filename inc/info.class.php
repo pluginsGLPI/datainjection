@@ -206,5 +206,47 @@ class PluginDatainjectionInfo extends CommonDBTM {
                   AND `value`='".PluginDatainjectionInjectionType::NO_VALUE."'";
       $DB->query($query);
    }
+
+   static function showAdditionalInformationsForm($options=array()) {
+      global $DB, $LANG;
+      if (isset($options['models_id']) && $options['models_id']) {
+         $infos = getAllDatasFromTable('glpi_plugin_datainjection_infos',
+                                       "`models_id`='". $options['models_id']."'");
+         if (count($infos)) {
+            $info = new PluginDatainjectionInfo;
+
+            echo "<table class='tab_cadre_fixe'>";
+            echo "<tr>";
+            echo "<th colspan='2'>" . $LANG["datainjection"]["info"][1]."</th>";
+            echo "</tr>";
+
+            foreach ($infos as $tmp) {
+               $info->fields = $tmp;
+               echo "<tr class='tab_bg_1'>";
+               PluginDatainjectionInjectionCommon::displayAdditionalInformation($info);
+               echo "</tr>";
+            }
+            if (count($infos)) {
+               echo "<tr class='tab_bg_1'>";
+               echo "<td colspan='2' align='left'>".$LANG["datainjection"]["fillInfoStep"][3]."</td>";
+               echo "</tr>";
+            }
+
+            //Show file selection
+            echo "<th colspan='2'>" . $LANG["datainjection"]["tabs"][3]."</th>";
+            echo "<tr class='tab_bg_1'>";
+            echo "<td>" . $LANG["datainjection"]["fileStep"][3] . "</td>";
+            echo "<td><input type='file' name='file' /></td>";
+            echo "</tr>";
+
+            echo "<tr class='tab_bg_1'>";
+            echo "<td colspan='2' align='center'>";
+            echo "<input type='submit' class='submit' name='upload' value=\"".
+                                                   $LANG["datainjection"]["import"][0]."\"/></td>";
+            echo "</tr>";
+            echo "</table>";
+         }
+      }
+   }
 }
 ?>

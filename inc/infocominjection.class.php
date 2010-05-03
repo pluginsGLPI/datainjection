@@ -54,6 +54,10 @@ class PluginDatainjectionInfocomInjection extends Infocom
       return parent::getSearchOptions();
    }
 
+   function showAdditionalInformation($info = array()) {
+
+   }
+
 }
 
 ?>

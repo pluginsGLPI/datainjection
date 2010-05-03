@@ -57,5 +57,11 @@ interface PluginDatainjectionInjectionInterface {
     * @return an array of search options, as defined in each commondbtm object
     */
    function getOptions();
+
+   /**
+    * Manage display of additional informations
+    * @param info an array which contains the additional information values
+    */
+   function showAdditionalInformation($info = array());
 }
 ?>

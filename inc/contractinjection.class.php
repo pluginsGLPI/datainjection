@@ -54,6 +54,10 @@ class PluginDatainjectionContractInjection extends Contract
       return parent::getSearchOptions();
    }
 
+   function showAdditionalInformation($info = array()) {
+
+   }
+
 }
 
 ?>

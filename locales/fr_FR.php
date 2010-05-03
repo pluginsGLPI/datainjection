@@ -33,13 +33,6 @@
 
 $LANG["datainjection"]["name"][1] = "Injection de fichiers";
 
-$LANG["datainjection"]["step"][1] = "Etape 1 : ";
-$LANG["datainjection"]["step"][2] = "Etape 2 : ";
-$LANG["datainjection"]["step"][3] = "Etape 3 : ";
-$LANG["datainjection"]["step"][4] = "Etape 4 : ";
-$LANG["datainjection"]["step"][5] = "Etape 5 : ";
-$LANG["datainjection"]["step"][6] = "Etape 6 : ";
-
 $LANG["datainjection"]["choiceStep"][1] = "Gestion ou utilisation d'un modèle";
 $LANG["datainjection"]["choiceStep"][2] = "Cette première étape vous permet de créer, modifier, supprimer, ou utiliser un modèle.";
 $LANG["datainjection"]["choiceStep"][3] = "Créer un nouveau modèle";
@@ -223,4 +216,6 @@ $LANG["datainjection"]["tabs"][0] = "Correspondances";
 $LANG["datainjection"]["tabs"][1] = "Infos complémentaires";
 $LANG["datainjection"]["tabs"][2] = "Valeurs fixées";
 $LANG["datainjection"]["tabs"][3] = "Fichier à injecter";
+
+$LANG["datainjection"]["import"][0] = "Procéder à l'import";
 ?>

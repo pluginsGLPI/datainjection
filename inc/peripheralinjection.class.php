@@ -53,6 +53,10 @@ class PluginDatainjectionPeripheralInjection extends Peripheral
       return parent::getSearchOptions();
    }
 
+   function showAdditionalInformation($info = array()) {
+
+   }
+
 }
 
 ?>

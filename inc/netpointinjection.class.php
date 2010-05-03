@@ -53,6 +53,10 @@ class PluginDatainjectionNetpointInjection extends Netpoint
       return parent::getSearchOptions();
    }
 
+   function showAdditionalInformation($info = array()) {
+
+   }
+
 }
 
 ?>

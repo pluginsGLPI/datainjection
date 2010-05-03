@@ -48,11 +48,12 @@ function plugin_init_datainjection() {
 
       if (plugin_datainjection_haveRight("model", "r")) {
          $PLUGIN_HOOKS['menu_entry']['datainjection'] = true;
-         $PLUGIN_HOOKS['submenu_entry']['datainjection']['search']  =
+         $PLUGIN_HOOKS['submenu_entry']['datainjection']['options']['model']['links']['search']  =
                                                            'front/model.php';
-         $PLUGIN_HOOKS['submenu_entry']['datainjection']['add'] =
+         $PLUGIN_HOOKS['submenu_entry']['datainjection']['options']['model']['links']['add'] =
                                                       'front/model.form.php';
       }
+      $PLUGIN_HOOKS['submenu_entry']['datainjection']['add'] = 'index.php';
 
       $PLUGIN_HOOKS['pre_item_delete']['datainjection'] = 'plugin_pre_item_delete_datainjection';
 
@@ -67,7 +68,7 @@ function plugin_init_datainjection() {
 
       $classes = array ('Model', 'Modelcsv', 'Backend', 'Backendcsv', 'Infos', 'InfosCollection',
                         'Mapping','MappingCollection', 'Profile','Data','Check',
-                        'InjectionInterface');
+                        'InjectionInterface','InjectionCommon');
       foreach ($classes as $value) {
          Plugin::registerClass('PluginDatainjection'.$value);
       }

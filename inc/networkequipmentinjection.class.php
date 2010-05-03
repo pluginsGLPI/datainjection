@@ -46,11 +46,15 @@ class PluginDatainjectionNetworkEquipmentInjection extends NetworkEquipment
    }
 
    function connectedTo() {
-      return array();
+      return array('Document');
    }
 
    function getOptions() {
       return parent::getSearchOptions();
+   }
+
+   function showAdditionalInformation($info = array()) {
+
    }
 
 }

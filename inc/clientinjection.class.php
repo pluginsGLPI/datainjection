@@ -26,7 +26,12 @@
  along with GLPI; if not, write to the Free Software
  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  --------------------------------------------------------------------------
- */
+
+// ----------------------------------------------------------------------
+// Original Author of file: Walid Nouh
+// Purpose of file: injection GUI
+// ----------------------------------------------------------------------
+*/
 class PluginDatainjectionClientInjection {
 
    /**
@@ -44,11 +49,26 @@ class PluginDatainjectionClientInjection {
          $buttons[$url] = $LANG["datainjection"]["profiles"][1];
          $title="";
       }
-      displayTitle($CFG_GLPI["root_doc"] . "/pics/groupes.png", $LANG['Menu'][36], $title, $buttons);
+      displayTitle($CFG_GLPI["root_doc"] . "/plugins/datainjection/pics/datainjection.png",
+                   $LANG['Menu'][36], $title, $buttons);
    }
 
    function showForm($ID, $options=array()) {
+      global $LANG;
 
+      echo "<form method='post' name=form action='".getItemTypeFormURL(__CLASS__)."'".
+            "enctype='multipart/form-data'>";
+      echo "<div class='center'>";
+      echo "<table class='tab_cadre_fixe'>";
+      echo "<tr>";
+      echo "<th>" . $LANG["datainjection"]["choiceStep"][6]."</th>";
+      echo "</tr>";
+      echo "<tr class='tab_bg_1'>";
+      echo "<td align='center'>".$LANG['common'][22]."&nbsp;:";
+      PluginDatainjectionModel::dropdown();
+      echo "</td></tr></table>";
+      echo "<span id='span_injection' name='span_injection'></span>";
+      echo "</div></form>";
    }
 }
 ?>

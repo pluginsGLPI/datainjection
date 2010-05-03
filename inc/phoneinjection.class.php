@@ -53,6 +53,10 @@ class PluginDatainjectionPhoneInjection extends Phone
       return parent::getSearchOptions();
    }
 
+   function showAdditionalInformation($info = array()) {
+
+   }
+
 }
 
 ?>

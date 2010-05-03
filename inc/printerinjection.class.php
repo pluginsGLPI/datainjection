@@ -53,6 +53,10 @@ class PluginDatainjectionPrinterInjection extends Printer
       return parent::getSearchOptions();
    }
 
+   function showAdditionalInformation($info = array()) {
+
+   }
+
 }
 
 ?>
