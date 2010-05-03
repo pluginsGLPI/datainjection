@@ -57,20 +57,34 @@ if ($_POST["id"] >0 && $model->can($_POST["id"],'r')) {
       case -1 :
          Plugin::displayAction($model,$_POST['glpi_tab']);
          $tmp->showForm($_POST['glpi_tab']);
-         $model->showUploadForm();
+         $model->showAdvancedForm($_POST["id"],$_POST['glpi_tab']);
+
+         if ($model->fields['step'] > PluginDatainjectionModel::INITIAL_STEP) {
+            $model->showUploadForm();
+         }
+         if ($model->fields['step'] > PluginDatainjectionModel::FILE_STEP) {
+            PluginDatainjectionMapping::showFormMappings($_POST["id"]);
+         }
+         if ($model->fields['step'] > PluginDatainjectionModel::MAPPING_STEP) {
+            PluginDatainjectionInfo::showFormInfos($_POST["id"]);
+         }
          break;
       case 1:
-         $tmp->showForm($_POST["id"],$_POST['glpi_tab']);
          break;
-      case 2 :
-         $model->showUploadForm();
+      case 2:
+         $tmp->showForm($_POST["id"],$_POST['glpi_tab']);
+         $model->showAdvancedForm($_POST["id"],$_POST['glpi_tab']);
          break;
       case 3 :
-         PluginDatainjectionMapping::showFormMappings($_POST["id"]);
+         $model->showUploadForm();
          break;
       case 4 :
+         PluginDatainjectionMapping::showFormMappings($_POST["id"]);
          break;
       case 5 :
+         PluginDatainjectionInfo::showFormInfos($_POST["id"]);
+         break;
+      case 6 :
          break;
 
       case 12 :

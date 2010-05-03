@@ -33,7 +33,7 @@
 // ----------------------------------------------------------------------
 */
 
-class PluginDatainjectionInfosCollection {
+class PluginDatainjectionInfoCollection {
 
    var $infosCollection;
 
@@ -56,7 +56,7 @@ class PluginDatainjectionInfosCollection {
               WHERE `models_id`='".$models_id."' ORDER BY `itemtype` ASC";
       foreach ($DB->request($query) as $data)
       {
-         $infos = new PluginDatainjectionInfos;
+         $infos = new PluginDatainjectionInfo;
          $infos->fields = $data;
          $this->infosCollection[] = $infos;
       }
@@ -111,7 +111,7 @@ class PluginDatainjectionInfosCollection {
 
    /*
     * Replace all the infos for a model
-    * @mappins the array of PluginDatainjectionInfos objects
+    * @mappins the array of PluginDatainjectionInfo objects
     */
    function replaceInfos($infos)
    {

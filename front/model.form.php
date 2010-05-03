@@ -82,7 +82,7 @@ elseif (isset($_POST['upload'])) {
 }
 
 
-commonHeader($LANG["datainjection"]["profiles"][1], '', "plugins", "datainjection", "budget");
+commonHeader($LANG["datainjection"]["profiles"][1], '', "plugins", "datainjection", "model");
 
 $model->showForm($_GET["id"]);
 

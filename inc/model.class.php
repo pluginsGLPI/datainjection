@@ -82,7 +82,7 @@ class PluginDatainjectionModel extends CommonDBTM {
    function __construct()
    {
       $this->mappings = new PluginDatainjectionMappingCollection;
-      $this->infos = new PluginDatainjectionInfosCollection;
+      $this->infos = new PluginDatainjectionInfoCollection;
    }
 
    function canCreate() {
@@ -511,6 +511,18 @@ class PluginDatainjectionModel extends CommonDBTM {
       echo "<textarea cols='45' rows='5' name='comment' >".$this->fields["comment"]."</textarea>";
       echo "</td></tr>";
 
+      $this->showFormButtons($options);
+      $this->addDivForTabs();
+
+      return true;
+   }
+
+   function showAdvancedForm($ID, $options = array()) {
+      global $DB,$LANG;
+      $candedit = $this->check($ID,'r');
+
+      echo "<form method='post' name=form action='".getItemTypeFormURL(__CLASS__)."'>";
+      echo "<table class='tab_cadre_fixe'>";
       echo "<tr class='tab_bg_1'><th colspan='4'>".$LANG["datainjection"]["model"][15]."</th></tr>";
       echo "<tr class='tab_bg_1'>";
       echo "<td>".$LANG["datainjection"]["model"][28].": </td>";
@@ -533,23 +545,21 @@ class PluginDatainjectionModel extends CommonDBTM {
       PluginDatainjectionDropdown::dropdownPortUnicity($this->fields['port_unicity']);
       echo "</td>";
       echo "</tr>";
-
-      $this->showFormButtons($options);
-      $this->addDivForTabs();
+      $this->showFormButtons(array('candel'=>false));
 
       return true;
    }
-
    function defineTabs($options=array()) {
       global $LANG;
 
       $ong[1] = $LANG['title'][26];
+      $ong[2] = $LANG["datainjection"]["model"][15];
       if ($this->fields['id'] > 0) {
-         $ong[2] = $LANG["datainjection"]["tabs"][3];
-         $ong[3] = $LANG["datainjection"]["tabs"][0];
+         $ong[3] = $LANG["datainjection"]["tabs"][3];
+         $ong[4] = $LANG["datainjection"]["tabs"][0];
          if ($this->fields['step'] > PluginDatainjectionModel::MAPPING_STEP) {
-            $ong[4] = $LANG["datainjection"]["tabs"][1];
-            $ong[5] = $LANG["datainjection"]["tabs"][2];
+            $ong[5] = $LANG["datainjection"]["tabs"][1];
+            $ong[6] = $LANG["datainjection"]["tabs"][2];
          }
          $ong[12] = $LANG['title'][38];
       }

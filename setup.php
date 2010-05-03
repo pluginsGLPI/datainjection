@@ -93,7 +93,10 @@ function plugin_init_datainjection() {
                                 'PluginDatainjectionSoftwareInjection'           =>'datainjection',
                                 'PluginDatainjectionSoftwareLicenseInjection'    =>'datainjection',
                                 'PluginDatainjectionSupplierInjection'           =>'datainjection',
-                                'PluginDatainjectionUserInjection'               =>'datainjection');
+                                'PluginDatainjectionUserInjection'               =>'datainjection',
+                                'PluginDatainjectionNetworkportInjection'        =>'datainjection',
+                                'PluginDatainjectionVlanInjection'               =>'datainjection',
+                                'PluginDatainjectionNetpointInjection'           =>'datainjection');
       foreach ($INJECTABLE_TYPES as $type => $plugname) {
          Plugin::registerClass($type);
       }

@@ -38,7 +38,7 @@ if (!defined('GLPI_ROOT')){
 }
 
 /// Location class
-class PluginDatainjectionContractInjection extends Contract
+class PluginDatainjectionVlanInjection extends Vlan
    implements PluginDatainjectionInjectionInterface {
 
    function isPrimaryType() {
@@ -46,8 +46,7 @@ class PluginDatainjectionContractInjection extends Contract
    }
 
    function connectedTo() {
-      return array('Computer','Phone','Printer','NetworkEquipment','Monitor','Software',
-                   'SoftwareLicense','Peripheral');
+      return array('NetworkEquipment','Computer','Peripheral','Phone');
    }
 
    function getOptions() {

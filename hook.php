@@ -168,7 +168,7 @@ function plugin_datainjection_install() {
                            `rank` INT( 11 ) NOT NULL ,
                            `name` VARCHAR( 255 ) NOT NULL ,
                            `value` VARCHAR( 255 ) NOT NULL ,
-                           `is_mandatory` INT( 1 ) NOT NULL DEFAULT '0'
+                           `is_mandatory` TINYINT( 1 ) NOT NULL DEFAULT '0'
                            ) ENGINE = MYISAM CHARSET=utf8 COLLATE=utf8_unicode_ci ;";
       $DB->query($query) or die($DB->error());
 
@@ -177,26 +177,14 @@ function plugin_datainjection_install() {
                            `models_id` INT( 11 ) NOT NULL ,
                            `itemtype` varchar(255) NOT NULL default '',
                            `value` VARCHAR( 255 ) NOT NULL ,
-                           `mandatory` INT( 1 ) NOT NULL DEFAULT '0'
+                           `is_mandatory` TINYINT( 1 ) NOT NULL DEFAULT '0'
                            ) ENGINE = MYISAM CHARSET=utf8 COLLATE=utf8_unicode_ci ;";
       $DB->query($query) or die($DB->error());
-
-      $query = "CREATE TABLE IF NOT EXISTS `glpi_plugin_datainjection_filetype` (
-                          `id` int(11) NOT NULL auto_increment,
-                          `name` varchar(255) NOT NULL,
-                          `value` int(11) NOT NULL,
-                          `backend_classname` varchar(255) NOT NULL,
-                          `model_classname` varchar(255) NOT NULL,
-                          PRIMARY KEY  (`ID`)
-                        ) ENGINE=MyISAM AUTO_INCREMENT=2  CHARSET=utf8 COLLATE=utf8_unicode_ci;
-                        ";
-      $DB->query($query) or die($DB->error());
-
 
       $query = "CREATE TABLE IF NOT EXISTS `glpi_plugin_datainjection_profiles` (
                           `id` int(11) NOT NULL auto_increment,
                           `name` varchar(255) default NULL,
-                          `is_default` int(6) NOT NULL default '0',
+                          `is_default` TINYINT(1) NOT NULL default '0',
                           `model` char(1) default NULL,
                           PRIMARY KEY  (`ID`)
                         ) ENGINE=MyISAM CHARSET=utf8 COLLATE=utf8_unicode_ci;";
@@ -344,6 +332,8 @@ function plugin_datainjection_update170_20() {
              ADD `step` TINYINT( 1 ) NOT NULL DEFAULT '0'";
    $qery = "ALTER TABLE `glpi_plugin_datainjection_mappings`
              CHANGE `mandatory` `is_mandatory` TINYINT( 1 ) NOT NULL DEFAULT '0'";
+   $query = "ALTER TABLE `glpi_plugin_datainjection_infos`
+            CHANGE `mandatory` `is_mandatory` TINYINT( 1 ) NOT NULL DEFAULT '0'";
 }
 function plugin_datainjection_createaccess($ID) {
    global $DB;

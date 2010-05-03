@@ -38,16 +38,15 @@ if (!defined('GLPI_ROOT')){
 }
 
 /// Location class
-class PluginDatainjectionContractInjection extends Contract
+class PluginDatainjectionNetworkportInjection extends NetworkPort
    implements PluginDatainjectionInjectionInterface {
 
    function isPrimaryType() {
-      return true;
+      return false;
    }
 
    function connectedTo() {
-      return array('Computer','Phone','Printer','NetworkEquipment','Monitor','Software',
-                   'SoftwareLicense','Peripheral');
+      return array('NetworkEquipment','Computer','Peripheral','Phone');
    }
 
    function getOptions() {

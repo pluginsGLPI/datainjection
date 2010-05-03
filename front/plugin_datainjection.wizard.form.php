@@ -276,12 +276,12 @@ if($load)
 		{
 		$model = unserialize($_SESSION["plugin_datainjection"]["model"]);
 
-		$infoscollection = new PluginDatainjectionInfosCollection;
+		$infoscollection = new PluginDatainjectionInfoCollection;
 
 		foreach($_POST["field"] as $field)
 			if($field[0]!=-1)
 				{
-				$infos = new PluginDatainjectionInfos;
+				$infos = new PluginDatainjectionInfo;
 				$infos->setInfosType($field[0]);
 				$infos->setValue($field[1]);
 				if(isset($field[2]))
