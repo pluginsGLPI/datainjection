@@ -68,7 +68,7 @@ function plugin_init_datainjection() {
 
       $classes = array ('Model', 'Modelcsv', 'Backend', 'Backendcsv', 'Infos', 'InfosCollection',
                         'Mapping','MappingCollection', 'Profile','Data','Check',
-                        'InjectionInterface','InjectionCommon');
+                        'InjectionInterface','InjectionCommon','Result');
       foreach ($classes as $value) {
          Plugin::registerClass('PluginDatainjection'.$value);
       }
@@ -97,27 +97,11 @@ function plugin_init_datainjection() {
                                 'PluginDatainjectionUserInjection'               =>'datainjection',
                                 'PluginDatainjectionNetworkportInjection'        =>'datainjection',
                                 'PluginDatainjectionVlanInjection'               =>'datainjection',
-                                'PluginDatainjectionNetpointInjection'           =>'datainjection');
+                                'PluginDatainjectionNetpointInjection'           =>'datainjection',
+                                'PluginDatainjectionContract_ItemInjection'      =>'datainjection');
       foreach ($INJECTABLE_TYPES as $type => $plugname) {
          Plugin::registerClass($type);
       }
-      //TODO : hook for other plugins types
-
-      /*
-      include_once("inc/plugin_datainjection.mapping.constant.php");
-      registerPluginType('datainjection', 'PLUGIN_DATA_INJECTION_MODEL', 1450, array(
-            'classname'  => 'PluginDatainjectionModel',
-            'tablename'  => 'glpi_plugin_datainjection_models',
-            'typename'   => $LANG['common'][22],
-            'formpage'   => '',
-            'searchpage' => '',
-            'specif_entities_tables' => true,
-            'recursive_type' => true
-            ));
-     */
-      //loadDeviceSpecificTypes();
-      //addDeviceSpecificMappings();
-      //addDeviceSpecificInfos();
    }
 }
 

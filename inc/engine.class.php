@@ -63,6 +63,60 @@ class PluginDatainjectionEngine {
     */
    function injectLine($line, $infos = array ()) {
       $result = new PluginDatainjectionResult;
+
+      //Store all fields to injection, sorted by itemtype
+      $fields_toinject = array();
+      $mandatory_fields = array();
+
+      //Get the injectionclass associated to the itemtype
+      $itemtype = $this->getModel()->getItemtype();
+      $iteminjection = PluginDatainjectionInjectionCommon::getInstance($itemtype);
+
+      //First of all : transform $line which is an array of values to inject into another array
+      //which looks like this :
+      //array(itemtype=>array(field=>value,field2=>value2))
+      //Note : ignore values which are not mapped with a glpi's field
+      for ($i = 0; $i < count($line); $i++) {
+         $mapping = $this->getModel()->getMappingByRank($i);
+         //If field is mapped with a value in glpi
+         if ($mapping->getValue() != PluginDatainjectionMapping::NOT_MAPPED) {
+            $fields_toinject[$mapping->getItemtype()][$mapping->getValue()] = $line[$i];
+            $mandatory_fields[$mapping->getItemtype()][$mapping->getValue()] =
+                                                                           $mapping->isMandatory();
+         }
+      }
+
+      //--------------- Set all needed options ------------------//
+      //Check options
+      $checks = array('ip'=>true,'mac'=>true,'integer'=>true,'yes'=>true,'yesno'=>true,
+                      'date'=>$this->getModel()->getDateFormat(),
+                      'float'=>$this->getModel()->getFloatFormat(),
+                      'right_r'=>true,'right_rw'=>true,
+                      'interface'=>true,'auth_method'=>true);
+      //Rights options
+      $rights = array('add_dropdown'=>$this->getModel()->getCanAddDropdown(),
+                      'overwrite_notempty_fields'=>$this->getModel()->getCanOverwriteIfNotEmpty());
+      //Field format options
+      $formats = array('date_format'=>$this->getModel()->getDateFormat(),
+                       'float_format'=>$this->getModel()->getFloatFormat());
+      //Check options : by default check all types
+      $options = array('checks'     =>$checks,
+                       'entities_id'=>$this->getEntity(),
+                       'rights'=> $rights,
+                       'formats'=>$formats,
+                       'mandatory_fields'=>$mandatory_fields);
+
+      //Do we need to add or update the objet ?
+      $action = 'add';
+      //TODO : implement method to check if it's an add/update
+      if ($action == 'add') {
+         $results = $iteminjection->addObject($fields_toinject,$options);
+      }
+      else {
+         $results = $iteminjection->updateObject($fields_toinject,$options);
+      }
+
+      /*
       $line = reformatDatasBeforeCheck($this->getModel(), $line, $this->getEntity(), $result);
 
       //If values check is not successful
@@ -82,13 +136,13 @@ class PluginDatainjectionEngine {
       for ($i = 0; $i < count($line); $i++) {
          $mapping = $this->getModel()->getMappingByRank($i);
          if ($mapping != null && $mapping->getValue() != NOT_MAPPED) {
-            $mapping_definition = getMappingDefinitionByTypeAndName($mapping->getMappingType(), $mapping->getValue());
-            if (!isset ($db_fields[$mapping->getMappingType()]))
-               $db_fields[$mapping->getMappingType()] = array ();
+            $mapping_definition = getMappingDefinitionByTypeAndName($mapping->getItemtype(), $mapping->getValue());
+            if (!isset ($db_fields[$mapping->getItemtype()]))
+               $db_fields[$mapping->getItemtype()] = array ();
 
-            $field = getFieldValue($result, $this->getModel()->getDeviceType(), $mapping, $mapping_definition, $line[$i], $this->getEntity(), $db_fields[$mapping->getMappingType()], $this->getModel()->getCanAddDropdown(), lookIfSeveralMappingsForField($this->getModel(), $mapping_definition, $mapping->getValue(), $line), getFieldCommentsIfExists($this->getModel(), $line, $mapping));
+            $field = getFieldValue($result, $this->getModel()->getDeviceType(), $mapping, $mapping_definition, $line[$i], $this->getEntity(), $db_fields[$mapping->getItemtype()], $this->getModel()->getCanAddDropdown(), lookIfSeveralMappingsForField($this->getModel(), $mapping_definition, $mapping->getValue(), $line), getFieldCommentsIfExists($this->getModel(), $line, $mapping));
             if (!empty ($field)) {
-               $db_fields[$mapping->getMappingType()] = $field;
+               $db_fields[$mapping->getItemtype()] = $field;
             }
          }
       }
@@ -229,6 +283,7 @@ class PluginDatainjectionEngine {
             } // Type check
          } // Each type
       }
+      */
 
       return $result;
    }

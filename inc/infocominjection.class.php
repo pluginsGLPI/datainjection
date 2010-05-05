@@ -46,8 +46,8 @@ class PluginDatainjectionInfocomInjection extends Infocom
    }
 
    function connectedTo() {
-      return array('Computer','Monitor','Printer','Phone','Peripheral','NetworkEquipment',
-                   'Software','SoftwareLicense');
+      global $CFG_GLPI;
+      return $CFG_GLPI["infocom_types"];
    }
 
    function getOptions() {

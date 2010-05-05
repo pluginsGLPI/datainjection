@@ -38,48 +38,32 @@ if (!defined('GLPI_ROOT')){
 }
 
 /// Location class
-class PluginDatainjectionSoftwareInjection extends Software
+class PluginDatainjectionContract_ItemInjection extends Contract_Item
    implements PluginDatainjectionInjectionInterface {
 
    function isPrimaryType() {
-      return true;
+      return false;
    }
 
    function connectedTo() {
-      return array();
+      return array('Computer','Phone','Printer','NetworkEquipment','Monitor','Software',
+                   'SoftwareLicense','Peripheral');
    }
 
    function getOptions() {
-      return parent::getSearchOptions();
+      global $LANG;
+      $tab = parent::getSearchOptions();
+
+      $tab[100]['table']        = '';
+      $tab[100]['field']        = 'items_name';
+      $tab[100]['linkfield']    = 'items_name';
+      $tab[100]['name']         = $LANG['common'][16].' '.$LANG['financial'][104];
+      $tab[100]['virtual']      = true;
+      return $tab;
    }
 
    function showAdditionalInformation($info = array()) {
 
-   }
-
-   /**
-    * Play software's dictionnary
-    */
-   function reformat(&$values = array()) {
-      foreach ($values as $field => $value) {
-         $supplier = (isset($values['supplier'])?$values['supplier']:'');
-
-         $rulecollection = new DictionnarySoftwareCollection;
-         $res_rule = $rulecollection->processAllRules(array("name"=>$value,
-                                                      "manufacturer"=>$supplier),
-                                                      array(),array());
-         if(isset($res_rule['name'])) {
-            $values['name']=$res_rule['name'];
-         }
-
-         if(isset($res_rule['supplier']))
-         {
-               if (isset($values['supplier'])) {
-                  $values['supplier'] = Dropdown::getDropdownName('glpi_suppliers',
-                                                                  $res_rule['supplier']);
-               }
-            }
-      }
    }
 
 }

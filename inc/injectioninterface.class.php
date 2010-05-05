@@ -63,5 +63,48 @@ interface PluginDatainjectionInjectionInterface {
     * @param info an array which contains the additional information values
     */
    function showAdditionalInformation($info = array());
+
+   /**
+    * Standard method to add an object into glpi
+    * WILL BE INTEGRATED INTO THE CORE IN 0.80
+    * @param values fields to add into glpi
+    * @param options options used during creation
+    * @return an array of IDs of newly created objects : for example array(Computer=>1, Networkport=>10)
+    */
+   function addObject($values=array(), $options=array());
+
+   /**
+    * Standard method to update an object into glpi
+    * WILL BE INTEGRATED INTO THE CORE IN 0.80
+    * @param fields fields to add into glpi
+    * @param options options used during creation
+    * @return an array of IDs of updated objects : for example array(Computer=>1, Networkport=>10)
+    */
+   function updateObject($values=array(), $options=array());
+
+
+   /**
+    * Standard method to delete an object into glpi
+    * WILL BE INTEGRATED INTO THE CORE IN 0.80
+    * @param fields fields to add into glpi
+    * @param options options used during creation
+    */
+   function deleteObject($values=array(), $options=array());
+
+   /**
+    * Check values to inject
+    * @param fields_name field to add to glpi
+    * @param data value to add
+    * @param mandatory is this value mandatory or not ?
+    * @return an array which indicates check status & errors
+    */
+   function checkType($field_name, $data, $mandatory);
+
+   /**
+    * Reformat data specifically for this itemtype
+    * @param values values to reformat (by reference)
+    * @return nothing
+    */
+   function reformat(&$values = array());
 }
 ?>

@@ -50,15 +50,6 @@ class PluginDatainjectionModel extends CommonDBTM {
    //Store specific backend parameters
    public $specific_model;
 
-   //Date management constants
-   const DATE_TYPE_DDMMYYYY = "dd-mm-yyyy";
-   const DATE_TYPE_MMDDYYYY = "mm-dd-yyyy";
-   const DATE_TYPE_YYYYMMDD = "yyyy-mm-dd";
-
-   //Float management constants
-   const FLOAT_TYPE_DOT          = 0;
-   const FLOAT_TYPE_COMMA        = 1;
-   const FLOAT_TYPE_DOT_AND_COM  = 2;
 
    //Port unicity constants
    const UNICITY_NETPORT_LOGICAL_NUMBER = 0;
@@ -148,7 +139,7 @@ class PluginDatainjectionModel extends CommonDBTM {
       return $this->fields["name"];
    }
 
-   function getModelType()
+   function getFiletype()
    {
       return $this->fields["filetype"];
    }
@@ -173,7 +164,7 @@ class PluginDatainjectionModel extends CommonDBTM {
       return $this->fields["id"];
    }
 
-   function getDeviceType()
+   function getItemtype()
    {
       return $this->fields["itemtype"];
    }

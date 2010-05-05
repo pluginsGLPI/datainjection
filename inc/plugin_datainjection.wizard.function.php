@@ -527,7 +527,7 @@ function mappingStep($target) {
 			echo "<option value='-1'>" . $LANG["datainjection"]["mappingStep"][6] . "</option>";
 
 			foreach ($types as $type) {
-				if ($value->getMappingType() == $type[0])
+				if ($value->getItemtype() == $type[0])
 					echo "<option value='" . $type[0] . "' selected>" . $type[1] . "</option>";
 				else
 					echo "<option value='" . $type[0] . "'>" . $type[1] . "</option>";
@@ -541,10 +541,10 @@ function mappingStep($target) {
 			echo "<td id='field$key'>";
 			echo "<select name='field[$key][2]' style='width: 150px'>";
 
-			if ($value->getMappingType() == -1)
+			if ($value->getItemtype() == -1)
 				echo "<option value='-1'>" . $LANG["datainjection"]["mappingStep"][7] . "</option>";
 			else {
-				$values = getAllMappingsDefinitionsByType($value->getMappingType());
+				$values = getAllMappingsDefinitionsByType($value->getItemtype());
 
 				foreach ($values as $key2 => $value2) {
 					if ($value->getValue() == $key2)
@@ -559,7 +559,7 @@ function mappingStep($target) {
 			/**************************************************************/
 
 			/*********************Checkbox Mandatory***********************/
-			if ($value->getMappingType() != $model->getDeviceType())
+			if ($value->getItemtype() != $model->getDeviceType())
 				echo "<td style='text-align:center'><input type='checkbox' name='field[$key][3]' id='check$key' disabled /></td>";
 			else {
 				if ($value->isMandatory())

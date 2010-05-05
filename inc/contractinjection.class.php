@@ -46,8 +46,7 @@ class PluginDatainjectionContractInjection extends Contract
    }
 
    function connectedTo() {
-      return array('Computer','Phone','Printer','NetworkEquipment','Monitor','Software',
-                   'SoftwareLicense','Peripheral');
+      return array();
    }
 
    function getOptions() {

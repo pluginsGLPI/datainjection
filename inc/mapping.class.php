@@ -29,11 +29,7 @@
  */
 class PluginDatainjectionMapping extends CommonDBTM {
 
-   function __construct()
-   {
-      $this->table="glpi_plugin_datainjection_mappings";
-      $this->type=-1;
-   }
+   const NOT_MAPPED = -1;
 
    function canCreate() {
       return plugin_datainjection_haveRight('model','w');
@@ -87,7 +83,7 @@ class PluginDatainjectionMapping extends CommonDBTM {
       return $this->fields["models_id"];
    }
 
-   function getMappingType()
+   function getItemtype()
    {
       return $this->fields["itemtype"];
    }
@@ -122,7 +118,7 @@ class PluginDatainjectionMapping extends CommonDBTM {
       $this->fields["models_id"] = $model_id;
    }
 
-   function setMappingType($type)
+   function setItemtype($type)
    {
       $this->fields["itemtype"] = $type;
    }

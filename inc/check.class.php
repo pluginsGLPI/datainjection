@@ -71,7 +71,7 @@ class PluginDatainjectionCheck {
                {
                   //Check type
                   $field = $line[$rank];
-                  $res_check_type = checkType($mapping->getMappingType(), $mapping->getValue(), $field,$mapping->isMandatory());
+                  $res_check_type = checkType($mapping->getItemtype(), $mapping->getValue(), $field,$mapping->isMandatory());
 
                   //If field is not the good type -> error
                   if (!$res->addCheckMessage($res_check_type,$mapping->getName())) {

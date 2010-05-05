@@ -123,18 +123,18 @@ class PluginDatainjectionDropdown {
    static function dropdownDateFormat($format)
    {
       global $LANG;
-      $date_format[PluginDatainjectionModel::DATE_TYPE_DDMMYYYY]=$LANG["datainjection"]["model"][22];
-      $date_format[PluginDatainjectionModel::DATE_TYPE_MMDDYYYY]=$LANG["datainjection"]["model"][23];
-      $date_format[PluginDatainjectionModel::DATE_TYPE_YYYYMMDD]=$LANG["datainjection"]["model"][24];
+      $date_format[PluginDatainjectionCommonInjectionLib::DATE_TYPE_DDMMYYYY]=$LANG["datainjection"]["model"][22];
+      $date_format[PluginDatainjectionCommonInjectionLib::DATE_TYPE_MMDDYYYY]=$LANG["datainjection"]["model"][23];
+      $date_format[PluginDatainjectionCommonInjectionLib::DATE_TYPE_YYYYMMDD]=$LANG["datainjection"]["model"][24];
 
       Dropdown::showFromArray('date_format',$date_format,array('value'=>$format));
    }
 
    static function floatFormats() {
       global $LANG;
-      $float_format[PluginDatainjectionModel::FLOAT_TYPE_DOT]=$LANG["datainjection"]["model"][25];
-      $float_format[PluginDatainjectionModel::FLOAT_TYPE_COMMA]=$LANG["datainjection"]["model"][26];
-      $float_format[PluginDatainjectionModel::FLOAT_TYPE_DOT_AND_COM]=$LANG["datainjection"]["model"][27];
+      $float_format[PluginDatainjectionCommonInjectionLib::FLOAT_TYPE_DOT]=$LANG["datainjection"]["model"][25];
+      $float_format[PluginDatainjectionCommonInjectionLib::FLOAT_TYPE_COMMA]=$LANG["datainjection"]["model"][26];
+      $float_format[PluginDatainjectionCommonInjectionLib::FLOAT_TYPE_DOT_AND_COM]=$LANG["datainjection"]["model"][27];
       return $float_format;
    }
 
