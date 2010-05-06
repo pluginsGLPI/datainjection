@@ -57,68 +57,6 @@ class PluginDatainjectionProfileInjection extends Profile
 
    }
 
-   /**
-    * Standard method to add an object into glpi
-    * WILL BE INTEGRATED INTO THE CORE IN 0.80
-    * @param values fields to add into glpi
-    * @param options options used during creation
-    * @return an array of IDs of newly created objects : for example array(Computer=>1, Networkport=>10)
-    */
-   function addObject($values=array(), $options=array()) {
-      global $LANG;
-
-      $itemtype = 'Profile';
-      $injectionResults = array();
-      //TODO : check values
-
-      //If no values are present for the Computer type, exit method
-      if (!isset($values[$itemtype])) {
-         $injectionResults = array($itemtype,-1);
-      }
-      else {
-         $item = new Computer;
-         $newID = $item->add($values);
-         if ($newID) {
-            $injectionResults = array($itemtype,$newID);
-         }
-         else {
-            $injectionResults = array($itemtype,-1);
-         }
-      }
-
-      if ($injectionResults[$itemtype] > 0) {
-         //Injected the other types
-         foreach ($values as $itemtype => $fields) {
-            if ($itemtype != $itemtype) {
-
-            }
-         }
-      }
-      return $injectionResults;
-   }
-
-
-   /**
-    * Standard method to update an object into glpi
-    * WILL BE INTEGRATED INTO THE CORE IN 0.80
-    * @param fields fields to add into glpi
-    * @param options options used during creation
-    * @return an array of IDs of updated objects : for example array(Computer=>1, Networkport=>10)
-    */
-   function updateObject($values=array(), $options=array()) {
-
-   }
-
-
-   /**
-    * Standard method to delete an object into glpi
-    * WILL BE INTEGRATED INTO THE CORE IN 0.80
-    * @param fields fields to add into glpi
-    * @param options options used during creation
-    */
-   function deleteObject($values=array(), $options=array()) {
-   }
-
    function checkType($field_name, $data, $mandatory) {
       switch($field_name) {
          case 'right_rw':
@@ -138,6 +76,54 @@ class PluginDatainjectionProfileInjection extends Profile
             return PluginDatainjectionCommonInjectionLib::SUCCESS;
       }
    }
+
+
+   /**
+    * Standard method to add an object into glpi
+    * WILL BE INTEGRATED INTO THE CORE IN 0.80
+    * @param values fields to add into glpi
+    * @param options options used during creation
+    * @return an array of IDs of newly created objects : for example array(Computer=>1, Networkport=>10)
+    */
+   function addObject($values=array(), $options=array()) {
+      global $LANG;
+      $lib = new PluginDatainjectionCommonInjectionLib($this,$values,$options);
+      $lib->addObject();
+      return $lib->getInjectionResults();
+   }
+
+
+   /**
+    * Standard method to update an object into glpi
+    * WILL BE INTEGRATED INTO THE CORE IN 0.80
+    * @param fields fields to add into glpi
+    * @param options options used during creation
+    * @return an array of IDs of updated objects : for example array(Computer=>1, Networkport=>10)
+    */
+   function updateObject($values=array(), $options=array()) {
+      $lib = new PluginDatainjectionCommonInjectionLib($this,$values,$options);
+      $lib->updateObject();
+      return $lib->getInjectionResults();
+
+   }
+
+
+   /**
+    * Standard method to delete an object into glpi
+    * WILL BE INTEGRATED INTO THE CORE IN 0.80
+    * @param fields fields to add into glpi
+    * @param options options used during creation
+    */
+   function deleteObject($values=array(), $options=array()) {
+      $lib = new PluginDatainjectionCommonInjectionLib($this,$values,$options);
+      $lib->deleteObject();
+      return $lib->getInjectionResults();
+   }
+
+   function reformat(&$values = array()) {
+
+   }
+
 }
 
 ?>

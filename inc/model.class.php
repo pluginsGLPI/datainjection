@@ -644,19 +644,74 @@ class PluginDatainjectionModel extends CommonDBTM {
       }
    }
 
-   static function methodListModels($params,$protocol) {
-      if (isset ($params['help'])) {
-         return array('help' => 'bool,optional');
+   function readUploadedFile($options = array()) {
+     global $LANG;
+
+     $file_encoding = (isset($options['file_encoding'])?$options['file_encoding']:
+                                                        PluginDatainjectionBackend::ENCODING_AUTO);
+     $webservice = (isset($options['webservice'])?$options['webservice']:false);
+     $original_filename = (isset($options['original_filename'])?$options['original_filename']:false);
+     $unique_filename = (isset($options['unique_filename'])?$options['unique_filename']:false);
+     $injectionData = false;
+
+     if ($webservice) {
+        $file_key = 'filename';
+     }
+     else {
+        $file_key = 'file';
+     }
+     //Get model & model specific fields
+      $specific_model = PluginDatainjectionModel::getInstance($this->fields['filetype']);
+      $specific_model->getFromDBByModelID($this->fields['id'],true);
+      $this->setSpecificModel($specific_model);
+
+      if (!$webservice) {
+         //Get and store uploaded file
+         $original_filename = $_FILES[$file_key]["name"];
+         $unique_filename = tempnam (realpath(PLUGIN_DATAINJECTION_UPLOAD_DIR), "PWS");
       }
 
-      if (!isset ($_SESSION['glpiID'])) {
-         return self::Error($protocol, WEBSERVICES_ERROR_NOTAUTHENTICATED);
-      }
 
-      return getAllDatasFromTable('glpi_plugin_datainjection_models');
+      //If file has not the right extension, reject it and delete if
+      if($specific_model->checkFileName($original_filename)) {
+         $message = $LANG["datainjection"]["fileStep"][5];
+         $message.="<br />".$LANG["datainjection"]["fileStep"][6]." csv ";
+         $message.=$LANG["datainjection"]["fileStep"][7];
+         if (!$webservice) {
+            addMessageAfterRedirect($message,true,ERROR,false);
+         }
+         //unlink($temporary_uniquefilename);
+         return array('status'=>ERROR,'message'=>$message);
+      }
+      else {
+         //if( !move_uploaded_file($temporary_name, $temporary_uniquefilename) ) {
+         //   $message = $LANG["datainjection"]["fileStep"][8];
+         //   $message.= $temporary_uniquefilename;
+         //   $message.= ' '.$original_filename;
+         //   if (!$webservice) {
+         //      addMessageAfterRedirect($message,true,ERROR,false);
+         //   }
+         //   unlink($temporary_uniquefilename);
+         //   return array('status'=>ERROR,'message'=>addslashes_deep($message));
+         //}
+         //else {
+            //Initialise a new backend
+            $backend = PluginDatainjectionBackend::getInstance($this->fields['filetype']);
+            //Init backend with needed values
+            $backend->init($unique_filename,$file_encoding);
+            $backend->setHeaderPresent($specific_model->fields['is_header_present']);
+            $backend->setDelimiter($specific_model->fields['delimiter']);
+
+            //Read file
+            $injectionData = $backend->read();
+            $backend->deleteFile();
+            $this->setBackend($backend);
+         //}
+      }
+      return $injectionData;
    }
 
-   function processUploadedFile($models_id,$file_encoding) {
+   function processUploadedFile($models_id,$file_encoding=PluginDatainjectionBackend::ENCODING_AUTO) {
       global $LANG;
 
       $injectionData = false;
@@ -668,72 +723,44 @@ class PluginDatainjectionModel extends CommonDBTM {
       $specific_model->getFromDBByModelID($models_id,true);
       $this->setSpecificModel($specific_model);
 
-      //Get and store uploaded file
-      $original_filename = $_FILES["file"]["name"];
-      $temporary_uniquefilename = tempnam (realpath(PLUGIN_DATAINJECTION_UPLOAD_DIR), "Tmp");
-      $temporary_name = $_FILES["file"]["tmp_name"];
-
-      //If file has not the right extension, reject it and delete if
-      if($specific_model->checkFileName($original_filename)) {
-         $message = $LANG["datainjection"]["fileStep"][5];
-         $message.="<br />".$LANG["datainjection"]["fileStep"][6]." csv ";
-         $message.=$LANG["datainjection"]["fileStep"][7];
-         addMessageAfterRedirect($message,true,ERROR,false);
-         unlink($temporary_uniquefilename);
-         $return_status = false;
+      $injectionData = $this->readUploadedFile($file_encoding);
+      if (!$injectionData) {
+         return false;
       }
       else {
-         if( !move_uploaded_file($temporary_name, $temporary_uniquefilename) ) {
-            addMessageAfterRedirect($LANG["datainjection"]["fileStep"][8],true,ERROR,false);
-            unlink($temporary_uniquefilename);
+         $check = $this->isFileCorrect($injectionData);
+         //There's an error
+         if ($check['status'] != PluginDatainjectionCheck::CHECK_OK) {
+            addMessageAfterRedirect($check['error_message'],true,ERROR,true);
             $return_status = false;
          }
          else {
-            //Initialise a new backend
-            $backend = PluginDatainjectionBackend::getInstance($this->fields['filetype']);
-            //Init backend with needed values
-            $backend->init($temporary_uniquefilename,$file_encoding);
-            $backend->setHeaderPresent($specific_model->fields['is_header_present']);
-            $backend->setDelimiter($specific_model->fields['delimiter']);
+            $mappingCollection = new PluginDatainjectionMappingCollection;
 
-            //Read file
-            $injectionData = $backend->read();
-            $backend->deleteFile();
-            $this->setBackend($backend);
-            $check = $this->isFileCorrect($injectionData);
-            //There's an error
-            if ($check['status'] != PluginDatainjectionCheck::CHECK_OK) {
-               addMessageAfterRedirect($check['error_message'],true,ERROR,true);
-               $return_status = false;
+            //If mapping still exists in DB, delete all of them !
+            $mappingCollection->deleteMappingsFromDB($this->fields['id']);
+
+            $rank = 0;
+            //Build the mappings list
+            foreach (PluginDatainjectionBackend::getHeader($injectionData,
+                                                           $specific_model->isHeaderPresent()
+                                                           ) as $data) {
+               $mapping = new PluginDatainjectionMapping;
+               $mapping->fields['models_id'] = $this->fields['id'];
+               $mapping->fields['rank'] = $rank;
+               $mapping->fields['name'] = $data;
+               $mapping->fields['value'] = PluginDatainjectionInjectionType::NO_VALUE;
+               $mapping->fields['itemtype'] = PluginDatainjectionInjectionType::NO_VALUE;
+               $mappingCollection->addNewMapping($mapping);
+               $rank++;
             }
-            else {
-               $mappingCollection = new PluginDatainjectionMappingCollection;
+            //Save the mapping list in DB
+            $mappingCollection->saveAllMappings();
+            PluginDatainjectionModel::changeStep($this->fields['id'],
+                                                 PluginDatainjectionModel::MAPPING_STEP);
 
-               //If mapping still exists in DB, delete all of them !
-               $mappingCollection->deleteMappingsFromDB($this->fields['id']);
-
-               $rank = 0;
-               //Build the mappings list
-               foreach (PluginDatainjectionBackend::getHeader($injectionData,
-                                                              $specific_model->isHeaderPresent()
-                                                              ) as $data) {
-                  $mapping = new PluginDatainjectionMapping;
-                  $mapping->fields['models_id'] = $this->fields['id'];
-                  $mapping->fields['rank'] = $rank;
-                  $mapping->fields['name'] = $data;
-                  $mapping->fields['value'] = PluginDatainjectionInjectionType::NO_VALUE;
-                  $mapping->fields['itemtype'] = PluginDatainjectionInjectionType::NO_VALUE;
-                  $mappingCollection->addNewMapping($mapping);
-                  $rank++;
-               }
-               //Save the mapping list in DB
-               $mappingCollection->saveAllMappings();
-               PluginDatainjectionModel::changeStep($this->fields['id'],
-                                                    PluginDatainjectionModel::MAPPING_STEP);
-
-               //Add redirect message
-               addMessageAfterRedirect($LANG["datainjection"]["model"][32],true,INFO,true);
-            }
+            //Add redirect message
+            addMessageAfterRedirect($LANG["datainjection"]["model"][32],true,INFO,true);
          }
       }
       return $return_status;
@@ -792,24 +819,5 @@ class PluginDatainjectionModel extends CommonDBTM {
       return $error;
    }
 
-   //Webservices methods
-   static function methodGetModel($params,$protocol) {
-
-      if (isset ($params['help'])) {
-         return array('help' => 'bool,optional');
-      }
-
-      if (!isset ($_SESSION['glpiID'])) {
-         return self::Error($protocol, WEBSERVICES_ERROR_NOTAUTHENTICATED);
-      }
-
-      $model = new PluginPluginDatainjectionModel;
-      if ($model->getFromDB($params['id'])) {
-         return $model->fields;
-      }
-      else {
-         return array();
-      }
-   }
 }
 ?>

@@ -37,7 +37,7 @@ if (!defined("PLUGIN_DATAINJECTION_UPLOAD_DIR")){
 
 function plugin_init_datainjection() {
    global $PLUGIN_HOOKS, $CFG_GLPI, $LANG, $INJECTABLE_TYPES;
-   include_once("config/config.php");
+
    $plugin = new Plugin;
    $PLUGIN_HOOKS['change_profile']['datainjection'] = 'plugin_datainjection_changeprofile';
 
@@ -49,9 +49,9 @@ function plugin_init_datainjection() {
       if (plugin_datainjection_haveRight("model", "r")) {
          $PLUGIN_HOOKS['menu_entry']['datainjection'] = true;
          $PLUGIN_HOOKS['submenu_entry']['datainjection']['options']['model']['links']['search']  =
-                                                           'front/model.php';
+                                                            '/plugins/datainjection/front/model.php';
          $PLUGIN_HOOKS['submenu_entry']['datainjection']['options']['model']['links']['add'] =
-                                                      'front/model.form.php';
+                                                      '/plugins/datainjection/front/model.form.php';
       }
       $PLUGIN_HOOKS['submenu_entry']['datainjection']['add'] = 'index.php';
 
@@ -66,9 +66,22 @@ function plugin_init_datainjection() {
       // Inbtegration with Webservices plugin
       $PLUGIN_HOOKS['webservices']['datainjection'] = 'plugin_datainjection_registerMethods';
 
-      $classes = array ('Model', 'Modelcsv', 'Backend', 'Backendcsv', 'Infos', 'InfosCollection',
-                        'Mapping','MappingCollection', 'Profile','Data','Check',
-                        'InjectionInterface','InjectionCommon','Result');
+      $classes = array ('Model',
+                        'Modelcsv',
+                        'Backend',
+                        'Backendcsv',
+                        'Infos',
+                        'InfosCollection',
+                        'Mapping',
+                        'MappingCollection',
+                        'Profile',
+                        'Data',
+                        'Check',
+                        'InjectionInterface',
+                        'InjectionCommon',
+                        'Result',
+                        'CommonInjectionLib',
+                        'Webservice');
       foreach ($classes as $value) {
          Plugin::registerClass('PluginDatainjection'.$value);
       }

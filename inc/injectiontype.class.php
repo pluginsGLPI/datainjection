@@ -30,15 +30,16 @@
 class PluginDatainjectionInjectionType {
 
    const NO_VALUE = 'none';
+
    /**
-    * Display a list of all importable types using datainjection plugin
-    * @param value the selected value
-    * @return nothing
+    * Return all injectable types
+    * @param only_primary return only primary types
+    * @return an array which contains array(itemtype => itemtype name)
     */
-   static function dropdown($value='',$only_primary=false) {
+   static function getItemtypes($only_primary=false) {
       global $INJECTABLE_TYPES;
 
-      $values = array();
+     $values = array();
       foreach ($INJECTABLE_TYPES as $type => $plugin) {
          $injectionclass = new $type();
          if (!$only_primary || ($only_primary && $injectionclass->isPrimaryType())) {
@@ -47,7 +48,18 @@ class PluginDatainjectionInjectionType {
          }
       }
       asort($values);
-      return Dropdown::showFromArray('itemtype',$values,array('value'=>$value));
+      return $values;
+   }
+
+   /**
+    * Display a list of all importable types using datainjection plugin
+    * @param value the selected value
+    * @return nothing
+    */
+   static function dropdown($value='',$only_primary=false) {
+       return Dropdown::showFromArray('itemtype',
+                                      self::getItemtypes($only_primary),
+                                      array('value'=>$value));
    }
 
    /**

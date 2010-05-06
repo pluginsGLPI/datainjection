@@ -36,6 +36,10 @@ class PluginDatainjectionBackendcsv extends PluginDatainjectionBackend {
    private $delemiter = '';
    private $isHeaderPresent = true;
 
+   function __construct() {
+      $this->errmsg= "";
+   }
+
    //Getters & setters
    function getDelimiter() {
       return $this->delimiter;
@@ -61,7 +65,9 @@ class PluginDatainjectionBackendcsv extends PluginDatainjectionBackend {
       for($c= 0; $c < $num; $c++) {
          //If field is not the last, or if field is the last of the line and is not empty
 
-         if($c <($num -1) ||($c ==($num -1) && $data[$num -1] != EMPTY_VALUE)) {
+         if($c <($num -1)
+               || ($c ==($num -1)
+                  && $data[$num -1] != PluginDatainjectionCommonInjectionLib::EMPTY_VALUE)) {
             switch($encoding) {
                //If file is ISO8859-1 : encode the datas in utf8
                case PluginDatainjectionBackend :: ENCODING_ISO8859_1 :
@@ -77,10 +83,6 @@ class PluginDatainjectionBackendcsv extends PluginDatainjectionBackend {
          }
       }
       return $csv;
-   }
-
-   function PluginDatainjectionBackendcsv() {
-      $this->errmsg= "";
    }
 
    function init($newfile,$encoding) {
@@ -100,8 +102,8 @@ class PluginDatainjectionBackendcsv extends PluginDatainjectionBackend {
                             3000,
                             $this->getDelimiter())) !== FALSE) {
          //If line is not empty
-         if(count($data) > 1 || $data[0] != EMPTY_VALUE) {
-            $line= PluginDatainjectionBackendcsv :: parseLine($fic, $data, $this->encoding);
+         if(count($data) > 1 || $data[0] != PluginDatainjectionCommonInjectionLib::EMPTY_VALUE) {
+            $line= self::parseLine($fic, $data, $this->encoding);
             if(count($line[0]) > 0) {
                $injectionData->addToDatas($line);
                if ($only_firstline) {
@@ -141,7 +143,7 @@ class PluginDatainjectionBackendcsv extends PluginDatainjectionBackend {
 
       while((($data= fgetcsv($fic, 3000, $this->delimiter)) !== FALSE) && $row <= $end_line) {
          if($row >= $start_line && $row <= $end_line)
-            $injectionData->addToDatas(PluginDatainjectionBackendcsv :: parseLine($fic,$data));
+            $injectionData->addToDatas(self :: parseLine($fic,$data));
          $row++;
       }
 

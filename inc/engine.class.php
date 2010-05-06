@@ -37,13 +37,10 @@ class PluginDatainjectionEngine {
    //Model informations
    private $model;
 
-   //PluginDatainjectionBackend to read file to import
-   private $backend;
-
    //Current entity
    private $entity;
 
-   function __construct($model, $filename, $backend, $entity = 0) {
+   function __construct($model, $entity = 0) {
       //Instanciate model
       $this->model = $model;
 
@@ -51,19 +48,13 @@ class PluginDatainjectionEngine {
       $this->getModel()->loadAll($this->model->getModelID());
 
       $this->entity = $entity;
-
-      $datas = new PluginDatainjectionData;
-
-      $this->backend = $backend;
    }
 
    /**
     * Inject one line of datas
     * @param line one line of data to import
     */
-   function injectLine($line, $infos = array ()) {
-      $result = new PluginDatainjectionResult;
-
+   function injectLine($line) {
       //Store all fields to injection, sorted by itemtype
       $fields_toinject = array();
       $mandatory_fields = array();
@@ -88,23 +79,33 @@ class PluginDatainjectionEngine {
 
       //--------------- Set all needed options ------------------//
       //Check options
-      $checks = array('ip'=>true,'mac'=>true,'integer'=>true,'yes'=>true,'yesno'=>true,
-                      'date'=>$this->getModel()->getDateFormat(),
-                      'float'=>$this->getModel()->getFloatFormat(),
-                      'right_r'=>true,'right_rw'=>true,
-                      'interface'=>true,'auth_method'=>true);
+      $checks = array('ip'                       =>true,
+                      'mac'                      =>true,
+                      'integer'                  =>true,
+                      'yes'                      =>true,
+                      'yesno'                    =>true,
+                      'date'                     =>$this->getModel()->getDateFormat(),
+                      'float'                    =>$this->getModel()->getFloatFormat(),
+                      'string'                   =>true,
+                      'right_r'                  =>true,
+                      'right_rw'                 =>true,
+                      'interface'                =>true,
+                      'auth_method'              =>true);
+
       //Rights options
-      $rights = array('add_dropdown'=>$this->getModel()->getCanAddDropdown(),
+      $rights = array('add_dropdown'             =>$this->getModel()->getCanAddDropdown(),
                       'overwrite_notempty_fields'=>$this->getModel()->getCanOverwriteIfNotEmpty());
+
       //Field format options
-      $formats = array('date_format'=>$this->getModel()->getDateFormat(),
-                       'float_format'=>$this->getModel()->getFloatFormat());
+      $formats = array('date_format'             =>$this->getModel()->getDateFormat(),
+                       'float_format'            =>$this->getModel()->getFloatFormat());
+
       //Check options : by default check all types
-      $options = array('checks'     =>$checks,
-                       'entities_id'=>$this->getEntity(),
-                       'rights'=> $rights,
-                       'formats'=>$formats,
-                       'mandatory_fields'=>$mandatory_fields);
+      $options = array('checks'                  =>$checks,
+                       'entities_id'             =>$this->getEntity(),
+                       'rights'                  => $rights,
+                       'formats'                 =>$formats,
+                       'mandatory_fields'        =>$mandatory_fields);
 
       //Do we need to add or update the objet ?
       $action = 'add';
@@ -285,39 +286,16 @@ class PluginDatainjectionEngine {
       }
       */
 
-      return $result;
+      return $results;
    }
 
    //--------- Getters -------------------------//
-   /**
-    * Get datas imported read from the file
-    */
-   function getDatas() {
-      if (isset ($this->backend))
-         return $this->backend->getDatas();
-      else
-         return array ();
-   }
-
    function getModel() {
       return $this->model;
-   }
-
-   function getBackend() {
-      return $this->backend;
    }
 
    function getEntity() {
       return $this->entity;
    }
-
-   /**
-    * Return the number of lines of the file
-    * @return the number of line of the file
-    */
-   function getNumberOfLines() {
-      return $this->backend->getNumberOfLine();
-   }
-
 }
 ?>

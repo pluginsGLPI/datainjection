@@ -101,7 +101,7 @@ class PluginDatainjectionComputerInjection extends Computer
     */
    function addObject($values=array(), $options=array()) {
       global $LANG;
-      $lib = new PluginDatainjectionCommonInjectionLib($options,$values,$this);
+      $lib = new PluginDatainjectionCommonInjectionLib($this,$values,$options);
       $lib->addObject();
       return $lib->getInjectionResults();
    }
@@ -115,7 +115,7 @@ class PluginDatainjectionComputerInjection extends Computer
     * @return an array of IDs of updated objects : for example array(Computer=>1, Networkport=>10)
     */
    function updateObject($values=array(), $options=array()) {
-      $lib = new PluginDatainjectionCommonInjectionLib($options,$values,$this);
+      $lib = new PluginDatainjectionCommonInjectionLib($this,$values,$options);
       $lib->updateObject();
       return $lib->getInjectionResults();
 
@@ -129,7 +129,7 @@ class PluginDatainjectionComputerInjection extends Computer
     * @param options options used during creation
     */
    function deleteObject($values=array(), $options=array()) {
-      $lib = new PluginDatainjectionCommonInjectionLib($options,$values,$this);
+      $lib = new PluginDatainjectionCommonInjectionLib($this,$values,$options);
       $lib->deleteObject();
       return $lib->getInjectionResults();
    }
@@ -139,7 +139,9 @@ class PluginDatainjectionComputerInjection extends Computer
    }
 
    function reformat(&$values = array()) {
+
    }
+
 }
 
 ?>

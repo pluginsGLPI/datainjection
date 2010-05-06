@@ -87,6 +87,7 @@ class PluginDatainjectionCommonInjectionLib {
    const WARNING_SEVERAL_VALUES_FOUND   = 18;
    const WARNING_ALREADY_LINKED         = 19;
    const IMPORT_IMPOSSIBLE              = 20;
+   const ERROR_FIELDSIZE_EXCEEDED       = 21;
 
    const EMPTY_VALUE                    = '';
    const DROPDOWN_DEFAULT_VALUE         = 0;
@@ -102,13 +103,13 @@ class PluginDatainjectionCommonInjectionLib {
 
    /**
     * Constructor : store all needed options into the library
-    * @param injection_options options that can be used during the injection (maybe an empty array)
-    * @param values values to injection into GLPI
     * @param injectionClass class which represents the itemtype to injection
     *                         (in 0.80, will be directly the itemtype class)
+    * @param values values to injection into GLPI
+    * @param injection_options options that can be used during the injection (maybe an empty array)
     * @return nothing
     */
-   function __construct($injection_options = array(), $values = array(), $injectionClass) {
+   function __construct($injectionClass, $values = array(), $injection_options = array()) {
 
       $options = array('rights','checks','mandatory_fields');
       foreach ($options as $option) {
@@ -162,7 +163,7 @@ class PluginDatainjectionCommonInjectionLib {
     * Get date format used for injection
     * @return date format used
     */
-   protected function getDateFormat() {
+   private function getDateFormat() {
       return $this->formats['date_format'];
    }
 
@@ -170,7 +171,7 @@ class PluginDatainjectionCommonInjectionLib {
     * Get date format used for injection
     * @return date format used
     */
-   protected function getFloatFormat() {
+   private function getFloatFormat() {
       return $this->formats['float_format'];
    }
 
@@ -178,7 +179,7 @@ class PluginDatainjectionCommonInjectionLib {
     * Is allowed to add values to dropdowns ?
     * @return boolean
     */
-   protected function canAddDropdownValue() {
+   private function canAddDropdownValue() {
       if (isset($this->rights['add_dropdown'])) {
          return $this->rights['add_dropdown'];
       }
@@ -217,6 +218,9 @@ class PluginDatainjectionCommonInjectionLib {
       return $this->results;
    }
 
+   private function getFieldValue($field) {
+
+   }
    //--------------------------------------------------//
    //----------- Reformat methods --------------------//
    //------------------------------------------------//
@@ -457,7 +461,12 @@ class PluginDatainjectionCommonInjectionLib {
          else {
             switch ($field_type) {
                case 'text' :
-                  return self::SUCCESS;
+                  if (sizeof($data) > 255) {
+                     return self::ERROR_FIELDSIZE_EXCEEDED;
+                  }
+                  else {
+                     return self::SUCCESS;
+                  }
                case 'integer' :
                   return (is_numeric($data)?self::SUCCESS:self::TYPE_MISMATCH);
                case 'float':

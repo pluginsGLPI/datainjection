@@ -35,20 +35,20 @@
 function plugin_datainjection_registerMethods() {
    global $WEBSERVICES_METHOD;
 
-   // Not authenticated method
-   $WEBSERVICES_METHOD['datainjection.getModel']  = array('PluginDatainjectionModel',
-                                                          'methodGetModel');
-   $WEBSERVICES_METHOD['datainjection.listModels']  = array('PluginDatainjectionModel',
-                                                          'methodListModels');
-    // Authenticated method
-   $WEBSERVICES_METHOD['datainjection.setModel']  = array('PluginDatainjectionModel',
-                                                          'methodSetModel');
+   $methods = array('getModel'      =>'methodGetModel',
+                    'listModels'    =>'methodListModels',
+                    'inject'        =>'methodInject',
+                    'listItemtypes' =>'methodListItemtypes');
+   foreach ($methods as $code => $method) {
+      $WEBSERVICES_METHOD['datainjection.'.$code]  = array('PluginDatainjectionWebservice',
+                                                             $method);
+   }
 }
 
 function plugin_pre_item_delete_datainjection($input) {
    if (isset ($input["_item_type_"]))
    switch ($input["_item_type_"]) {
-      case PROFILE_TYPE :
+      case 'Profile' :
          // Manipulate data if needed
          $PluginDatainjectionProfile = new PluginDatainjectionProfile;
          $PluginDatainjectionProfile->cleanProfiles($input["ID"]);
@@ -71,7 +71,7 @@ function plugin_datainjection_changeprofile() {
 
 function plugin_headings_actions_datainjection($itemtype) {
    switch ($itemtype) {
-      case PROFILE_TYPE :
+      case 'Profile' :
          return array (
             1 => "plugin_headings_datainjection",
 
@@ -347,12 +347,6 @@ function plugin_datainjection_createaccess($ID) {
    $DB->query($query);
 }
 
-
-
-function plugin_datainjection_haveTypeRight($module,$right)
-{
-   return plugin_datainjection_haveRight("model", $right);
-}
 
 function plugin_datainjection_checkRight($module, $right) {
    global $CFG_GLPI;

@@ -57,6 +57,7 @@ class PluginDatainjectionUserInjection extends User
 
    }
 
+
    /**
     * Standard method to add an object into glpi
     * WILL BE INTEGRATED INTO THE CORE IN 0.80
@@ -66,35 +67,9 @@ class PluginDatainjectionUserInjection extends User
     */
    function addObject($values=array(), $options=array()) {
       global $LANG;
-
-      $itemtype = 'User';
-      $injectionResults = array();
-      //TODO : check values
-
-      //If no values are present for the Computer type, exit method
-      if (!isset($values[$itemtype])) {
-         $injectionResults = array($itemtype,-1);
-      }
-      else {
-         $item = new Computer;
-         $newID = $item->add($values);
-         if ($newID) {
-            $injectionResults = array($itemtype,$newID);
-         }
-         else {
-            $injectionResults = array($itemtype,-1);
-         }
-      }
-
-      if ($injectionResults[$itemtype] > 0) {
-         //Injected the other types
-         foreach ($values as $itemtype => $fields) {
-            if ($itemtype != $itemtype) {
-
-            }
-         }
-      }
-      return $injectionResults;
+      $lib = new PluginDatainjectionCommonInjectionLib($this,$values,$options);
+      $lib->addObject();
+      return $lib->getInjectionResults();
    }
 
 
@@ -106,6 +81,9 @@ class PluginDatainjectionUserInjection extends User
     * @return an array of IDs of updated objects : for example array(Computer=>1, Networkport=>10)
     */
    function updateObject($values=array(), $options=array()) {
+      $lib = new PluginDatainjectionCommonInjectionLib($this,$values,$options);
+      $lib->updateObject();
+      return $lib->getInjectionResults();
 
    }
 
@@ -117,19 +95,19 @@ class PluginDatainjectionUserInjection extends User
     * @param options options used during creation
     */
    function deleteObject($values=array(), $options=array()) {
+      $lib = new PluginDatainjectionCommonInjectionLib($this,$values,$options);
+      $lib->deleteObject();
+      return $lib->getInjectionResults();
    }
 
    function checkType($field_name, $data, $mandatory) {
-      switch($field_name) {
-         case 'auth_method':
-            $auths = array(Auth::AUTH_CAS, Auth::AUTH_DB_GLPI, Auth::AUTH_EXTERNAL,
-                                   Auth::AUTH_LDAP, Auth::AUTH_MAIL, Auth::AUTH_X509);
-            return (in_array($data,$auths)?PluginDatainjectionCommonInjectionLib::SUCCESS
-                                             :PluginDatainjectionCommonInjectionLib::TYPE_MISMATCH);
-          default:
-            return PluginDatainjectionCommonInjectionLib::SUCCESS;
-      }
+      return PluginDatainjectionCommonInjectionLib::SUCCESS;
    }
+
+   function reformat(&$values = array()) {
+
+   }
+
 }
 
 ?>

@@ -101,9 +101,7 @@ interface PluginDatainjectionInjectionInterface {
    function checkType($field_name, $data, $mandatory);
 
    /**
-    * Reformat data specifically for this itemtype
-    * @param values values to reformat (by reference)
-    * @return nothing
+    * Reformat data if itemtypes needs it
     */
    function reformat(&$values = array());
 }
