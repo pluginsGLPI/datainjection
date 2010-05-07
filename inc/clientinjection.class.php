@@ -48,13 +48,13 @@ class PluginDatainjectionClientInjection {
          $url = getItemTypeSearchURL('PluginDatainjectionModel');
          $buttons[$url] = $LANG["datainjection"]["profiles"][1];
          $title="";
+         displayTitle($CFG_GLPI["root_doc"] . "/plugins/datainjection/pics/datainjection.png",
+                      $LANG['Menu'][36], $title, $buttons);
       }
-      displayTitle($CFG_GLPI["root_doc"] . "/plugins/datainjection/pics/datainjection.png",
-                   $LANG['Menu'][36], $title, $buttons);
    }
 
    function showForm($ID, $options=array()) {
-      global $LANG;
+      global $LANG, $CFG_GLPI;
 
       echo "<form method='post' name=form action='".getItemTypeFormURL(__CLASS__)."'".
             "enctype='multipart/form-data'>";
@@ -65,10 +65,19 @@ class PluginDatainjectionClientInjection {
       echo "</tr>";
       echo "<tr class='tab_bg_1'>";
       echo "<td align='center'>".$LANG['common'][22]."&nbsp;:";
-      PluginDatainjectionModel::dropdown();
+      PluginDatainjectionModel::dropdown(array('value'=>$ID));
       echo "</td></tr></table>";
-      echo "<span id='span_injection' name='span_injection'></span>";
+      echo "<span id='span_injection' name='span_injection'>";
+      echo "</span>";
       echo "</div></form>";
+
+      if (isset($_SESSION['glpi_plugin_datainjection_models_id'])) {
+         $url = $CFG_GLPI["root_doc"]."/plugins/datainjection/ajax/dropdownSelectModel.php";
+         $p['models_id'] = $_SESSION['glpi_plugin_datainjection_models_id'];
+         ajaxUpdateItem("span_injection",
+                        $url,$p);
+      }
+
    }
 }
 ?>

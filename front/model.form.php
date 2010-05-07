@@ -79,6 +79,9 @@ elseif (isset($_POST['upload'])) {
                                             'mode'=>PluginDatainjectionModel::CREATION))) {
          setActiveTab('PluginDatainjectionModel', 3);
       }
+      else {
+         addMessageAfterRedirect($LANG["datainjection"]["fileStep"][4],true,ERROR,true);
+      }
    }
    glpi_header($_SERVER['HTTP_REFERER']);
 }

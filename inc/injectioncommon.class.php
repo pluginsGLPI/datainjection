@@ -61,55 +61,5 @@ class PluginDatainjectionInjectionCommon {
       }
       return false;
    }
-
-   static function displayAdditionalInformation(PluginDatainjectionInfo $info) {
-      $injectionClass = PluginDatainjectionInjectionCommon::getInstance($info->fields['itemtype']);
-      $option = PluginDatainjectionCommonInjectionLib::findSearchOption($injectionClass->getOptions(),
-                                                                        $info->fields['value']);
-      if ($option) {
-         echo "<td>";
-         echo $option['name'];
-         echo "</td>";
-         echo "<td>";
-         self::showAdditionalInformation($info,$option,$injectionClass);
-         echo "</td>";
-      }
-   }
-
-   /**
-    * Display command additional informations
-    * @param info
-    * @param option
-    * @param injectionClass
-    * @return nothing
-    */
-   static function showAdditionalInformation(PluginDatainjectionInfo $info,
-                                             $option = array(),
-                                             $injectionClass) {
-      switch ($option['displaytype']) {
-         case 'text' :
-            echo "<input type='text' name='".$option['linkfield']."'>";
-         break;
-         case 'dropdown':
-            Dropdown::show(getItemTypeForTable($option['table']));
-            break;
-         case 'yesno':
-            Dropdown::showYesNo($option['linkfield'],0);
-            break;
-         case 'user':
-            User::dropdown(array('name'=>$option['linkfield']));
-            break;
-         case 'multiline_text':
-            echo "<textarea cols='45' rows='5' name='".$option['linkfield']."' ></textarea>";
-            break;
-         default:
-            //If type is not a standard type, must be treated by specific injection class
-            $injectionClass->showAdditionalInformation($info,$option);
-            break;
-      }
-      if ($info->isMandatory()) {
-         echo "&nbsp;*";
-      }
-   }
 }
 ?>

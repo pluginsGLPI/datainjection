@@ -31,19 +31,41 @@
 // Purpose of file:
 // ----------------------------------------------------------------------
 if (!defined('GLPI_ROOT')) {
-   define('GLPI_ROOT', '../..');
+   define('GLPI_ROOT', '../../..');
 }
 include (GLPI_ROOT."/inc/includes.php");
 
-//Reset parameters stored in session
-$fields = array('models_id','infos');
-foreach ($fields as $field) {
-   if (isset($_SESSION['glpi_plugin_datainjection_'.$field])) {
-      unset($_SESSION['glpi_plugin_datainjection_'.$field]);
-   }
-}
-$_SESSION['glpi_plugin_datainjection_infos'] = array();
+commonHeader($LANG["datainjection"]["name"][1], $_SERVER["PHP_SELF"],"plugins","datainjection");
 
-//TODO : maybe show a welcome screen, to be discussed...
-glpi_header(getItemTypeFormURL('PluginDatainjectionClientInjection'));
+if (isset($_POST['upload'])) {
+   $model = new PluginDatainjectionModel();
+   $model->check($_POST['id'],'w');
+   if (isset($_POST['info'])) {
+      $_SESSION['glpi_plugin_datainjection_infos'] = $_POST['info'];
+   }
+   else {
+      $_SESSION['glpi_plugin_datainjection_infos'] = array();
+   }
+
+   //If additional informations provided : check if mandatory infos are present
+   if (!$model->checkMandatoryFields($_POST['info'])) {
+      addMessageAfterRedirect($LANG["datainjection"]["fillInfoStep"][4],true,ERROR,true);
+   }
+   elseif (!empty($_FILES) && isset($_FILES['name'])) {
+      if ($model->processUploadedFile(array('file_encoding'=>$_POST['file_encoding'],
+                                            'mode'=>PluginDatainjectionModel::CREATION))) {
+      }
+   }
+   else {
+      addMessageAfterRedirect($LANG["datainjection"]["fileStep"][4],true,ERROR,true);
+   }
+
+   glpi_header($_SERVER['HTTP_REFERER']);
+}
+
+$clientInjection = new PluginDatainjectionClientInjection;
+$clientInjection->title();
+$clientInjection->showForm(1);
+
+commonFooter();
 ?>

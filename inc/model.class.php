@@ -333,10 +333,17 @@ class PluginDatainjectionModel extends CommonDBTM {
 
    static function dropdown($options = array()) {
       global $CFG_GLPI;
+
       $models = self::getModels(getLoginUserID(),'name',$_SESSION['glpiactive_entity'],false);
       $models[0] = '-----';
       $p = array('models_id' => '__VALUE__');
-      $rand = Dropdown::showFromArray('models',$models,array('value'=>0));
+      if (isset($_SESSION['glpi_plugin_datainjection_models_id'])) {
+         $value = $_SESSION['glpi_plugin_datainjection_models_id'];
+      }
+      else {
+         $value = 0;
+      }
+      $rand = Dropdown::showFromArray('models',$models,array('value'=>$value));
       $url = $CFG_GLPI["root_doc"]."/plugins/datainjection/ajax/dropdownSelectModel.php";
       ajaxUpdateItemOnSelectEvent("dropdown_models$rand",
                                   "span_injection",
@@ -812,5 +819,20 @@ class PluginDatainjectionModel extends CommonDBTM {
       return $error;
    }
 
+   function checkMandatoryFields($fields) {
+      //Load infos associated with the model
+      $this->loadInfos();
+      $check = true;
+
+      foreach ($this->infos->getAllInfos() as $info) {
+         if ($info->isMandatory()) {
+            if (!isset($fields[$info->getValue()]) || $fields[$info->getValue()] == '') {
+               $check = false;
+               break;
+            }
+         }
+      }
+      return $check;
+   }
 }
 ?>

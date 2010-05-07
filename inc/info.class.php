@@ -29,8 +29,6 @@
  */
 class PluginDatainjectionInfo extends CommonDBTM {
 
-   var $text;
-
    function getEmpty() {
       $this->fields['itemtype'] = PluginDatainjectionInjectionType::NO_VALUE;
       $this->fields['value'] = PluginDatainjectionInjectionType::NO_VALUE;
@@ -64,36 +62,6 @@ class PluginDatainjectionInfo extends CommonDBTM {
    function getInfosType()
    {
       return $this->fields["itemtype"];
-   }
-
-   function setMandatory($mandatory)
-   {
-      $this->fields["is_mandatory"] = $mandatory;
-   }
-
-   function setInfosText($text)
-   {
-      $this->text = $text;
-   }
-
-   function setValue($value)
-   {
-      $this->fields["value"] = $value;
-   }
-
-   function setID($ID)
-   {
-      $this->fields["id"] = $ID;
-   }
-
-   function setModelID($model_id)
-   {
-      $this->fields["models_id"] = $model_id;
-   }
-
-   function setInfosType($type)
-   {
-      $this->fields["itemtype"] = $type;
    }
 
    static function showAddInfo(PluginDatainjectionModel $model,$canedit=false) {
@@ -219,18 +187,17 @@ class PluginDatainjectionInfo extends CommonDBTM {
             $info = new PluginDatainjectionInfo;
 
             echo "<tr>";
-            echo "<th colspan='2'>" . $LANG["datainjection"]["info"][1]."</th>";
+            echo "<th colspan='2'>" . $LANG["datainjection"]["info"][1];
+            echo "&nbsp;(".$LANG["datainjection"]["fillInfoStep"][3].")</th>";
             echo "</tr>";
 
             foreach ($infos as $tmp) {
                $info->fields = $tmp;
                echo "<tr class='tab_bg_1'>";
-               PluginDatainjectionInjectionCommon::displayAdditionalInformation($info);
+               self::displayAdditionalInformation($info,
+                                                  $_SESSION['glpi_plugin_datainjection_infos']);
                echo "</tr>";
             }
-            echo "<tr class='tab_bg_1'>";
-            echo "<td colspan='2' align='left'>".$LANG["datainjection"]["fillInfoStep"][3]."</td>";
-            echo "</tr>";
          }
 
          //Show file selection
@@ -238,6 +205,7 @@ class PluginDatainjectionInfo extends CommonDBTM {
          echo "<tr class='tab_bg_1'>";
          echo "<td>" . $LANG["datainjection"]["fileStep"][3] . "</td>";
          echo "<td><input type='file' name='file' /></td>";
+         echo "<input type='hidden' name='id' value='".$options['models_id']."'>";
          echo "</tr>";
 
          echo "<tr class='tab_bg_1'>";
@@ -246,6 +214,75 @@ class PluginDatainjectionInfo extends CommonDBTM {
                                                 $LANG["datainjection"]["import"][0]."\"/></td>";
          echo "</tr>";
          echo "</table>";
+         $_SESSION['glpi_plugin_datainjection_models_id'] = $options['models_id'];
+      }
+   }
+
+   static function displayAdditionalInformation(PluginDatainjectionInfo $info,$values = array()) {
+      $injectionClass = PluginDatainjectionInjectionCommon::getInstance($info->fields['itemtype']);
+      $option = PluginDatainjectionCommonInjectionLib::findSearchOption($injectionClass->getOptions(),
+                                                                        $info->fields['value']);
+      if ($option) {
+         echo "<td>";
+         echo $option['name'];
+         echo "</td>";
+         echo "<td>";
+         self::showAdditionalInformation($info,$option,$injectionClass,$values);
+         echo "</td>";
+      }
+   }
+
+   /**
+    * Display command additional informations
+    * @param info
+    * @param option
+    * @param injectionClass
+    * @return nothing
+    */
+   static function showAdditionalInformation(PluginDatainjectionInfo $info,
+                                             $option = array(),
+                                             $injectionClass,
+                                             $values = array()) {
+      $name = "info[".$option['linkfield']."]";
+      $value = '';
+      if (isset($values[$option['linkfield']])) {
+         $value = $values[$option['linkfield']];
+      }
+
+      switch ($option['displaytype']) {
+         case 'text' :
+            echo "<input type='text' name='$name' value='$value'>";
+         break;
+         case 'dropdown':
+            if ($value == '') {
+               $value = 0;
+            }
+            Dropdown::show(getItemTypeForTable($option['table']),
+                                               array('name'=>$name,
+                                                     'value'=>$value));
+            break;
+         case 'yesno':
+            if ($value == '') {
+               $value = 0;
+            }
+            Dropdown::showYesNo($name,0,$value);
+            break;
+         case 'user':
+            if ($value == '') {
+               $value = 0;
+            }
+            User::dropdown(array('name'=>$name,'value'=>$value));
+            break;
+         case 'multiline_text':
+            echo "<textarea cols='45' rows='5' name='$name' >$value</textarea>";
+            break;
+         default:
+            //If type is not a standard type, must be treated by specific injection class
+            $injectionClass->showAdditionalInformation($info,$option);
+            break;
+      }
+      if ($info->isMandatory()) {
+         echo "&nbsp;*";
       }
    }
 }
