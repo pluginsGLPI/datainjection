@@ -74,7 +74,9 @@ else if (isset ($_POST["update"])) {
 }
 elseif (isset($_POST['upload'])) {
    if (!empty($_FILES)) {
-      if ($model->processUploadedFile($_POST['id'],$_POST['file_encoding'])) {
+      $model->check($_POST['id'],'w');
+      if ($model->processUploadedFile(array('file_encoding'=>$_POST['file_encoding'],
+                                            'mode'=>PluginDatainjectionModel::CREATION))) {
          setActiveTab('PluginDatainjectionModel', 3);
       }
    }

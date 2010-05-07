@@ -52,23 +52,26 @@ class PluginDatainjectionModel extends CommonDBTM {
 
 
    //Port unicity constants
-   const UNICITY_NETPORT_LOGICAL_NUMBER = 0;
-   const UNICITY_NETPORT_NAME = 1;
-   const UNICITY_NETPORT_MACADDRESS = 2;
-   const UNICITY_NETPORT_LOGICAL_NUMBER_NAME = 3;
-   const UNICITY_NETPORT_LOGICAL_NUMBER_MAC = 4;
-   const UNICITY_NETPORT_LOGICAL_NUMBER_NAME_MAC = 5;
+   const UNICITY_NETPORT_LOGICAL_NUMBER            = 0;
+   const UNICITY_NETPORT_NAME                      = 1;
+   const UNICITY_NETPORT_MACADDRESS                = 2;
+   const UNICITY_NETPORT_LOGICAL_NUMBER_NAME       = 3;
+   const UNICITY_NETPORT_LOGICAL_NUMBER_MAC        = 4;
+   const UNICITY_NETPORT_LOGICAL_NUMBER_NAME_MAC   = 5;
 
    //Private or public model
-   const MODEL_PRIVATE = 1;
-   const MODEL_PUBLIC = 0;
+   const MODEL_PRIVATE                             = 1;
+   const MODEL_PUBLIC                              = 0;
 
    //Step constants
-   const INITIAL_STEP = 1;
-   const FILE_STEP = 2;
-   const MAPPING_STEP = 3;
-   const OTHERS_STEP = 4;
-   const READY_TO_USE = 5;
+   const INITIAL_STEP                              = 1;
+   const FILE_STEP                                 = 2;
+   const MAPPING_STEP                              = 3;
+   const OTHERS_STEP                               = 4;
+   const READY_TO_USE                              = 5;
+
+   const PROCESS                                   = 0;
+   const CREATION                                  = 1;
 
    function __construct()
    {
@@ -573,6 +576,7 @@ class PluginDatainjectionModel extends CommonDBTM {
 
    function showUploadForm() {
       global $LANG;
+
       if ($this->can($this->fields['id'],'w')) {
          echo "<form method='post' name=form action='".getItemTypeFormURL(__CLASS__)."'".
                "enctype='multipart/form-data'>";
@@ -653,13 +657,8 @@ class PluginDatainjectionModel extends CommonDBTM {
      $original_filename = (isset($options['original_filename'])?$options['original_filename']:false);
      $unique_filename = (isset($options['unique_filename'])?$options['unique_filename']:false);
      $injectionData = false;
+     $file_key = ($webservice?'filename':'file');
 
-     if ($webservice) {
-        $file_key = 'filename';
-     }
-     else {
-        $file_key = 'file';
-     }
      //Get model & model specific fields
       $specific_model = PluginDatainjectionModel::getInstance($this->fields['filetype']);
       $specific_model->getFromDBByModelID($this->fields['id'],true);
@@ -670,7 +669,6 @@ class PluginDatainjectionModel extends CommonDBTM {
          $original_filename = $_FILES[$file_key]["name"];
          $unique_filename = tempnam (realpath(PLUGIN_DATAINJECTION_UPLOAD_DIR), "PWS");
       }
-
 
       //If file has not the right extension, reject it and delete if
       if($specific_model->checkFileName($original_filename)) {
@@ -684,46 +682,37 @@ class PluginDatainjectionModel extends CommonDBTM {
          return array('status'=>ERROR,'message'=>$message);
       }
       else {
-         //if( !move_uploaded_file($temporary_name, $temporary_uniquefilename) ) {
-         //   $message = $LANG["datainjection"]["fileStep"][8];
-         //   $message.= $temporary_uniquefilename;
-         //   $message.= ' '.$original_filename;
-         //   if (!$webservice) {
-         //      addMessageAfterRedirect($message,true,ERROR,false);
-         //   }
-         //   unlink($temporary_uniquefilename);
-         //   return array('status'=>ERROR,'message'=>addslashes_deep($message));
-         //}
-         //else {
-            //Initialise a new backend
-            $backend = PluginDatainjectionBackend::getInstance($this->fields['filetype']);
-            //Init backend with needed values
-            $backend->init($unique_filename,$file_encoding);
-            $backend->setHeaderPresent($specific_model->fields['is_header_present']);
-            $backend->setDelimiter($specific_model->fields['delimiter']);
+         //Initialise a new backend
+          $backend = PluginDatainjectionBackend::getInstance($this->fields['filetype']);
+         //Init backend with needed values
+         $backend->init($unique_filename,$file_encoding);
+         $backend->setHeaderPresent($specific_model->fields['is_header_present']);
+         $backend->setDelimiter($specific_model->fields['delimiter']);
 
-            //Read file
-            $injectionData = $backend->read();
-            $backend->deleteFile();
-            $this->setBackend($backend);
-         //}
+         //Read file
+         $injectionData = $backend->read();
+         $backend->deleteFile();
+         $this->setBackend($backend);
       }
       return $injectionData;
    }
 
-   function processUploadedFile($models_id,$file_encoding=PluginDatainjectionBackend::ENCODING_AUTO) {
+   function processUploadedFile($options = array()) {
       global $LANG;
 
+      $file_encoding=(isset($options['file_encoding'])?$options['file_encoding']
+                                                        :PluginDatainjectionBackend::ENCODING_AUTO);
+      $mode = (isset($options['mode'])?$options['mode']:self::PROCESS);
       $injectionData = false;
       $return_status = true;
 
       //Get model & model specific fields
-      $this->getFromDB($models_id);
-      $specific_model = PluginDatainjectionModel::getInstance($this->fields['filetype']);
-      $specific_model->getFromDBByModelID($models_id,true);
+
+      $specific_model = PluginDatainjectionModel::getInstance($this->getFiletype());
+      $specific_model->getFromDBByModelID($this->fields['id'],true);
       $this->setSpecificModel($specific_model);
 
-      $injectionData = $this->readUploadedFile($file_encoding);
+      $injectionData = $this->readUploadedFile($options);
       if (!$injectionData) {
          return false;
       }
@@ -731,7 +720,9 @@ class PluginDatainjectionModel extends CommonDBTM {
          $check = $this->isFileCorrect($injectionData);
          //There's an error
          if ($check['status'] != PluginDatainjectionCheck::CHECK_OK) {
-            addMessageAfterRedirect($check['error_message'],true,ERROR,true);
+            if ($mode == self::CREATION) {
+               addMessageAfterRedirect($check['error_message'],true,ERROR,true);
+            }
             $return_status = false;
          }
          else {
@@ -759,8 +750,10 @@ class PluginDatainjectionModel extends CommonDBTM {
             PluginDatainjectionModel::changeStep($this->fields['id'],
                                                  PluginDatainjectionModel::MAPPING_STEP);
 
-            //Add redirect message
-            addMessageAfterRedirect($LANG["datainjection"]["model"][32],true,INFO,true);
+            if ($mode == self::CREATION) {
+               //Add redirect message
+               addMessageAfterRedirect($LANG["datainjection"]["model"][32],true,INFO,true);
+            }
          }
       }
       return $return_status;
@@ -788,7 +781,7 @@ class PluginDatainjectionModel extends CommonDBTM {
       }
 
       //If no header in the CSV file, exit method
-      if(!$specific_model->isHeaderPresent()) {
+      if(!$this->specific_model->isHeaderPresent()) {
          return array('status'=>0,'field_in_error'=>false,'error_message'=>'');
       }
 

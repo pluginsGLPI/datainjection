@@ -212,10 +212,12 @@ class PluginDatainjectionInfo extends CommonDBTM {
       if (isset($options['models_id']) && $options['models_id']) {
          $infos = getAllDatasFromTable('glpi_plugin_datainjection_infos',
                                        "`models_id`='". $options['models_id']."'");
+
+         echo "<table class='tab_cadre_fixe'>";
+
          if (count($infos)) {
             $info = new PluginDatainjectionInfo;
 
-            echo "<table class='tab_cadre_fixe'>";
             echo "<tr>";
             echo "<th colspan='2'>" . $LANG["datainjection"]["info"][1]."</th>";
             echo "</tr>";
@@ -226,26 +228,24 @@ class PluginDatainjectionInfo extends CommonDBTM {
                PluginDatainjectionInjectionCommon::displayAdditionalInformation($info);
                echo "</tr>";
             }
-            if (count($infos)) {
-               echo "<tr class='tab_bg_1'>";
-               echo "<td colspan='2' align='left'>".$LANG["datainjection"]["fillInfoStep"][3]."</td>";
-               echo "</tr>";
-            }
-
-            //Show file selection
-            echo "<th colspan='2'>" . $LANG["datainjection"]["tabs"][3]."</th>";
             echo "<tr class='tab_bg_1'>";
-            echo "<td>" . $LANG["datainjection"]["fileStep"][3] . "</td>";
-            echo "<td><input type='file' name='file' /></td>";
+            echo "<td colspan='2' align='left'>".$LANG["datainjection"]["fillInfoStep"][3]."</td>";
             echo "</tr>";
-
-            echo "<tr class='tab_bg_1'>";
-            echo "<td colspan='2' align='center'>";
-            echo "<input type='submit' class='submit' name='upload' value=\"".
-                                                   $LANG["datainjection"]["import"][0]."\"/></td>";
-            echo "</tr>";
-            echo "</table>";
          }
+
+         //Show file selection
+         echo "<th colspan='2'>" . $LANG["datainjection"]["tabs"][3]."</th>";
+         echo "<tr class='tab_bg_1'>";
+         echo "<td>" . $LANG["datainjection"]["fileStep"][3] . "</td>";
+         echo "<td><input type='file' name='file' /></td>";
+         echo "</tr>";
+
+         echo "<tr class='tab_bg_1'>";
+         echo "<td colspan='2' align='center'>";
+         echo "<input type='submit' class='submit' name='upload' value=\"".
+                                                $LANG["datainjection"]["import"][0]."\"/></td>";
+         echo "</tr>";
+         echo "</table>";
       }
    }
 }
