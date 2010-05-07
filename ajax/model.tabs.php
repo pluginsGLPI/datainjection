@@ -60,7 +60,9 @@ if ($_POST["id"] >0 && $model->can($_POST["id"],'r')) {
          $model->showAdvancedForm($_POST["id"],$_POST['glpi_tab']);
 
          if ($model->fields['step'] > PluginDatainjectionModel::INITIAL_STEP) {
-            $model->showUploadForm();
+            $options['confirm'] = 'creation';
+            $options['models_id'] = $model->fields['id'];
+            PluginDatainjectionClientInjection::showUploadFileForm($options);
          }
          if ($model->fields['step'] > PluginDatainjectionModel::FILE_STEP) {
             PluginDatainjectionMapping::showFormMappings($_POST["id"]);
@@ -76,7 +78,9 @@ if ($_POST["id"] >0 && $model->can($_POST["id"],'r')) {
          $model->showAdvancedForm($_POST["id"],$_POST['glpi_tab']);
          break;
       case 3 :
-         $model->showUploadForm();
+         $options['confirm'] = 'creation';
+         $options['models_id'] = $model->fields['id'];
+         PluginDatainjectionClientInjection::showUploadFileForm($options);
          break;
       case 4 :
          PluginDatainjectionMapping::showFormMappings($_POST["id"]);

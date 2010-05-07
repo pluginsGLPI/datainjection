@@ -48,12 +48,17 @@ if (isset($_POST['upload'])) {
    }
 
    //If additional informations provided : check if mandatory infos are present
-   if (!$model->checkMandatoryFields($_POST['info'])) {
+   if (!$model->checkMandatoryFields($_SESSION['glpi_plugin_datainjection_infos'])) {
       addMessageAfterRedirect($LANG["datainjection"]["fillInfoStep"][4],true,ERROR,true);
    }
-   elseif (!empty($_FILES) && isset($_FILES['name'])) {
-      if ($model->processUploadedFile(array('file_encoding'=>$_POST['file_encoding'],
-                                            'mode'=>PluginDatainjectionModel::CREATION))) {
+   elseif (!empty($_FILES) && !isset($_FILES['name'])) {
+      $response = $model->processUploadedFile(array('file_encoding'=>$_POST['file_encoding'],
+                                            'mode'=>PluginDatainjectionModel::CREATION));
+      if ($response) {
+         //File uploaded successfully and matches the given model : switch to the import tab
+         $_SESSION['glpi_plugin_datainjection_step'] =
+                                          PluginDatainjectionClientInjection::STEP_PROCESS;
+         addMessageAfterRedirect('upload ok');
       }
    }
    else {

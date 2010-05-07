@@ -199,21 +199,12 @@ class PluginDatainjectionInfo extends CommonDBTM {
                echo "</tr>";
             }
          }
-
-         //Show file selection
-         echo "<th colspan='2'>" . $LANG["datainjection"]["tabs"][3]."</th>";
-         echo "<tr class='tab_bg_1'>";
-         echo "<td>" . $LANG["datainjection"]["fileStep"][3] . "</td>";
-         echo "<td><input type='file' name='file' /></td>";
-         echo "<input type='hidden' name='id' value='".$options['models_id']."'>";
-         echo "</tr>";
-
-         echo "<tr class='tab_bg_1'>";
-         echo "<td colspan='2' align='center'>";
-         echo "<input type='submit' class='submit' name='upload' value=\"".
-                                                $LANG["datainjection"]["import"][0]."\"/></td>";
-         echo "</tr>";
          echo "</table>";
+
+         $options['confirm'] = 'process';
+         PluginDatainjectionClientInjection::showUploadFileForm($options);
+
+         //Store models_id in session for future usage
          $_SESSION['glpi_plugin_datainjection_models_id'] = $options['models_id'];
       }
    }

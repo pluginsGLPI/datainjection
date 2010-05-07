@@ -581,41 +581,6 @@ class PluginDatainjectionModel extends CommonDBTM {
       $DB->query($query);
    }
 
-   function showUploadForm() {
-      global $LANG;
-
-      if ($this->can($this->fields['id'],'w')) {
-         echo "<form method='post' name=form action='".getItemTypeFormURL(__CLASS__)."'".
-               "enctype='multipart/form-data'>";
-         echo "<table class='tab_cadre_fixe'>";
-         echo "<tr><th colspan='2'>".$LANG["datainjection"]["model"][29]."</th></tr>";
-         echo "<tr class='tab_bg_1'>";
-         echo "<td>" . $LANG["datainjection"]["fileStep"][3] . "</td>";
-         echo "<td><input type='file' name='file' /></td>";
-         echo "</tr>";
-
-         echo "<tr class='tab_bg_1'>";
-         echo "<td>" . $LANG["datainjection"]["fileStep"][9] . "</td>";
-         echo "<td>";
-         PluginDatainjectionDropdown::dropdownFileEncoding();
-         echo "</td>";
-         echo "</tr>";
-         echo "<tr class='tab_bg_2'>";
-         echo "<td align='center' colspan='2'>";
-         echo "<input type='hidden' name='id' value='".$this->fields['id']."'>";
-         $alert ="";
-         if ($this->fields['step'] != PluginDatainjectionModel::FILE_STEP) {
-            $alert = "OnClick='return window.confirm(\"" .
-                      addslashes($LANG["datainjection"]["mapping"][13]). "\");'";
-         }
-
-         echo "<input type='submit' name='upload' value=\"" . $LANG['buttons'][7] .
-                    "\" class='submit' $alert>";
-         echo "</td></tr>";
-         echo "</table></form>";
-      }
-   }
-
    static function changeStep($models_id,$step) {
       $model = new PluginDatainjectionModel;
       if ($model->getFromDB($models_id)) {
@@ -720,15 +685,16 @@ class PluginDatainjectionModel extends CommonDBTM {
       $this->setSpecificModel($specific_model);
 
       $injectionData = $this->readUploadedFile($options);
+
       if (!$injectionData) {
          return false;
       }
       else {
          $check = $this->isFileCorrect($injectionData);
          //There's an error
-         if ($check['status'] != PluginDatainjectionCheck::CHECK_OK) {
+         if ($check['status'] > 0) {
             if ($mode == self::CREATION) {
-               addMessageAfterRedirect($check['error_message'],true,ERROR,true);
+               addMessageAfterRedirect($check['error_message'],true,ERROR);
             }
             $return_status = false;
          }
@@ -759,7 +725,7 @@ class PluginDatainjectionModel extends CommonDBTM {
 
             if ($mode == self::CREATION) {
                //Add redirect message
-               addMessageAfterRedirect($LANG["datainjection"]["model"][32],true,INFO,true);
+               addMessageAfterRedirect($LANG["datainjection"]["model"][32],true,INFO);
             }
          }
       }

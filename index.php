@@ -43,6 +43,7 @@ foreach ($fields as $field) {
    }
 }
 $_SESSION['glpi_plugin_datainjection_infos'] = array();
+$_SESSION['glpi_plugin_datainjection_step'] = PluginDatainjectionClientInjection::STEP_UPLOAD;
 
 //TODO : maybe show a welcome screen, to be discussed...
 glpi_header(getItemTypeFormURL('PluginDatainjectionClientInjection'));

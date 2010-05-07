@@ -34,6 +34,10 @@
 */
 class PluginDatainjectionClientInjection {
 
+   const STEP_UPLOAD  = 0;
+   const STEP_PROCESS = 1;
+   const STEP_RESULT  = 2;
+
    /**
     * Print a good title for group pages
     *
@@ -72,12 +76,57 @@ class PluginDatainjectionClientInjection {
       echo "</div></form>";
 
       if (isset($_SESSION['glpi_plugin_datainjection_models_id'])) {
-         $url = $CFG_GLPI["root_doc"]."/plugins/datainjection/ajax/dropdownSelectModel.php";
          $p['models_id'] = $_SESSION['glpi_plugin_datainjection_models_id'];
-         ajaxUpdateItem("span_injection",
-                        $url,$p);
-      }
 
+         if ($_SESSION['glpi_plugin_datainjection_step'] == self::STEP_UPLOAD) {
+            $url = $CFG_GLPI["root_doc"]."/plugins/datainjection/ajax/dropdownSelectModel.php";
+         }
+         else {
+            $url = $CFG_GLPI["root_doc"]."/plugins/datainjection/ajax/injection.php";
+         }
+         ajaxUpdateItem("span_injection",$url,$p);
+      }
+   }
+
+   static function showUploadFileForm($options = array()) {
+      global $LANG;
+      echo "<table class='tab_cadre_fixe'>";
+      //Show file selection
+      echo "<th colspan='2'>" . $LANG["datainjection"]["tabs"][3]."</th>";
+      echo "<tr class='tab_bg_1'>";
+      echo "<td>" . $LANG["datainjection"]["fileStep"][3] . "</td>";
+      echo "<td><input type='file' name='file' /></td>";
+      echo "<input type='hidden' name='id' value='".$options['models_id']."'>";
+      echo "</tr>";
+
+      echo "<tr class='tab_bg_1'>";
+      echo "<td>" . $LANG["datainjection"]["fileStep"][9] . "</td>";
+      echo "<td>";
+      PluginDatainjectionDropdown::dropdownFileEncoding();
+      echo "</td>";
+      echo "</tr>";
+
+      echo "<tr class='tab_bg_1'>";
+      echo "<td colspan='2' align='center'>";
+      if (isset($options['confirm']) && $options['confirm']) {
+         if ($options['confirm'] == 'creation') {
+            $message = $LANG["datainjection"]["mapping"][13];
+         }
+         else {
+         	$message = $LANG["datainjection"]["fillInfoStep"][1];
+         }
+         $alert = "OnClick='return window.confirm(\"" .
+                  $message. "\");'";
+      }
+       echo "<input type='submit' class='submit' name='upload' value=\"".
+                                             $LANG["datainjection"]["import"][0]."\" $alert/>";
+      echo "</td>";
+      echo "</tr>";
+      echo "</table>";
+   }
+
+   static function showInjectionForm() {
+      global $LANG;
    }
 }
 ?>

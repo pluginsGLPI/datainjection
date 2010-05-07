@@ -142,7 +142,7 @@ $LANG["datainjection"]["saveStep"][18] = " Dans le fichier ";
 $LANG["datainjection"]["saveStep"][19] = " Dans le modèle ";
 
 
-$LANG["datainjection"]["fillInfoStep"][1] = "Attention ! Vous êtes sur le point d'importer des données dans GLPI. Etes-vous sûr de vouloir importer ?";
+$LANG["datainjection"]["fillInfoStep"][1] = "Attention ! Vous allez importer des données dans GLPI.Etes-vous sûr de vouloir continuer ?";
 $LANG["datainjection"]["fillInfoStep"][2] = "Remplissez les champs pour que les informations soient insérées dans GLPI lors de l'importation.";
 $LANG["datainjection"]["fillInfoStep"][3] = "* Champ obligatoire";
 $LANG["datainjection"]["fillInfoStep"][4] = "Un champ obligatoire n'est pas remplis";
