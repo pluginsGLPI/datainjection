@@ -40,12 +40,7 @@ commonHeader($LANG["datainjection"]["name"][1], $_SERVER["PHP_SELF"],"plugins","
 if (isset($_POST['upload'])) {
    $model = new PluginDatainjectionModel();
    $model->check($_POST['id'],'w');
-   if (isset($_POST['info'])) {
-      $_SESSION['glpi_plugin_datainjection_infos'] = $_POST['info'];
-   }
-   else {
-      $_SESSION['glpi_plugin_datainjection_infos'] = array();
-   }
+   $_SESSION['glpi_plugin_datainjection_infos'] = (isset($_POST['info'])?$_POST['info']:array());
 
    //If additional informations provided : check if mandatory infos are present
    if (!$model->checkMandatoryFields($_SESSION['glpi_plugin_datainjection_infos'])) {
@@ -53,12 +48,11 @@ if (isset($_POST['upload'])) {
    }
    elseif (!empty($_FILES) && !isset($_FILES['name'])) {
       $response = $model->processUploadedFile(array('file_encoding'=>$_POST['file_encoding'],
-                                            'mode'=>PluginDatainjectionModel::CREATION));
+                                            'mode'=>PluginDatainjectionModel::PROCESS));
       if ($response) {
          //File uploaded successfully and matches the given model : switch to the import tab
          $_SESSION['glpi_plugin_datainjection_step'] =
                                           PluginDatainjectionClientInjection::STEP_PROCESS;
-         addMessageAfterRedirect('upload ok');
       }
    }
    else {

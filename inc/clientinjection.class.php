@@ -90,12 +90,19 @@ class PluginDatainjectionClientInjection {
 
    static function showUploadFileForm($options = array()) {
       global $LANG;
+      $add_form = (isset($options['add_form']) && $options['add_form']);
+      $confirm = (isset($options['confirm']) && $options['confirm']);
+      $url = ($confirm == 'creation'?getItemTypeFormURL('PluginDatainjectionModel')
+                                                                  :getItemTypeFormURL(__CLASS__));
+      if ($add_form) {
+         echo "<form method='post' name='form' action='$url' enctype='multipart/form-data'>";
+      }
       echo "<table class='tab_cadre_fixe'>";
       //Show file selection
       echo "<th colspan='2'>" . $LANG["datainjection"]["tabs"][3]."</th>";
       echo "<tr class='tab_bg_1'>";
       echo "<td>" . $LANG["datainjection"]["fileStep"][3] . "</td>";
-      echo "<td><input type='file' name='file' /></td>";
+      echo "<td><input type='file' name='filename' /></td>";
       echo "<input type='hidden' name='id' value='".$options['models_id']."'>";
       echo "</tr>";
 
@@ -107,22 +114,25 @@ class PluginDatainjectionClientInjection {
       echo "</tr>";
 
       echo "<tr class='tab_bg_1'>";
+
       echo "<td colspan='2' align='center'>";
-      if (isset($options['confirm']) && $options['confirm']) {
-         if ($options['confirm'] == 'creation') {
+      if ($confirm) {
+         if ($confirm == 'creation') {
             $message = $LANG["datainjection"]["mapping"][13];
          }
          else {
-         	$message = $LANG["datainjection"]["fillInfoStep"][1];
+            $message = $LANG["datainjection"]["fillInfoStep"][1];
          }
-         $alert = "OnClick='return window.confirm(\"" .
-                  $message. "\");'";
+         $alert = "OnClick='return window.confirm(\"$message\");'";
       }
-       echo "<input type='submit' class='submit' name='upload' value=\"".
-                                             $LANG["datainjection"]["import"][0]."\" $alert/>";
+      echo "<input type='submit' class='submit' name='upload' value=\"".
+                                            $LANG["datainjection"]["import"][0]."\" $alert/>";
       echo "</td>";
       echo "</tr>";
       echo "</table>";
+      if ($add_form) {
+         echo "</form>";
+      }
    }
 
    static function showInjectionForm() {

@@ -77,7 +77,7 @@ elseif (isset($_POST['upload'])) {
       $model->check($_POST['id'],'w');
       if ($model->processUploadedFile(array('file_encoding'=>$_POST['file_encoding'],
                                             'mode'=>PluginDatainjectionModel::CREATION))) {
-         setActiveTab('PluginDatainjectionModel', 3);
+         setActiveTab('PluginDatainjectionModel', 4);
       }
       else {
          addMessageAfterRedirect($LANG["datainjection"]["fileStep"][4],true,ERROR,true);

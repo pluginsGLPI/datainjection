@@ -629,7 +629,6 @@ class PluginDatainjectionModel extends CommonDBTM {
      $original_filename = (isset($options['original_filename'])?$options['original_filename']:false);
      $unique_filename = (isset($options['unique_filename'])?$options['unique_filename']:false);
      $injectionData = false;
-     $file_key = ($webservice?'filename':'file');
 
      //Get model & model specific fields
       $specific_model = PluginDatainjectionModel::getInstance($this->fields['filetype']);
@@ -638,8 +637,10 @@ class PluginDatainjectionModel extends CommonDBTM {
 
       if (!$webservice) {
          //Get and store uploaded file
-         $original_filename = $_FILES[$file_key]["name"];
+         $original_filename = $_FILES['filename']['name'];
+         $temporary_uploaded_filename = $_FILES["filename"]["tmp_name"];
          $unique_filename = tempnam (realpath(PLUGIN_DATAINJECTION_UPLOAD_DIR), "PWS");
+         move_uploaded_file($temporary_uploaded_filename, $unique_filename);
       }
 
       //If file has not the right extension, reject it and delete if
@@ -669,6 +670,13 @@ class PluginDatainjectionModel extends CommonDBTM {
       return $injectionData;
    }
 
+   /**
+    * Once file is uploaded, process it
+    * @param options an array of possible options
+    *   - file_encoding
+    *   - mode
+    * @ return boolean
+    */
    function processUploadedFile($options = array()) {
       global $LANG;
 
@@ -685,14 +693,18 @@ class PluginDatainjectionModel extends CommonDBTM {
       $this->setSpecificModel($specific_model);
 
       $injectionData = $this->readUploadedFile($options);
-
       if (!$injectionData) {
          return false;
       }
       else {
-         $check = $this->isFileCorrect($injectionData);
+         if ($mode == self::PROCESS) {
+            $check = $this->isFileCorrect($injectionData);
+         }
+         else {
+            $check['status'] = PluginDatainjectionCommonInjectionLib::SUCCESS;
+         }
          //There's an error
-         if ($check['status'] > 0) {
+         if ($check['status']!= PluginDatainjectionCommonInjectionLib::SUCCESS) {
             if ($mode == self::CREATION) {
                addMessageAfterRedirect($check['error_message'],true,ERROR);
             }

@@ -62,6 +62,7 @@ if ($_POST["id"] >0 && $model->can($_POST["id"],'r')) {
          if ($model->fields['step'] > PluginDatainjectionModel::INITIAL_STEP) {
             $options['confirm'] = 'creation';
             $options['models_id'] = $model->fields['id'];
+            $options['add_form'] = true;
             PluginDatainjectionClientInjection::showUploadFileForm($options);
          }
          if ($model->fields['step'] > PluginDatainjectionModel::FILE_STEP) {
@@ -80,6 +81,7 @@ if ($_POST["id"] >0 && $model->can($_POST["id"],'r')) {
       case 3 :
          $options['confirm'] = 'creation';
          $options['models_id'] = $model->fields['id'];
+         $options['add_form'] = true;
          PluginDatainjectionClientInjection::showUploadFileForm($options);
          break;
       case 4 :
