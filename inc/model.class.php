@@ -95,7 +95,7 @@ class PluginDatainjectionModel extends CommonDBTM {
 
    //Loading methods
    function loadMappings() {
-      $this->mappings->loadMappingsFromDB($this->fields['id']);
+      $this->mappings->load($this->fields['id']);
    }
 
    //Loading methods
@@ -625,14 +625,16 @@ class PluginDatainjectionModel extends CommonDBTM {
    function readUploadedFile($options = array()) {
      global $LANG;
 
-     $file_encoding = (isset($options['file_encoding'])?$options['file_encoding']:
+      $file_encoding = (isset($options['file_encoding'])?$options['file_encoding']:
                                                         PluginDatainjectionBackend::ENCODING_AUTO);
-     $webservice = (isset($options['webservice'])?$options['webservice']:false);
-     $original_filename = (isset($options['original_filename'])?$options['original_filename']:false);
-     $unique_filename = (isset($options['unique_filename'])?$options['unique_filename']:false);
-     $injectionData = false;
+      $webservice = (isset($options['webservice'])?$options['webservice']:false);
+      $original_filename = (isset($options['original_filename'])?$options['original_filename']:false);
+      $unique_filename = (isset($options['unique_filename'])?$options['unique_filename']:false);
+      $injectionData = false;
+      $only_header = (isset($options['only_header'])?$options['only_header']:false);
+      $delete_file = (isset($options['delete_file'])?$options['delete_file']:true);
 
-     //Get model & model specific fields
+      //Get model & model specific fields
       $specific_model = PluginDatainjectionModel::getInstance($this->fields['filetype']);
       $specific_model->getFromDBByModelID($this->fields['id'],true);
       $this->setSpecificModel($specific_model);
@@ -668,9 +670,11 @@ class PluginDatainjectionModel extends CommonDBTM {
          $backend->setHeaderPresent($specific_model->fields['is_header_present']);
          $backend->setDelimiter($specific_model->fields['delimiter']);
 
-         //Read file
-         $injectionData = $backend->read();
-         $backend->deleteFile();
+         //Read 1 line from the CSV file
+         $injectionData = $backend->read(1);
+         if ($delete_file) {
+            $backend->deleteFile();
+         }
          $this->setBackend($backend);
       }
       $this->injectionData = $injectionData;
@@ -709,7 +713,6 @@ class PluginDatainjectionModel extends CommonDBTM {
          else {
             $check['status'] = PluginDatainjectionCommonInjectionLib::SUCCESS;
          }
-         logDebug($check);
          //There's an error
          if ($check['status']!= PluginDatainjectionCommonInjectionLib::SUCCESS) {
             if ($mode == self::PROCESS) {

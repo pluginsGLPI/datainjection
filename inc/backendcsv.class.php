@@ -36,6 +36,8 @@ class PluginDatainjectionBackendcsv extends PluginDatainjectionBackend {
    private $delemiter = '';
    private $isHeaderPresent = true;
 
+   private $file_handler = null;
+
    function __construct() {
       $this->errmsg= "";
    }
@@ -92,22 +94,26 @@ class PluginDatainjectionBackendcsv extends PluginDatainjectionBackend {
 
    /**
     * Read a CSV file and store data in an array
-    * @param only_firstline indicates if only the first line must be returned (header or not)
+    * @param numoberOfLines indicates if only the first line must be returned (header or not)
     */
-   function read($only_firstline = false) {
+   function read($numberOfLines = 1) {
       $fic= fopen($this->file, 'r');
 
+      $index = 0;
       $injectionData = new PluginDatainjectionData;
       while(($data= fgetcsv($fic,
-                            3000,
+                            0,
                             $this->getDelimiter())) !== FALSE) {
          //If line is not empty
          if(count($data) > 1 || $data[0] != PluginDatainjectionCommonInjectionLib::EMPTY_VALUE) {
             $line= self::parseLine($fic, $data, $this->encoding);
             if(count($line[0]) > 0) {
                $injectionData->addToDatas($line);
-               if ($only_firstline) {
+               if ($index == $numberOfLines) {
                   break;
+               }
+               else {
+               	$index++;
                }
             }
          }
@@ -116,6 +122,40 @@ class PluginDatainjectionBackendcsv extends PluginDatainjectionBackend {
       return $injectionData;
    }
 
+   /**
+    * Open the csv file
+    */
+   function openFile() {
+      $this->file_handler = fopen($this->file, 'r');
+   }
+
+   /**
+    * Close the csv file
+    */
+   function closeFile() {
+      fclose($this->file_handler);
+   }
+
+   /**
+    * Read next line of the csv file
+    */
+   function getNextLine() {
+      $result = $data= fgetcsv($this->file_handler,0,$this->getDelimiter());
+      if ($result === FALSE) {
+         return false;
+      }
+      else {
+         $line = array();
+         if(count($data) > 1 || $data[0] != PluginDatainjectionCommonInjectionLib::EMPTY_VALUE) {
+            $line= self::parseLine($this->file_handler, $data, $this->encoding);
+         }
+         return $line;
+      }
+   }
+
+   /**
+    * Delete csv file from disk
+    */
    function deleteFile() {
       unlink($this->file);
    }

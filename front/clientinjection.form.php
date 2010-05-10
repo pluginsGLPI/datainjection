@@ -48,11 +48,13 @@ if (isset($_POST['upload'])) {
    }
    elseif (!empty($_FILES) && !isset($_FILES['name'])) {
       $response = $model->processUploadedFile(array('file_encoding'=>$_POST['file_encoding'],
-                                            'mode'=>PluginDatainjectionModel::PROCESS));
+                                            'mode'=>PluginDatainjectionModel::PROCESS,
+                                            'delete_file'=>false));
       if ($response) {
          //File uploaded successfully and matches the given model : switch to the import tab
          $_SESSION['glpi_plugin_datainjection_step'] =
                                           PluginDatainjectionClientInjection::STEP_PROCESS;
+         $_SESSION['glpi_plugin_datainjection_current_model'] = serialize($model);
       }
       else {
          $_SESSION['glpi_plugin_datainjection_step'] =

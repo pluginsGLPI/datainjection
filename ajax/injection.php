@@ -44,5 +44,6 @@ if (!defined('GLPI_ROOT')) {
 }
 
 checkCentralAccess();
-PluginDatainjectionClientInjection::showInjectionForm();
+$model = unserialize($_SESSION['glpi_plugin_datainjection_current_model']);
+PluginDatainjectionClientInjection::showInjectionForm($_POST,$model,$_SESSION['glpiactive_entity']);
 ?>

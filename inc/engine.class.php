@@ -45,7 +45,8 @@ class PluginDatainjectionEngine {
       $this->model = $model;
 
       //Load model and mappings informations
-      $this->getModel()->loadAll($this->model->getModelID());
+      $this->getModel()->loadMappings();
+      $this->getModel()->loadInfos();
 
       $this->entity = $entity;
    }

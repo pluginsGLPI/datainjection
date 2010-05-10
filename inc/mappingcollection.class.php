@@ -39,11 +39,11 @@ class PluginDatainjectionMappingCollection {
 
    //---- Getter ----//
 
-   /*
+   /**
     * Load all the mappings for a specified model
     * @param model_ids the model ID
     */
-   function loadMappingsFromDB($models_id)
+   function load($models_id)
    {
       global $DB;
 
@@ -61,7 +61,7 @@ class PluginDatainjectionMappingCollection {
       }
    }
 
-   /*
+   /**
     * Return all the mappings for this model
     * @return the list of all the mappings for this model
     */
@@ -70,7 +70,7 @@ class PluginDatainjectionMappingCollection {
       return $this->mappingCollection;
    }
 
-   /*
+   /**
     * Get a PluginDatainjectionMapping by giving the mapping name
     * @param name
     * @return the PluginDatainjectionMapping object associated or null
@@ -80,7 +80,7 @@ class PluginDatainjectionMappingCollection {
       return $this->getMappingsByField("name",$name);
    }
 
-   /*
+   /**
     * Get a PluginDatainjectionMapping by giving the mapping rank
     * @param rank
     * @return the PluginDatainjectionMapping object associated or null
@@ -90,7 +90,7 @@ class PluginDatainjectionMappingCollection {
       return $this->getMappingsByField("rank",$rank);
    }
 
-   /*
+   /**
     * Find a mapping by looking for a specific field
     * @param field the field to look for
     * @param the value of the field
@@ -108,7 +108,7 @@ class PluginDatainjectionMappingCollection {
 
    //---- Save ----//
 
-   /*
+   /**
     * Save in database the model and all his associated mappings
     */
    function saveAllMappings()
@@ -134,7 +134,7 @@ class PluginDatainjectionMappingCollection {
 
    //---- Add ----//
 
-   /*
+   /**
     * Add a new mapping to this model (don't write in to DB)
     * @param mapping the new PluginDatainjectionMapping to add
     */
@@ -143,7 +143,7 @@ class PluginDatainjectionMappingCollection {
       $this->mappingCollection[] = $mapping;
    }
 
-   /*
+   /**
     * Replace all the mappings for a model
     * @mappins the array of PluginDatainjectionMapping objects
     */

@@ -38,6 +38,12 @@ class PluginDatainjectionClientInjection {
    const STEP_PROCESS = 1;
    const STEP_RESULT  = 2;
 
+   //Model used for injection
+   private $model;
+
+   //Overall injection results
+   private $global_results;
+
    /**
     * Print a good title for group pages
     *
@@ -135,8 +141,49 @@ class PluginDatainjectionClientInjection {
       }
    }
 
-   static function showInjectionForm() {
+   static function showInjectionForm($options = array(),$model,$entities_id) {
       global $LANG;
+
+      echo "<table class='tab_cadre_fixe'>";
+      echo "<th colspan='2'>" . $LANG["datainjection"]["tabs"][3]."</th>";
+      echo "<tr class='tab_bg_1'>";
+      echo "<td>" ;
+      $_SESSION["plugin_datainjection"]["import"]["i"] = 0;
+      $_SESSION["plugin_datainjection"]["import"]["nbline"] =
+      createProgressBar($LANG["datainjection"]["importStep"][1]);
+
+      //New injection engine
+      $engine = new PluginDatainjectionEngine($model,$entities_id);
+
+
+      $clientinjection = new PluginDatainjectionClientInjection;
+      $backend = $model->getBackend();
+      $backend->openFile();
+
+      $index = 0;
+      $line = $backend->getNextLine();
+      while ($line) {
+      $clientinjection->inject($engine,$line,$index);
+      changeProgressBarPosition(
+         $_SESSION["plugin_datainjection"]["import"]["i"],
+         $_SESSION["plugin_datainjection"]["import"]["nbline"],
+         $LANG["datainjection"]["importStep"][1]."... ".
+         number_format($_SESSION["plugin_datainjection"]["import"]["i"]*100/$_SESSION["plugin_datainjection"]["import"]["nbline"],1).'%');
+         $line = $backend->getNextLine();
+         $index++;
+   }
+   changeProgressBarMessage($LANG["datainjection"]["importStep"][3]);
+
+      echo "</td>" ;
+      echo "</tr>";
+      echo "</table>";
+   }
+
+   function inject(PluginDatainjectionEngine $engine, $line,$line_id) {
+      $global_result = $engine->injectLine($line);
+      $global_result->setLineId($line_id);
+      $tab_result[] = $global_result;
+      $datas = $engine->getDatas();
    }
 }
 ?>
