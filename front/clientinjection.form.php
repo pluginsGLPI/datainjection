@@ -54,6 +54,10 @@ if (isset($_POST['upload'])) {
          $_SESSION['glpi_plugin_datainjection_step'] =
                                           PluginDatainjectionClientInjection::STEP_PROCESS;
       }
+      else {
+         $_SESSION['glpi_plugin_datainjection_step'] =
+                                          PluginDatainjectionClientInjection::STEP_UPLOAD;
+      }
    }
    else {
       addMessageAfterRedirect($LANG["datainjection"]["fileStep"][4],true,ERROR,true);

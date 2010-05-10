@@ -41,6 +41,11 @@ if (!defined('GLPI_ROOT')){
 class PluginDatainjectionLocationInjection extends Location
    implements PluginDatainjectionInjectionInterface {
 
+   function __construct() {
+      //Needed for getSearchOptions !
+      $this->table = getTableForItemType('Location');
+   }
+
    function isPrimaryType() {
       return true;
    }
@@ -50,7 +55,24 @@ class PluginDatainjectionLocationInjection extends Location
    }
 
    function getOptions() {
-      return parent::getSearchOptions();
+      $tab = parent::getSearchOptions();
+
+      //Remove some options because some fields cannot be imported
+      $remove = array(1, 2, 80);
+      foreach ($remove as $tmp) {
+         unset($tab[$tmp]);
+      }
+
+      //Add default displaytype (text)
+      foreach ($tab as $id => $tmp) {
+         if (isset($tmp['linkfield']) && !isset($tmp['displaytype'])) {
+            $tab[$id]['displaytype'] = 'text';
+         }
+         if (isset($tmp['linkfield']) && !isset($tmp['checktype'])) {
+            $tab[$id]['checktype'] = 'text';
+         }
+      }
+      return $tab;
    }
 
    function showAdditionalInformation($info = array()) {

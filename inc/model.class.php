@@ -50,6 +50,8 @@ class PluginDatainjectionModel extends CommonDBTM {
    //Store specific backend parameters
    public $specific_model;
 
+   //Data to inject
+   public $injectionData = false;
 
    //Port unicity constants
    const UNICITY_NETPORT_LOGICAL_NUMBER            = 0;
@@ -640,7 +642,11 @@ class PluginDatainjectionModel extends CommonDBTM {
          $original_filename = $_FILES['filename']['name'];
          $temporary_uploaded_filename = $_FILES["filename"]["tmp_name"];
          $unique_filename = tempnam (realpath(PLUGIN_DATAINJECTION_UPLOAD_DIR), "PWS");
-         move_uploaded_file($temporary_uploaded_filename, $unique_filename);
+         if (!move_uploaded_file($temporary_uploaded_filename, $unique_filename)) {
+            return array('status'=>PluginDatainjectionCommonInjectionLib::FAILED,
+                         'message'=>$LANG["datainjection"]["fileStep"][8].' '.
+                                                         realpath(PLUGIN_DATAINJECTION_UPLOAD_DIR));
+         }
       }
 
       //If file has not the right extension, reject it and delete if
@@ -667,7 +673,7 @@ class PluginDatainjectionModel extends CommonDBTM {
          $backend->deleteFile();
          $this->setBackend($backend);
       }
-      return $injectionData;
+      $this->injectionData = $injectionData;
    }
 
    /**
@@ -683,7 +689,6 @@ class PluginDatainjectionModel extends CommonDBTM {
       $file_encoding=(isset($options['file_encoding'])?$options['file_encoding']
                                                         :PluginDatainjectionBackend::ENCODING_AUTO);
       $mode = (isset($options['mode'])?$options['mode']:self::PROCESS);
-      $injectionData = false;
       $return_status = true;
 
       //Get model & model specific fields
@@ -692,23 +697,25 @@ class PluginDatainjectionModel extends CommonDBTM {
       $specific_model->getFromDBByModelID($this->fields['id'],true);
       $this->setSpecificModel($specific_model);
 
-      $injectionData = $this->readUploadedFile($options);
-      if (!$injectionData) {
+      $this->readUploadedFile($options);
+      if (!$this->injectionData) {
          return false;
       }
       else {
          if ($mode == self::PROCESS) {
-            $check = $this->isFileCorrect($injectionData);
+            $this->loadMappings();
+            $check = $this->isFileCorrect();
          }
          else {
             $check['status'] = PluginDatainjectionCommonInjectionLib::SUCCESS;
          }
+         logDebug($check);
          //There's an error
          if ($check['status']!= PluginDatainjectionCommonInjectionLib::SUCCESS) {
-            if ($mode == self::CREATION) {
+            if ($mode == self::PROCESS) {
                addMessageAfterRedirect($check['error_message'],true,ERROR);
             }
-            $return_status = false;
+            return false;
          }
          else {
             $mappingCollection = new PluginDatainjectionMappingCollection;
@@ -718,7 +725,7 @@ class PluginDatainjectionModel extends CommonDBTM {
 
             $rank = 0;
             //Build the mappings list
-            foreach (PluginDatainjectionBackend::getHeader($injectionData,
+            foreach (PluginDatainjectionBackend::getHeader($this->injectionData,
                                                            $specific_model->isHeaderPresent()
                                                            ) as $data) {
                $mapping = new PluginDatainjectionMapping;
@@ -748,51 +755,62 @@ class PluginDatainjectionModel extends CommonDBTM {
     * Try to parse an input file
     * @return true if the file is a CSV file
     */
-   function isFileCorrect(PluginDatainjectionData $injectionData) {
+   function isFileCorrect() {
       global $LANG;
 
       $field_in_error = false;
 
       //Get CSV file first line
-      $header= PluginDatainjectionBackend::getHeader($injectionData,
+      $header= PluginDatainjectionBackend::getHeader($this->injectionData,
                                                      $this->specific_model->isHeaderPresent());
 
       //If file columns don't match number of mappings in DB
       if(count($this->getMappings()) != count($header)) {
-         $error_message = count($this->getMappings())." ";
-         $error_message.=$LANG["datainjection"]["saveStep"][16]."\n";
-         $error_message.=count($header)." ".$LANG["datainjection"]["saveStep"][17];
-         return array('status'=>1,'field_in_error'=>false,'error_message'=>$error_message);
+         $error_message  = $LANG["datainjection"]["saveStep"][11]."\n";
+         $error_message .= count($this->getMappings())." ";
+         $error_message .=$LANG["datainjection"]["saveStep"][16]."\n";
+         $error_message .=count($header)." ".$LANG["datainjection"]["saveStep"][17];
+         return array('status'=>PluginDatainjectionCommonInjectionLib::FAILED,
+                      'field_in_error'=>false,
+                      'error_message'=>$error_message);
       }
 
       //If no header in the CSV file, exit method
       if(!$this->specific_model->isHeaderPresent()) {
-         return array('status'=>0,'field_in_error'=>false,'error_message'=>'');
+         return array('status'=>PluginDatainjectionCommonInjectionLib::FAILED,
+                      'field_in_error'=>false,
+                      'error_message'=>'');
       }
 
-      $error = array('status'=>0,'field_in_error'=>false,'error_message'=>'');
+      $error = array('status'=>PluginDatainjectionCommonInjectionLib::SUCCESS,
+                     'field_in_error'=>false,
+                     'error_message'=>'');
 
       //Check each mapping to be sure it has exactly the same name
       foreach($this->getMappings() as $key => $mapping) {
          if(!isset($header[$key])) {
-            $error['status'] = 2;
+            $error['status'] = PluginDatainjectionCommonInjectionLib::FAILED;
             $error['field_in_error'] = $key;
-            $check= 2;
          }
          else {
             //If name of the mapping is not equal in the csv file header and in the DB
             $name_from_file = trim(strtoupper(stripslashes($header[$mapping->getRank()])));
-            $name_from_db = trim(strtoupper(stripslashes($mapping->getName())));
+            $name_from_db   = trim(strtoupper(stripslashes($mapping->getName())));
             if($name_from_db != $name_from_file) {
-               $error['status'] = 2;
+               if ($error['error_message'] == '') {
+                  $error['error_message'] = $LANG["datainjection"]["saveStep"][12];
+               }
+               $error['status']         = PluginDatainjectionCommonInjectionLib::FAILED;
                $error['field_in_error'] = false;
-               $error_message = $LANG["datainjection"]["saveStep"][18];
-               $error_message.= $name_from_file."\n";
-               $error_message.=$LANG["datainjection"]["saveStep"][19];
-               $error_message.= $name_from_db;
-               $error['error_message'] = $error_message;
+               $error['error_message'] .= $LANG["datainjection"]["saveStep"][18];
+               $error['error_message'] .= $name_from_file."\n";
+               $error['error_message'] .=$LANG["datainjection"]["saveStep"][19];
+               $error['error_message'] .= $name_from_db."\n";
             }
          }
+      }
+      if (PluginDatainjectionCommonInjectionLib::FAILED) {
+         $error['error_message'].= $LANG["datainjection"]["saveStep"][12].$error_message;
       }
       return $error;
    }
