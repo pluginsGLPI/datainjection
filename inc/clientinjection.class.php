@@ -70,13 +70,30 @@ class PluginDatainjectionClientInjection {
             "enctype='multipart/form-data'>";
       echo "<div class='center'>";
       echo "<table class='tab_cadre_fixe'>";
+
+      $models = PluginDatainjectionModel::getModels(getLoginUserID(),
+                                                    'name',
+                                                    $_SESSION['glpiactive_entity'],
+                                                    false);
       echo "<tr>";
       echo "<th>" . $LANG["datainjection"]["choiceStep"][6]."</th>";
       echo "</tr>";
-      echo "<tr class='tab_bg_1'>";
-      echo "<td align='center'>".$LANG['common'][22]."&nbsp;:";
-      PluginDatainjectionModel::dropdown(array('value'=>$ID));
-      echo "</td></tr></table>";
+
+      if (count($models) > 0) {
+         echo "<tr class='tab_bg_1'>";
+         echo "<td align='center'>".$LANG['common'][22]."&nbsp;:";
+         PluginDatainjectionModel::dropdown(array('value'=>$ID));
+         echo "</td></tr></table>";
+      }
+      else {
+         echo "<tr class='tab_bg_1'>";
+         echo "<td align='center' colspan='2'>".$LANG["datainjection"]["model"][33];
+         if (plugin_datainjection_haveRight('model','w')) {
+            echo ". ".$LANG["datainjection"]["model"][34].":".$LANG["datainjection"]["profiles"][1];
+         }
+         echo "</td></tr></table>";
+      }
+
       echo "<span id='span_injection' name='span_injection'>";
       echo "</span>";
       echo "</div></form>";
@@ -148,8 +165,8 @@ class PluginDatainjectionClientInjection {
       echo "<th colspan='2'>" . $LANG["datainjection"]["tabs"][3]."</th>";
       echo "<tr class='tab_bg_1'>";
       echo "<td>" ;
-      $_SESSION["plugin_datainjection"]["import"]["i"] = 0;
-      $_SESSION["plugin_datainjection"]["import"]["nbline"] =
+
+      $nblines = $model->getBackend()->getNumberOfLines();
       createProgressBar($LANG["datainjection"]["importStep"][1]);
 
       $clientinjection = new PluginDatainjectionClientInjection;
@@ -163,21 +180,20 @@ class PluginDatainjectionClientInjection {
 
       $index = 0;
       $line = $backend->getNextLine();
+
       //If header is present, then get the second line
       if ($model->getSpecificModel()->isHeaderPresent()) {
          $line = $backend->getNextLine();
       }
 
       while ($line != null) {
-         logDebug($line);
-      //$clientinjection->inject($engine,$line,$index);
-      //changeProgressBarPosition(
-      //   $_SESSION["plugin_datainjection"]["import"]["i"],
-      //   $_SESSION["plugin_datainjection"]["import"]["nbline"],
-      //   $LANG["datainjection"]["importStep"][1]."... ".
-      //   number_format($_SESSION["plugin_datainjection"]["import"]["i"]*100
-      //                              /$_SESSION["plugin_datainjection"]["import"]["nbline"],
-      //                 1).'%');
+         //Inject line
+         $clientinjection->inject($engine,$line,$index);
+         changeProgressBarPosition(
+            $index,
+            $nblines,
+            $LANG["datainjection"]["importStep"][1]."... ".
+            number_format($index*100/$nblines,1).'%');
          $line = $backend->getNextLine();
          $index++;
       }

@@ -79,6 +79,13 @@ $LANG["datainjection"]["model"][30] = "Vous devez spécifier un nom de modèle";
 $LANG["datainjection"]["model"][31] = "Votre modèle doit permettre l'import et/ou la mise à jour de données";
 $LANG["datainjection"]["model"][32] = "Le fichier est correct.".
                      "<br>Vous pouvez à présent faire les correspondances avec les champs de GLPI";
+$LANG["datainjection"]["model"][33] = "Aucun modèle n'est disponible actuellement";
+$LANG["datainjection"]["model"][34] = "Vous pouvez en créer un en cliquant sur le bouton";
+$LANG["datainjection"]["model"][35] = "Modèle en cours de création";
+$LANG["datainjection"]["model"][36] = "Modèle utilisable";
+$LANG["datainjection"]["model"][37] = "Validation";
+$LANG["datainjection"]["model"][38] = "Valider le modèle";
+
 
 $LANG["datainjection"]["deleteStep"][1] = "Confirmation de la suppression";
 $LANG["datainjection"]["deleteStep"][2] = "Attention si vous supprimez le modèle, les mappings et les informations complémentaires seront supprimés également.";

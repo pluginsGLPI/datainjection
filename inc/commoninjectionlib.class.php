@@ -89,8 +89,10 @@ class PluginDatainjectionCommonInjectionLib {
    const IMPORT_IMPOSSIBLE              = 20;
    const ERROR_FIELDSIZE_EXCEEDED       = 21;
 
+   //Empty values
    const EMPTY_VALUE                    = '';
    const DROPDOWN_DEFAULT_VALUE         = 0;
+
    //Format constants
    const FLOAT_TYPE_COMMA               = 0; //xxxx,xx
    const FLOAT_TYPE_DOT                 = 1; //xxxx.xx

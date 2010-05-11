@@ -36,7 +36,7 @@ class PluginDatainjectionBackendcsv extends PluginDatainjectionBackend
 
    private $delemiter = '';
    private $isHeaderPresent = true;
-
+   private $numberOfLines = 0;
    private $file_handler = null;
 
    function __construct() {
@@ -130,13 +130,10 @@ class PluginDatainjectionBackendcsv extends PluginDatainjectionBackend
     * @param numberOfLines inumber of lines to be read (-1 means all file)
     *
     */
-   function numberOfLines() {
+   function storeNumberOfLines() {
       $fic= fopen($this->file, 'r');
 
       $index = 0;
-      if ($this->isHeaderPresent) {
-         $index = 1;
-      }
       while(($data= fgetcsv($fic,
                             0,
                             $this->getDelimiter())) !== FALSE) {
@@ -149,7 +146,16 @@ class PluginDatainjectionBackendcsv extends PluginDatainjectionBackend
          }
       }
       fclose($fic);
-      return $index;
+
+      if ($this->isHeaderPresent) {
+         $index--;
+      }
+
+      $this->numberOfLines = $index;
+   }
+
+   function getNumberOfLines() {
+      return $this->numberOfLines;
    }
 
    /**
@@ -190,7 +196,7 @@ class PluginDatainjectionBackendcsv extends PluginDatainjectionBackend
       unlink($this->file);
    }
 
-   function export($file, $model, $tab_result) {
+   function export($file, PluginDatainjectionModel $model, $tab_result) {
       $tmpfile= fopen($file, "w");
 
       $header= $this->getHeader($model->isHeaderPresent());

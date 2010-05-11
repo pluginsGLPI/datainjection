@@ -70,7 +70,7 @@ class PluginDatainjectionModel extends CommonDBTM {
    const FILE_STEP                                 = 2;
    const MAPPING_STEP                              = 3;
    const OTHERS_STEP                               = 4;
-   const READY_TO_USE                              = 5;
+   const READY_TO_USE_STEP                         = 5;
 
    const PROCESS                                   = 0;
    const CREATION                                  = 1;
@@ -356,14 +356,15 @@ class PluginDatainjectionModel extends CommonDBTM {
       global $DB;
 
       $models = array ();
-      $query = "SELECT `id`, `name` FROM `glpi_plugin_datainjection_models` WHERE" .
-               " (`is_private`=" . PluginDatainjectionModel::MODEL_PUBLIC .
-               getEntitiesRestrictRequest(" AND",
+      $query = "SELECT `id`, `name` FROM `glpi_plugin_datainjection_models` WHERE ";
+      $query.= "`step`='".self::READY_TO_USE_STEP."' ";
+      $query.= "AND (`is_private`=" . PluginDatainjectionModel::MODEL_PUBLIC;
+      $query.= getEntitiesRestrictRequest(" AND",
                                           "glpi_plugin_datainjection_models",
-                                          "entities_id", $entity,true) . ")
-               OR (`is_private`='" . PluginDatainjectionModel::MODEL_PRIVATE .
-               "' AND `users_id`='$user_id')" .
-               " ORDER BY `entities_id`, " . ($order == "`name`" ? "`name`" : $order);
+                                          "entities_id", $entity,true) . ")";
+      $query.= " OR (`is_private`='" . PluginDatainjectionModel::MODEL_PRIVATE;
+      $query.= "' AND `users_id`='$user_id') ";
+      $query.= " ORDER BY `entities_id`, " . ($order == "`name`" ? "`name`" : $order);
 
       foreach ($DB->request($query) as $data) {
          $models[$data['id']] = $data['name'];
@@ -523,6 +524,15 @@ class PluginDatainjectionModel extends CommonDBTM {
       echo "<textarea cols='45' rows='5' name='comment' >".$this->fields["comment"]."</textarea>";
       echo "</td></tr>";
 
+      echo "<tr class='tab_bg_1'>";
+      echo "<td>".$LANG['state'][0].": </td>";
+      echo "<td>";
+      echo $this->getStatusLabel();
+      echo "</td>";
+      echo "<td colspan='2'>";
+      echo "</td>";
+      echo "</tr>";
+
       $this->showFormButtons($options);
       $this->addDivForTabs();
 
@@ -562,6 +572,23 @@ class PluginDatainjectionModel extends CommonDBTM {
       return true;
    }
 
+   function showValidationForm() {
+      global $LANG;
+      echo "<form method='post' name=form action='".getItemTypeFormURL(__CLASS__)."'>";
+      echo "<table class='tab_cadre_fixe'>";
+      echo "<tr class='tab_bg_1'><th colspan='4'>".$LANG["datainjection"]["model"][37]."</th></tr>";
+      echo "<tr class='tab_bg_1'>";
+      echo "<td align='center'>";
+      echo "<input type='submit' class='submit'
+                                 name='validate' value='".$LANG["datainjection"]["model"][38]."'>";
+      echo "<input type='hidden' name='id' value='".$this->fields['id']."'>";
+      echo "</td>";
+      echo "</tr>";
+      echo "</table></form>";
+
+      return true;
+   }
+
    function defineTabs($options=array()) {
       global $LANG;
 
@@ -572,7 +599,8 @@ class PluginDatainjectionModel extends CommonDBTM {
          $ong[4] = $LANG["datainjection"]["tabs"][0];
          if ($this->fields['step'] > PluginDatainjectionModel::MAPPING_STEP) {
             $ong[5] = $LANG["datainjection"]["tabs"][1];
-            $ong[6] = $LANG["datainjection"]["tabs"][2];
+            //$ong[6] = $LANG["datainjection"]["tabs"][2];
+            $ong[7] = $LANG["datainjection"]["model"][37];
          }
          $ong[12] = $LANG['title'][38];
       }
@@ -581,9 +609,12 @@ class PluginDatainjectionModel extends CommonDBTM {
 
    function cleanDBonPurge() {
       global $DB;
-      $query = "DELETE FROM `glpi_plugin_datainjection_modelcsvs`
-                WHERE `models_id`='".$this->fields['id']."'";
-      $DB->query($query);
+      $tables = array("glpi_plugin_datainjection_modelcsvs","glpi_plugin_datainjection_mappings",
+                      "glpi_plugin_datainjection_infos");
+      foreach ($tables as $table) {
+         $query = "DELETE FROM `$table` WHERE `models_id`='".$this->fields['id']."'";
+         $DB->query($query);
+      }
    }
 
    static function changeStep($models_id,$step) {
@@ -673,6 +704,10 @@ class PluginDatainjectionModel extends CommonDBTM {
 
          //Read 1 line from the CSV file
          $injectionData = $backend->read(1);
+
+         //Read the whole file and store the number of lines found
+         $backend->storeNumberOfLines();
+
          if ($delete_file) {
             $backend->deleteFile();
          }
@@ -839,6 +874,29 @@ class PluginDatainjectionModel extends CommonDBTM {
          }
       }
       return $check;
+   }
+
+   /**
+    * Model is now ready to be used
+    */
+   function switchReadyToUse() {
+      $tmp = $this->fields;
+      $tmp['step'] = self::READY_TO_USE_STEP;
+      $this->update($tmp);
+   }
+
+   /**
+    * Return current status of the model
+    * @return nothing
+    */
+   function getStatusLabel() {
+      global $LANG;
+      if ($this->fields['step'] == self::READY_TO_USE_STEP) {
+         return $LANG["datainjection"]["model"][36];
+      }
+      else {
+         return $LANG["datainjection"]["model"][35];
+      }
    }
 }
 ?>

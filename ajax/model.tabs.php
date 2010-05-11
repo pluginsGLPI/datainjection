@@ -65,11 +65,14 @@ if ($_POST["id"] >0 && $model->can($_POST["id"],'r')) {
             $options['add_form'] = true;
             PluginDatainjectionClientInjection::showUploadFileForm($options);
          }
-         if ($model->fields['step'] > PluginDatainjectionModel::FILE_STEP) {
-            PluginDatainjectionMapping::showFormMappings($model);
-         }
-         if ($model->fields['step'] > PluginDatainjectionModel::MAPPING_STEP) {
-            PluginDatainjectionInfo::showFormInfos($model);
+         else {
+            if ($model->fields['step'] > PluginDatainjectionModel::FILE_STEP) {
+               PluginDatainjectionMapping::showFormMappings($model);
+            }
+            if ($model->fields['step'] > PluginDatainjectionModel::MAPPING_STEP) {
+               PluginDatainjectionInfo::showFormInfos($model);
+               $model->showValidationForm();
+            }
          }
          break;
       case 1:
@@ -88,11 +91,17 @@ if ($_POST["id"] >0 && $model->can($_POST["id"],'r')) {
          PluginDatainjectionMapping::showFormMappings($model);
          break;
       case 5 :
-         PluginDatainjectionInfo::showFormInfos($model);
+         if ($model->fields['step'] > PluginDatainjectionModel::MAPPING_STEP) {
+            PluginDatainjectionInfo::showFormInfos($model);
+         }
          break;
       case 6 :
          break;
-
+      case 7:
+         if ($model->fields['step'] > PluginDatainjectionModel::MAPPING_STEP) {
+            $model->showValidationForm();
+         }
+         break;
       case 12 :
          Log::showForItem($model);
          break;

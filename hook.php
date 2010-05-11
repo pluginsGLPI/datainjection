@@ -144,7 +144,7 @@ function plugin_datainjection_install() {
                           `date_format` varchar(11) NOT NULL default 'yyyy-mm-dd',
                           `float_format` tinyint( 1 ) NOT NULL DEFAULT '0',
                           `port_unicity` tinyint( 1 ) NOT NULL DEFAULT '0',
-                          `step` tinyint( 1 ) NOT NULL DEFAULT '0',
+                          `step` int( 11 ) NOT NULL DEFAULT '0',
                           PRIMARY KEY  (`id`)
                         ) ENGINE=MyISAM CHARSET=utf8 COLLATE=utf8_unicode_ci;";
 

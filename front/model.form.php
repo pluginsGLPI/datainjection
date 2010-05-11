@@ -42,34 +42,30 @@ if (!isset ($_GET["withtemplate"]))
 
 $model = new PluginDatainjectionModel();
 
-/* add order */
+/* add */
 if (isset ($_POST["add"])) {
    $model->check(-1,'w',$_POST);
    $newID = $model->add($_POST);
+   //Set display to the advanced options tab
+   setActiveTab('PluginDatainjectionModel', 2);
    glpi_header($_SERVER['HTTP_REFERER']."?id=$newID");
 }
-/* delete order */
+/* delete */
 elseif (isset ($_POST["delete"])) {
    $model->check($_POST['id'],'w');
    $model->delete($_POST);
    glpi_header(getItemTypeSearchURL('PluginDatainjectionModel'));
 }
-/* restore order */
-elseif (isset ($_POST["restore"])) {
-   $model->check($_POST['id'],'w');
-   $model->restore($_POST);
-   glpi_header(getItemTypeSearchURL('PluginDatainjectionModel'));
-}
-/* purge order */
-elseif (isset ($_POST["purge"])) {
-   $model->check($_POST['id'],'w');
-   $model->delete($_POST, 1);
-   glpi_header(getItemTypeSearchURL('PluginDatainjectionModel'));
-}
-/* update order */
+/* update */
 else if (isset ($_POST["update"])) {
    $model->check($_POST['id'],'w');
    $model->update($_POST);
+   glpi_header($_SERVER['HTTP_REFERER']);
+}
+/* update order */
+else if (isset ($_POST["validate"])) {
+   $model->check($_POST['id'],'w');
+   $model->switchReadyToUse();
    glpi_header($_SERVER['HTTP_REFERER']);
 }
 elseif (isset($_POST['upload'])) {

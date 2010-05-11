@@ -215,19 +215,5 @@ class PluginDatainjectionInjectionType {
                "name='data[".$mapping_or_info['id']."][is_mandatory]' $checked>";
       }
    }
-
-   /**
-    * Try to guess the itemtype associated with the field
-    */
-   static function tryToGuessItemType($field = '') {
-      $infocom = new Infocom;
-      $searchOptions = $infocom->getSearchOptions();
-      if (isset($searchOptions[$field])) {
-         return 'Infocom';
-      }
-      else {
-         return false;
-      }
-   }
 }
 ?>
