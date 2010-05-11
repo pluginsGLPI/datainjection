@@ -276,7 +276,7 @@ class PluginDatainjectionCommonInjectionLib {
     * @return nothing
     */
    private function reformatSecondPass() {
-      $injectionClass->reformat($this->values);
+      $this->injectionClass->reformat($this->values);
    }
 
    /**
@@ -315,7 +315,7 @@ class PluginDatainjectionCommonInjectionLib {
    private function reformat() {
       $this->reformatFirstPass();
       $this->reformatSecondPass();
-      $this->reformatThirdtPass();
+      $this->reformatThirdPass();
    }
 
    /**
@@ -514,7 +514,7 @@ class PluginDatainjectionCommonInjectionLib {
 
       //Second : check data
       $this->check();
-      if ($this->results[self::ACTION_CHECK] != self::ERROR) {
+      if ($this->results[self::ACTION_CHECK] != self::FAILED) {
          //Third : inject data
          $itemtype = $this->getItemtype();
          $item = new $itemtype();
@@ -538,7 +538,7 @@ class PluginDatainjectionCommonInjectionLib {
       //Second : check data
      //Second : check data
       $this->check();
-      if ($this->results[self::ACTION_CHECK] != self::ERROR) {
+      if ($this->results[self::ACTION_CHECK] != self::FAILED) {
          //Third : inject data
          $itemtype = $this->getItemtype();
          $item = new $itemtype();
@@ -562,7 +562,7 @@ class PluginDatainjectionCommonInjectionLib {
             $this->results[self::ACTION_INJECT]['status'] = self::SUCCESS;
          }
          else {
-            $this->results[self::ACTION_INJECT]['status'] = self::ERROR;
+            $this->results[self::ACTION_INJECT]['status'] = self::FAILED;
          }
          $this->results[self::ACTION_INJECT][$itemtype] = $this->values[$itemtype]['id'];
       }

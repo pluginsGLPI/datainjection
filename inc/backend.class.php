@@ -64,15 +64,6 @@ abstract class PluginDatainjectionBackend {
    {
       $this->errmsg = "";
    }
-   /*
-    * Read datas from the input file
-    */
-   abstract protected function read();
-
-   /*
-    * Read n lines from the input files
-    */
-   abstract protected function readLinesFromTo($start_line, $end_line);
 
    /*
     * Get header of the file
@@ -109,10 +100,6 @@ abstract class PluginDatainjectionBackend {
          $tmp[] = $injectionData->getDataAtLine($i);
       return $tmp;
    }
-
-   abstract protected function deleteFile();
-
-   abstract protected function export($file, $model, $tab_result);
 
    /*
     * Get the backend implementation by type

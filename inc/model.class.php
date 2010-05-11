@@ -330,7 +330,7 @@ class PluginDatainjectionModel extends CommonDBTM {
    }
 
    function getSpecificModel() {
-      $this->specific_model;
+      return  $this->specific_model;
    }
 
    static function dropdown($options = array()) {
@@ -357,11 +357,13 @@ class PluginDatainjectionModel extends CommonDBTM {
 
       $models = array ();
       $query = "SELECT `id`, `name` FROM `glpi_plugin_datainjection_models` WHERE" .
-      " (`is_private`=" . PluginDatainjectionModel::MODEL_PUBLIC . getEntitiesRestrictRequest(" AND",
-                                                               "glpi_plugin_datainjection_models",
-                                                               "entities_id", $entity,true) . ")
-       OR (`is_private`='" . PluginDatainjectionModel::MODEL_PRIVATE . "' AND `users_id`='$user_id')" .
-      " ORDER BY `entities_id`, " . ($order == "`name`" ? "`name`" : $order);
+               " (`is_private`=" . PluginDatainjectionModel::MODEL_PUBLIC .
+               getEntitiesRestrictRequest(" AND",
+                                          "glpi_plugin_datainjection_models",
+                                          "entities_id", $entity,true) . ")
+               OR (`is_private`='" . PluginDatainjectionModel::MODEL_PRIVATE .
+               "' AND `users_id`='$user_id')" .
+               " ORDER BY `entities_id`, " . ($order == "`name`" ? "`name`" : $order);
 
       foreach ($DB->request($query) as $data) {
          $models[$data['id']] = $data['name'];
@@ -559,6 +561,7 @@ class PluginDatainjectionModel extends CommonDBTM {
 
       return true;
    }
+
    function defineTabs($options=array()) {
       global $LANG;
 
@@ -635,9 +638,7 @@ class PluginDatainjectionModel extends CommonDBTM {
       $delete_file = (isset($options['delete_file'])?$options['delete_file']:true);
 
       //Get model & model specific fields
-      $specific_model = PluginDatainjectionModel::getInstance($this->fields['filetype']);
-      $specific_model->getFromDBByModelID($this->fields['id'],true);
-      $this->setSpecificModel($specific_model);
+      $this->loadSpecificModel();
 
       if (!$webservice) {
          //Get and store uploaded file
@@ -652,7 +653,7 @@ class PluginDatainjectionModel extends CommonDBTM {
       }
 
       //If file has not the right extension, reject it and delete if
-      if($specific_model->checkFileName($original_filename)) {
+      if($this->specific_model->checkFileName($original_filename)) {
          $message = $LANG["datainjection"]["fileStep"][5];
          $message.="<br />".$LANG["datainjection"]["fileStep"][6]." csv ";
          $message.=$LANG["datainjection"]["fileStep"][7];
@@ -667,8 +668,8 @@ class PluginDatainjectionModel extends CommonDBTM {
           $backend = PluginDatainjectionBackend::getInstance($this->fields['filetype']);
          //Init backend with needed values
          $backend->init($unique_filename,$file_encoding);
-         $backend->setHeaderPresent($specific_model->fields['is_header_present']);
-         $backend->setDelimiter($specific_model->fields['delimiter']);
+         $backend->setHeaderPresent($this->specific_model->fields['is_header_present']);
+         $backend->setDelimiter($this->specific_model->fields['delimiter']);
 
          //Read 1 line from the CSV file
          $injectionData = $backend->read(1);
@@ -678,6 +679,15 @@ class PluginDatainjectionModel extends CommonDBTM {
          $this->setBackend($backend);
       }
       $this->injectionData = $injectionData;
+   }
+
+   /**
+    * Load specific model
+    */
+   function loadSpecificModel() {
+      $specific_model = PluginDatainjectionModel::getInstance($this->getFiletype());
+      $specific_model->getFromDBByModelID($this->fields['id']);
+      $this->specific_model = $specific_model;
    }
 
    /**
@@ -696,12 +706,9 @@ class PluginDatainjectionModel extends CommonDBTM {
       $return_status = true;
 
       //Get model & model specific fields
-
-      $specific_model = PluginDatainjectionModel::getInstance($this->getFiletype());
-      $specific_model->getFromDBByModelID($this->fields['id'],true);
-      $this->setSpecificModel($specific_model);
-
+      $this->loadSpecificModel();
       $this->readUploadedFile($options);
+
       if (!$this->injectionData) {
          return false;
       }
@@ -729,7 +736,7 @@ class PluginDatainjectionModel extends CommonDBTM {
             $rank = 0;
             //Build the mappings list
             foreach (PluginDatainjectionBackend::getHeader($this->injectionData,
-                                                           $specific_model->isHeaderPresent()
+                                                           $this->specific_model->isHeaderPresent()
                                                            ) as $data) {
                $mapping = new PluginDatainjectionMapping;
                $mapping->fields['models_id'] = $this->fields['id'];

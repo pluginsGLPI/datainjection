@@ -102,11 +102,11 @@ class PluginDatainjectionInfo extends CommonDBTM {
      }
 
    }
-   static function showFormInfos($models_id) {
+
+   static function showFormInfos(PluginDatainjectionModel $model) {
       global $LANG, $DB,$CFG_GLPI;
 
-      $model = new PluginDatainjectionModel;
-      $canedit=$model->can($models_id,'w');
+      $canedit=$model->can($model->fields['id'],'w');
 
       PluginDatainjectionInfo::showAddInfo($model,$canedit);
 
@@ -118,8 +118,6 @@ class PluginDatainjectionInfo extends CommonDBTM {
       echo "<th>" . $LANG["datainjection"]["info"][5] . "</th>";
       echo "</tr>";
 
-      $model = new PluginDatainjectionModel;
-      $model->getFromDB($models_id);
       $model->loadInfos();
 
       foreach ($model->getInfos() as $info) {
@@ -139,7 +137,7 @@ class PluginDatainjectionInfo extends CommonDBTM {
       if ($canedit) {
          echo "<tr>";
          echo "<td class='tab_bg_2 center' colspan='4'>";
-         echo "<input type='hidden' name='models_id' value='$models_id'>";
+         echo "<input type='hidden' name='models_id' value='".$model->fields['id']."'>";
          echo "<input type='submit' name='update' value=\"".$LANG['buttons'][7]."\" class='submit' >";
          echo "</td></tr>";
       }

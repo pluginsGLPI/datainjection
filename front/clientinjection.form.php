@@ -47,16 +47,20 @@ if (isset($_POST['upload'])) {
       addMessageAfterRedirect($LANG["datainjection"]["fillInfoStep"][4],true,ERROR,true);
    }
    elseif (!empty($_FILES) && !isset($_FILES['name'])) {
-      $response = $model->processUploadedFile(array('file_encoding'=>$_POST['file_encoding'],
-                                            'mode'=>PluginDatainjectionModel::PROCESS,
-                                            'delete_file'=>false));
+      //Read file using automatic encoding detection, and do not delete file once readed
+      $options = array('file_encoding'=>$_POST['file_encoding'],
+                       'mode'         =>PluginDatainjectionModel::PROCESS,
+                       'delete_file'  =>false);
+      $response = $model->processUploadedFile($options);
       if ($response) {
          //File uploaded successfully and matches the given model : switch to the import tab
          $_SESSION['glpi_plugin_datainjection_step'] =
                                           PluginDatainjectionClientInjection::STEP_PROCESS;
+         //Store model in session for injection
          $_SESSION['glpi_plugin_datainjection_current_model'] = serialize($model);
       }
       else {
+         //Got back to the file upload page
          $_SESSION['glpi_plugin_datainjection_step'] =
                                           PluginDatainjectionClientInjection::STEP_UPLOAD;
       }

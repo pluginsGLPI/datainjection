@@ -123,11 +123,10 @@ class PluginDatainjectionMapping extends CommonDBTM {
       $this->fields["itemtype"] = $type;
    }
 
-   static function showFormMappings($models_id) {
+   static function showFormMappings(PluginDatainjectionModel $model) {
       global $LANG, $DB,$CFG_GLPI;
 
-      $model = new PluginDatainjectionModel;
-      $canedit=$model->can($models_id,'w');
+      $canedit=$model->can($model->fields['id'],'w');
 
       echo "<form method='post' name=form action='".getItemTypeFormURL(__CLASS__)."'>";
       echo "<table class='tab_cadre_fixe'>";
@@ -138,8 +137,6 @@ class PluginDatainjectionMapping extends CommonDBTM {
       echo "<th>" . $LANG["datainjection"]["mapping"][5] . "</th>";
       echo "</tr>";
 
-      $model = new PluginDatainjectionModel;
-      $model->getFromDB($models_id);
       $model->loadMappings();
 
       foreach ($model->getMappings() as $mapping) {
@@ -160,7 +157,7 @@ class PluginDatainjectionMapping extends CommonDBTM {
       if ($canedit) {
          echo "<tr>";
          echo "<td class='tab_bg_2 center' colspan='4'>";
-         echo "<input type='hidden' name='models_id' value='$models_id'>";
+         echo "<input type='hidden' name='models_id' value='".$model->fields['id']."'>";
          echo "<input type='submit' name='update' value=\"".$LANG['buttons'][7]."\" class='submit' >";
          echo "</td></tr>";
       }

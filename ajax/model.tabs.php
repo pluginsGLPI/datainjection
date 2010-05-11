@@ -66,10 +66,10 @@ if ($_POST["id"] >0 && $model->can($_POST["id"],'r')) {
             PluginDatainjectionClientInjection::showUploadFileForm($options);
          }
          if ($model->fields['step'] > PluginDatainjectionModel::FILE_STEP) {
-            PluginDatainjectionMapping::showFormMappings($_POST["id"]);
+            PluginDatainjectionMapping::showFormMappings($model);
          }
          if ($model->fields['step'] > PluginDatainjectionModel::MAPPING_STEP) {
-            PluginDatainjectionInfo::showFormInfos($_POST["id"]);
+            PluginDatainjectionInfo::showFormInfos($model);
          }
          break;
       case 1:
@@ -85,10 +85,10 @@ if ($_POST["id"] >0 && $model->can($_POST["id"],'r')) {
          PluginDatainjectionClientInjection::showUploadFileForm($options);
          break;
       case 4 :
-         PluginDatainjectionMapping::showFormMappings($_POST["id"]);
+         PluginDatainjectionMapping::showFormMappings($model);
          break;
       case 5 :
-         PluginDatainjectionInfo::showFormInfos($_POST["id"]);
+         PluginDatainjectionInfo::showFormInfos($model);
          break;
       case 6 :
          break;

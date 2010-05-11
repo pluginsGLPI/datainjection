@@ -34,7 +34,6 @@ class PluginDatainjectionModelcsv extends CommonDBChild {
    public $itemtype = 'PluginDatainjectionModel';
    public $items_id = 'models_id';
    public $dohistory = true;
-   public $model = null;
 
    function getEmpty() {
       $this->fields['delimiter'] = ';';
@@ -90,7 +89,7 @@ class PluginDatainjectionModelcsv extends CommonDBChild {
     * @param models_id the model ID
     * @return the ID of the row in glpi_plugin_datainjection_modelcsv
     */
-   function getFromDBByModelID($models_id,$store_model=false) {
+   function getFromDBByModelID($models_id) {
       global $DB;
       $query = "SELECT `id` FROM `".$this->getTable()."` WHERE `models_id`='$models_id'";
       $results = $DB->query($query);
@@ -107,11 +106,6 @@ class PluginDatainjectionModelcsv extends CommonDBChild {
          $this->getFromDB($id);
       }
 
-      if ($store_model) {
-         $model = new PluginDatainjectionModel;
-         $model->getFromDB($models_id);
-         $this->model = $model;
-      }
       return $id;
    }
 

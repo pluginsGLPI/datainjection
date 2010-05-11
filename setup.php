@@ -70,6 +70,7 @@ function plugin_init_datainjection() {
                         'Modelcsv',
                         'Backend',
                         'Backendcsv',
+                        'BackendInterface',
                         'Infos',
                         'InfosCollection',
                         'Mapping',

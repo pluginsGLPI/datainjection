@@ -141,7 +141,7 @@ class PluginDatainjectionClientInjection {
       }
    }
 
-   static function showInjectionForm($options = array(),$model,$entities_id) {
+   static function showInjectionForm($options = array(),PluginDatainjectionModel $model,$entities_id) {
       global $LANG;
 
       echo "<table class='tab_cadre_fixe'>";
@@ -152,28 +152,37 @@ class PluginDatainjectionClientInjection {
       $_SESSION["plugin_datainjection"]["import"]["nbline"] =
       createProgressBar($LANG["datainjection"]["importStep"][1]);
 
+      $clientinjection = new PluginDatainjectionClientInjection;
+
       //New injection engine
       $engine = new PluginDatainjectionEngine($model,$entities_id);
 
-
-      $clientinjection = new PluginDatainjectionClientInjection;
       $backend = $model->getBackend();
+      $model->loadSpecificModel();
       $backend->openFile();
 
       $index = 0;
       $line = $backend->getNextLine();
-      while ($line) {
-      $clientinjection->inject($engine,$line,$index);
-      changeProgressBarPosition(
-         $_SESSION["plugin_datainjection"]["import"]["i"],
-         $_SESSION["plugin_datainjection"]["import"]["nbline"],
-         $LANG["datainjection"]["importStep"][1]."... ".
-         number_format($_SESSION["plugin_datainjection"]["import"]["i"]*100/$_SESSION["plugin_datainjection"]["import"]["nbline"],1).'%');
+      //If header is present, then get the second line
+      if ($model->getSpecificModel()->isHeaderPresent()) {
+         $line = $backend->getNextLine();
+      }
+
+      while ($line != null) {
+         logDebug($line);
+      //$clientinjection->inject($engine,$line,$index);
+      //changeProgressBarPosition(
+      //   $_SESSION["plugin_datainjection"]["import"]["i"],
+      //   $_SESSION["plugin_datainjection"]["import"]["nbline"],
+      //   $LANG["datainjection"]["importStep"][1]."... ".
+      //   number_format($_SESSION["plugin_datainjection"]["import"]["i"]*100
+      //                              /$_SESSION["plugin_datainjection"]["import"]["nbline"],
+      //                 1).'%');
          $line = $backend->getNextLine();
          $index++;
-   }
-   changeProgressBarMessage($LANG["datainjection"]["importStep"][3]);
-
+      }
+      changeProgressBarMessage($LANG["datainjection"]["importStep"][3]);
+      $backend->closeFile();
       echo "</td>" ;
       echo "</tr>";
       echo "</table>";
