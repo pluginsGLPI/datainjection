@@ -38,6 +38,9 @@ class PluginDatainjectionClientInjection {
    const STEP_PROCESS = 1;
    const STEP_RESULT  = 2;
 
+   //Injection results
+   private $results = array();
+
    //Model used for injection
    private $model;
 
@@ -207,7 +210,7 @@ class PluginDatainjectionClientInjection {
    function inject(PluginDatainjectionEngine $engine, $line,$line_id) {
       $global_result = $engine->injectLine($line);
       $global_result->setLineId($line_id);
-      $tab_result[] = $global_result;
+      $this->results[] = $global_result;
       $datas = $engine->getDatas();
    }
 }

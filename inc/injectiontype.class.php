@@ -70,10 +70,10 @@ class PluginDatainjectionInjectionType {
    static function dropdownLinkedTypes($mapping_or_info,$options=array()) {
       global $INJECTABLE_TYPES,$LANG,$CFG_GLPI;
 
-      $p['primary_type'] = '';
-      $p['itemtype'] = PluginDatainjectionInjectionType::NO_VALUE;
-      $p['mapping_or_info'] = json_encode($mapping_or_info->fields);
-      $p['called_by'] = get_class($mapping_or_info);
+      $p['primary_type']      = '';
+      $p['itemtype']          = PluginDatainjectionInjectionType::NO_VALUE;
+      $p['mapping_or_info']   = json_encode($mapping_or_info->fields);
+      $p['called_by']         = get_class($mapping_or_info);
       foreach ($options as $key => $value) {
          $p[$key] = $value;
       }
@@ -128,7 +128,7 @@ class PluginDatainjectionInjectionType {
       global $LANG,$CFG_GLPI;
 
       $blacklisted_fields = array('id','date_mod');
-
+      $used = array();
       $p['itemtype'] = PluginDatainjectionInjectionType::NO_VALUE;
       $p['primary_type'] = '';
       $p['mapping_or_info'] = array();
@@ -170,12 +170,14 @@ class PluginDatainjectionInjectionType {
                }
             }
          }
+         $used = self::getUsedMappingsOrInfos($p);
       }
       asort($fields);
 
+
       $rand = Dropdown::showFromArray("data[".$mapping_or_info['id']."][value]",
                                       $fields,
-                                      array('value'=>$mapping_value));
+                                      array('value'=>$mapping_value,'used'=>$used));
      $url = $CFG_GLPI["root_doc"]."/plugins/datainjection/ajax/dropdownMandatory.php";
       ajaxUpdateItemOnSelectEvent("dropdown_data[".$mapping_or_info['id']."][value]$rand",
                                   "span_mandatory_".$mapping_or_info['id'],
@@ -216,5 +218,44 @@ class PluginDatainjectionInjectionType {
                "name='data[".$mapping_or_info['id']."][is_mandatory]' $checked>";
       }
    }
+
+
+   static function getUsedMappingsOrInfos($options = array()) {
+      global $DB;
+
+      $p['itemtype'] = PluginDatainjectionInjectionType::NO_VALUE;
+      $p['primary_type'] = '';
+      $p['mapping_or_info'] = array();
+      $p['called_by'] = '';
+      foreach ($options as $key => $value) {
+         $p[$key] = $value;
+      }
+      $mapping_or_info = json_decode(stripslashes_deep($options['mapping_or_info']),true);
+
+      $used = array();
+      $table = (($p['called_by']=='PluginDatainjectionMapping')
+                  ?"glpi_plugin_datainjection_mappings"
+                     :"glpi_plugin_datainjection_infos");
+
+      $datas = getAllDatasFromTable($table,"`models_id`='".$mapping_or_info['models_id']."'");
+
+      $injectionClass = PluginDatainjectionInjectionCommon::getInstance($p['itemtype']);
+      $options = $injectionClass->getOptions();
+      foreach ($datas as $data) {
+         if ($data['value'] != PluginDatainjectionInjectionType::NO_VALUE) {
+            foreach ($options as $option) {
+               if ($option['linkfield'] == $data['value']
+                        && $option['displaytype'] != 'multiline_text'
+                           && $mapping_or_info['value'] != $data['value']) {
+                  $used[$option['linkfield']] = $option['linkfield'];
+                  break;
+               }
+            }
+         }
+      }
+
+      return $used;
+   }
+
 }
 ?>

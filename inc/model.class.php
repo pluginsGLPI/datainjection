@@ -500,8 +500,15 @@ class PluginDatainjectionModel extends CommonDBTM {
       echo "<tr class='tab_bg_1'>";
       echo "<td>".$LANG["datainjection"]["model"][4].": </td>";
       echo "<td>";
-      //Get only the primary types
-      PluginDatainjectionInjectionType::dropdown($this->fields['itemtype'],true);
+      if ($this->fields['step'] == '' || $this->fields['step'] == self::INITIAL_STEP) {
+         //Get only the primary types
+         PluginDatainjectionInjectionType::dropdown($this->fields['itemtype'],true);
+      }
+      else {
+         $itemtype = new $this->fields['itemtype'];
+         echo $itemtype->getTypeName();
+      }
+
       echo "</td>";
       echo "<td>".$LANG["datainjection"]["model"][12].": </td>";
       echo "<td>";

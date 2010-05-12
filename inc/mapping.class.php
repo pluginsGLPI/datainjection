@@ -145,10 +145,8 @@ class PluginDatainjectionMapping extends CommonDBTM {
          echo "<tr class='tab_bg_1'>";
          echo "<td align='center'>".$mapping->fields['name']."</td>";
          echo "<td align='center'>";
-         $rand = PluginDatainjectionInjectionType::dropdownLinkedTypes($mapping,
-                                                                       array('primary_type'=>
-                                                                       $model->fields['itemtype'])
-                                                                       );
+         $options =  array('primary_type' => $model->fields['itemtype']);
+         $rand = PluginDatainjectionInjectionType::dropdownLinkedTypes($mapping,$options);
          echo "</td>";
          echo "<td align='center'><span id='span_field_$mappings_id'></span></td>";
          echo "<td align='center'><span id='span_mandatory_$mappings_id'></span></td>";

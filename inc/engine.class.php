@@ -77,7 +77,7 @@ class PluginDatainjectionEngine {
                                                                            $mapping->isMandatory();
          }
       }
-
+      logDebug($fields_toinject);
       //--------------- Set all needed options ------------------//
       //Check options
       $checks = array('ip'                       =>true,

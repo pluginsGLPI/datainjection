@@ -47,7 +47,7 @@ class PluginDatainjectionInfocomInjection extends Infocom
    }
 
    function isPrimaryType() {
-      return true;
+      return false;
    }
 
    function connectedTo() {
