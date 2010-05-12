@@ -71,7 +71,7 @@ class PluginDatainjectionInfocomInjection extends Infocom
                                  "dropdown_integer"   => array(6),
                                  "decimal"            => array(8,13,17),
                                  "sink_type"          => array(15),
-                                 "alert"              => array(20),
+                                 "alert"              => array(22),
                                  "multiline_text"     => array(16));
       foreach ($fields_definition as $type => $tabsID) {
          foreach ($tabsID as $tabID) {
@@ -110,9 +110,13 @@ class PluginDatainjectionInfocomInjection extends Infocom
    }
 
    function showAdditionalInformation($info = array(),$option = array()) {
+      $name = "info[".$option['linkfield']."]";
       switch ($option['displaytype']) {
          case 'sink_type' :
-            Infocom::dropdownAmortType("sink_type");
+            Infocom::dropdownAmortType($name);
+         break;
+         case 'alert' :
+            Infocom::dropdownAlert($name);
          break;
          default:
             break;

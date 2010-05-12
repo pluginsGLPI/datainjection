@@ -66,7 +66,7 @@ class PluginDatainjectionComputerInjection extends Computer
       //Add displaytype value
       $dropdown = array("dropdown"       => array(3, 4, 40, 31, 45, 46, 41, 71, 32, 33, 23),
                         "yesno"          => array(42),
-                        "dropdown_users" => array(70, 24),
+                        "user" => array(70, 24),
                         "multiline_text" => array(16, 90));
       foreach ($dropdown as $type => $tabsID) {
          foreach ($tabsID as $tabID) {
