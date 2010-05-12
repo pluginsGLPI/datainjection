@@ -51,7 +51,7 @@ class PluginDatainjectionLocationInjection extends Location
    }
 
    function connectedTo() {
-      return array('Computer','Monitor','Phone','Printer','Peripheral','User','NetworkEquipment');
+      return array();
    }
 
    function getOptions() {
@@ -61,6 +61,15 @@ class PluginDatainjectionLocationInjection extends Location
       $remove = array(1, 2, 80);
       foreach ($remove as $tmp) {
          unset($tab[$tmp]);
+      }
+
+      //Add displaytype value
+      $fields_definition = array("yesno"              => array(86),
+                                 "multiline_text"     => array(16));
+      foreach ($fields_definition as $type => $tabsID) {
+         foreach ($tabsID as $tabID) {
+            $tab[$tabID]['displaytype'] = $type;
+         }
       }
 
       //Add default displaytype (text)

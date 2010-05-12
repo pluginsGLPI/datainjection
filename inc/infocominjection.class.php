@@ -66,13 +66,14 @@ class PluginDatainjectionInfocomInjection extends Infocom
       }
 
       //Add displaytype value
-      $dropdown = array("date"               => array(4, 5),
-                        "dropdown"           => array(6, 9, 19),
-                        "dropdown_integer"   => array(6),
-                        "decimal"            => array(8,13,17),
-                        "sink_type"          => array(15),
-                        "alert"              => array(20));
-      foreach ($dropdown as $type => $tabsID) {
+      $fields_definition = array("date"               => array(4, 5),
+                                 "dropdown"           => array(6, 9, 19),
+                                 "dropdown_integer"   => array(6),
+                                 "decimal"            => array(8,13,17),
+                                 "sink_type"          => array(15),
+                                 "alert"              => array(20),
+                                 "multiline_text"     => array(16));
+      foreach ($fields_definition as $type => $tabsID) {
          foreach ($tabsID as $tabID) {
             $tab[$tabID]['displaytype'] = $type;
          }
