@@ -232,15 +232,22 @@ class PluginDatainjectionInfo extends CommonDBTM {
                                              $option = array(),
                                              $injectionClass,
                                              $values = array()) {
+      global $LANG;
       $name = "info[".$option['linkfield']."]";
       $value = '';
-      if (isset($values[$option['linkfield']])) {
-         $value = $values[$option['linkfield']];
-      }
+      //if (isset($values[$option['linkfield']])) {
+      //   $value = $values[$option['linkfield']];
+      //}
 
       switch ($option['displaytype']) {
          case 'text' :
-            echo "<input type='text' name='$name' value='$value'>";
+         case 'decimal' :
+            $value = (isset($option['default'])?$option['default']:'');
+            echo "<input type='text' name='$name' value='$value'";
+            if (isset($option['size'])) {
+               echo " size='".$option['size']."'";
+            }
+            echo ">";
          break;
          case 'dropdown':
             if ($value == '') {
@@ -262,9 +269,24 @@ class PluginDatainjectionInfo extends CommonDBTM {
             }
             User::dropdown(array('name'=>$name,'value'=>$value));
             break;
+         case 'date':
+            showDateFormItem($name,$value,true,true);
+            break;
          case 'multiline_text':
             echo "<textarea cols='45' rows='5' name='$name' >$value</textarea>";
             break;
+         case 'dropdown_integer':
+            $minvalue = (isset($option['minvalue'])?$option['minvalue']:0);
+            $maxvalue =(isset($option['maxvalue'])?$option['maxvalue']:0);
+            $step =(isset($option['step'])?$option['step']:1);
+            $default =(isset($option['-1'])?array(-1=>$option['-1']):array());
+
+            Dropdown::showInteger($name,
+                                  $value,
+                                  $minvalue,
+                                  $maxvalue,
+                                  $step,
+                                  $default);
          default:
             //If type is not a standard type, must be treated by specific injection class
             $injectionClass->showAdditionalInformation($info,$option);

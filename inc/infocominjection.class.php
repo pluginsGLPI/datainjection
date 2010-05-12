@@ -41,6 +41,11 @@ if (!defined('GLPI_ROOT')){
 class PluginDatainjectionInfocomInjection extends Infocom
    implements PluginDatainjectionInjectionInterface {
 
+   function __construct() {
+      //Needed for getSearchOptions !
+      $this->table = getTableForItemType('Infocom');
+   }
+
    function isPrimaryType() {
       return true;
    }
@@ -51,11 +56,66 @@ class PluginDatainjectionInfocomInjection extends Infocom
    }
 
    function getOptions() {
-      return parent::getSearchOptions();
+      global $LANG;
+      $tab = parent::getSearchOptions();
+
+      //Remove some options because some fields cannot be imported
+      $remove = array(2, 3, 20, 21, 80, 86);
+      foreach ($remove as $tmp) {
+         unset($tab[$tmp]);
+      }
+
+      //Add displaytype value
+      $dropdown = array("date"               => array(4, 5),
+                        "dropdown"           => array(6, 9, 19),
+                        "dropdown_integer"   => array(6),
+                        "decimal"            => array(8,13,17),
+                        "sink_type"          => array(15),
+                        "alert"              => array(20));
+      foreach ($dropdown as $type => $tabsID) {
+         foreach ($tabsID as $tabID) {
+            $tab[$tabID]['displaytype'] = $type;
+         }
+      }
+
+      //Warranty_duration
+      $tab[6]['minvalue'] = 0;
+      $tab[6]['maxvalue'] = 120;
+      $tab[6]['step']     = 1;
+      $tab[6]['-1']       = $LANG['financial'][2];
+
+      $tab[8]['minvalue'] = 0;
+      $tab[8]['maxvalue'] = 120;
+      $tab[8]['step']     = 1;
+
+      $tab[14]['minvalue'] = 0;
+      $tab[14]['maxvalue'] = 15;
+      $tab[14]['step']     = 1;
+
+      $tab[17]['size']    = 14;
+      $tab[17]['default'] = 0;
+
+      //Add default displaytype (text)
+      foreach ($tab as $id => $tmp) {
+         if (isset($tmp['linkfield']) && !isset($tmp['displaytype'])) {
+            $tab[$id]['displaytype'] = 'text';
+         }
+         if (isset($tmp['linkfield']) && !isset($tmp['checktype'])) {
+            $tab[$id]['checktype'] = 'text';
+         }
+      }
+
+      return $tab;
    }
 
-   function showAdditionalInformation($info = array()) {
-
+   function showAdditionalInformation($info = array(),$option = array()) {
+      switch ($option['displaytype']) {
+         case 'sink_type' :
+            Infocom::dropdownAmortType("sink_type");
+         break;
+         default:
+            break;
+      }
    }
 
 

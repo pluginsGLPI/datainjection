@@ -55,7 +55,6 @@ class PluginDatainjectionComputerInjection extends Computer
    }
 
    function getOptions() {
-      global $LANG;
       $tab = parent::getSearchOptions();
 
       //Remove some options because some fields cannot be imported

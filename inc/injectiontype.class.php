@@ -159,8 +159,9 @@ class PluginDatainjectionInjectionType {
             //If it's a real option (not a group label) and if field is not blacklisted
             //and if a linkfield is defined (meaning that the field can be updated)
             if (is_array($option)
-                  && !in_array($option['linkfield'],$blacklisted_fields)
-                     && $option['linkfield'] != '') {
+                  && isset($option['linkfield'])
+                     && $option['linkfield'] != ''
+                        && !in_array($option['linkfield'],$blacklisted_fields)) {
                $fields[$option['linkfield']] = $option['name'];
                if ($mapping_value == PluginDatainjectionInjectionType::NO_VALUE
                      && $p['called_by'] == 'PluginDatainjectionMapping'
