@@ -191,7 +191,7 @@ class PluginDatainjectionClientInjection {
 
       while ($line != null) {
          //Inject line
-         $clientinjection->inject($engine,$line,$index);
+         $clientinjection->inject($engine,$line[0],$index);
          changeProgressBarPosition(
             $index,
             $nblines,
@@ -200,7 +200,9 @@ class PluginDatainjectionClientInjection {
          $line = $backend->getNextLine();
          $index++;
       }
-      changeProgressBarMessage($LANG["datainjection"]["importStep"][3]);
+
+      changeProgressBarPosition(100,100,
+            $LANG["datainjection"]["importStep"][3]);
       $backend->closeFile();
       echo "</td>" ;
       echo "</tr>";
@@ -208,10 +210,9 @@ class PluginDatainjectionClientInjection {
    }
 
    function inject(PluginDatainjectionEngine $engine, $line,$line_id) {
-      $global_result = $engine->injectLine($line);
-      $global_result->setLineId($line_id);
-      $this->results[] = $global_result;
-      $datas = $engine->getDatas();
+      $res = $engine->injectLine($line);
+      $this->results[] = $engine->injectLine($line);
+      //$datas = $engine->getDatas();
    }
 }
 ?>

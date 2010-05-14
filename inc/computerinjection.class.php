@@ -146,6 +146,9 @@ class PluginDatainjectionComputerInjection extends Computer
 
    }
 
+   function checkPresent($options = array()) {
+      return "";
+   }
 }
 
 ?>

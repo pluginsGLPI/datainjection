@@ -59,6 +59,7 @@ class PluginDatainjectionEngine {
       //Store all fields to injection, sorted by itemtype
       $fields_toinject = array();
       $mandatory_fields = array();
+      $results = array();
 
       //Get the injectionclass associated to the itemtype
       $itemtype = $this->getModel()->getItemtype();
@@ -71,13 +72,15 @@ class PluginDatainjectionEngine {
       for ($i = 0; $i < count($line); $i++) {
          $mapping = $this->getModel()->getMappingByRank($i);
          //If field is mapped with a value in glpi
-         if ($mapping->getValue() != PluginDatainjectionMapping::NOT_MAPPED) {
+         if ($mapping->getItemtype() != PluginDatainjectionInjectionType::NO_VALUE) {
             $fields_toinject[$mapping->getItemtype()][$mapping->getValue()] = $line[$i];
             $mandatory_fields[$mapping->getItemtype()][$mapping->getValue()] =
                                                                            $mapping->isMandatory();
          }
       }
-      logDebug($fields_toinject);
+      //Add entity to the primary type
+      $fields_toinject[$itemtype]['entities_id'] = $this->entity;
+
       //--------------- Set all needed options ------------------//
       //Check options
       $checks = array('ip'                       =>true,
@@ -108,16 +111,37 @@ class PluginDatainjectionEngine {
                        'formats'                 =>$formats,
                        'mandatory_fields'        =>$mandatory_fields);
 
-      //Do we need to add or update the objet ?
-      $action = 'add';
-      //TODO : implement method to check if it's an add/update
-      if ($action == 'add') {
-         $results = $iteminjection->addObject($fields_toinject,$options);
+      $fields_toinject = $this->dataAlreadyInDB($iteminjection, $fields_toinject);
+      //No item found in DB
+      if($fields_toinject['id'] == PluginDatainjectionCommonInjectionLib::ITEM_NOT_FOUND) {
+         //Can add item ?
+         if ($this->model->getBehaviorAdd()) {
+            $results = $iteminjection->addObject($fields_toinject,$options);
+         }
+         else {
+               $results[PluginDatainjectionCommonInjectionLib::ACTION_INJECT]['status'] =
+                                         PluginDatainjectionCommonInjectionLib::ERROR_CANNOT_IMPORT;
+               $results[PluginDatainjectionCommonInjectionLib::ACTION_INJECT]['type'] =
+                                         PluginDatainjectionCommonInjectionLib::IMPORT_ADD;
+            logDebug("doit insérer mais pas les droits");
+         }
       }
+      //Item found in DB
       else {
-         $results = $iteminjection->updateObject($fields_toinject,$options);
+         if ($this->model->getBehaviorUpdate()) {
+            $results = $iteminjection->updateObject($fields_toinject,$options);
+         }
+         else {
+               $results[PluginDatainjectionCommonInjectionLib::ACTION_INJECT]['status'] =
+                                         PluginDatainjectionCommonInjectionLib::ERROR_CANNOT_UPDATE;
+               $results[PluginDatainjectionCommonInjectionLib::ACTION_INJECT]['type'] =
+                                         PluginDatainjectionCommonInjectionLib::IMPORT_UPDATE;
+
+            logDebug("doit updater mais pas les droits");
+         }
       }
 
+      logDebug($results);
       /*
       $line = reformatDatasBeforeCheck($this->getModel(), $line, $this->getEntity(), $result);
 
@@ -288,6 +312,57 @@ class PluginDatainjectionEngine {
       */
 
       return $results;
+   }
+
+   /**
+    * Function to check if the datas to inject already exists in DB
+    * @param type the type of datas to inject
+    */
+   function dataAlreadyInDB($injectionClass, $fields_to_inject = array()) {
+      global $DB;
+      $where = "";
+      $mandatories = $this->model->getMandatoryMappings();
+      logDebug($fields_to_inject);
+      $itemtype = PluginDatainjectionInjectionCommon::getItemtypeByInjection(get_class($injectionClass));
+
+      if ($injectionClass->maybeDeleted()) {
+         $where .= " AND `is_deleted`='0' ";
+      }
+      if ($injectionClass->maybeTemplate()) {
+         $where .= " AND `is_template`='0' ";
+      }
+      if ($injectionClass->maybeRecursive()) {
+         $where_entity = getEntitiesRestrictRequest("",
+                                                    $injectionClass->getTable(),
+                                                    "entities_id",
+                                                    $fields_to_inject[$itemtype]["entities_id"],
+                                                    true);
+      } else {
+         $where_entity = " `entities_id`='" . $fields_to_inject[$itemtype]["entities_id"]."'";
+      }
+
+      $searchOptions = $injectionClass->getOptions();
+      foreach ($mandatories as $mapping) {
+         $option = PluginDatainjectionCommonInjectionLib::findSearchOption($searchOptions,$mapping->getValue());
+         $where .= " AND `" . $mapping->getValue() . "`='";
+         $where .= $fields_to_inject[$itemtype][$mapping->getValue()] . "'";
+      }
+   /*
+            case NETPORT_TYPE :
+               $where .= " AND device_type=" . $model->getDeviceType() . " AND on_device=" . $fields["on_device"];
+               $where .= getPortUnicityRequest($model, $fields);
+               break;
+   */
+      $sql  = "SELECT * FROM `" . $injectionClass->getTable();
+      $sql .="` WHERE " . $where_entity . " " . $where;
+      $result = $DB->query($sql);
+
+      if ($DB->numrows($result) > 0) {
+         return $DB->fetch_array($result);
+      }
+      else {
+         return array ("id" => PluginDatainjectionCommonInjectionLib::ITEM_NOT_FOUND);
+      }
    }
 
    //--------- Getters -------------------------//

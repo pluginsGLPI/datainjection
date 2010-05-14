@@ -139,6 +139,9 @@ class PluginDatainjectionLocationInjection extends Location
 
    }
 
+   function checkPresent($options = array()) {
+      return "";
+   }
 }
 
 ?>

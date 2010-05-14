@@ -104,6 +104,11 @@ class PluginDatainjectionModel extends CommonDBTM {
    }
 
    //---- Getters -----//
+   function getMandatoryMappings()
+   {
+      return $this->mappings->getMandatoryMappings();
+   }
+   //---- Getters -----//
    function getMappings()
    {
       return $this->mappings->getAllMappings();
@@ -607,7 +612,9 @@ class PluginDatainjectionModel extends CommonDBTM {
          if ($this->fields['step'] > PluginDatainjectionModel::MAPPING_STEP) {
             $ong[5] = $LANG["datainjection"]["tabs"][1];
             //$ong[6] = $LANG["datainjection"]["tabs"][2];
-            $ong[7] = $LANG["datainjection"]["model"][37];
+            if ($this->fields['step'] != self::READY_TO_USE_STEP) {
+               $ong[7] = $LANG["datainjection"]["model"][37];
+            }
          }
          $ong[12] = $LANG['title'][38];
       }
@@ -772,8 +779,12 @@ class PluginDatainjectionModel extends CommonDBTM {
          else {
             $mappingCollection = new PluginDatainjectionMappingCollection;
 
-            //If mapping still exists in DB, delete all of them !
-            $mappingCollection->deleteMappingsFromDB($this->fields['id']);
+            //Delete existing mappings only in model creation mode !!
+            if ($mode == self::CREATION) {
+
+               //If mapping still exists in DB, delete all of them !
+               $mappingCollection->deleteMappingsFromDB($this->fields['id']);
+            }
 
             $rank = 0;
             //Build the mappings list
@@ -789,12 +800,13 @@ class PluginDatainjectionModel extends CommonDBTM {
                $mappingCollection->addNewMapping($mapping);
                $rank++;
             }
-            //Save the mapping list in DB
-            $mappingCollection->saveAllMappings();
-            PluginDatainjectionModel::changeStep($this->fields['id'],
-                                                 PluginDatainjectionModel::MAPPING_STEP);
 
             if ($mode == self::CREATION) {
+               //Save the mapping list in DB
+               $mappingCollection->saveAllMappings();
+               PluginDatainjectionModel::changeStep($this->fields['id'],
+                                                    PluginDatainjectionModel::MAPPING_STEP);
+
                //Add redirect message
                addMessageAfterRedirect($LANG["datainjection"]["model"][32],true,INFO);
             }

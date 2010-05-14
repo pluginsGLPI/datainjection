@@ -57,9 +57,18 @@ class PluginDatainjectionInjectionCommon {
    static function getItemtypeInstanceByInjection($injectionClassName) {
       $pattern = "/PluginDatainjection(.*)Injection/";
       if (preg_match($pattern,$injectionClassName,$results)) {
-         return new $results[2];
+         return new $results[1];
       }
       return false;
    }
+
+   static function getItemtypeByInjection($injectionClassName) {
+      $pattern = "/PluginDatainjection(.*)Injection/";
+      if (preg_match($pattern,$injectionClassName,$results)) {
+         return $results[1];
+      }
+      return false;
+   }
+
 }
 ?>

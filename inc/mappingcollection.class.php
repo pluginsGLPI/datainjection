@@ -158,5 +158,15 @@ class PluginDatainjectionMappingCollection {
    static function checkMappings($models_id) {
 
    }
+
+   function getMandatoryMappings() {
+      $mandatories = array();
+      foreach ($this->mappingCollection as $mapping) {
+         if ($mapping->isMandatory()) {
+            $mandatories[] = $mapping;
+         }
+      }
+      return $mandatories;
+   }
 }
 ?>

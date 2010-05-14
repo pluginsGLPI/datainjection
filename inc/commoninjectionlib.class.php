@@ -63,6 +63,11 @@ class PluginDatainjectionCommonInjectionLib {
    const ACTION_CHECK                   = 0;
    const ACTION_INJECT                  = 1;
 
+   //Type of action to perform
+   const IMPORT_ADD                     = 0;
+   const IMPORT_UPDATE                  = 1;
+   const IMPORT_DELETE                  = 2;
+
    //Action return constants
    const SUCCESS                        = 1;
    const FAILED                         = 0;
@@ -88,6 +93,7 @@ class PluginDatainjectionCommonInjectionLib {
    const WARNING_ALREADY_LINKED         = 19;
    const IMPORT_IMPOSSIBLE              = 20;
    const ERROR_FIELDSIZE_EXCEEDED       = 21;
+   const WARNING_PARTIALLY_IMPORTED     = 22;
 
    //Empty values
    const EMPTY_VALUE                    = '';
@@ -113,11 +119,14 @@ class PluginDatainjectionCommonInjectionLib {
     */
    function __construct($injectionClass, $values = array(), $injection_options = array()) {
 
-      $options = array('rights','checks','mandatory_fields');
-      foreach ($options as $option) {
-         if (isset($injection_options[$option])) {
-            $this->rights = $injection_options[$option];
-         }
+      if (isset($injection_options['checks'])) {
+         $this->checks = $injection_options['checks'];
+      }
+      if (isset($injection_options['rights'])) {
+         $this->rights = $injection_options['rights'];
+      }
+      if (isset($injection_options['mandatory_fields'])) {
+         $this->mandatory_fields = $injection_options['mandatory_fields'];
       }
 
       //Split $injection_options array and store data into the rights internal arrays
@@ -208,6 +217,15 @@ class PluginDatainjectionCommonInjectionLib {
     * @return an itemtype
     */
    private function getItemtype() {
+      $classname = get_class($this->injectionClass);
+      return PluginDatainjectionInjectionCommon::getItemtypeByInjection($classname);
+   }
+
+   /**
+    * Get itemtype associated to the injectionClass
+    * @return an itemtype
+    */
+   private function getItemInstance() {
       $classname = get_class($this->injectionClass);
       return PluginDatainjectionInjectionCommon::getItemtypeInstanceByInjection($classname);
    }
@@ -425,18 +443,20 @@ class PluginDatainjectionCommonInjectionLib {
       //Get search options associated with the injectionClass
       $searchOptions = $this->injectionClass->getOptions();
 
-      foreach ($this->values as $field => $value) {
-         //Get search option associated with the field
-         $option = self::findSearchOption($searchOptions,$field);
-         if ($value == self::EMPTY_VALUE && $this->mandatory_fields[$field]) {
-            $this->results[self::ACTION_CHECK]['status'] = self::ERROR;
-            $this->results[self::ACTION_CHECK][$field] = self::MANDATORY;
-         }
-         else {
-            $check_result = $this->checkType($field,$value,$this->mandatory_fields[$field]);
-            $this->results[self::ACTION_CHECK][$field] = $check_result;
-            if ($check_result != self::SUCCESS) {
+      foreach ($this->values as $type => $fields) {
+         foreach($fields as $field => $value) {
+            //Get search option associated with the field
+            $option = self::findSearchOption($searchOptions,$field);
+            if ($value == self::EMPTY_VALUE && $this->mandatory_fields[$type][$field]) {
                $this->results[self::ACTION_CHECK]['status'] = self::ERROR;
+               $this->results[self::ACTION_CHECK][$field] = self::MANDATORY;
+            }
+            else {
+               $check_result = $this->checkType($field,$value,$this->mandatory_fields[$type][$field]);
+               $this->results[self::ACTION_CHECK][$field] = $check_result;
+               if ($check_result != self::SUCCESS) {
+                  $this->results[self::ACTION_CHECK]['status'] = self::ERROR;
+               }
             }
          }
       }
@@ -452,7 +472,8 @@ class PluginDatainjectionCommonInjectionLib {
 
    private function checkType($field_name, $data, $mandatory)
    {
-      $option = self::findSearchOption($this->options,$field_name);
+      $searchOptions = $this->injectionClass->getOptions();
+      $option = self::findSearchOption($searchOptions,$field_name);
       if (!empty($options)) {
          $field_type = (isset($option['checktype'])?$option['checktype']:'text');
 
@@ -502,6 +523,14 @@ class PluginDatainjectionCommonInjectionLib {
 
 
    //--------------------------------------------------//
+   //------ Pre and post injection methods -----------//
+   //------------------------------------------------//
+   function addNecessaryFields() {
+     $itemtype = $this->getItemtype();
+     $this->values[$itemtype]['entities_id'] = $this->entity;
+   }
+
+   //--------------------------------------------------//
    //-------- Add /Update/Delete methods -------------//
    //------------------------------------------------//
 
@@ -518,15 +547,25 @@ class PluginDatainjectionCommonInjectionLib {
       $this->check();
       if ($this->results[self::ACTION_CHECK] != self::FAILED) {
          //Third : inject data
-         $itemtype = $this->getItemtype();
-         $item = new $itemtype();
+         $item = $this->getItemInstance();
 
+         //Add important fields for injection
+         $this->addNecessaryFields();
+
+         $tmp = $this->values[get_class($item)];
+         logDebug($tmp);
          //Insert data using the standard add() method
-         $newID = $item->add($this->values[$itemtype]);
+         if ($item instanceof CommonDropdown) {
+            $newID = $item->import($tmp);
+         }
+         else {
+            $newID = $item->add($tmp);
+         }
          $this->results[self::ACTION_INJECT]['status'] = self::SUCCESS;
-         $this->results[self::ACTION_INJECT][$itemtype] = $newID;
+         $this->results[self::ACTION_INJECT]['type'] = self::IMPORT_ADD;
+         $this->results[self::ACTION_INJECT][get_class($item)] = $newID;
       }
-
+      return $this->results;
    }
 
    /**
@@ -537,18 +576,27 @@ class PluginDatainjectionCommonInjectionLib {
       //First : reformat data
       $this->reformat();
 
-      //Second : check data
      //Second : check data
       $this->check();
       if ($this->results[self::ACTION_CHECK] != self::FAILED) {
          //Third : inject data
-         $itemtype = $this->getItemtype();
-         $item = new $itemtype();
+         $item = $this->getItemInstance();
 
-         //Insert data using the standard add() method
-         $item->update($this->values[$itemtype]);
+         //Add important fields for injection
+         $this->addNecessaryFields();
+
+         //Insert data using the standard update() method
+         $tmp = $this->values[get_class($item)];
+         if ($item instanceof CommonDropdown) {
+            $newID = $item->import($tmp);
+         }
+         else {
+            $newID = $item->update($tmp);
+         }
          $this->results[self::ACTION_INJECT]['status'] = self::SUCCESS;
-         $this->results[self::ACTION_INJECT][$itemtype] = $this->values[$itemtype]['id'];
+         $this->results[self::ACTION_INJECT]['type'] = self::IMPORT_UPDATE;
+         $this->results[self::ACTION_INJECT][get_class($item)] =
+                                                              $this->values[get_class($item)]['id'];
       }
    }
 
@@ -560,6 +608,8 @@ class PluginDatainjectionCommonInjectionLib {
       $itemtype = $this->getItemtype();
       $item = new $itemtype();
       if (isset($this->values[$itemtype]['id'])) {
+         $this->results[self::ACTION_INJECT]['type'] = self::IMPORT_DELETE;
+
          if ($item->delete($this->values[$itemtype])) {
             $this->results[self::ACTION_INJECT]['status'] = self::SUCCESS;
          }

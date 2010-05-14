@@ -104,5 +104,10 @@ interface PluginDatainjectionInjectionInterface {
     * Reformat data if itemtypes needs it
     */
    function reformat(&$values = array());
+
+   /**
+    * Add itemtype specific checks to see if object is already in DB or not
+    */
+   function checkPresent($options = array());
 }
 ?>

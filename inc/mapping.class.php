@@ -29,7 +29,7 @@
  */
 class PluginDatainjectionMapping extends CommonDBTM {
 
-   const NOT_MAPPED = -1;
+   //const NOT_MAPPED = -1;
 
    function canCreate() {
       return plugin_datainjection_haveRight('model','w');

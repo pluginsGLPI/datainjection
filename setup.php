@@ -82,7 +82,8 @@ function plugin_init_datainjection() {
                         'InjectionCommon',
                         'Result',
                         'CommonInjectionLib',
-                        'Webservice');
+                        'Webservice',
+                        'Result');
       foreach ($classes as $value) {
          Plugin::registerClass('PluginDatainjection'.$value);
       }
