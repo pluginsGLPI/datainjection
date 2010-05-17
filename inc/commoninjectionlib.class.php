@@ -45,6 +45,8 @@ class PluginDatainjectionCommonInjectionLib {
    //Fields mandatory for injection
    private $mandatory_fields = array();
 
+   private $addtional_infos = array();
+
    //Injection class to use
    private $injectionClass;
 
@@ -127,6 +129,9 @@ class PluginDatainjectionCommonInjectionLib {
       }
       if (isset($injection_options['mandatory_fields'])) {
          $this->mandatory_fields = $injection_options['mandatory_fields'];
+      }
+      if (isset($injection_options['addtional_infos'])) {
+         $this->addtional_infos = $injection_options['addtional_infos'];
       }
 
       //Split $injection_options array and store data into the rights internal arrays
@@ -238,8 +243,160 @@ class PluginDatainjectionCommonInjectionLib {
       return $this->results;
    }
 
-   private function getFieldValue($field) {
+   /**
+    * Get ID associate to the value from the CSV file is needed (for example for dropdown tables)
+    * @return nothing
+    */
+   private function manageFieldValues() {
+      $searchOptions = $this->injectionClass->getOptions();
 
+      $itemtype = $this->getItemtype();
+
+      foreach ($this->values[$itemtype] as $field => $value) {
+         $searchOption = self::findSearchOption($searchOptions,$field);
+         $this->getFieldValue($itemtype, $searchOption,$field,$value);
+      }
+   }
+
+   /**
+    * Get the ID associated with a value from the CSV file
+    * @param itemtype itemtype of the values to inject
+    * @param searchOption option associated with the field to check
+    * @param field the field to check
+    * @param value the value coming from the CSV file
+    * @return nothing
+    */
+   private function getFieldValue($itemtype, $searchOption, $field, $value) {
+      $linkfield = $searchOption['linkfield'];
+      if (!isset($searchOption['displaytype'])) {
+         $searchOption['displaytype'] = 'text';
+      }
+
+      switch ($searchOption['displaytype']) {
+         case 'text':
+            $this->values[$itemtype][$linkfield] = $value;
+            break;
+         case 'dropdown':
+            //if ($value != self::DROPDOWN_DEFAULT_VALUE) {
+               $tmptype = getItemTypeForTable($searchOption['table']);
+               $item = new $tmptype;
+               if ($item instanceof CommonDropdown) {
+                 $this->values[$itemtype][$linkfield] = $item->importExternal($value,
+                                                                              $this->entity,
+                                                                              array(),
+                                                                              '',
+                                                                              $this->rights['add_dropdown']);
+               }
+               else {
+                  $this->values[$itemtype][$linkfield] =  self::findSingle($item,
+                                                                           $searchOption,
+                                                                           $value);
+               }
+
+            break;
+         case 'contact':
+            if ($value != self::DROPDOWN_DEFAULT_VALUE) {
+               $this->values[$itemtype][$linkfield] = self::findContact($value,
+                                                                        $this->entity);
+            }
+            else {
+               $this->values[$itemtype][$linkfield] = self::DROPDOWN_DEFAULT_VALUE;
+            }
+            break;
+         case 'user':
+            if ($value != self::DROPDOWN_DEFAULT_VALUE) {
+               $this->values[$itemtype][$linkfield] = self::findUser($value, $this->entity);
+            }
+            else {
+               $this->values[$itemtype][$linkfield] = self::DROPDOWN_DEFAULT_VALUE;
+            }
+            break;
+         case 'multiline_text':
+            if ($value != self::EMPTY_VALUE) {
+               if (!isset($this->values[$field])) {
+                  $this->values[$itemtype][$linkfield] = '';
+               }
+               $this->values[$itemtype][$linkfield] .= $searchOption['name'] . "=" . $value . "\n";
+            }
+            break;
+         }
+      }
+
+   /**
+    * Find a user. Look for login OR firstname + lastname OR lastname + firstname
+    * @param value the user to look for
+    * @param entity the entity where the user should have right
+    * @return the user ID if found or ''
+    */
+   static private function findUser($value,$entity)
+   {
+      global $DB;
+
+      $sql = "SELECT `id` FROM `glpi_users`
+              WHERE LOWER(`name`)=\"".strtolower($value)."\"
+                 OR (CONCAT(LOWER(`realname`),' ',LOWER(`firstname`))=\"".strtolower($value)."\"
+                  OR CONCAT(LOWER(`firstname`),' ',LOWER(`realname`))=\"".strtolower($value)."\")";
+      $result = $DB->query($sql);
+      if ($DB->numrows($result)>0)
+      {
+         //check if user has right on the current entity
+         $ID = $DB->result($result,0,"id");
+         $entities = getUserEntities($ID,true);
+         if (in_array($entity,$entities))
+            return $ID;
+         else
+            return 0;
+      }
+      else
+         return 0;
+   }
+
+
+   /**
+    * Find a user. Look for login OR firstname + lastname OR lastname + firstname
+    * @param value the user to look for
+    * @param entity the entity where the user should have right
+    * @return the user ID if found or ''
+    */
+   static private function findContact($value,$entity)
+   {
+      global $DB;
+      $sql = "SELECT id FROM `glpi_contacts`
+              WHERE `entities_id`='".$entity."'
+               AND (LOWER(`name`)=\"".strtolower($value)."\"
+                  OR (CONCAT(LOWER(`name`),' ',LOWER(`firstname`))=\"".strtolower($value)."\"
+                     OR CONCAT(LOWER(`firstname`),' ',LOWER(`name`))=\"".strtolower($value)."\"))";
+      $result = $DB->query($sql);
+      if ($DB->numrows($result)>0)
+      {
+         //check if user has right on the current entity
+         return $DB->result($result,0,"id");
+      }
+      else {
+         return PluginDatainjectionCommonInjectionLib::EMPTY_VALUE;
+      }
+   }
+
+   static private function findSingle($item, $searchOption, $value) {
+      global $DB;
+      $query = "SELECT `id` FROM `".$item->getTable()."` WHERE 1";
+      if ($item->maybeTemplate()) {
+         $query.= " `is_template`='0'";
+      }
+      if ($item->isEntityAssign()) {
+         $query.=getEntitiesRestrictRequest(" AND",$item->getTable(),'entities_id',
+                                            $value,$item->maybeRecursive());
+      }
+      $query.= " AND `".$searchOption['field']."`='$value'";
+      $result = $DB->query($query);
+      if ($DB->numrows($result)>0)
+      {
+         //check if user has right on the current entity
+         return $DB->result($result,0,"id");
+      }
+      else {
+         return PluginDatainjectionCommonInjectionLib::EMPTY_VALUE;
+      }
    }
    //--------------------------------------------------//
    //----------- Reformat methods --------------------//
@@ -260,30 +417,33 @@ class PluginDatainjectionCommonInjectionLib {
       $searchOptions = $this->injectionClass->getOptions();
 
       //Browse all fields & values
-      foreach ($this->values as $field => $value) {
-         if ($value == "NULL") {
-               $this->values[$field]=self::EMPTY_VALUE;
-         }
-         else {
-            //Get search option associated with the field
-            $option = self::findSearchOption($searchOptions,$field);
+      foreach ($this->values as $itemtype => $data) {
+         foreach ($data as $field => $value) {
+            if ($value == "NULL") {
+                  $this->values[$itemtype][$field] = self::EMPTY_VALUE;
+            }
+            else {
+               //Get search option associated with the field
+               $option = self::findSearchOption($searchOptions,$field);
 
-            //If field is a dropdown, then use the standard import() table
-            if($option['checktype'] == 'dropdown') {
-               $dropdownItemName = getItemTypeForTable($option['table']);
-               $dropdownClass = new $dropdownItemName();
+               //If field is a dropdown, then use the standard import() table
+               if($option['checktype'] == 'dropdown') {
+                  $dropdownItemName = getItemTypeForTable($option['table']);
+                  $dropdownClass = new $dropdownItemName();
 
-               if ($dropdownClass instanceof CommonTreeDropdown) {
-                  $value = self::reformatSpecialChars($value);
-               }
-               if ($dropdownClass->canCreate() && $this->canAddDropdownValue()) {
-                  $dropdownID = $dropdownClass->import($value);
-                  if ($dropdownID) {
-                     $this->values[$field] = Dropdown::getDropdownName($option['table'],$dropdownID);
+                  if ($dropdownClass instanceof CommonTreeDropdown) {
+                     $value = self::reformatSpecialChars($value);
                   }
-                  else {
-                     $results[self::ACTION_CHECK]['status'] = self::WARNING;
-                     $results[self::ACTION_CHECK][$field] = self::WARNING_NOTFOUND;
+                  if ($dropdownClass->canCreate() && $this->canAddDropdownValue()) {
+                     $dropdownID = $dropdownClass->import($value);
+                     if ($dropdownID) {
+                        $this->values[$itemtype][$field] = Dropdown::getDropdownName($option['table'],
+                                                                                     $dropdownID);
+                     }
+                     else {
+                        $results[self::ACTION_CHECK]['status'] = self::WARNING;
+                        $results[self::ACTION_CHECK][$field] = self::WARNING_NOTFOUND;
+                     }
                   }
                }
             }
@@ -308,26 +468,30 @@ class PluginDatainjectionCommonInjectionLib {
       //Get search options associated with the injectionClass
       $searchOptions = $this->injectionClass->getOptions();
 
-      foreach ($this->values as $field => $value) {
-         //Get search option associated with the field
-         $option = self::findSearchOption($searchOptions,$field);
+      foreach ($this->values as $itemtype => $data) {
+         foreach ($data as $field => $value) {
+            //Get search option associated with the field
+            $option = self::findSearchOption($searchOptions,$field);
 
-         // Check some types
-         switch ($option['checktype'])
-         {
-            case "date":
-               //If the value is a date, try to reformat it if it's not the good type
-               //(dd-mm-yyyy instead of yyyy-mm-dd)
-               $this->values[$field] = self::reformatDate($value,$this->getDateFormat());
+            // Check some types
+            switch ($option['checktype'])
+            {
+               case "date":
+                  //If the value is a date, try to reformat it if it's not the good type
+                  //(dd-mm-yyyy instead of yyyy-mm-dd)
+                  $this->values[$itemtype][$field] = self::reformatDate($value,
+                                                                        $this->getDateFormat());
+                  break;
+               case "mac":
+                  $this->values[$itemtype][$field] = self::reformatMacAddress($value);
+                  break;
+               case "float":
+                     $this->values[$itemtype][$field] = self::reformatFloat($value,
+                                                                            $this->getFloatFormat());
+                  break;
+               default:
                break;
-            case "mac":
-               $this->values[$field] = self::reformatMacAddress($value);
-               break;
-            case "float":
-                  $this->values[$field] = self::reformatFloat($value, $this->getFloatFormat());
-               break;
-            default:
-            break;
+            }
          }
       }
    }
@@ -366,14 +530,14 @@ class PluginDatainjectionCommonInjectionLib {
       switch ($format)
       {
          case self::FLOAT_TYPE_COMMA:
-         $value = str_replace(array(" ", ","), array("","."), $value);
-         break;
+            $value = str_replace(array(" ", ","), array("","."), $value);
+            break;
          case self::FLOAT_TYPE_DOT:
-         $value = str_replace(" ","", $value);
-         break;
+            $value = str_replace(" ","", $value);
+            break;
          case self::FLOAT_TYPE_DOT_AND_COM:
-         $value=str_replace(",","", $value);
-         break;
+            $value=str_replace(",","", $value);
+            break;
       }
       return $value;
    }
@@ -443,19 +607,24 @@ class PluginDatainjectionCommonInjectionLib {
       //Get search options associated with the injectionClass
       $searchOptions = $this->injectionClass->getOptions();
 
-      foreach ($this->values as $type => $fields) {
+      foreach ($this->values as $itemtype => $fields) {
          foreach($fields as $field => $value) {
-            //Get search option associated with the field
-            $option = self::findSearchOption($searchOptions,$field);
-            if ($value == self::EMPTY_VALUE && $this->mandatory_fields[$type][$field]) {
-               $this->results[self::ACTION_CHECK]['status'] = self::ERROR;
-               $this->results[self::ACTION_CHECK][$field] = self::MANDATORY;
-            }
-            else {
-               $check_result = $this->checkType($field,$value,$this->mandatory_fields[$type][$field]);
-               $this->results[self::ACTION_CHECK][$field] = $check_result;
-               if ($check_result != self::SUCCESS) {
-                  $this->results[self::ACTION_CHECK]['status'] = self::ERROR;
+            if (isset($this->mandatory_fields[$itemtype][$field])) {
+               //Get search option associated with the field
+               $option = self::findSearchOption($searchOptions,$field);
+               if ($value == self::EMPTY_VALUE
+                     && $this->mandatory_fields[$itemtype][$field]) {
+                  $this->results[self::ACTION_CHECK]['status'] = self::FAILED;
+                  $this->results[self::ACTION_CHECK][$field] = self::MANDATORY;
+               }
+               else {
+                  $check_result = $this->checkType($field,
+                                                   $value,
+                                                   $this->mandatory_fields[$itemtype][$field]);
+                  $this->results[self::ACTION_CHECK][$field] = $check_result;
+                  if ($check_result != self::SUCCESS) {
+                     $this->results[self::ACTION_CHECK]['status'] = self::FAILED;
+                  }
                }
             }
          }
@@ -540,6 +709,9 @@ class PluginDatainjectionCommonInjectionLib {
     */
    function addObject() {
 
+      //Get real value for fields (ie dropdown, etc)
+      $this->manageFieldValues();
+
       //First : reformat data
       $this->reformat();
 
@@ -552,8 +724,9 @@ class PluginDatainjectionCommonInjectionLib {
          //Add important fields for injection
          $this->addNecessaryFields();
 
+         $this->addAdditionalInfos();
+
          $tmp = $this->values[get_class($item)];
-         logDebug($tmp);
          //Insert data using the standard add() method
          if ($item instanceof CommonDropdown) {
             $newID = $item->import($tmp);
@@ -573,6 +746,9 @@ class PluginDatainjectionCommonInjectionLib {
     */
    function updateObject() {
 
+      //Get real value for fields (ie dropdown, etc)
+      $this->manageFieldValues();
+
       //First : reformat data
       $this->reformat();
 
@@ -584,6 +760,8 @@ class PluginDatainjectionCommonInjectionLib {
 
          //Add important fields for injection
          $this->addNecessaryFields();
+
+         $this->addAdditionalInfos();
 
          //Insert data using the standard update() method
          $tmp = $this->values[get_class($item)];
@@ -617,6 +795,14 @@ class PluginDatainjectionCommonInjectionLib {
             $this->results[self::ACTION_INJECT]['status'] = self::FAILED;
          }
          $this->results[self::ACTION_INJECT][$itemtype] = $this->values[$itemtype]['id'];
+      }
+   }
+
+   private function addAdditionalInfos() {
+      foreach ($this->addtional_infos as $itemtype => $data) {
+         foreach ($data as $field => $value) {
+            $this->values[$itemtype][$field] = $data;
+         }
       }
    }
 }

@@ -41,6 +41,10 @@ if (!defined('GLPI_ROOT')){
 class PluginDatainjectionNetworkportInjection extends NetworkPort
    implements PluginDatainjectionInjectionInterface {
 
+   function __construct() {
+      $this->table = getTableForItemType('NetworkPort');
+   }
+
    function isPrimaryType() {
       return false;
    }
@@ -108,6 +112,61 @@ class PluginDatainjectionNetworkportInjection extends NetworkPort
 
    }
 
+   function checkPresent($fields_toinject = array(), $options = array()) {
+      $where  = " AND `itemtype`='" . $options['itemtype']."'";
+      $where .= " AND `items_id`='" . $fields_toinject['items_id']."'";
+      $where .= getPortUnicityRequest($fields_toinject, $options);
+      return $where;
+   }
+
+      /**
+    * Build where sql request to look for a network port
+    * @param model the model
+    * @param fields the fields to insert into DB
+    *
+    * @return the sql where clause
+    */
+   function getPortUnicityRequest($fields_toinject = array(), $options = array()) {
+      $where = "";
+
+      switch ($options['port_unicity']) {
+         case PluginDatainjectionModel::UNICITY_NETPORT_LOGICAL_NUMBER :
+            $where .= " AND `logical_number`='" . (isset ($fields_toinject["logical_number"])
+                                                   ? $fields_toinject["logical_number"] : '') . "'";
+            break;
+         case PluginDatainjectionModel::UNICITY_NETPORT_LOGICAL_NUMBER_MAC :
+            $where .= " AND `logical_number`='" . (isset ($fields_toinject["logical_number"])
+                                                   ? $fields_toinject["logical_number"] : '') . "'";
+            $where .= " AND `name`='" . (isset ($fields_toinject["name"])
+                                                            ? $fields_toinject["name"] : '') . "'";
+            $where .= " AND `mac`='" . (isset ($fields_toinject["mac"])
+                                                            ? $fields_toinject["mac"] : '') . "'";
+            break;
+         case PluginDatainjectionModel::UNICITY_NETPORT_LOGICAL_NUMBER_NAME :
+            $where .= " AND `logical_number`='" . (isset ($fields_toinject["logical_number"])
+                                                   ? $fields_toinject["logical_number"] : '') . "'";
+            $where .= " AND `name`='" . (isset ($fields_toinject["name"])
+                                                   ? $fields_toinject["name"] : '') . "'";
+            break;
+         case PluginDatainjectionModel::UNICITY_NETPORT_LOGICAL_NUMBER_NAME_MAC :
+            $where .= " AND `logical_number`='" . (isset ($fields_toinject["logical_number"])
+                                                   ? $fields_toinject["logical_number"] : '') . "'";
+            $where .= " AND `name`='" . (isset ($fields_toinject["name"])
+                                                   ? $fields_toinject["name"] : '') . "'";
+            $where .= " AND `mac`='" . (isset ($fields_toinject["mac"])
+                                                   ? $fields_toinject["mac"] : '') . "'";
+            break;
+         case PluginDatainjectionModel::UNICITY_NETPORT_MACADDRESS :
+            $where .= " AND `mac`='" . (isset ($fields_toinject["mac"])
+                                                   ? $fields_toinject["mac"] : '') . "'";
+            break;
+         case PluginDatainjectionModel::UNICITY_NETPORT_NAME :
+            $where .= " AND `name`='" . (isset ($fields_toinject["name"])
+                                                   ? $fields_toinject["name"] : '') . "'";
+            break;
+      }
+      return $where;
+   }
 }
 
 ?>

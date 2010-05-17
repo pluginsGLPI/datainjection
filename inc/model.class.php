@@ -526,7 +526,9 @@ class PluginDatainjectionModel extends CommonDBTM {
       echo "<td>";
       PluginDatainjectionDropdown::dropdownFileTypes($this->fields['filetype']);
       echo "</td>";
-      echo "<td colspan='2'>";
+      echo "<td>".$LANG["datainjection"]["model"][8].": </td>";
+      echo "<td>";
+      Dropdown::showYesNo("can_add_dropdown",$this->fields['can_add_dropdown']);
       echo "</td>";
       echo "</tr>";
 

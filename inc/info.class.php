@@ -296,5 +296,36 @@ class PluginDatainjectionInfo extends CommonDBTM {
          echo "&nbsp;*";
       }
    }
+
+   static function keepInfo(PluginDatainjectionInfo $info, $value) {
+      $itemtype = $info->getInfosType();
+      $injectionClass = PluginDatainjectionInjectionCommon::getInstance($itemtype);
+      $options = $injectionClass->getOptions();
+
+      $option = PluginDatainjectionCommonInjectionLib::findSearchOption($options,$info->getValue());
+      if ($option) {
+         switch ($option['displaytype']) {
+            case 'text':
+            case 'multiline_text':
+               if ($value != PluginDatainjectionCommonInjectionLib::EMPTY_VALUE) {
+                  return true;
+               }
+               else {
+                  return false;
+               }
+               break;
+            case 'dropdown':
+            case 'user':
+            case 'contact':
+               if ($value != PluginDatainjectionCommonInjectionLib::DROPDOWN_DEFAULT_VALUE) {
+                  return true;
+               }
+               else {
+                  return false;
+               }
+               break;
+         }
+      }
+   }
 }
 ?>

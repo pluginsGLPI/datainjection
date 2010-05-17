@@ -164,6 +164,10 @@ class PluginDatainjectionClientInjection {
    static function showInjectionForm($options = array(),PluginDatainjectionModel $model,$entities_id) {
       global $LANG;
 
+      if (!isset($options['info'])) {
+         $options['info'] = array();
+      }
+
       echo "<table class='tab_cadre_fixe'>";
       echo "<th colspan='2'>" . $LANG["datainjection"]["tabs"][3]."</th>";
       echo "<tr class='tab_bg_1'>";
@@ -175,7 +179,7 @@ class PluginDatainjectionClientInjection {
       $clientinjection = new PluginDatainjectionClientInjection;
 
       //New injection engine
-      $engine = new PluginDatainjectionEngine($model,$entities_id);
+      $engine = new PluginDatainjectionEngine($model,$options['info'],$entities_id);
 
       $backend = $model->getBackend();
       $model->loadSpecificModel();

@@ -153,53 +153,6 @@ class PluginDatainjectionCheck {
    }
 
    /**
-    * Find a user. Look for login OR firstname + lastname OR lastname + firstname
-    * @param value the user to look for
-    * @param entity the entity where the user should have right
-    * @return the user ID if found or ''
-    */
-   static function findUser($value,$entity)
-   {
-      global $DB;
-
-      $sql = "SELECT ID FROM glpi_users WHERE LOWER(name)=\"".strtolower($value)."\" OR (CONCAT(LOWER(realname),' ',LOWER(firstname))=\"".strtolower($value)."\" OR CONCAT(LOWER(firstname),' ',LOWER(realname))=\"".strtolower($value)."\")";
-      $result = $DB->query($sql);
-      if ($DB->numrows($result)>0)
-      {
-         //check if user has right on the current entity
-         $ID = $DB->result($result,0,"ID");
-         $entities = getUserEntities($ID,true);
-         if (in_array($entity,$entities))
-            return $ID;
-         else
-            return 0;
-      }
-      else
-         return 0;
-   }
-
-
-   /**
-    * Find a user. Look for login OR firstname + lastname OR lastname + firstname
-    * @param value the user to look for
-    * @param entity the entity where the user should have right
-    * @return the user ID if found or ''
-    */
-   static function findContact($value,$entity)
-   {
-      global $DB;
-      $sql = "SELECT ID FROM glpi_contacts WHERE FK_entities=".$entity." AND (LOWER(name)=\"".strtolower($value)."\" OR (CONCAT(LOWER(name),' ',LOWER(firstname))=\"".strtolower($value)."\" OR CONCAT(LOWER(firstname),' ',LOWER(name))=\"".strtolower($value)."\"))";
-      $result = $DB->query($sql);
-      if ($DB->numrows($result)>0)
-      {
-         //check if user has right on the current entity
-         return $DB->result($result,0,"ID");
-      }
-      else
-         return EMPTY_VALUE;
-   }
-
-   /**
     * Create a tree of locations
     * @param location the full tree of locations
     * @param entity the current entity
@@ -320,9 +273,11 @@ class PluginDatainjectionCheck {
    static function findTemplate($entity,$table,$value)
    {
       global $DB;
-      $result = $DB->query("SELECT ID FROM ".$table." WHERE FK_entities=".$entity." AND tplname='".addslashes($value)."' AND is_template=1");
+      $result = $DB->query("SELECT `id`
+                            FROM `".$table."` WHERE `entities_id`='".$entity."'
+                            AND `tplname`='".addslashes($value)."' AND `is_template`='1'");
       if ($DB->numrows($result)==1)
-         return $DB->result($result,0,"ID");
+         return $DB->result($result,0,"id");
       else
          return 0;
    }

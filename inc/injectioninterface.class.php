@@ -107,7 +107,10 @@ interface PluginDatainjectionInjectionInterface {
 
    /**
     * Add itemtype specific checks to see if object is already in DB or not
+    * @param fields_toinject the fields to be injected into GLPI DB
+    * @param options more informations needed
+    * @return nothing
     */
-   function checkPresent($options = array());
+   function checkPresent($fields_toinject = array(), $options = array());
 }
 ?>

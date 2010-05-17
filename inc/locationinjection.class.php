@@ -139,7 +139,7 @@ class PluginDatainjectionLocationInjection extends Location
 
    }
 
-   function checkPresent($options = array()) {
+   function checkPresent($fields_toinject = array(), $options = array()) {
       return "";
    }
 }

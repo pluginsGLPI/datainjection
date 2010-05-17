@@ -174,7 +174,7 @@ class PluginDatainjectionInfocomInjection extends Infocom
 
    }
 
-   function checkPresent($options = array()) {
+   function checkPresent($fields_toinject = array(), $options = array()) {
       return " AND itemtype=" . $options['itemtype'] . " AND items_id=" . $options["id"];
    }
 }
