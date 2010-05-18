@@ -235,9 +235,6 @@ class PluginDatainjectionInfo extends CommonDBTM {
       global $LANG;
       $name = "info[".$option['linkfield']."]";
       $value = '';
-      //if (isset($values[$option['linkfield']])) {
-      //   $value = $values[$option['linkfield']];
-      //}
 
       switch ($option['displaytype']) {
          case 'text' :

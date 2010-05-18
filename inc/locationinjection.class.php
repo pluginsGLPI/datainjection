@@ -142,6 +142,11 @@ class PluginDatainjectionLocationInjection extends Location
    function checkPresent($fields_toinject = array(), $options = array()) {
       return "";
    }
+
+   function getSpecificFieldValue($itemtype, $searchOption, $field, $value) {
+      return false;
+   }
+
 }
 
 ?>

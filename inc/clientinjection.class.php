@@ -97,20 +97,24 @@ class PluginDatainjectionClientInjection {
          echo "</td></tr></table>";
       }
 
-      echo "<span id='span_injection' name='span_injection'>";
-      echo "</span>";
+      echo "<span id='span_injection' name='span_injection'></span>";
       echo "</div></form>";
 
       if (isset($_SESSION['glpi_plugin_datainjection_models_id'])) {
          $p['models_id'] = $_SESSION['glpi_plugin_datainjection_models_id'];
 
-         if ($_SESSION['glpi_plugin_datainjection_step'] == self::STEP_UPLOAD) {
-            $url = $CFG_GLPI["root_doc"]."/plugins/datainjection/ajax/dropdownSelectModel.php";
+         switch ($_SESSION['glpi_plugin_datainjection_step']) {
+            case self::STEP_UPLOAD:
+               $url = $CFG_GLPI["root_doc"]."/plugins/datainjection/ajax/dropdownSelectModel.php";
+               ajaxUpdateItem("span_injection",$url,$p);
+               break;
+             case self::STEP_PROCESS:
+               $url = $CFG_GLPI["root_doc"]."/plugins/datainjection/ajax/injection.php";
+               ajaxUpdateItem("span_injection",$url,$p);
+                break;
+             default:
+                break;
          }
-         else {
-            $url = $CFG_GLPI["root_doc"]."/plugins/datainjection/ajax/injection.php";
-         }
-         ajaxUpdateItem("span_injection",$url,$p);
       }
    }
 
@@ -161,31 +165,48 @@ class PluginDatainjectionClientInjection {
       }
    }
 
-   static function showInjectionForm($options = array(),PluginDatainjectionModel $model,$entities_id) {
-      global $LANG;
+   static function showInjectionForm(PluginDatainjectionModel $model, $entities_id) {
+      global $LANG,$CFG_GLPI;
 
-      if (!isset($options['info'])) {
-         $options['info'] = array();
+      if (!isset($_SESSION['glpi_plugin_datainjection_infos'])) {
+         $_SESSION['glpi_plugin_datainjection_infos'] = array();
       }
 
       echo "<table class='tab_cadre_fixe'>";
       echo "<th colspan='2'>" . $LANG["datainjection"]["tabs"][3]."</th>";
       echo "<tr class='tab_bg_1'>";
       echo "<td>" ;
-
-      $nblines = $model->getBackend()->getNumberOfLines();
       createProgressBar($LANG["datainjection"]["importStep"][1]);
+      echo "</td>" ;
+      echo "</tr>";
+      echo "<tr class='tab_bg_1'>";
+      echo "<td>" ;
+      echo "</td>" ;
+      echo "</tr>";
+      echo "</table>";
+      echo "<span id='span_results'></span>";
 
+      self::processInjection($model,$entities_id);
+   }
+
+   static function processInjection(PluginDatainjectionModel $model, $entities_id) {
+      global $LANG,$CFG_GLPI;
+      $nblines = $model->getBackend()->getNumberOfLines();
       $clientinjection = new PluginDatainjectionClientInjection;
 
-      //New injection engine
-      $engine = new PluginDatainjectionEngine($model,$options['info'],$entities_id);
-
+            //New injection engine
+      $engine = new PluginDatainjectionEngine($model,
+                                              $_SESSION['glpi_plugin_datainjection_infos'],
+                                              $entities_id);
       $backend = $model->getBackend();
       $model->loadSpecificModel();
+
+      //Open CSV file
       $backend->openFile();
 
       $index = 0;
+
+      //Read CSV file
       $line = $backend->getNextLine();
 
       //If header is present, then get the second line
@@ -193,9 +214,10 @@ class PluginDatainjectionClientInjection {
          $line = $backend->getNextLine();
       }
 
+      //While CSV file is not EOF
       while ($line != null) {
          //Inject line
-         $clientinjection->inject($engine,$line[0],$index);
+         $clientinjection->results[] = $engine->injectLine($line[0]);
          changeProgressBarPosition(
             $index,
             $nblines,
@@ -205,18 +227,47 @@ class PluginDatainjectionClientInjection {
          $index++;
       }
 
+      //EOF : change progressbar to 100% !
       changeProgressBarPosition(100,100,
             $LANG["datainjection"]["importStep"][3]);
+
+      //Close CSV file
       $backend->closeFile();
-      echo "</td>" ;
-      echo "</tr>";
-      echo "</table>";
+
+      //Delete CSV file
+      $backend->deleteFile();
+
+      //Change step
+      $_SESSION['glpi_plugin_datainjection_step'] = self::STEP_UPLOAD;
+
+      //Display results form
+      $p['models_id'] = $model->fields['id'];
+      $p['nblines'] = $nblines;
+      $url = $CFG_GLPI["root_doc"]."/plugins/datainjection/ajax/results.php";
+      ajaxUpdateItem("span_results",$url,$p);
    }
 
-   function inject(PluginDatainjectionEngine $engine, $line,$line_id) {
-      $res = $engine->injectLine($line);
-      $this->results[] = $engine->injectLine($line);
-      //$datas = $engine->getDatas();
+   static function showResultsForm(PluginDatainjectionModel $model, $options) {
+      global $LANG;
+
+      echo "<table class='tab_cadre_fixe'>";
+      echo "<th>" . $LANG["datainjection"]["tabs"][3]."</th>";
+      echo "<tr class='tab_bg_1'>";
+
+      echo "<td align='center'>";
+      echo "<input type='button' name='popup' value='" . addslashes($LANG["datainjection"]["button"][4]) . "'
+                                  class='submit' onclick='log_popup(".$options['nblines'].")' />";
+      echo "&nbsp;";
+      echo "<input type='button' name='pdf' value='" . addslashes($LANG["datainjection"]["button"][7]) . "'
+                                 class='submit'
+                                 onclick=\"location.href='plugin_datainjection.export.pdf.php'\" />";
+      echo "&nbsp;";
+      echo "<input type='button' name='export' value='" . addslashes($LANG["datainjection"]["button"][5]) . "'
+                                 class='submit'
+                                 onclick=\"location.href='plugin_datainjection.download.php'\" />";
+      echo "</td>";
+      echo "</tr>";
+      echo "</table>";
    }
 }
 ?>

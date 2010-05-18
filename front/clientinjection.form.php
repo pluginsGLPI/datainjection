@@ -48,9 +48,9 @@ if (isset($_POST['upload'])) {
    }
    elseif (!empty($_FILES) && !isset($_FILES['name'])) {
       //Read file using automatic encoding detection, and do not delete file once readed
-      $options = array('file_encoding'=>$_POST['file_encoding'],
-                       'mode'         =>PluginDatainjectionModel::PROCESS,
-                       'delete_file'  =>false);
+      $options = array('file_encoding'=> $_POST['file_encoding'],
+                       'mode'         => PluginDatainjectionModel::PROCESS,
+                       'delete_file'  => false);
       $response = $model->processUploadedFile($options);
       if ($response) {
          //File uploaded successfully and matches the given model : switch to the import tab

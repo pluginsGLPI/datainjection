@@ -68,7 +68,7 @@ class PluginDatainjectionInfocomInjection extends Infocom
       //Add displaytype value
       $fields_definition = array("date"               => array(4, 5),
                                  "dropdown"           => array(6, 9, 19),
-                                 "dropdown_integer"   => array(6),
+                                 "dropdown_integer"   => array(6, 14),
                                  "decimal"            => array(8,13,17),
                                  "sink_type"          => array(15),
                                  "alert"              => array(22),
@@ -177,6 +177,11 @@ class PluginDatainjectionInfocomInjection extends Infocom
    function checkPresent($fields_toinject = array(), $options = array()) {
       return " AND itemtype=" . $options['itemtype'] . " AND items_id=" . $options["id"];
    }
+
+   function getSpecificFieldValue($itemtype, $searchOption, $field, $value) {
+      return false;
+   }
+
 }
 
 ?>

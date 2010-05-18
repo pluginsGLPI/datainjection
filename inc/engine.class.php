@@ -121,7 +121,9 @@ class PluginDatainjectionEngine {
                        'optional_data'           => $optional_data);
 
 
+      //Check is data to be inject still exists in DB (update) or not (add)
       $this->dataAlreadyInDB($iteminjection, $fields_toinject);
+
       //No item found in DB
       if($fields_toinject[$itemtype]['id'] == PluginDatainjectionCommonInjectionLib::ITEM_NOT_FOUND) {
          //Can add item ?

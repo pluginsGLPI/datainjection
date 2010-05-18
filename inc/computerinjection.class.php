@@ -57,15 +57,26 @@ class PluginDatainjectionComputerInjection extends Computer
    function getOptions() {
       $tab = parent::getSearchOptions();
 
+      $add_linkfield = array('comment' => 'comment', 'notepad' => 'notepad');
+      foreach ($tab as $id => $tmp) {
+         if (!is_array($tmp)) {
+            unset($tab[$id]);
+         }
+         elseif (in_array($tmp['field'],$add_linkfield)) {
+            $tab[$id]['linkfield'] = $add_linkfield[$tmp['field']];
+         }
+      }
+
       //Remove some options because some fields cannot be imported
-      $remove = array(2, 80, 100, 7, 10, 11, 12, 13, 15, 34, 35, 36, 39, 91, 92,93);
+      $remove = array(2, 80, 100, 7, 10, 11, 12, 13, 15, 34, 35, 36, 39, 91, 92,93, 14, 150, 151,
+                      152, 153, 154, 155, 156, 101, 102, 103, 110, 111, 19);
       foreach ($remove as $tmp) {
          unset($tab[$tmp]);
       }
 
       //Add displaytype value
-      $dropdown = array("dropdown"       => array(3, 4, 40, 31, 45, 46, 41, 71, 32, 33, 23, 42),
-                        "user" => array(70, 24),
+      $dropdown = array("dropdown"       => array(4, 40, 31, 45, 46, 41, 71, 32, 33, 23, 42),
+                        "user"           => array(70, 24),
                         "multiline_text" => array(16, 90));
       foreach ($dropdown as $type => $tabsID) {
          foreach ($tabsID as $tabID) {
@@ -146,6 +157,10 @@ class PluginDatainjectionComputerInjection extends Computer
 
    function checkPresent($fields_toinject = array(), $options = array()) {
       return "";
+   }
+
+   function getSpecificFieldValue($itemtype, $searchOption, $field, $value) {
+      return false;
    }
 }
 

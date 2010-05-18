@@ -45,7 +45,7 @@ class PluginDatainjectionCommonInjectionLib {
    //Fields mandatory for injection
    private $mandatory_fields = array();
 
-   private $addtional_infos = array();
+   private $additional_infos = array();
 
    //Injection class to use
    private $injectionClass;
@@ -130,8 +130,8 @@ class PluginDatainjectionCommonInjectionLib {
       if (isset($injection_options['mandatory_fields'])) {
          $this->mandatory_fields = $injection_options['mandatory_fields'];
       }
-      if (isset($injection_options['addtional_infos'])) {
-         $this->addtional_infos = $injection_options['addtional_infos'];
+      if (isset($injection_options['additional_infos'])) {
+         $this->additional_infos = $injection_options['additional_infos'];
       }
 
       //Split $injection_options array and store data into the rights internal arrays
@@ -248,13 +248,23 @@ class PluginDatainjectionCommonInjectionLib {
     * @return nothing
     */
    private function manageFieldValues() {
+      $blacklisted_fields = array('id');
       $searchOptions = $this->injectionClass->getOptions();
-
       $itemtype = $this->getItemtype();
 
-      foreach ($this->values[$itemtype] as $field => $value) {
-         $searchOption = self::findSearchOption($searchOptions,$field);
-         $this->getFieldValue($itemtype, $searchOption,$field,$value);
+      foreach ($this->values as $itemtype => $data) {
+         foreach ($data as $field => $value) {
+            if (!in_array($field,$blacklisted_fields)) {
+               $searchOption = self::findSearchOption($searchOptions,$field);
+               $this->getFieldValue($itemtype, $searchOption,$field,$value);
+            }
+         }
+         //This is ugly, need to find why it adds an empty value to the array
+         foreach ($this->values[$itemtype] as $field => $value) {
+            if ($field == '') {
+               unset($this->values[$itemtype][$field]);
+            }
+         }
       }
    }
 
@@ -277,7 +287,6 @@ class PluginDatainjectionCommonInjectionLib {
             $this->values[$itemtype][$linkfield] = $value;
             break;
          case 'dropdown':
-            //if ($value != self::DROPDOWN_DEFAULT_VALUE) {
                $tmptype = getItemTypeForTable($searchOption['table']);
                $item = new $tmptype;
                if ($item instanceof CommonDropdown) {
@@ -292,7 +301,6 @@ class PluginDatainjectionCommonInjectionLib {
                                                                            $searchOption,
                                                                            $value);
                }
-
             break;
          case 'contact':
             if ($value != self::DROPDOWN_DEFAULT_VALUE) {
@@ -317,6 +325,15 @@ class PluginDatainjectionCommonInjectionLib {
                   $this->values[$itemtype][$linkfield] = '';
                }
                $this->values[$itemtype][$linkfield] .= $searchOption['name'] . "=" . $value . "\n";
+            }
+            break;
+         default:
+            $value = $this->injectionClass->getSpecificFieldValue($itemtype,
+                                                                  $searchOption,
+                                                                  $field,
+                                                                  $value);
+            if ($value) {
+               $this->values[$itemtype][$linkfield] = $value;
             }
             break;
          }
@@ -373,7 +390,7 @@ class PluginDatainjectionCommonInjectionLib {
          return $DB->result($result,0,"id");
       }
       else {
-         return PluginDatainjectionCommonInjectionLib::EMPTY_VALUE;
+         return self::EMPTY_VALUE;
       }
    }
 
@@ -395,7 +412,7 @@ class PluginDatainjectionCommonInjectionLib {
          return $DB->result($result,0,"id");
       }
       else {
-         return PluginDatainjectionCommonInjectionLib::EMPTY_VALUE;
+         return self::DROPDOWN_DEFAULT_VALUE;
       }
    }
    //--------------------------------------------------//
@@ -732,6 +749,7 @@ class PluginDatainjectionCommonInjectionLib {
             $newID = $item->import($tmp);
          }
          else {
+            //logDebug($tmp);
             $newID = $item->add($tmp);
          }
          $this->results[self::ACTION_INJECT]['status'] = self::SUCCESS;
@@ -769,6 +787,7 @@ class PluginDatainjectionCommonInjectionLib {
             $newID = $item->import($tmp);
          }
          else {
+            logDebug($tmp);
             $newID = $item->update($tmp);
          }
          $this->results[self::ACTION_INJECT]['status'] = self::SUCCESS;
@@ -799,11 +818,12 @@ class PluginDatainjectionCommonInjectionLib {
    }
 
    private function addAdditionalInfos() {
-      foreach ($this->addtional_infos as $itemtype => $data) {
+      /*
+      foreach ($this->additional_infos as $itemtype => $data) {
          foreach ($data as $field => $value) {
             $this->values[$itemtype][$field] = $data;
          }
-      }
+      }*/
    }
 }
 ?>

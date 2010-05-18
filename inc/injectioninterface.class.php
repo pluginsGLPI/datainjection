@@ -112,5 +112,11 @@ interface PluginDatainjectionInjectionInterface {
     * @return nothing
     */
    function checkPresent($fields_toinject = array(), $options = array());
+
+   /**
+    * Get value for a field (for example specific dropdowns for an itemtype)
+    */
+   function getSpecificFieldValue($itemtype, $searchOption, $field, $value);
+
 }
 ?>
