@@ -749,7 +749,6 @@ class PluginDatainjectionCommonInjectionLib {
             $newID = $item->import($tmp);
          }
          else {
-            //logDebug($tmp);
             $newID = $item->add($tmp);
          }
          $this->results[self::ACTION_INJECT]['status'] = self::SUCCESS;
@@ -787,7 +786,6 @@ class PluginDatainjectionCommonInjectionLib {
             $newID = $item->import($tmp);
          }
          else {
-            logDebug($tmp);
             $newID = $item->update($tmp);
          }
          $this->results[self::ACTION_INJECT]['status'] = self::SUCCESS;

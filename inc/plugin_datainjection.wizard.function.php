@@ -1277,14 +1277,14 @@ function logStep($target) {
 	echo "<td class='wizard_left_area' valign='top'>";
 
 	/************************Title Step****************************/
-	echo "<div class='wizard_title' valign='bottom'>" . $LANG["datainjection"]["step"][5] . $LANG["datainjection"]["logStep"][1] . "</div>";
+	echo "<div class='wizard_title' valign='bottom'>" . $LANG["datainjection"]["step"][5] . $LANG["datainjection"]["log"][1] . "</div>";
 	/**************************************************************/
 
 	/***********************Explain Step***************************/
-	echo "<div class='wizard_explain'>" . $LANG["datainjection"]["logStep"][2] . "</div>";
-	echo "<div class='wizard_explain'>" . $LANG["datainjection"]["logStep"][6] . "</div>";
+	echo "<div class='wizard_explain'>" . $LANG["datainjection"]["log"][2] . "</div>";
+	echo "<div class='wizard_explain'>" . $LANG["datainjection"]["log"][6] . "</div>";
 	if (count($tab_result[0]) > 0)
-		echo "<div class='wizard_explain'>" . $LANG["datainjection"]["logStep"][7] . "</div>";
+		echo "<div class='wizard_explain'>" . $LANG["datainjection"]["log"][7] . "</div>";
 	/**************************************************************/
 
 	echo "</td>";
@@ -1292,9 +1292,9 @@ function logStep($target) {
 	echo "<td class='wizard_right_area' style='width: 400px' valign='top'>";
 
 	if (count($tab_result[0]) > 0)
-		echo "<div class='logStep_success' colspan='2' valign='top'>" . $LANG["datainjection"]["logStep"][8] . "</div>";
+		echo "<div class='logStep_success' colspan='2' valign='top'>" . $LANG["datainjection"]["log"][8] . "</div>";
 	else
-		echo "<div class='logStep_success' colspan='2' valign='top'>" . $LANG["datainjection"]["logStep"][3] . "</div>";
+		echo "<div class='logStep_success' colspan='2' valign='top'>" . $LANG["datainjection"]["log"][3] . "</div>";
 
 	echo "<table class='logStep_tab'>";
 	echo "<tr>";

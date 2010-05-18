@@ -158,14 +158,14 @@ $LANG["datainjection"]["importStep"][1] = "Importation du fichier";
 $LANG["datainjection"]["importStep"][2] = "L'importation du fichier peut prendre plusieurs minutes en fonction de votre configurations. Veuillez patientez et suivre la barre de progression pour voir où en est l'importation.";
 $LANG["datainjection"]["importStep"][3] = "Importation terminée";
 
-$LANG["datainjection"]["logStep"][1] = "Résultat de l'importation";
-$LANG["datainjection"]["logStep"][2] = "Le bouton 'voir le rapport' vous permet de vérifier que l'importation c'est déroulée sans problèmes.";
-$LANG["datainjection"]["logStep"][3] = "L'importation a réussi";
-$LANG["datainjection"]["logStep"][4] = "Tableau des imports qui ont réussis";
-$LANG["datainjection"]["logStep"][5] = "Tableau des imports qui ont échoués ou partiellement réussis";
-$LANG["datainjection"]["logStep"][6] = "Le bouton 'exporter le rapport en PDF' vous permet d'enregistrer le rapport sur votre disque dur afin de garder une trace.";
-$LANG["datainjection"]["logStep"][7] = "Le bouton 'générer le fichier importer' vous permet d'enregistrer sur le disque dur le fichier que vous venez d'importer avec les lignes qui ont échouées.";
-$LANG["datainjection"]["logStep"][8] = "L'importation a rencontré des erreurs";
+$LANG["datainjection"]["log"][1] = "Résultat de l'importation";
+$LANG["datainjection"]["log"][2] = "Le bouton 'voir le rapport' vous permet de vérifier que l'importation c'est déroulée sans problèmes.";
+$LANG["datainjection"]["log"][3] = "L'importation a réussi";
+$LANG["datainjection"]["log"][4] = "Tableau des imports qui ont réussis";
+$LANG["datainjection"]["log"][5] = "Tableau des imports qui ont échoués ou partiellement réussis";
+$LANG["datainjection"]["log"][6] = "Le bouton 'exporter le rapport en PDF' vous permet d'enregistrer le rapport sur votre disque dur afin de garder une trace.";
+$LANG["datainjection"]["log"][7] = "Le bouton 'générer le fichier importer' vous permet d'enregistrer sur le disque dur le fichier que vous venez d'importer avec les lignes qui ont échouées.";
+$LANG["datainjection"]["log"][8] = "L'importation a rencontré des erreurs";
 
 $LANG["datainjection"]["button"][1] = "< Précédent";
 $LANG["datainjection"]["button"][2] = "Suivant >";
@@ -225,4 +225,5 @@ $LANG["datainjection"]["tabs"][2] = "Valeurs fixées";
 $LANG["datainjection"]["tabs"][3] = "Fichier à injecter";
 
 $LANG["datainjection"]["import"][0] = "Procéder à l'import";
+$LANG["datainjection"]["import"][1] = "Etat d'avancement de l'import";
 ?>

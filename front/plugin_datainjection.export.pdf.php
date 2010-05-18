@@ -52,7 +52,7 @@ if(count($tab_result[1])>0)
 	$pdf->filledRectangle(395,($start_tab-25)-(20*$i),80,15);
 	$pdf->filledRectangle(480,($start_tab-25)-(20*$i),90,15);
 	$pdf->restoreState();
-	$pdf->addText(32,($start_tab)-(20*$i),9,'<b><i>'.utf8_decode($LANG["datainjection"]["logStep"][4]).' :</i></b>');
+	$pdf->addText(32,($start_tab)-(20*$i),9,'<b><i>'.utf8_decode($LANG["datainjection"]["log"][4]).' :</i></b>');
 	$pdf->addText(32,($start_tab-20)-(20*$i),9,'<b>'.utf8_decode($LANG["joblist"][0]).'</b>');
 	$pdf->addText(80,($start_tab-20)-(20*$i),9,'<b>'.utf8_decode($LANG["datainjection"]["result"][14]).'</b>');
 	$pdf->addText(145,($start_tab-20)-(20*$i),9,'<b>'.utf8_decode($LANG["datainjection"]["result"][10]).'</b>');
@@ -128,7 +128,7 @@ if(count($tab_result[0])>0)
 	$pdf->filledRectangle(395,($start_tab-25)-(20*$i),80,15);
 	$pdf->filledRectangle(480,($start_tab-25)-(20*$i),90,15);
 	$pdf->restoreState();
-	$pdf->addText(32,($start_tab)-(20*$i),9,'<b><i>'.utf8_decode($LANG["datainjection"]["logStep"][5]).' :</i></b>');
+	$pdf->addText(32,($start_tab)-(20*$i),9,'<b><i>'.utf8_decode($LANG["datainjection"]["log"][5]).' :</i></b>');
 	$pdf->addText(32,($start_tab-20)-(20*$i),9,'<b>'.utf8_decode($LANG["joblist"][0]).'</b>');
 	$pdf->addText(80,($start_tab-20)-(20*$i),9,'<b>'.utf8_decode($LANG["datainjection"]["result"][14]).'</b>');
 	$pdf->addText(145,($start_tab-20)-(20*$i),9,'<b>'.utf8_decode($LANG["datainjection"]["result"][10]).'</b>');

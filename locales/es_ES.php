@@ -165,14 +165,14 @@ $LANG["datainjection"]["importStep"][1] = "Importación del archivo";
 $LANG["datainjection"]["importStep"][2] = "La importación del archivo puede durar varios minutos dependiendo de su configuración. Por favor, espere.";
 $LANG["datainjection"]["importStep"][3] = "Importación finalizada";
 
-$LANG["datainjection"]["logStep"][1] = "Resultados de la importación";
-$LANG["datainjection"]["logStep"][2] = "Puede ver el informe de la importación pulsando el botón 'Ver el log'";
-$LANG["datainjection"]["logStep"][3] = "Importación correta";
-$LANG["datainjection"]["logStep"][4] = "Lista de inserciones correctas";
-$LANG["datainjection"]["logStep"][5] = "Lista de inserciones incorrectas";
-$LANG["datainjection"]["logStep"][6] = "El botón 'Exportar informe en PDF' le permite guardar un informe de la importación en su disco duro";
-$LANG["datainjection"]["logStep"][7] = "El botón 'Exportar el log' le permite generar un archivo CSV con las líneas que fallaron en el proceso de importación";
-$LANG["datainjection"]["logStep"][8] = "Hubo errores en la importación";
+$LANG["datainjection"]["log"][1] = "Resultados de la importación";
+$LANG["datainjection"]["log"][2] = "Puede ver el informe de la importación pulsando el botón 'Ver el log'";
+$LANG["datainjection"]["log"][3] = "Importación correta";
+$LANG["datainjection"]["log"][4] = "Lista de inserciones correctas";
+$LANG["datainjection"]["log"][5] = "Lista de inserciones incorrectas";
+$LANG["datainjection"]["log"][6] = "El botón 'Exportar informe en PDF' le permite guardar un informe de la importación en su disco duro";
+$LANG["datainjection"]["log"][7] = "El botón 'Exportar el log' le permite generar un archivo CSV con las líneas que fallaron en el proceso de importación";
+$LANG["datainjection"]["log"][8] = "Hubo errores en la importación";
 
 $LANG["datainjection"]["button"][1] = "< Anterior";
 $LANG["datainjection"]["button"][2] = "Siguiente >";

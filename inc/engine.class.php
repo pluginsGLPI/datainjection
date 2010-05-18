@@ -397,9 +397,9 @@ class PluginDatainjectionEngine {
    function addAdditionalInformations() {
       $additional_infos = array();
       foreach ($this->model->getInfos() as $info) {
-         if (isset($users_infos[$info->getValue()])
-            && $this->infos[$info->getValue()] != PluginDatainjectionCommonInjectionLib::EMPTY_VALUE
-               && PluginDatainjectionInfo::keepInfo($info, $users_infos[$info->getValue()])) {
+         if (isset($this->infos[$info->getValue()])
+               && PluginDatainjectionInfo::keepInfo($info, $this->infos[$info->getValue()])
+               ) {
                $additional_infos[$info->getInfosType()][$info->getValue()] = $this->infos[$info->getValue()];
          }
       }

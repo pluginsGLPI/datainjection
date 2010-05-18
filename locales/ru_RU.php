@@ -174,14 +174,14 @@ $LANG["datainjection"]["button"][6] = "Закончить";
 $LANG["datainjection"]["button"][7] = "Экспортировать в PDF";
 $LANG["datainjection"]["button"][8] = "Закрыть";
 
-$LANG["datainjection"]["logStep"][1] = "Результаты импорта";
-$LANG["datainjection"]["logStep"][2] = "Вы можете просмотреть или экспортировать отчет используя кнопки ".$LANG["datainjection"]["button"][4]." или «".$LANG["datainjection"]["button"][7]."».";
-$LANG["datainjection"]["logStep"][3] = "Импорт данных завершился успешно";
-$LANG["datainjection"]["logStep"][4] = "Список импортированных данных";
-$LANG["datainjection"]["logStep"][5] = "Список не импортированных данных";
-$LANG["datainjection"]["logStep"][6] = "Кнопка «".$LANG["datainjection"]["button"][7]."» позволяет сохранить отчет об выполненном импорте данных на диск.";
-$LANG["datainjection"]["logStep"][7] = "Кнопка «".$LANG["datainjection"]["button"][5]."» позволяет сохранить только те данные, которые содержали ошибки и небыли импортированы.";
-$LANG["datainjection"]["logStep"][8] = "При импорте были ошибки!";
+$LANG["datainjection"]["log"][1] = "Результаты импорта";
+$LANG["datainjection"]["log"][2] = "Вы можете просмотреть или экспортировать отчет используя кнопки ".$LANG["datainjection"]["button"][4]." или «".$LANG["datainjection"]["button"][7]."».";
+$LANG["datainjection"]["log"][3] = "Импорт данных завершился успешно";
+$LANG["datainjection"]["log"][4] = "Список импортированных данных";
+$LANG["datainjection"]["log"][5] = "Список не импортированных данных";
+$LANG["datainjection"]["log"][6] = "Кнопка «".$LANG["datainjection"]["button"][7]."» позволяет сохранить отчет об выполненном импорте данных на диск.";
+$LANG["datainjection"]["log"][7] = "Кнопка «".$LANG["datainjection"]["button"][5]."» позволяет сохранить только те данные, которые содержали ошибки и небыли импортированы.";
+$LANG["datainjection"]["log"][8] = "При импорте были ошибки!";
 
 $LANG["datainjection"]["result"][1] = "Дата в неправильном формате";
 $LANG["datainjection"]["result"][2] = "Данные не обработаны";

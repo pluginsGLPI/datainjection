@@ -74,7 +74,7 @@ if(count($tab_result[1])>0)
 	echo "<a href=\"javascript:show_log('1')\"><img src='../pics/plus.png' alt='plus' id='log1' /></a>";
 	echo "</td>";
 	echo "<td style='width: 900px;font-size: 14px;font-weight: bold;padding-left: 20px'>";
-	echo $LANG["datainjection"]["logStep"][4];
+	echo $LANG["datainjection"]["log"][4];
 	echo "</td>";
 	echo "</tr>";
 	echo "</table>";
@@ -126,7 +126,7 @@ if(count($tab_result[0])>0)
 	echo "<a href=\"javascript:show_log('2')\"><img src='../pics/minus.png' alt='minus' id='log2' /></a>";
 	echo "</td>";
 	echo "<td style='width: 900px;font-size: 14px;font-weight: bold;padding-left: 20px'>";
-	echo $LANG["datainjection"]["logStep"][5];
+	echo $LANG["datainjection"]["log"][5];
 	echo "</td>";
 	echo "</tr>";
 	echo "</table>";

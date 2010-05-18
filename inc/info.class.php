@@ -298,10 +298,10 @@ class PluginDatainjectionInfo extends CommonDBTM {
       $itemtype = $info->getInfosType();
       $injectionClass = PluginDatainjectionInjectionCommon::getInstance($itemtype);
       $options = $injectionClass->getOptions();
-
       $option = PluginDatainjectionCommonInjectionLib::findSearchOption($options,$info->getValue());
       if ($option) {
          switch ($option['displaytype']) {
+            default:
             case 'text':
             case 'multiline_text':
                if ($value != PluginDatainjectionCommonInjectionLib::EMPTY_VALUE) {

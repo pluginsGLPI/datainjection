@@ -165,14 +165,14 @@ $LANG["datainjection"]["importStep"][1] = "Injection fo the file";
 $LANG["datainjection"]["importStep"][2] = "File injection could take several minutes depending of your configuration. Please wait.";
 $LANG["datainjection"]["importStep"][3] = "Injection finished";
 
-$LANG["datainjection"]["logStep"][1] = "Injection's results";
-$LANG["datainjection"]["logStep"][2] = "You can watch or export injection's report by clicking on the watch or export buttons";
-$LANG["datainjection"]["logStep"][3] = "Injection's successful";
-$LANG["datainjection"]["logStep"][4] = "Array of successful injections";
-$LANG["datainjection"]["logStep"][5] = "Array of unsuccessful injections";
-$LANG["datainjection"]["logStep"][6] = "The 'Export in PDF' button allows you to save a report of the injection onto your harddrive.";
-$LANG["datainjection"]["logStep"][7] = "The 'Generation the imported file' allows you to generate a CSV file with only the failed line during the process.";
-$LANG["datainjection"]["logStep"][8] = "Injection encounters errors";
+$LANG["datainjection"]["log"][1] = "Injection's results";
+$LANG["datainjection"]["log"][2] = "You can watch or export injection's report by clicking on the watch or export buttons";
+$LANG["datainjection"]["log"][3] = "Injection's successful";
+$LANG["datainjection"]["log"][4] = "Array of successful injections";
+$LANG["datainjection"]["log"][5] = "Array of unsuccessful injections";
+$LANG["datainjection"]["log"][6] = "The 'Export in PDF' button allows you to save a report of the injection onto your harddrive.";
+$LANG["datainjection"]["log"][7] = "The 'Generation the imported file' allows you to generate a CSV file with only the failed line during the process.";
+$LANG["datainjection"]["log"][8] = "Injection encounters errors";
 
 $LANG["datainjection"]["button"][1] = "< Previous";
 $LANG["datainjection"]["button"][2] = "Next >";

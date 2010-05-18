@@ -173,7 +173,7 @@ class PluginDatainjectionClientInjection {
       }
 
       echo "<table class='tab_cadre_fixe'>";
-      echo "<th colspan='2'>" . $LANG["datainjection"]["tabs"][3]."</th>";
+      echo "<th colspan='2'>" . $LANG["datainjection"]["import"][1]."</th>";
       echo "<tr class='tab_bg_1'>";
       echo "<td>" ;
       createProgressBar($LANG["datainjection"]["importStep"][1]);
@@ -251,7 +251,7 @@ class PluginDatainjectionClientInjection {
       global $LANG;
 
       echo "<table class='tab_cadre_fixe'>";
-      echo "<th>" . $LANG["datainjection"]["tabs"][3]."</th>";
+      echo "<th>" . $LANG["datainjection"]["log"][1]."</th>";
       echo "<tr class='tab_bg_1'>";
 
       echo "<td align='center'>";
