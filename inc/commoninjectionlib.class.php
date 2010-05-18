@@ -130,8 +130,8 @@ class PluginDatainjectionCommonInjectionLib {
       if (isset($injection_options['mandatory_fields'])) {
          $this->mandatory_fields = $injection_options['mandatory_fields'];
       }
-      if (isset($injection_options['additional_infos'])) {
-         $this->additional_infos = $injection_options['additional_infos'];
+      if (isset($injection_options['optional_data'])) {
+         $this->optional_infos = $injection_options['optional_data'];
       }
 
       //Split $injection_options array and store data into the rights internal arrays
@@ -741,7 +741,7 @@ class PluginDatainjectionCommonInjectionLib {
          //Add important fields for injection
          $this->addNecessaryFields();
 
-         $this->addAdditionalInfos();
+         $this->addOptionalInfos();
 
          $tmp = $this->values[get_class($item)];
          //Insert data using the standard add() method
@@ -778,10 +778,11 @@ class PluginDatainjectionCommonInjectionLib {
          //Add important fields for injection
          $this->addNecessaryFields();
 
-         $this->addAdditionalInfos();
+         $this->addOptionalInfos();
 
          //Insert data using the standard update() method
          $tmp = $this->values[get_class($item)];
+
          if ($item instanceof CommonDropdown) {
             $newID = $item->import($tmp);
          }
@@ -815,13 +816,12 @@ class PluginDatainjectionCommonInjectionLib {
       }
    }
 
-   private function addAdditionalInfos() {
-      /*
-      foreach ($this->additional_infos as $itemtype => $data) {
+   private function addOptionalInfos() {
+      foreach ($this->optional_infos as $itemtype => $data) {
          foreach ($data as $field => $value) {
-            $this->values[$itemtype][$field] = $data;
+            $this->values[$itemtype][$field] = $value;
          }
-      }*/
+      }
    }
 }
 ?>
