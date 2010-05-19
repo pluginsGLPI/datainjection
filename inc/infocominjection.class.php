@@ -182,6 +182,8 @@ class PluginDatainjectionInfocomInjection extends Infocom
       return false;
    }
 
+   function addSpecificNeededFields($primary_type, &$fields_toinject) {
+   }
 }
 
 ?>

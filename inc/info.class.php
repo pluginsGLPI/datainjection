@@ -208,7 +208,7 @@ class PluginDatainjectionInfo extends CommonDBTM {
    }
 
    static function displayAdditionalInformation(PluginDatainjectionInfo $info,$values = array()) {
-      $injectionClass = PluginDatainjectionInjectionCommon::getInstance($info->fields['itemtype']);
+      $injectionClass = PluginDatainjectionCommonInjectionLib::getInstance($info->fields['itemtype']);
       $option = PluginDatainjectionCommonInjectionLib::findSearchOption($injectionClass->getOptions(),
                                                                         $info->fields['value']);
       if ($option) {
@@ -296,7 +296,7 @@ class PluginDatainjectionInfo extends CommonDBTM {
 
    static function keepInfo(PluginDatainjectionInfo $info, $value) {
       $itemtype = $info->getInfosType();
-      $injectionClass = PluginDatainjectionInjectionCommon::getInstance($itemtype);
+      $injectionClass = PluginDatainjectionCommonInjectionLib::getInstance($itemtype);
       $options = $injectionClass->getOptions();
       $option = PluginDatainjectionCommonInjectionLib::findSearchOption($options,$info->getValue());
       if ($option) {

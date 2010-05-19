@@ -239,7 +239,7 @@ class PluginDatainjectionInjectionType {
 
       $datas = getAllDatasFromTable($table,"`models_id`='".$mapping_or_info['models_id']."'");
 
-      $injectionClass = PluginDatainjectionInjectionCommon::getInstance($p['itemtype']);
+      $injectionClass = PluginDatainjectionCommonInjectionLib::getInstance($p['itemtype']);
       $options = $injectionClass->getOptions();
       foreach ($datas as $data) {
          if ($data['value'] != PluginDatainjectionInjectionType::NO_VALUE) {

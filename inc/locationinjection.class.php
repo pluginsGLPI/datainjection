@@ -147,6 +147,8 @@ class PluginDatainjectionLocationInjection extends Location
       return false;
    }
 
+   function addSpecificNeededFields($primary_type, &$fields_toinject) {
+   }
 }
 
 ?>

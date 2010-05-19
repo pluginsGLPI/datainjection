@@ -162,6 +162,9 @@ class PluginDatainjectionComputerInjection extends Computer
    function getSpecificFieldValue($itemtype, $searchOption, $field, $value) {
       return false;
    }
+
+   function addSpecificNeededFields($primary_type, &$fields_toinject) {
+   }
 }
 
 ?>

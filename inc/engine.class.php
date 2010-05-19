@@ -67,7 +67,7 @@ class PluginDatainjectionEngine {
 
       //Get the injectionclass associated to the itemtype
       $itemtype = $this->getModel()->getItemtype();
-      $iteminjection = PluginDatainjectionInjectionCommon::getInstance($itemtype);
+      $iteminjection = PluginDatainjectionCommonInjectionLib::getInstance($itemtype);
 
       //First of all : transform $line which is an array of values to inject into another array
       //which looks like this :
@@ -102,11 +102,15 @@ class PluginDatainjectionEngine {
                       'right_r'                  =>true,
                       'right_rw'                 =>true,
                       'interface'                =>true,
-                      'auth_method'              =>true);
+                      'auth_method'              =>true,
+                      'port_unicity'             =>$this->getModel()->getPortUnicity());
 
       //Rights options
       $rights = array('add_dropdown'             =>$this->getModel()->getCanAddDropdown(),
-                      'overwrite_notempty_fields'=>$this->getModel()->getCanOverwriteIfNotEmpty());
+                      'overwrite_notempty_fields'=>$this->getModel()->getCanOverwriteIfNotEmpty(),
+                      'can_add'                  =>$this->model->getBehaviorAdd(),
+                      'can_update'               =>$this->model->getBehaviorUpdate(),
+                      'can_delete'               =>false);
 
       //Field format options
       $formats = array('date_format'             =>$this->getModel()->getDateFormat(),
@@ -115,40 +119,15 @@ class PluginDatainjectionEngine {
       //Check options : by default check all types
       $options = array('checks'                  =>$checks,
                        'entities_id'             =>$this->getEntity(),
-                       'rights'                  => $rights,
+                       'rights'                  =>$rights,
                        'formats'                 =>$formats,
                        'mandatory_fields'        =>$mandatory_fields,
-                       'optional_data'           => $optional_data);
+                       'optional_data'           =>$optional_data);
+
+      //Will manage add or update
+      $this->results = $iteminjection->addObject($fields_toinject,$options);
 
 
-      //Check is data to be inject still exists in DB (update) or not (add)
-      $this->dataAlreadyInDB($iteminjection, $fields_toinject);
-
-      //No item found in DB
-      if($fields_toinject[$itemtype]['id'] == PluginDatainjectionCommonInjectionLib::ITEM_NOT_FOUND) {
-         //Can add item ?
-         if ($this->model->getBehaviorAdd()) {
-            $this->results = $iteminjection->addObject($fields_toinject,$options);
-         }
-         else {
-               $this->results[PluginDatainjectionCommonInjectionLib::ACTION_INJECT]['status'] =
-                                         PluginDatainjectionCommonInjectionLib::ERROR_CANNOT_IMPORT;
-               $this->results[PluginDatainjectionCommonInjectionLib::ACTION_INJECT]['type'] =
-                                         PluginDatainjectionCommonInjectionLib::IMPORT_ADD;
-         }
-      }
-      //Item found in DB
-      else {
-         if ($this->model->getBehaviorUpdate()) {
-            $this->results = $iteminjection->updateObject($fields_toinject,$options);
-         }
-         else {
-               $this->results[PluginDatainjectionCommonInjectionLib::ACTION_INJECT]['status'] =
-                                         PluginDatainjectionCommonInjectionLib::ERROR_CANNOT_UPDATE;
-               $this->results[PluginDatainjectionCommonInjectionLib::ACTION_INJECT]['type'] =
-                                         PluginDatainjectionCommonInjectionLib::IMPORT_UPDATE;
-         }
-      }
       /*
       $line = reformatDatasBeforeCheck($this->getModel(), $line, $this->getEntity(), $result);
 
@@ -332,58 +311,6 @@ class PluginDatainjectionEngine {
       $fields_toinject[$itemtype]['entities_id'] = $this->entity;
    }
 
-   /**
-    * Function to check if the datas to inject already exists in DB
-    * @param pe the type of datas to inject
-    */
-   function dataAlreadyInDB($injectionClass, &$fields_toinject = array()) {
-      global $DB;
-      $where = "";
-      $mandatories = $this->model->getMandatoryMappings();
-
-      $itemtype =
-            PluginDatainjectionInjectionCommon::getItemtypeByInjection(get_class($injectionClass));
-
-      if ($injectionClass->maybeDeleted()) {
-         $where .= " AND `is_deleted`='0' ";
-      }
-      if ($injectionClass->maybeTemplate()) {
-         $where .= " AND `is_template`='0' ";
-      }
-      if ($injectionClass->maybeRecursive()) {
-         $where_entity = getEntitiesRestrictRequest("",
-                                                    $injectionClass->getTable(),
-                                                    "entities_id",
-                                                    $fields_toinject[$itemtype]["entities_id"],
-                                                    true);
-      } else {
-         $where_entity = " `entities_id`='" . $fields_toinject[$itemtype]["entities_id"]."'";
-      }
-
-      $searchOptions = $injectionClass->getOptions();
-      foreach ($mandatories as $mapping) {
-         $option = PluginDatainjectionCommonInjectionLib::findSearchOption($searchOptions,
-                                                                           $mapping->getValue());
-         $where .= " AND `" . $mapping->getValue() . "`='";
-         $where .= $fields_toinject[$itemtype][$mapping->getValue()] . "'";
-      }
-
-      //Add sql request checks specific to this itemtype
-      $options['model'] = $this->model->fields;
-      $options['itemtype'] = $itemtype;
-      $where .= $injectionClass->checkPresent($fields_toinject, $options);
-
-      $sql  = "SELECT * FROM `" . $injectionClass->getTable();
-      $sql .="` WHERE " . $where_entity . " " . $where;
-      $result = $DB->query($sql);
-      if ($DB->numrows($result) > 0) {
-         $data = $DB->fetch_array($result);
-         $fields_toinject[$itemtype]['id'] = $data['id'];
-      }
-      else {
-         $fields_toinject[$itemtype]['id'] = PluginDatainjectionCommonInjectionLib::ITEM_NOT_FOUND;
-      }
-   }
 
    //--------- Getters -------------------------//
    function getModel() {

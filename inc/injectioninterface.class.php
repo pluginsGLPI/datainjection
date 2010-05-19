@@ -118,5 +118,11 @@ interface PluginDatainjectionInjectionInterface {
     */
    function getSpecificFieldValue($itemtype, $searchOption, $field, $value);
 
+   /**
+    * Add specific values to the object to inject
+    * @param primary_type the primary_type to inject
+    * @param fields_toinject all the fields that need to be injected
+    */
+   function addSpecificNeededFields($primary_type, &$fields_toinject);
 }
 ?>
