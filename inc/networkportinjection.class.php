@@ -54,7 +54,42 @@ class PluginDatainjectionNetworkportInjection extends NetworkPort
    }
 
    function getOptions() {
-      return parent::getSearchOptions();
+      $tab = parent::getSearchOptions();
+      $blacklist = PluginDatainjectionCommonInjectionLib::getBlacklistedOptions();
+      //Remove some options because some fields cannot be imported
+      $notimportable = array(20, 21);
+      $ignore_fields = array_merge($blacklist,$notimportable);
+
+      //Add linkfield for theses fields : no massive action is allowed in the core, but they can be
+      //imported using the commonlib
+      $add_linkfield = array('comment' => 'comment', 'notepad' => 'notepad');
+
+      //Add default displaytype (text)
+      foreach ($tab as $id => $tmp) {
+         if (!is_array($tmp) || in_array($id,$ignore_fields)) {
+            unset($tab[$id]);
+         }
+         else {
+            if (in_array($tmp['field'],$add_linkfield)) {
+               $tab[$id]['linkfield'] = $add_linkfield[$tmp['field']];
+            }
+            if (!in_array($id,$ignore_fields)) {
+               if (!isset($tmp['linkfield'])) {
+                  $tab[$id]['injectable'] = PluginDatainjectionCommonInjectionLib::FIELD_VIRTUAL;
+               }
+               else {
+                  $tab[$id]['injectable'] = PluginDatainjectionCommonInjectionLib::FIELD_INJECTABLE;
+               }
+               if (isset($tmp['linkfield']) && !isset($tmp['displaytype'])) {
+                  $tab[$id]['displaytype'] = 'text';
+               }
+               if (isset($tmp['linkfield']) && !isset($tmp['checktype'])) {
+                  $tab[$id]['checktype'] = 'text';
+               }
+            }
+         }
+      }
+      return $tab;
    }
 
    function showAdditionalInformation($info = array()) {
@@ -113,10 +148,39 @@ class PluginDatainjectionNetworkportInjection extends NetworkPort
    }
 
    function checkPresent($fields_toinject = array(), $options = array()) {
-      $where  = " AND `itemtype`='" . $options['itemtype']."'";
-      $where .= " AND `items_id`='" . $fields_toinject['items_id']."'";
-      $where .= getPortUnicityRequest($fields_toinject, $options);
-      return $where;
+      return $this->getUnicityRequest($fields_toinject, $options['checks']);
+   }
+
+   function checkParameters ($fields_toinject, $options) {
+      $fields_tocheck = array();
+      switch ($options['checks']['port_unicity']) {
+         case PluginDatainjectionModel::UNICITY_NETPORT_LOGICAL_NUMBER :
+            $fields_tocheck = array('logical_number');
+            break;
+         case PluginDatainjectionModel::UNICITY_NETPORT_LOGICAL_NUMBER_MAC :
+            $fields_tocheck = array('logical_number','mac');
+            break;
+         case PluginDatainjectionModel::UNICITY_NETPORT_LOGICAL_NUMBER_NAME :
+            $fields_tocheck = array('logical_number','name');
+            break;
+         case PluginDatainjectionModel::UNICITY_NETPORT_LOGICAL_NUMBER_NAME_MAC :
+            $fields_tocheck = array('logical_number','mac','name');
+            break;
+         case PluginDatainjectionModel::UNICITY_NETPORT_MACADDRESS :
+            $fields_tocheck = array('mac');
+            break;
+         case PluginDatainjectionModel::UNICITY_NETPORT_NAME :
+            $fields_tocheck = array('name');
+            break;
+      }
+      $check_status = true;
+      foreach($fields_tocheck as $field) {
+         if (!isset($fields_toinject[$field])
+               || $fields_toinject[$field] == PluginDatainjectionCommonInjectionLib::EMPTY_VALUE) {
+            $check_status = false;
+         }
+      }
+      return $check_status;
    }
 
       /**
@@ -126,7 +190,7 @@ class PluginDatainjectionNetworkportInjection extends NetworkPort
     *
     * @return the sql where clause
     */
-   function getPortUnicityRequest($fields_toinject = array(), $options = array()) {
+   function getUnicityRequest($fields_toinject = array(), $options = array()) {
       $where = "";
 
       switch ($options['port_unicity']) {
@@ -166,6 +230,14 @@ class PluginDatainjectionNetworkportInjection extends NetworkPort
             break;
       }
       return $where;
+   }
+
+   function getSpecificFieldValue($itemtype, $searchOption, $field, $value) {
+      return false;
+   }
+
+   function addSpecificNeededFields($primary_type, $fields_toinject) {
+      return array();
    }
 }
 

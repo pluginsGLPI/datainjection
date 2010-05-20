@@ -127,7 +127,6 @@ class PluginDatainjectionInjectionType {
    static function dropdownFields($options = array()) {
       global $LANG,$CFG_GLPI;
 
-      $blacklisted_fields = array('id','date_mod');
       $used = array();
       $p['itemtype'] = PluginDatainjectionInjectionType::NO_VALUE;
       $p['primary_type'] = '';
@@ -159,9 +158,7 @@ class PluginDatainjectionInjectionType {
             //If it's a real option (not a group label) and if field is not blacklisted
             //and if a linkfield is defined (meaning that the field can be updated)
             if (is_array($option)
-                  && isset($option['linkfield'])
-                     && $option['linkfield'] != ''
-                        && !in_array($option['linkfield'],$blacklisted_fields)) {
+                  && $option['injectable'] == PluginDatainjectionCommonInjectionLib::FIELD_INJECTABLE) {
                $fields[$option['linkfield']] = $option['name'];
                if ($mapping_value == PluginDatainjectionInjectionType::NO_VALUE
                      && $p['called_by'] == 'PluginDatainjectionMapping'

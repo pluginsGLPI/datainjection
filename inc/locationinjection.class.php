@@ -57,10 +57,39 @@ class PluginDatainjectionLocationInjection extends Location
    function getOptions() {
       $tab = parent::getSearchOptions();
 
+      $blacklist = PluginDatainjectionCommonInjectionLib::getBlacklistedOptions();
       //Remove some options because some fields cannot be imported
-      $remove = array(2, 14, 80);
-      foreach ($remove as $tmp) {
-         unset($tab[$tmp]);
+      $notimportable = array(2, 14, 80);
+      $ignore_fields = array_merge($blacklist,$notimportable);
+
+      //Add linkfield for theses fields : no massive action is allowed in the core, but they can be
+      //imported using the commonlib
+      $add_linkfield = array('comment' => 'comment', 'notepad' => 'notepad');
+
+      //Add default displaytype (text)
+      foreach ($tab as $id => $tmp) {
+         if (!is_array($tmp) || in_array($id,$ignore_fields)) {
+            unset($tab[$id]);
+         }
+         else {
+            if (in_array($tmp['field'],$add_linkfield)) {
+               $tab[$id]['linkfield'] = $add_linkfield[$tmp['field']];
+            }
+            if (!in_array($id,$ignore_fields)) {
+               if (!isset($tmp['linkfield'])) {
+                  $tab[$id]['injectable'] = PluginDatainjectionCommonInjectionLib::FIELD_VIRTUAL;
+               }
+               else {
+                  $tab[$id]['injectable'] = PluginDatainjectionCommonInjectionLib::FIELD_INJECTABLE;
+               }
+               if (isset($tmp['linkfield']) && !isset($tmp['displaytype'])) {
+                  $tab[$id]['displaytype'] = 'text';
+               }
+               if (isset($tmp['linkfield']) && !isset($tmp['checktype'])) {
+                  $tab[$id]['checktype'] = 'text';
+               }
+            }
+         }
       }
 
       //Add displaytype value
@@ -75,15 +104,6 @@ class PluginDatainjectionLocationInjection extends Location
       //By default completename has no linkfield because it cannot be modified using the massiveaction
       $tab[1]['linkfield'] = 'completename';
 
-      //Add default displaytype (text)
-      foreach ($tab as $id => $tmp) {
-         if (isset($tmp['linkfield']) && !isset($tmp['displaytype'])) {
-            $tab[$id]['displaytype'] = 'text';
-         }
-         if (isset($tmp['linkfield']) && !isset($tmp['checktype'])) {
-            $tab[$id]['checktype'] = 'text';
-         }
-      }
       return $tab;
    }
 
@@ -149,7 +169,7 @@ class PluginDatainjectionLocationInjection extends Location
       return false;
    }
 
-   function addSpecificNeededFields($primary_type, &$fields_toinject) {
+   function addSpecificNeededFields($primary_type, $fields_toinject) {
       return array();
    }
 }

@@ -112,8 +112,8 @@ function plugin_init_datainjection() {
                                 //'PluginDatainjectionSoftwareLicenseInjection'    =>'datainjection',
                                 //'PluginDatainjectionSupplierInjection'           =>'datainjection',
                                 //'PluginDatainjectionUserInjection'               =>'datainjection',
-                                //'PluginDatainjectionNetworkportInjection'        =>'datainjection',
-                                //'PluginDatainjectionVlanInjection'               =>'datainjection',
+                                'PluginDatainjectionNetworkportInjection'        =>'datainjection',
+                                'PluginDatainjectionVlanInjection'               =>'datainjection',
                                 //'PluginDatainjectionNetpointInjection'           =>'datainjection',
                                 //'PluginDatainjectionContract_ItemInjection'      =>'datainjection'
                                 );

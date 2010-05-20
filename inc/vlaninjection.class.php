@@ -41,16 +41,56 @@ if (!defined('GLPI_ROOT')){
 class PluginDatainjectionVlanInjection extends Vlan
    implements PluginDatainjectionInjectionInterface {
 
+   function __construct() {
+      $this->table = getTableForItemType('Vlan');
+   }
+
    function isPrimaryType() {
       return true;
    }
 
    function connectedTo() {
-      return array('NetworkEquipment','Computer','Peripheral','Phone');
+      return array();
    }
 
    function getOptions() {
-      return parent::getSearchOptions();
+      $tab = parent::getSearchOptions();
+
+      $blacklist = PluginDatainjectionCommonInjectionLib::getBlacklistedOptions();
+      //Remove some options because some fields cannot be imported
+      $notimportable = array();
+      $ignore_fields = array_merge($blacklist,$notimportable);
+
+      //Add linkfield for theses fields : no massive action is allowed in the core, but they can be
+      //imported using the commonlib
+      $add_linkfield = array('comment' => 'comment', 'notepad' => 'notepad');
+
+      //Add default displaytype (text)
+      foreach ($tab as $id => $tmp) {
+         if (!is_array($tmp) || in_array($id,$ignore_fields)) {
+            unset($tab[$id]);
+         }
+         else {
+            if (in_array($tmp['field'],$add_linkfield)) {
+               $tab[$id]['linkfield'] = $add_linkfield[$tmp['field']];
+            }
+            if (!in_array($id,$ignore_fields)) {
+               if (!isset($tmp['linkfield'])) {
+                  $tab[$id]['injectable'] = PluginDatainjectionCommonInjectionLib::FIELD_VIRTUAL;
+               }
+               else {
+                  $tab[$id]['injectable'] = PluginDatainjectionCommonInjectionLib::FIELD_INJECTABLE;
+               }
+               if (isset($tmp['linkfield']) && !isset($tmp['displaytype'])) {
+                  $tab[$id]['displaytype'] = 'text';
+               }
+               if (isset($tmp['linkfield']) && !isset($tmp['checktype'])) {
+                  $tab[$id]['checktype'] = 'text';
+               }
+            }
+         }
+      }
+      return $tab;
    }
 
    function showAdditionalInformation($info = array()) {
@@ -100,6 +140,10 @@ class PluginDatainjectionVlanInjection extends Vlan
       return $lib->getInjectionResults();
    }
 
+   function checkPresent($fields_toinject = array(), $options = array()) {
+      return "";
+   }
+
    function checkType($field_name, $data, $mandatory) {
       return PluginDatainjectionCommonInjectionLib::SUCCESS;
    }
@@ -108,6 +152,13 @@ class PluginDatainjectionVlanInjection extends Vlan
 
    }
 
+   function getSpecificFieldValue($itemtype, $searchOption, $field, $value) {
+      return false;
+   }
+
+   function addSpecificNeededFields($primary_type, $fields_toinject) {
+      return array();
+   }
 }
 
 ?>

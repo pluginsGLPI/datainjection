@@ -233,6 +233,7 @@ class PluginDatainjectionInfo extends CommonDBTM {
                                              $injectionClass,
                                              $values = array()) {
       global $LANG;
+
       $name = "info[".$option['linkfield']."]";
       $value = '';
 
@@ -247,6 +248,7 @@ class PluginDatainjectionInfo extends CommonDBTM {
             echo ">";
          break;
          case 'dropdown':
+
             if ($value == '') {
                $value = 0;
             }

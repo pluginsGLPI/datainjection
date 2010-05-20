@@ -184,7 +184,6 @@ class PluginDatainjectionClientInjection {
       echo "</td>" ;
       echo "</tr>";
       echo "</table>";
-      echo "<span id='span_results'></span>";
 
       self::processInjection($model,$entities_id);
    }
@@ -243,13 +242,16 @@ class PluginDatainjectionClientInjection {
 
       //Display results form
       $p['models_id'] = $model->fields['id'];
-      $p['nblines'] = $nblines;
+      $p['results']   = json_encode($clientinjection->results);
+      $p['nblines']   = $nblines;
       $url = $CFG_GLPI["root_doc"]."/plugins/datainjection/ajax/results.php";
-      ajaxUpdateItem("span_results",$url,$p);
+      ajaxUpdateItem("span_injection",$url,$p);
    }
 
    static function showResultsForm(PluginDatainjectionModel $model, $options) {
       global $LANG;
+      $results = json_decode(stripslashes_deep($options['results']),true);
+      printCleanArray($results);
 
       echo "<table class='tab_cadre_fixe'>";
       echo "<th>" . $LANG["datainjection"]["log"][1]."</th>";

@@ -145,7 +145,7 @@ class PluginDatainjectionStateInjection extends State
       return false;
    }
 
-   function addSpecificNeededFields($primary_type, &$fields_toinject) {
+   function addSpecificNeededFields($primary_type, $fields_toinject) {
       return array();
    }
 }

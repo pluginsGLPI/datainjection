@@ -59,26 +59,6 @@ class PluginDatainjectionInfocomInjection extends Infocom
       global $LANG;
       $tab = parent::getSearchOptions();
 
-      //Remove some options because some fields cannot be imported
-      $remove = array(2, 3, 20, 21, 80, 86);
-      foreach ($remove as $tmp) {
-         unset($tab[$tmp]);
-      }
-
-      //Add displaytype value
-      $fields_definition = array("date"               => array(4, 5),
-                                 "dropdown"           => array(6, 9, 19),
-                                 "dropdown_integer"   => array(6, 14),
-                                 "decimal"            => array(8,13,17),
-                                 "sink_type"          => array(15),
-                                 "alert"              => array(22),
-                                 "multiline_text"     => array(16));
-      foreach ($fields_definition as $type => $tabsID) {
-         foreach ($tabsID as $tabID) {
-            $tab[$tabID]['displaytype'] = $type;
-         }
-      }
-
       $tab[4]['checktype']    = 'date';
       $tab[5]['checktype']    = 'date';
 
@@ -105,13 +85,52 @@ class PluginDatainjectionInfocomInjection extends Infocom
       $tab[17]['default']     = 0;
       $tab[17]['checktype']   = 'integer';
 
+      $blacklist = PluginDatainjectionCommonInjectionLib::getBlacklistedOptions();
+      //Remove some options because some fields cannot be imported
+      $notimportable = array(2, 3, 20, 21, 80, 86);
+      $ignore_fields = array_merge($blacklist,$notimportable);
+
+      //Add linkfield for theses fields : no massive action is allowed in the core, but they can be
+      //imported using the commonlib
+      $add_linkfield = array('comment' => 'comment', 'notepad' => 'notepad');
+
       //Add default displaytype (text)
       foreach ($tab as $id => $tmp) {
-         if (isset($tmp['linkfield']) && !isset($tmp['displaytype'])) {
-            $tab[$id]['displaytype'] = 'text';
+         if (!is_array($tmp) || in_array($id,$ignore_fields)) {
+            unset($tab[$id]);
          }
-         if (isset($tmp['linkfield']) && !isset($tmp['checktype'])) {
-            $tab[$id]['checktype'] = 'text';
+         else {
+            if (in_array($tmp['field'],$add_linkfield)) {
+               $tab[$id]['linkfield'] = $add_linkfield[$tmp['field']];
+            }
+            if (!in_array($id,$ignore_fields)) {
+               if (!isset($tmp['linkfield'])) {
+                  $tab[$id]['injectable'] = PluginDatainjectionCommonInjectionLib::FIELD_VIRTUAL;
+               }
+               else {
+                  $tab[$id]['injectable'] = PluginDatainjectionCommonInjectionLib::FIELD_INJECTABLE;
+               }
+               if (isset($tmp['linkfield']) && !isset($tmp['displaytype'])) {
+                  $tab[$id]['displaytype'] = 'text';
+               }
+               if (isset($tmp['linkfield']) && !isset($tmp['checktype'])) {
+                  $tab[$id]['checktype'] = 'text';
+               }
+            }
+         }
+      }
+
+      //Add displaytype value
+      $fields_definition = array("date"               => array(4, 5),
+                                 "dropdown"           => array(6, 9, 19),
+                                 "dropdown_integer"   => array(6, 14),
+                                 "decimal"            => array(8,13,17),
+                                 "sink_type"          => array(15),
+                                 "alert"              => array(22),
+                                 "multiline_text"     => array(16));
+      foreach ($fields_definition as $type => $tabsID) {
+         foreach ($tabsID as $tabID) {
+            $tab[$tabID]['displaytype'] = $type;
          }
       }
 
@@ -191,7 +210,7 @@ class PluginDatainjectionInfocomInjection extends Infocom
       return false;
    }
 
-   function addSpecificNeededFields($primary_type, &$fields_toinject) {
+   function addSpecificNeededFields($primary_type, $fields_toinject) {
       //No specific fields to add
       return array();
    }
