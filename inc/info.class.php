@@ -208,7 +208,7 @@ class PluginDatainjectionInfo extends CommonDBTM {
    }
 
    static function displayAdditionalInformation(PluginDatainjectionInfo $info,$values = array()) {
-      $injectionClass = PluginDatainjectionCommonInjectionLib::getInstance($info->fields['itemtype']);
+      $injectionClass = PluginDatainjectionCommonInjectionLib::getInjectionClassInstance($info->fields['itemtype']);
       $option = PluginDatainjectionCommonInjectionLib::findSearchOption($injectionClass->getOptions(),
                                                                         $info->fields['value']);
       if ($option) {
@@ -258,7 +258,7 @@ class PluginDatainjectionInfo extends CommonDBTM {
             if ($value == '') {
                $value = 0;
             }
-            Dropdown::showYesNo($name,0,$value);
+            Dropdown::showYesNo($name,$value);
             break;
          case 'user':
             if ($value == '') {
@@ -296,7 +296,7 @@ class PluginDatainjectionInfo extends CommonDBTM {
 
    static function keepInfo(PluginDatainjectionInfo $info, $value) {
       $itemtype = $info->getInfosType();
-      $injectionClass = PluginDatainjectionCommonInjectionLib::getInstance($itemtype);
+      $injectionClass = PluginDatainjectionCommonInjectionLib::getInjectionClassInstance($itemtype);
       $options = $injectionClass->getOptions();
       $option = PluginDatainjectionCommonInjectionLib::findSearchOption($options,$info->getValue());
       if ($option) {

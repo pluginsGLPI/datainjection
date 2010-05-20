@@ -100,6 +100,8 @@ function plugin_init_datainjection() {
                                 //'PluginDatainjectionGroupInjection'              =>'datainjection',
                                 'PluginDatainjectionInfocomInjection'            =>'datainjection',
                                 'PluginDatainjectionLocationInjection'           =>'datainjection',
+                                'PluginDatainjectionStateInjection'              =>'datainjection',
+                                'PluginDatainjectionManufacturerInjection'       =>'datainjection',
                                 //'PluginDatainjectionMonitorInjection'            =>'datainjection',
                                 //'PluginDatainjectionNetworkequipmentInjection'   =>'datainjection',
                                 //'PluginDatainjectionPeripheralInjection'         =>'datainjection',

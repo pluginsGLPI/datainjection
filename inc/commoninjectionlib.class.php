@@ -182,7 +182,7 @@ class PluginDatainjectionCommonInjectionLib {
       return self::getItemtypeByInjection(get_class($injectionClass));
    }
 
-   static function getInstance($itemtype) {
+   static function getInjectionClassInstance($itemtype) {
       $injectionClass = 'PluginDatainjection'.ucfirst($itemtype).'Injection';
       return new $injectionClass();
    }
@@ -264,7 +264,7 @@ class PluginDatainjectionCommonInjectionLib {
     */
    private function getItemInstance() {
       $classname = get_class($this->injectionClass);
-      return PluginDatainjectionCommonInjectionLib::getItemtypeInstanceByInjection($classname);
+      return self::getItemtypeInstanceByInjection($classname);
    }
 
    /**
@@ -287,7 +287,6 @@ class PluginDatainjectionCommonInjectionLib {
          foreach ($data as $field => $value) {
             if (!in_array($field,$blacklisted_fields)) {
                $searchOption = self::findSearchOption($searchOptions,$field);
-               logDebug($field,$value);
                $this->getFieldValue($itemtype, $searchOption,$field,$value);
             }
          }
@@ -470,13 +469,19 @@ class PluginDatainjectionCommonInjectionLib {
     * @param the itemtype
     * @return an array with all values for this itemtype
     */
-   function getValueByItemtypeAndName($itemtype,$field) {
+   private function getValueByItemtypeAndName($itemtype,$field) {
       $values = $this->getValuesForItemtype($itemtype);
       if ($values) {
-         return (isset($values[$field])?$values[$field]:'');
+         return (isset($values[$field])?$values[$field]:false);
       }
       else {
          return false;
+      }
+   }
+
+   private function unsetValue($itemtype,$field) {
+      if ($this->getValueByItemtypeAndName($itemtype,$field)) {
+         unset($this->values[$itemtype][$field]);
       }
    }
 
@@ -485,7 +490,7 @@ class PluginDatainjectionCommonInjectionLib {
     * @param the itemtype
     * @return an array with all values for this itemtype
     */
-   function setValueForItemtype($itemtype,$field, $value) {
+   private function setValueForItemtype($itemtype,$field, $value) {
       $this->values[$itemtype][$field] = $value;
    }
 
@@ -493,8 +498,7 @@ class PluginDatainjectionCommonInjectionLib {
    //----------- Reformat methods --------------------//
    //------------------------------------------------//
    //Several pass are needed to reformat data
-   //because dictionnaries need to be process in a
-   //specific order
+   //because dictionnaries need to be process in a specific order
 
    /**
     * First pass of data reformat : check values like NULL or values coming from dropdown tables
@@ -556,10 +560,15 @@ class PluginDatainjectionCommonInjectionLib {
     */
    private function reformatThirdPass() {
       global $CFG_GLPI;
-      //Get search options associated with the injectionClass
-      $searchOptions = $this->injectionClass->getOptions();
 
       foreach ($this->values as $itemtype => $data) {
+
+         //Get injectionClass associated with the itemtype
+         $injectionClass = self::getInjectionClassInstance($itemtype);
+
+         //Get search options associated with the injectionClass
+         $searchOptions = $injectionClass->getOptions();
+
          foreach ($data as $field => $value) {
             //Get search option associated with the field
             $option = self::findSearchOption($searchOptions,$field);
@@ -785,14 +794,35 @@ class PluginDatainjectionCommonInjectionLib {
    //--------------------------------------------------//
    //------ Pre and post injection methods -----------//
    //------------------------------------------------//
-   function addNecessaryFields() {
+   private function addNecessaryFields() {
      $this->setValueForItemtype($this->primary_type,'entities_id',$this->entity);
    }
+
+   private function addNeededFields($itemtype) {
+      //Add default fields
+      $fields = array('entities_id' =>'entities_id',
+                      'items_id'    =>'id',
+                      'is_recursive'=>'is_recursive');
+      foreach ($fields as $new => $field) {
+         $val = $this->getValueByItemtypeAndName($this->primary_type,$field);
+         if ($val) {
+            $this->setValueForItemtype($itemtype,$new,$val);
+         }
+      }
+      $this->setValueForItemtype($itemtype,'itemtype',$this->primary_type);
+
+      $itemClass = self::getInjectionClassInstance($itemtype);
+      $specific_fields = $itemClass->addSpecificNeededFields($this->primary_type,$this->values);
+      foreach ($specific_fields as $field => $value) {
+         $this->setValueForItemtype($itemtype,$field,$value);
+      }
+   }
+
 
    //--------------------------------------------------//
    //-------- Add /Update/Delete methods -------------//
    //------------------------------------------------//
-   function processAddOrUpdate() {
+   private function processAddOrUpdate() {
       $process = false;
 
       //Check is data to be inject still exists in DB (update) or not (add)
@@ -800,17 +830,18 @@ class PluginDatainjectionCommonInjectionLib {
 
       //No item found in DB
       if($this->getValueByItemtypeAndName($this->primary_type,'id')
-            == PluginDatainjectionCommonInjectionLib::ITEM_NOT_FOUND) {
+            == self::ITEM_NOT_FOUND) {
          //Can add item ?
          if ($this->rights['can_add']) {
             $process = true;
             $add = true;
+            $this->unsetValue($this->primary_type,'id');
          }
          else {
-               $this->results[PluginDatainjectionCommonInjectionLib::ACTION_INJECT]['status'] =
-                                         PluginDatainjectionCommonInjectionLib::ERROR_CANNOT_IMPORT;
-               $this->results[PluginDatainjectionCommonInjectionLib::ACTION_INJECT]['type'] =
-                                         PluginDatainjectionCommonInjectionLib::IMPORT_ADD;
+               $this->results[self::ACTION_INJECT]['status'] =
+                                         self::ERROR_CANNOT_IMPORT;
+               $this->results[self::ACTION_INJECT]['type'] =
+                                         self::IMPORT_ADD;
          }
       }
       //Item found in DB
@@ -820,10 +851,10 @@ class PluginDatainjectionCommonInjectionLib {
             $add = false;
          }
          else {
-               $this->results[PluginDatainjectionCommonInjectionLib::ACTION_INJECT]['status'] =
-                                         PluginDatainjectionCommonInjectionLib::ERROR_CANNOT_UPDATE;
-               $this->results[PluginDatainjectionCommonInjectionLib::ACTION_INJECT]['type'] =
-                                         PluginDatainjectionCommonInjectionLib::IMPORT_UPDATE;
+               $this->results[self::ACTION_INJECT]['status'] =
+                                         self::ERROR_CANNOT_UPDATE;
+               $this->results[self::ACTION_INJECT]['type'] =
+                                         self::IMPORT_UPDATE;
          }
       }
       if ($process) {
@@ -845,9 +876,8 @@ class PluginDatainjectionCommonInjectionLib {
 
             $this->addOptionalInfos();
 
-            $newID = $this->effectiveAddOrUpdate($add,
-                                                 $item,
-                                                 $this->getValuesForItemtype($this->primary_type));
+            $values = $this->getValuesForItemtype($this->primary_type);
+            $newID = $this->effectiveAddOrUpdate($add,$item,$values);
 
             if (!$newID) {
                $this->results[self::ACTION_INJECT]['status'] = self::FAILED;
@@ -859,35 +889,46 @@ class PluginDatainjectionCommonInjectionLib {
                $this->results[self::ACTION_INJECT]['type'] = ($add?self::IMPORT_ADD
                                                                      :self::IMPORT_UPDATE);
                $this->results[self::ACTION_INJECT][get_class($item)] = $newID;
-               /*
+
                //Process other types
                foreach ($this->values as $itemtype => $data) {
+                  //Do not process primary_type
                   if ($itemtype != get_class($item)) {
-                    $injectionClass = self::getInstance($itemtype);
-                    $item = new $itemtype;
+                    $injectionClass = self::getInjectionClassInstance($itemtype);
+                    $item = new $itemtype();
                     $this->dataAlreadyInDB($injectionClass);
-                    $tmpID = $this->effectiveAddOrUpdate($add,
-                                                         $item,
-                                                         $this->getValuesForItemtype($itemtype));
+                    if($this->getValueByItemtypeAndName($itemtype,'id') == self::ITEM_NOT_FOUND) {
+                       $add = true;
+                       $this->unsetValue($itemtype,'id');
+                    }
+                    else {
+                       $add = false;
+                    }
+                    $this->addNeededFields($itemtype);
+                    $values = $this->getValuesForItemtype($itemtype);
+                    $tmpID = $this->effectiveAddOrUpdate($add,$item,$values);
                   }
-               }*/
+               }
             }
          }
       }
       return $this->results;
    }
 
-   function effectiveAddOrUpdate($add=true, $item, $values) {
+   private function effectiveAddOrUpdate($add=true, $item, $values) {
+
       //Insert data using the standard add() method
       if ($item instanceof CommonDropdown) {
          $newID = $item->import($values);
       }
       else {
-         logDebug($this->values);
          if ($add) {
+            logDebug($values);
             $newID = $item->add($values);
+            $this->setValueForItemtype(get_class($item),'id',$newID);
          }
          else {
+            logDebug($values,$this->values[$this->primary_type]);
             $newID = $item->update($values);
          }
       }
@@ -930,7 +971,6 @@ class PluginDatainjectionCommonInjectionLib {
    }
 
    private function addOptionalInfos() {
-      logDebug($this->optional_infos);
       foreach ($this->optional_infos as $itemtype => $data) {
          foreach ($data as $field => $value) {
             $this->setValueForItemtype($itemtype,$field,$value);
@@ -938,56 +978,43 @@ class PluginDatainjectionCommonInjectionLib {
       }
    }
 
-   private function addNeededFields($primary_type, $itemtype) {
-      //Add default fields
-      $this->setValueForItemtype($itemtype,
-                                  'items_id',
-                                  $this->getValueByItemtypeAndName($itemtype,'id'));
-      $this->setValueForItemtype($itemtype,
-                                  'itemtype',
-                                  $this->getValueByItemtypeAndName($itemtype,'itemtype'));
-      $itemClass = PluginDatainjectionCommon::getClass($itemtype);
-
-      $specific_fields = $itemClass->injectionClass->addSpecificNeededFields($primary_type,
-                                                                             $this->values);
-      foreach ($specific_fields as $field => $value) {
-         $this->setValueForItemtype($itemtype,$field,$value);
-      }
-   }
 
    /**
     * Function to check if the datas to inject already exists in DB
     * @param pe the type of datas to inject
     */
-   function dataAlreadyInDB($injectionClass) {
+   private function dataAlreadyInDB($injectionClass) {
       global $DB;
       $where = "";
       $itemtype = self::getItemtypeByInjectionClass($injectionClass);
 
-      if ($this->injectionClass->maybeDeleted()) {
+      if ($injectionClass->maybeDeleted()) {
          $where .= " AND `is_deleted`='0' ";
       }
-      if ($this->injectionClass->maybeTemplate()) {
+      if ($injectionClass->maybeTemplate()) {
          $where .= " AND `is_template`='0' ";
       }
-      if ($this->injectionClass->maybeRecursive()) {
-         $where_entity = getEntitiesRestrictRequest("",
+      if ($injectionClass->maybeRecursive()) {
+         $where_entity = getEntitiesRestrictRequest(" AND",
                                                     $injectionClass->getTable(),
                                                     "entities_id",
                                                     $this->getValueByItemtypeAndName($itemtype,
                                                                                      'entities_id'),
                                                     true);
-      } else {
-         $where_entity = " `entities_id`='" .
+      } elseif($injectionClass->isEntityAssign()) {
+         $where_entity = " AND `entities_id`='" .
                            $this->getValueByItemtypeAndName($itemtype,'entities_id')."'";
+      }
+      else {
+         $where_entity = "";
       }
 
       //Add mandatory fields to the query only if it's the primary_type to be injected
       if ($itemtype == $this->primary_type) {
-         $searchOptions = $this->injectionClass->getOptions();
+         $searchOptions = $injectionClass->getOptions();
          foreach ($this->mandatory_fields[$itemtype] as $field => $is_mandatory) {
             if ($is_mandatory) {
-               $option = PluginDatainjectionCommonInjectionLib::findSearchOption($searchOptions,
+               $option = self::findSearchOption($searchOptions,
                                                                                  $field);
                $where .= " AND `" . $field . "`='";
                $where .= $this->getValueByItemtypeAndName($itemtype,$field) . "'";
@@ -995,7 +1022,7 @@ class PluginDatainjectionCommonInjectionLib {
          }
       }
       else {
-         $where.= " AND `itemtype='".$itemtype."'";
+         $where.= " AND `itemtype`='".$this->getValueByItemtypeAndName($itemtype,'itemtype')."'";
          $where.= " AND `items_id`='".$this->getValueByItemtypeAndName($itemtype,'items_id')."'";
       }
 
@@ -1004,8 +1031,9 @@ class PluginDatainjectionCommonInjectionLib {
       $options['itemtype'] = $itemtype;
       $where .= $injectionClass->checkPresent($this->getValuesForItemtype($itemtype), $options);
 
-      $sql  = "SELECT `id` FROM `" . $this->injectionClass->getTable()."`";
-      $sql .= " WHERE " . $where_entity . " " . $where;
+      $sql  = "SELECT `id` FROM `" . $injectionClass->getTable()."`";
+      $sql .= " WHERE 1 " . $where_entity . " " . $where;
+
       $result = $DB->query($sql);
       if ($DB->numrows($result) > 0) {
          $this->values[$itemtype]['id'] = $DB->result($result,0,'id');

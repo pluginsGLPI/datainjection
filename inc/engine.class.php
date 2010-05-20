@@ -67,7 +67,7 @@ class PluginDatainjectionEngine {
 
       //Get the injectionclass associated to the itemtype
       $itemtype = $this->getModel()->getItemtype();
-      $iteminjection = PluginDatainjectionCommonInjectionLib::getInstance($itemtype);
+      $iteminjection = PluginDatainjectionCommonInjectionLib::getInjectionClassInstance($itemtype);
 
       //First of all : transform $line which is an array of values to inject into another array
       //which looks like this :

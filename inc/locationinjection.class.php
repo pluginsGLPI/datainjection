@@ -58,7 +58,7 @@ class PluginDatainjectionLocationInjection extends Location
       $tab = parent::getSearchOptions();
 
       //Remove some options because some fields cannot be imported
-      $remove = array(1, 2, 80);
+      $remove = array(2, 14, 80);
       foreach ($remove as $tmp) {
          unset($tab[$tmp]);
       }
@@ -71,6 +71,9 @@ class PluginDatainjectionLocationInjection extends Location
             $tab[$tabID]['displaytype'] = $type;
          }
       }
+
+      //By default completename has no linkfield because it cannot be modified using the massiveaction
+      $tab[1]['linkfield'] = 'completename';
 
       //Add default displaytype (text)
       foreach ($tab as $id => $tmp) {
@@ -115,7 +118,6 @@ class PluginDatainjectionLocationInjection extends Location
       $lib = new PluginDatainjectionCommonInjectionLib($this,$values,$options);
       $lib->updateObject();
       return $lib->getInjectionResults();
-
    }
 
 
@@ -148,6 +150,7 @@ class PluginDatainjectionLocationInjection extends Location
    }
 
    function addSpecificNeededFields($primary_type, &$fields_toinject) {
+      return array();
    }
 }
 
