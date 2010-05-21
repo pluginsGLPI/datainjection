@@ -53,10 +53,6 @@ class PluginDatainjectionSoftwareInjection extends Software
       return parent::getSearchOptions();
    }
 
-   function showAdditionalInformation($info = array()) {
-
-   }
-
    /**
     * Play software's dictionnary
     */
@@ -123,10 +119,6 @@ class PluginDatainjectionSoftwareInjection extends Software
       $lib = new PluginDatainjectionCommonInjectionLib($this,$values,$options);
       $lib->deleteObject();
       return $lib->getInjectionResults();
-   }
-
-   function checkType($field_name, $data, $mandatory) {
-      return PluginDatainjectionCommonInjectionLib::SUCCESS;
    }
 
 }

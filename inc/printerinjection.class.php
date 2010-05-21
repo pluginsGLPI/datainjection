@@ -53,11 +53,6 @@ class PluginDatainjectionPrinterInjection extends Printer
       return parent::getSearchOptions();
    }
 
-   function showAdditionalInformation($info = array()) {
-
-   }
-
-
    /**
     * Standard method to add an object into glpi
     * WILL BE INTEGRATED INTO THE CORE IN 0.80
@@ -100,13 +95,6 @@ class PluginDatainjectionPrinterInjection extends Printer
       return $lib->getInjectionResults();
    }
 
-   function checkType($field_name, $data, $mandatory) {
-      return PluginDatainjectionCommonInjectionLib::SUCCESS;
-   }
-
-   function reformat(&$values = array()) {
-
-   }
 }
 
 ?>

@@ -292,13 +292,15 @@ class PluginDatainjectionCommonInjectionLib {
     */
    private function manageFieldValues() {
       $blacklisted_fields = array('id');
-      $searchOptions = $this->injectionClass->getOptions();
 
       foreach ($this->values as $itemtype => $data) {
+         $injectionClass = self::getInjectionClassInstance($itemtype);
+         $searchOptions = $injectionClass->getOptions();
+
          foreach ($data as $field => $value) {
             if (!in_array($field,$blacklisted_fields)) {
                $searchOption = self::findSearchOption($searchOptions,$field);
-               $this->getFieldValue($itemtype, $searchOption,$field,$value);
+               $this->getFieldValue($injectionClass, $itemtype, $searchOption,$field,$value);
             }
          }
          //TODO : This is ugly, need to find why it adds an empty value to the array
@@ -318,7 +320,7 @@ class PluginDatainjectionCommonInjectionLib {
     * @param value the value coming from the CSV file
     * @return nothing
     */
-   private function getFieldValue($itemtype, $searchOption, $field, $value) {
+   private function getFieldValue($injectionClass, $itemtype, $searchOption, $field, $value) {
       $linkfield = $searchOption['linkfield'];
       if (!isset($searchOption['displaytype'])) {
          $searchOption['displaytype'] = 'text';
@@ -373,10 +375,12 @@ class PluginDatainjectionCommonInjectionLib {
             }
             break;
          default:
-            $value = $this->injectionClass->getSpecificFieldValue($itemtype,
+            if (method_exists($injectionClass,'getSpecificFieldValue')) {
+               $value = $injectionClass->getSpecificFieldValue($itemtype,
                                                                   $searchOption,
                                                                   $field,
                                                                   $value);
+            }
             if ($value) {
                $this->setValueForItemtype($itemtype,$linkfield,$value);
             }
@@ -519,11 +523,14 @@ class PluginDatainjectionCommonInjectionLib {
       //By default check is ok : if it's not the case, the value will be modified later
       $results[self::ACTION_CHECK]['status'] = self::SUCCESS;
 
-      //Get search options associated with the injectionClass
-      $searchOptions = $this->injectionClass->getOptions();
-
       //Browse all fields & values
       foreach ($this->values as $itemtype => $data) {
+
+         $injectionClass = self::getInjectionClassInstance($itemtype);
+
+         //Get search options associated with the injectionClass
+         $searchOptions = $injectionClass->getOptions();
+
          foreach ($data as $field => $value) {
             if ($value == "NULL") {
                   $this->values[$itemtype][$field] = self::EMPTY_VALUE;
@@ -562,7 +569,9 @@ class PluginDatainjectionCommonInjectionLib {
     * @return nothing
     */
    private function reformatSecondPass() {
-      $this->injectionClass->reformat($this->values);
+      if (method_exists($this->injectionClass,'reformat')) {
+         $injectionClass->reformat($this->values);
+      }
    }
 
    /**
@@ -795,7 +804,13 @@ class PluginDatainjectionCommonInjectionLib {
                default :
                   //Not a standard check ? Try checks specific to the injection class
                   //Will return SUCCESS if it's not a specific check
-                  return $injectionClass->checkType($field_name, $data, $mandatory);
+                  if (method_exists($injectionClass,'checkType')) {
+                     return $injectionClass->checkType($field_name, $data, $mandatory);
+                  }
+                  else {
+                     self::SUCCESS;
+                  }
+
             }
          }
       }
@@ -833,10 +848,12 @@ class PluginDatainjectionCommonInjectionLib {
          $this->setValueForItemtype($itemtype,'is_recursive',$recursive);
       }
 
-      $specific_fields = $injectionClass->addSpecificNeededFields($this->primary_type,
-                                                                  $this->values);
-      foreach ($specific_fields as $field => $value) {
-         $this->setValueForItemtype($itemtype,$field,$value);
+      if (method_exists($injectionClass,'addSpecificNeededFields')) {
+         $specific_fields = $injectionClass->addSpecificNeededFields($this->primary_type,
+                                                                     $this->values);
+         foreach ($specific_fields as $field => $value) {
+            $this->setValueForItemtype($itemtype,$field,$value);
+         }
       }
    }
 
@@ -1068,7 +1085,9 @@ class PluginDatainjectionCommonInjectionLib {
             $where.= " AND `items_id`='".$this->getValueByItemtypeAndName($itemtype,'items_id')."'";
          }
 
-         $where .= $injectionClass->checkPresent($values, $options);
+         if (method_exists($injectionClass,'chekPresent')) {
+            $where .= $injectionClass->checkPresent($values, $options);
+         }
          $sql  = "SELECT `id` FROM `" . $injectionClass->getTable()."`";
          $sql .= " WHERE 1 " . $where_entity . " " . $where;
 

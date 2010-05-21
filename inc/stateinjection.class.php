@@ -83,11 +83,6 @@ class PluginDatainjectionStateInjection extends State
       return $tab;
    }
 
-   function showAdditionalInformation($info = array()) {
-
-   }
-
-
    /**
     * Standard method to add an object into glpi
     * WILL BE INTEGRATED INTO THE CORE IN 0.80
@@ -127,26 +122,6 @@ class PluginDatainjectionStateInjection extends State
       $lib = new PluginDatainjectionCommonInjectionLib($this,$values,$options);
       $lib->deleteObject();
       return $lib->getInjectionResults();
-   }
-
-   function checkType($field_name, $data, $mandatory) {
-      return PluginDatainjectionCommonInjectionLib::SUCCESS;
-   }
-
-   function reformat(&$values = array()) {
-
-   }
-
-   function checkPresent($fields_toinject = array(), $options = array()) {
-      return "";
-   }
-
-   function getSpecificFieldValue($itemtype, $searchOption, $field, $value) {
-      return false;
-   }
-
-   function addSpecificNeededFields($primary_type, $fields_toinject) {
-      return array();
    }
 }
 

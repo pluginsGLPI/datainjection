@@ -194,26 +194,6 @@ class PluginDatainjectionInfocomInjection extends Infocom
       return $lib->getInjectionResults();
    }
 
-   function checkType($field_name, $data, $mandatory) {
-      return PluginDatainjectionCommonInjectionLib::SUCCESS;
-   }
-
-   function reformat(&$values = array()) {
-
-   }
-
-   function checkPresent($fields_toinject = array(), $options = array()) {
-      return "";
-   }
-
-   function getSpecificFieldValue($itemtype, $searchOption, $field, $value) {
-      return false;
-   }
-
-   function addSpecificNeededFields($primary_type, $fields_toinject) {
-      //No specific fields to add
-      return array();
-   }
 }
 
 ?>

@@ -287,8 +287,10 @@ class PluginDatainjectionInfo extends CommonDBTM {
                                   $step,
                                   $default);
          default:
-            //If type is not a standard type, must be treated by specific injection class
-            $injectionClass->showAdditionalInformation($info,$option);
+            if (method_exists($injectionClass,'showAdditionalInformation')) {
+               //If type is not a standard type, must be treated by specific injection class
+               $injectionClass->showAdditionalInformation($info,$option);
+            }
             break;
       }
       if ($info->isMandatory()) {

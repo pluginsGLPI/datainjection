@@ -61,8 +61,9 @@ interface PluginDatainjectionInjectionInterface {
    /**
     * Manage display of additional informations
     * @param info an array which contains the additional information values
+    * This method is optionnal ! Implement it if the itemtype to display special information
     */
-   function showAdditionalInformation($info = array());
+   //function showAdditionalInformation($info = array());
 
    /**
     * Standard method to add an object into glpi
@@ -93,17 +94,19 @@ interface PluginDatainjectionInjectionInterface {
 
    /**
     * Check values to inject
+    * This method is optionnal ! Implement it if the itemtype need special checks
     * @param fields_name field to add to glpi
     * @param data value to add
     * @param mandatory is this value mandatory or not ?
     * @return an array which indicates check status & errors
     */
-   function checkType($field_name, $data, $mandatory);
+   //function checkType($field_name, $data, $mandatory);
 
    /**
     * Reformat data if itemtypes needs it
+    * This method is optionnal ! Implement it if the itemtype need special reformat
     */
-   function reformat(&$values = array());
+   //function reformat(&$values = array());
 
    /**
     * Add itemtype specific checks to see if object is already in DB or not
@@ -111,18 +114,20 @@ interface PluginDatainjectionInjectionInterface {
     * @param options more informations needed
     * @return nothing
     */
-   function checkPresent($fields_toinject = array(), $options = array());
+   //function checkPresent($fields_toinject = array(), $options = array());
 
    /**
     * Get value for a field (for example specific dropdowns for an itemtype)
+    * This method is optionnal ! Implement it if the itemtype need special field values
     */
-   function getSpecificFieldValue($itemtype, $searchOption, $field, $value);
+   //function getSpecificFieldValue($itemtype, $searchOption, $field, $value);
 
    /**
     * Add specific values to the object to inject
     * @param primary_type the primary_type to inject
     * @param fields_toinject all the fields that need to be injected
+    * This method is optionnal ! Implement it if the itemtype need special reformat
     */
-   function addSpecificNeededFields($primary_type, $fields_toinject);
+   //function addSpecificNeededFields($primary_type, $fields_toinject);
 }
 ?>

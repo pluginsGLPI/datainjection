@@ -93,10 +93,6 @@ class PluginDatainjectionVlanInjection extends Vlan
       return $tab;
    }
 
-   function showAdditionalInformation($info = array()) {
-
-   }
-
 
    /**
     * Standard method to add an object into glpi
@@ -140,25 +136,6 @@ class PluginDatainjectionVlanInjection extends Vlan
       return $lib->getInjectionResults();
    }
 
-   function checkPresent($fields_toinject = array(), $options = array()) {
-      return "";
-   }
-
-   function checkType($field_name, $data, $mandatory) {
-      return PluginDatainjectionCommonInjectionLib::SUCCESS;
-   }
-
-   function reformat(&$values = array()) {
-
-   }
-
-   function getSpecificFieldValue($itemtype, $searchOption, $field, $value) {
-      return false;
-   }
-
-   function addSpecificNeededFields($primary_type, $fields_toinject) {
-      return array();
-   }
 }
 
 ?>

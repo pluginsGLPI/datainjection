@@ -53,11 +53,6 @@ class PluginDatainjectionContractInjection extends Contract
       return parent::getSearchOptions();
    }
 
-   function showAdditionalInformation($info = array()) {
-
-   }
-
-
    /**
     * Standard method to add an object into glpi
     * WILL BE INTEGRATED INTO THE CORE IN 0.80
@@ -98,14 +93,6 @@ class PluginDatainjectionContractInjection extends Contract
       $lib = new PluginDatainjectionCommonInjectionLib($this,$values,$options);
       $lib->deleteObject();
       return $lib->getInjectionResults();
-   }
-
-   function checkType($field_name, $data, $mandatory) {
-      return PluginDatainjectionCommonInjectionLib::SUCCESS;
-   }
-
-   function reformat(&$values = array()) {
-
    }
 
 }

@@ -54,8 +54,14 @@ class PluginDatainjectionNetworkportInjection extends NetworkPort
    }
 
    function getOptions() {
+      global $LANG;
       $tab = parent::getSearchOptions();
       $blacklist = PluginDatainjectionCommonInjectionLib::getBlacklistedOptions();
+
+      $tab[100]['name'] = $LANG['setup'][90];
+      $tab[100]['field'] = 'name';
+      $tab[100]['table'] = getTableForItemType('Vlan');
+
       //Remove some options because some fields cannot be imported
       $notimportable = array(20, 21);
       $ignore_fields = array_merge($blacklist,$notimportable);
@@ -91,11 +97,6 @@ class PluginDatainjectionNetworkportInjection extends NetworkPort
       }
       return $tab;
    }
-
-   function showAdditionalInformation($info = array()) {
-
-   }
-
 
    /**
     * Standard method to add an object into glpi
@@ -141,10 +142,6 @@ class PluginDatainjectionNetworkportInjection extends NetworkPort
 
    function checkType($field_name, $data, $mandatory) {
       return PluginDatainjectionCommonInjectionLib::SUCCESS;
-   }
-
-   function reformat(&$values = array()) {
-
    }
 
    function checkPresent($fields_toinject = array(), $options = array()) {
@@ -232,13 +229,6 @@ class PluginDatainjectionNetworkportInjection extends NetworkPort
       return $where;
    }
 
-   function getSpecificFieldValue($itemtype, $searchOption, $field, $value) {
-      return false;
-   }
-
-   function addSpecificNeededFields($primary_type, $fields_toinject) {
-      return array();
-   }
 }
 
 ?>

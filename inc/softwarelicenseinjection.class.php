@@ -53,10 +53,6 @@ class PluginDatainjectionSoftwareLicenseInjection extends SoftwareLicense
       return parent::getSearchOptions();
    }
 
-   function showAdditionalInformation($info = array()) {
-
-   }
-
 
    /**
     * Standard method to add an object into glpi
@@ -98,14 +94,6 @@ class PluginDatainjectionSoftwareLicenseInjection extends SoftwareLicense
       $lib = new PluginDatainjectionCommonInjectionLib($this,$values,$options);
       $lib->deleteObject();
       return $lib->getInjectionResults();
-   }
-
-   function checkType($field_name, $data, $mandatory) {
-      return PluginDatainjectionCommonInjectionLib::SUCCESS;
-   }
-
-   function reformat(&$values = array()) {
-
    }
 
 }

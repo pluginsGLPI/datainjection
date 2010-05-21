@@ -53,10 +53,6 @@ class PluginDatainjectionProfileInjection extends Profile
       return parent::getSearchOptions();
    }
 
-   function showAdditionalInformation($info = array()) {
-
-   }
-
    function checkType($field_name, $data, $mandatory) {
       switch($field_name) {
          case 'right_rw':
@@ -118,10 +114,6 @@ class PluginDatainjectionProfileInjection extends Profile
       $lib = new PluginDatainjectionCommonInjectionLib($this,$values,$options);
       $lib->deleteObject();
       return $lib->getInjectionResults();
-   }
-
-   function reformat(&$values = array()) {
-
    }
 
 }

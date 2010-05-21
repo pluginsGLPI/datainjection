@@ -110,15 +110,6 @@ class PluginDatainjectionComputerInjection extends Computer
    }
 
    /**
-    * Manage display of additional informations
-    * @param info an array which contains the additional information values
-    */
-   function showAdditionalInformation($info = array()) {
-
-   }
-
-
-   /**
     * Standard method to add an object into glpi
     * WILL BE INTEGRATED INTO THE CORE IN 0.80
     * @param values fields to add into glpi
@@ -159,24 +150,6 @@ class PluginDatainjectionComputerInjection extends Computer
       return $lib->getInjectionResults();
    }
 
-   function checkType($field_name, $data, $mandatory) {
-      return PluginDatainjectionCommonInjectionLib::SUCCESS;
-   }
-
-   function reformat(&$values = array()) {
-
-   }
-
-   function checkPresent($fields_toinject = array(), $options = array()) {
-      return "";
-   }
-
-   function getSpecificFieldValue($itemtype, $searchOption, $field, $value) {
-      return false;
-   }
-
-   function addSpecificNeededFields($primary_type, $fields_toinject) {
-   }
 }
 
 ?>
