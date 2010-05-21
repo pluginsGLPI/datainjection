@@ -114,7 +114,7 @@ function plugin_init_datainjection() {
                                 //'PluginDatainjectionUserInjection'               =>'datainjection',
                                 'PluginDatainjectionNetworkportInjection'        =>'datainjection',
                                 'PluginDatainjectionVlanInjection'               =>'datainjection',
-                                //'PluginDatainjectionNetpointInjection'           =>'datainjection',
+                                'PluginDatainjectionNetpointInjection'           =>'datainjection',
                                 //'PluginDatainjectionContract_ItemInjection'      =>'datainjection'
                                 );
       foreach ($INJECTABLE_TYPES as $type => $plugname) {
