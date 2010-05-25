@@ -29,7 +29,7 @@
  */
 
 // ----------------------------------------------------------------------
-// Original Author of file: Remi Collet
+// Original Author of file: Walid Nouh
 // Purpose of file:
 // ----------------------------------------------------------------------
 
@@ -59,11 +59,12 @@ class PluginDatainjectionNetworkportInjection extends NetworkPort
       $blacklist = PluginDatainjectionCommonInjectionLib::getBlacklistedOptions();
 
       //To manage vlans : relies on a CommonDBRelation object !
-      $tab[100]['name'] = $LANG['setup'][90];
-      $tab[100]['field'] = 'name';
-      $tab[100]['table'] = getTableForItemType('NetworkPort_Vlan');
-      $tab[100]['linkfield'] = getForeignKeyFieldForTable('NetworkPort');
-      $tab[100]['displaytype'] = 'relation';
+      $tab[100]['name']          = $LANG['setup'][90];
+      $tab[100]['field']         = 'name';
+      $tab[100]['table']         = getTableForItemType('Vlan');
+      $tab[100]['linkfield']     = getForeignKeyFieldForTable($tab[100]['table']);
+      $tab[100]['displaytype']   = 'relation';
+      $tab[100]['relationclass'] = 'NetworkPort_Vlan';
 
       //Remove some options because some fields cannot be imported
       $notimportable = array(20, 21);
@@ -98,6 +99,7 @@ class PluginDatainjectionNetworkportInjection extends NetworkPort
             }
          }
       }
+
       return $tab;
    }
 
@@ -188,7 +190,7 @@ class PluginDatainjectionNetworkportInjection extends NetworkPort
     */
    function getUnicityRequest($fields_toinject = array(), $options = array()) {
       $where = "";
-
+      logDebug($options);
       switch ($options['port_unicity']) {
          case PluginDatainjectionModel::UNICITY_NETPORT_LOGICAL_NUMBER :
             $where .= " AND `logical_number`='" . (isset ($fields_toinject["logical_number"])

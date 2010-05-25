@@ -170,23 +170,16 @@ class PluginDatainjectionCommonInjectionLib {
    }
 
    static function getItemtypeInstanceByInjection($injectionClassName) {
-      $pattern = "/PluginDatainjection(.*)Injection/";
-      if (preg_match($pattern,$injectionClassName,$results)) {
-         return new $results[1];
-      }
-      return false;
+      $injection = self::getItemtypeByInjectionClass(new $injectionClassName);
+      return new $injection;
    }
 
    static function getItemtypeByInjection($injectionClassName) {
-      $pattern = "/PluginDatainjection(.*)Injection/";
-      if (preg_match($pattern,$injectionClassName,$results)) {
-         return $results[1];
-      }
-      return false;
+      return self::getItemtypeByInjectionClass(new $injectionClassName);
    }
 
    static function getItemtypeByInjectionClass($injectionClass) {
-      return self::getItemtypeByInjection(get_class($injectionClass));
+      return getItemTypeForTable($injectionClass->getTable());
    }
 
    static function getInjectionClassInstance($itemtype) {
@@ -325,7 +318,7 @@ class PluginDatainjectionCommonInjectionLib {
     * @param add is insertion (true) or update (false)
     * @return nothing
     */
-   private function getFieldValue($injectionClass, $itemtype, $searchOption, $field, $value,$add) {
+   private function getFieldValue($injectionClass, $itemtype, $searchOption, $field, $value,$add=true) {
       $linkfield = $searchOption['linkfield'];
       if (!isset($searchOption['displaytype'])) {
          $searchOption['displaytype'] = 'text';
@@ -336,6 +329,7 @@ class PluginDatainjectionCommonInjectionLib {
             $this->setValueForItemtype($itemtype,$linkfield,$value);
             break;
          case 'dropdown':
+         case 'relation':
             $tmptype = getItemTypeForTable($searchOption['table']);
             $item = new $tmptype;
             if ($item instanceof CommonDropdown) {
@@ -383,24 +377,6 @@ class PluginDatainjectionCommonInjectionLib {
                $message .= $value;
                $this->setValueForItemtype($itemtype,$linkfield,$message);
             }
-            break;
-         case 'relation':
-            $relation_itemtype = getItemTypeForTable($searchOption['table']);
-            $relation = new $relation_itemtype;
-            $item = new $relation->itemtype_1;
-            if ($item instanceof CommonDropdown) {
-               $id = $item->importExternal($value,
-                                           $this->entity,
-                                           array(),
-                                           '',
-                                           $this->rights['add_dropdown']);
-            }
-            else {
-               $id = self::findSingle($item,
-                                      $searchOption,
-                                      $value);
-            }
-            $this->setValueForItemtype($relation_itemtype,$relation->items_id_2,$id);
             break;
          default:
             if (method_exists($injectionClass,'getSpecificFieldValue')) {
@@ -892,6 +868,9 @@ class PluginDatainjectionCommonInjectionLib {
    private function processAddOrUpdate() {
       $process = false;
 
+         //Manage fields belonging to relations between tables
+         $this->manageRelations();
+
       //Check is data to be inject still exists in DB (update) or not (add)
       $this->dataAlreadyInDB($this->injectionClass, $this->primary_type);
 
@@ -926,12 +905,8 @@ class PluginDatainjectionCommonInjectionLib {
       }
       if ($process) {
 
-         //Manage fields belonging to relations between tables
-         $this->manageRelations($this->primary_type, $this->injectionClass->getOptions());
-
          //Get real value for fields (ie dropdown, etc)
          $this->manageFieldValues($add);
-
          //First : reformat data
          $this->reformat();
 
@@ -966,24 +941,21 @@ class PluginDatainjectionCommonInjectionLib {
                foreach ($this->values as $itemtype => $data) {
                   //Do not process primary_type
                   if ($itemtype != get_class($item)) {
-                    $injectionClass = self::getInjectionClassInstance($itemtype);
-                    $item = new $itemtype();
+                     $injectionClass = self::getInjectionClassInstance($itemtype);
+                     $item = new $itemtype();
 
-                  //Manage fields belonging to relations between tables
-                  $this->manageRelations($itemtype, $injectionClass->getOptions());
+                     $this->addNeededFields($injectionClass, $itemtype);
+                     $this->dataAlreadyInDB($injectionClass,$itemtype);
 
-                    $this->addNeededFields($injectionClass, $itemtype);
-                    $this->dataAlreadyInDB($injectionClass,$itemtype);
-
-                    if($this->getValueByItemtypeAndName($itemtype,'id') == self::ITEM_NOT_FOUND) {
-                       $add = true;
-                       $this->unsetValue($itemtype,'id');
-                    }
-                    else {
-                       $add = false;
-                    }
-                    $values = $this->getValuesForItemtype($itemtype);
-                    $tmpID = $this->effectiveAddOrUpdate($add,$item,$values);
+                     if($this->getValueByItemtypeAndName($itemtype,'id') == self::ITEM_NOT_FOUND) {
+                        $add = true;
+                        $this->unsetValue($itemtype,'id');
+                     }
+                     else {
+                        $add = false;
+                     }
+                     $values = $this->getValuesForItemtype($itemtype);
+                     $tmpID = $this->effectiveAddOrUpdate($add,$item,$values);
                   }
                }
             }
@@ -1053,18 +1025,28 @@ class PluginDatainjectionCommonInjectionLib {
       }
    }
 
-   private function manageRelations($itemtype, $searchOptions) {
+   private function manageRelations() {
+      foreach ($this->values as $itemtype => $data) {
+         $injectionClass = self::getInjectionClassInstance($itemtype);
+         //Get search options associated with the injectionClass
+         $searchOptions = $injectionClass->getOptions();
 
-      foreach ($searchOptions as $id => $option) {
-         if ($option['displaytype'] == 'relation') {
-            $relation_itemtype = getItemTypeForTable($option['table']);
-            $value = $this->getValueByItemtypeAndName($itemtype,$option['field']);
-            $this->setValueForItemtype($relation_itemtype,$option['field'],$value);
-            $this->unsetValue($itemtype,$option['field']);
+         foreach ($searchOptions as $id => $option) {
+            //If it's a relation
+            if ($option['displaytype'] == 'relation') {
+               //Get the relation object associated with the field
+               //Add a new array for the relation object
+               $value = $this->getValueByItemtypeAndName($itemtype,$option['linkfield']);
+               //$this->setValueForItemtype($option['relationclass'],$option['linkfield'],$value);
+               $this->getFieldValue(null, $option['relationclass'], $option,$option['linkfield'],$value,true);
+
+               //Remove the old option
+               $this->unsetValue($itemtype,$option['linkfield']);
+            }
          }
       }
-
    }
+
    /**
     * Function to check if the datas to inject already exists in DB
     * @param pe the type of datas to inject
@@ -1094,11 +1076,11 @@ class PluginDatainjectionCommonInjectionLib {
          //Type is a relation : check it this relation still exists
          if (new $itemtype instanceof CommonDBRelation) {
             $searchOptions = $injectionClass->getOptions();
-            $where   = " `".$searchOptions[3]['field']."`='";
-            $where.= $this->getValueByItemtypeAndName($itemtype,$searchOptions[3]['field'])."'";
-            $where   = " AND `".$searchOptions[4]['field']."`='";
-            $where.= $this->getValueByItemtypeAndName($itemtype,$searchOptions[4]['field'])."'";
-            $sql  .= " WHERE ".$where;
+            $where .= " `".$searchOptions[3]['field']."`='";
+            $where .= $this->getValueByItemtypeAndName($itemtype,$searchOptions[3]['field'])."'";
+            $where .= " AND `".$searchOptions[4]['field']."`='";
+            $where .= $this->getValueByItemtypeAndName($itemtype,$searchOptions[4]['field'])."'";
+            $sql   .= " WHERE ".$where;
          }
          else {
             //Type is not a relation
@@ -1145,7 +1127,7 @@ class PluginDatainjectionCommonInjectionLib {
                $where.= " AND `items_id`='".$this->getValueByItemtypeAndName($itemtype,'items_id')."'";
             }
 
-            if (method_exists($injectionClass,'chekPresent')) {
+            if (method_exists($injectionClass,'checkPresent')) {
                $where .= $injectionClass->checkPresent($values, $options);
             }
             $sql .= " WHERE 1 " . $where_entity . " " . $where;
