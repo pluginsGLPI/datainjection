@@ -161,5 +161,25 @@ class PluginDatainjectionMapping extends CommonDBTM {
       }
       echo "</table></form>";
    }
+
+   /**
+    * For multitext only ! Check it there's more than one value to inject in a field
+    * @model the model
+    * @mapping_definition the mapping_definition corresponding to the field
+    * @value the value of the mapping
+    * @line the complete line to inject
+    * @return true if more than one value to inject, false if not
+    */
+   static function getSeveralMappedField($models_id) {
+      global $DB;
+      $several = array();
+      $query  = "SELECT value, COUNT(*) AS `counter` FROM `glpi_plugin_datainjection_mappings` ";
+      $query .= "WHERE `models_id`='$models_id' AND `value` NOT IN ('none') ";
+      $query .= "GROUP BY `value` HAVING `counter` > 1";
+      foreach ($DB->request($query) as $mapping) {
+         $several[] = $mapping['value'];
+      }
+      return $several;
+   }
 }
 ?>

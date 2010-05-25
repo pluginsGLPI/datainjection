@@ -58,9 +58,12 @@ class PluginDatainjectionNetworkportInjection extends NetworkPort
       $tab = parent::getSearchOptions();
       $blacklist = PluginDatainjectionCommonInjectionLib::getBlacklistedOptions();
 
+      //To manage vlans : relies on a CommonDBRelation object !
       $tab[100]['name'] = $LANG['setup'][90];
       $tab[100]['field'] = 'name';
-      $tab[100]['table'] = getTableForItemType('Vlan');
+      $tab[100]['table'] = getTableForItemType('NetworkPort_Vlan');
+      $tab[100]['linkfield'] = getForeignKeyFieldForTable('NetworkPort');
+      $tab[100]['displaytype'] = 'relation';
 
       //Remove some options because some fields cannot be imported
       $notimportable = array(20, 21);
@@ -138,10 +141,6 @@ class PluginDatainjectionNetworkportInjection extends NetworkPort
       $lib = new PluginDatainjectionCommonInjectionLib($this,$values,$options);
       $lib->deleteObject();
       return $lib->getInjectionResults();
-   }
-
-   function checkType($field_name, $data, $mandatory) {
-      return PluginDatainjectionCommonInjectionLib::SUCCESS;
    }
 
    function checkPresent($fields_toinject = array(), $options = array()) {

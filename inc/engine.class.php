@@ -51,6 +51,7 @@ class PluginDatainjectionEngine {
 
       //Load model and mappings informations
       $this->getModel()->loadMappings();
+      $this->getModel()->populateSeveraltimesMappedFields();
       $this->getModel()->loadInfos();
       $this->infos = $infos;
       $this->entity = $entity;
@@ -67,18 +68,19 @@ class PluginDatainjectionEngine {
 
       //Get the injectionclass associated to the itemtype
       $itemtype = $this->getModel()->getItemtype();
-      $iteminjection = PluginDatainjectionCommonInjectionLib::getInjectionClassInstance($itemtype);
+      $injectionClass = PluginDatainjectionCommonInjectionLib::getInjectionClassInstance($itemtype);
+      $several = PluginDatainjectionMapping::getSeveralMappedField($this->getModel()->fields['id']);
 
       //First of all : transform $line which is an array of values to inject into another array
       //which looks like this :
       //array(itemtype=>array(field=>value,field2=>value2))
       //Note : ignore values which are not mapped with a glpi's field
-
+      $searchOptions = $injectionClass->getOptions();
       for ($i = 0; $i < count($line); $i++) {
          $mapping = $this->getModel()->getMappingByRank($i);
          //If field is mapped with a value in glpi
          if ($mapping->getItemtype() != PluginDatainjectionInjectionType::NO_VALUE) {
-            $fields_toinject[$mapping->getItemtype()][$mapping->getValue()] = $line[$i];
+            $this->manageMultipleValues($fields_toinject,$searchOptions,$mapping,$line[$i],$several);
             $mandatory_fields[$mapping->getItemtype()][$mapping->getValue()] =
                                                                            $mapping->isMandatory();
          }
@@ -125,7 +127,7 @@ class PluginDatainjectionEngine {
                        'optional_data'           =>$optional_data);
 
       //Will manage add or update
-      $this->results = $iteminjection->addObject($fields_toinject,$options);
+      $this->results = $injectionClass->addObject($fields_toinject,$options);
 
 
       /*
@@ -311,6 +313,24 @@ class PluginDatainjectionEngine {
       $fields_toinject[$itemtype]['entities_id'] = $this->entity;
    }
 
+   function manageMultipleValues(&$fields_toinject, $searchOptions, $mapping, $value,
+                                 $several = array()) {
+      $option = PluginDatainjectionCommonInjectionLib::findSearchOption($searchOptions,
+                                                                        $mapping->getValue());
+      $return_value = '';
+      if ($option['displaytype'] == 'multiline_text'
+            && in_array($mapping->getValue(),$several)
+               && $value != PluginDatainjectionCommonInjectionLib::EMPTY_VALUE) {
+         if (isset($fields_toinject[$mapping->getItemtype()][$mapping->getValue()])) {
+            $return_value.= $fields_toinject[$mapping->getItemtype()][$mapping->getValue()];
+         }
+         $return_value .= $mapping->getMappingName()."=".$value."\n";
+      }
+      else {
+         $return_value = $value;
+      }
+      $fields_toinject[$mapping->getItemtype()][$mapping->getValue()] = $return_value;
+   }
 
    //--------- Getters -------------------------//
    function getModel() {

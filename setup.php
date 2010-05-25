@@ -114,6 +114,7 @@ function plugin_init_datainjection() {
                                 //'PluginDatainjectionUserInjection'               =>'datainjection',
                                 'PluginDatainjectionNetworkportInjection'        =>'datainjection',
                                 'PluginDatainjectionVlanInjection'               =>'datainjection',
+                                'PluginDatainjectionNetworkport_VlanInjection'   =>'datainjection',
                                 'PluginDatainjectionNetpointInjection'           =>'datainjection',
                                 //'PluginDatainjectionContract_ItemInjection'      =>'datainjection'
                                 );

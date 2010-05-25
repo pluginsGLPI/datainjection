@@ -53,6 +53,9 @@ class PluginDatainjectionModel extends CommonDBTM {
    //Data to inject
    public $injectionData = false;
 
+   //Store field of type 'multline_text' several times mapped
+   public $severaltimes_mapped = array();
+
    //Port unicity constants
    const UNICITY_NETPORT_LOGICAL_NUMBER            = 0;
    const UNICITY_NETPORT_NAME                      = 1;
@@ -918,6 +921,14 @@ class PluginDatainjectionModel extends CommonDBTM {
       else {
          return $LANG["datainjection"]["model"][35];
       }
+   }
+
+   function populateSeveraltimesMappedFields() {
+      $this->severaltimes_mapped = PluginDatainjectionMapping::getSeveralMappedField($this->fields['id']);
+   }
+
+   function getSeveraltimesMappedFields() {
+      return $this->severaltimes_mapped;
    }
 }
 ?>

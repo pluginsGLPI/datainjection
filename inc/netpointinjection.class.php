@@ -147,6 +147,17 @@ class PluginDatainjectionNetpointInjection extends Netpoint
       return $lib->getInjectionResults();
    }
 
+   function addSpecificNeededFields($primary_type, $fields_toinject) {
+      //If netpoint is not the primary type to inject, then get the locations_id from the primary_type
+      if ($primary_type != 'Netpoint') {
+         if (isset($fields_toinject[$primary_type]['locations_id'])) {
+            return array('locations_id',$fields_toinject[$primary_type]['locations_id']);
+         }
+         else {
+            return array('locations_id',0);
+         }
+      }
+   }
 }
 
 ?>
