@@ -190,7 +190,31 @@ class PluginDatainjectionInjectionType {
     * @return boolean the value matches the searchOption or not
     */
    static function isEqual($option = array(), $mapping) {
+      global $LANG;
       $name = strtolower($mapping['name']);
+      if (self::testBasicEqual(strtolower($mapping['name']), $option)) {
+         return true;
+      }
+      else {
+         //Manage mappings begining with N° or n°
+         $new_name = preg_replace("/[n|N]°/",$LANG['financial'][4],$name);
+         if (self::testBasicEqual(strtolower($new_name), $option)) {
+            return true;
+         }
+         else {
+           //Field may match is it was in plural...
+           $plural = array('comments','notes',$LANG['common'][25],$LANG['title'][37]);
+           if (in_array($name.'s',$plural)
+                  && self::testBasicEqual(strtolower($name.'s'), $option)) {
+              return true;
+           }
+           return false;
+         }
+      }
+   }
+
+   static function testBasicEqual($name, $option = array()) {
+            //Basic tests
       if ( strtolower($option['field']) == $name
             || strtolower($option['name']) == $name
                || strtolower($option['linkfield']) == $name) {
