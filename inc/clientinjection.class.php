@@ -85,7 +85,12 @@ class PluginDatainjectionClientInjection {
       if (count($models) > 0) {
          echo "<tr class='tab_bg_1'>";
          echo "<td align='center'>".$LANG['common'][22]."&nbsp;:";
-         PluginDatainjectionModel::dropdown(array('value'=>$ID));
+         //if ($_SESSION['glpi_plugin_datainjection_step'] == self::STEP_UPLOAD) {
+            PluginDatainjectionModel::dropdown(array('value'=>$ID));
+         //}
+         //else {
+        //    echo Dropdown::getDropdownName('glpi_plugin_datainjection_models',$ID);
+         //}
          echo "</td></tr></table>";
       }
       else {
@@ -251,7 +256,6 @@ class PluginDatainjectionClientInjection {
    static function showResultsForm(PluginDatainjectionModel $model, $options) {
       global $LANG;
       $results = json_decode(stripslashes_deep($options['results']),true);
-      printCleanArray($results);
 
       echo "<table class='tab_cadre_fixe'>";
       echo "<th>" . $LANG["datainjection"]["log"][1]."</th>";

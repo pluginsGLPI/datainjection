@@ -85,10 +85,9 @@ class PluginDatainjectionInfocomInjection extends Infocom
       $tab[17]['default']     = 0;
       $tab[17]['checktype']   = 'integer';
 
-      $blacklist = PluginDatainjectionCommonInjectionLib::getBlacklistedOptions();
+      //$blacklist = PluginDatainjectionCommonInjectionLib::getBlacklistedOptions();
       //Remove some options because some fields cannot be imported
       $notimportable = array(2, 3, 20, 21, 80, 86);
-      $ignore_fields = array_merge($blacklist,$notimportable);
 
       //Add linkfield for theses fields : no massive action is allowed in the core, but they can be
       //imported using the commonlib
@@ -96,14 +95,14 @@ class PluginDatainjectionInfocomInjection extends Infocom
 
       //Add default displaytype (text)
       foreach ($tab as $id => $tmp) {
-         if (!is_array($tmp) || in_array($id,$ignore_fields)) {
+         if (!is_array($tmp) || in_array($id,$notimportable)) {
             unset($tab[$id]);
          }
          else {
             if (in_array($tmp['field'],$add_linkfield)) {
                $tab[$id]['linkfield'] = $add_linkfield[$tmp['field']];
             }
-            if (!in_array($id,$ignore_fields)) {
+            if (!in_array($id,$notimportable)) {
                if (!isset($tmp['linkfield'])) {
                   $tab[$id]['injectable'] = PluginDatainjectionCommonInjectionLib::FIELD_VIRTUAL;
                }

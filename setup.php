@@ -102,7 +102,7 @@ function plugin_init_datainjection() {
                                 'PluginDatainjectionLocationInjection'           =>'datainjection',
                                 'PluginDatainjectionStateInjection'              =>'datainjection',
                                 'PluginDatainjectionManufacturerInjection'       =>'datainjection',
-                                //'PluginDatainjectionMonitorInjection'            =>'datainjection',
+                                'PluginDatainjectionMonitorInjection'            =>'datainjection',
                                 //'PluginDatainjectionNetworkequipmentInjection'   =>'datainjection',
                                 //'PluginDatainjectionPeripheralInjection'         =>'datainjection',
                                 //'PluginDatainjectionPhoneInjection'              =>'datainjection',
