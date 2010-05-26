@@ -256,7 +256,7 @@ class PluginDatainjectionClientInjection {
    static function showResultsForm(PluginDatainjectionModel $model, $options) {
       global $LANG;
       $results = json_decode(stripslashes_deep($options['results']),true);
-
+      printCleanArray($results);
       echo "<table class='tab_cadre_fixe'>";
       echo "<th>" . $LANG["datainjection"]["log"][1]."</th>";
       echo "<tr class='tab_bg_1'>";

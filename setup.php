@@ -106,7 +106,7 @@ function plugin_init_datainjection() {
                                 //'PluginDatainjectionNetworkequipmentInjection'   =>'datainjection',
                                 //'PluginDatainjectionPeripheralInjection'         =>'datainjection',
                                 //'PluginDatainjectionPhoneInjection'              =>'datainjection',
-                                //'PluginDatainjectionPrinterInjection'            =>'datainjection',
+                                'PluginDatainjectionPrinterInjection'            =>'datainjection',
                                 //'PluginDatainjectionProfileInjection'            =>'datainjection',
                                 //'PluginDatainjectionSoftwareInjection'           =>'datainjection',
                                 //'PluginDatainjectionSoftwareLicenseInjection'    =>'datainjection',

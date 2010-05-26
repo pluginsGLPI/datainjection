@@ -286,7 +286,11 @@ class PluginDatainjectionCheck {
     * Function found on php.net page about is_float, because is_float doesn't behave correctly
     */
    static function isTrueFloat($val){
-       if( ctype_digit($val)
+       if (!$val) {
+         return true;
+       }
+
+       if(ctype_digit($val)
             && (is_float($val)
             || ( (float) $val > (int) $val
                || strlen($val) != strlen( (int) $val) )) ) {

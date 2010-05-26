@@ -244,19 +244,6 @@ class PluginDatainjectionCommonInjectionLib {
    }
 
    /**
-    * Should a field type be checked ?
-    * @return the value as given in the constructor or false (no check to perform for this type)
-    */
-   private function getCheckFieldType($type) {
-      if (isset($this->checks[$type])) {
-         return $this->checks[$type];
-      }
-      else {
-         return false;
-      }
-   }
-
-   /**
     * Get itemtype associated to the injectionClass
     * @return an itemtype
     */
@@ -811,7 +798,6 @@ class PluginDatainjectionCommonInjectionLib {
                      return self::SUCCESS;
                   }
                case 'decimal' :
-                  if (!is_numeric($data)) logDebug($field_name,$data," is numeric!!");
                   return (is_numeric($data)?self::SUCCESS:self::TYPE_MISMATCH);
                case 'float':
                   return (PluginDatainjectionCheck::isTrueFloat($data)?self::SUCCESS:
@@ -994,7 +980,7 @@ class PluginDatainjectionCommonInjectionLib {
    }
 
    private function effectiveAddOrUpdate($add=true, $item, $values) {
-      //logDebug($values);
+      logDebug($values);
       //Insert data using the standard add() method
       if ($item instanceof CommonDropdown & $add) {
          $newID = $item->import($values);
