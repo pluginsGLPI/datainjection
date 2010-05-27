@@ -375,9 +375,10 @@ class PluginDatainjectionModel extends CommonDBTM {
       $query.= " ORDER BY `entities_id`, " . ($order == "`name`" ? "`name`" : $order);
 
       foreach ($DB->request($query) as $data) {
-         $models[$data['id']] = $data['name'];
+         if (self::checkRightOnModel($data['id'])) {
+            $models[$data['id']] = $data['name'];
+         }
       }
-
       return $models;
    }
 
@@ -929,6 +930,28 @@ class PluginDatainjectionModel extends CommonDBTM {
 
    function getSeveraltimesMappedFields() {
       return $this->severaltimes_mapped;
+   }
+
+   static function checkRightOnModel($models_id) {
+      global $DB;
+      $continue = true;
+      $query = "(SELECT `itemtype` FROM `glpi_plugin_datainjection_models` ";
+      $query.= "WHERE `id`='$models_id') ";
+      $query.= "UNION (SELECT `itemtype` FROM `glpi_plugin_datainjection_mappings` ";
+      $query.= "WHERE `models_id`='$models_id')";
+      $query.= "UNION (SELECT `itemtype` FROM `glpi_plugin_datainjection_infos` ";
+      $query.= "WHERE `models_id`='$models_id')";
+
+      foreach ($DB->request($query) as $data) {
+         if ($data['itemtype'] != PluginDatainjectionInjectionType::NO_VALUE) {
+            $item = new $data['itemtype'];
+            if (!$item->canCreate()) {
+               $continue = false;
+               break;
+            }
+         }
+      }
+      return $continue;
    }
 }
 ?>
