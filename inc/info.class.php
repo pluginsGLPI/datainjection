@@ -191,10 +191,13 @@ class PluginDatainjectionInfo extends CommonDBTM {
 
             foreach ($infos as $tmp) {
                $info->fields = $tmp;
-               echo "<tr class='tab_bg_1'>";
-               self::displayAdditionalInformation($info,
-                                                  $_SESSION['glpi_plugin_datainjection_infos']);
-               echo "</tr>";
+               $item = new $tmp['itemtype'];
+               if ($item->can(-1,'w')) {
+                  echo "<tr class='tab_bg_1'>";
+                  self::displayAdditionalInformation($info,
+                                                     $_SESSION['glpi_plugin_datainjection_infos']);
+                  echo "</tr>";
+               }
             }
          }
          echo "</table>";
@@ -236,6 +239,7 @@ class PluginDatainjectionInfo extends CommonDBTM {
 
       $name = "info[".$option['linkfield']."]";
       $value = '';
+      $item = new $option['itemtype'];
 
       switch ($option['displaytype']) {
          case 'text' :
@@ -256,7 +260,7 @@ class PluginDatainjectionInfo extends CommonDBTM {
                                                array('name'=>$name,
                                                      'value'=>$value));
             break;
-         case 'yesno':
+         case 'bool':
             if ($value == '') {
                $value = 0;
             }

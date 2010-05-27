@@ -69,8 +69,8 @@ function plugin_datainjection_changeprofile() {
    }
 }
 
-function plugin_headings_actions_datainjection($itemtype) {
-   switch ($itemtype) {
+function plugin_headings_actions_datainjection($item) {
+   switch (get_class($item)) {
       case 'Profile' :
          return array (
             1 => "plugin_headings_datainjection",
@@ -85,11 +85,8 @@ function plugin_get_headings_datainjection($item, $withtemplate) {
    global $LANG;
 
    switch (get_class($item)) {
-      case PROFILE_TYPE :
-         $prof = new Profile();
-         if ($item->fields['id']>0
-               && $prof->getFromDB($item->fields['id'])
-                  && $prof->fields['interface']=='central') {
+      case 'Profile' :
+         if ($item->fields['interface']=='central') {
             return array(
                1 => $LANG["datainjection"]["name"][1]
             );
@@ -101,16 +98,16 @@ function plugin_get_headings_datainjection($item, $withtemplate) {
    return false;
 }
 
-function plugin_headings_datainjection($type, $ID, $withtemplate = 0) {
+function plugin_headings_datainjection($item,$withtemplate=0) {
    global $CFG_GLPI;
 
-   switch ($type) {
-      case PROFILE_TYPE :
+   switch (get_class($item)) {
+      case 'Profile' :
          $profile = new PluginDatainjectionProfile;
-         if (!$profile->getFromDB($ID))
-         plugin_datainjection_createaccess($ID);
-
-         $profile->showForm($CFG_GLPI["root_doc"] . "/plugins/datainjection/front/plugin_datainjection.profile.php", $ID);
+         if (!$profile->getFromDB($item->fields['id'])) {
+            plugin_datainjection_createaccess($item->fields['id']);
+         }
+         $profile->showForm($item->fields['id']);
          break;
       default :
          break;

@@ -1091,7 +1091,7 @@ function fillInfoStep($target, $error) {
 							break;
 					}
 					break;
-				case "yesno":
+				case "bool":
 					echo "<tr><td colspan='3'><input type='hidden' name='field[$key][0]' value='" . $value->getID() . "' /></td></tr>";
 					echo "<tr><td style='width: 200px'>" . $DATA_INJECTION_INFOS[$value->getInfosType()][$value->getValue()]["name"] . " : </td><td style='width: 130px'>";
 					dropdownYesNo("field[$key][1]");

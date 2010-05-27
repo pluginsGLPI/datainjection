@@ -98,7 +98,7 @@ class PluginDatainjectionMonitorInjection extends Monitor
                                                   23, 42, 23),
                         "user"           => array(70, 24),
                         "float"          => array(11),
-                        "yesno"          => array(41, 42, 43, 44, 45, 46),
+                        "bool"          => array(41, 42, 43, 44, 45, 46),
                         "multiline_text" => array(16, 90));
       foreach ($dropdown as $type => $tabsID) {
          foreach ($tabsID as $tabID) {

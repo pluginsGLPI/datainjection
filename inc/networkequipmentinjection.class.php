@@ -96,7 +96,7 @@ class PluginDatainjectionNetworkEquipmentInjection extends NetworkEquipment
 
       //Add displaytype value
       $dropdown = array("dropdown"       => array(3, 4, 40, 31, 71, 11, 32, 33, 23),
-                        "yesno"          => array(86),
+                        "bool"          => array(86),
                         "user"           => array(70, 24),
                         "multiline_text" => array(16, 90));
       foreach ($dropdown as $type => $tabsID) {

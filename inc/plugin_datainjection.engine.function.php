@@ -986,7 +986,7 @@ function keepInfo($info) {
 			if ($info->getInfosText() != NULL && $info->getInfosText() != EMPTY_VALUE)
 				return true;
 			break;
-		case "yesno" :
+		case "bool" :
 			return true;
 			break;
 		case "dropdown" :

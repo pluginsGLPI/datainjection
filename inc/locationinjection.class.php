@@ -93,7 +93,7 @@ class PluginDatainjectionLocationInjection extends Location
       }
 
       //Add displaytype value
-      $fields_definition = array("yesno"              => array(86),
+      $fields_definition = array("bool"              => array(86),
                                  "multiline_text"     => array(16));
       foreach ($fields_definition as $type => $tabsID) {
          foreach ($tabsID as $tabID) {

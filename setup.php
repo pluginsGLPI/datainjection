@@ -66,24 +66,10 @@ function plugin_init_datainjection() {
       // Inbtegration with Webservices plugin
       $PLUGIN_HOOKS['webservices']['datainjection'] = 'plugin_datainjection_registerMethods';
 
-      $classes = array ('Model',
-                        'Modelcsv',
-                        'Backend',
-                        'Backendcsv',
-                        'BackendInterface',
-                        'Infos',
-                        'InfosCollection',
-                        'Mapping',
-                        'MappingCollection',
-                        'Profile',
-                        'Data',
-                        'Check',
-                        'InjectionInterface',
-                        'InjectionCommon',
-                        'Result',
-                        'CommonInjectionLib',
-                        'Webservice',
-                        'Result');
+      $classes = array ('Model', 'Modelcsv', 'Backend', 'Backendcsv', 'BackendInterface',
+                        'Infos', 'InfosCollection', 'Mapping', 'MappingCollection',
+                        'Profile', 'Data', 'Check', 'InjectionInterface', 'InjectionCommon',
+                        'Result', 'CommonInjectionLib', 'Webservice', 'Result');
       foreach ($classes as $value) {
          Plugin::registerClass('PluginDatainjection'.$value);
       }

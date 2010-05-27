@@ -315,7 +315,7 @@ $DATA_INJECTION_INFOS[PRINTER_TYPE]['recursive']['table'] = 'glpi_printers';
 $DATA_INJECTION_INFOS[PRINTER_TYPE]['recursive']['field'] = 'recursive';
 $DATA_INJECTION_INFOS[PRINTER_TYPE]['recursive']['name'] = $LANG["entity"][9];
 $DATA_INJECTION_INFOS[PRINTER_TYPE]['recursive']['type'] = 'integer';
-$DATA_INJECTION_INFOS[PRINTER_TYPE]['recursive']['input_type'] = 'yesno';
+$DATA_INJECTION_INFOS[PRINTER_TYPE]['recursive']['input_type'] = 'bool';
 
 // ----------------------------------------------------------------------
 //PHONE INFOS
@@ -511,7 +511,7 @@ $DATA_INJECTION_INFOS[NETWORKING_TYPE]['recursive']['table'] = 'glpi_networking'
 $DATA_INJECTION_INFOS[NETWORKING_TYPE]['recursive']['field'] = 'recursive';
 $DATA_INJECTION_INFOS[NETWORKING_TYPE]['recursive']['name'] = $LANG["entity"][9];
 $DATA_INJECTION_INFOS[NETWORKING_TYPE]['recursive']['type'] = 'integer';
-$DATA_INJECTION_INFOS[NETWORKING_TYPE]['recursive']['input_type'] = 'yesno';
+$DATA_INJECTION_INFOS[NETWORKING_TYPE]['recursive']['input_type'] = 'bool';
 
 // ----------------------------------------------------------------------
 //USER INFOS
@@ -610,7 +610,7 @@ $DATA_INJECTION_INFOS[PROFILE_USER_TYPE]['recursive']['field'] = 'recursive';
 $DATA_INJECTION_INFOS[PROFILE_USER_TYPE]['recursive']['linkfield'] = 'recursive';
 $DATA_INJECTION_INFOS[PROFILE_USER_TYPE]['recursive']['name'] = $LANG['profiles'][28];
 $DATA_INJECTION_INFOS[PROFILE_USER_TYPE]['recursive']['type'] = 'integer';
-$DATA_INJECTION_INFOS[PROFILE_USER_TYPE]['recursive']['input_type'] = 'yesno';
+$DATA_INJECTION_INFOS[PROFILE_USER_TYPE]['recursive']['input_type'] = 'bool';
 
 //----------------------------------------------------------------------
 //GROUP INFOS
@@ -629,7 +629,7 @@ $DATA_INJECTION_INFOS[GROUP_TYPE]['recursive']['table'] = 'glpi_groups';
 $DATA_INJECTION_INFOS[GROUP_TYPE]['recursive']['field'] = 'recursive';
 $DATA_INJECTION_INFOS[GROUP_TYPE]['recursive']['name'] = $LANG["entity"][9];
 $DATA_INJECTION_INFOS[GROUP_TYPE]['recursive']['type'] = 'integer';
-$DATA_INJECTION_INFOS[GROUP_TYPE]['recursive']['input_type'] = 'yesno';
+$DATA_INJECTION_INFOS[GROUP_TYPE]['recursive']['input_type'] = 'bool';
 
 // ----------------------------------------------------------------------
 //CONTACT INFOS
@@ -650,7 +650,7 @@ $DATA_INJECTION_INFOS[CONTACT_TYPE]['recursive']['table'] = 'glpi_enterprises';
 $DATA_INJECTION_INFOS[CONTACT_TYPE]['recursive']['field'] = 'recursive';
 $DATA_INJECTION_INFOS[CONTACT_TYPE]['recursive']['name'] = $LANG["entity"][9];
 $DATA_INJECTION_INFOS[CONTACT_TYPE]['recursive']['type'] = 'integer';
-$DATA_INJECTION_INFOS[CONTACT_TYPE]['recursive']['input_type'] = 'yesno';
+$DATA_INJECTION_INFOS[CONTACT_TYPE]['recursive']['input_type'] = 'bool';
 
 // ----------------------------------------------------------------------
 //ENTERPRISES INFOS
@@ -692,7 +692,7 @@ $DATA_INJECTION_INFOS[ENTERPRISE_TYPE]['recursive']['table'] = 'glpi_enterprises
 $DATA_INJECTION_INFOS[ENTERPRISE_TYPE]['recursive']['field'] = 'recursive';
 $DATA_INJECTION_INFOS[ENTERPRISE_TYPE]['recursive']['name'] = $LANG["entity"][9];
 $DATA_INJECTION_INFOS[ENTERPRISE_TYPE]['recursive']['type'] = 'integer';
-$DATA_INJECTION_INFOS[ENTERPRISE_TYPE]['recursive']['input_type'] = 'yesno';
+$DATA_INJECTION_INFOS[ENTERPRISE_TYPE]['recursive']['input_type'] = 'bool';
 
 // ----------------------------------------------------------------------
 //CONSUMABLE INFOS
@@ -812,7 +812,7 @@ $DATA_INJECTION_INFOS[DOCUMENT_TYPE]['recursive']['table'] = 'glpi_contracts';
 $DATA_INJECTION_INFOS[DOCUMENT_TYPE]['recursive']['field'] = 'recursive';
 $DATA_INJECTION_INFOS[DOCUMENT_TYPE]['recursive']['name'] = $LANG["entity"][9];
 $DATA_INJECTION_INFOS[DOCUMENT_TYPE]['recursive']['type'] = 'integer';
-$DATA_INJECTION_INFOS[DOCUMENT_TYPE]['recursive']['input_type'] = 'yesno';
+$DATA_INJECTION_INFOS[DOCUMENT_TYPE]['recursive']['input_type'] = 'bool';
 
 $DATA_INJECTION_INFOS[DOCUMENT_TYPE]['rubrique']['table'] = 'glpi_dropdown_rubdocs';
 $DATA_INJECTION_INFOS[DOCUMENT_TYPE]['rubrique']['field'] = 'name';
@@ -865,7 +865,7 @@ $DATA_INJECTION_INFOS[SOFTWARE_TYPE]['recursive']['table'] = 'glpi_software';
 $DATA_INJECTION_INFOS[SOFTWARE_TYPE]['recursive']['field'] = 'recursive';
 $DATA_INJECTION_INFOS[SOFTWARE_TYPE]['recursive']['name'] = $LANG["entity"][9];
 $DATA_INJECTION_INFOS[SOFTWARE_TYPE]['recursive']['type'] = 'integer';
-$DATA_INJECTION_INFOS[SOFTWARE_TYPE]['recursive']['input_type'] = 'yesno';
+$DATA_INJECTION_INFOS[SOFTWARE_TYPE]['recursive']['input_type'] = 'bool';
 
 $DATA_INJECTION_INFOS[SOFTWARE_TYPE]['platform']['table'] = 'glpi_dropdown_os';
 $DATA_INJECTION_INFOS[SOFTWARE_TYPE]['platform']['field'] = 'name';
@@ -878,7 +878,7 @@ $DATA_INJECTION_INFOS[SOFTWARE_TYPE]['is_template']['table'] = 'glpi_software';
 $DATA_INJECTION_INFOS[SOFTWARE_TYPE]['is_template']['field'] = 'is_template';
 $DATA_INJECTION_INFOS[SOFTWARE_TYPE]['is_template']['name'] = $LANG["rulesengine"][0] . " " . $LANG["common"][13] . " ?";
 $DATA_INJECTION_INFOS[SOFTWARE_TYPE]['is_template']['type'] = 'integer';
-$DATA_INJECTION_INFOS[SOFTWARE_TYPE]['is_template']['input_type'] = 'yesno';
+$DATA_INJECTION_INFOS[SOFTWARE_TYPE]['is_template']['input_type'] = 'bool';
 
 $DATA_INJECTION_INFOS[SOFTWARE_TYPE]['tplname']['table'] = 'glpi_software';
 $DATA_INJECTION_INFOS[SOFTWARE_TYPE]['tplname']['field'] = 'tplname';
@@ -895,7 +895,7 @@ $DATA_INJECTION_INFOS[SOFTWARE_TYPE]['helpdesk_visible']['table'] = 'glpi_softwa
 $DATA_INJECTION_INFOS[SOFTWARE_TYPE]['helpdesk_visible']['field'] = 'helpdesk_visible';
 $DATA_INJECTION_INFOS[SOFTWARE_TYPE]['helpdesk_visible']['name'] = $LANG['software'][46];
 $DATA_INJECTION_INFOS[SOFTWARE_TYPE]['helpdesk_visible']['type'] = 'integer';
-$DATA_INJECTION_INFOS[SOFTWARE_TYPE]['helpdesk_visible']['input_type'] = 'yesno';
+$DATA_INJECTION_INFOS[SOFTWARE_TYPE]['helpdesk_visible']['input_type'] = 'bool';
 
 $DATA_INJECTION_INFOS[SOFTWARE_TYPE]['FK_users']['table'] = 'glpi_users';
 $DATA_INJECTION_INFOS[SOFTWARE_TYPE]['FK_users']['field'] = 'name';
@@ -965,7 +965,7 @@ $DATA_INJECTION_INFOS[SOFTWARELICENSE_TYPE]['recursive']['table'] = 'glpi_softwa
 $DATA_INJECTION_INFOS[SOFTWARELICENSE_TYPE]['recursive']['field'] = 'recursive';
 $DATA_INJECTION_INFOS[SOFTWARELICENSE_TYPE]['recursive']['name'] = $LANG["entity"][9];
 $DATA_INJECTION_INFOS[SOFTWARELICENSE_TYPE]['recursive']['type'] = 'integer';
-$DATA_INJECTION_INFOS[SOFTWARELICENSE_TYPE]['recursive']['input_type'] = 'yesno';
+$DATA_INJECTION_INFOS[SOFTWARELICENSE_TYPE]['recursive']['input_type'] = 'bool';
 
 $DATA_INJECTION_INFOS[SOFTWARELICENSE_TYPE]['comments']['table'] = 'glpi_softwarelicenses';
 $DATA_INJECTION_INFOS[SOFTWARELICENSE_TYPE]['comments']['field'] = 'comments';
@@ -1008,7 +1008,7 @@ $DATA_INJECTION_INFOS[SOFTWARELICENSE_TYPE]['expire']['input_type'] = 'date';
 $DATA_INJECTION_INFOS[KNOWBASE_TYPE]['recursive']['table'] = 'glpi_kbitems';
 $DATA_INJECTION_INFOS[KNOWBASE_TYPE]['recursive']['field'] = 'recursive';
 $DATA_INJECTION_INFOS[KNOWBASE_TYPE]['recursive']['name'] = $LANG["entity"][9];
-$DATA_INJECTION_INFOS[KNOWBASE_TYPE]['recursive']['input_type'] = 'yesno';
+$DATA_INJECTION_INFOS[KNOWBASE_TYPE]['recursive']['input_type'] = 'bool';
 $DATA_INJECTION_INFOS[KNOWBASE_TYPE]['recursive']['type'] = 'integer';
 
 $DATA_INJECTION_INFOS[KNOWBASE_TYPE]['categoryID']['table'] = 'glpi_dropdown_kbcategories';
@@ -1022,7 +1022,7 @@ $DATA_INJECTION_INFOS[KNOWBASE_TYPE]['faq']['table'] = 'glpi_kbitems';
 $DATA_INJECTION_INFOS[KNOWBASE_TYPE]['faq']['field'] = 'faq';
 $DATA_INJECTION_INFOS[KNOWBASE_TYPE]['faq']['name'] = $LANG['knowbase'][5];
 $DATA_INJECTION_INFOS[KNOWBASE_TYPE]['faq']['type'] = 'integer';
-$DATA_INJECTION_INFOS[KNOWBASE_TYPE]['faq']['input_type'] = 'yesno';
+$DATA_INJECTION_INFOS[KNOWBASE_TYPE]['faq']['input_type'] = 'bool';
 
 $DATA_INJECTION_INFOS[KNOWBASE_TYPE]['view']['table'] = 'glpi_kbitems';
 $DATA_INJECTION_INFOS[KNOWBASE_TYPE]['view']['field'] = 'view';

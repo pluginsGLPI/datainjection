@@ -96,7 +96,7 @@ class PluginDatainjectionPrinterInjection extends Printer
       //Add displaytype value
       $dropdown = array("dropdown"       => array(3, 4, 40, 23, 32, 33, 45, 46, 71,
                                                   32, 33, 23, 31 ),
-                        "yesno"          => array(42,43,44,45,46,86),
+                        "bool"          => array(42,43,44,45,46,86),
                         "user"           => array(70, 24),
                         "multiline_text" => array(16, 90));
       foreach ($dropdown as $type => $tabsID) {

@@ -525,6 +525,22 @@ class PluginDatainjectionCommonInjectionLib {
       $this->values[$itemtype][$field] = $value;
    }
 
+   private function filterFields() {
+      foreach ($this->values as $itemtype => $data) {
+         $injectionClass = self::getInjectionClassInstance($itemtype);
+         $searchOptions = $injectionClass->getOptions();
+         foreach ($data as $field => $value) {
+            $searchOption = self::findSearchOption($searchOptions,$field);
+            logDebug($field, $value);
+            $classname = getItemTypeForTable($searchOption['table']);
+            $item = new $classname;
+            if (!$item->can(-1,'w')) {
+               $this->unsetValue($itemtype,$field);
+            }
+         }
+      }
+   }
+
    //--------------------------------------------------//
    //----------- Reformat methods --------------------//
    //------------------------------------------------//
@@ -819,7 +835,7 @@ class PluginDatainjectionCommonInjectionLib {
                   return ((count($regs) > 0)?self::SUCCESS:self::TYPE_MISMATCH);
                case 'itemtype':
                   return (class_exists($data)?self::SUCCESS:self::TYPE_MISMATCH);
-               case 'yesno':
+               case 'bool':
                   return (($data == 0 || $data == 1)?self::SUCCESS:self::TYPE_MISMATCH);
                case 'date':
                   //TODO : check date !!
@@ -887,8 +903,12 @@ class PluginDatainjectionCommonInjectionLib {
    private function processAddOrUpdate() {
       $process = false;
 
-         //Manage fields belonging to relations between tables
-         $this->manageRelations();
+      //Remove fields for which the user have no rights
+      //TOOD : filter fields
+      //$this->filterFields();
+
+      //Manage fields belonging to relations between tables
+      $this->manageRelations();
 
       //Check is data to be inject still exists in DB (update) or not (add)
       $this->dataAlreadyInDB($this->injectionClass, $this->primary_type);

@@ -98,7 +98,7 @@ class PluginDatainjectionEngine {
                       'mac'                      =>true,
                       'integer'                  =>true,
                       'yes'                      =>true,
-                      'yesno'                    =>true,
+                      'bool'                    =>true,
                       'date'                     =>$this->getModel()->getDateFormat(),
                       'float'                    =>$this->getModel()->getFloatFormat(),
                       'string'                   =>true,

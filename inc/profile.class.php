@@ -38,30 +38,34 @@ class PluginDatainjectionProfile extends CommonDBTM {
    function cleanProfiles($ID) {
 
       global $DB;
-      $query = "DELETE FROM `glpi_plugin_datainjectionprofiles` WHERE `id`='$ID' ";
+      $query = "DELETE FROM `glpi_plugin_datainjection_profiles` WHERE `id`='$ID' ";
       $DB->query($query);
    }
 
-   function showForm($target,$ID){
+   function showForm($ID){
       global $LANG;
 
-      if (!haveRight("profile","r")) return false;
+      if (!haveRight("profile","r"))  {
+         return false;
+      }
       $canedit=haveRight("profile","w");
-      if ($ID)
+      if ($ID) {
          $this->getFromDB($ID);
+      }
 
       $profile = new Profile;
       $profile->getFromDB($ID);
 
-      echo "<form action='".$target."' method='post'>";
+      echo "<form action='".getItemTypeFormURL(get_class($this))."' method='post'>";
       echo "<table class='tab_cadre_fixe'>";
 
-      echo "<tr><th colspan='2' align='center'><strong>".
-             $LANG["datainjection"]["setup"][1]." ".$profile->fields["name"]."</strong></th></tr>";
+      echo "<tr><th colspan='2' align='center'><strong>";
+      echo $LANG["datainjection"]["name"][1]." ".$profile->fields["name"];
+      echo "</strong></th></tr>";
 
       echo "<tr class='tab_bg_2'>";
       echo "<td>".$LANG["datainjection"]["profiles"][1].":</td><td>";
-      Dropdown::dropdownNoneReadWrite("model",$this->fields["model"],1,1,1);
+      Profile::dropdownNoneReadWrite("model",$this->fields["model"],1,1,1);
       echo "</td>";
       echo "</tr>";
 
