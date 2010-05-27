@@ -992,12 +992,16 @@ class PluginDatainjectionCommonInjectionLib {
       }
       else {
          if ($add) {
-            $newID = $item->add($values);
-            $this->setValueForItemtype(get_class($item),'id',$newID);
+            if ($newID = $item->add($values)) {
+               $this->setValueForItemtype(get_class($item),'id',$newID);
+               self::logAddOrUpdate($item, $add);
+            }
          }
          else {
-            $item->update($values);
-            $newID = $values['id'];
+            if ($item->update($values)) {
+               $newID = $values['id'];
+               self::logAddOrUpdate($item, $add);
+            }
          }
       }
       return $newID;
@@ -1168,5 +1172,27 @@ class PluginDatainjectionCommonInjectionLib {
       }
    }
 
+   /**
+    * Log event into the history
+    * @param device_type the type of the item to inject
+    * @param device_id the id of the inserted item
+    * @param the action_type the type of action(add or update)
+    */
+   static function logAddOrUpdate($item, $add=true) {
+      global $LANG;
+
+      if ($item->dohistory) {
+         $changes[0] = 0;
+
+         if ($add) {
+            $changes[2] = $LANG["datainjection"]["result"][8] . " " . $LANG["datainjection"]["history"][1];
+         }
+         else {
+            $changes[2] = $LANG["datainjection"]["result"][9] . " " . $LANG["datainjection"]["history"][1];
+         }
+         $changes[1] = "";
+         Log::history ($item->fields['id'],get_class($item),$changes);
+      }
+   }
 }
 ?>
