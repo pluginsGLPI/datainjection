@@ -342,10 +342,9 @@ class PluginDatainjectionModel extends CommonDBTM {
    }
 
    static function dropdown($options = array()) {
-      global $CFG_GLPI;
+      global $CFG_GLPI, $LANG;
 
       $models = self::getModels(getLoginUserID(),'name',$_SESSION['glpiactive_entity'],false);
-      $models[0] = '-----';
       $p = array('models_id' => '__VALUE__');
       if (isset($_SESSION['glpi_plugin_datainjection_models_id'])) {
          $value = $_SESSION['glpi_plugin_datainjection_models_id'];
@@ -353,7 +352,36 @@ class PluginDatainjectionModel extends CommonDBTM {
       else {
          $value = 0;
       }
-      $rand = Dropdown::showFromArray('models',$models,array('value'=>$value));
+
+      $rand=mt_rand();
+      //$rand = Dropdown::showFromArray('models',$models,array('value'=>$value));
+
+      echo "\n<select name='dropdown_models' id='dropdown_models$rand'>";
+      $prev = -2;
+      echo "\n<option value='0'>-----</option>";
+
+      foreach($models as $model) {
+
+         if ($model['entities_id'] != $prev) {
+            if ($prev >= -1) {
+               echo "</optgroup>\n";
+            }
+            if ($model['is_private']) {
+               echo "\n<optgroup label=\"" . $LANG["datainjection"]["model"][18] . "\">";
+            }
+            else {
+               $prev = $model['entities_id'];
+               echo "\n<optgroup label=\"" . Dropdown::getDropdownName("glpi_entities", $prev) . "\">";
+            }
+         }
+         echo "\n<option value='".$model['id']."'>".$model['name']."</option>";
+      }
+
+      if ($prev >= -1) {
+         echo "</optgroup>";
+      }
+      echo "</select>";
+
       $url = $CFG_GLPI["root_doc"]."/plugins/datainjection/ajax/dropdownSelectModel.php";
       ajaxUpdateItemOnSelectEvent("dropdown_models$rand",
                                   "span_injection",
@@ -364,19 +392,20 @@ class PluginDatainjectionModel extends CommonDBTM {
       global $DB;
 
       $models = array ();
-      $query = "SELECT `id`, `name` FROM `glpi_plugin_datainjection_models` WHERE ";
+      $query = "SELECT `id`, `name`, `is_private`, `entities_id` ";
+      $query.= "FROM `glpi_plugin_datainjection_models` WHERE ";
       $query.= "`step`='".self::READY_TO_USE_STEP."' ";
-      $query.= "AND (`is_private`=" . PluginDatainjectionModel::MODEL_PUBLIC;
+      $query.= "AND (`is_private`=" . self::MODEL_PUBLIC;
       $query.= getEntitiesRestrictRequest(" AND",
                                           "glpi_plugin_datainjection_models",
                                           "entities_id", $entity,true) . ")";
-      $query.= " OR (`is_private`='" . PluginDatainjectionModel::MODEL_PRIVATE;
+      $query.= " OR (`is_private`='" . self::MODEL_PRIVATE;
       $query.= "' AND `users_id`='$user_id') ";
-      $query.= " ORDER BY `entities_id`, " . ($order == "`name`" ? "`name`" : $order);
+      $query.= " ORDER BY `is_private` DESC, `entities_id`, " . ($order == "`name`" ? "`name`" : $order);
 
       foreach ($DB->request($query) as $data) {
          if (self::checkRightOnModel($data['id'])) {
-            $models[$data['id']] = $data['name'];
+            $models[] = $data;
          }
       }
       return $models;
@@ -448,6 +477,12 @@ class PluginDatainjectionModel extends CommonDBTM {
       $tab[10]['linkfield'] = 'port_unicity';
       $tab[10]['name']      = $LANG["datainjection"]["mappings"][7];
       $tab[10]['datatype'] = 'text';
+
+      $tab[11]['table']     = $this->getTable();
+      $tab[11]['field']     = 'is_private';
+      $tab[11]['linkfield'] = 'is_private';
+      $tab[11]['name']      = $LANG['common'][77];
+      $tab[11]['datatype']  = 'bool';
 
       $tab[16]['table']     = $this->getTable();
       $tab[16]['field']     = 'comment';
