@@ -119,9 +119,8 @@ class PluginDatainjectionInjectionType {
       return $rand;
    }
 
-   static function getParentObjectName($injectionclass='') {
-      preg_match("/PluginDatainjection(.*)Injection/",$injectionclass,$results);
-      return ucfirst($results[1]);
+   static function getParentObjectName($injectionClass='') {
+      return get_parent_class($injectionClass);
    }
 
    static function dropdownFields($options = array()) {
@@ -203,9 +202,8 @@ class PluginDatainjectionInjectionType {
          }
          else {
            //Field may match is it was in plural...
-           $plural = array('comments','notes',$LANG['common'][25],$LANG['title'][37]);
-           if (in_array($name.'s',$plural)
-                  && self::testBasicEqual(strtolower($name.'s'), $option)) {
+           $plural_name = $name.'s';
+           if (self::testBasicEqual(strtolower($plural_name), $option)) {
               return true;
            }
            return false;

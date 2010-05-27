@@ -103,7 +103,7 @@ function plugin_init_datainjection() {
                                 'PluginDatainjectionStateInjection'              =>'datainjection',
                                 'PluginDatainjectionManufacturerInjection'       =>'datainjection',
                                 'PluginDatainjectionMonitorInjection'            =>'datainjection',
-                                //'PluginDatainjectionNetworkequipmentInjection'   =>'datainjection',
+                                'PluginDatainjectionNetworkequipmentInjection'   =>'datainjection',
                                 //'PluginDatainjectionPeripheralInjection'         =>'datainjection',
                                 //'PluginDatainjectionPhoneInjection'              =>'datainjection',
                                 'PluginDatainjectionPrinterInjection'            =>'datainjection',
