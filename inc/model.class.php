@@ -354,8 +354,6 @@ class PluginDatainjectionModel extends CommonDBTM {
       }
 
       $rand=mt_rand();
-      //$rand = Dropdown::showFromArray('models',$models,array('value'=>$value));
-
       echo "\n<select name='dropdown_models' id='dropdown_models$rand'>";
       $prev = -2;
       echo "\n<option value='0'>-----</option>";
@@ -650,7 +648,7 @@ class PluginDatainjectionModel extends CommonDBTM {
       if ($this->fields['id'] > 0) {
          $ong[3] = $LANG["datainjection"]["tabs"][3];
          $ong[4] = $LANG["datainjection"]["tabs"][0];
-         if ($this->fields['step'] > PluginDatainjectionModel::MAPPING_STEP) {
+         if ($this->fields['step'] > self::MAPPING_STEP) {
             $ong[5] = $LANG["datainjection"]["tabs"][1];
             //$ong[6] = $LANG["datainjection"]["tabs"][2];
             if ($this->fields['step'] != self::READY_TO_USE_STEP) {
@@ -664,7 +662,8 @@ class PluginDatainjectionModel extends CommonDBTM {
 
    function cleanDBonPurge() {
       global $DB;
-      $tables = array("glpi_plugin_datainjection_modelcsvs","glpi_plugin_datainjection_mappings",
+      $tables = array("glpi_plugin_datainjection_modelcsvs",
+                      "glpi_plugin_datainjection_mappings",
                       "glpi_plugin_datainjection_infos");
       foreach ($tables as $table) {
          $query = "DELETE FROM `$table` WHERE `models_id`='".$this->fields['id']."'";
@@ -775,7 +774,7 @@ class PluginDatainjectionModel extends CommonDBTM {
     * Load specific model
     */
    function loadSpecificModel() {
-      $specific_model = PluginDatainjectionModel::getInstance($this->getFiletype());
+      $specific_model = self::getInstance($this->getFiletype());
       $specific_model->getFromDBByModelID($this->fields['id']);
       $this->specific_model = $specific_model;
    }
@@ -845,8 +844,7 @@ class PluginDatainjectionModel extends CommonDBTM {
             if ($mode == self::CREATION) {
                //Save the mapping list in DB
                $mappingCollection->saveAllMappings();
-               PluginDatainjectionModel::changeStep($this->fields['id'],
-                                                    PluginDatainjectionModel::MAPPING_STEP);
+               self::changeStep($this->fields['id'],self::MAPPING_STEP);
 
                //Add redirect message
                addMessageAfterRedirect($LANG["datainjection"]["model"][32],true,INFO);
@@ -960,7 +958,8 @@ class PluginDatainjectionModel extends CommonDBTM {
    }
 
    function populateSeveraltimesMappedFields() {
-      $this->severaltimes_mapped = PluginDatainjectionMapping::getSeveralMappedField($this->fields['id']);
+      $this->severaltimes_mapped =
+                           PluginDatainjectionMapping::getSeveralMappedField($this->fields['id']);
    }
 
    function getSeveraltimesMappedFields() {

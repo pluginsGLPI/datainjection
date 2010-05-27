@@ -222,11 +222,12 @@ class PluginDatainjectionClientInjection {
       while ($line != null) {
          //Inject line
          $clientinjection->results[] = $engine->injectLine($line[0]);
+         $engine->injectLine($line[0]);
          changeProgressBarPosition(
-            $index,
-            $nblines,
-            $LANG["datainjection"]["importStep"][1]."... ".
-            number_format($index*100/$nblines,1).'%');
+             $index,
+              $nblines,
+              $LANG["datainjection"]["importStep"][1]."... ".
+              number_format($index*100/$nblines,1).'%');
          $line = $backend->getNextLine();
          $index++;
          logDebug($index.' sur '.$nblines);

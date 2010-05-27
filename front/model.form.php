@@ -48,7 +48,7 @@ if (isset ($_POST["add"])) {
    $newID = $model->add($_POST);
    //Set display to the advanced options tab
    setActiveTab('PluginDatainjectionModel', 2);
-   glpi_header($_SERVER['HTTP_REFERER']."?id=$newID");
+   glpi_header(getItemTypeFormURL('PluginDatainjectionModel')."?id=$newID");
 }
 /* delete */
 elseif (isset ($_POST["delete"])) {

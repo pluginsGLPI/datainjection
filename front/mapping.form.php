@@ -44,7 +44,7 @@ if (isset ($_POST["update"])) {
 
       //If no field selected, reset other values
       if ($mapping_infos['value'] == PluginDatainjectionInjectionType::NO_VALUE) {
-         $mapping_infos['itemtype'] = PluginDatainjectionInjectionType::NO_VALUE;
+         $mapping_infos['itemtype']     = PluginDatainjectionInjectionType::NO_VALUE;
          $mapping_infos['is_mandatory'] = 0;
       }
       else {
@@ -59,10 +59,14 @@ if (isset ($_POST["update"])) {
       addMessageAfterRedirect($LANG["datainjection"]["mapping"][11],true,ERROR,true);
    }
    else {
-      PluginDatainjectionModel::changeStep($_POST['models_id'],
-                                           PluginDatainjectionModel::OTHERS_STEP);
-      setActiveTab('PluginDatainjectionModel',4);
-      addMessageAfterRedirect($LANG["datainjection"]["info"][3]);
+      $model = new PluginDatainjectionModel;
+      $model->getFromDB($_POST['models_id']);
+      if ($model->fields['step'] != PluginDatainjectionModel::READY_TO_USE_STEP) {
+         PluginDatainjectionModel::changeStep($_POST['models_id'],
+                                              PluginDatainjectionModel::OTHERS_STEP);
+         setActiveTab('PluginDatainjectionModel',4);
+         addMessageAfterRedirect($LANG["datainjection"]["info"][3]);
+      }
    }
 }
 glpi_header($_SERVER['HTTP_REFERER']);
