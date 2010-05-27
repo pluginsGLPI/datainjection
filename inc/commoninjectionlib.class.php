@@ -183,7 +183,12 @@ class PluginDatainjectionCommonInjectionLib {
    }
 
    static function getInjectionClassInstance($itemtype) {
-      $injectionClass = 'PluginDatainjection'.ucfirst($itemtype).'Injection';
+      if (!isPluginItemType($itemtype)) {
+         $injectionClass = 'PluginDatainjection'.ucfirst($itemtype).'Injection';
+      }
+      else {
+         $injectionClass = ucfirst($itemtype).'Injection';
+      }
       return new $injectionClass();
    }
 

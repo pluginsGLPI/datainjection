@@ -88,36 +88,7 @@ function plugin_init_datainjection() {
          Plugin::registerClass('PluginDatainjection'.$value);
       }
 
-      $INJECTABLE_TYPES = array(//'PluginDatainjectionCartridgeItemInjection'      =>'datainjection',
-                                //'PluginDatainjectionCartridgeInjection'          =>'datainjection',
-                                'PluginDatainjectionComputerInjection'           =>'datainjection',
-                                //'PluginDatainjectionConsumableInjection'         =>'datainjection',
-                                //'PluginDatainjectionConsumableItemInjection'     =>'datainjection',
-                                //'PluginDatainjectionContactInjection'            =>'datainjection',
-                                //'PluginDatainjectionContractInjection'           =>'datainjection',
-                                //'PluginDatainjectionDocumentInjection'           =>'datainjection',
-                                //'PluginDatainjectionEntityInjection'             =>'datainjection',
-                                //'PluginDatainjectionGroupInjection'              =>'datainjection',
-                                'PluginDatainjectionInfocomInjection'            =>'datainjection',
-                                'PluginDatainjectionLocationInjection'           =>'datainjection',
-                                'PluginDatainjectionStateInjection'              =>'datainjection',
-                                'PluginDatainjectionManufacturerInjection'       =>'datainjection',
-                                'PluginDatainjectionMonitorInjection'            =>'datainjection',
-                                'PluginDatainjectionNetworkequipmentInjection'   =>'datainjection',
-                                //'PluginDatainjectionPeripheralInjection'         =>'datainjection',
-                                //'PluginDatainjectionPhoneInjection'              =>'datainjection',
-                                'PluginDatainjectionPrinterInjection'            =>'datainjection',
-                                //'PluginDatainjectionProfileInjection'            =>'datainjection',
-                                //'PluginDatainjectionSoftwareInjection'           =>'datainjection',
-                                //'PluginDatainjectionSoftwareLicenseInjection'    =>'datainjection',
-                                //'PluginDatainjectionSupplierInjection'           =>'datainjection',
-                                //'PluginDatainjectionUserInjection'               =>'datainjection',
-                                'PluginDatainjectionNetworkportInjection'        =>'datainjection',
-                                'PluginDatainjectionVlanInjection'               =>'datainjection',
-                                'PluginDatainjectionNetworkport_VlanInjection'   =>'datainjection',
-                                'PluginDatainjectionNetpointInjection'           =>'datainjection',
-                                //'PluginDatainjectionContract_ItemInjection'      =>'datainjection'
-                                );
+      getTypesToInject();
       foreach ($INJECTABLE_TYPES as $type => $plugname) {
          Plugin::registerClass($type);
       }
@@ -162,5 +133,42 @@ function plugin_datainjection_check_prerequisites() {
 
 function plugin_datainjection_check_config($verbose=false) {
    return true;
+}
+
+function getTypesToInject() {
+   global $INJECTABLE_TYPES,$PLUGIN_HOOKS;
+   $INJECTABLE_TYPES = array(//'PluginDatainjectionCartridgeItemInjection'      =>'datainjection',
+                                //'PluginDatainjectionCartridgeInjection'          =>'datainjection',
+                                'PluginDatainjectionComputerInjection'           =>'datainjection',
+                                //'PluginDatainjectionConsumableInjection'         =>'datainjection',
+                                //'PluginDatainjectionConsumableItemInjection'     =>'datainjection',
+                                //'PluginDatainjectionContactInjection'            =>'datainjection',
+                                //'PluginDatainjectionContractInjection'           =>'datainjection',
+                                //'PluginDatainjectionDocumentInjection'           =>'datainjection',
+                                //'PluginDatainjectionEntityInjection'             =>'datainjection',
+                                //'PluginDatainjectionGroupInjection'              =>'datainjection',
+                                'PluginDatainjectionInfocomInjection'            =>'datainjection',
+                                'PluginDatainjectionLocationInjection'           =>'datainjection',
+                                'PluginDatainjectionStateInjection'              =>'datainjection',
+                                'PluginDatainjectionManufacturerInjection'       =>'datainjection',
+                                'PluginDatainjectionMonitorInjection'            =>'datainjection',
+                                'PluginDatainjectionNetworkequipmentInjection'   =>'datainjection',
+                                //'PluginDatainjectionPeripheralInjection'         =>'datainjection',
+                                //'PluginDatainjectionPhoneInjection'              =>'datainjection',
+                                'PluginDatainjectionPrinterInjection'            =>'datainjection',
+                                //'PluginDatainjectionProfileInjection'            =>'datainjection',
+                                //'PluginDatainjectionSoftwareInjection'           =>'datainjection',
+                                //'PluginDatainjectionSoftwareLicenseInjection'    =>'datainjection',
+                                //'PluginDatainjectionSupplierInjection'           =>'datainjection',
+                                //'PluginDatainjectionUserInjection'               =>'datainjection',
+                                'PluginDatainjectionNetworkportInjection'        =>'datainjection',
+                                'PluginDatainjectionVlanInjection'               =>'datainjection',
+                                'PluginDatainjectionNetworkport_VlanInjection'   =>'datainjection',
+                                'PluginDatainjectionNetpointInjection'           =>'datainjection',
+                                //'PluginDatainjectionContract_ItemInjection'      =>'datainjection'
+                                );
+   //Add plugins
+   doHook('plugin_datainjection_populate');
+
 }
 ?>

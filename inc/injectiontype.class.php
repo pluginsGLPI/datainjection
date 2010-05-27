@@ -148,12 +148,10 @@ class PluginDatainjectionInjectionType {
          if($mapping_or_info['value'] != PluginDatainjectionInjectionType::NO_VALUE) {
             $mapping_value = $mapping_or_info['value'];
          }
-         $search_options = array();
-         $typename = 'PluginDatainjection'.$p['itemtype'].'Injection';
-         $type = new $typename();
-         $search_options = $type->getOptions();
 
-         foreach ($search_options as $option) {
+         $injectionClass = PluginDatainjectionCommonInjectionLib::getInjectionClassInstance($p['itemtype']);
+
+         foreach ($injectionClass->getOptions() as $option) {
             //If it's a real option (not a group label) and if field is not blacklisted
             //and if a linkfield is defined (meaning that the field can be updated)
             if (is_array($option)
