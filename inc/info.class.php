@@ -239,7 +239,6 @@ class PluginDatainjectionInfo extends CommonDBTM {
 
       $name = "info[".$option['linkfield']."]";
       $value = '';
-      $item = new $option['itemtype'];
 
       switch ($option['displaytype']) {
          case 'text' :

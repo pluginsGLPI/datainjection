@@ -312,6 +312,7 @@ class PluginDatainjectionCommonInjectionLib {
     */
    private function getFieldValue($injectionClass, $itemtype, $searchOption, $field, $value,$add=true) {
       $linkfield = $searchOption['linkfield'];
+
       switch ($searchOption['displaytype']) {
          case 'decimal':
          case 'text':
@@ -322,11 +323,17 @@ class PluginDatainjectionCommonInjectionLib {
             $tmptype = getItemTypeForTable($searchOption['table']);
             $item = new $tmptype;
             if ($item instanceof CommonDropdown) {
+               if ($item->canCreate() && $this->rights['add_dropdown']) {
+                  $canadd = true;
+               }
+               else {
+                  $canadd = false;
+               }
                $id = $item->importExternal($value,
                                            $this->entity,
                                            $this->addExternalDropdownParameters($itemtype),
                                            '',
-                                           $this->rights['add_dropdown']);
+                                           $canadd);
             }
             else {
                $id = self::findSingle($item,
@@ -523,22 +530,6 @@ class PluginDatainjectionCommonInjectionLib {
     */
    private function setValueForItemtype($itemtype,$field, $value) {
       $this->values[$itemtype][$field] = $value;
-   }
-
-   private function filterFields() {
-      foreach ($this->values as $itemtype => $data) {
-         $injectionClass = self::getInjectionClassInstance($itemtype);
-         $searchOptions = $injectionClass->getOptions();
-         foreach ($data as $field => $value) {
-            $searchOption = self::findSearchOption($searchOptions,$field);
-            logDebug($field, $value);
-            $classname = getItemTypeForTable($searchOption['table']);
-            $item = new $classname;
-            if (!$item->can(-1,'w')) {
-               $this->unsetValue($itemtype,$field);
-            }
-         }
-      }
    }
 
    //--------------------------------------------------//
@@ -903,10 +894,6 @@ class PluginDatainjectionCommonInjectionLib {
    private function processAddOrUpdate() {
       $process = false;
 
-      //Remove fields for which the user have no rights
-      //TOOD : filter fields
-      //$this->filterFields();
-
       //Manage fields belonging to relations between tables
       $this->manageRelations();
 
@@ -914,8 +901,7 @@ class PluginDatainjectionCommonInjectionLib {
       $this->dataAlreadyInDB($this->injectionClass, $this->primary_type);
 
       //No item found in DB
-      if($this->getValueByItemtypeAndName($this->primary_type,'id')
-            == self::ITEM_NOT_FOUND) {
+      if($this->getValueByItemtypeAndName($this->primary_type,'id') == self::ITEM_NOT_FOUND) {
          //Can add item ?
          if ($this->rights['can_add']) {
             $process = true;
@@ -923,10 +909,8 @@ class PluginDatainjectionCommonInjectionLib {
             $this->unsetValue($this->primary_type,'id');
          }
          else {
-               $this->results[self::ACTION_INJECT]['status'] =
-                                         self::ERROR_CANNOT_IMPORT;
-               $this->results[self::ACTION_INJECT]['type'] =
-                                         self::IMPORT_ADD;
+               $this->results[self::ACTION_INJECT]['status'] = self::ERROR_CANNOT_IMPORT;
+               $this->results[self::ACTION_INJECT]['type'] = self::IMPORT_ADD;
          }
       }
       //Item found in DB
@@ -936,10 +920,8 @@ class PluginDatainjectionCommonInjectionLib {
             $add = false;
          }
          else {
-               $this->results[self::ACTION_INJECT]['status'] =
-                                         self::ERROR_CANNOT_UPDATE;
-               $this->results[self::ACTION_INJECT]['type'] =
-                                         self::IMPORT_UPDATE;
+               $this->results[self::ACTION_INJECT]['status'] = self::ERROR_CANNOT_UPDATE;
+               $this->results[self::ACTION_INJECT]['type'] = self::IMPORT_UPDATE;
          }
       }
       if ($process) {

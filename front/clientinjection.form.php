@@ -39,7 +39,7 @@ commonHeader($LANG["datainjection"]["name"][1], $_SERVER["PHP_SELF"],"plugins","
 
 if (isset($_POST['upload'])) {
    $model = new PluginDatainjectionModel();
-   $model->check($_POST['id'],'w');
+   $model->getFromDB($_POST['id']);
    $_SESSION['glpi_plugin_datainjection_infos'] = (isset($_POST['info'])?$_POST['info']:array());
 
    //If additional informations provided : check if mandatory infos are present
