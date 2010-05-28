@@ -127,8 +127,29 @@ class PluginDatainjectionMapping extends CommonDBTM {
       global $LANG, $DB,$CFG_GLPI;
 
       $canedit=$model->can($model->fields['id'],'w');
+      if (isset($_SESSION['datainjection']['lines'])) {
+         $lines = unserialize($_SESSION['datainjection']['lines']);
+      }
+      else {
+         $lines = array();
+      }
 
       echo "<form method='post' name=form action='".getItemTypeFormURL(__CLASS__)."'>";
+
+      //Display link to the preview popup
+      if (isset($_SESSION['datainjection']['lines'])
+            && !empty($lines)) {
+         $nblines = $_SESSION['datainjection']['nblines'];
+         echo "<table class='tab_cadre_fixe'>";
+         echo "<tr class='tab_bg_1'><td align='center'>";
+         $url = $CFG_GLPI["root_doc"].
+              "/plugins/datainjection/front/popup.php?popup=preview&amp;models_id=".$model->fields['id'];
+         echo "<a href=#  onClick=\"var w = window.open('$url' ,";
+         echo "'glpipopup', 'height=400, width=600, top=100, left=100, scrollbars=yes' );w.focus();\"/>";
+         echo $LANG["datainjection"]["button"][3]."</a>";
+         echo "</td></tr>";
+      }
+
       echo "<table class='tab_cadre_fixe'>";
       echo "<tr>";
       echo "<th>" . $LANG["datainjection"]["mapping"][2] . "</th>";
@@ -181,5 +202,6 @@ class PluginDatainjectionMapping extends CommonDBTM {
       }
       return $several;
    }
+
 }
 ?>

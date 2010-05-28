@@ -169,7 +169,7 @@ $LANG["datainjection"]["log"][8] = "L'importation a rencontré des erreurs";
 
 $LANG["datainjection"]["button"][1] = "< Précédent";
 $LANG["datainjection"]["button"][2] = "Suivant >";
-$LANG["datainjection"]["button"][3] = "Voir le fichier";
+$LANG["datainjection"]["button"][3] = "Voir un aperçu du fichier";
 $LANG["datainjection"]["button"][4] = "Voir le rapport";
 $LANG["datainjection"]["button"][5] = "Générer CSV des erreurs";
 $LANG["datainjection"]["button"][6] = "Terminé";

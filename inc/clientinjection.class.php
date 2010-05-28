@@ -85,12 +85,7 @@ class PluginDatainjectionClientInjection {
       if (count($models) > 0) {
          echo "<tr class='tab_bg_1'>";
          echo "<td align='center'>".$LANG['common'][22]."&nbsp;:";
-         //if ($_SESSION['glpi_plugin_datainjection_step'] == self::STEP_UPLOAD) {
-            PluginDatainjectionModel::dropdown(array('value'=>$ID));
-         //}
-         //else {
-        //    echo Dropdown::getDropdownName('glpi_plugin_datainjection_models',$ID);
-         //}
+         PluginDatainjectionModel::dropdown();
          echo "</td></tr></table>";
       }
       else {
@@ -105,10 +100,10 @@ class PluginDatainjectionClientInjection {
       echo "<span id='span_injection' name='span_injection'></span>";
       echo "</div></form>";
 
-      if (isset($_SESSION['glpi_plugin_datainjection_models_id'])) {
-         $p['models_id'] = $_SESSION['glpi_plugin_datainjection_models_id'];
+      if (isset($_SESSION['datainjection']['models_id'])) {
+         $p['models_id'] = $_SESSION['datainjection']['models_id'];
 
-         switch ($_SESSION['glpi_plugin_datainjection_step']) {
+         switch ($_SESSION['datainjection']['step']) {
             case self::STEP_UPLOAD:
                $url = $CFG_GLPI["root_doc"]."/plugins/datainjection/ajax/dropdownSelectModel.php";
                ajaxUpdateItem("span_injection",$url,$p);
@@ -195,7 +190,7 @@ class PluginDatainjectionClientInjection {
 
    static function processInjection(PluginDatainjectionModel $model, $entities_id) {
       global $LANG,$CFG_GLPI;
-      $nblines = $model->getBackend()->getNumberOfLines();
+      $nblines = $_SESSION['datainjection']['nblines'];
       $clientinjection = new PluginDatainjectionClientInjection;
 
             //New injection engine
@@ -244,7 +239,7 @@ class PluginDatainjectionClientInjection {
       $backend->deleteFile();
 
       //Change step
-      $_SESSION['glpi_plugin_datainjection_step'] = self::STEP_UPLOAD;
+      $_SESSION['datainjection']['step'] = self::STEP_UPLOAD;
 
       //Display results form
       $p['models_id'] = $model->fields['id'];

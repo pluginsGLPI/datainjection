@@ -29,14 +29,13 @@
 */
 
 // Original Author of file: Walid Nouh
-// Purpose of file:
+// Purpose of file: read a CSV file
 // ----------------------------------------------------------------------
 class PluginDatainjectionBackendcsv extends PluginDatainjectionBackend
                                     implements PluginDatainjectionBackendInterface {
 
    private $delemiter = '';
    private $isHeaderPresent = true;
-   private $numberOfLines = 0;
    private $file_handler = null;
 
    function __construct() {
@@ -99,28 +98,21 @@ class PluginDatainjectionBackendcsv extends PluginDatainjectionBackend
     *
     */
    function read($numberOfLines = 1) {
-      $fic= fopen($this->file, 'r');
-
-      $index = 0;
       $injectionData = new PluginDatainjectionData;
-      while(($data= fgetcsv($fic,
-                            0,
-                            $this->getDelimiter())) !== FALSE) {
-         //If line is not empty
-         if(count($data) > 1 || $data[0] != PluginDatainjectionCommonInjectionLib::EMPTY_VALUE) {
-            $line= self::parseLine($fic, $data, $this->encoding);
-            if(count($line[0]) > 0) {
-               $injectionData->addToDatas($line);
-               if ($index < $numberOfLines && $numberOfLines != -1) {
-                  break;
-               }
-               else {
-                  $index++;
-               }
-            }
+      $this->openFile();
+      $continue = true;
+      $data = false;
+
+      for ($index = 0; $index < $numberOfLines && $continue; $index++) {
+         $data = $this->getNextLine();
+         if ($data) {
+            $injectionData->addToDatas($data);
+         }
+         else {
+            $continue = false;
          }
       }
-      fclose($fic);
+      $this->closeFile();
       return $injectionData;
    }
 
@@ -134,9 +126,7 @@ class PluginDatainjectionBackendcsv extends PluginDatainjectionBackend
       $fic= fopen($this->file, 'r');
 
       $index = 0;
-      while(($data= fgetcsv($fic,
-                            0,
-                            $this->getDelimiter())) !== FALSE) {
+      while(($data= fgetcsv($fic,0,$this->getDelimiter())) !== FALSE) {
          //If line is not empty
          if(count($data) > 1 || $data[0] != PluginDatainjectionCommonInjectionLib::EMPTY_VALUE) {
             $line= self::parseLine($fic, $data, $this->encoding);
@@ -152,10 +142,6 @@ class PluginDatainjectionBackendcsv extends PluginDatainjectionBackend
       }
 
       $this->numberOfLines = $index;
-   }
-
-   function getNumberOfLines() {
-      return $this->numberOfLines;
    }
 
    /**

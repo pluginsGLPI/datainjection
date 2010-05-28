@@ -44,6 +44,6 @@ if (!defined('GLPI_ROOT')) {
 }
 
 checkCentralAccess();
-$_SESSION['glpi_plugin_datainjection_step'] = PluginDatainjectionClientInjection::STEP_UPLOAD;
+$_SESSION['datainjection']['step'] = PluginDatainjectionClientInjection::STEP_UPLOAD;
 PluginDatainjectionInfo::showAdditionalInformationsForm($_POST);
 ?>

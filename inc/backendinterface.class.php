@@ -40,7 +40,7 @@ interface PluginDatainjectionBackendInterface {
    /**
     * Read from file
     */
-  function read();
+  function read($numberOfLines = 1);
 
    /**
     * Read n lines from the input files

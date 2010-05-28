@@ -40,6 +40,7 @@ abstract class PluginDatainjectionBackend {
    private $delimiter;
    private $encoding;
    private $errmsg;
+   private $numberOfLines = 0;
 
    const ENCODING_ISO8859_1 = 0;
    const ENCODING_UFT8      = 1;
@@ -131,6 +132,10 @@ abstract class PluginDatainjectionBackend {
          return utf8_encode($string);
       else
          return $string;
+   }
+
+   function getNumberOfLines() {
+      return $this->numberOfLines;
    }
 }
 

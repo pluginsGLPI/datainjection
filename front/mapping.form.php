@@ -67,6 +67,7 @@ if (isset ($_POST["update"])) {
          setActiveTab('PluginDatainjectionModel',4);
          addMessageAfterRedirect($LANG["datainjection"]["info"][3]);
       }
+      unset($_SESSION['datainjection']['lines']);
    }
 }
 glpi_header($_SERVER['HTTP_REFERER']);

@@ -35,15 +35,8 @@ if (!defined('GLPI_ROOT')) {
 }
 include (GLPI_ROOT."/inc/includes.php");
 
-//Reset parameters stored in session
-$fields = array('models_id','infos');
-foreach ($fields as $field) {
-   if (isset($_SESSION['glpi_plugin_datainjection_'.$field])) {
-      unset($_SESSION['glpi_plugin_datainjection_'.$field]);
-   }
-}
-$_SESSION['glpi_plugin_datainjection_infos'] = array();
-$_SESSION['glpi_plugin_datainjection_step'] = PluginDatainjectionClientInjection::STEP_UPLOAD;
+PluginDatainjectionModel::cleanSessionVariables();
+$_SESSION['datainjection']['step'] = PluginDatainjectionClientInjection::STEP_UPLOAD;
 
 //TODO : maybe show a welcome screen, to be discussed...
 glpi_header(getItemTypeFormURL('PluginDatainjectionClientInjection'));

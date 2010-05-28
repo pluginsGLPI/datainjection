@@ -346,8 +346,8 @@ class PluginDatainjectionModel extends CommonDBTM {
 
       $models = self::getModels(getLoginUserID(),'name',$_SESSION['glpiactive_entity'],false);
       $p = array('models_id' => '__VALUE__');
-      if (isset($_SESSION['glpi_plugin_datainjection_models_id'])) {
-         $value = $_SESSION['glpi_plugin_datainjection_models_id'];
+      if (isset($_SESSION['datainjection']['models_id'])) {
+         $value = $_SESSION['datainjection']['models_id'];
       }
       else {
          $value = 0;
@@ -359,7 +359,6 @@ class PluginDatainjectionModel extends CommonDBTM {
       echo "\n<option value='0'>-----</option>";
 
       foreach($models as $model) {
-
          if ($model['entities_id'] != $prev) {
             if ($prev >= -1) {
                echo "</optgroup>\n";
@@ -372,7 +371,13 @@ class PluginDatainjectionModel extends CommonDBTM {
                echo "\n<optgroup label=\"" . Dropdown::getDropdownName("glpi_entities", $prev) . "\">";
             }
          }
-         echo "\n<option value='".$model['id']."'>".$model['name']."</option>";
+         if ($model['id'] == $value) {
+            $selected = "selected";
+         }
+         else {
+            $selected = "";
+         }
+         echo "\n<option value='".$model['id']."' $selected>".$model['name']."</option>";
       }
 
       if ($prev >= -1) {
@@ -710,6 +715,15 @@ class PluginDatainjectionModel extends CommonDBTM {
       }
    }
 
+   static function getInstanceByModelID($models_id) {
+      $model = new PluginDatainjectionModel;
+      $model->getFromDB($models_id);
+      $specific = self::getInstance($model->getFiletype());
+      $specific->getFromDBByModelID($models_id);
+      $model->setSpecificModel($specific);
+      return $model;
+   }
+
    function readUploadedFile($options = array()) {
      global $LANG;
 
@@ -757,10 +771,13 @@ class PluginDatainjectionModel extends CommonDBTM {
          $backend->setDelimiter($this->specific_model->fields['delimiter']);
 
          //Read 1 line from the CSV file
-         $injectionData = $backend->read(1);
+         $injectionData = $backend->read(20);
 
          //Read the whole file and store the number of lines found
          $backend->storeNumberOfLines();
+
+         $_SESSION['datainjection']['lines']   = serialize($injectionData);
+         $_SESSION['datainjection']['nblines'] = $backend->getNumberOfLines();
 
          if ($delete_file) {
             $backend->deleteFile();
@@ -986,6 +1003,48 @@ class PluginDatainjectionModel extends CommonDBTM {
          }
       }
       return $continue;
+   }
+
+   static function cleanSessionVariables() {
+      //Reset parameters stored in session
+      unset($_SESSION['datainjection']);
+      $_SESSION['datainjection']['infos'] = array();
+   }
+
+   static function showPreviewMappings($models_id) {
+      global $LANG;
+
+      echo "<table class='tab_cadre_fixe'>";
+      if (isset($_SESSION['datainjection']['lines'])) {
+         $injectionData = unserialize($_SESSION['datainjection']['lines']);
+         $lines = $injectionData->getDatas();
+         $nblines = $_SESSION['datainjection']['nblines'];
+         $model = PluginDatainjectionModel::getInstanceByModelID($models_id);
+
+         $model->loadMappings();
+         $mappings = $model->getMappings();
+         if ($model->getSpecificModel()->isHeaderPresent()) {
+            $nbmappings = count($mappings);
+            echo "<tr class='tab_bg_1'>";
+
+            foreach($mappings as $mapping) {
+               echo"<th style='height:40px'>".stripslashes($mapping->getMappingName())."</th>";
+            }
+            echo "</tr>";
+            unset($lines[0]);
+         }
+         foreach ($lines as $line) {
+            echo "<tr class='tab_bg_2'>";
+            foreach ($line[0] as $value) {
+               echo "<td>".$value."</td>";
+            }
+            echo "</tr>";
+         }
+      }
+      echo "</table>";
+      echo "<div style='margin-top:15px;text-align:center'>";
+      echo "<a href='javascript:window.close()'>" . $LANG["datainjection"]["button"][8] .  "</a>";
+      echo "</div>";
    }
 }
 ?>

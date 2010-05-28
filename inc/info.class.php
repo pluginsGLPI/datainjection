@@ -195,7 +195,7 @@ class PluginDatainjectionInfo extends CommonDBTM {
                if ($item->can(-1,'w')) {
                   echo "<tr class='tab_bg_1'>";
                   self::displayAdditionalInformation($info,
-                                                     $_SESSION['glpi_plugin_datainjection_infos']);
+                                                     $_SESSION['datainjection']['infos']);
                   echo "</tr>";
                }
             }
@@ -206,7 +206,7 @@ class PluginDatainjectionInfo extends CommonDBTM {
          PluginDatainjectionClientInjection::showUploadFileForm($options);
 
          //Store models_id in session for future usage
-         $_SESSION['glpi_plugin_datainjection_models_id'] = $options['models_id'];
+         $_SESSION['datainjection']['models_id'] = $options['models_id'];
       }
    }
 
