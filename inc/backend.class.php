@@ -134,9 +134,6 @@ abstract class PluginDatainjectionBackend {
          return $string;
    }
 
-   function getNumberOfLines() {
-      return $this->numberOfLines;
-   }
 }
 
 ?>

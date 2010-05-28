@@ -144,6 +144,9 @@ class PluginDatainjectionBackendcsv extends PluginDatainjectionBackend
       $this->numberOfLines = $index;
    }
 
+   function getNumberOfLines() {
+      return $this->numberOfLines;
+   }
    /**
     * Open the csv file
     */

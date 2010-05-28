@@ -108,12 +108,13 @@ class PluginDatainjectionClientInjection {
                $url = $CFG_GLPI["root_doc"]."/plugins/datainjection/ajax/dropdownSelectModel.php";
                ajaxUpdateItem("span_injection",$url,$p);
                break;
+            /*
              case self::STEP_PROCESS:
                $url = $CFG_GLPI["root_doc"]."/plugins/datainjection/ajax/injection.php";
                ajaxUpdateItem("span_injection",$url,$p);
                 break;
              default:
-                break;
+                break;*/
          }
       }
    }
@@ -171,9 +172,13 @@ class PluginDatainjectionClientInjection {
       if (!isset($_SESSION['glpi_plugin_datainjection_infos'])) {
          $_SESSION['glpi_plugin_datainjection_infos'] = array();
       }
-
       echo "<table class='tab_cadre_fixe'>";
+      echo "<tr class='tab_bg_1'>";
+      echo "<th colspan='2'>" . $LANG["datainjection"]["model"][0]." : ".$model->fields['name']."</th>";
+      echo "</tr>";
+      echo "<tr class='tab_bg_1'>";
       echo "<th colspan='2'>" . $LANG["datainjection"]["import"][1]."</th>";
+      echo "</tr>";
       echo "<tr class='tab_bg_1'>";
       echo "<td>" ;
       createProgressBar($LANG["datainjection"]["importStep"][1]);
@@ -184,7 +189,7 @@ class PluginDatainjectionClientInjection {
       echo "</td>" ;
       echo "</tr>";
       echo "</table>";
-
+      echo "<span id='span_injection' name='span_injection'></span>";
       self::processInjection($model,$entities_id);
    }
 
@@ -252,7 +257,7 @@ class PluginDatainjectionClientInjection {
    static function showResultsForm(PluginDatainjectionModel $model, $options) {
       global $LANG;
       $results = json_decode(stripslashes_deep($options['results']),true);
-      printCleanArray($results);
+      //printCleanArray($results);
       echo "<table class='tab_cadre_fixe'>";
       echo "<th>" . $LANG["datainjection"]["log"][1]."</th>";
       echo "<tr class='tab_bg_1'>";

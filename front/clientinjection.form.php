@@ -37,7 +37,11 @@ include (GLPI_ROOT."/inc/includes.php");
 
 commonHeader($LANG["datainjection"]["name"][1], $_SERVER["PHP_SELF"],"plugins","datainjection");
 
-if (isset($_POST['upload'])) {
+if (isset($_SESSION['datainjection']['go'])) {
+   $model = unserialize($_SESSION['datainjection']['currentmodel']);
+   PluginDatainjectionClientInjection::showInjectionForm($model, $_SESSION['glpiactive_entity']);
+}
+elseif (isset($_POST['upload'])) {
    $model = new PluginDatainjectionModel();
    $model->getFromDB($_POST['id']);
    $_SESSION['datainjection']['infos'] = (isset($_POST['info'])?$_POST['info']:array());
@@ -47,6 +51,7 @@ if (isset($_POST['upload'])) {
       addMessageAfterRedirect($LANG["datainjection"]["fillInfoStep"][4],true,ERROR,true);
    }
    elseif (!empty($_FILES) && !isset($_FILES['name'])) {
+
       //Read file using automatic encoding detection, and do not delete file once readed
       $options = array('file_encoding'=> $_POST['file_encoding'],
                        'mode'         => PluginDatainjectionModel::PROCESS,
@@ -58,6 +63,7 @@ if (isset($_POST['upload'])) {
                                           PluginDatainjectionClientInjection::STEP_PROCESS;
          //Store model in session for injection
          $_SESSION['datainjection']['currentmodel'] = serialize($model);
+         $_SESSION['datainjection']['go'] = true;
       }
       else {
          //Got back to the file upload page
@@ -71,10 +77,11 @@ if (isset($_POST['upload'])) {
 
    glpi_header($_SERVER['HTTP_REFERER']);
 }
-
-$clientInjection = new PluginDatainjectionClientInjection;
-$clientInjection->title();
-$clientInjection->showForm(0);
+else {
+   $clientInjection = new PluginDatainjectionClientInjection;
+   $clientInjection->title();
+   $clientInjection->showForm(0);
+}
 
 commonFooter();
 ?>

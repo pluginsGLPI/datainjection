@@ -775,7 +775,6 @@ class PluginDatainjectionModel extends CommonDBTM {
 
          //Read the whole file and store the number of lines found
          $backend->storeNumberOfLines();
-
          $_SESSION['datainjection']['lines']   = serialize($injectionData);
          $_SESSION['datainjection']['nblines'] = $backend->getNumberOfLines();
 
