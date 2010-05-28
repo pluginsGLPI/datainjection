@@ -174,8 +174,12 @@ class PluginDatainjectionClientInjection {
       }
       echo "<table class='tab_cadre_fixe'>";
       echo "<tr class='tab_bg_1'>";
-      echo "<th colspan='2'>" . $LANG["datainjection"]["model"][0]." : ".$model->fields['name']."</th>";
+      echo "<th colspan='2'>";
+      echo $LANG["datainjection"]["model"][0]." : ".$model->fields['name']."</th>";
       echo "</tr>";
+      echo "</table><br/>";
+
+      echo "<table class='tab_cadre_fixe'>";
       echo "<tr class='tab_bg_1'>";
       echo "<th colspan='2'>" . $LANG["datainjection"]["import"][1]."</th>";
       echo "</tr>";
@@ -255,7 +259,7 @@ class PluginDatainjectionClientInjection {
    }
 
    static function showResultsForm(PluginDatainjectionModel $model, $options) {
-      global $LANG;
+      global $LANG,$CFG_GLPI;
       $results = json_decode(stripslashes_deep($options['results']),true);
       //printCleanArray($results);
       echo "<table class='tab_cadre_fixe'>";
@@ -263,16 +267,20 @@ class PluginDatainjectionClientInjection {
       echo "<tr class='tab_bg_1'>";
 
       echo "<td align='center'>";
-      echo "<input type='button' name='popup' value='" . addslashes($LANG["datainjection"]["button"][4]) . "'
-                                  class='submit' onclick='log_popup(".$options['nblines'].")' />";
+      echo "<a href='#' onclick='log_popup(".$options['nblines'].")'";
+      echo "title='".addslashes($LANG["datainjection"]["button"][4])."'>";
+      echo "<img src='".$CFG_GLPI['root_doc']."/plugins/datainjection/pics/seereport.png'>";
+      echo "</a>";
       echo "&nbsp;";
-      echo "<input type='button' name='pdf' value='" . addslashes($LANG["datainjection"]["button"][7]) . "'
-                                 class='submit'
-                                 onclick=\"location.href='plugin_datainjection.export.pdf.php'\" />";
+      echo "<a href='#' onclick=\"location.href='plugin_datainjection.export.pdf.php'\"";
+      echo "title='".addslashes($LANG["datainjection"]["button"][7])."'>";
+      echo "<img src='".$CFG_GLPI['root_doc']."/plugins/datainjection/pics/reportpdf.png'>";
+      echo "</a>";
       echo "&nbsp;";
-      echo "<input type='button' name='export' value='" . addslashes($LANG["datainjection"]["button"][5]) . "'
-                                 class='submit'
-                                 onclick=\"location.href='plugin_datainjection.download.php'\" />";
+      echo "<a href='#' onclick=\"location.href='download.pdf.php'\"";
+      echo "title='".addslashes($LANG["datainjection"]["button"][5])."'>";
+      echo "<img src='".$CFG_GLPI['root_doc']."/plugins/datainjection/pics/failedcsv.png'>";
+      echo "</a>";
       echo "</td>";
       echo "</tr>";
       echo "</table>";

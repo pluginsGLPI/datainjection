@@ -987,7 +987,7 @@ class PluginDatainjectionCommonInjectionLib {
    }
 
    private function effectiveAddOrUpdate($add=true, $item, $values) {
-      logDebug($values);
+      //logDebug($values);
       //Insert data using the standard add() method
       if ($item instanceof CommonDropdown & $add) {
          $newID = $item->import($values);
