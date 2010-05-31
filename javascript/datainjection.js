@@ -50,33 +50,6 @@ function log_popup(nbline)
 	window.open('../front/plugin_datainjection.popup.log.php', 'Popup', 'resizable=no, location=no, menubar=no, scrollbars=yes, toolbar=no, status=no, width=1010, height='+height+', left='+x+', top='+y+'');
 }
 
-function verif_delimiter()
-{	
-	if(document.getElementById('delimiter').value == "")
-		{
-		document.getElementById('delimiter_error').style.visibility='visible';
-		return false;
-		}
-	else
-		return true;
-}
-
-function verif_mandatory(cpt)
-{	
-	var ok=0;
-	
-	for(var i=0;i<cpt;i++)
-		if(document.getElementById("check"+i).checked == true)
-			ok=1;
-			
-	if(ok)
-		return true;
-	else
-		{
-		document.getElementById('mandatory_error').style.visibility='visible';
-		return false;
-		}
-}
 
 function show_log(num)
 {	

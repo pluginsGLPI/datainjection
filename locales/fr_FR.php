@@ -197,6 +197,7 @@ $LANG["datainjection"]["result"][18] = "Rapport d'injection du fichier";
 $LANG["datainjection"]["result"][19] = "Plus d'une valeur trouvée";
 $LANG["datainjection"]["result"][20] = "L'objet est déjà lié";
 $LANG["datainjection"]["result"][21] = "Import impossible";
+$LANG["datainjection"]["result"][22] = "Non testé";
 
 $LANG["datainjection"]["profiles"][1] = "Gestion des modèles";
 $LANG["datainjection"]["profiles"][4] = "Listes des profils déjà configurés";

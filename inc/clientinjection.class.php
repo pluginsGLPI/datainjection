@@ -261,13 +261,37 @@ class PluginDatainjectionClientInjection {
    static function showResultsForm(PluginDatainjectionModel $model, $options) {
       global $LANG,$CFG_GLPI;
       $results = json_decode(stripslashes_deep($options['results']),true);
-      //printCleanArray($results);
-      echo "<table class='tab_cadre_fixe'>";
-      echo "<th>" . $LANG["datainjection"]["log"][1]."</th>";
-      echo "<tr class='tab_bg_1'>";
+      $_SESSION['datainjection']['results'] = $options['results'];
+      unset($_SESSION['datainjection']['go']);
+      $ok = true;
+      foreach ($results as $result) {
+         if ($result['status'] != PluginDatainjectionCommonInjectionLib::SUCCESS) {
+            $ok = false;
+            break;
+         }
+      }
 
+      echo "<table class='tab_cadre_fixe'>";
+      echo "<tr class='tab_bg_1'>";
+      echo "<th>" . $LANG["datainjection"]["log"][1]."</th></tr>";
+      echo "<tr class='tab_bg_1'>";
       echo "<td align='center'>";
-      echo "<a href='#' onclick='log_popup(".$options['nblines'].")'";
+      if ($ok) {
+         echo "<img src='".$CFG_GLPI['root_doc']."/plugins/datainjection/pics/ok.png'>";
+         echo $LANG["datainjection"]["log"][3];
+      }
+      else {
+         echo "<img src='".$CFG_GLPI['root_doc']."/plugins/datainjection/pics/danger.png'>";
+         echo $LANG["datainjection"]["log"][8];
+      }
+      echo "</td></tr>";
+      echo "<tr class='tab_bg_1'>";
+      echo "<td align='center'>";
+
+      $url = $CFG_GLPI["root_doc"].
+              "/plugins/datainjection/front/popup.php?popup=log&amp;models_id=".$model->fields['id'];
+      echo "<a href='#' onClick=\"var w = window.open('$url' ,";
+      echo "'glpipopup', 'height=400, width=600, top=100, left=100, scrollbars=yes' );w.focus();\"/' ";
       echo "title='".addslashes($LANG["datainjection"]["button"][4])."'>";
       echo "<img src='".$CFG_GLPI['root_doc']."/plugins/datainjection/pics/seereport.png'>";
       echo "</a>";

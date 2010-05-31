@@ -40,8 +40,6 @@ class PluginDatainjectionEngine {
    //Current entity
    private $entity;
 
-   private $results = array();
-
    //Additional infos to be added
    private $infos = array();
 

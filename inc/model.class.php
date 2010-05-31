@@ -1045,5 +1045,118 @@ class PluginDatainjectionModel extends CommonDBTM {
       echo "<a href='javascript:window.close()'>" . $LANG["datainjection"]["button"][8] .  "</a>";
       echo "</div>";
    }
+
+   static function showLogResults($models_id) {
+      global $LANG;
+      $results = json_decode(stripslashes_deep($_SESSION['datainjection']['results']),true);
+      $model = new PluginDatainjectionModel;
+      $model->getFromDB($models_id);
+      if (!empty($results)) {
+         echo "<table>";
+         echo "<tr>";
+         echo "<td style='width:30px'>";
+         echo "<a href=\"javascript:show_log('1')\"><img src='../pics/plus.png' alt='plus' id='log1' /></a>";
+         echo "</td>";
+         echo "<td style='width: 900px;font-size: 14px;font-weight: bold;padding-left: 20px'>";
+         echo $LANG["datainjection"]["log"][4];
+         echo "</td>";
+         echo "</tr>";
+         echo "</table>";
+
+         echo "<table class='tab_cadre_fixe'  id='log1_table'>";
+
+         echo "<tr><th>".$LANG["joblist"][0]."</th>";
+         echo "<th>".$LANG["datainjection"]["result"][14]."</th>";
+         echo "<th>".$LANG["datainjection"]["result"][10]."</th>";
+         echo "<th>".$LANG["datainjection"]["result"][11]."</th>";
+         echo "<th>".$LANG["datainjection"]["result"][12]."</th>";
+         echo "<th>".$LANG["datainjection"]["result"][13]."</th></tr>";
+
+         $index = 0;
+         foreach ($results as $result) {
+            if ($result['status'] == PluginDatainjectionCommonInjectionLib::SUCCESS) {
+               echo "<tr class='tab_bg_1'>";
+               echo "<td style='height:30px;width:30px'><img src='../pics/ok.png' alt='success' /></td>";
+               echo "</td>";
+               echo "<td>$index</td>";
+               echo "<td>";
+               echo PluginDatainjectionCommonInjectionLib::getLogLabel($result[PluginDatainjectionCommonInjectionLib::ACTION_CHECK]['status']);
+               echo "</td>";
+               echo "<td>";
+               echo PluginDatainjectionCommonInjectionLib::getLogLabel($result['status']);
+               echo "</td>";
+               echo "<td>";
+               echo PluginDatainjectionCommonInjectionLib::getActionLabel($result['type']);
+               echo "</td>";
+               echo "<td>";
+               if ($result[$model->fields['itemtype']]) {
+                  $url = getItemTypeFormURL($model->fields['itemtype'])."?id=".
+                           $result[$model->fields['itemtype']];
+                  echo "<a href=\"$url\">".$result[$model->fields['itemtype']]."</a>";
+               }
+               echo "</td>";
+            }
+            $index++;
+         }
+
+         echo "</tr>";
+         echo "</table>";
+
+         echo "<table>";
+
+         echo "<tr>";
+         echo "<td style='width:30px'>";
+         echo "<a href=\"javascript:show_log('2')\"><img src='../pics/minus.png' alt='minus' id='log2' /></a>";
+         echo "</td>";
+         echo "<td style='width: 900px;font-size: 14px;font-weight: bold;padding-left: 20px'>";
+         echo $LANG["datainjection"]["log"][5];
+         echo "</td>";
+         echo "</tr>";
+         echo "</table>";
+
+         echo "<table class='tab_cadre_fixe' style='text-align: center' id='log2_table'>";
+         echo "<tr><th>".$LANG["joblist"][0]."</th>";
+         echo "<th>".$LANG["datainjection"]["result"][14]."</th>";
+         echo "<th>".$LANG["datainjection"]["result"][10]."</th>";
+         echo "<th>".$LANG["datainjection"]["result"][11]."</th>";
+         echo "<th>".$LANG["datainjection"]["result"][12]."</th>";
+         echo "<th>".$LANG["datainjection"]["result"][13]."</th></tr>";
+
+         $index = 0;
+         foreach ($results as $result) {
+            if ($result['status'] != PluginDatainjectionCommonInjectionLib::SUCCESS) {
+               echo "<tr class='tab_bg_1'>";
+               echo "<td style='height:30px;width:30px'><img src='../pics/ok.png' alt='success' /></td>";
+               echo "</td>";
+               echo "<td>$index</td>";
+               echo "<td>";
+               echo PluginDatainjectionCommonInjectionLib::getLogLabel($result[PluginDatainjectionCommonInjectionLib::ACTION_CHECK]['status']);
+               echo "</td>";
+               echo "<td>";
+               if (isset($result[PluginDatainjectionCommonInjectionLib::ACTION_CHECK]['status'])
+                     && $result[PluginDatainjectionCommonInjectionLib::ACTION_CHECK]['status'] !=
+                        PluginDatainjectionCommonInjectionLib::FAILED) {
+                        echo PluginDatainjectionCommonInjectionLib::getLogLabel($result['status']);
+                     }
+               echo "</td>";
+               echo "<td>";
+               if ($result[PluginDatainjectionCommonInjectionLib::ACTION_CHECK]['status'] !=
+                     PluginDatainjectionCommonInjectionLib::FAILED) {
+                  echo PluginDatainjectionCommonInjectionLib::getActionLabel($result['type']);
+               }
+               echo "</td>";
+               echo "<td>";
+               if (isset($result[$model->fields['itemtype']])) {
+                  $url = getItemTypeFormURL($model->fields['itemtype'])."?id=".
+                           $result[$model->fields['itemtype']];
+                  echo "<a href=\"$url\">".$result[$model->fields['itemtype']]."</a>";
+               }
+               echo "</td>";
+            }
+            $index++;
+         }
+         echo "</tr>";
+      }
+   }
 }
 ?>

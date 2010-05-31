@@ -102,6 +102,7 @@ class PluginDatainjectionCommonInjectionLib {
    const IMPORT_IMPOSSIBLE              = 20;
    const ERROR_FIELDSIZE_EXCEEDED       = 21;
    const WARNING_PARTIALLY_IMPORTED     = 22;
+   const NOT_PROCESSED                  = 23;
 
    //Empty values
    const EMPTY_VALUE                    = '';
@@ -544,7 +545,7 @@ class PluginDatainjectionCommonInjectionLib {
     */
    private function reformatFirstPass() {
       //By default check is ok : if it's not the case, the value will be modified later
-      $results[self::ACTION_CHECK]['status'] = self::SUCCESS;
+      $this->results['status'] = self::SUCCESS;
 
       //Browse all fields & values
       foreach ($this->values as $itemtype => $data) {
@@ -577,8 +578,8 @@ class PluginDatainjectionCommonInjectionLib {
                                                                                      $dropdownID);
                      }
                      else {
-                        $results[self::ACTION_CHECK]['status'] = self::WARNING;
-                        $results[self::ACTION_CHECK][$field] = self::WARNING_NOTFOUND;
+                        $this->results['status'] = self::WARNING;
+                        $this->results[$field]   = self::WARNING_NOTFOUND;
                      }
                   }
                }
@@ -761,8 +762,9 @@ class PluginDatainjectionCommonInjectionLib {
                $option = self::findSearchOption($searchOptions,$field);
                if ($value == self::EMPTY_VALUE
                      && $this->mandatory_fields[$itemtype][$field]) {
-                  $this->results[self::ACTION_CHECK]['status'] = self::FAILED;
-                  $this->results[self::ACTION_CHECK][$field] = self::MANDATORY;
+                  $this->results['status'] = self::FAILED;
+                  $this->results[$field] = self::MANDATORY;
+                  $this->results[self::ACTION_CHECK]['status'] = self::MANDATORY;
                }
                else {
                   $check_result = $this->checkType($injectionClass,
@@ -774,6 +776,7 @@ class PluginDatainjectionCommonInjectionLib {
 
                   if ($check_result != self::SUCCESS) {
                      $this->results[self::ACTION_CHECK]['status'] = self::FAILED;
+                     $this->results['status'] = self::FAILED;
                   }
                   else {
                      $this->results[self::ACTION_CHECK]['status'] = self::SUCCESS;
@@ -909,8 +912,10 @@ class PluginDatainjectionCommonInjectionLib {
             $this->unsetValue($this->primary_type,'id');
          }
          else {
-               $this->results[self::ACTION_INJECT]['status'] = self::ERROR_CANNOT_IMPORT;
-               $this->results[self::ACTION_INJECT]['type'] = self::IMPORT_ADD;
+               $this->results['status'] = self::FAILED;
+               $this->results[self::ACTION_CHECK]['status'] = self::ERROR_CANNOT_IMPORT;
+               $this->results['type'] = self::IMPORT_ADD;
+               $this->results[self::ACTION_INJECT] = self::NOT_PROCESSED;
          }
       }
       //Item found in DB
@@ -920,8 +925,10 @@ class PluginDatainjectionCommonInjectionLib {
             $add = false;
          }
          else {
-               $this->results[self::ACTION_INJECT]['status'] = self::ERROR_CANNOT_UPDATE;
-               $this->results[self::ACTION_INJECT]['type'] = self::IMPORT_UPDATE;
+               $this->results['status'] = self::FAILED;
+               $this->results[self::ACTION_CHECK]['status'] = self::ERROR_CANNOT_UPDATE;
+               $this->results['type'] = self::IMPORT_UPDATE;
+               $this->results[self::ACTION_INJECT] = self::NOT_PROCESSED;
          }
       }
       if ($process) {
@@ -934,7 +941,7 @@ class PluginDatainjectionCommonInjectionLib {
 
          //Second : check data
          $this->check();
-         if ($this->results[self::ACTION_CHECK]['status'] != self::FAILED) {
+         if ($this->results['status'] != self::FAILED) {
 
             //Third : inject data
             $item = $this->getItemInstance();
@@ -949,15 +956,13 @@ class PluginDatainjectionCommonInjectionLib {
             $newID  = $this->effectiveAddOrUpdate($add,$item,$values);
 
             if (!$newID) {
-               $this->results[self::ACTION_INJECT]['status'] = self::FAILED;
-               $this->results[self::ACTION_INJECT]['type']   = ($add?self::IMPORT_ADD
-                                                                     :self::IMPORT_UPDATE);
+               $this->results['status'] = self::FAILED;
+               $this->results['type']   = ($add?self::IMPORT_ADD:self::IMPORT_UPDATE);
             }
             else {
-               $this->results[self::ACTION_INJECT]['status'] = self::SUCCESS;
-               $this->results[self::ACTION_INJECT]['type']   = ($add?self::IMPORT_ADD
-                                                                     :self::IMPORT_UPDATE);
-               $this->results[self::ACTION_INJECT][get_class($item)] = $newID;
+               $this->results['status'] = self::SUCCESS;
+               $this->results['type']   = ($add?self::IMPORT_ADD:self::IMPORT_UPDATE);
+               $this->results[get_class($item)] = $newID;
 
                //Process other types
                foreach ($this->values as $itemtype => $data) {
@@ -1031,16 +1036,15 @@ class PluginDatainjectionCommonInjectionLib {
       $itemtype = $this->getItemtype();
       $item = new $itemtype();
       if ($this->getValueByItemtypeAndName($itemtype,'id')) {
-         $this->results[self::ACTION_INJECT]['type'] = self::IMPORT_DELETE;
+         $this->results['type'] = self::IMPORT_DELETE;
 
          if ($item->delete($this->values[$itemtype])) {
-            $this->results[self::ACTION_INJECT]['status'] = self::SUCCESS;
+            $this->results['status'] = self::SUCCESS;
          }
          else {
-            $this->results[self::ACTION_INJECT]['status'] = self::FAILED;
+            $this->results['status'] = self::FAILED;
          }
-         $this->results[self::ACTION_INJECT][$itemtype]
-                                                = $this->getValueByItemtypeAndName($itemtype,'id');
+         $this->results[$itemtype] = $this->getValueByItemtypeAndName($itemtype,'id');
       }
    }
 
@@ -1187,14 +1191,57 @@ class PluginDatainjectionCommonInjectionLib {
          $changes[0] = 0;
 
          if ($add) {
-            $changes[2] = $LANG["datainjection"]["result"][8] . " " . $LANG["datainjection"]["history"][1];
+            $changes[2] = $LANG["datainjection"]["result"][8] . " " .
+                             $LANG["datainjection"]["history"][1];
          }
          else {
-            $changes[2] = $LANG["datainjection"]["result"][9] . " " . $LANG["datainjection"]["history"][1];
+            $changes[2] = $LANG["datainjection"]["result"][9] . " " .
+                             $LANG["datainjection"]["history"][1];
          }
          $changes[1] = "";
          Log::history ($item->fields['id'],get_class($item),$changes);
       }
    }
+
+   static function getActionLabel($action) {
+      global $LANG;
+      $actions = array(self::IMPORT_ADD                  => $LANG["datainjection"]["result"][8],
+                       self::IMPORT_UPDATE               => $LANG["datainjection"]["result"][9],
+                       self::IMPORT_DELETE               => $LANG["datainjection"]["result"][9]);
+      if (isset($actions[$action])) {
+         return  $actions[$action];
+      }
+      else {
+         return "";
+      }
+
+   }
+   static function getLogLabel($type) {
+      global $LANG;
+      $labels = array(self::SUCCESS                         => 7,
+                      self::ERROR_CANNOT_IMPORT             => 5,
+                      self::WARNING_NOTEMPTY                => 6,
+                      self::ERROR_CANNOT_UPDATE             => 6,
+                      self::ERROR_IMPORT_ALREADY_IMPORTED   => 3,
+                      self::TYPE_MISMATCH                   => 1,
+                      self::MANDATORY                       => 4,
+                      //self::ERROR_IMPORT_LINK_FIELD_MISSING => 4,
+                      self::SUCCESS                         => 2,
+                      self::WARNING_NOTFOUND                => 15,
+                      self::WARNING_USED                    => 16,
+                      self::WARNING_ALLEMPTY                => 17,
+                      self::WARNING_SEVERAL_VALUES_FOUND    => 19,
+                      self::WARNING_ALREADY_LINKED          => 20,
+                      self::IMPORT_IMPOSSIBLE               => 21,
+                      self::WARNING_PARTIALLY_IMPORTED      => 22,
+                      self::NOT_PROCESSED                   => 23);
+      if (isset($labels[$type])) {
+         return  $LANG["datainjection"]["result"][$labels[$type]];
+      }
+      else {
+         return "";
+      }
+   }
 }
+
 ?>
