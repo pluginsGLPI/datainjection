@@ -295,11 +295,15 @@ class PluginDatainjectionClientInjection {
       echo "title='".addslashes($LANG["datainjection"]["button"][4])."'>";
       echo "<img src='".$CFG_GLPI['root_doc']."/plugins/datainjection/pics/seereport.png'>";
       echo "</a>";
-      echo "&nbsp;";
-      echo "<a href='#' onclick=\"location.href='plugin_datainjection.export.pdf.php'\"";
-      echo "title='".addslashes($LANG["datainjection"]["button"][7])."'>";
-      echo "<img src='".$CFG_GLPI['root_doc']."/plugins/datainjection/pics/reportpdf.png'>";
-      echo "</a>";
+      $plugin = new Plugin;
+      if ($plugin->isInstalled('pdf') && $plugin->isActivated('pdf')) {
+         echo "&nbsp;";
+         echo "<a href='#' onclick=\"location.href='export.pdf.php?models_id=".$model->fields['id']."'\"";
+         echo "title='".addslashes($LANG["datainjection"]["button"][7])."'>";
+         echo "<img src='".$CFG_GLPI['root_doc']."/plugins/datainjection/pics/reportpdf.png'>";
+         echo "</a>";
+      }
+
       echo "&nbsp;";
       echo "<a href='#' onclick=\"location.href='download.pdf.php'\"";
       echo "title='".addslashes($LANG["datainjection"]["button"][5])."'>";
