@@ -371,6 +371,15 @@ function plugin_datainjection_update170_20() {
    }
 
    $glpitables = array('glpi_plugin_datainjection_models','glpi_plugin_datainjection_mappings',
+                       'glpi_plugin_datainjection_infos','glpi_plugin_datainjection_modelcsvs',
+                       'glpi_plugin_datainjection_profiles');
+   foreach($glpitables as $table) {
+      $query = "ALTER TABLE  $table
+                CHANGE  `ID`  `id` INT( 11 ) NOT NULL AUTO_INCREMENT";
+      $DB->query($query) or die ("Datainjection : Rename ID to id");
+   }
+
+   $glpitables = array('glpi_plugin_datainjection_models','glpi_plugin_datainjection_mappings',
                        'glpi_plugin_datainjection_infos','glpi_plugin_datainjection_modelcsvs');
    Plugin::migrateItemType (array(), array(), $glpitables);
 
