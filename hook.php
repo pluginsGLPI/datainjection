@@ -383,12 +383,13 @@ function plugin_datainjection_update170_20() {
                        'glpi_plugin_datainjection_infos','glpi_plugin_datainjection_modelcsvs');
    Plugin::migrateItemType (array(), array(), $glpitables);
 
+   /*
    //TODO : manage virtual types
    Plugin::migrateItemType (array(999 => 'NetworkPort'),array('glpi_plugin_datainjection_models',
                                                               'glpi_plugin_datainjection_mappings',
                                                               'glpi_plugin_datainjection_infos',
                                                               'glpi_plugin_datainjection_modelcsvs'));
-
+   */
    $query = "UPDATE `glpi_plugin_datainjection_mappings` SET `itemtype`='none' ,";
    $query.= " `value`='none' WHERE `itemtype`='-1'";
    $DB->query($query) or die ("Datainjection mappings tables : error updating not mapped fields");

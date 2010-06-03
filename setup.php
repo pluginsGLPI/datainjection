@@ -41,6 +41,8 @@ function plugin_init_datainjection() {
    $plugin = new Plugin;
    $PLUGIN_HOOKS['change_profile']['datainjection'] = 'plugin_datainjection_changeprofile';
 
+   $PLUGIN_HOOKS['migratetypes']['datainjection'] = 'plugin_datainjection_migratetypes_datainjection';
+
    if ($plugin->isInstalled("datainjection") && $plugin->isActivated("datainjection")) {
 
       $PLUGIN_HOOKS['headings']['datainjection'] = 'plugin_get_headings_datainjection';
@@ -156,5 +158,10 @@ function getTypesToInject() {
    //Add plugins
    doHook('plugin_datainjection_populate');
 
+}
+
+function plugin_datainjection_migratetypes_datainjection($types) {
+   $types[999] = 'NetworkPort';
+   return $types;
 }
 ?>
