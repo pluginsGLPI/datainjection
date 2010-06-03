@@ -134,7 +134,7 @@ function getTypesToInject() {
                                 //'PluginDatainjectionContractInjection'           =>'datainjection',
                                 //'PluginDatainjectionDocumentInjection'           =>'datainjection',
                                 //'PluginDatainjectionEntityInjection'             =>'datainjection',
-                                //'PluginDatainjectionGroupInjection'              =>'datainjection',
+                                'PluginDatainjectionGroupInjection'              =>'datainjection',
                                 'PluginDatainjectionInfocomInjection'            =>'datainjection',
                                 'PluginDatainjectionLocationInjection'           =>'datainjection',
                                 'PluginDatainjectionStateInjection'              =>'datainjection',
