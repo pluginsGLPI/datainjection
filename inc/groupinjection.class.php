@@ -91,7 +91,7 @@ class PluginDatainjectionGroupInjection extends Group
       }
 
       //Add displaytype value
-      $dropdown = array("multiline_text" => array(16));
+      $dropdown = array("bool"=>array(6),"multiline_text" => array(16));
       foreach ($dropdown as $type => $tabsID) {
          foreach ($tabsID as $tabID) {
             $tab[$tabID]['displaytype'] = $type;
