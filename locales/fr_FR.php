@@ -85,6 +85,7 @@ $LANG["datainjection"]["model"][35] = "Modèle en cours de création";
 $LANG["datainjection"]["model"][36] = "Modèle utilisable";
 $LANG["datainjection"]["model"][37] = "Validation";
 $LANG["datainjection"]["model"][38] = "Valider le modèle";
+$LANG["datainjection"]["model"][39] = "Liste des modèles";
 
 
 $LANG["datainjection"]["deleteStep"][1] = "Confirmation de la suppression";

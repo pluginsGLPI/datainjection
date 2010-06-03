@@ -395,7 +395,7 @@ class PluginDatainjectionModel extends CommonDBTM {
       global $DB;
 
       $models = array ();
-      $query = "SELECT `id`, `name`, `is_private`, `entities_id` ";
+      $query = "SELECT `id`, `name`, `is_private`, `entities_id`, `is_recursive`, `itemtype` ";
       $query.= "FROM `glpi_plugin_datainjection_models` WHERE ";
       $query.= "`step`='".self::READY_TO_USE_STEP."' ";
       $query.= "AND (`is_private`=" . self::MODEL_PUBLIC;
@@ -1287,6 +1287,68 @@ class PluginDatainjectionModel extends CommonDBTM {
          }
          $pdf->render();
       }
+   }
+
+   static function showModelsList() {
+      global $LANG;
+      $models = self::getModels(getLoginUserID(),'name',$_SESSION['glpiactive_entity'],false);
+      $canedit = plugin_datainjection_haveRight("model","w");
+      echo "<form method='post' id='models' action=\"".getItemTypeFormURL(__CLASS__)."\">";
+      echo "<table class='tab_cadrehov'>";
+      echo "<tr class='tab_bg_1'><th colspan='6'>".$LANG["datainjection"]["model"][39]."</th></tr>";
+      if (!empty($models)) {
+         echo "<tr class='tab_bg_1'>";
+         echo "<th></th>";
+         echo "<th>".$LANG['common'][16]."</th>";
+         echo "<th>".$LANG['common'][77]."</th>";
+         echo "<th>".$LANG['entity'][0]."</th>";
+         echo "<th>".$LANG['entity'][9]."</th>";
+         echo "<th>".$LANG['common'][17]."</th></th>";
+
+         foreach ($models as $model) {
+            echo "<tr class='tab_bg_1'>";
+            echo "<td width='10px'>";
+            if ($canedit) {
+               $sel="";
+               if (isset($_GET["select"]) && $_GET["select"]=="all") {
+                  $sel="checked";
+               }
+               echo "<input type='checkbox' name='model[".$model["id"]."]'". $sel.">";
+            } else {
+               echo "&nbsp;";
+            }
+            echo "</td>";
+            echo "<td>";
+            echo "<a href='".getItemTypeFormURL('PluginDatainjectionModel')."?id=".$model['id']."'>";
+            echo $model['name']."</a>";
+            echo "</td>";
+            echo "<td>";
+            echo Dropdown::getYesNo($model['is_private']);
+            echo "</td>";
+            echo "<td>";
+            if (!$model['is_private']) {
+               echo Dropdown::getDropdownName('glpi_entities',$model['entities_id']);
+            }
+            echo "</td>";
+            echo "<td>";
+            if (!$model['is_private']) {
+               echo Dropdown::getYesNo($model['is_recursive']);
+            }
+            echo "</td>";
+            echo "<td>";
+            echo call_user_func(array($model['itemtype'],'getTypeName'));
+            echo "</td>";
+            echo "</tr>";
+         }
+
+         openArrowMassive("model");
+         closeArrowMassive('delete_several', $LANG['buttons'][6]);
+
+      }
+      else {
+         echo "<tr class='tab_bg_1'><td>".$LANG['search'][15]."</td>";
+      }
+      echo "</table></form>";
    }
 }
 ?>

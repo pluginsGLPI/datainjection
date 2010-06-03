@@ -38,7 +38,8 @@ include (GLPI_ROOT . "/inc/includes.php");
 commonHeader($LANG["datainjection"]["profiles"][1], '', "plugins", "datainjection", "model");
 
 if (plugin_datainjection_haveRight("model", "r")) {
-   Search::show("PluginDatainjectionModel");
+   PluginDatainjectionModel::showModelsList();
+   //Search::show("PluginDatainjectionModel");
 } else {
    echo "<div align='center'><br><br><img src=\"" . $CFG_GLPI["root_doc"] .
             "/pics/warning.png\" alt=\"warning\"><br><br>";
