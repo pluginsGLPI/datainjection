@@ -1110,13 +1110,19 @@ class PluginDatainjectionCommonInjectionLib {
       else {
          $sql  = "SELECT * FROM `" . $injectionClass->getTable()."`";
 
+         $item = new $itemtype;
          //Type is a relation : check it this relation still exists
-         if (new $itemtype instanceof CommonDBRelation) {
-            $where .= " `".$searchOptions[3]['field']."`='";
-            $where .= $this->getValueByItemtypeAndName($itemtype,$searchOptions[3]['field'])."'";
-            $where .= " AND `".$searchOptions[4]['field']."`='";
-            $where .= $this->getValueByItemtypeAndName($itemtype,$searchOptions[4]['field'])."'";
-            $sql   .= " WHERE ".$where;
+         if ($item instanceof CommonDBRelation) {
+            $where .= " AND `".$item->items_id_1."`='";
+            $where .= $this->getValueByItemtypeAndName($itemtype,$item->items_id_1)."'";
+
+            if ($item->isField('itemtype')) {
+               $where .= "AND `".$item->itemtype_2."`='";
+               $where .= $this->getValueByItemtypeAndName($itemtype,$item->itemtype_2)."'";
+            }
+            $where .= " AND `".$item->items_id_2."`='";
+            $where .= $this->getValueByItemtypeAndName($itemtype,$item->items_id_2)."'";
+            $sql   .= " WHERE 1 ".$where;
          }
          else {
             //Type is not a relation
@@ -1168,6 +1174,7 @@ class PluginDatainjectionCommonInjectionLib {
             $sql .= " WHERE 1 " . $where_entity . " " . $where;
          }
 
+         logDebug($sql);
          $result = $DB->query($sql);
          if ($DB->numrows($result) > 0) {
             $this->setValueForItemtype($itemtype,'id',$DB->result($result,0,'id'));

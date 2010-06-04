@@ -38,14 +38,15 @@ if (!defined('GLPI_ROOT')){
 }
 
 /// Location class
-class PluginDatainjectionUserInjection extends User
+class PluginDatainjectionProfile_UserInjection extends Profile_User
    implements PluginDatainjectionInjectionInterface {
 
-   function __construct() {
-      $this->table = getTableForItemType('User');
+   function __construct()  {
+      $this->table = getTableForItemType('Profile_User');
    }
+
    function isPrimaryType() {
-      return true;
+      return false;
    }
 
    function connectedTo() {
@@ -53,72 +54,17 @@ class PluginDatainjectionUserInjection extends User
    }
 
    function getOptions() {
-      global $LANG;
       $tab = parent::getSearchOptions();
+      unset($tab[2]);
 
-      //Specific to location
-      $tab[3]['linkfield'] = 'locations_id';
-      $tab[1]['linkfield'] = 'name';
+      $tab[3]['checktype']  = 'bool';
+      $tab[3]['displaytype']  = 'bool';
 
-      //To manage groups : relies on a CommonDBRelation object !
-      $tab[100]['name']          = $LANG['common'][35];
-      $tab[100]['field']         = 'name';
-      $tab[100]['table']         = getTableForItemType('Group');
-      $tab[100]['linkfield']     = getForeignKeyFieldForTable($tab[100]['table']);
-      $tab[100]['displaytype']   = 'relation';
-      $tab[100]['relationclass'] = 'Group_User';
+      $tab[4]['checktype']  = 'text';
+      $tab[4]['displaytype']  = 'dropdown';
 
-      //To manage groups : relies on a CommonDBRelation object !
-      $tab[101]['name']          = $LANG['Menu'][35];
-      $tab[101]['field']         = 'name';
-      $tab[101]['table']         = getTableForItemType('Profile');
-      $tab[101]['linkfield']     = getForeignKeyFieldForTable($tab[101]['table']);
-      $tab[101]['displaytype']   = 'relation';
-      $tab[101]['relationclass'] = 'Profile_User';
-
-      $blacklist = PluginDatainjectionCommonInjectionLib::getBlacklistedOptions();
-      //Remove some options because some fields cannot be imported
-      $notimportable = array(13, 14, 15, 20, 80);
-      $ignore_fields = array_merge($blacklist,$notimportable);
-
-      //Add linkfield for theses fields : no massive action is allowed in the core, but they can be
-      //imported using the commonlib
-      $add_linkfield = array('comment' => 'comment', 'notepad' => 'notepad');
-      foreach ($tab as $id => $tmp) {
-         if (!is_array($tmp) || in_array($id,$ignore_fields)) {
-            unset($tab[$id]);
-         }
-         else {
-            if (in_array($tmp['field'],$add_linkfield)) {
-               $tab[$id]['linkfield'] = $add_linkfield[$tmp['field']];
-            }
-            if (!in_array($id,$ignore_fields)) {
-               if (!isset($tmp['linkfield'])) {
-                  $tab[$id]['injectable'] = PluginDatainjectionCommonInjectionLib::FIELD_VIRTUAL;
-               }
-               else {
-                  $tab[$id]['injectable'] = PluginDatainjectionCommonInjectionLib::FIELD_INJECTABLE;
-               }
-
-               if (isset($tmp['linkfield']) && !isset($tmp['displaytype'])) {
-                  $tab[$id]['displaytype'] = 'text';
-               }
-               if (isset($tmp['linkfield']) && !isset($tmp['checktype'])) {
-                  $tab[$id]['checktype'] = 'text';
-               }
-            }
-         }
-      }
-
-      //Add displaytype value
-      $dropdown = array("dropdown"       => array(81, 82 ),
-                        "multiline_text" => array(16),
-                        "bool"           => array(8));
-      foreach ($dropdown as $type => $tabsID) {
-         foreach ($tabsID as $tabID) {
-            $tab[$tabID]['displaytype'] = $type;
-         }
-      }
+      $tab[5]['checktype']  = 'text';
+      $tab[5]['displaytype']  = 'dropdown';
       return $tab;
    }
 
@@ -164,6 +110,10 @@ class PluginDatainjectionUserInjection extends User
       return $lib->getInjectionResults();
    }
 
+   function addSpecificNeededFields($primary_type,$values) {
+      $fields['users_id'] = $values['User']['id'];
+      return $fields;
+   }
 }
 
 ?>

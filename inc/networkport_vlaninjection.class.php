@@ -38,14 +38,15 @@ if (!defined('GLPI_ROOT')){
 }
 
 /// Location class
-class PluginDatainjectionUserInjection extends User
+class PluginDatainjectionNetworkport_VlanInjection extends NetworkPort_Vlan
    implements PluginDatainjectionInjectionInterface {
 
    function __construct() {
-      $this->table = getTableForItemType('User');
+      $this->table = getTableForItemType('NetworkPort_Vlan');
    }
+
    function isPrimaryType() {
-      return true;
+      return false;
    }
 
    function connectedTo() {
@@ -55,35 +56,17 @@ class PluginDatainjectionUserInjection extends User
    function getOptions() {
       global $LANG;
       $tab = parent::getSearchOptions();
-
-      //Specific to location
-      $tab[3]['linkfield'] = 'locations_id';
-      $tab[1]['linkfield'] = 'name';
-
-      //To manage groups : relies on a CommonDBRelation object !
-      $tab[100]['name']          = $LANG['common'][35];
-      $tab[100]['field']         = 'name';
-      $tab[100]['table']         = getTableForItemType('Group');
-      $tab[100]['linkfield']     = getForeignKeyFieldForTable($tab[100]['table']);
-      $tab[100]['displaytype']   = 'relation';
-      $tab[100]['relationclass'] = 'Group_User';
-
-      //To manage groups : relies on a CommonDBRelation object !
-      $tab[101]['name']          = $LANG['Menu'][35];
-      $tab[101]['field']         = 'name';
-      $tab[101]['table']         = getTableForItemType('Profile');
-      $tab[101]['linkfield']     = getForeignKeyFieldForTable($tab[101]['table']);
-      $tab[101]['displaytype']   = 'relation';
-      $tab[101]['relationclass'] = 'Profile_User';
-
       $blacklist = PluginDatainjectionCommonInjectionLib::getBlacklistedOptions();
+
       //Remove some options because some fields cannot be imported
-      $notimportable = array(13, 14, 15, 20, 80);
+      $notimportable = array();
       $ignore_fields = array_merge($blacklist,$notimportable);
 
       //Add linkfield for theses fields : no massive action is allowed in the core, but they can be
       //imported using the commonlib
       $add_linkfield = array('comment' => 'comment', 'notepad' => 'notepad');
+
+      //Add default displaytype (text)
       foreach ($tab as $id => $tmp) {
          if (!is_array($tmp) || in_array($id,$ignore_fields)) {
             unset($tab[$id]);
@@ -99,7 +82,6 @@ class PluginDatainjectionUserInjection extends User
                else {
                   $tab[$id]['injectable'] = PluginDatainjectionCommonInjectionLib::FIELD_INJECTABLE;
                }
-
                if (isset($tmp['linkfield']) && !isset($tmp['displaytype'])) {
                   $tab[$id]['displaytype'] = 'text';
                }
@@ -107,16 +89,6 @@ class PluginDatainjectionUserInjection extends User
                   $tab[$id]['checktype'] = 'text';
                }
             }
-         }
-      }
-
-      //Add displaytype value
-      $dropdown = array("dropdown"       => array(81, 82 ),
-                        "multiline_text" => array(16),
-                        "bool"           => array(8));
-      foreach ($dropdown as $type => $tabsID) {
-         foreach ($tabsID as $tabID) {
-            $tab[$tabID]['displaytype'] = $type;
          }
       }
       return $tab;
@@ -164,6 +136,10 @@ class PluginDatainjectionUserInjection extends User
       return $lib->getInjectionResults();
    }
 
+   function addSpecificNeededFields($primary_type,$values) {
+      $fields['networkports_id'] = $values['NetworkPort']['id'];
+      return $fields;
+   }
 }
 
 ?>
