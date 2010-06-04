@@ -50,6 +50,10 @@ function plugin_init_datainjection() {
 
       if (plugin_datainjection_haveRight("model", "r")) {
          $PLUGIN_HOOKS['menu_entry']['datainjection'] = true;
+         $PLUGIN_HOOKS['submenu_entry']['datainjection']['options']['model']['title']  =
+                                                               $LANG["datainjection"]["model"][0];
+         $PLUGIN_HOOKS['submenu_entry']['datainjection']['options']['model']['page']  =
+                                                           '/plugins/datainjection/front/model.php';
          $PLUGIN_HOOKS['submenu_entry']['datainjection']['options']['model']['links']['search']  =
                                                             '/plugins/datainjection/front/model.php';
          $PLUGIN_HOOKS['submenu_entry']['datainjection']['options']['model']['links']['add'] =

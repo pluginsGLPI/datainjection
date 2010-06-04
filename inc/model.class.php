@@ -391,13 +391,15 @@ class PluginDatainjectionModel extends CommonDBTM {
                                   $url,$p);
    }
 
-   static function getModels($user_id, $order = "name", $entity = -1, $can_write = false) {
+   static function getModels($user_id, $order = "name", $entity = -1, $all = false) {
       global $DB;
 
       $models = array ();
-      $query = "SELECT `id`, `name`, `is_private`, `entities_id`, `is_recursive`, `itemtype` ";
-      $query.= "FROM `glpi_plugin_datainjection_models` WHERE ";
-      $query.= "`step`='".self::READY_TO_USE_STEP."' ";
+      $query = "SELECT `id`, `name`, `is_private`, `entities_id`, `is_recursive`, `itemtype`, `step` ";
+      $query.= "FROM `glpi_plugin_datainjection_models` WHERE 1 ";
+      if ($all) {
+         $query.= " AND`step`='".self::READY_TO_USE_STEP."' ";
+      }
       $query.= "AND (`is_private`=" . self::MODEL_PUBLIC;
       $query.= getEntitiesRestrictRequest(" AND",
                                           "glpi_plugin_datainjection_models",
@@ -1292,10 +1294,10 @@ class PluginDatainjectionModel extends CommonDBTM {
    static function showModelsList() {
       global $LANG;
       $models = self::getModels(getLoginUserID(),'name',$_SESSION['glpiactive_entity'],false);
-      $canedit = plugin_datainjection_haveRight("model","w");
-      echo "<form method='post' id='models' action=\"".getItemTypeFormURL(__CLASS__)."\">";
+
+      echo "<form method='post' id='modelslist' action=\"".getItemTypeSearchURL(__CLASS__)."\">";
       echo "<table class='tab_cadrehov'>";
-      echo "<tr class='tab_bg_1'><th colspan='6'>".$LANG["datainjection"]["model"][39]."</th></tr>";
+      echo "<tr class='tab_bg_1'><th colspan='7'>".$LANG["datainjection"]["model"][39]."</th></tr>";
       if (!empty($models)) {
          echo "<tr class='tab_bg_1'>";
          echo "<th></th>";
@@ -1303,20 +1305,17 @@ class PluginDatainjectionModel extends CommonDBTM {
          echo "<th>".$LANG['common'][77]."</th>";
          echo "<th>".$LANG['entity'][0]."</th>";
          echo "<th>".$LANG['entity'][9]."</th>";
-         echo "<th>".$LANG['common'][17]."</th></th>";
+         echo "<th>".$LANG['common'][17]."</th>";
+         echo "<th>".$LANG['joblist'][0]."</th></th>";
 
          foreach ($models as $model) {
             echo "<tr class='tab_bg_1'>";
             echo "<td width='10px'>";
-            if ($canedit) {
-               $sel="";
-               if (isset($_GET["select"]) && $_GET["select"]=="all") {
-                  $sel="checked";
-               }
-               echo "<input type='checkbox' name='model[".$model["id"]."]'". $sel.">";
-            } else {
-               echo "&nbsp;";
+            $sel="";
+            if (isset($_GET["select"]) && $_GET["select"]=="all") {
+               $sel="checked";
             }
+            echo "<input type='checkbox' name='models[".$model["id"]."]'". $sel.">";
             echo "</td>";
             echo "<td>";
             echo "<a href='".getItemTypeFormURL('PluginDatainjectionModel')."?id=".$model['id']."'>";
@@ -1338,17 +1337,25 @@ class PluginDatainjectionModel extends CommonDBTM {
             echo "<td>";
             echo call_user_func(array($model['itemtype'],'getTypeName'));
             echo "</td>";
+
+            echo "<td>";
+            if ($model['step'] != self::READY_TO_USE_STEP) {
+               echo $LANG["datainjection"]["model"][35];
+            }
+            else {
+               echo $LANG["datainjection"]["model"][36];
+            }
+            echo "</td>";
             echo "</tr>";
          }
-
-         openArrowMassive("model");
-         closeArrowMassive('delete_several', $LANG['buttons'][6]);
-
+         echo "</table>";
+         openArrowMassive("modelslist");
+         closeArrowMassive('delete', $LANG['buttons'][6]);
       }
       else {
-         echo "<tr class='tab_bg_1'><td>".$LANG['search'][15]."</td>";
+         echo "<tr class='tab_bg_1'><td>".$LANG['search'][15]."</table></td>";
       }
-      echo "</table></form>";
+      echo "</form>";
    }
 }
 ?>
