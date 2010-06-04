@@ -363,13 +363,13 @@ class PluginDatainjectionModel extends CommonDBTM {
             if ($prev >= -1) {
                echo "</optgroup>\n";
             }
-            if ($model['is_private']) {
+            if ($model['entities_id'] == -1) {
                echo "\n<optgroup label=\"" . $LANG["datainjection"]["model"][18] . "\">";
             }
             else {
-               $prev = $model['entities_id'];
-               echo "\n<optgroup label=\"" . Dropdown::getDropdownName("glpi_entities", $prev) . "\">";
+               echo "\n<optgroup label=\"" . Dropdown::getDropdownName("glpi_entities", $model['entities_id']) . "\">";
             }
+            $prev = $model['entities_id'];
          }
          if ($model['id'] == $value) {
             $selected = "selected";
