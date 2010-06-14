@@ -109,14 +109,12 @@ class PluginDatainjectionModelcsv extends CommonDBChild {
       return $id;
    }
 
-   function showForm($models_id,$options=array()) {
+   function showForm(PluginDatainjectionModel $model,$options=array()) {
       global $LANG;
 
-      $id = $this->getFromDBByModelID($models_id);
+      $id = $this->getFromDBByModelID($model->fields['id']);
       $canedit=$this->can($id,'w');
 
-      echo "<form method='post' name=form action='".getItemTypeFormURL(__CLASS__)."'>";
-      echo "<table class='tab_cadre_fixe'>";
       echo "<tr><th colspan='4'>".$LANG["datainjection"]["model"][29]."</th></tr>";
 
       echo "<tr class='tab_bg_1'>";
@@ -130,18 +128,6 @@ class PluginDatainjectionModelcsv extends CommonDBChild {
       echo "<input type='text' size='1' name='delimiter' value='".$this->getDelimiter()."'";
       echo "</td>";
       echo "</tr>";
-
-      if ($canedit) {
-         echo "<tr>";
-         echo "<td class='tab_bg_2 center' colspan='4'>";
-         echo "<input type='hidden' name='id' value='$id'>";
-         echo "<input type='hidden' name='models_id' value='$models_id'>";
-         echo "<input type='submit' name='update' value=\"".$LANG['buttons'][7]."\" class='submit' >";
-         echo "</td></tr>";
-         echo "</table></form>";
-      } else {
-         echo "</table>";
-      }
    }
 
 

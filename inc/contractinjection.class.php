@@ -41,6 +41,10 @@ if (!defined('GLPI_ROOT')){
 class PluginDatainjectionContractInjection extends Contract
    implements PluginDatainjectionInjectionInterface {
 
+   function __construct() {
+      $this->table = getTableForItemType('Contract');
+   }
+
    function isPrimaryType() {
       return true;
    }
