@@ -106,7 +106,7 @@ class PluginDatainjectionCommonInjectionLib {
 
    //Empty values
    const EMPTY_VALUE                    = '';
-   const DROPDOWN_DEFAULT_VALUE         = 0;
+   const DROPDOWN_EMPTY_VALUE         = 0;
 
    //Format constants
    const FLOAT_TYPE_COMMA               = 0; //xxxx,xx
@@ -345,20 +345,20 @@ class PluginDatainjectionCommonInjectionLib {
             $this->setValueForItemtype($itemtype,$linkfield,$id);
             break;
          case 'contact':
-            if ($value != self::DROPDOWN_DEFAULT_VALUE) {
+            if ($value != self::DROPDOWN_EMPTY_VALUE) {
                $id = self::findContact($value,$this->entity);
             }
             else {
-               $id = self::DROPDOWN_DEFAULT_VALUE;
+               $id = self::DROPDOWN_EMPTY_VALUE;
             }
             $this->setValueForItemtype($itemtype,$linkfield,$id);
             break;
          case 'user':
-            if ($value != self::DROPDOWN_DEFAULT_VALUE) {
+            if ($value != self::DROPDOWN_EMPTY_VALUE) {
                $id =  self::findUser($value, $this->entity);
             }
             else {
-               $id =  self::DROPDOWN_DEFAULT_VALUE;
+               $id =  self::DROPDOWN_EMPTY_VALUE;
             }
             $this->setValueForItemtype($itemtype,$linkfield,$id);
             break;
@@ -426,11 +426,11 @@ class PluginDatainjectionCommonInjectionLib {
             return $ID;
          }
          else {
-            return self::DROPDOWN_DEFAULT_VALUE;
+            return self::DROPDOWN_EMPTY_VALUE;
          }
       }
       else {
-         return self::DROPDOWN_DEFAULT_VALUE;
+         return self::DROPDOWN_EMPTY_VALUE;
       }
    }
 
@@ -455,7 +455,7 @@ class PluginDatainjectionCommonInjectionLib {
          return $DB->result($result,0,"id");
       }
       else {
-         return self::DROPDOWN_DEFAULT_VALUE;
+         return self::DROPDOWN_EMPTY_VALUE;
       }
    }
 
@@ -481,7 +481,7 @@ class PluginDatainjectionCommonInjectionLib {
          return $DB->result($result,0,"id");
       }
       else {
-         $id = self::DROPDOWN_DEFAULT_VALUE;
+         $id = self::DROPDOWN_EMPTY_VALUE;
          if (in_array(get_class($item),$shouldbetropdowns)) {
             $id = $item->add(array($searchOption['field']=>$value));
          }

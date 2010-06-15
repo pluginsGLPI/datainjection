@@ -74,6 +74,7 @@ class PluginDatainjectionInjectionType {
       $p['itemtype']          = PluginDatainjectionInjectionType::NO_VALUE;
       $p['mapping_or_info']   = json_encode($mapping_or_info->fields);
       $p['called_by']         = get_class($mapping_or_info);
+      $p['fields_update']     = true;
       foreach ($options as $key => $value) {
          $p[$key] = $value;
       }
@@ -110,12 +111,12 @@ class PluginDatainjectionInjectionType {
 
       $p['itemtype'] = '__VALUE__';
 
-      $url = $CFG_GLPI["root_doc"]."/plugins/datainjection/ajax/dropdownChooseField.php";
-      ajaxUpdateItemOnSelectEvent("dropdown_data[".$mapping_or_info->fields['id']."][itemtype]$rand",
-                                  "span_field_".$mapping_or_info->fields['id'],
-                                  $url,$p);
-      ajaxUpdateItem("span_field_".$mapping_or_info->fields['id'],$url,$p,false,
+      $url_field = $CFG_GLPI["root_doc"]."/plugins/datainjection/ajax/dropdownChooseField.php";
+      $url_mandatory = $CFG_GLPI["root_doc"]."/plugins/datainjection/ajax/dropdownMandatory.php";
+      ajaxUpdateItem("span_field_".$mapping_or_info->fields['id'],$url_field,$p,false,
                      "dropdown_data[".$mapping_or_info->fields['id']."][itemtype]$rand");
+      ajaxUpdateItemOnSelectEvent("dropdown_data[".$mapping_or_info->fields['id']."][itemtype]$rand",
+                                  "span_field_".$mapping_or_info->fields['id'],$url_field,$p);
       return $rand;
    }
 
@@ -127,14 +128,21 @@ class PluginDatainjectionInjectionType {
       global $LANG,$CFG_GLPI;
 
       $used = array();
-      $p['itemtype'] = PluginDatainjectionInjectionType::NO_VALUE;
-      $p['primary_type'] = '';
-      $p['mapping_or_info'] = array();
-      $p['called_by'] = '';
+      $p['itemtype']       = PluginDatainjectionInjectionType::NO_VALUE;
+      $p['primary_type']   = '';
+      $p['mapping_or_info']= array();
+      $p['called_by']      = '';
+      $p['need_decode']    = true;
+      $p['fields_update']  = true;
       foreach ($options as $key => $value) {
          $p[$key] = $value;
       }
-      $mapping_or_info = json_decode(stripslashes_deep($options['mapping_or_info']),true);
+      if ($p['need_decode']) {
+         $mapping_or_info = json_decode(stripslashes_deep($options['mapping_or_info']),true);
+      }
+      else {
+         $mapping_or_info = $options['mapping_or_info'];
+      }
 
       $fields = array();
       $fields[PluginDatainjectionInjectionType::NO_VALUE] = $LANG["datainjection"]["mapping"][7];
@@ -168,16 +176,17 @@ class PluginDatainjectionInjectionType {
       }
       asort($fields);
 
-
       $rand = Dropdown::showFromArray("data[".$mapping_or_info['id']."][value]",
                                       $fields,
                                       array('value'=>$mapping_value,'used'=>$used));
-     $url = $CFG_GLPI["root_doc"]."/plugins/datainjection/ajax/dropdownMandatory.php";
-      ajaxUpdateItemOnSelectEvent("dropdown_data[".$mapping_or_info['id']."][value]$rand",
-                                  "span_mandatory_".$mapping_or_info['id'],
-                                  $url,$p);
+
+      $url = $CFG_GLPI["root_doc"]."/plugins/datainjection/ajax/dropdownMandatory.php";
+      //if ($p['fields_update']) {
       ajaxUpdateItem("span_mandatory_".$mapping_or_info['id'],$url,$p,false,
                      "dropdown_data[".$mapping_or_info['id']."][value]$rand");
+      //}
+      ajaxUpdateItemOnSelectEvent("dropdown_data[".$mapping_or_info['id']."][value]$rand",
+                                  "span_mandatory_".$mapping_or_info['id'],$url,$p);
    }
 
    /**
@@ -222,7 +231,12 @@ class PluginDatainjectionInjectionType {
    }
 
    static function showMandatoryCheckbox($options = array()) {
-      $mapping_or_info = json_decode(stripslashes_deep($options['mapping_or_info']),true);
+      if (isset($options['need_decode']) && $options['need_decode']) {
+         $mapping_or_info = json_decode(stripslashes_deep($options['mapping_or_info']),true);
+      }
+      else {
+         $mapping_or_info = $options['mapping_or_info'];
+      }
 
       //TODO : to improve
       $checked = '';
@@ -244,10 +258,17 @@ class PluginDatainjectionInjectionType {
       $p['primary_type'] = '';
       $p['mapping_or_info'] = array();
       $p['called_by'] = '';
+      $p['need_decode'] = true;
+
       foreach ($options as $key => $value) {
          $p[$key] = $value;
       }
-      $mapping_or_info = json_decode(stripslashes_deep($options['mapping_or_info']),true);
+      if ($p['need_decode']) {
+         $mapping_or_info = json_decode(stripslashes_deep($options['mapping_or_info']),true);
+      }
+      else {
+         $mapping_or_info = $options['mapping_or_info'];
+      }
 
       $used = array();
       $table = (($p['called_by']=='PluginDatainjectionMapping')

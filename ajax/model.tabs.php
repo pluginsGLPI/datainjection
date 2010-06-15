@@ -50,11 +50,14 @@ if (!isset($_POST["order"])) {
 }
 $model = new PluginDatainjectionModel;
 
+if ($_POST['glpi_tab'] == 1) {
+   $model->showAdvancedForm($_POST["id"]);
+}
+
 if ($_POST["id"] >0 && $model->can($_POST["id"],'r')) {
    switch($_POST['glpi_tab']) {
       case -1 :
          Plugin::displayAction($model,$_POST['glpi_tab']);
-         $model->showAdvancedForm($_POST["id"],$_POST['glpi_tab']);
 
          if ($model->fields['step'] > PluginDatainjectionModel::INITIAL_STEP) {
             $options['confirm'] = 'creation';
@@ -71,9 +74,6 @@ if ($_POST["id"] >0 && $model->can($_POST["id"],'r')) {
                $model->showValidationForm();
             }
          }
-         break;
-      case 1:
-         $model->showAdvancedForm($_POST["id"],$_POST['glpi_tab']);
          break;
       case 3 :
          $options['confirm'] = 'creation';

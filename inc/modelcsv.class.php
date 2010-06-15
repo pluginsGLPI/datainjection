@@ -109,7 +109,7 @@ class PluginDatainjectionModelcsv extends CommonDBChild {
       return $id;
    }
 
-   function showForm(PluginDatainjectionModel $model,$options=array()) {
+   function showAdditionnalForm(PluginDatainjectionModel $model,$options=array()) {
       global $LANG;
 
       $id = $this->getFromDBByModelID($model->fields['id']);
@@ -130,6 +130,15 @@ class PluginDatainjectionModelcsv extends CommonDBChild {
       echo "</tr>";
    }
 
+   function saveFields($fields) {
+      $csv = clone $this;
+      $tmp['models_id'] = $fields['id'];
+      $tmp['delimiter'] = $fields['delimiter'];
+      $tmp['is_header_present'] = $fields['is_header_present'];
+      $csv->getFromDBByModelID($fields['id']);
+      $tmp['id'] = $csv->fields['id'];
+      $csv->update($tmp);
+   }
 
 }
 ?>

@@ -523,10 +523,25 @@ class PluginDatainjectionModel extends CommonDBTM {
          // Create item
          $this->check(-1,'w');
          $this->getEmpty();
-         echo "<input type='hidden' name='step' value='1'>";
       }
 
       $this->showTabs($options);
+      $this->addDivForTabs();
+
+      return true;
+   }
+
+   function showAdvancedForm($ID, $options = array()) {
+      global $DB,$LANG;
+      if ($ID > 0) {
+         $this->check($ID,'r');
+      } else {
+         // Create item
+         $this->check(-1,'w');
+         $this->getEmpty();
+         echo "<input type='hidden' name='step' value='1'>";
+      }
+
       echo "<form name='form' method='post' action='".getItemTypeFormURL(__CLASS__)."'>";
       echo "<div class='center' id='tabsbody'>";
       echo "<table class='tab_cadre_fixe'>";
@@ -540,10 +555,7 @@ class PluginDatainjectionModel extends CommonDBTM {
       echo "<td>";
       autocompletionTextField($this,"name");
       echo "</td>";
-      echo "<td>".$LANG["datainjection"]["model"][5].": </td>";
-      echo "<td>";
-      PluginDatainjectionDropdown::dropdownFileTypes($this->fields['filetype']);
-      echo "</td></tr>";
+      echo "<td colspan='2'></td></tr>";
 
       echo "<tr class='tab_bg_1'>";
       echo "<td colspan='4' align='center'>";
@@ -552,6 +564,28 @@ class PluginDatainjectionModel extends CommonDBTM {
       echo "</td></tr>";
 
       echo "<tr class='tab_bg_1'>";
+      echo "<td>".$LANG['common'][25]."&nbsp;:</td>";
+      echo "<td colspan='3' class='middle'>";
+      echo "<textarea cols='45' rows='5' name='comment' >".$this->fields["comment"]."</textarea>";
+      echo "</td></tr>";
+
+      echo "<tr class='tab_bg_1'><th colspan='4'>".$LANG["datainjection"]["model"][15]."</th></tr>";
+
+      echo "<tr class='tab_bg_1'>";
+      echo "<td>".$LANG["datainjection"]["model"][6].": </td>";
+      echo "<td>";
+      Dropdown::showYesNo("behavior_add",$this->fields['behavior_add']);
+      echo "</td>";
+      echo "<td>".$LANG["datainjection"]["model"][5].": </td>";
+      echo "<td>";
+      PluginDatainjectionDropdown::dropdownFileTypes($this->fields['filetype']);
+      echo "</td></tr>";
+
+      echo "<tr class='tab_bg_1'>";
+      echo "<td>".$LANG["datainjection"]["model"][7].": </td>";
+      echo "<td>";
+      Dropdown::showYesNo("behavior_update",$this->fields['behavior_update']);
+      echo "</td>";
       echo "<td>".$LANG["datainjection"]["model"][4].": </td>";
       echo "<td>";
       if ($this->fields['step'] == '' || $this->fields['step'] == self::INITIAL_STEP) {
@@ -562,54 +596,23 @@ class PluginDatainjectionModel extends CommonDBTM {
          $itemtype = new $this->fields['itemtype'];
          echo $itemtype->getTypeName();
       }
-      echo "</td><td colspan='2'></td></tr>";
-
-      echo "<tr class='tab_bg_1'>";
-      echo "<td>".$LANG["datainjection"]["model"][6].": </td>";
-      echo "<td>";
-      Dropdown::showYesNo("behavior_add",$this->fields['behavior_add']);
-      echo "</td>";
-      echo "<td>".$LANG["datainjection"]["model"][7].": </td>";
-      echo "<td>";
-      Dropdown::showYesNo("behavior_update",$this->fields['behavior_update']);
-      echo "</td>";
-      echo "</tr>";
-
-      echo "<tr class='tab_bg_1'>";
-      echo "<td>".$LANG['common'][25]."&nbsp;:</td>";
-      echo "<td colspan='3' class='middle'>";
-      echo "<textarea cols='45' rows='5' name='comment' >".$this->fields["comment"]."</textarea>";
       echo "</td></tr>";
 
-      $this->showFormButtons($options);
-      $this->addDivForTabs();
-
-      return true;
-   }
-
-   function showAdvancedForm($ID, $options = array()) {
-      global $DB,$LANG;
-      $candedit = $this->check($ID,'r');
-
-      echo "<form method='post' name=form action='".getItemTypeFormURL(__CLASS__)."'>";
-      echo "<table class='tab_cadre_fixe'>";
-      echo "<tr class='tab_bg_1'><th colspan='4'>".$LANG["datainjection"]["model"][15]."</th></tr>";
+      echo "<tr class='tab_bg_1'>";
+      echo "<td>".$LANG["datainjection"]["model"][8].": </td>";
+      echo "<td>";
+      Dropdown::showYesNo("can_add_dropdown",$this->fields['can_add_dropdown']);
+      echo "</td>";
+      echo "<td>".$LANG["datainjection"]["model"][28].": </td>";
+      echo "<td>";
+      PluginDatainjectionDropdown::dropdownFloatFormat($this->fields['float_format']);
+      echo "</td>";
+      echo "</tr>";
 
       echo "<tr class='tab_bg_1'>";
       echo "<td>".$LANG["datainjection"]["model"][12].": </td>";
       echo "<td>";
       Dropdown::showYesNo("can_overwrite_if_not_empty",$this->fields['can_overwrite_if_not_empty']);
-      echo "</td>";
-      echo "<td>".$LANG["datainjection"]["model"][8].": </td>";
-      echo "<td>";
-      Dropdown::showYesNo("can_add_dropdown",$this->fields['can_add_dropdown']);
-      echo "</td>";
-      echo "</tr>";
-
-      echo "<tr class='tab_bg_1'>";
-      echo "<td>".$LANG["datainjection"]["model"][28].": </td>";
-      echo "<td>";
-      PluginDatainjectionDropdown::dropdownFloatFormat($this->fields['float_format']);
       echo "</td>";
       echo "<td>".$LANG["datainjection"]["model"][21].": </td>";
       echo "<td>";
@@ -628,10 +631,11 @@ class PluginDatainjectionModel extends CommonDBTM {
       echo "</td>";
       echo "</tr>";
 
-      $tmp = self::getInstance($this->fields['filetype']);
-      $tmp->showForm($this);
-      $this->showFormButtons(array('candel'=>false));
-
+      if ($ID > 0) {
+         $tmp = self::getInstance($this->fields['filetype']);
+         $tmp->showAdditionnalForm($this);
+      }
+      $this->showFormButtons($options);
       return true;
    }
 

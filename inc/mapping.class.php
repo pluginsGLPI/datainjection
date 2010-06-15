@@ -169,7 +169,16 @@ class PluginDatainjectionMapping extends CommonDBTM {
          $options =  array('primary_type' => $model->fields['itemtype']);
          $rand = PluginDatainjectionInjectionType::dropdownLinkedTypes($mapping,$options);
          echo "</td>";
-         echo "<td align='center'><span id='span_field_$mappings_id'></span></td>";
+         $options['mapping_or_info']= $mapping->fields;
+         $options['called_by']      = __CLASS__;
+         $options['need_decode']    = false;
+         $options['itemtype']= $mapping->fields['itemtype'];
+         $options['fields_update']= false;
+
+         echo "<td align='center'><span id='span_field_$mappings_id'>";
+         //PluginDatainjectionDropdown::dropdownFields($options);
+         echo "</span></td>";
+         //PluginDatainjectionDropdown::showMandatoryCheckbox($options);
          echo "<td align='center'><span id='span_mandatory_$mappings_id'></span></td>";
       }
 

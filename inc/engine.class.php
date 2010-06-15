@@ -171,7 +171,7 @@ class PluginDatainjectionEngine {
          else {
             //Value is empty : use the right default value regarding the field's type
             if (!in_array($option['displaytype'],array('text','multiline_text'))) {
-               $return_value = PluginDatainjectionCommonInjectionLib::DROPDOWN_DEFAULT_VALUE;
+               $return_value = PluginDatainjectionCommonInjectionLib::DROPDOWN_EMPTY_VALUE;
             }
          }
       }

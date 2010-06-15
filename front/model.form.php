@@ -58,8 +58,12 @@ elseif (isset ($_POST["delete"])) {
 }
 /* update */
 else if (isset ($_POST["update"])) {
+   //Update model
    $model->check($_POST['id'],'w');
    $model->update($_POST);
+
+   $specific_model = PluginDatainjectionModel::getInstance($_POST['filetype']);
+   $specific_model->saveFields($_POST);
    glpi_header($_SERVER['HTTP_REFERER']);
 }
 /* update order */

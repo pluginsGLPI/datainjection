@@ -258,7 +258,7 @@ function updateWithTemplate(& $fields, $type) {
 		unset ($tpl->fields["FK_entities"]);
 
 		foreach ($tpl->fields as $key => $value) {
-			if ($value != EMPTY_VALUE && (!isset ($fields[$key]) || $fields[$key] == EMPTY_VALUE || $fields[$key] == DROPDOWN_DEFAULT_VALUE))
+			if ($value != EMPTY_VALUE && (!isset ($fields[$key]) || $fields[$key] == EMPTY_VALUE || $fields[$key] == DROPDOWN_EMPTY_VALUE))
 				$fields[$key] = $value;
 		}
 	}
