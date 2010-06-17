@@ -76,37 +76,36 @@ class PluginDatainjectionCommonInjectionLib {
    const IMPORT_UPDATE                  = 1;
    const IMPORT_DELETE                  = 2;
 
+
    //Action return constants
-   const SUCCESS                        = 1;
-   const FAILED                         = 0;
-   const WARNING                        = 2;
-
-   const ITEM_NOT_FOUND                 = 0;
-
+   const SUCCESS                        = 11;
+   const FAILED                         = 10;
+   const WARNING                        = 12;
    //Field check return constants
-   const UNKNOWN_ID                     = 0;
-   const ALREADY_EXISTS                 = 1;
-   const TYPE_MISMATCH                  = 2;
-   const MANDATORY                      = 3;
+   const UNKNOWN_ID                     = 20;
+   const ALREADY_EXISTS                 = 21;
+   const TYPE_MISMATCH                  = 22;
+   const MANDATORY                      = 23;
+   const ITEM_NOT_FOUND                 = 24;
 
    //Injection Message
-   const ERROR_IMPORT_ALREADY_IMPORTED  = 11;
-   const ERROR_CANNOT_IMPORT            = 12;
-   const ERROR_CANNOT_UPDATE            = 13;
-   const WARNING_NOTFOUND               = 14;
-   const WARNING_USED                   = 15;
-   const WARNING_NOTEMPTY               = 16;
-   const WARNING_ALLEMPTY               = 17;
-   const WARNING_SEVERAL_VALUES_FOUND   = 18;
-   const WARNING_ALREADY_LINKED         = 19;
-   const IMPORT_IMPOSSIBLE              = 20;
-   const ERROR_FIELDSIZE_EXCEEDED       = 21;
-   const WARNING_PARTIALLY_IMPORTED     = 22;
-   const NOT_PROCESSED                  = 23;
+   const ERROR_IMPORT_ALREADY_IMPORTED  = 30;
+   const ERROR_CANNOT_IMPORT            = 31;
+   const ERROR_CANNOT_UPDATE            = 32;
+   const WARNING_NOTFOUND               = 33;
+   const WARNING_USED                   = 34;
+   const WARNING_NOTEMPTY               = 35;
+   const WARNING_ALLEMPTY               = 36;
+   const WARNING_SEVERAL_VALUES_FOUND   = 37;
+   const WARNING_ALREADY_LINKED         = 38;
+   const IMPORT_IMPOSSIBLE              = 39;
+   const ERROR_FIELDSIZE_EXCEEDED       = 40;
+   const WARNING_PARTIALLY_IMPORTED     = 41;
+   const NOT_PROCESSED                  = 42;
 
    //Empty values
    const EMPTY_VALUE                    = '';
-   const DROPDOWN_EMPTY_VALUE         = 0;
+   const DROPDOWN_EMPTY_VALUE           = 0;
 
    //Format constants
    const FLOAT_TYPE_COMMA               = 0; //xxxx,xx
@@ -151,7 +150,7 @@ class PluginDatainjectionCommonInjectionLib {
       }
       else {
          $this->formats = array('date_format' => self::DATE_TYPE_YYYYMMDD,
-                                'float_format' => FLOAT_TYPE_DOT);
+                                'float_format' => self::FLOAT_TYPE_DOT);
       }
 
       //Store values to inject
@@ -197,6 +196,7 @@ class PluginDatainjectionCommonInjectionLib {
       //2 : id, 19 : date_mod
       return array(2, 19);
    }
+
    /**
     * Find and return the right search option
     * @param options the search options array
@@ -894,7 +894,7 @@ class PluginDatainjectionCommonInjectionLib {
    //--------------------------------------------------//
    //-------- Add /Update/Delete methods -------------//
    //------------------------------------------------//
-   private function processAddOrUpdate() {
+   public function processAddOrUpdate() {
       $process = false;
 
       //Manage fields belonging to relations between tables
@@ -931,6 +931,7 @@ class PluginDatainjectionCommonInjectionLib {
                $this->results[self::ACTION_INJECT] = self::NOT_PROCESSED;
          }
       }
+
       if ($process) {
 
          //Get real value for fields (ie dropdown, etc)
@@ -992,7 +993,6 @@ class PluginDatainjectionCommonInjectionLib {
    }
 
    private function effectiveAddOrUpdate($add=true, $item, $values) {
-      //logDebug($values);
       //Insert data using the standard add() method
       if ($item instanceof CommonDropdown & $add) {
          $newID = $item->import($values);
@@ -1013,21 +1013,6 @@ class PluginDatainjectionCommonInjectionLib {
       }
       return $newID;
    }
-   /**
-    * Add object into GLPI
-    * @return the injection results
-    */
-   function addObject() {
-      $this->processAddOrUpdate();
-   }
-
-   /**
-    * Update data into GLPI
-    */
-   function updateObject() {
-      $this->processAddOrUpdate();
-   }
-
 
    /**
     * Delete data into GLPI
@@ -1174,7 +1159,6 @@ class PluginDatainjectionCommonInjectionLib {
             $sql .= " WHERE 1 " . $where_entity . " " . $where;
          }
 
-         logDebug($sql);
          $result = $DB->query($sql);
          if ($DB->numrows($result) > 0) {
             $this->setValueForItemtype($itemtype,'id',$DB->result($result,0,'id'));

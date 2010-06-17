@@ -126,7 +126,7 @@ class PluginDatainjectionEngine {
                        'optional_data'           =>$optional_data);
 
       //Will manage add or update
-      return $injectionClass->addObject($fields_toinject,$options);
+      return $injectionClass->addOrUpdateObject($fields_toinject,$options);
    }
 
    /**

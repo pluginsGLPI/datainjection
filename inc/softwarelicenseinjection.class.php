@@ -41,6 +41,10 @@ if (!defined('GLPI_ROOT')){
 class PluginDatainjectionSoftwareLicenseInjection extends SoftwareLicense
    implements PluginDatainjectionInjectionInterface {
 
+   function __construct() {
+      $this->table = getTableForItemType('SoftwareLicense');
+   }
+
    function isPrimaryType() {
       return true;
    }
@@ -61,41 +65,12 @@ class PluginDatainjectionSoftwareLicenseInjection extends SoftwareLicense
     * @param options options used during creation
     * @return an array of IDs of newly created objects : for example array(Computer=>1, Networkport=>10)
     */
-   function addObject($values=array(), $options=array()) {
+   function addOrUpdateObject($values=array(), $options=array()) {
       global $LANG;
       $lib = new PluginDatainjectionCommonInjectionLib($this,$values,$options);
-      $lib->addObject();
+      $lib->processAddOrUpdate();
       return $lib->getInjectionResults();
    }
-
-
-   /**
-    * Standard method to update an object into glpi
-    * WILL BE INTEGRATED INTO THE CORE IN 0.80
-    * @param fields fields to add into glpi
-    * @param options options used during creation
-    * @return an array of IDs of updated objects : for example array(Computer=>1, Networkport=>10)
-    */
-   function updateObject($values=array(), $options=array()) {
-      $lib = new PluginDatainjectionCommonInjectionLib($this,$values,$options);
-      $lib->updateObject();
-      return $lib->getInjectionResults();
-
-   }
-
-
-   /**
-    * Standard method to delete an object into glpi
-    * WILL BE INTEGRATED INTO THE CORE IN 0.80
-    * @param fields fields to add into glpi
-    * @param options options used during creation
-    */
-   function deleteObject($values=array(), $options=array()) {
-      $lib = new PluginDatainjectionCommonInjectionLib($this,$values,$options);
-      $lib->deleteObject();
-      return $lib->getInjectionResults();
-   }
-
 }
 
 ?>

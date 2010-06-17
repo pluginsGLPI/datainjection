@@ -48,6 +48,10 @@ function plugin_init_datainjection() {
       $PLUGIN_HOOKS['headings']['datainjection'] = 'plugin_get_headings_datainjection';
       $PLUGIN_HOOKS['headings_action']['datainjection'] = 'plugin_headings_actions_datainjection';
 
+      $image_import = "<img src='".$CFG_GLPI["root_doc"]."/pics/actualiser.png' title='";
+      $image_import.= $LANG["datainjection"]["importStep"][1];
+      $image_import.= "' alt='".$LANG["datainjection"]["importStep"][1]."'>";
+
       if (plugin_datainjection_haveRight("model", "r")) {
          $PLUGIN_HOOKS['menu_entry']['datainjection'] = true;
          $PLUGIN_HOOKS['submenu_entry']['datainjection']['options']['model']['title']  =
@@ -58,6 +62,11 @@ function plugin_init_datainjection() {
                                                             '/plugins/datainjection/front/model.php';
          $PLUGIN_HOOKS['submenu_entry']['datainjection']['options']['model']['links']['add'] =
                                                       '/plugins/datainjection/front/model.form.php';
+         $image_model = "<img src='".$CFG_GLPI["root_doc"]."/pics/rdv.png' title='";
+         $image_model.= $LANG["datainjection"]["profiles"][1];
+         $image_model.= "' alt='".$LANG["datainjection"]["profiles"][1]."'>";
+         $PLUGIN_HOOKS['submenu_entry']['datainjection'][$image_model] = 'front/model.php';
+         $PLUGIN_HOOKS['submenu_entry']['datainjection']['options']['model']['links'][$image_import] = '/plugins/datainjection/index.php';
       }
       $PLUGIN_HOOKS['submenu_entry']['datainjection']['add'] = 'index.php';
 

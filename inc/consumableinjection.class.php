@@ -41,6 +41,10 @@ if (!defined('GLPI_ROOT')){
 class PluginDatainjectionConsumableInjection extends Consumable
    implements PluginDatainjectionInjectionInterface {
 
+   function __construct() {
+      $this->table = getTableForItemType('Consumable');
+   }
+
    function isPrimaryType() {
       return true;
    }
@@ -60,10 +64,10 @@ class PluginDatainjectionConsumableInjection extends Consumable
     * @param options options used during creation
     * @return an array of IDs of newly created objects : for example array(Computer=>1, Networkport=>10)
     */
-   function addObject($values=array(), $options=array()) {
+   function addOrUpdateObject($values=array(), $options=array()) {
       global $LANG;
       $lib = new PluginDatainjectionCommonInjectionLib($this,$values,$options);
-      $lib->addObject();
+      $lib->processAddOrUpdate();
       return $lib->getInjectionResults();
    }
 
