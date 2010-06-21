@@ -162,7 +162,6 @@ class PluginDatainjectionNetworkportInjection extends NetworkPort
     */
    function getUnicityRequest($fields_toinject = array(), $options = array()) {
       $where = "";
-      logDebug($options);
       switch ($options['port_unicity']) {
          case PluginDatainjectionModel::UNICITY_NETPORT_LOGICAL_NUMBER :
             $where .= " AND `logical_number`='" . (isset ($fields_toinject["logical_number"])

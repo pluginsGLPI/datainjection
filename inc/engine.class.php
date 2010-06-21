@@ -43,6 +43,10 @@ class PluginDatainjectionEngine {
    //Additional infos to be added
    private $infos = array();
 
+   //Lines in error
+   private $error_lines = array();
+
+
    function __construct($model, $infos = array(), $entity = 0) {
       //Instanciate model
       $this->model = $model;
@@ -126,7 +130,11 @@ class PluginDatainjectionEngine {
                        'optional_data'           =>$optional_data);
 
       //Will manage add or update
-      return $injectionClass->addOrUpdateObject($fields_toinject,$options);
+      $results = $injectionClass->addOrUpdateObject($fields_toinject,$options);
+      if ($results['status'] != PluginDatainjectionCommonInjectionLib::SUCCESS) {
+         $this->error_lines[] = $line;
+      }
+      return $results;
    }
 
    /**
@@ -201,6 +209,10 @@ class PluginDatainjectionEngine {
 
    function getEntity() {
       return $this->entity;
+   }
+
+   function getLinesInError() {
+      return $this->error_lines;
    }
 }
 ?>

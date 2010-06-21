@@ -57,8 +57,10 @@ elseif (isset($_POST['upload'])) {
                        'mode'         => PluginDatainjectionModel::PROCESS,
                        'delete_file'  => false);
       $response = $model->processUploadedFile($options);
+      $model->cleanData();
       if ($response) {
          //File uploaded successfully and matches the given model : switch to the import tab
+         $_SESSION['datainjection']['file_name'] = $_FILES['filename']['name'];
          $_SESSION['datainjection']['step'] =
                                           PluginDatainjectionClientInjection::STEP_PROCESS;
          //Store model in session for injection

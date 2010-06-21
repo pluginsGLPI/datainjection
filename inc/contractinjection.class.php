@@ -69,6 +69,11 @@ class PluginDatainjectionContractInjection extends Contract
       $tab[6]['step'] = 1;
       $tab[6]['checktype']    = 'integer';
 
+      $tab[7]['minvalue'] = 0;
+      $tab[7]['maxvalue'] = 120;
+      $tab[7]['step'] = 1;
+      $tab[7]['checktype']    = 'integer';
+
       $tab[22]['linkfield'] = 'billing';
       //Add linkfield for theses fields : no massive action is allowed in the core, but they can be
       //imported using the commonlib

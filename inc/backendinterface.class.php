@@ -55,7 +55,7 @@ interface PluginDatainjectionBackendInterface {
    /**
     * Export results to a file
     */
-   function export($file, PluginDatainjectionModel $model, $tab_result);
+   //function export($file, PluginDatainjectionModel $model, $tab_result);
 
    /**
     * Store the number of lines red from the file

@@ -108,13 +108,10 @@ class PluginDatainjectionClientInjection {
                $url = $CFG_GLPI["root_doc"]."/plugins/datainjection/ajax/dropdownSelectModel.php";
                ajaxUpdateItem("span_injection",$url,$p);
                break;
-            /*
-             case self::STEP_PROCESS:
-               $url = $CFG_GLPI["root_doc"]."/plugins/datainjection/ajax/injection.php";
+            case self::STEP_RESULT:
+               $url = $CFG_GLPI["root_doc"]."/plugins/datainjection/ajax/results.php";
                ajaxUpdateItem("span_injection",$url,$p);
-                break;
-             default:
-                break;*/
+               break;
          }
       }
    }
@@ -234,7 +231,7 @@ class PluginDatainjectionClientInjection {
               number_format($index*100/$nblines,1).'%');
          $line = $backend->getNextLine();
          $index++;
-         logDebug($index.' sur '.$nblines);
+         //logDebug($index.' sur '.$nblines);
       }
 
       //EOF : change progressbar to 100% !
@@ -248,21 +245,25 @@ class PluginDatainjectionClientInjection {
       $backend->deleteFile();
 
       //Change step
-      $_SESSION['datainjection']['step'] = self::STEP_UPLOAD;
+      $_SESSION['datainjection']['step'] = self::STEP_RESULT;
 
       //Display results form
+      $_SESSION['datainjection']['results'] = json_encode($clientinjection->results);
+      $_SESSION['datainjection']['error_lines'] = json_encode($engine->getLinesInError());
       $p['models_id'] = $model->fields['id'];
-      $p['results']   = json_encode($clientinjection->results);
       $p['nblines']   = $nblines;
+
+      unset($_SESSION['datainjection']['go']);
+
       $url = $CFG_GLPI["root_doc"]."/plugins/datainjection/ajax/results.php";
       ajaxUpdateItem("span_injection",$url,$p);
    }
 
-   static function showResultsForm(PluginDatainjectionModel $model, $options) {
+   static function showResultsForm(PluginDatainjectionModel $model) {
       global $LANG,$CFG_GLPI;
-      $results = json_decode(stripslashes_deep($options['results']),true);
-      $_SESSION['datainjection']['results'] = $options['results'];
-      unset($_SESSION['datainjection']['go']);
+
+      $results = json_decode(stripslashes_deep($_SESSION['datainjection']['results']),true);
+      $error_lines = json_decode(stripslashes_deep($_SESSION['datainjection']['error_lines']),true);
       $ok = true;
       foreach ($results as $result) {
          if ($result['status'] != PluginDatainjectionCommonInjectionLib::SUCCESS) {
@@ -304,14 +305,50 @@ class PluginDatainjectionClientInjection {
          echo "</a>";
       }
 
-      echo "&nbsp;";
-      echo "<a href='#' onclick=\"location.href='download.pdf.php'\"";
-      echo "title='".addslashes($LANG["datainjection"]["button"][5])."'>";
-      echo "<img src='".$CFG_GLPI['root_doc']."/plugins/datainjection/pics/failedcsv.png'>";
-      echo "</a>";
-      echo "</td>";
-      echo "</tr>";
+      if (!empty($error_lines)) {
+         echo "&nbsp;";
+         echo "<a href='#' onclick=\"location.href='export.csv.php'\"";
+         echo "title='".addslashes($LANG["datainjection"]["button"][5])."'>";
+         echo "<img src='".$CFG_GLPI['root_doc']."/plugins/datainjection/pics/failedcsv.png'>";
+         echo "</a>";
+         echo "</td>";
+         echo "</tr>";
+      }
       echo "</table>";
+   }
+
+   static function exportErrorsInCSV() {
+
+      $error_lines = json_decode(stripslashes_deep($_SESSION['datainjection']['error_lines']),true);
+      if (!empty($error_lines)) {
+         $model = unserialize($_SESSION["datainjection"]["currentmodel"]);
+         $file = PLUGIN_DATAINJECTION_UPLOAD_DIR . $_SESSION['datainjection']['file_name'];
+
+         $mappings = $model->getMappings();
+         $tmpfile= fopen($file, "w");
+
+         //If headers present
+         if ($model->getBackend()->isHeaderPresent()) {
+            $headers = PluginDatainjectionMapping::getMappingsSortedByRank($model->fields['id']);
+            fputcsv($tmpfile, $headers, $model->getBackend()->getDelimiter());
+         }
+
+         //Write lines
+         foreach($error_lines as $line) {
+            fputcsv($tmpfile, $line, $model->getBackend()->getDelimiter());
+         }
+         fclose($tmpfile);
+
+         header('Content-disposition: attachment; filename=Error-'.$_SESSION['datainjection']['file_name']);
+         header('Content-Type: application/force-download');
+         header('Content-Transfer-Encoding: fichier');
+         header('Content-Length: '.filesize($file));
+         header('Pragma: no-cache');
+         header('Cache-Control: no-store, no-cache, must-revalidate, post-check=0, pre-check=0');
+         header('Expires: 0');
+         readfile($file);
+         unlink($file);
+      }
    }
 }
 ?>

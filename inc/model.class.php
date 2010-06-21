@@ -1371,5 +1371,9 @@ class PluginDatainjectionModel extends CommonDBTM {
       }
       echo "</form>";
    }
+
+   function cleanData() {
+      $this->injectionData = array();
+   }
 }
 ?>

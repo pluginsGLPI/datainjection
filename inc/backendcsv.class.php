@@ -185,22 +185,6 @@ class PluginDatainjectionBackendcsv extends PluginDatainjectionBackend
       unlink($this->file);
    }
 
-   function export($file, PluginDatainjectionModel $model, $tab_result) {
-      $tmpfile= fopen($file, "w");
-
-      $header= $this->getHeader($model->isHeaderPresent());
-
-      fputcsv($tmpfile, $header, $this->getDelimiter());
-
-      foreach($tab_result[0] as $value) {
-         $list= $this->getDataAtLine($value->getLineID());
-
-         fputcsv($tmpfile, $list, $this->getDelimiter());
-      }
-
-      fclose($tmpfile);
-   }
-
    function readLinesFromTo($start_line, $end_line) {
       $row= 0;
       $fic= fopen($this->file, 'r');

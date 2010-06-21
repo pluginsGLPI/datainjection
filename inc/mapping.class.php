@@ -212,5 +212,17 @@ class PluginDatainjectionMapping extends CommonDBTM {
       return $several;
    }
 
+   static function getMappingsSortedByRank($models_id) {
+     global $DB;
+     $mappings = array();
+     $query = "SELECT `name`
+               FROM `glpi_plugin_datainjection_mappings`
+               WHERE `models_id`='$models_id'
+               ORDER BY `rank` ASC";
+     foreach($DB->request($query) as $data) {
+        $mappings[] = $data['name'];
+     }
+     return $mappings;
+   }
 }
 ?>
