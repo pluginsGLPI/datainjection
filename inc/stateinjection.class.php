@@ -54,7 +54,7 @@ class PluginDatainjectionStateInjection extends State
       return array();
    }
 
-   function getOptions() {
+   function getOptions($primary_type = '') {
       $tab = parent::getSearchOptions();
 
       //Remove some options because some fields cannot be imported

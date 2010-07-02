@@ -78,3 +78,67 @@ function show_option()
 		document.getElementById('option').style.display = 'none';
 		}
 }
+
+function go_mapping(id,type)
+{  
+   var xhr = getXhr();
+
+   xhr.onreadystatechange = function(){
+
+      if(xhr.readyState == 4 && xhr.status == 200)
+         {
+         leselect = xhr.responseText;
+         document.getElementById('field'+id).innerHTML = leselect;
+         }
+      }
+
+   xhr.open("POST","../inc/plugin_datainjection.ajax.tablefieldmapping.php",true);
+
+   xhr.setRequestHeader('Content-Type','application/x-www-form-urlencoded');
+
+   sel = document.getElementById('table'+id);
+   idtable = sel.options[sel.selectedIndex].value;
+
+   nom = document.getElementById('name'+id).value;
+   
+   if (sel.value==type)
+      document.getElementById("check"+id).disabled=false;
+   else
+      {
+      document.getElementById("check"+id).disabled=true;
+      document.getElementById("check"+id).checked=false;
+      }
+      
+   xhr.send("id="+id+"&idMapping="+idtable+"&name="+nom);
+}
+
+function go_info(id)
+{  
+   var xhr = getXhr();
+
+   xhr.onreadystatechange = function(){
+
+      if(xhr.readyState == 4 && xhr.status == 200)
+         {
+         leselect = xhr.responseText;
+         document.getElementById('field'+id).innerHTML = leselect;
+         }
+      }
+
+   xhr.open("POST","../inc/plugin_datainjection.ajax.tablefieldinfo.php",true);
+
+   xhr.setRequestHeader('Content-Type','application/x-www-form-urlencoded');
+
+   sel = document.getElementById('table'+id);
+   idtable = sel.options[sel.selectedIndex].value;
+   
+   if(idtable!=-1)
+      document.getElementById("check"+id).disabled=false;
+   else
+      {
+      document.getElementById("check"+id).disabled=true;
+      document.getElementById("check"+id).checked=false;
+      }
+      
+   xhr.send("id="+id+"&idMapping="+idtable);
+}

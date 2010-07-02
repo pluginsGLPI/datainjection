@@ -49,20 +49,37 @@ class PluginDatainjectionContract_ItemInjection extends Contract_Item
       return false;
    }
 
-   function connectedTo() {
-      return array('Computer','Phone','Printer','NetworkEquipment','Monitor','Software',
-                   'SoftwareLicense','Peripheral');
+   function relationSide() {
+      return false;
    }
 
-   function getOptions() {
-      global $LANG;
-      $tab = parent::getSearchOptions();
+   function connectedTo() {
+      return array('Computer','Monitor','Software','Printer','Peripheral','Phone','NetworkEquipment');
+   }
 
-      $tab[100]['table']        = '';
-      $tab[100]['field']        = 'items_name';
-      $tab[100]['linkfield']    = 'items_name';
-      $tab[100]['name']         = $LANG['common'][16].' '.$LANG['financial'][104];
-      $tab[100]['virtual']      = true;
+   function getOptions($primary_type = '') {
+      global $LANG;
+
+      $tab[100]['table']        = 'glpi_contracts';
+      $tab[100]['field']        = 'name';
+      $tab[100]['linkfield']    = 'name';
+      $tab[100]['name']         = $LANG['common'][16];
+      $tab[100]['injectable']   = true;
+      $tab[100]['checktype']    = 'text';
+      $tab[100]['displaytype']  = 'relation';
+      $tab[100]['relationclass']= 'Contract_Item';
+      $tab[100]['storevaluein']= 'contracts_id';
+
+      $tab[101]['table']        = 'glpi_contracts';
+      $tab[101]['field']        = 'num';
+      $tab[101]['linkfield']    = 'num';
+      $tab[101]['name']         = $LANG['common'][19];
+      $tab[101]['injectable']   = true;
+      $tab[101]['checktype']    = 'text';
+      $tab[101]['displaytype']  = 'relation';
+      $tab[101]['relationclass']= 'Contract_Item';
+      $tab[101]['storevaluein']= 'contracts_id';
+
       return $tab;
    }
 
@@ -79,6 +96,13 @@ class PluginDatainjectionContract_ItemInjection extends Contract_Item
       $lib->processAddOrUpdate();
       return $lib->getInjectionResults();
    }
+
+   function addSpecificNeededFields($primary_type,$values) {
+      $fields['items_id'] = $values[$primary_type]['id'];
+      $fields['itemtype'] = $primary_type;
+      return $fields;
+   }
+
 }
 
 ?>

@@ -53,7 +53,7 @@ class PluginDatainjectionConsumableItemInjection extends ConsumableItem
       return array();
    }
 
-   function getOptions() {
+   function getOptions($primary_type = '') {
       return parent::getSearchOptions();
    }
 

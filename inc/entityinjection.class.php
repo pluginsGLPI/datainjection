@@ -53,7 +53,7 @@ class PluginDatainjectionEntityInjection extends Entity
       return array('Document');
    }
 
-   function getOptions() {
+   function getOptions($primary_type = '') {
       return parent::getSearchOptions();
    }
 

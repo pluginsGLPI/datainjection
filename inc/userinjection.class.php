@@ -52,7 +52,7 @@ class PluginDatainjectionUserInjection extends User
       return array();
    }
 
-   function getOptions() {
+   function getOptions($primary_type = '') {
       global $LANG;
       $tab = parent::getSearchOptions();
 
@@ -67,6 +67,7 @@ class PluginDatainjectionUserInjection extends User
       $tab[100]['linkfield']     = getForeignKeyFieldForTable($tab[100]['table']);
       $tab[100]['displaytype']   = 'relation';
       $tab[100]['relationclass'] = 'Group_User';
+      $tab[100]['relationfield'] = $tab[100]['linkfield'];
 
       //To manage groups : relies on a CommonDBRelation object !
       $tab[101]['name']          = $LANG['Menu'][35];
@@ -75,6 +76,7 @@ class PluginDatainjectionUserInjection extends User
       $tab[101]['linkfield']     = getForeignKeyFieldForTable($tab[101]['table']);
       $tab[101]['displaytype']   = 'relation';
       $tab[101]['relationclass'] = 'Profile_User';
+      $tab[101]['relationfield'] = $tab[101]['linkfield'];
 
       $blacklist = PluginDatainjectionCommonInjectionLib::getBlacklistedOptions();
       //Remove some options because some fields cannot be imported

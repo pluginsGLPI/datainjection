@@ -46,7 +46,6 @@ class PluginDatainjectionEngine {
    //Lines in error
    private $error_lines = array();
 
-
    function __construct($model, $infos = array(), $entity = 0) {
       //Instanciate model
       $this->model = $model;
@@ -77,7 +76,7 @@ class PluginDatainjectionEngine {
       //which looks like this :
       //array(itemtype=>array(field=>value,field2=>value2))
       //Note : ignore values which are not mapped with a glpi's field
-      $searchOptions = $injectionClass->getOptions();
+      $searchOptions = $injectionClass->getOptions($itemtype);
       for ($i = 0; $i < count($line); $i++) {
          $mapping = $this->getModel()->getMappingByRank($i);
          //If field is mapped with a value in glpi

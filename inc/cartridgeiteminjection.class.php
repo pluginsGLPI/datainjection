@@ -53,7 +53,7 @@ class PluginDatainjectionCartridgeItemInjection extends CartridgeItem
       return array();
    }
 
-   function getOptions() {
+   function getOptions($primary_type = '') {
       return parent::getSearchOptions();
    }
 

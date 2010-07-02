@@ -53,7 +53,7 @@ class PluginDatainjectionProfile_UserInjection extends Profile_User
       return array();
    }
 
-   function getOptions() {
+   function getOptions($primary_type = '') {
       $tab = parent::getSearchOptions();
       unset($tab[2]);
 

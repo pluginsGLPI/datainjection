@@ -53,7 +53,7 @@ class PluginDatainjectionNetworkport_VlanInjection extends NetworkPort_Vlan
       return array();
    }
 
-   function getOptions() {
+   function getOptions($primary_type = '') {
       global $LANG;
       $tab = parent::getSearchOptions();
       $blacklist = PluginDatainjectionCommonInjectionLib::getBlacklistedOptions();
@@ -107,6 +107,7 @@ class PluginDatainjectionNetworkport_VlanInjection extends NetworkPort_Vlan
       $lib->processAddOrUpdate();
       return $lib->getInjectionResults();
    }
+
 
    function addSpecificNeededFields($primary_type,$values) {
       $fields['networkports_id'] = $values['NetworkPort']['id'];

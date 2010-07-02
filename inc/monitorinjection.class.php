@@ -53,7 +53,7 @@ class PluginDatainjectionMonitorInjection extends Monitor
       return array();
    }
 
-   function getOptions() {
+   function getOptions($primary_type = '') {
      $tab = parent::getSearchOptions();
 
       //Specific to location

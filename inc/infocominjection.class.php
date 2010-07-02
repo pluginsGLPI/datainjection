@@ -55,7 +55,7 @@ class PluginDatainjectionInfocomInjection extends Infocom
       return $CFG_GLPI["infocom_types"];
    }
 
-   function getOptions() {
+   function getOptions($primary_type = '') {
       global $LANG;
       $tab = parent::getSearchOptions();
 

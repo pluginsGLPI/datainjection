@@ -53,7 +53,7 @@ class PluginDatainjectionVlanInjection extends Vlan
       return array();
    }
 
-   function getOptions() {
+   function getOptions($primary_type = '') {
       $tab = parent::getSearchOptions();
 
       $blacklist = PluginDatainjectionCommonInjectionLib::getBlacklistedOptions();

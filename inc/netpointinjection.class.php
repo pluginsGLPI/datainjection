@@ -53,7 +53,7 @@ class PluginDatainjectionNetpointInjection extends Netpoint
       return array('NetworkEquipment','Computer','Peripheral','Phone');
    }
 
-   function getOptions() {
+   function getOptions($primary_type = '') {
       $tab = parent::getSearchOptions();
       //Specific to location
       $tab[3]['linkfield'] = 'locations_id';

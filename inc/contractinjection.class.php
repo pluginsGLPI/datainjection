@@ -41,7 +41,6 @@ if (!defined('GLPI_ROOT')){
 class PluginDatainjectionContractInjection extends Contract
    implements PluginDatainjectionInjectionInterface {
 
-
    function __construct() {
       $this->table = getTableForItemType('Contract');
    }
@@ -54,7 +53,7 @@ class PluginDatainjectionContractInjection extends Contract
       return array();
    }
 
-   function getOptions() {
+   function getOptions($primary_type = '') {
      $tab = parent::getSearchOptions();
 
       $blacklist = PluginDatainjectionCommonInjectionLib::getBlacklistedOptions();

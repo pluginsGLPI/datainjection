@@ -159,7 +159,7 @@ class PluginDatainjectionInjectionType {
 
          $injectionClass = PluginDatainjectionCommonInjectionLib::getInjectionClassInstance($p['itemtype']);
 
-         foreach ($injectionClass->getOptions() as $option) {
+         foreach ($injectionClass->getOptions($p['primary_type']) as $option) {
             //If it's a real option (not a group label) and if field is not blacklisted
             //and if a linkfield is defined (meaning that the field can be updated)
             if (is_array($option)
@@ -282,7 +282,8 @@ class PluginDatainjectionInjectionType {
       foreach ($datas as $data) {
          if ($data['value'] != PluginDatainjectionInjectionType::NO_VALUE) {
             foreach ($options as $option) {
-               if ($option['linkfield'] == $data['value']
+               if ($option['table'] == getItemTypeForTable($data['itemtype'])
+                     && $option['linkfield'] == $data['value']
                         && $option['displaytype'] != 'multiline_text'
                            && $mapping_or_info['value'] != $data['value']) {
                   $used[$option['linkfield']] = $option['linkfield'];

@@ -403,7 +403,7 @@ class PluginDatainjectionModel extends CommonDBTM {
       $models = array ();
       $query = "SELECT `id`, `name`, `is_private`, `entities_id`, `is_recursive`, `itemtype`, `step` ";
       $query.= "FROM `glpi_plugin_datainjection_models` WHERE 1 ";
-      if ($all) {
+      if (!$all) {
          $query.= " AND`step`='".self::READY_TO_USE_STEP."' ";
       }
       $query.= "AND (`is_private`=" . self::MODEL_PUBLIC;
@@ -1000,6 +1000,10 @@ class PluginDatainjectionModel extends CommonDBTM {
 
    static function checkRightOnModel($models_id) {
       global $DB;
+
+      $model = new PluginDatainjectionModel;
+      $model->getFromDB($models_id);
+
       $continue = true;
       $query = "(SELECT `itemtype` FROM `glpi_plugin_datainjection_models` ";
       $query.= "WHERE `id`='$models_id') ";
@@ -1011,7 +1015,10 @@ class PluginDatainjectionModel extends CommonDBTM {
       foreach ($DB->request($query) as $data) {
          if ($data['itemtype'] != PluginDatainjectionInjectionType::NO_VALUE) {
             $item = new $data['itemtype'];
-            if (!$item->canCreate()) {
+            $item->fields['itemtype'] = $model->fields['itemtype'];
+            if (!($item instanceof CommonDBRelation)
+                  && !$item->canCreate()) {
+               logDebug("false",$data['itemtype']);
                $continue = false;
                break;
             }

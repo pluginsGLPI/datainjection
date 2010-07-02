@@ -53,7 +53,7 @@ class PluginDatainjectionNetworkportInjection extends NetworkPort
       return array('NetworkEquipment','Computer','Peripheral','Phone');
    }
 
-   function getOptions() {
+   function getOptions($primary_type = '') {
       global $LANG;
       $tab = parent::getSearchOptions();
       $blacklist = PluginDatainjectionCommonInjectionLib::getBlacklistedOptions();
@@ -65,6 +65,7 @@ class PluginDatainjectionNetworkportInjection extends NetworkPort
       $tab[100]['linkfield']     = getForeignKeyFieldForTable($tab[100]['table']);
       $tab[100]['displaytype']   = 'relation';
       $tab[100]['relationclass'] = 'NetworkPort_Vlan';
+      $tab[100]['storevaluein'] = $tab[100]['linkfield'];
 
       //Remove some options because some fields cannot be imported
       $notimportable = array(20, 21);

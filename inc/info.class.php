@@ -212,7 +212,7 @@ class PluginDatainjectionInfo extends CommonDBTM {
 
    static function displayAdditionalInformation(PluginDatainjectionInfo $info,$values = array()) {
       $injectionClass = PluginDatainjectionCommonInjectionLib::getInjectionClassInstance($info->fields['itemtype']);
-      $option = PluginDatainjectionCommonInjectionLib::findSearchOption($injectionClass->getOptions(),
+      $option = PluginDatainjectionCommonInjectionLib::findSearchOption($injectionClass->getOptions($info->fields['itemtype']),
                                                                         $info->fields['value']);
       if ($option) {
          echo "<td>";
@@ -304,7 +304,7 @@ class PluginDatainjectionInfo extends CommonDBTM {
    static function keepInfo(PluginDatainjectionInfo $info, $value) {
       $itemtype = $info->getInfosType();
       $injectionClass = PluginDatainjectionCommonInjectionLib::getInjectionClassInstance($itemtype);
-      $options = $injectionClass->getOptions();
+      $options = $injectionClass->getOptions($itemtype);
       $option = PluginDatainjectionCommonInjectionLib::findSearchOption($options,$info->getValue());
       if ($option) {
          switch ($option['displaytype']) {
