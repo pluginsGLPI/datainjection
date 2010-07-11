@@ -142,6 +142,10 @@ class PluginDatainjectionSoftwareLicenseInjection extends SoftwareLicense
       $lib->processAddOrUpdate();
       return $lib->getInjectionResults();
    }
+
+   function checkMandatoryMappings() {
+      return array('softwares_id');
+   }
 }
 
 ?>

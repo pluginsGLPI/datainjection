@@ -290,8 +290,8 @@ class PluginDatainjectionCheck {
          return true;
        }
 
-       if(ctype_digit($val)
-            && (is_float($val)
+       $val = floatval($val);
+       if((is_float($val)
             || ( (float) $val > (int) $val
                || strlen($val) != strlen( (int) $val) )) ) {
           return true;

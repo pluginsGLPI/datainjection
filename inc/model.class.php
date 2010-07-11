@@ -1176,12 +1176,12 @@ class PluginDatainjectionModel extends CommonDBTM {
                   if (isset($result[PluginDatainjectionCommonInjectionLib::ACTION_CHECK]['status'])
                         && $result[PluginDatainjectionCommonInjectionLib::ACTION_CHECK]['status'] !=
                            PluginDatainjectionCommonInjectionLib::FAILED) {
-                           echo PluginDatainjectionCommonInjectionLib::getLogLabel($result['status']);
+                           $code = $result[PluginDatainjectionCommonInjectionLib::ACTION_INJECT]['status'];
+                           echo PluginDatainjectionCommonInjectionLib::getLogLabel($code);
                         }
                   echo "</td>";
                   echo "<td>";
-                  if ($result[PluginDatainjectionCommonInjectionLib::ACTION_CHECK]['status'] !=
-                        PluginDatainjectionCommonInjectionLib::FAILED) {
+                  if ($result['status'] != PluginDatainjectionCommonInjectionLib::FAILED) {
                      echo PluginDatainjectionCommonInjectionLib::getActionLabel($result['type']);
                   }
                   echo "</td>";

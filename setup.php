@@ -140,6 +140,7 @@ function getTypesToInject() {
    global $INJECTABLE_TYPES,$PLUGIN_HOOKS;
    $INJECTABLE_TYPES = array(//'PluginDatainjectionCartridgeItemInjection'      =>'datainjection',
                                 //'PluginDatainjectionCartridgeInjection'          =>'datainjection',
+                                'PluginDatainjectionBudgetInjection'             =>'datainjection',
                                 'PluginDatainjectionComputerInjection'           =>'datainjection',
                                 'PluginDatainjectionComputer_ItemInjection'      =>'datainjection',
                                 //'PluginDatainjectionConsumableInjection'         =>'datainjection',

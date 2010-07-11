@@ -300,7 +300,6 @@ class PluginDatainjectionCommonInjectionLib {
             }
          }
       }
-      logDebug("manageFieldValues",$this->values);
    }
 
    /**
@@ -704,23 +703,28 @@ class PluginDatainjectionCommonInjectionLib {
       switch ($date_format)
       {
          case self::DATE_TYPE_YYYYMMDD:
-            $new_date=preg_replace('/(\d{4})[-\/](\d{1,2})[-\/](\d{1,2})/','\1-\2-\3',
+            $new_date=preg_replace('/(\d{4})[-\/](\d{1,2})[-\/](\d{1,2})/',
+                                   '\1-\2-\3',
                                    $original_date);
          break;
          case self::DATE_TYPE_DDMMYYYY:
-            $new_date=preg_replace('/(\d{1,2})[-\/](\d{1,2})[-\/](\d{4})/','\3-\2-\1',
+            $new_date=preg_replace('/(\d{1,2})[-\/](\d{1,2})[-\/](\d{4})/',
+                                   '\3-\2-\1',
                                    $original_date);
          break;
          case self::DATE_TYPE_MMDDYYYY:
-            $new_date=preg_replace('/(\d{1,2})[-\/](\d{1,2})[-\/](\d{4})/','\3-\1-\2',
+            $new_date=preg_replace('/(\d{1,2})[-\/](\d{1,2})[-\/](\d{4})/',
+                                   '\3-\1-\2',
                                    $original_date);
          break;
       }
 
-      if (preg_match('/[0-9]{2,4}-[0-9]{1,2}-[0-9]{1,2}/',$new_date))
+      if (preg_match('/[0-9]{2,4}-[0-9]{1,2}-[0-9]{1,2}/',$new_date)) {
          return $new_date;
-      else
+      }
+      else {
          return $original_date;
+      }
    }
 
    /**
@@ -999,6 +1003,7 @@ class PluginDatainjectionCommonInjectionLib {
    }
 
    private function effectiveAddOrUpdate($add=true, $item, $values) {
+      logDebug("effectiveAddOrUpdate",$values);
       //Insert data using the standard add() method
       if ($item instanceof CommonDropdown & $add) {
          $newID = $item->import($values);
