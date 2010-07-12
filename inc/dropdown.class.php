@@ -105,14 +105,14 @@ class PluginDatainjectionDropdown {
 
    static function portUnicityValues() {
       global $LANG;
-      $values[PluginDatainjectionModel::UNICITY_NETPORT_LOGICAL_NUMBER] = $LANG["networking"][21];
-      $values[PluginDatainjectionModel::UNICITY_NETPORT_NAME] = $LANG["common"][16];
-      $values[PluginDatainjectionModel::UNICITY_NETPORT_MACADDRESS] = $LANG["device_iface"][2];
-      $values[PluginDatainjectionModel::UNICITY_NETPORT_LOGICAL_NUMBER_NAME] =
+      $values[PluginDatainjectionCommonInjectionLib::UNICITY_NETPORT_LOGICAL_NUMBER] = $LANG["networking"][21];
+      $values[PluginDatainjectionCommonInjectionLib::UNICITY_NETPORT_NAME] = $LANG["common"][16];
+      $values[PluginDatainjectionCommonInjectionLib::UNICITY_NETPORT_MACADDRESS] = $LANG["device_iface"][2];
+      $values[PluginDatainjectionCommonInjectionLib::UNICITY_NETPORT_LOGICAL_NUMBER_NAME] =
                                                    $LANG["networking"][21]."+".$LANG["common"][16];
-      $values[PluginDatainjectionModel::UNICITY_NETPORT_LOGICAL_NUMBER_MAC]=
+      $values[PluginDatainjectionCommonInjectionLib::UNICITY_NETPORT_LOGICAL_NUMBER_MAC]=
                                               $LANG["networking"][21]."+".$LANG["device_iface"][2];
-      $values[PluginDatainjectionModel::UNICITY_NETPORT_LOGICAL_NUMBER_NAME_MAC]=
+      $values[PluginDatainjectionCommonInjectionLib::UNICITY_NETPORT_LOGICAL_NUMBER_NAME_MAC]=
                       $LANG["networking"][21]."+".$LANG["common"][16]."+".$LANG["device_iface"][2];
       return $values;
    }

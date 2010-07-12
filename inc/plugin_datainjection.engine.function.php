@@ -1049,27 +1049,27 @@ function filterFields(& $fields, $fields_from_db, $can_overwrite, $type) {
 function getPortUnicityRequest($model, $fields) {
 	$where = "";
 	switch ($model->getPortUnicity()) {
-		case PluginDatainjectionModel::UNICITY_NETPORT_LOGICAL_NUMBER :
+		case PluginDatainjectionCommonInjectionLib::UNICITY_NETPORT_LOGICAL_NUMBER :
 			$where .= " AND logical_number='" . (isset ($fields["logical_number"]) ? $fields["logical_number"] : '') . "'";
 			break;
-		case PluginDatainjectionModel::UNICITY_NETPORT_LOGICAL_NUMBER_MAC :
-			$where .= " AND logical_number='" . (isset ($fields["logical_number"]) ? $fields["logical_number"] : '') . "'";
-			$where .= " AND name='" . (isset ($fields["name"]) ? $fields["name"] : '') . "'";
-			$where .= " AND ifmac='" . (isset ($fields["ifmac"]) ? $fields["ifmac"] : '') . "'";
-			break;
-		case PluginDatainjectionModel::UNICITY_NETPORT_LOGICAL_NUMBER_NAME :
-			$where .= " AND logical_number='" . (isset ($fields["logical_number"]) ? $fields["logical_number"] : '') . "'";
-			$where .= " AND name='" . (isset ($fields["name"]) ? $fields["name"] : '') . "'";
-			break;
-		case PluginDatainjectionModel::UNICITY_NETPORT_LOGICAL_NUMBER_NAME_MAC :
+		case PluginDatainjectionCommonInjectionLib::UNICITY_NETPORT_LOGICAL_NUMBER_MAC :
 			$where .= " AND logical_number='" . (isset ($fields["logical_number"]) ? $fields["logical_number"] : '') . "'";
 			$where .= " AND name='" . (isset ($fields["name"]) ? $fields["name"] : '') . "'";
 			$where .= " AND ifmac='" . (isset ($fields["ifmac"]) ? $fields["ifmac"] : '') . "'";
 			break;
-		case PluginDatainjectionModel::UNICITY_NETPORT_MACADDRESS :
+		case PluginDatainjectionCommonInjectionLib::UNICITY_NETPORT_LOGICAL_NUMBER_NAME :
+			$where .= " AND logical_number='" . (isset ($fields["logical_number"]) ? $fields["logical_number"] : '') . "'";
+			$where .= " AND name='" . (isset ($fields["name"]) ? $fields["name"] : '') . "'";
+			break;
+		case PluginDatainjectionCommonInjectionLib::UNICITY_NETPORT_LOGICAL_NUMBER_NAME_MAC :
+			$where .= " AND logical_number='" . (isset ($fields["logical_number"]) ? $fields["logical_number"] : '') . "'";
+			$where .= " AND name='" . (isset ($fields["name"]) ? $fields["name"] : '') . "'";
 			$where .= " AND ifmac='" . (isset ($fields["ifmac"]) ? $fields["ifmac"] : '') . "'";
 			break;
-		case PluginDatainjectionModel::UNICITY_NETPORT_NAME :
+		case PluginDatainjectionCommonInjectionLib::UNICITY_NETPORT_MACADDRESS :
+			$where .= " AND ifmac='" . (isset ($fields["ifmac"]) ? $fields["ifmac"] : '') . "'";
+			break;
+		case PluginDatainjectionCommonInjectionLib::UNICITY_NETPORT_NAME :
 			$where .= " AND name='" . (isset ($fields["name"]) ? $fields["name"] : '') . "'";
 			break;
 	}

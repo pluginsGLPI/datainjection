@@ -125,22 +125,22 @@ class PluginDatainjectionNetworkportInjection extends NetworkPort
    function checkParameters ($fields_toinject, $options) {
       $fields_tocheck = array();
       switch ($options['checks']['port_unicity']) {
-         case PluginDatainjectionModel::UNICITY_NETPORT_LOGICAL_NUMBER :
+         case PluginDatainjectionCommonInjectionLib::UNICITY_NETPORT_LOGICAL_NUMBER :
             $fields_tocheck = array('logical_number');
             break;
-         case PluginDatainjectionModel::UNICITY_NETPORT_LOGICAL_NUMBER_MAC :
+         case PluginDatainjectionCommonInjectionLib::UNICITY_NETPORT_LOGICAL_NUMBER_MAC :
             $fields_tocheck = array('logical_number','mac');
             break;
-         case PluginDatainjectionModel::UNICITY_NETPORT_LOGICAL_NUMBER_NAME :
+         case PluginDatainjectionCommonInjectionLib::UNICITY_NETPORT_LOGICAL_NUMBER_NAME :
             $fields_tocheck = array('logical_number','name');
             break;
-         case PluginDatainjectionModel::UNICITY_NETPORT_LOGICAL_NUMBER_NAME_MAC :
+         case PluginDatainjectionCommonInjectionLib::UNICITY_NETPORT_LOGICAL_NUMBER_NAME_MAC :
             $fields_tocheck = array('logical_number','mac','name');
             break;
-         case PluginDatainjectionModel::UNICITY_NETPORT_MACADDRESS :
+         case PluginDatainjectionCommonInjectionLib::UNICITY_NETPORT_MACADDRESS :
             $fields_tocheck = array('mac');
             break;
-         case PluginDatainjectionModel::UNICITY_NETPORT_NAME :
+         case PluginDatainjectionCommonInjectionLib::UNICITY_NETPORT_NAME :
             $fields_tocheck = array('name');
             break;
       }
@@ -164,11 +164,11 @@ class PluginDatainjectionNetworkportInjection extends NetworkPort
    function getUnicityRequest($fields_toinject = array(), $options = array()) {
       $where = "";
       switch ($options['port_unicity']) {
-         case PluginDatainjectionModel::UNICITY_NETPORT_LOGICAL_NUMBER :
+         case PluginDatainjectionCommonInjectionLib::UNICITY_NETPORT_LOGICAL_NUMBER :
             $where .= " AND `logical_number`='" . (isset ($fields_toinject["logical_number"])
                                                    ? $fields_toinject["logical_number"] : '') . "'";
             break;
-         case PluginDatainjectionModel::UNICITY_NETPORT_LOGICAL_NUMBER_MAC :
+         case PluginDatainjectionCommonInjectionLib::UNICITY_NETPORT_LOGICAL_NUMBER_MAC :
             $where .= " AND `logical_number`='" . (isset ($fields_toinject["logical_number"])
                                                    ? $fields_toinject["logical_number"] : '') . "'";
             $where .= " AND `name`='" . (isset ($fields_toinject["name"])
@@ -176,13 +176,13 @@ class PluginDatainjectionNetworkportInjection extends NetworkPort
             $where .= " AND `mac`='" . (isset ($fields_toinject["mac"])
                                                             ? $fields_toinject["mac"] : '') . "'";
             break;
-         case PluginDatainjectionModel::UNICITY_NETPORT_LOGICAL_NUMBER_NAME :
+         case PluginDatainjectionCommonInjectionLib::UNICITY_NETPORT_LOGICAL_NUMBER_NAME :
             $where .= " AND `logical_number`='" . (isset ($fields_toinject["logical_number"])
                                                    ? $fields_toinject["logical_number"] : '') . "'";
             $where .= " AND `name`='" . (isset ($fields_toinject["name"])
                                                    ? $fields_toinject["name"] : '') . "'";
             break;
-         case PluginDatainjectionModel::UNICITY_NETPORT_LOGICAL_NUMBER_NAME_MAC :
+         case PluginDatainjectionCommonInjectionLib::UNICITY_NETPORT_LOGICAL_NUMBER_NAME_MAC :
             $where .= " AND `logical_number`='" . (isset ($fields_toinject["logical_number"])
                                                    ? $fields_toinject["logical_number"] : '') . "'";
             $where .= " AND `name`='" . (isset ($fields_toinject["name"])
@@ -190,11 +190,11 @@ class PluginDatainjectionNetworkportInjection extends NetworkPort
             $where .= " AND `mac`='" . (isset ($fields_toinject["mac"])
                                                    ? $fields_toinject["mac"] : '') . "'";
             break;
-         case PluginDatainjectionModel::UNICITY_NETPORT_MACADDRESS :
+         case PluginDatainjectionCommonInjectionLib::UNICITY_NETPORT_MACADDRESS :
             $where .= " AND `mac`='" . (isset ($fields_toinject["mac"])
                                                    ? $fields_toinject["mac"] : '') . "'";
             break;
-         case PluginDatainjectionModel::UNICITY_NETPORT_NAME :
+         case PluginDatainjectionCommonInjectionLib::UNICITY_NETPORT_NAME :
             $where .= " AND `name`='" . (isset ($fields_toinject["name"])
                                                    ? $fields_toinject["name"] : '') . "'";
             break;

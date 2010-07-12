@@ -54,7 +54,53 @@ class PluginDatainjectionSupplierInjection extends Supplier
    }
 
    function getOptions($primary_type = '') {
-      return parent::getSearchOptions();
+
+      $tab = parent::getSearchOptions();
+
+      $blacklist = PluginDatainjectionCommonInjectionLib::getBlacklistedOptions();
+      //Remove some options because some fields cannot be imported
+      $notimportable = array();
+      $ignore_fields = array_merge($blacklist,$notimportable);
+
+      //Add linkfield for theses fields : no massive action is allowed in the core, but they can be
+      //imported using the commonlib
+      $add_linkfield = array('comment' => 'comment', 'notepad' => 'notepad');
+      foreach ($tab as $id => $tmp) {
+         if (!is_array($tmp) || in_array($id,$ignore_fields)) {
+            unset($tab[$id]);
+         }
+         else {
+            if (in_array($tmp['field'],$add_linkfield)) {
+               $tab[$id]['linkfield'] = $add_linkfield[$tmp['field']];
+            }
+            if (!in_array($id,$ignore_fields)) {
+               if (!isset($tmp['linkfield'])) {
+                  $tab[$id]['injectable'] = PluginDatainjectionCommonInjectionLib::FIELD_VIRTUAL;
+               }
+               else {
+                  $tab[$id]['injectable'] = PluginDatainjectionCommonInjectionLib::FIELD_INJECTABLE;
+               }
+
+               if (isset($tmp['linkfield']) && !isset($tmp['displaytype'])) {
+                  $tab[$id]['displaytype'] = 'text';
+               }
+               if (isset($tmp['linkfield']) && !isset($tmp['checktype'])) {
+                  $tab[$id]['checktype'] = 'text';
+               }
+            }
+         }
+      }
+
+      //Add displaytype value
+      $dropdown = array("dropdown"       => array(9,8 ),
+                        "multiline_text" => array(16),
+                        "bool"           => array(86));
+      foreach ($dropdown as $type => $tabsID) {
+         foreach ($tabsID as $tabID) {
+            $tab[$tabID]['displaytype'] = $type;
+         }
+      }
+      return $tab;
    }
 
 

@@ -117,9 +117,44 @@ class PluginDatainjectionCommonInjectionLib {
    const DATE_TYPE_MMDDYYYY             = "mm-dd-yyyy";
    const DATE_TYPE_YYYYMMDD             = "yyyy-mm-dd";
 
+   //Port unicity constants
+   const UNICITY_NETPORT_LOGICAL_NUMBER            = 0;
+   const UNICITY_NETPORT_NAME                      = 1;
+   const UNICITY_NETPORT_MACADDRESS                = 2;
+   const UNICITY_NETPORT_LOGICAL_NUMBER_NAME       = 3;
+   const UNICITY_NETPORT_LOGICAL_NUMBER_MAC        = 4;
+   const UNICITY_NETPORT_LOGICAL_NUMBER_NAME_MAC   = 5;
+
    const FIELD_INJECTABLE               = 1;
    const FIELD_NOT_INJECTABLE           = 0;
    const FIELD_VIRTUAL                  = 2;
+
+   function setDefaultValues() {
+      $this->checks = array('ip'                       =>false,
+                            'mac'                      =>false,
+                            'integer'                  =>false,
+                            'yes'                      =>false,
+                            'bool'                     =>false,
+                            'date'                     =>false,
+                            'float'                    =>false,
+                            'string'                   =>false,
+                            'right_r'                  =>false,
+                            'right_rw'                 =>false,
+                            'interface'                =>false,
+                            'auth_method'              =>false,
+                            'port_unicity'             =>false);
+
+      //Rights options
+      $this->rights = array('add_dropdown'             =>false,
+                            'overwrite_notempty_fields'=>false,
+                            'can_add'                  =>false,
+                            'can_update'               =>false,
+                            'can_delete'               =>false);
+
+      //Field format options
+      $this->formats = array('date_format'             =>self::DATE_TYPE_YYYYMMDD,
+                             'float_format'            =>self::FLOAT_TYPE_COMMA);
+   }
 
    /**
     * Constructor : store all needed options into the library
@@ -130,6 +165,7 @@ class PluginDatainjectionCommonInjectionLib {
     * @return nothing
     */
    function __construct($injectionClass, $values = array(), $injection_options = array()) {
+      $this->setDefaultValues();
 
       if (isset($injection_options['checks'])) {
          $this->checks = $injection_options['checks'];

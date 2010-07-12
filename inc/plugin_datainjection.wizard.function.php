@@ -293,7 +293,7 @@ function model($target) {
 
 	/***************Port existance*********************/
 	echo "<tr><td>" . $LANG["datainjection"]["mappings"][7] . "</td><td>";
-	dropdownPortUnicity("port_unicity", (isset ($model) ? $model->getPortUnicity() : PluginDatainjectionModel::UNICITY_NETPORT_LOGICAL_NUMBER));
+	dropdownPortUnicity("port_unicity", (isset ($model) ? $model->getPortUnicity() : PluginDatainjectionCommonInjectionLib::UNICITY_NETPORT_LOGICAL_NUMBER));
 	echo "</td></tr>";
 	/**************************************************************/
 

@@ -56,14 +56,6 @@ class PluginDatainjectionModel extends CommonDBTM {
    //Store field of type 'multline_text' several times mapped
    public $severaltimes_mapped = array();
 
-   //Port unicity constants
-   const UNICITY_NETPORT_LOGICAL_NUMBER            = 0;
-   const UNICITY_NETPORT_NAME                      = 1;
-   const UNICITY_NETPORT_MACADDRESS                = 2;
-   const UNICITY_NETPORT_LOGICAL_NUMBER_NAME       = 3;
-   const UNICITY_NETPORT_LOGICAL_NUMBER_MAC        = 4;
-   const UNICITY_NETPORT_LOGICAL_NUMBER_NAME_MAC   = 5;
-
    //Private or public model
    const MODEL_PRIVATE                             = 1;
    const MODEL_PUBLIC                              = 0;

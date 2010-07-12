@@ -166,7 +166,7 @@ function getTypesToInject() {
                                 'PluginDatainjectionProfile_UserInjection'       =>'datainjection',
                                 'PluginDatainjectionSoftwareInjection'           =>'datainjection',
                                 'PluginDatainjectionSoftwareLicenseInjection'    =>'datainjection',
-                                //'PluginDatainjectionSupplierInjection'           =>'datainjection',
+                                'PluginDatainjectionSupplierInjection'           =>'datainjection',
                                 'PluginDatainjectionUserInjection'               =>'datainjection',
                                 'PluginDatainjectionNetworkportInjection'        =>'datainjection',
                                 'PluginDatainjectionVlanInjection'               =>'datainjection',
