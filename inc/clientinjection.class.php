@@ -243,12 +243,11 @@ class PluginDatainjectionClientInjection {
 
       //Delete CSV file
       $backend->deleteFile();
-
+      logDebug($clientinjection->results);
       //Change step
-      $_SESSION['datainjection']['step'] = self::STEP_RESULT;
-
+      $_SESSION['datainjection']['step']        = self::STEP_RESULT;
       //Display results form
-      $_SESSION['datainjection']['results'] = json_encode($clientinjection->results);
+      $_SESSION['datainjection']['results']     = json_encode($clientinjection->results);
       $_SESSION['datainjection']['error_lines'] = json_encode($engine->getLinesInError());
       $p['models_id'] = $model->fields['id'];
       $p['nblines']   = $nblines;

@@ -1093,11 +1093,11 @@ class PluginDatainjectionModel extends CommonDBTM {
 
             echo "<table class='tab_cadre_fixe'  id='log1_table'>";
             echo "<tr><th>".$LANG["joblist"][0]."</th>";
-            echo "<th>".$LANG["datainjection"]["result"][14]."</th>";
-            echo "<th>".$LANG["datainjection"]["result"][10]."</th>";
-            echo "<th>".$LANG["datainjection"]["result"][11]."</th>";
-            echo "<th>".$LANG["datainjection"]["result"][12]."</th>";
-            echo "<th>".$LANG["datainjection"]["result"][13]."</th></tr>";
+            echo "<th>".$LANG["datainjection"]["log"][13]."</th>";
+            echo "<th>".$LANG["datainjection"]["log"][9]."</th>";
+            echo "<th>".$LANG["datainjection"]["log"][10]."</th>";
+            echo "<th>".$LANG["datainjection"]["log"][11]."</th>";
+            echo "<th>".$LANG["datainjection"]["log"][12]."</th></tr>";
 
             $index = 0;
             foreach ($results as $result) {
@@ -1142,11 +1142,11 @@ class PluginDatainjectionModel extends CommonDBTM {
             echo "</table>";
             echo "<table class='tab_cadre_fixe' style='text-align: center' id='log2_table'>";
             echo "<tr><th>".$LANG["joblist"][0]."</th>";
-            echo "<th>".$LANG["datainjection"]["result"][14]."</th>";
-            echo "<th>".$LANG["datainjection"]["result"][10]."</th>";
-            echo "<th>".$LANG["datainjection"]["result"][11]."</th>";
-            echo "<th>".$LANG["datainjection"]["result"][12]."</th>";
-            echo "<th>".$LANG["datainjection"]["result"][13]."</th></tr>";
+            echo "<th>".$LANG["datainjection"]["log"][13]."</th>";
+            echo "<th>".$LANG["datainjection"]["log"][9]."</th>";
+            echo "<th>".$LANG["datainjection"]["log"][10]."</th>";
+            echo "<th>".$LANG["datainjection"]["log"][11]."</th>";
+            echo "<th>".$LANG["datainjection"]["log"][12]."</th></tr>";
             $index = 0;
             foreach ($results as $result) {
                if ($result['status'] != PluginDatainjectionCommonInjectionLib::SUCCESS) {
@@ -1161,19 +1161,27 @@ class PluginDatainjectionModel extends CommonDBTM {
                   echo "</td>";
                   echo "<td>$index</td>";
                   echo "<td>";
-                  $status = $result[PluginDatainjectionCommonInjectionLib::ACTION_CHECK]['status'];
-                  echo PluginDatainjectionCommonInjectionLib::getLogLabel($status);
-                  echo "</td>";
-                  echo "<td>";
-                  if (isset($result[PluginDatainjectionCommonInjectionLib::ACTION_CHECK]['status'])
-                        && $result[PluginDatainjectionCommonInjectionLib::ACTION_CHECK]['status'] !=
-                           PluginDatainjectionCommonInjectionLib::FAILED) {
-                           $code = $result[PluginDatainjectionCommonInjectionLib::ACTION_INJECT]['status'];
-                           echo PluginDatainjectionCommonInjectionLib::getLogLabel($code);
+                  if (isset($result[PluginDatainjectionCommonInjectionLib::ACTION_CHECK]['status'])) {
+                     $status = $result[PluginDatainjectionCommonInjectionLib::ACTION_CHECK]['status'];
+                     echo PluginDatainjectionCommonInjectionLib::getLogLabel($status);
+                     if ($status != PluginDatainjectionCommonInjectionLib::SUCCESS) {
+                        foreach ($result[PluginDatainjectionCommonInjectionLib::ACTION_CHECK] as $field => $value) {
+                           if ($field != 'status' && $value != PluginDatainjectionCommonInjectionLib::SUCCESS) {
+                              echo "&nbsp;($field)";
+                           }
                         }
+                     }
+                  }
+
                   echo "</td>";
                   echo "<td>";
-                  if ($result['status'] != PluginDatainjectionCommonInjectionLib::FAILED) {
+                  if (isset($result[PluginDatainjectionCommonInjectionLib::ACTION_INJECT]['status'])) {
+                     $code = $result[PluginDatainjectionCommonInjectionLib::ACTION_INJECT]['status'];
+                     echo PluginDatainjectionCommonInjectionLib::getLogLabel($code);
+                  }
+                  echo "</td>";
+                  echo "<td>";
+                  if (isset($result['type'])) {
                      echo PluginDatainjectionCommonInjectionLib::getActionLabel($result['type']);
                   }
                   echo "</td>";
@@ -1212,15 +1220,21 @@ class PluginDatainjectionModel extends CommonDBTM {
             $tmp = array();
             $tmp['index'] = $index;
 
-               $check_status = $result[PluginDatainjectionCommonInjectionLib::ACTION_CHECK]['status'];
-               $tmp['check_status'] =
+            $check_status = $result[PluginDatainjectionCommonInjectionLib::ACTION_CHECK]['status'];
+            $tmp['check_status'] =
                                  PluginDatainjectionCommonInjectionLib::getLogLabel($check_status);
+            if (isset($result['type'])) {
                $type = PluginDatainjectionCommonInjectionLib::getActionLabel($result['type']);
+            }
+            else {
+               $type = "";
+            }
 
+            //Display global result
             if ($result['status'] == PluginDatainjectionCommonInjectionLib::SUCCESS) {
                $tmp['type'] = $type;
                $tmp['item'] = $result[$model->fields['itemtype']];
-              $tmp['status']= PluginDatainjectionCommonInjectionLib::getLogLabel($result['status']);
+               $tmp['status']= PluginDatainjectionCommonInjectionLib::getLogLabel($result['status']);
                $todisplay[PluginDatainjectionCommonInjectionLib::SUCCESS][] = $tmp;
             }
             else {
@@ -1231,6 +1245,7 @@ class PluginDatainjectionModel extends CommonDBTM {
                else {
                   $tmp['type'] = '';
                }
+
                if (isset($result[$model->fields['itemtype']])) {
                   $tmp['item'] = $result[$model->fields['itemtype']];
                }

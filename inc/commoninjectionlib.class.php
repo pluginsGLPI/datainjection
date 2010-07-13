@@ -78,11 +78,11 @@ class PluginDatainjectionCommonInjectionLib {
 
 
    //Action return constants
-   const SUCCESS                        = 11;
-   const FAILED                         = 10;
-   const WARNING                        = 12;
+   const SUCCESS                        = 10; //Injection OK
+   const FAILED                         = 11; //Error during injection
+   const WARNING                        = 12; //Injection ok but partial
+
    //Field check return constants
-   const UNKNOWN_ID                     = 20;
    const ALREADY_EXISTS                 = 21;
    const TYPE_MISMATCH                  = 22;
    const MANDATORY                      = 23;
@@ -94,14 +94,10 @@ class PluginDatainjectionCommonInjectionLib {
    const ERROR_CANNOT_UPDATE            = 32;
    const WARNING_NOTFOUND               = 33;
    const WARNING_USED                   = 34;
-   const WARNING_NOTEMPTY               = 35;
-   const WARNING_ALLEMPTY               = 36;
-   const WARNING_SEVERAL_VALUES_FOUND   = 37;
-   const WARNING_ALREADY_LINKED         = 38;
-   const IMPORT_IMPOSSIBLE              = 39;
-   const ERROR_FIELDSIZE_EXCEEDED       = 40;
-   const WARNING_PARTIALLY_IMPORTED     = 41;
-   const NOT_PROCESSED                  = 42;
+   const WARNING_SEVERAL_VALUES_FOUND   = 35;
+   const WARNING_ALREADY_LINKED         = 36;
+   const ERROR_FIELDSIZE_EXCEEDED       = 37;
+   const WARNING_PARTIALLY_IMPORTED     = 38;
 
    //Empty values
    const EMPTY_VALUE                    = '';
@@ -168,10 +164,20 @@ class PluginDatainjectionCommonInjectionLib {
       $this->setDefaultValues();
 
       if (isset($injection_options['checks'])) {
-         $this->checks = $injection_options['checks'];
+         foreach ($injection_options['checks'] as $key => $value) {
+            $this->checks[$key] = $value;
+         }
+      }
+
+      if (isset($injection_options['checks'])) {
+         foreach ($injection_options['checks'] as $key => $value) {
+            $this->checks[$key] = $value;
+         }
       }
       if (isset($injection_options['rights'])) {
-         $this->rights = $injection_options['rights'];
+         foreach ($injection_options['rights'] as $key => $value) {
+            $this->rights[$key] = $value;
+         }
       }
       if (isset($injection_options['mandatory_fields'])) {
          $this->mandatory_fields = $injection_options['mandatory_fields'];
@@ -683,6 +689,11 @@ class PluginDatainjectionCommonInjectionLib {
       }
    }
 
+   /**
+    * Perform field reformat (if needed)
+    * Composed of 3 passes (one is optional, and depends on the itemtype to inject)
+    * @return nothing
+    */
    private function reformat() {
       $this->reformatFirstPass();
       $this->reformatSecondPass();
@@ -803,34 +814,39 @@ class PluginDatainjectionCommonInjectionLib {
          //Get search options associated with the injectionClass
          $searchOptions = $injectionClass->getOptions($this->primary_type);
 
+         $continue = true;
          foreach($fields as $field => $value) {
-            if (isset($this->mandatory_fields[$itemtype][$field])) {
-               //Get search option associated with the field
-               $option = self::findSearchOption($searchOptions,$field);
-               if ($value == self::EMPTY_VALUE
-                     && $this->mandatory_fields[$itemtype][$field]) {
-                  $this->results['status'] = self::FAILED;
-                  $this->results[$field] = self::MANDATORY;
-                  $this->results[self::ACTION_CHECK]['status'] = self::MANDATORY;
-               }
-               else {
-                  $check_result = $this->checkType($injectionClass,
-                                                   $option,
-                                                   $field,
-                                                   $value,
-                                                   $this->mandatory_fields[$itemtype][$field]);
-                  $this->results[self::ACTION_CHECK][$field] = $check_result;
-
-                  if ($check_result != self::SUCCESS) {
-                     $this->results[self::ACTION_CHECK]['status'] = self::FAILED;
+            if ($continue) {
+               if (isset($this->mandatory_fields[$itemtype][$field])) {
+                  //Get search option associated with the field
+                  $option = self::findSearchOption($searchOptions,$field);
+                  if ($value == self::EMPTY_VALUE
+                        && $this->mandatory_fields[$itemtype][$field]) {
                      $this->results['status'] = self::FAILED;
+                     $this->results[$field] = self::MANDATORY;
+                     $continue = false;
                   }
                   else {
-                     $this->results[self::ACTION_CHECK]['status'] = self::SUCCESS;
+                     $check_result = $this->checkType($injectionClass,
+                                                      $option,
+                                                      $field,
+                                                      $value,
+                                                      $this->mandatory_fields[$itemtype][$field]);
+                     $this->results[self::ACTION_CHECK][$field] = $check_result;
+
+                     if ($check_result != self::SUCCESS) {
+                        $this->results[self::ACTION_CHECK]['status'] = $check_result;
+                        $this->results['status'] = self::FAILED;
+                        $continue = false;
+                     }
                   }
                }
             }
          }
+      }
+
+      if ($continue) {
+         $this->results[self::ACTION_CHECK]['status'] = self::SUCCESS;
       }
    }
 
@@ -957,12 +973,12 @@ class PluginDatainjectionCommonInjectionLib {
             $process = true;
             $add = true;
             $this->unsetValue($this->primary_type,'id');
+            $this->results['type'] = self::IMPORT_ADD;
          }
          else {
                $this->results['status'] = self::FAILED;
-               $this->results[self::ACTION_CHECK]['status'] = self::ERROR_CANNOT_IMPORT;
+               $this->results[self::ACTION_INJECT]['status'] = self::ERROR_CANNOT_IMPORT;
                $this->results['type'] = self::IMPORT_ADD;
-               $this->results[self::ACTION_INJECT] = self::NOT_PROCESSED;
          }
       }
       //Item found in DB
@@ -970,12 +986,12 @@ class PluginDatainjectionCommonInjectionLib {
          if ($this->rights['can_update']) {
             $process = true;
             $add = false;
+            $this->results['type'] = self::IMPORT_UPDATE;
          }
          else {
                $this->results['status'] = self::FAILED;
-               $this->results[self::ACTION_CHECK]['status'] = self::ERROR_CANNOT_UPDATE;
+               $this->results[self::ACTION_INJECT]['status'] = self::ERROR_CANNOT_UPDATE;
                $this->results['type'] = self::IMPORT_UPDATE;
-               $this->results[self::ACTION_INJECT] = self::NOT_PROCESSED;
          }
       }
 
@@ -1003,12 +1019,10 @@ class PluginDatainjectionCommonInjectionLib {
             $values = $this->getValuesForItemtype($this->primary_type);
             $newID  = $this->effectiveAddOrUpdate($add,$item,$values);
             if (!$newID) {
-               $this->results['status'] = self::FAILED;
-               $this->results['type']   = ($add?self::IMPORT_ADD:self::IMPORT_UPDATE);
+               $this->results['status'] = self::WARNING;
             }
             else {
                $this->results['status'] = self::SUCCESS;
-               $this->results['type']   = ($add?self::IMPORT_ADD:self::IMPORT_UPDATE);
                $this->results[get_class($item)] = $newID;
 
                //Process other types
@@ -1215,8 +1229,10 @@ class PluginDatainjectionCommonInjectionLib {
                }
             }
             else {
-               $where.= " AND `itemtype`='".$this->getValueByItemtypeAndName($itemtype,'itemtype')."'";
-               $where.= " AND `items_id`='".$this->getValueByItemtypeAndName($itemtype,'items_id')."'";
+               $where.= " AND `itemtype`='";
+               $where.= $this->getValueByItemtypeAndName($itemtype,'itemtype')."'";
+               $where.= " AND `items_id`='";
+               $where.= $this->getValueByItemtypeAndName($itemtype,'items_id')."'";
             }
 
             //Add additional parameters specific to this itemtype (or function checkPresent exists)
@@ -1263,9 +1279,9 @@ class PluginDatainjectionCommonInjectionLib {
 
    static function getActionLabel($action) {
       global $LANG;
-      $actions = array(self::IMPORT_ADD                  => $LANG["datainjection"]["result"][8],
-                       self::IMPORT_UPDATE               => $LANG["datainjection"]["result"][9],
-                       self::IMPORT_DELETE               => $LANG["datainjection"]["result"][9]);
+      $actions = array(self::IMPORT_ADD      => $LANG["datainjection"]["result"][8],
+                       self::IMPORT_UPDATE   => $LANG["datainjection"]["result"][9],
+                       self::IMPORT_DELETE   => $LANG["datainjection"]["result"][9]);
       if (isset($actions[$action])) {
          return  $actions[$action];
       }
@@ -1277,29 +1293,62 @@ class PluginDatainjectionCommonInjectionLib {
 
    static function getLogLabel($type) {
       global $LANG;
-      $labels = array(self::SUCCESS                         => 7,
-                      self::ERROR_CANNOT_IMPORT             => 5,
-                      self::WARNING_NOTEMPTY                => 6,
-                      self::ERROR_CANNOT_UPDATE             => 6,
-                      self::ERROR_IMPORT_ALREADY_IMPORTED   => 3,
-                      self::TYPE_MISMATCH                   => 1,
-                      self::MANDATORY                       => 4,
-                      //self::ERROR_IMPORT_LINK_FIELD_MISSING => 4,
-                      self::SUCCESS                         => 2,
-                      self::WARNING_NOTFOUND                => 15,
-                      self::WARNING_USED                    => 16,
-                      self::WARNING_ALLEMPTY                => 17,
-                      self::WARNING_SEVERAL_VALUES_FOUND    => 19,
-                      self::WARNING_ALREADY_LINKED          => 20,
-                      self::IMPORT_IMPOSSIBLE               => 21,
-                      self::WARNING_PARTIALLY_IMPORTED      => 22,
-                      self::NOT_PROCESSED                   => 23);
-      if (isset($labels[$type])) {
-         return  $LANG["datainjection"]["result"][$labels[$type]];
+
+      $labels = array(self::SUCCESS,
+                      self::ERROR_CANNOT_IMPORT,
+                      self::ERROR_CANNOT_UPDATE,
+                      self::ERROR_IMPORT_ALREADY_IMPORTED,
+                      self::TYPE_MISMATCH,
+                      self::MANDATORY,
+                      self::FAILED,
+                      self::WARNING_NOTFOUND,
+                      self::WARNING_USED,
+                      self::WARNING_SEVERAL_VALUES_FOUND,
+                      self::WARNING_ALREADY_LINKED);
+      if (in_array($type,$labels)) {
+         return  $LANG["datainjection"]["result"][$type];
       }
       else {
          return "";
       }
+   }
+
+   static function addToSearchOptions($type_searchOptions = array(), $options = array()) {
+      //Add linkfield for theses fields : no massive action is allowed in the core, but they can be
+      //imported using the commonlib
+      $add_linkfield = array('comment' => 'comment', 'notepad' => 'notepad');
+      foreach ($type_searchOptions as $id => $tmp) {
+         if (!is_array($tmp) || in_array($id,$options['ignore_fields'])) {
+            unset($type_searchOptions[$id]);
+         }
+         else {
+            if (in_array($tmp['field'],$add_linkfield)) {
+               $type_searchOptions[$id]['linkfield'] = $add_linkfield[$tmp['field']];
+            }
+            if (!in_array($id,$options['ignore_fields'])) {
+               if (!isset($tmp['linkfield'])) {
+                  $type_searchOptions[$id]['injectable'] = self::FIELD_VIRTUAL;
+               }
+               else {
+                  $type_searchOptions[$id]['injectable'] = self::FIELD_INJECTABLE;
+               }
+
+               if (isset($tmp['linkfield']) && !isset($tmp['displaytype'])) {
+                  $type_searchOptions[$id]['displaytype'] = 'text';
+               }
+               if (isset($tmp['linkfield']) && !isset($tmp['checktype'])) {
+                  $type_searchOptions[$id]['checktype'] = 'text';
+               }
+            }
+         }
+      }
+
+      foreach ($options['displaytype'] as $type => $tabsID) {
+         foreach ($tabsID as $tabID) {
+            $type_searchOptions[$tabID]['displaytype'] = $type;
+         }
+      }
+      return $type_searchOptions;
    }
 }
 
