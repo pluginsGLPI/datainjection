@@ -37,7 +37,7 @@ if (!defined('GLPI_ROOT')){
    die("Sorry. You can't access directly to this file");
 }
 
-/// Location class
+/// SoftwareLicense class
 class PluginDatainjectionSoftwareLicenseInjection extends SoftwareLicense
    implements PluginDatainjectionInjectionInterface {
 
@@ -50,79 +50,34 @@ class PluginDatainjectionSoftwareLicenseInjection extends SoftwareLicense
    }
 
    function connectedTo() {
-      return array('Software');
+      return array();
    }
 
    function getOptions($primary_type = '') {
       global $LANG;
-      if ($primary_type == 'SoftwareLicense') {
-         $tab = parent::getSearchOptions();
+      $tab = parent::getSearchOptions();
+      $options['ignore_fields'] = PluginDatainjectionCommonInjectionLib::getBlacklistedOptions();
+      $options['displaytype']   = array("dropdown"       => array(5, 6, 7),
+                                        "date"          => array(8),
+                                        "computer"      => array(9),
+                                        "multiline_text" => array(16));
 
-         $blacklist = PluginDatainjectionCommonInjectionLib::getBlacklistedOptions();
-         //Remove some options because some fields cannot be imported
-         $notimportable = array();
-         $ignore_fields = array_merge($blacklist,$notimportable);
-
-         //Add linkfield for theses fields : no massive action is allowed in the core, but they can be
-         //imported using the commonlib
-         $add_linkfield = array('comment' => 'comment', 'notepad' => 'notepad');
-         foreach ($tab as $id => $tmp) {
-            if (!is_array($tmp) || in_array($id,$ignore_fields)) {
-               unset($tab[$id]);
-            }
-            else {
-               if (in_array($tmp['field'],$add_linkfield)) {
-                  $tab[$id]['linkfield'] = $add_linkfield[$tmp['field']];
-               }
-               if (!in_array($id,$ignore_fields)) {
-                  if (!isset($tmp['linkfield'])) {
-                     $tab[$id]['injectable'] = PluginDatainjectionCommonInjectionLib::FIELD_VIRTUAL;
-                  }
-                  else {
-                     $tab[$id]['injectable'] = PluginDatainjectionCommonInjectionLib::FIELD_INJECTABLE;
-                  }
-
-                  if (isset($tmp['linkfield']) && !isset($tmp['displaytype'])) {
-                     $tab[$id]['displaytype'] = 'text';
-                  }
-                  if (isset($tmp['linkfield']) && !isset($tmp['checktype'])) {
-                     $tab[$id]['checktype'] = 'text';
-                  }
-               }
-            }
-         }
-
-         //Add displaytype value
-         $dropdown = array("dropdown"       => array(5, 6, 7),
-                           "date"          => array(8),
-                           "computer"      => array(9),
-                           "multiline_text" => array(16));
-         foreach ($dropdown as $type => $tabsID) {
-            foreach ($tabsID as $tabID) {
-               $tab[$tabID]['displaytype'] = $type;
-            }
-         }
-      }
-      else {
-         $tab[100]['name']          = $LANG['help'][31];
-         $tab[100]['field']         = 'name';
-         $tab[100]['table']         = getTableForItemType('Software');
-         $tab[100]['linkfield']     = getForeignKeyFieldForTable($tab[100]['table']);
-         $tab[100]['displaytype']   = 'text';
-         $tab[100]['injectable']   = true;
-         $tab[100]['storevaluein'] = $tab[100]['linkfield'];
-      }
-
-      return $tab;
+      $tab[100]['name']          = $LANG['help'][31];
+      $tab[100]['field']         = 'name';
+      $tab[100]['table']         = getTableForItemType('Software');
+      $tab[100]['linkfield']     = 'softwares_id';
+      $tab[100]['displaytype']   = 'text';
+      $tab[100]['injectable']   = true;
+      return PluginDatainjectionCommonInjectionLib::addToSearchOptions($tab, $options);
    }
-
 
    function showAdditionalInformation($info = array(),$option = array()) {
       $name = "info[".$option['linkfield']."]";
       switch ($option['displaytype']) {
          case 'computer':
-            Dropdown::show('Computer',array('name'=>$name,'comment'=>true,
-                                            'entity'=>$_SESSION['glpiactive_entity']));
+            Dropdown::show('Computer',
+                           array('name'=>$name,'comment'=>true,
+                                 'entity'=>$_SESSION['glpiactive_entity']));
             break;
          default:
             break;
@@ -143,9 +98,37 @@ class PluginDatainjectionSoftwareLicenseInjection extends SoftwareLicense
       return $lib->getInjectionResults();
    }
 
-   function checkMandatoryMappings() {
+   function addSpecificMandatoryFields() {
       return array('softwares_id');
    }
+
+   function getValueForAdditionalMandatoryFields($fields_toinject = array()) {
+      global $DB;
+      if (!isset($fields_toinject['SoftwareLicense']['softwares_id'])) {
+         return $fields_toinject;
+      }
+
+      $query = "SELECT `id` FROM `glpi_softwares`
+                WHERE `name`='".$fields_toinject['SoftwareLicense']['softwares_id']."'";
+      $result = $DB->query($query);
+
+      if ($DB->numrows($result) > 0) {
+         $id = $DB->result($result,0,'id');
+         //Add softwares_id to the array
+         $fields_toinject['SoftwareLicense']['softwares_id'] = $id;
+      }
+      else {
+         //Remove software name
+         unset($fields_toinject['SoftwareLicense']['softwares_id']);
+      }
+
+      return $fields_toinject;
+   }
+
+   //function addSpecificNeededFields($primary_type,$values) {
+   //   $fields['softwares_id'] = $values[$primary_type]['id'];
+   //   return $fields;
+   //}
 }
 
 ?>

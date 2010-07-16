@@ -50,7 +50,7 @@ class PluginDatainjectionNetworkportInjection extends NetworkPort
    }
 
    function connectedTo() {
-      return array('NetworkEquipment','Computer','Peripheral','Phone');
+      return array('NetworkEquipment','Computer','Peripheral','Phone','Printer');
    }
 
    function getOptions($primary_type = '') {

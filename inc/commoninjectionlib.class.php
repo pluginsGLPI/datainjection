@@ -211,6 +211,34 @@ class PluginDatainjectionCommonInjectionLib {
       }
    }
 
+   /**
+    * Check and add fields for itemtype which depend on other itemtypes
+    * (for example SoftwareLicense needs to be linked to a Software)
+    * @param injectionClass class to use for injection
+    */
+   function areTypeMandatoryFieldsOK($injectionClass) {
+      if (method_exists($injectionClass,'getValueForAdditionalMandatoryFields')) {
+         $this->values = $injectionClass->getValueForAdditionalMandatoryFields($this->values);
+      }
+
+      if (method_exists($injectionClass,'addSpecificMandatoryFields')) {
+         $fields = $injectionClass->addSpecificMandatoryFields();
+         $status_check = true;
+         foreach ($fields as $field) {
+            if (!$this->getValueByItemtypeAndName(self::getItemtypeByInjectionClass($injectionClass),
+                                                  $field)) {
+               $status_check = false;
+               $option = self::findSearchOption($injectionClass->getOptions(),$field);
+               $this->results[self::ACTION_CHECK][$option['name']] = self::MANDATORY;
+            }
+         }
+         return $status_check;
+      }
+      else {
+         return true;
+      }
+   }
+
    static function getItemtypeInstanceByInjection($injectionClassName) {
       $injection = self::getItemtypeByInjectionClass(new $injectionClassName);
       return new $injection;
@@ -322,7 +350,7 @@ class PluginDatainjectionCommonInjectionLib {
     * @param data to be added (true) or updaes(false)
     * @return nothing
     */
-   private function manageFieldValues($add) {
+   private function manageFieldValues() {
       $blacklisted_fields = array('id');
 
       foreach ($this->values as $itemtype => $data) {
@@ -331,7 +359,12 @@ class PluginDatainjectionCommonInjectionLib {
          foreach ($data as $field => $value) {
             if (!in_array($field,$blacklisted_fields)) {
                $searchOption = self::findSearchOption($searchOptions,$field);
-               $this->getFieldValue($injectionClass, $itemtype, $searchOption,$field,$value,$add);
+               $this->getFieldValue($injectionClass,
+                                    $itemtype,
+                                    $searchOption,
+                                    $field,
+                                    $value,
+                                    $this->results['type']);
             }
          }
 
@@ -959,46 +992,58 @@ class PluginDatainjectionCommonInjectionLib {
    //------------------------------------------------//
    public function processAddOrUpdate() {
       $process = false;
+      $add = true;
 
       //Manage fields belonging to relations between tables
       $this->manageRelations();
 
-      //Check is data to be inject still exists in DB (update) or not (add)
-      $this->dataAlreadyInDB($this->injectionClass, $this->primary_type);
-
-      //No item found in DB
-      if($this->getValueByItemtypeAndName($this->primary_type,'id') == self::ITEM_NOT_FOUND) {
-         //Can add item ?
-         if ($this->rights['can_add']) {
-            $process = true;
-            $add = true;
-            $this->unsetValue($this->primary_type,'id');
-            $this->results['type'] = self::IMPORT_ADD;
-         }
-         else {
-               $this->results['status'] = self::FAILED;
-               $this->results[self::ACTION_INJECT]['status'] = self::ERROR_CANNOT_IMPORT;
-               $this->results['type'] = self::IMPORT_ADD;
-         }
+      //Check if the type to inject requires additional fields
+      //(for example to link it with another type)
+      if (!$this->areTypeMandatoryFieldsOK($this->injectionClass)) {
+         $process = false;
+         $this->results['status'] = self::FAILED;
+         $this->results[self::ACTION_CHECK]['status'] = self::MANDATORY;
       }
-      //Item found in DB
       else {
-         if ($this->rights['can_update']) {
-            $process = true;
-            $add = false;
-            $this->results['type'] = self::IMPORT_UPDATE;
+         //Check is data to be inject still exists in DB (update) or not (add)
+         $this->dataAlreadyInDB($this->injectionClass, $this->primary_type);
+
+         $process = true;
+
+         //No item found in DB
+         if($this->getValueByItemtypeAndName($this->primary_type,'id') == self::ITEM_NOT_FOUND) {
+            //Can add item ?
+            if ($this->rights['can_add']) {
+               $add = true;
+               $this->unsetValue($this->primary_type,'id');
+               $this->results['type'] = self::IMPORT_ADD;
+            }
+            else {
+                  $this->results['status'] = self::FAILED;
+                  $this->results[self::ACTION_INJECT]['status'] = self::ERROR_CANNOT_IMPORT;
+                  $this->results['type'] = self::IMPORT_ADD;
+            }
          }
+         //Item found in DB
          else {
-               $this->results['status'] = self::FAILED;
-               $this->results[self::ACTION_INJECT]['status'] = self::ERROR_CANNOT_UPDATE;
+            if ($this->rights['can_update']) {
+               $process = true;
+               $add = false;
                $this->results['type'] = self::IMPORT_UPDATE;
+            }
+            else {
+                  $this->results['status'] = self::FAILED;
+                  $this->results[self::ACTION_INJECT]['status'] = self::ERROR_CANNOT_UPDATE;
+                  $this->results['type'] = self::IMPORT_UPDATE;
+            }
          }
       }
+
 
       if ($process) {
 
          //Get real value for fields (ie dropdown, etc)
-         $this->manageFieldValues($add);
+         $this->manageFieldValues();
 
          //First : reformat data
          $this->reformat();
@@ -1192,14 +1237,21 @@ class PluginDatainjectionCommonInjectionLib {
          }
          else {
             //Type is not a relation
+
+            //Type can be deleted
             if ($injectionClass->maybeDeleted()) {
                $where .= " AND `is_deleted`='0' ";
             }
+
+            //Type can be a template
             if ($injectionClass->maybeTemplate()) {
                $where .= " AND `is_template`='0' ";
             }
 
+            //Type can be assigned to an entity
             if($injectionClass->isEntityAssign()) {
+
+               //Type can be recursive
                if ($injectionClass->maybeRecursive()) {
                   $where_entity = getEntitiesRestrictRequest(" AND",
                                                              $injectionClass->getTable(),
@@ -1209,6 +1261,7 @@ class PluginDatainjectionCommonInjectionLib {
                                                              true);
                }
                else {
+                  //Type cannot be recursive
                   $where_entity = " AND `entities_id`='" .
                                    $this->getValueByItemtypeAndName($itemtype,'entities_id')."'";
                }
@@ -1229,21 +1282,33 @@ class PluginDatainjectionCommonInjectionLib {
                }
             }
             else {
-               $where.= " AND `itemtype`='";
-               $where.= $this->getValueByItemtypeAndName($itemtype,'itemtype')."'";
-               $where.= " AND `items_id`='";
-               $where.= $this->getValueByItemtypeAndName($itemtype,'items_id')."'";
+               //Table contains an itemtype field
+               if ($injectionClass->isField('itemtype')) {
+                  $where.= " AND `itemtype`='";
+                  $where.= $this->getValueByItemtypeAndName($itemtype,'itemtype')."'";
+               }
+               //Table contains an items_id field
+               if ($injectionClass->isField('items_id')) {
+                  $where.= " AND `items_id`='";
+                  $where.= $this->getValueByItemtypeAndName($itemtype,'items_id')."'";
+               }
             }
 
             //Add additional parameters specific to this itemtype (or function checkPresent exists)
             if (method_exists($injectionClass,'checkPresent')) {
-               $where .= $injectionClass->checkPresent($values, $options);
+               $where .= $injectionClass->checkPresent($this->values, $options);
             }
             $sql .= " WHERE 1 " . $where_entity . " " . $where;
          }
 
          $result = $DB->query($sql);
          if ($DB->numrows($result) > 0) {
+            $db_fields = $DB->fetch_array($result);
+            foreach ($db_fields as $key => $value) {
+               if (!$this->getValueByItemtypeAndName($itemtype,$key)) {
+                  $this->setValueForItemtype($itemtype,$key,$value);
+               }
+            }
             $this->setValueForItemtype($itemtype,'id',$DB->result($result,0,'id'));
          }
          else {
