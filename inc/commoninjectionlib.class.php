@@ -1098,7 +1098,7 @@ class PluginDatainjectionCommonInjectionLib {
    }
 
    private function effectiveAddOrUpdate($add=true, $item, $values) {
-      logDebug("effectiveAddOrUpdate",$values);
+      //logDebug("effectiveAddOrUpdate",$values);
       //Insert data using the standard add() method
       if ($item instanceof CommonDropdown & $add) {
          $newID = $item->import($values);
@@ -1408,11 +1408,16 @@ class PluginDatainjectionCommonInjectionLib {
          }
       }
 
-      foreach ($options['displaytype'] as $type => $tabsID) {
-         foreach ($tabsID as $tabID) {
-            $type_searchOptions[$tabID]['displaytype'] = $type;
+      foreach (array('displaytype','checktype') as $paramtype) {
+         if (isset($options[$paramtype])) {
+            foreach ($options[$paramtype] as $type => $tabsID) {
+               foreach ($tabsID as $tabID) {
+                  $type_searchOptions[$tabID][$paramtype] = $type;
+               }
+            }
          }
       }
+
       return $type_searchOptions;
    }
 }
