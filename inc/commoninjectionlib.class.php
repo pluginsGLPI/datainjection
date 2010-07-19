@@ -444,12 +444,12 @@ class PluginDatainjectionCommonInjectionLib {
             break;
          case 'multiline_text':
             $message = '';
+            logDebug($linkfield, "add=$add","value=$value",$this->values);
+
             if ($value != self::EMPTY_VALUE) {
                //If update : do not overwrite the existing field in DB, append at the end !
-               if (!$add) {
-                  $item = new $itemtype;
-                  $item->getFromDB($this->values[$itemtype]['id']);
-                  $message = $item->fields[$linkfield]."\n";
+               if ($add == self::IMPORT_UPDATE) {
+                  $message = $this->values[$itemtype][$linkfield]."\n";
                }
 
                $message .= $value;

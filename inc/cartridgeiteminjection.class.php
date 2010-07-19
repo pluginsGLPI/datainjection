@@ -54,7 +54,29 @@ class PluginDatainjectionCartridgeItemInjection extends CartridgeItem
    }
 
    function getOptions($primary_type = '') {
-      return parent::getSearchOptions();
+      global $LANG;
+      $tab = parent::getSearchOptions();
+
+      //Specific to location
+      $tab[3]['linkfield'] = 'locations_id';
+
+      $tab[8]['minvalue'] = '1';
+      $tab[8]['maxvalue'] = '100';
+      $tab[8]['step'] = 1;
+      $tab[8]['-1'] = $LANG['setup'][307];
+
+      $blacklist = PluginDatainjectionCommonInjectionLib::getBlacklistedOptions();
+      //Remove some options because some fields cannot be imported
+      $notimportable = array(80, 91, 92, 93);
+      $options['ignore_fields'] = array_merge($blacklist,$notimportable);
+      $options['displaytype']   = array("dropdown"       => array(3, 4,23),
+                                        "user"           => array(24),
+                                        "multiline_text" => array(16, 90),
+                                        "dropdown_integer" => array(8));
+      $options['checktype']     = array("integer"        => array(8));
+      $tab = PluginDatainjectionCommonInjectionLib::addToSearchOptions($tab, $options);
+
+      return $tab;
    }
 
    /**
