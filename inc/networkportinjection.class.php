@@ -119,7 +119,7 @@ class PluginDatainjectionNetworkportInjection extends NetworkPort
    }
 
    function checkPresent($fields_toinject = array(), $options = array()) {
-      return $this->getUnicityRequest($fields_toinject, $options['checks']);
+      return $this->getUnicityRequest($fields_toinject['NetworkPort'], $options['checks']);
    }
 
    function checkParameters ($fields_toinject, $options) {

@@ -815,7 +815,7 @@ class PluginDatainjectionCommonInjectionLib {
    static private function reformatMacAddress($mac)
    {
       $pattern = "/^([0-9a-fA-F]{2})([0-9a-fA-F]{2})([0-9a-fA-F]{2})";
-      $patter .="([0-9a-fA-F]{2})([0-9a-fA-F]{2})([0-9a-fA-F]{2})/";
+      $pattern.="([0-9a-fA-F]{2})([0-9a-fA-F]{2})([0-9a-fA-F]{2})/";
       preg_match($pattern,$mac,$results);
       if (count($results) > 0)
       {

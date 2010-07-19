@@ -1010,7 +1010,6 @@ class PluginDatainjectionModel extends CommonDBTM {
             $item->fields['itemtype'] = $model->fields['itemtype'];
             if (!($item instanceof CommonDBRelation)
                   && !$item->canCreate()) {
-               logDebug("false",$data['itemtype']);
                $continue = false;
                break;
             }

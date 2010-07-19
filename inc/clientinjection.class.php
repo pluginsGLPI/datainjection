@@ -223,7 +223,6 @@ class PluginDatainjectionClientInjection {
       while ($line != null) {
          //Inject line
          $clientinjection->results[] = $engine->injectLine($line[0]);
-         $engine->injectLine($line[0]);
          changeProgressBarPosition(
              $index,
               $nblines,
@@ -243,7 +242,7 @@ class PluginDatainjectionClientInjection {
 
       //Delete CSV file
       $backend->deleteFile();
-      logDebug($clientinjection->results);
+      //logDebug($clientinjection->results);
       //Change step
       $_SESSION['datainjection']['step']        = self::STEP_RESULT;
       //Display results form
@@ -291,7 +290,7 @@ class PluginDatainjectionClientInjection {
       $url = $CFG_GLPI["root_doc"].
               "/plugins/datainjection/front/popup.php?popup=log&amp;models_id=".$model->fields['id'];
       echo "<a href='#' onClick=\"var w = window.open('$url' ,";
-      echo "'glpipopup', 'height=400, width=600, top=100, left=100, scrollbars=yes' );w.focus();\"/' ";
+      echo "'glpipopup', 'height=400, width=800, top=100, left=100, scrollbars=yes' );w.focus();\"/' ";
       echo "title='".addslashes($LANG["datainjection"]["button"][4])."'>";
       echo "<img src='".$CFG_GLPI['root_doc']."/plugins/datainjection/pics/seereport.png'>";
       echo "</a>";
