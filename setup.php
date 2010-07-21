@@ -170,6 +170,8 @@ function getTypesToInject() {
                              'PluginDatainjectionVlanInjection'               =>'datainjection',
                              'PluginDatainjectionNetworkport_VlanInjection'   =>'datainjection',
                              'PluginDatainjectionNetpointInjection'           =>'datainjection',
+                             'PluginDatainjectionKnowbaseItemCategoryInjection' =>'datainjection',
+                             'PluginDatainjectionKnowbaseItemInjection'       =>'datainjection',
                              );
    //Add plugins
    doHook('plugin_datainjection_populate');

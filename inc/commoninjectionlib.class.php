@@ -126,30 +126,30 @@ class PluginDatainjectionCommonInjectionLib {
    const FIELD_VIRTUAL                  = 2;
 
    function setDefaultValues() {
-      $this->checks = array('ip'                       =>false,
-                            'mac'                      =>false,
-                            'integer'                  =>false,
-                            'yes'                      =>false,
-                            'bool'                     =>false,
-                            'date'                     =>false,
-                            'float'                    =>false,
-                            'string'                   =>false,
-                            'right_r'                  =>false,
-                            'right_rw'                 =>false,
-                            'interface'                =>false,
-                            'auth_method'              =>false,
-                            'port_unicity'             =>false);
+      $this->checks = array('ip'                       => false,
+                            'mac'                      => false,
+                            'integer'                  => false,
+                            'yes'                      => false,
+                            'bool'                     => false,
+                            'date'                     => false,
+                            'float'                    => false,
+                            'string'                   => false,
+                            'right_r'                  => false,
+                            'right_rw'                 => false,
+                            'interface'                => false,
+                            'auth_method'              => false,
+                            'port_unicity'             => false);
 
       //Rights options
-      $this->rights = array('add_dropdown'             =>false,
-                            'overwrite_notempty_fields'=>false,
-                            'can_add'                  =>false,
-                            'can_update'               =>false,
-                            'can_delete'               =>false);
+      $this->rights = array('add_dropdown'             => false,
+                            'overwrite_notempty_fields'=> false,
+                            'can_add'                  => false,
+                            'can_update'               => false,
+                            'can_delete'               => false);
 
       //Field format options
-      $this->formats = array('date_format'             =>self::DATE_TYPE_YYYYMMDD,
-                             'float_format'            =>self::FLOAT_TYPE_COMMA);
+      $this->formats = array('date_format'             => self::DATE_TYPE_YYYYMMDD,
+                             'float_format'            => self::FLOAT_TYPE_COMMA);
    }
 
    /**
@@ -444,8 +444,6 @@ class PluginDatainjectionCommonInjectionLib {
             break;
          case 'multiline_text':
             $message = '';
-            logDebug($linkfield, "add=$add","value=$value",$this->values);
-
             if ($value != self::EMPTY_VALUE) {
                //If update : do not overwrite the existing field in DB, append at the end !
                if ($add == self::IMPORT_UPDATE) {
@@ -459,9 +457,9 @@ class PluginDatainjectionCommonInjectionLib {
          default:
             if (method_exists($injectionClass,'getSpecificFieldValue')) {
                $id = $injectionClass->getSpecificFieldValue($itemtype,
-                                                                  $searchOption,
-                                                                  $field,
-                                                                  $value);
+                                                            $searchOption,
+                                                            $field,
+                                                            $this->values);
                $this->setValueForItemtype($itemtype,$linkfield,$id);
             }
             else {
@@ -754,7 +752,7 @@ class PluginDatainjectionCommonInjectionLib {
     */
    static private function reformatFloat($value,$format)
    {
-      if ($value==self::EMPTY_VALUE) {
+      if ($value == self::EMPTY_VALUE) {
          return $value;
       }
       //TODO : replace str_replace by a regex
@@ -1098,9 +1096,9 @@ class PluginDatainjectionCommonInjectionLib {
    }
 
    private function effectiveAddOrUpdate($add=true, $item, $values) {
-      //logDebug("effectiveAddOrUpdate",$values);
+      logDebug("effectiveAddOrUpdate",$values);
       //Insert data using the standard add() method
-      if ($item instanceof CommonDropdown & $add) {
+      if ($item instanceof CommonDropdown && $add) {
          $newID = $item->import($values);
       }
       else {
