@@ -68,7 +68,7 @@ class PluginDatainjectionPrinterInjection extends Printer
                                       "bool"          => array(42,43,44,45,46,86),
                                       "user"           => array(70, 24),
                                       "multiline_text" => array(16, 90));
-      return PluginDatainjectionCommonInjectionLib::addToSearchOptions($tab, $options);
+      return PluginDatainjectionCommonInjectionLib::addToSearchOptions($tab, $options,$this);
    }
 
    /**

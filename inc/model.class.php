@@ -1320,7 +1320,7 @@ class PluginDatainjectionModel extends CommonDBTM {
 
    static function showModelsList() {
       global $LANG;
-      $models = self::getModels(getLoginUserID(),'name',$_SESSION['glpiactive_entity'],false);
+      $models = self::getModels(getLoginUserID(),'name',$_SESSION['glpiactive_entity'],true);
 
       echo "<form method='post' id='modelslist' action=\"".getItemTypeSearchURL(__CLASS__)."\">";
       echo "<table class='tab_cadrehov'>";

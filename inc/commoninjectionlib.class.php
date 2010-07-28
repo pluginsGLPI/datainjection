@@ -424,6 +424,11 @@ class PluginDatainjectionCommonInjectionLib {
             }
             $this->setValueForItemtype($itemtype,$linkfield,$id);
             break;
+         case 'template':
+            $id = self::getTemplateIDByName($itemtype, $value);
+            if ($id) {
+               $this->setValueForItemtype($itemtype,$linkfield,$id);
+            }
          case 'contact':
             if ($value != self::DROPDOWN_EMPTY_VALUE) {
                $id = self::findContact($value,$this->entity);
@@ -541,7 +546,7 @@ class PluginDatainjectionCommonInjectionLib {
       global $DB;
 
       //List of objects that should inherit from CommonDropdown...
-      //TODO : should ne be needed in 0.80
+      //TODO : not needed in 0.80
       $shouldbetropdowns = array('Budget');
 
       $query = "SELECT `id` FROM `".$item->getTable()."` WHERE 1";
@@ -610,6 +615,27 @@ class PluginDatainjectionCommonInjectionLib {
     */
    private function setValueForItemtype($itemtype,$field, $value) {
       $this->values[$itemtype][$field] = $value;
+   }
+
+   /**
+    * Get a template name by giving his ID
+    * @param itemtype the objet's type
+    * @param id the template's id
+    * @return name of the template or false is no template found
+    */
+   static private function getTemplateIDByName($itemtype, $name) {
+      $item = new $itemtype();
+      $query = "SELECT `".getTableForItemType($itemtype)."`
+                  WHERE `is_template`='1'
+                     AND `template_name`='$name'";
+      logDebug($query);
+      $result = $DB->query($query);
+      if ($DB->numrows($result) > 0) {
+         return $DB->result($result,0,'id');
+      }
+      else {
+         return false;
+      }
    }
 
    //--------------------------------------------------//
@@ -1060,11 +1086,13 @@ class PluginDatainjectionCommonInjectionLib {
             $this->addOptionalInfos();
 
             $values = $this->getValuesForItemtype($this->primary_type);
-            $newID  = $this->effectiveAddOrUpdate($add,$item,$values);
+            $newID  = $this->effectiveAddOrUpdate($this->injectionClass,$add,$item,$values);
             if (!$newID) {
                $this->results['status'] = self::WARNING;
             }
             else {
+               //If type needs it : process more data after type import
+               $this->processAfterInsertOrUpdate();
                $this->results['status'] = self::SUCCESS;
                $this->results[get_class($item)] = $newID;
 
@@ -1086,7 +1114,7 @@ class PluginDatainjectionCommonInjectionLib {
                         $add = false;
                      }
                      $values = $this->getValuesForItemtype($itemtype);
-                     $tmpID = $this->effectiveAddOrUpdate($add,$item,$values);
+                     $tmpID = $this->effectiveAddOrUpdate($injectionClass,$add,$item,$values);
                   }
                }
             }
@@ -1095,22 +1123,31 @@ class PluginDatainjectionCommonInjectionLib {
       return $this->results;
    }
 
-   private function effectiveAddOrUpdate($add=true, $item, $values) {
+   private function effectiveAddOrUpdate($injectionClass, $add=true, $item, $values) {
       logDebug("effectiveAddOrUpdate",$values);
       //Insert data using the standard add() method
+      $toinject = array();
+      $options = $injectionClass->getOptions();
+      foreach ($values as $key => $value) {
+         $option = self::findSearchOption($options, $key);
+         if ($option['checktype'] != self::FIELD_VIRTUAL) {
+            $toinject[$key] = $value;
+         }
+      }
+
       if ($item instanceof CommonDropdown && $add) {
-         $newID = $item->import($values);
+         $newID = $item->import($toinject);
       }
       else {
          if ($add) {
-            if ($newID = $item->add($values)) {
+            if ($newID = $item->add($toinject)) {
                $this->setValueForItemtype(get_class($item),'id',$newID);
                self::logAddOrUpdate($item, $add);
             }
          }
          else {
-            if ($item->update($values)) {
-               $newID = $values['id'];
+            if ($item->update($toinject)) {
+               $newID = $toinject['id'];
                self::logAddOrUpdate($item, $add);
             }
          }
@@ -1315,6 +1352,29 @@ class PluginDatainjectionCommonInjectionLib {
       }
    }
 
+   private function addTemplateFields($itemtype) {
+      if (!$this->getValueByItemtypeAndName($itemtype,'is_template')) {
+         $template = new $itemtype();
+         if ($template->getFromDB($this->getValueByItemtypeAndName($itemtype,'templates_id'))) {
+            unset ($template->fields["id"]);
+            unset ($template->fields["date_mod"]);
+            unset ($template->fields["is_template"]);
+            unset ($template->fields["entities_id"]);
+            foreach ($template->fields as $key => $value) {
+               if ($value != self::EMPTY_VALUE && (!isset ($this->values[$itemtype][$key])
+                     || $this->values[$itemtype][$key] == EMPTY_VALUE
+                        || $this->values[$itemtype][$key] == DROPDOWN_EMPTY_VALUE))
+                  $this->setValueForItemtype($itemtype,$key,$value);
+            }
+            $name = autoName($this->values[$itemtype]['name'], "name", true,
+                                       $itemtype,$this->values[$itemtype]['entities_id']);
+            $this->setValueForItemtype($itemtype,'name',$name);
+            $otherserial = autoName($this->values[$itemtype]['otherserial'], "otherserial", true,
+                                       $itemtype,$this->values[$itemtype]['entities_id']);
+            $this->setValueForItemtype($itemtype,'otherserial',$otherserial);
+         }
+      }
+   }
    /**
     * Log event into the history
     * @param device_type the type of the item to inject
@@ -1376,7 +1436,9 @@ class PluginDatainjectionCommonInjectionLib {
       }
    }
 
-   static function addToSearchOptions($type_searchOptions = array(), $options = array()) {
+   static function addToSearchOptions($type_searchOptions = array(), $options = array(),$injectionClass) {
+      self::addTemplateSearchOptions($injectionClass,$type_searchOptions);
+
       //Add linkfield for theses fields : no massive action is allowed in the core, but they can be
       //imported using the commonlib
       $add_linkfield = array('comment' => 'comment', 'notepad' => 'notepad');
@@ -1417,6 +1479,40 @@ class PluginDatainjectionCommonInjectionLib {
       }
 
       return $type_searchOptions;
+   }
+
+   /**
+    * Add necessary search options for template management
+    */
+   static function addTemplateSearchOptions($injectionClass,&$tab) {
+      global $LANG;
+      $itemtype = self::getItemtypeByInjectionClass($injectionClass) ;
+      $item = new $itemtype;
+
+      if ($item->maybeTemplate()) {
+         $tab[300]['table'] = $item->getTable();
+         $tab[300]['field'] = 'is_template';
+         $tab[300]['linkfield'] = 'is_template';
+         $tab[300]['name'] = $LANG["rulesengine"][0] . " " . $LANG["common"][13] . " ?";
+         $tab[300]['type'] = 'integer';
+         $tab[300]['injectable'] = 1;
+         $tab[300]['checktype'] = 'integer';
+         $tab[300]['displaytype'] = 'bool';
+
+         $tab[301]['table'] = $item->getTable();
+         $tab[301]['field'] = 'template_name';
+         $tab[301]['name'] = $LANG["common"][13];
+         $tab[301]['injectable'] = 1;
+         $tab[301]['checktype'] = 'text';
+         $tab[301]['displaytype'] = 'template';
+         $tab[301]['linkfield'] = 'templates_id';
+      }
+   }
+
+   private function processAfterInsertOrUpdate() {
+      if (method_exists($this->injectionClass,'processAfterInsertOrUpdate')) {
+         $this->injectionClass->processAfterInsertOrUpdate($this->values);
+      }
    }
 }
 

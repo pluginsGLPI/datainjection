@@ -54,12 +54,22 @@ class PluginDatainjectionNetworkEquipmentInjection extends NetworkEquipment
    }
 
    function getOptions($primary_type = '') {
+      global $LANG;
       $tab = parent::getSearchOptions();
 
       //Specific to location
       $tab[3]['linkfield']  = 'locations_id';
       $tab[12]['checktype'] = 'ip';
       $tab[13]['checktype'] = 'mac';
+
+      //Virtual type : need to be processed at the end !
+      $tab[200]['table'] = 'glpi_networking';
+      $tab[200]['field'] = 'nb_ports';
+      $tab[200]['name'] = $LANG["datainjection"]["mappings"][1];
+      $tab[200]['checktype'] = 'integer';
+      $tab[200]['displaytype'] = 'virtual';
+      $tab[200]['linkfield'] = 'nb_ports';
+      $tab[200]['injectable'] = PluginDatainjectionCommonInjectionLib::FIELD_VIRTUAL;
 
       $blacklist = PluginDatainjectionCommonInjectionLib::getBlacklistedOptions();
       //Remove some options because some fields cannot be imported
@@ -122,6 +132,27 @@ class PluginDatainjectionNetworkEquipmentInjection extends NetworkEquipment
       $lib->processAddOrUpdate();
       return $lib->getInjectionResults();
    }
+
+   function processAfterInsertOrUpdate($values) {
+      if (isset($values['NetworkEquipment']['nb_ports'])) {
+         for ($i = 1; $i <= $values['NetworkEquipment']['nb_ports']; $i++) {
+            $input = array ();
+            $netport = new NetworkPort;
+
+            $add = "";
+            if ($i < 10) {
+               $add = "0";
+            }
+            $input["logical_number"] = $i;
+            $input["name"] = $add . $i;
+            $input["items_id"] = $values['NetworkEquipment']['id'];
+            $input["itemtype"] = 'NetworkEquipment';
+            $input["entities_id"] = $values['NetworkEquipment']['entities_id'];
+            $netport->add($input);
+         }
+      }
+   }
+
 }
 
 ?>

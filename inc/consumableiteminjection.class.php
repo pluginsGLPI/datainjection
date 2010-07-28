@@ -74,7 +74,7 @@ class PluginDatainjectionConsumableItemInjection extends ConsumableItem
                                         "multiline_text" => array(16, 90),
                                         "dropdown_integer"        => array(8));
       $options['checktype']     = array("integer" => array(8));
-      $tab = PluginDatainjectionCommonInjectionLib::addToSearchOptions($tab, $options);
+      $tab = PluginDatainjectionCommonInjectionLib::addToSearchOptions($tab, $options,$this);
 
       return $tab;
    }

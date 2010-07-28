@@ -68,7 +68,7 @@ class PluginDatainjectionSoftwareLicenseInjection extends SoftwareLicense
       $tab[100]['linkfield']     = 'softwares_id';
       $tab[100]['displaytype']   = 'text';
       $tab[100]['injectable']   = true;
-      return PluginDatainjectionCommonInjectionLib::addToSearchOptions($tab, $options);
+      return PluginDatainjectionCommonInjectionLib::addToSearchOptions($tab, $options,$this);
    }
 
    function showAdditionalInformation($info = array(),$option = array()) {

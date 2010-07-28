@@ -68,7 +68,7 @@ class PluginDatainjectionKnowbaseItemCategoryInjection extends KnowbaseItemCateg
       //Remove some options because some fields cannot be imported
       $options['ignore_fields'] = array(1, 80, 2, 19);
       $options['displaytype']   = array("multiline_text" => array(16));
-      $tab = PluginDatainjectionCommonInjectionLib::addToSearchOptions($tab, $options);
+      $tab = PluginDatainjectionCommonInjectionLib::addToSearchOptions($tab, $options,$this);
 
       return $tab;
    }

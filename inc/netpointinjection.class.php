@@ -66,7 +66,7 @@ class PluginDatainjectionNetpointInjection extends Netpoint
       $options['displaytype'] = array("dropdown"       => array(3),
                                       "multiline_text" => array(16));
 
-      $tab = PluginDatainjectionCommonInjectionLib::addToSearchOptions($tab, $options);
+      $tab = PluginDatainjectionCommonInjectionLib::addToSearchOptions($tab, $options,$this);
       return $tab;
    }
 

@@ -58,7 +58,7 @@ class PluginDatainjectionNetworkport_VlanInjection extends NetworkPort_Vlan
       $options['ignore_fields'] = PluginDatainjectionCommonInjectionLib::getBlacklistedOptions();
       $options['displaytype'] = array();
       return PluginDatainjectionCommonInjectionLib::addToSearchOptions(parent::getSearchOptions(),
-                                                                       $options);
+                                                                       $options,$this);
    }
 
    /**

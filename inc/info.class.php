@@ -289,6 +289,9 @@ class PluginDatainjectionInfo extends CommonDBTM {
                                   $maxvalue,
                                   $step,
                                   $default);
+         case 'template':
+            self::dropdownTemplates($name,getItemTypeForTable($option['table']));
+            break;
          default:
             if (method_exists($injectionClass,'showAdditionalInformation')) {
                //If type is not a standard type, must be treated by specific injection class
@@ -330,6 +333,17 @@ class PluginDatainjectionInfo extends CommonDBTM {
                break;
          }
       }
+   }
+
+   static function dropdownTemplates($name,$itemtype) {
+      $templates = getTemplatesByItem(new $itemtype());
+      $values = array();
+      foreach ($templates as $data) {
+         $values[$data['id']] = $data['template_name'];
+      }
+      $values[0] = DROPDOWN_EMPTY_VALUE;
+      asort($values);
+      Dropdown::showFromArray($name,$values);
    }
 }
 ?>

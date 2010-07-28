@@ -71,7 +71,7 @@ class PluginDatainjectionComputerInjection extends Computer
                                       "user"           => array(70, 24),
                                       "multiline_text" => array(16, 90));
 
-      $tab = PluginDatainjectionCommonInjectionLib::addToSearchOptions($tab, $options);
+      $tab = PluginDatainjectionCommonInjectionLib::addToSearchOptions($tab, $options,$this);
 
       return $tab;
    }
