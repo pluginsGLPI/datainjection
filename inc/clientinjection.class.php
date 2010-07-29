@@ -166,8 +166,8 @@ class PluginDatainjectionClientInjection {
    static function showInjectionForm(PluginDatainjectionModel $model, $entities_id) {
       global $LANG,$CFG_GLPI;
 
-      if (!isset($_SESSION['glpi_plugin_datainjection_infos'])) {
-         $_SESSION['glpi_plugin_datainjection_infos'] = array();
+      if (!isset($_SESSION['datainjection']['infos'])) {
+         $_SESSION['datainjection']['infos'] = array();
       }
       echo "<table class='tab_cadre_fixe'>";
       echo "<tr class='tab_bg_1'>";
@@ -199,9 +199,10 @@ class PluginDatainjectionClientInjection {
       $nblines = $_SESSION['datainjection']['nblines'];
       $clientinjection = new PluginDatainjectionClientInjection;
 
+      logDebug("glpi_plugin_datainjection_infos",$_SESSION['datainjection']['infos']);
             //New injection engine
       $engine = new PluginDatainjectionEngine($model,
-                                              $_SESSION['glpi_plugin_datainjection_infos'],
+                                              $_SESSION['datainjection']['infos'],
                                               $entities_id);
       $backend = $model->getBackend();
       $model->loadSpecificModel();

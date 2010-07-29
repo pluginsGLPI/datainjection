@@ -427,7 +427,9 @@ class PluginDatainjectionCommonInjectionLib {
          case 'template':
             $id = self::getTemplateIDByName($itemtype, $value);
             if ($id) {
-               $this->setValueForItemtype($itemtype,$linkfield,$id);
+               //Template id is stored into the item's id : when adding the object
+               //glpi will understand that it needs to take fields from the template
+               $this->setValueForItemtype($itemtype,'_oldID',$id);
             }
          case 'contact':
             if ($value != self::DROPDOWN_EMPTY_VALUE) {
@@ -628,7 +630,6 @@ class PluginDatainjectionCommonInjectionLib {
       $query = "SELECT `".getTableForItemType($itemtype)."`
                   WHERE `is_template`='1'
                      AND `template_name`='$name'";
-      logDebug($query);
       $result = $DB->query($query);
       if ($DB->numrows($result) > 0) {
          return $DB->result($result,0,'id');
@@ -1085,6 +1086,12 @@ class PluginDatainjectionCommonInjectionLib {
             //Add aditional infos
             $this->addOptionalInfos();
 
+            //Manage template only when adding an item
+            if ($this->results['type'] == self::IMPORT_ADD) {
+               //If needed, manage templates
+               $this->addTemplateFields($this->primary_type);
+            }
+
             $values = $this->getValuesForItemtype($this->primary_type);
             $newID  = $this->effectiveAddOrUpdate($this->injectionClass,$add,$item,$values);
             if (!$newID) {
@@ -1124,7 +1131,7 @@ class PluginDatainjectionCommonInjectionLib {
    }
 
    private function effectiveAddOrUpdate($injectionClass, $add=true, $item, $values) {
-      logDebug("effectiveAddOrUpdate",$values);
+      //logDebug("effectiveAddOrUpdate",$values);
       //Insert data using the standard add() method
       $toinject = array();
       $options = $injectionClass->getOptions();
@@ -1177,7 +1184,17 @@ class PluginDatainjectionCommonInjectionLib {
    private function addOptionalInfos() {
       foreach ($this->optional_infos as $itemtype => $data) {
          foreach ($data as $field => $value) {
-            $this->setValueForItemtype($itemtype,$field,$value);
+            //Exception for template management
+            //We've got the template id, not let's add the template name
+            if($field == 'templates_id') {
+               $item = new $itemtype();
+               $item->getFromDB($value);
+               $this->setValueForItemtype($itemtype,'template_name',$item->fields['template_name']);
+               $this->setValueForItemtype($itemtype,'_oldID',$value);
+            }
+            else {
+               $this->setValueForItemtype($itemtype,$field,$value);
+            }
          }
       }
    }
@@ -1353,17 +1370,19 @@ class PluginDatainjectionCommonInjectionLib {
    }
 
    private function addTemplateFields($itemtype) {
+      //If data inserted is not a template
       if (!$this->getValueByItemtypeAndName($itemtype,'is_template')) {
          $template = new $itemtype();
-         if ($template->getFromDB($this->getValueByItemtypeAndName($itemtype,'templates_id'))) {
+         $template_id = $this->getValueByItemtypeAndName($itemtype,'_oldID');
+         if ($template->getFromDB($template_id)) {
             unset ($template->fields["id"]);
             unset ($template->fields["date_mod"]);
             unset ($template->fields["is_template"]);
             unset ($template->fields["entities_id"]);
             foreach ($template->fields as $key => $value) {
                if ($value != self::EMPTY_VALUE && (!isset ($this->values[$itemtype][$key])
-                     || $this->values[$itemtype][$key] == EMPTY_VALUE
-                        || $this->values[$itemtype][$key] == DROPDOWN_EMPTY_VALUE))
+                     || $this->values[$itemtype][$key] == self::EMPTY_VALUE
+                        || $this->values[$itemtype][$key] == self::DROPDOWN_EMPTY_VALUE))
                   $this->setValueForItemtype($itemtype,$key,$value);
             }
             $name = autoName($this->values[$itemtype]['name'], "name", true,
@@ -1375,6 +1394,7 @@ class PluginDatainjectionCommonInjectionLib {
          }
       }
    }
+
    /**
     * Log event into the history
     * @param device_type the type of the item to inject
@@ -1436,6 +1456,9 @@ class PluginDatainjectionCommonInjectionLib {
       }
    }
 
+   /**
+    * Manage search options
+    */
    static function addToSearchOptions($type_searchOptions = array(), $options = array(),$injectionClass) {
       self::addTemplateSearchOptions($injectionClass,$type_searchOptions);
 
@@ -1483,6 +1506,9 @@ class PluginDatainjectionCommonInjectionLib {
 
    /**
     * Add necessary search options for template management
+    * @param injectionClass the injection class to use
+    * @param tab the options tab, as an array (passed as a reference)
+    * @return nothing
     */
    static function addTemplateSearchOptions($injectionClass,&$tab) {
       global $LANG;
@@ -1509,8 +1535,14 @@ class PluginDatainjectionCommonInjectionLib {
       }
    }
 
+   /**
+    * If itemtype injection needs to process things after data is written in DB
+    * @return nothing
+    */
    private function processAfterInsertOrUpdate() {
+      //If itemtype implements special process after type injection
       if (method_exists($this->injectionClass,'processAfterInsertOrUpdate')) {
+         //Invoke it
          $this->injectionClass->processAfterInsertOrUpdate($this->values);
       }
    }
