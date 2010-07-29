@@ -121,10 +121,15 @@ class PluginDatainjectionCommonInjectionLib {
    const UNICITY_NETPORT_LOGICAL_NUMBER_MAC        = 4;
    const UNICITY_NETPORT_LOGICAL_NUMBER_NAME_MAC   = 5;
 
+   //Field status must evolve when ticket #2216 will be resolved
    const FIELD_INJECTABLE               = 1;
    const FIELD_NOT_INJECTABLE           = 0;
    const FIELD_VIRTUAL                  = 2;
 
+   /**
+    * Set default values for injection parameters
+    * @return nothing
+    */
    function setDefaultValues() {
       $this->checks = array('ip'                       => false,
                             'mac'                      => false,
@@ -476,6 +481,11 @@ class PluginDatainjectionCommonInjectionLib {
          }
       }
 
+   /**
+    * Add additional parameters needed for dropdown import
+    * @param itemtype dropdrown's itemtype
+    * @return an array with additional options to be added
+    */
    private function addExternalDropdownParameters($itemtype) {
       $external = array();
       $values = $this->getValuesForItemtype($itemtype);
@@ -544,6 +554,14 @@ class PluginDatainjectionCommonInjectionLib {
       }
    }
 
+   /**
+    * Find id for a single type
+    * @param item the ComonDBTM item representing an itemtype
+    * @param searchOption searchOption related to the item
+    * @param entity the current entity
+    * @param value the name of the item for which id must be returned
+    * @return the id of the item found
+    */
    static private function findSingle($item, $searchOption, $entity, $value) {
       global $DB;
 
@@ -977,10 +995,21 @@ class PluginDatainjectionCommonInjectionLib {
    //--------------------------------------------------//
    //------ Pre and post injection methods -----------//
    //------------------------------------------------//
+
+   /**
+    * Add fields needed for all type injection
+    * @return nothing
+    */
    private function addNecessaryFields() {
      $this->setValueForItemtype($this->primary_type,'entities_id',$this->entity);
    }
 
+   /**
+    * Add fields needed to inject and itemtype
+    * @param injectionClass class which represents the object to inject
+    * @param itemtype the itemtype to inject
+    * @return nothing
+    */
    private function addNeededFields($injectionClass, $itemtype) {
 
       //Add itemtype
@@ -1015,6 +1044,11 @@ class PluginDatainjectionCommonInjectionLib {
    //--------------------------------------------------//
    //-------- Add /Update/Delete methods -------------//
    //------------------------------------------------//
+
+   /**
+    * Process of inject data into GLPI
+    * @return an array which contains the injection results
+    */
    public function processAddOrUpdate() {
       $process = false;
       $add = true;
@@ -1130,6 +1164,14 @@ class PluginDatainjectionCommonInjectionLib {
       return $this->results;
    }
 
+   /**
+    * Perform data injection into GLPI DB
+    * @param injectionClass class which represents the object to inject
+    * @param add true to insert an object, false to update an existing object
+    * @param item the CommonDBTM object representing the itemtype to inject
+    * @param values the values to inject
+    * @return the id of the object added or updated
+    */
    private function effectiveAddOrUpdate($injectionClass, $add=true, $item, $values) {
       //logDebug("effectiveAddOrUpdate",$values);
       //Insert data using the standard add() method
@@ -1164,6 +1206,7 @@ class PluginDatainjectionCommonInjectionLib {
 
    /**
     * Delete data into GLPI
+    * @return nothing
     */
    function deleteObject() {
       $itemtype = $this->getItemtype();
@@ -1181,6 +1224,10 @@ class PluginDatainjectionCommonInjectionLib {
       }
    }
 
+   /**
+    * Add optional informations filled by the user
+    * @return nothing
+    */
    private function addOptionalInfos() {
       foreach ($this->optional_infos as $itemtype => $data) {
          foreach ($data as $field => $value) {
@@ -1201,6 +1248,7 @@ class PluginDatainjectionCommonInjectionLib {
 
    /**
     * Manage fields tagged as relations
+    * @return nothing
     */
    private function manageRelations() {
       foreach ($this->values as $itemtype => $data) {
@@ -1227,7 +1275,9 @@ class PluginDatainjectionCommonInjectionLib {
 
    /**
     * Function to check if the datas to inject already exists in DB
-    * @param pe the type of datas to inject
+    * @param class which represents type to inject
+    * @param itemtype the itemtype to inject
+    * @return nothing
     */
    private function dataAlreadyInDB($injectionClass, $itemtype) {
       global $DB;
@@ -1369,6 +1419,11 @@ class PluginDatainjectionCommonInjectionLib {
       }
    }
 
+   /**
+    * Add fields coming for a template to the values to be injected
+    * @param itemtype the itemtype to inject
+    * @return nothing
+    */
    private function addTemplateFields($itemtype) {
       //If data inserted is not a template
       if (!$this->getValueByItemtypeAndName($itemtype,'is_template')) {
@@ -1400,6 +1455,7 @@ class PluginDatainjectionCommonInjectionLib {
     * @param device_type the type of the item to inject
     * @param device_id the id of the inserted item
     * @param the action_type the type of action(add or update)
+    * @return nothing
     */
    static function logAddOrUpdate($item, $add=true) {
       global $LANG;
@@ -1420,6 +1476,11 @@ class PluginDatainjectionCommonInjectionLib {
       }
    }
 
+   /**
+    * Get label associated with an injection action
+    * @param action code as defined in the head of this file
+    * @return label associated with the code
+    */
    static function getActionLabel($action) {
       global $LANG;
       $actions = array(self::IMPORT_ADD      => $LANG["datainjection"]["result"][8],
@@ -1434,6 +1495,11 @@ class PluginDatainjectionCommonInjectionLib {
 
    }
 
+   /**
+    * Get label associated with an injection result
+    * @param action code as defined in the head of this file
+    * @return label associated with the code
+    */
    static function getLogLabel($type) {
       global $LANG;
 
