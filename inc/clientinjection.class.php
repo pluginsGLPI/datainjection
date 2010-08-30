@@ -153,8 +153,9 @@ class PluginDatainjectionClientInjection {
          }
          $alert = "OnClick='return window.confirm(\"$message\");'";
       }
-      echo "<input type='submit' class='submit' name='upload' value=\"".
-                                            $LANG["datainjection"]["import"][0]."\" $alert/>";
+      echo "<input type='submit' class='submit' name='upload' value=\"";
+      echo (isset($options['submit']) ? $options['submit'] : $LANG["datainjection"]["import"][0]);
+      echo "\" $alert/>";
       echo "</td>";
       echo "</tr>";
       echo "</table>";

@@ -108,6 +108,7 @@ $LANG["datainjection"]["fileStep"][9] = "Encodage du fichier";
 $LANG["datainjection"]["fileStep"][10] = "Détection automatique";
 $LANG["datainjection"]["fileStep"][11] = "UTF-8";
 $LANG["datainjection"]["fileStep"][12] = "ISO8859-1";
+$LANG["datainjection"]["fileStep"][13] = "Charger le fichier";
 
 $LANG["datainjection"]["mapping"][1] = "colonnes trouvées";
 $LANG["datainjection"]["mapping"][2] = "En-tête du fichier";

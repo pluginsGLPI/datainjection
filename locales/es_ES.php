@@ -116,6 +116,7 @@ $LANG["datainjection"]["fileStep"][9] = "Codificación del archivo :";
 $LANG["datainjection"]["fileStep"][10] = "Detección automática";
 $LANG["datainjection"]["fileStep"][11] = "UTF-8";
 $LANG["datainjection"]["fileStep"][12] = "ISO8859-1";
+$LANG["datainjection"]["fileStep"][13] = "Load this file";
 
 $LANG["datainjection"]["mapping"][1] = "Se han encontrado campos a mapear";
 $LANG["datainjection"]["mappingStep"][2] = "Cabecera del archivo";

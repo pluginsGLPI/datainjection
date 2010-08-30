@@ -116,6 +116,7 @@ $LANG["datainjection"]["fileStep"][9] = "File encoding :";
 $LANG["datainjection"]["fileStep"][10] = "Automatic detection";
 $LANG["datainjection"]["fileStep"][11] = "UTF-8";
 $LANG["datainjection"]["fileStep"][12] = "ISO8859-1";
+$LANG["datainjection"]["fileStep"][13] = "Load this file";
 
 $LANG["datainjection"]["mapping"][1] = "columns to map have been found";
 $LANG["datainjection"]["mappingStep"][2] = "Header of the file";

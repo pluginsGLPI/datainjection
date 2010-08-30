@@ -116,6 +116,7 @@ $LANG["datainjection"]["fileStep"][9] = "Кодировка файла :";
 $LANG["datainjection"]["fileStep"][10] = "Определить автоматически";
 $LANG["datainjection"]["fileStep"][11] = "UTF-8";
 $LANG["datainjection"]["fileStep"][12] = "ISO8859-1";
+$LANG["datainjection"]["fileStep"][13] = "Load this file";
 
 $LANG["datainjection"]["mapping"][1] = "колонок было распознано";
 $LANG["datainjection"]["mappingStep"][2] = "Названия столбцов";

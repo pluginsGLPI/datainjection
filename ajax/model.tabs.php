@@ -60,9 +60,10 @@ if ($_POST["id"] >0 && $model->can($_POST["id"],'r')) {
          Plugin::displayAction($model,$_POST['glpi_tab']);
 
          if ($model->fields['step'] > PluginDatainjectionModel::INITIAL_STEP) {
-            $options['confirm'] = 'creation';
+            $options['confirm']   = 'creation';
             $options['models_id'] = $model->fields['id'];
-            $options['add_form'] = true;
+            $options['add_form']  = true;
+            $options['submit']    = $LANG["datainjection"]["fileStep"][13];
             PluginDatainjectionClientInjection::showUploadFileForm($options);
          }
          else {
@@ -76,9 +77,10 @@ if ($_POST["id"] >0 && $model->can($_POST["id"],'r')) {
          }
          break;
       case 3 :
-         $options['confirm'] = 'creation';
+         $options['confirm']   = 'creation';
          $options['models_id'] = $model->fields['id'];
-         $options['add_form'] = true;
+         $options['add_form']  = true;
+         $options['submit']    = $LANG["datainjection"]["fileStep"][13];
          PluginDatainjectionClientInjection::showUploadFileForm($options);
          break;
       case 4 :
