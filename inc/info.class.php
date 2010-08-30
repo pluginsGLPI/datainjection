@@ -324,7 +324,7 @@ class PluginDatainjectionInfo extends CommonDBTM {
             case 'dropdown':
             case 'user':
             case 'contact':
-               if ($value != PluginDatainjectionCommonInjectionLib::DROPDOWN_DEFAULT_VALUE) {
+               if ($value != PluginDatainjectionCommonInjectionLib::DROPDOWN_EMPTY_VALUE) {
                   return true;
                }
                else {
