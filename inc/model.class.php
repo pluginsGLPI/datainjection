@@ -346,8 +346,7 @@ class PluginDatainjectionModel extends CommonDBTM {
       $p = array('models_id' => '__VALUE__');
       if (isset($_SESSION['datainjection']['models_id'])) {
          $value = $_SESSION['datainjection']['models_id'];
-      }
-      else {
+      } else {
          $value = 0;
       }
 
@@ -363,16 +362,14 @@ class PluginDatainjectionModel extends CommonDBTM {
             }
             if ($model['entities_id'] == -1) {
                echo "\n<optgroup label=\"" . $LANG["datainjection"]["model"][18] . "\">";
-            }
-            else {
+            } else {
                echo "\n<optgroup label=\"" . Dropdown::getDropdownName("glpi_entities", $model['entities_id']) . "\">";
             }
             $prev = $model['entities_id'];
          }
          if ($model['id'] == $value) {
             $selected = "selected";
-         }
-         else {
+         } else {
             $selected = "";
          }
          echo "\n<option value='".$model['id']."' $selected>".$model['name']."</option>";
@@ -717,8 +714,7 @@ class PluginDatainjectionModel extends CommonDBTM {
       $class = 'PluginDatainjectionModel'.$type;
       if (class_exists($class)) {
          return new $class();
-      }
-      else {
+      } else {
          return false;
       }
    }
@@ -769,8 +765,7 @@ class PluginDatainjectionModel extends CommonDBTM {
          }
          //unlink($temporary_uniquefilename);
          return array('status'=>ERROR,'message'=>$message);
-      }
-      else {
+      } else {
          //Initialise a new backend
           $backend = PluginDatainjectionBackend::getInstance($this->fields['filetype']);
          //Init backend with needed values
@@ -824,13 +819,11 @@ class PluginDatainjectionModel extends CommonDBTM {
 
       if (!$this->injectionData) {
          return false;
-      }
-      else {
+      } else {
          if ($mode == self::PROCESS) {
             $this->loadMappings();
             $check = $this->isFileCorrect();
-         }
-         else {
+         } else {
             $check['status'] = PluginDatainjectionCommonInjectionLib::SUCCESS;
          }
          //There's an error
@@ -839,8 +832,7 @@ class PluginDatainjectionModel extends CommonDBTM {
                addMessageAfterRedirect($check['error_message'],true,ERROR);
             }
             return false;
-         }
-         else {
+         } else {
             $mappingCollection = new PluginDatainjectionMappingCollection;
 
             //Delete existing mappings only in model creation mode !!
@@ -918,8 +910,7 @@ class PluginDatainjectionModel extends CommonDBTM {
          if(!isset($header[$key])) {
             $error['status'] = PluginDatainjectionCommonInjectionLib::FAILED;
             $error['field_in_error'] = $key;
-         }
-         else {
+         } else {
             //If name of the mapping is not equal in the csv file header and in the DB
             $name_from_file = trim(strtoupper(stripslashes($header[$mapping->getRank()])));
             $name_from_db   = trim(strtoupper(stripslashes($mapping->getName())));
@@ -975,8 +966,7 @@ class PluginDatainjectionModel extends CommonDBTM {
       global $LANG;
       if ($this->fields['step'] == self::READY_TO_USE_STEP) {
          return $LANG["datainjection"]["model"][36];
-      }
-      else {
+      } else {
          return $LANG["datainjection"]["model"][35];
       }
    }
@@ -1066,14 +1056,14 @@ class PluginDatainjectionModel extends CommonDBTM {
 
       $model = new PluginDatainjectionModel;
       $model->getFromDB($models_id);
+
       if (!empty($results)) {
          $show_ok = false;
          $show_notok = false;
          foreach ($results as $result) {
             if ($result['status'] == PluginDatainjectionCommonInjectionLib::SUCCESS) {
                $show_ok = true;
-            }
-            else {
+            } else {
                $show_notok = true;
             }
          }
@@ -1098,13 +1088,12 @@ class PluginDatainjectionModel extends CommonDBTM {
             echo "<th>".$LANG["datainjection"]["log"][11]."</th>";
             echo "<th>".$LANG["datainjection"]["log"][12]."</th></tr>";
 
-            $index = 0;
             foreach ($results as $result) {
                if ($result['status'] == PluginDatainjectionCommonInjectionLib::SUCCESS) {
                   echo "<tr class='tab_bg_1'>";
                   echo "<td style='height:30px;width:30px'><img src='../pics/ok.png' alt='success' /></td>";
                   echo "</td>";
-                  echo "<td>$index</td>";
+                  echo "<td>".$result['line']."</td>";
                   echo "<td>";
                   $status = $result[PluginDatainjectionCommonInjectionLib::ACTION_CHECK]['status'];
                   echo PluginDatainjectionCommonInjectionLib::getLogLabel($status);
@@ -1123,7 +1112,6 @@ class PluginDatainjectionModel extends CommonDBTM {
                   }
                   echo "</td>";
                }
-               $index++;
             }
             echo "</tr>";
             echo "</table>";
@@ -1146,19 +1134,18 @@ class PluginDatainjectionModel extends CommonDBTM {
             echo "<th>".$LANG["datainjection"]["log"][10]."</th>";
             echo "<th>".$LANG["datainjection"]["log"][11]."</th>";
             echo "<th>".$LANG["datainjection"]["log"][12]."</th></tr>";
-            $index = 0;
+
             foreach ($results as $result) {
                if ($result['status'] != PluginDatainjectionCommonInjectionLib::SUCCESS) {
                   echo "<tr class='tab_bg_1'>";
                   echo "<td style='height:30px;width:30px'>";
                   if ($result['status'] != PluginDatainjectionCommonInjectionLib::WARNING) {
                      echo "<img src='../pics/notok.png' alt='error' />";
-                  }
-                  else {
+                  } else {
                      echo "<img src='../pics/danger.png' alt='warning' />";
                   }
                   echo "</td>";
-                  echo "<td>$index</td>";
+                  echo "<td>".$result['line']."</td>";
                   echo "<td>";
                   if (isset($result[PluginDatainjectionCommonInjectionLib::ACTION_CHECK]['status'])) {
                      $status = $result[PluginDatainjectionCommonInjectionLib::ACTION_CHECK]['status'];
@@ -1192,7 +1179,6 @@ class PluginDatainjectionModel extends CommonDBTM {
                   }
                   echo "</td>";
                }
-               $index++;
             }
             echo "</tr>";
             echo "</table>";
@@ -1214,18 +1200,22 @@ class PluginDatainjectionModel extends CommonDBTM {
       $model = new PluginDatainjectionModel;
       $model->getFromDB($models_id);
       if (!empty($results)) {
-         $index = 0;
          foreach ($results as $result) {
             $tmp = array();
-            $tmp['index'] = $index;
+            $tmp['line'] = $result['line'];
 
-            $check_status = $result[PluginDatainjectionCommonInjectionLib::ACTION_CHECK]['status'];
-            $tmp['check_status'] =
-                                 PluginDatainjectionCommonInjectionLib::getLogLabel($check_status);
+            if (isset($result[PluginDatainjectionCommonInjectionLib::ACTION_CHECK]['status'])) {
+               $check_status = $result[PluginDatainjectionCommonInjectionLib::ACTION_CHECK]['status'];
+            } else {
+               $check_status = "";
+            }
+
+             $tmp['check_status'] =
+                                  PluginDatainjectionCommonInjectionLib::getLogLabel($check_status);
+
             if (isset($result['type'])) {
                $type = PluginDatainjectionCommonInjectionLib::getActionLabel($result['type']);
-            }
-            else {
+            } else {
                $type = "";
             }
 
@@ -1235,20 +1225,17 @@ class PluginDatainjectionModel extends CommonDBTM {
                $tmp['item'] = $result[$model->fields['itemtype']];
                $tmp['status']= PluginDatainjectionCommonInjectionLib::getLogLabel($result['status']);
                $todisplay[PluginDatainjectionCommonInjectionLib::SUCCESS][] = $tmp;
-            }
-            else {
-               if ($result[PluginDatainjectionCommonInjectionLib::ACTION_CHECK]['status'] !=
+            } else {
+               if ($check_status != '' && $check_status !=
                      PluginDatainjectionCommonInjectionLib::FAILED) {
                   $tmp['type'] = $type;
-               }
-               else {
+               } else {
                   $tmp['type'] = '';
                }
 
                if (isset($result[$model->fields['itemtype']])) {
                   $tmp['item'] = $result[$model->fields['itemtype']];
-               }
-               else {
+               } else {
                   $tmp['item'] = '';
                }
 
@@ -1257,14 +1244,12 @@ class PluginDatainjectionModel extends CommonDBTM {
                         PluginDatainjectionCommonInjectionLib::FAILED) {
                   $tmp['status'] =
                           PluginDatainjectionCommonInjectionLib::getLogLabel($result['status']);
-               }
-               else {
+               } else {
                   $tmp['status'] = '';
                }
                $todisplay[PluginDatainjectionCommonInjectionLib::FAILED][] = $tmp;
 
             }
-            $index++;
          }
       }
       return $todisplay;
@@ -1284,33 +1269,33 @@ class PluginDatainjectionModel extends CommonDBTM {
             $pdf->displayTitle('<b>'.$LANG["datainjection"]["log"][4].'</b>');
             $pdf->setColumnsSize(6,20,20,30);
             $pdf->setColumnsAlign('center','center','center','center');
-            $col0 = '<b>'.$LANG["datainjection"]["result"][14].'</b>';
-            $col1 = '<b>'.$LANG["datainjection"]["result"][13].'</b>';
-            $col2 = '<b>'.$LANG["datainjection"]["result"][12].'</b>';
+            $col0 = '<b>'.$LANG["datainjection"]["log"][13].'</b>';
+            $col1 = '<b>'.$LANG["datainjection"]["log"][12].'</b>';
+            $col2 = '<b>'.$LANG["datainjection"]["log"][11].'</b>';
             $col3 = '<b>'.$LANG["joblist"][0].'</b>';
             $pdf->displayTitle($col0, $col1, $col2, $col3);
 
             $index = 0;
             foreach ($logresults[PluginDatainjectionCommonInjectionLib::SUCCESS] as $result) {
-               $pdf->displayLine($result['index'],$result['item'],$result['type'],$result['status']);
+               $pdf->displayLine($result['line'],$result['item'],$result['type'],$result['status']);
             }
          }
 
          if (isset($logresults[PluginDatainjectionCommonInjectionLib::FAILED])) {
             $pdf->setColumnsSize(100);
-            $pdf->displayTitle('<b>'.$LANG["datainjection"]["log"][4].'</b>');
+            $pdf->displayTitle('<b>'.$LANG["datainjection"]["log"][5].'</b>');
             $pdf->setColumnsSize(6, 10, 20, 20, 20);
             $pdf->setColumnsAlign('center','center','center','center','center');
-            $col0 = '<b>'.$LANG["datainjection"]["result"][14].'</b>';
-            $col1 = '<b>'.$LANG["datainjection"]["result"][13].'</b>';
-            $col2 = '<b>'.$LANG["datainjection"]["result"][12].'</b>';
-            $col3 = '<b>'.$LANG["datainjection"]["result"][10].'</b>';
-            $col4 = '<b>'.$LANG["datainjection"]["result"][11].'</b>';
+            $col0 = '<b>'.$LANG["datainjection"]["log"][13].'</b>';
+            $col1 = '<b>'.$LANG["datainjection"]["log"][12].'</b>';
+            $col2 = '<b>'.$LANG["datainjection"]["log"][11].'</b>';
+            $col3 = '<b>'.$LANG["datainjection"]["log"][9].'</b>';
+            $col4 = '<b>'.$LANG["datainjection"]["log"][10].'</b>';
             $pdf->displayTitle($col0, $col1, $col2, $col3, $col4);
 
             $index = 0;
             foreach ($logresults[PluginDatainjectionCommonInjectionLib::FAILED] as $result) {
-               $pdf->displayLine($result['index'],$result['item'],$result['type'],
+               $pdf->displayLine($result['line'],$result['item'],$result['type'],
                                  $result['check_status'],$result['status']);
             }
          }
@@ -1368,8 +1353,7 @@ class PluginDatainjectionModel extends CommonDBTM {
             echo "<td>";
             if ($model['step'] != self::READY_TO_USE_STEP) {
                echo $LANG["datainjection"]["model"][35];
-            }
-            else {
+            } else {
                echo $LANG["datainjection"]["model"][36];
             }
             echo "</td>";
@@ -1378,8 +1362,7 @@ class PluginDatainjectionModel extends CommonDBTM {
          echo "</table>";
          openArrowMassive("modelslist");
          closeArrowMassive('delete', $LANG['buttons'][6]);
-      }
-      else {
+      } else {
          echo "<tr class='tab_bg_1'><td>".$LANG['search'][15]."</table></td>";
       }
       echo "</form>";

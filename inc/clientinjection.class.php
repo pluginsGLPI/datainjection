@@ -224,7 +224,8 @@ class PluginDatainjectionClientInjection {
       //While CSV file is not EOF
       while ($line != null) {
          //Inject line
-         $clientinjection->results[] = $engine->injectLine($line[0]);
+         $injectionline = $index + ($model->getSpecificModel()->isHeaderPresent()?2:1);
+         $clientinjection->results[] = $engine->injectLine($line[0],$injectionline);
          changeProgressBarPosition(
              $index,
               $nblines,

@@ -61,8 +61,9 @@ class PluginDatainjectionEngine {
    /**
     * Inject one line of datas
     * @param line one line of data to import
+    * @param index the line number is the file
     */
-   function injectLine($line) {
+   function injectLine($line,$index) {
       //Store all fields to injection, sorted by itemtype
       $fields_toinject = array();
       $mandatory_fields = array();
@@ -130,6 +131,9 @@ class PluginDatainjectionEngine {
 
       //Will manage add or update
       $results = $injectionClass->addOrUpdateObject($fields_toinject,$options);
+
+      //Add injected line number to the result array
+      $results['line'] = $index;
       if ($results['status'] != PluginDatainjectionCommonInjectionLib::SUCCESS) {
          $this->error_lines[] = $line;
       }

@@ -1067,8 +1067,7 @@ class PluginDatainjectionCommonInjectionLib {
          $process = false;
          $this->results['status'] = self::FAILED;
          $this->results[self::ACTION_CHECK]['status'] = self::MANDATORY;
-      }
-      else {
+      } else {
          //Check is data to be inject still exists in DB (update) or not (add)
          $this->dataAlreadyInDB($this->injectionClass, $this->primary_type);
 
@@ -1080,21 +1079,17 @@ class PluginDatainjectionCommonInjectionLib {
                $add = true;
                $this->unsetValue($this->primary_type,'id');
                $this->results['type'] = self::IMPORT_ADD;
-            }
-            else {
+            } else {
                   $process = false;
                   $this->results['status'] = self::FAILED;
                   $this->results[self::ACTION_INJECT]['status'] = self::ERROR_CANNOT_IMPORT;
                   $this->results['type'] = self::IMPORT_ADD;
             }
-         }
-         //Item found in DB
-         else {
+         } else { //Item found in DB
             if ($this->rights['can_update']) {
                $add = false;
                $this->results['type'] = self::IMPORT_UPDATE;
-            }
-            else {
+            } else {
                   $process = false;
                   $this->results['status'] = self::FAILED;
                   $this->results[self::ACTION_INJECT]['status'] = self::ERROR_CANNOT_UPDATE;
