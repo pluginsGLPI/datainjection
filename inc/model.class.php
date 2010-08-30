@@ -681,6 +681,25 @@ class PluginDatainjectionModel extends CommonDBTM {
       }
    }
 
+   /**
+    * Clean all model which match some criteria
+    *
+    * $crit array of criteria (ex array('itemtype'=>'PluginAppliancesAppliance'))
+    *
+    **/
+   static function clean ($crit=array()) {
+      global $DB;
+
+      $model = new self();
+
+      if (is_array($crit) && count($crit)>0) {
+         $crit['FIELDS'] = 'id';
+         foreach ($DB->request($model->getTable(), $crit) as $row) {
+            $model->delete($row);
+         }
+      }
+   }
+
    static function changeStep($models_id,$step) {
       $model = new PluginDatainjectionModel;
       if ($model->getFromDB($models_id)) {
