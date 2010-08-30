@@ -1088,7 +1088,7 @@ class PluginDatainjectionModel extends CommonDBTM {
          }
 
          if ($show_ok) {
-            echo "<table>";
+            echo "<table>\n";
             echo "<tr>";
             echo "<td style='width:30px'>";
             echo "<a href=\"javascript:show_log('1')\"><img src='../pics/plus.png' alt='plus' id='log1' /></a>";
@@ -1096,22 +1096,22 @@ class PluginDatainjectionModel extends CommonDBTM {
             echo "<td style='width: 900px;font-size: 14px;font-weight: bold;padding-left: 20px'>";
             echo $LANG["datainjection"]["log"][4];
             echo "</td>";
-            echo "</tr>";
-            echo "</table>";
+            echo "</tr>\n";
+            echo "</table>\n";
 
-            echo "<table class='tab_cadre_fixe'  id='log1_table'>";
+            echo "<div id='log1_table'>";
+            echo "<table class='tab_cadre_fixe'>\n";
             echo "<tr><th>".$LANG["joblist"][0]."</th>";
             echo "<th>".$LANG["datainjection"]["log"][13]."</th>";
             echo "<th>".$LANG["datainjection"]["log"][9]."</th>";
             echo "<th>".$LANG["datainjection"]["log"][10]."</th>";
             echo "<th>".$LANG["datainjection"]["log"][11]."</th>";
-            echo "<th>".$LANG["datainjection"]["log"][12]."</th></tr>";
+            echo "<th>".$LANG["datainjection"]["log"][12]."</th></tr>\n";
 
             foreach ($results as $result) {
                if ($result['status'] == PluginDatainjectionCommonInjectionLib::SUCCESS) {
                   echo "<tr class='tab_bg_1'>";
                   echo "<td style='height:30px;width:30px'><img src='../pics/ok.png' alt='success' /></td>";
-                  echo "</td>";
                   echo "<td>".$result['line']."</td>";
                   echo "<td>";
                   $status = $result[PluginDatainjectionCommonInjectionLib::ACTION_CHECK]['status'];
@@ -1130,13 +1130,13 @@ class PluginDatainjectionModel extends CommonDBTM {
                      echo "<a href=\"$url\">".$result[$model->fields['itemtype']]."</a>";
                   }
                   echo "</td>";
+                  echo "</tr>\n";
                }
             }
-            echo "</tr>";
-            echo "</table>";
+            echo "</table></div>\n";
          }
          if ($show_notok) {
-            echo "<table>";
+            echo "<table>\n";
             echo "<tr>";
             echo "<td style='width:30px'>";
             echo "<a href=\"javascript:show_log('2')\"><img src='../pics/minus.png' alt='minus' id='log2' /></a>";
@@ -1144,15 +1144,17 @@ class PluginDatainjectionModel extends CommonDBTM {
             echo "<td style='width: 900px;font-size: 14px;font-weight: bold;padding-left: 20px'>";
             echo $LANG["datainjection"]["log"][5];
             echo "</td>";
-            echo "</tr>";
-            echo "</table>";
-            echo "<table class='tab_cadre_fixe' style='text-align: center' id='log2_table'>";
+            echo "</tr>\n";
+            echo "</table>\n";
+
+            echo "<div id='log2_table'>";
+            echo "<table class='tab_cadre_fixe' style='text-align: center' >\n";
             echo "<tr><th>".$LANG["joblist"][0]."</th>";
             echo "<th>".$LANG["datainjection"]["log"][13]."</th>";
             echo "<th>".$LANG["datainjection"]["log"][9]."</th>";
             echo "<th>".$LANG["datainjection"]["log"][10]."</th>";
             echo "<th>".$LANG["datainjection"]["log"][11]."</th>";
-            echo "<th>".$LANG["datainjection"]["log"][12]."</th></tr>";
+            echo "<th>".$LANG["datainjection"]["log"][12]."</th></tr>\n";
 
             foreach ($results as $result) {
                if ($result['status'] != PluginDatainjectionCommonInjectionLib::SUCCESS) {
@@ -1197,10 +1199,10 @@ class PluginDatainjectionModel extends CommonDBTM {
                      echo "<a href=\"$url\">".$result[$model->fields['itemtype']]."</a>";
                   }
                   echo "</td>";
+                  echo "</tr>\n";
                }
             }
-            echo "</tr>";
-            echo "</table>";
+            echo "</table></div>\n";
          }
          if ($show_notok) {
             echo "<script type='text/javascript'>document.getElementById('log1_table').style.display='none'</script>";
