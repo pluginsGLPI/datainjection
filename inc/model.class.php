@@ -1288,7 +1288,7 @@ class PluginDatainjectionModel extends CommonDBTM {
          if (isset($logresults[PluginDatainjectionCommonInjectionLib::SUCCESS])) {
             $pdf->setColumnsSize(100);
             $pdf->displayTitle('<b>'.$LANG["datainjection"]["log"][4].'</b>');
-            $pdf->setColumnsSize(6,20,20,30);
+            $pdf->setColumnsSize(10,30,30,30);
             $pdf->setColumnsAlign('center','center','center','center');
             $col0 = '<b>'.$LANG["datainjection"]["log"][13].'</b>';
             $col1 = '<b>'.$LANG["datainjection"]["log"][12].'</b>';
@@ -1305,7 +1305,7 @@ class PluginDatainjectionModel extends CommonDBTM {
          if (isset($logresults[PluginDatainjectionCommonInjectionLib::FAILED])) {
             $pdf->setColumnsSize(100);
             $pdf->displayTitle('<b>'.$LANG["datainjection"]["log"][5].'</b>');
-            $pdf->setColumnsSize(6, 10, 20, 20, 20);
+            $pdf->setColumnsSize(6, 16, 26, 26, 26);
             $pdf->setColumnsAlign('center','center','center','center','center');
             $col0 = '<b>'.$LANG["datainjection"]["log"][13].'</b>';
             $col1 = '<b>'.$LANG["datainjection"]["log"][12].'</b>';
