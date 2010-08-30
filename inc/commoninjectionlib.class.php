@@ -368,8 +368,7 @@ class PluginDatainjectionCommonInjectionLib {
                                     $itemtype,
                                     $searchOption,
                                     $field,
-                                    $value,
-                                    $this->results['type']);
+                                    $value);
             }
          }
 
@@ -458,9 +457,9 @@ class PluginDatainjectionCommonInjectionLib {
             $message = '';
             if ($value != self::EMPTY_VALUE) {
                //If update : do not overwrite the existing field in DB, append at the end !
-               if ($add == self::IMPORT_UPDATE) {
+               //if ($add == self::IMPORT_UPDATE) {
                   $message = $this->values[$itemtype][$linkfield]."\n";
-               }
+               //}
 
                $message .= $value;
                $this->setValueForItemtype($itemtype,$linkfield,$message);
@@ -493,6 +492,9 @@ class PluginDatainjectionCommonInjectionLib {
       foreach ($toadd as $field => $addvalue)
       if (isset($values[$field])) {
          $external[$addvalue] = $values[$field];
+      }
+      else {
+         $external[$addvalue] = '';
       }
       return $external;
    }
@@ -1056,6 +1058,9 @@ class PluginDatainjectionCommonInjectionLib {
       //Manage fields belonging to relations between tables
       $this->manageRelations();
 
+      //Get real value for fields (ie dropdown, etc)
+      $this->manageFieldValues();
+
       //Check if the type to inject requires additional fields
       //(for example to link it with another type)
       if (!$this->areTypeMandatoryFieldsOK($this->injectionClass)) {
@@ -1068,7 +1073,6 @@ class PluginDatainjectionCommonInjectionLib {
          $this->dataAlreadyInDB($this->injectionClass, $this->primary_type);
 
          $process = true;
-
          //No item found in DB
          if($this->getValueByItemtypeAndName($this->primary_type,'id') == self::ITEM_NOT_FOUND) {
             //Can add item ?
@@ -1078,6 +1082,7 @@ class PluginDatainjectionCommonInjectionLib {
                $this->results['type'] = self::IMPORT_ADD;
             }
             else {
+                  $process = false;
                   $this->results['status'] = self::FAILED;
                   $this->results[self::ACTION_INJECT]['status'] = self::ERROR_CANNOT_IMPORT;
                   $this->results['type'] = self::IMPORT_ADD;
@@ -1086,11 +1091,11 @@ class PluginDatainjectionCommonInjectionLib {
          //Item found in DB
          else {
             if ($this->rights['can_update']) {
-               $process = true;
                $add = false;
                $this->results['type'] = self::IMPORT_UPDATE;
             }
             else {
+                  $process = false;
                   $this->results['status'] = self::FAILED;
                   $this->results[self::ACTION_INJECT]['status'] = self::ERROR_CANNOT_UPDATE;
                   $this->results['type'] = self::IMPORT_UPDATE;
@@ -1098,11 +1103,7 @@ class PluginDatainjectionCommonInjectionLib {
          }
       }
 
-
       if ($process) {
-
-         //Get real value for fields (ie dropdown, etc)
-         $this->manageFieldValues();
 
          //First : reformat data
          $this->reformat();
