@@ -1071,7 +1071,9 @@ class PluginDatainjectionModel extends CommonDBTM {
 
    static function showLogResults($models_id) {
       global $LANG;
+
       $results = json_decode(stripslashes_deep($_SESSION['datainjection']['results']),true);
+      //logDebug("showLogResults", $results);
 
       $model = new PluginDatainjectionModel;
       $model->getFromDB($models_id);

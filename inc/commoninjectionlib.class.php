@@ -886,13 +886,14 @@ class PluginDatainjectionCommonInjectionLib {
     */
    private function check() {
 
+      //logDebug("Check", $this);
+      $continue = true;
       foreach ($this->values as $itemtype => $fields) {
 
          $injectionClass = self::getInjectionClassInstance($itemtype);
          //Get search options associated with the injectionClass
          $searchOptions = $injectionClass->getOptions($this->primary_type);
 
-         $continue = true;
          foreach($fields as $field => $value) {
             if ($continue) {
                if (isset($this->mandatory_fields[$itemtype][$field])) {
@@ -901,7 +902,8 @@ class PluginDatainjectionCommonInjectionLib {
                   if ($value == self::EMPTY_VALUE
                         && $this->mandatory_fields[$itemtype][$field]) {
                      $this->results['status'] = self::FAILED;
-                     $this->results[$field] = self::MANDATORY;
+                     $this->results[self::ACTION_CHECK]['status'] = self::MANDATORY;
+                     $this->results[self::ACTION_CHECK][$field] = self::MANDATORY;
                      $continue = false;
                   }
                   else {
