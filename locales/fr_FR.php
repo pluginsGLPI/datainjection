@@ -179,7 +179,7 @@ $LANG["datainjection"]["button"][2] = "Suivant >";
 $LANG["datainjection"]["button"][3] = "Voir un aperçu du fichier";
 $LANG["datainjection"]["button"][4] = "Voir le rapport";
 $LANG["datainjection"]["button"][5] = "Générer CSV des erreurs";
-$LANG["datainjection"]["button"][6] = "Terminé";
+$LANG["datainjection"]["button"][6] = "Terminer";
 $LANG["datainjection"]["button"][7] = "Exporter le rapport en PDF";
 $LANG["datainjection"]["button"][8] = "Fermer";
 

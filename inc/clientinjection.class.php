@@ -273,6 +273,7 @@ class PluginDatainjectionClientInjection {
          }
       }
 
+      echo "<form method='post' action='".$CFG_GLPI['root_doc']."/plugins/datainjection/index.php'>";
       echo "<table class='tab_cadre_fixe'>";
       echo "<tr class='tab_bg_1'>";
       echo "<th>" . $LANG["datainjection"]["log"][1]."</th></tr>";
@@ -288,7 +289,7 @@ class PluginDatainjectionClientInjection {
       }
       echo "</td></tr>";
       echo "<tr class='tab_bg_1'>";
-      echo "<td align='center'>";
+      echo "<td class='center'>";
 
       $url = $CFG_GLPI["root_doc"].
               "/plugins/datainjection/front/popup.php?popup=log&amp;models_id=".$model->fields['id'];
@@ -315,7 +316,12 @@ class PluginDatainjectionClientInjection {
          echo "</td>";
          echo "</tr>";
       }
-      echo "</table>";
+
+      echo "<tr class='tab_bg_1'>";
+      echo "<td class='center'>";
+      echo "<input class='submit' type='submit' name='finish' value='".$LANG["datainjection"]["button"][6]."'>";
+      echo "</td></tr>";
+      echo "</table></form>";
    }
 
    static function exportErrorsInCSV() {
