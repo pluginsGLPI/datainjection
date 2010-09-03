@@ -83,6 +83,12 @@ class PluginDatainjectionEngine {
          //If field is mapped with a value in glpi
          if ($mapping->getItemtype() != PluginDatainjectionInjectionType::NO_VALUE) {
             $this->addValueToInject($fields_toinject,$searchOptions,$mapping,$line[$i],$several);
+         }
+      }
+
+      //Create an array with the mandatory mappings
+      foreach ($this->getModel()->getMappings() as $mapping) {
+         if ($mapping->isMandatory()) {
             $mandatory_fields[$mapping->getItemtype()][$mapping->getValue()] =
                                                                            $mapping->isMandatory();
          }

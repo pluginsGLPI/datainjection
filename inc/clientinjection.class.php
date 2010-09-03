@@ -87,8 +87,7 @@ class PluginDatainjectionClientInjection {
          echo "<td align='center'>".$LANG['common'][22]."&nbsp;:";
          PluginDatainjectionModel::dropdown();
          echo "</td></tr></table>";
-      }
-      else {
+      } else {
          echo "<tr class='tab_bg_1'>";
          echo "<td align='center' colspan='2'>".$LANG["datainjection"]["model"][33];
          if (plugin_datainjection_haveRight('model','w')) {
@@ -100,10 +99,10 @@ class PluginDatainjectionClientInjection {
       echo "<span id='span_injection' name='span_injection'></span>";
       echo "</div></form>";
 
-      if (isset($_SESSION['datainjection']['models_id'])) {
-         $p['models_id'] = $_SESSION['datainjection']['models_id'];
+      if (plugin_datainjection_getSessionParam('models_id')) {
+         $p['models_id'] = plugin_datainjection_getSessionParam('models_id');
 
-         switch ($_SESSION['datainjection']['step']) {
+         switch (plugin_datainjection_getSessionParam('step')) {
             case self::STEP_UPLOAD:
                $url = $CFG_GLPI["root_doc"]."/plugins/datainjection/ajax/dropdownSelectModel.php";
                ajaxUpdateItem("span_injection",$url,$p);
@@ -147,8 +146,7 @@ class PluginDatainjectionClientInjection {
       if ($confirm) {
          if ($confirm == 'creation') {
             $message = $LANG["datainjection"]["mapping"][13];
-         }
-         else {
+         } else {
             $message = $LANG["datainjection"]["fillInfoStep"][1];
          }
          $alert = "OnClick='return window.confirm(\"$message\");'";
@@ -167,8 +165,8 @@ class PluginDatainjectionClientInjection {
    static function showInjectionForm(PluginDatainjectionModel $model, $entities_id) {
       global $LANG,$CFG_GLPI;
 
-      if (!isset($_SESSION['datainjection']['infos'])) {
-         $_SESSION['datainjection']['infos'] = array();
+      if (!plugin_datainjection_getSessionParam('infos')) {
+         plugin_datainjection_setSessionParam('infos',array());
       }
       echo "<table class='tab_cadre_fixe'>";
       echo "<tr class='tab_bg_1'>";
@@ -197,13 +195,12 @@ class PluginDatainjectionClientInjection {
 
    static function processInjection(PluginDatainjectionModel $model, $entities_id) {
       global $LANG,$CFG_GLPI;
-      $nblines = $_SESSION['datainjection']['nblines'];
+      $nblines = plugin_datainjection_getSessionParam('nblines');
       $clientinjection = new PluginDatainjectionClientInjection;
 
-      logDebug("glpi_plugin_datainjection_infos",$_SESSION['datainjection']['infos']);
-            //New injection engine
+      //New injection engine
       $engine = new PluginDatainjectionEngine($model,
-                                              $_SESSION['datainjection']['infos'],
+                                              plugin_datainjection_getSessionParam('infos'),
                                               $entities_id);
       $backend = $model->getBackend();
       $model->loadSpecificModel();
@@ -245,12 +242,11 @@ class PluginDatainjectionClientInjection {
 
       //Delete CSV file
       $backend->deleteFile();
-      //logDebug($clientinjection->results);
       //Change step
       $_SESSION['datainjection']['step']        = self::STEP_RESULT;
       //Display results form
-      $_SESSION['datainjection']['results']     = json_encode($clientinjection->results);
-      $_SESSION['datainjection']['error_lines'] = json_encode($engine->getLinesInError());
+      plugin_datainjection_setSessionParam('results',json_encode($clientinjection->results));
+      plugin_datainjection_setSessionParam('error_lines',json_encode($engine->getLinesInError()));
       $p['models_id'] = $model->fields['id'];
       $p['nblines']   = $nblines;
 
@@ -263,8 +259,8 @@ class PluginDatainjectionClientInjection {
    static function showResultsForm(PluginDatainjectionModel $model) {
       global $LANG,$CFG_GLPI;
 
-      $results = json_decode(stripslashes_deep($_SESSION['datainjection']['results']),true);
-      $error_lines = json_decode(stripslashes_deep($_SESSION['datainjection']['error_lines']),true);
+      $results = json_decode(stripslashes_deep(plugin_datainjection_getSessionParam('results')),true);
+      $error_lines = json_decode(stripslashes_deep(plugin_datainjection_getSessionParam('error_lines')),true);
       $ok = true;
       foreach ($results as $result) {
          if ($result['status'] != PluginDatainjectionCommonInjectionLib::SUCCESS) {
@@ -282,8 +278,7 @@ class PluginDatainjectionClientInjection {
       if ($ok) {
          echo "<img src='".$CFG_GLPI['root_doc']."/plugins/datainjection/pics/ok.png'>";
          echo $LANG["datainjection"]["log"][3];
-      }
-      else {
+      } else {
          echo "<img src='".$CFG_GLPI['root_doc']."/plugins/datainjection/pics/danger.png'>";
          echo $LANG["datainjection"]["log"][8];
       }
@@ -326,10 +321,10 @@ class PluginDatainjectionClientInjection {
 
    static function exportErrorsInCSV() {
 
-      $error_lines = json_decode(stripslashes_deep($_SESSION['datainjection']['error_lines']),true);
+      $error_lines = json_decode(stripslashes_deep(plugin_datainjection_getSessionParam('error_lines')),true);
       if (!empty($error_lines)) {
-         $model = unserialize($_SESSION["datainjection"]["currentmodel"]);
-         $file = PLUGIN_DATAINJECTION_UPLOAD_DIR . $_SESSION['datainjection']['file_name'];
+         $model = unserialize(plugin_datainjection_getSessionParam('currentmodel'));
+         $file = PLUGIN_DATAINJECTION_UPLOAD_DIR . plugin_datainjection_getSessionParam('file_name');
 
          $mappings = $model->getMappings();
          $tmpfile= fopen($file, "w");
@@ -346,7 +341,7 @@ class PluginDatainjectionClientInjection {
          }
          fclose($tmpfile);
 
-         header('Content-disposition: attachment; filename=Error-'.$_SESSION['datainjection']['file_name']);
+         header('Content-disposition: attachment; filename=Error-'.plugin_datainjection_getSessionParam('file_name'));
          header('Content-Type: application/force-download');
          header('Content-Transfer-Encoding: fichier');
          header('Content-Length: '.filesize($file));

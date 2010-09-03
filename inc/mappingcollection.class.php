@@ -168,5 +168,9 @@ class PluginDatainjectionMappingCollection {
       }
       return $mandatories;
    }
+
+   function getNumberOfMappings() {
+      return count($this->mappingCollection);
+   }
 }
 ?>

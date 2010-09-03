@@ -189,11 +189,12 @@ $LANG["datainjection"]["result"][7] = "L'import s'est bien passé";
 $LANG["datainjection"]["result"][8] = "Ajout";
 $LANG["datainjection"]["result"][9] = "Mise à jour";
 $LANG["datainjection"]["result"][10] = "Succès";
+$LANG["datainjection"]["result"][11] = "Echec";
 $LANG["datainjection"]["result"][17] = "Pas de données à insérer";
 $LANG["datainjection"]["result"][18] = "Rapport d'injection du fichier";
 $LANG["datainjection"]["result"][21] = "Import impossible";
 $LANG["datainjection"]["result"][22] = "Mauvais type";
-$LANG["datainjection"]["result"][23] = "Un champs obligatoire est manquant";
+$LANG["datainjection"]["result"][23] = "Au moins un champs obligatoire est manquant";
 
 $LANG["datainjection"]["result"][30] = "Les données existent déjà en base";
 $LANG["datainjection"]["result"][31] = "Pas les droits pour importer les données";

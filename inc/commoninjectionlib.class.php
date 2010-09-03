@@ -194,8 +194,7 @@ class PluginDatainjectionCommonInjectionLib {
       //Split $injection_options array and store data into the rights internal arrays
       if (isset($injection_options['formats'])) {
          $this->formats = $injection_options['formats'];
-      }
-      else {
+      } else {
          $this->formats = array('date_format' => self::DATE_TYPE_YYYYMMDD,
                                 'float_format' => self::FLOAT_TYPE_DOT);
       }
@@ -210,8 +209,7 @@ class PluginDatainjectionCommonInjectionLib {
       //If entity is given stores it, then use root entity
       if (isset($injection_options['entities_id'])) {
          $this->entity = $injection_options['entities_id'];
-      }
-      else {
+      } else {
          $this->entity = 0;
       }
    }
@@ -222,28 +220,55 @@ class PluginDatainjectionCommonInjectionLib {
     * @param injectionClass class to use for injection
     */
    function areTypeMandatoryFieldsOK($injectionClass) {
+      $itemtype = self::getItemtypeByInjectionClass($injectionClass);
+
+      //Add more values needed for mandatory fields management
       if (method_exists($injectionClass,'getValueForAdditionalMandatoryFields')) {
          $this->values = $injectionClass->getValueForAdditionalMandatoryFields($this->values);
       }
 
+      //Add new mandatory fields to check, needed by other itemtypes to inject
       if (method_exists($injectionClass,'addSpecificMandatoryFields')) {
          $fields = $injectionClass->addSpecificMandatoryFields();
-         $status_check = true;
          foreach ($fields as $field) {
-            if (!$this->getValueByItemtypeAndName(self::getItemtypeByInjectionClass($injectionClass),
-                                                  $field)) {
-               $status_check = false;
-               $option = self::findSearchOption($injectionClass->getOptions(),$field);
-               $this->results[self::ACTION_CHECK][$option['name']] = self::MANDATORY;
-            }
+            $this->mandatory_fields[$itemtype] = $field;
          }
-         return $status_check;
       }
-      else {
-         return true;
+
+      $status_check = true;
+      foreach ($this->mandatory_fields[$itemtype] as $field => $value) {
+         //Get value associated with the mandatory field
+         $value = $this->getValueByItemtypeAndName($itemtype,$field);
+
+         //Get search option associated with the mandatory field
+         $option = self::findSearchOption($injectionClass->getOptions(),$field);
+
+         //If field not defined, or if value is the dropdown's default value
+         //If no value found or value is 0 and field is a dropdown,
+         //then mandatory field management failed
+         //if (!$value) {
+         if ($value == false
+               || ($value == self::DROPDOWN_EMPTY_VALUE
+                     && self::isFieldADropdown($option['displaytype']))) {
+            $status_check = false;
+            $this->results[self::ACTION_CHECK][$option['name']] = self::MANDATORY;
+         }
       }
+      return $status_check;
    }
 
+   /**
+    * Check if a field type represents a dropdown or not
+    * @param field_type the type of field
+    * @return true if it's a dropdown type, false if not
+    */
+   static function isFieldADropdown($field_type) {
+      if (!in_array($field_type, array('text','multiline_text','date'))) {
+         return true;
+      } else {
+         return false;
+      }
+   }
    static function getItemtypeInstanceByInjection($injectionClassName) {
       $injection = self::getItemtypeByInjectionClass(new $injectionClassName);
       return new $injection;
@@ -260,8 +285,7 @@ class PluginDatainjectionCommonInjectionLib {
    static function getInjectionClassInstance($itemtype) {
       if (!isPluginItemType($itemtype)) {
          $injectionClass = 'PluginDatainjection'.ucfirst($itemtype).'Injection';
-      }
-      else {
+      } else {
          $injectionClass = ucfirst($itemtype).'Injection';
       }
       return new $injectionClass();
@@ -318,8 +342,7 @@ class PluginDatainjectionCommonInjectionLib {
    private function canAddDropdownValue() {
       if (isset($this->rights['add_dropdown'])) {
          return $this->rights['add_dropdown'];
-      }
-      else {
+      } else {
          return true;
       }
    }
@@ -393,8 +416,7 @@ class PluginDatainjectionCommonInjectionLib {
    private function getFieldValue($injectionClass, $itemtype, $searchOption, $field, $value,$add=true) {
       if(isset($searchOption['storevaluein'])) {
          $linkfield = $searchOption['storevaluein'];
-      }
-      else {
+      } else {
          $linkfield = $searchOption['linkfield'];
       }
 
@@ -410,8 +432,7 @@ class PluginDatainjectionCommonInjectionLib {
             if ($item instanceof CommonDropdown) {
                if ($item->canCreate() && $this->rights['add_dropdown']) {
                   $canadd = true;
-               }
-               else {
+               } else {
                   $canadd = false;
                }
                $id = $item->importExternal($value,
@@ -419,8 +440,7 @@ class PluginDatainjectionCommonInjectionLib {
                                            $this->addExternalDropdownParameters($itemtype),
                                            '',
                                            $canadd);
-            }
-            else {
+            } else {
                $id = self::findSingle($item,
                                       $searchOption,
                                       $this->entity,
@@ -438,8 +458,7 @@ class PluginDatainjectionCommonInjectionLib {
          case 'contact':
             if ($value != self::DROPDOWN_EMPTY_VALUE) {
                $id = self::findContact($value,$this->entity);
-            }
-            else {
+            } else {
                $id = self::DROPDOWN_EMPTY_VALUE;
             }
             $this->setValueForItemtype($itemtype,$linkfield,$id);
@@ -447,8 +466,7 @@ class PluginDatainjectionCommonInjectionLib {
          case 'user':
             if ($value != self::DROPDOWN_EMPTY_VALUE) {
                $id =  self::findUser($value, $this->entity);
-            }
-            else {
+            } else {
                $id =  self::DROPDOWN_EMPTY_VALUE;
             }
             $this->setValueForItemtype($itemtype,$linkfield,$id);
@@ -472,8 +490,7 @@ class PluginDatainjectionCommonInjectionLib {
                                                             $field,
                                                             $this->values);
                $this->setValueForItemtype($itemtype,$linkfield,$id);
-            }
-            else {
+            } else {
                $this->setValueForItemtype($itemtype,$linkfield,$value);
             }
             break;
@@ -492,8 +509,7 @@ class PluginDatainjectionCommonInjectionLib {
       foreach ($toadd as $field => $addvalue)
       if (isset($values[$field])) {
          $external[$addvalue] = $values[$field];
-      }
-      else {
+      } else {
          $external[$addvalue] = '';
       }
       return $external;
@@ -521,12 +537,10 @@ class PluginDatainjectionCommonInjectionLib {
          $entities = getUserEntities($ID,true);
          if (in_array($entity,$entities)) {
             return $ID;
-         }
-         else {
+         } else {
             return self::DROPDOWN_EMPTY_VALUE;
          }
-      }
-      else {
+      } else {
          return self::DROPDOWN_EMPTY_VALUE;
       }
    }
@@ -550,8 +564,7 @@ class PluginDatainjectionCommonInjectionLib {
       {
          //check if user has right on the current entity
          return $DB->result($result,0,"id");
-      }
-      else {
+      } else {
          return self::DROPDOWN_EMPTY_VALUE;
       }
    }
@@ -585,8 +598,7 @@ class PluginDatainjectionCommonInjectionLib {
          //check if user has right on the current entity
 
          return $DB->result($result,0,"id");
-      }
-      else {
+      } else {
          $id = self::DROPDOWN_EMPTY_VALUE;
          if (in_array(get_class($item),$shouldbetropdowns)) {
             $id = $item->add(array($searchOption['field']=>$value));
@@ -603,8 +615,7 @@ class PluginDatainjectionCommonInjectionLib {
    function getValuesForItemtype($itemtype) {
       if (isset($this->values[$itemtype])) {
          return $this->values[$itemtype];
-      }
-      else {
+      } else {
          return false;
       }
    }
@@ -618,8 +629,7 @@ class PluginDatainjectionCommonInjectionLib {
       $values = $this->getValuesForItemtype($itemtype);
       if ($values) {
          return (isset($values[$field])?$values[$field]:false);
-      }
-      else {
+      } else {
          return false;
       }
    }
@@ -653,8 +663,7 @@ class PluginDatainjectionCommonInjectionLib {
       $result = $DB->query($query);
       if ($DB->numrows($result) > 0) {
          return $DB->result($result,0,'id');
-      }
-      else {
+      } else {
          return false;
       }
    }
@@ -683,8 +692,7 @@ class PluginDatainjectionCommonInjectionLib {
          foreach ($data as $field => $value) {
             if ($value && $value == "NULL") {
                $this->values[$itemtype][$field] = self::EMPTY_VALUE;
-            }
-            else {
+            } else {
                //Get search option associated with the field
                $option = self::findSearchOption($searchOptions,$field);
 
@@ -702,8 +710,7 @@ class PluginDatainjectionCommonInjectionLib {
                      if ($dropdownID) {
                         $this->values[$itemtype][$field] = Dropdown::getDropdownName($option['table'],
                                                                                      $dropdownID);
-                     }
-                     else {
+                     } else {
                         $this->results['status'] = self::WARNING;
                         $this->results[$field]   = self::WARNING_NOTFOUND;
                      }
@@ -846,8 +853,7 @@ class PluginDatainjectionCommonInjectionLib {
 
       if (preg_match('/[0-9]{2,4}-[0-9]{1,2}-[0-9]{1,2}/',$new_date)) {
          return $new_date;
-      }
-      else {
+      } else {
          return $original_date;
       }
    }
@@ -862,13 +868,11 @@ class PluginDatainjectionCommonInjectionLib {
       $pattern = "/^([0-9a-fA-F]{2})([0-9a-fA-F]{2})([0-9a-fA-F]{2})";
       $pattern.="([0-9a-fA-F]{2})([0-9a-fA-F]{2})([0-9a-fA-F]{2})/";
       preg_match($pattern,$mac,$results);
-      if (count($results) > 0)
-      {
+      if (count($results) > 0) {
          $mac="";
          $first=true;
          unset($results[0]);
-         foreach($results as $result)
-         {
+         foreach($results as $result) {
             $mac.=(!$first?":":"").$result;
             $first=false;
          }
@@ -886,7 +890,6 @@ class PluginDatainjectionCommonInjectionLib {
     */
    private function check() {
 
-      //logDebug("Check", $this);
       $continue = true;
       foreach ($this->values as $itemtype => $fields) {
 
@@ -905,8 +908,7 @@ class PluginDatainjectionCommonInjectionLib {
                      $this->results[self::ACTION_CHECK]['status'] = self::MANDATORY;
                      $this->results[self::ACTION_CHECK][$field] = self::MANDATORY;
                      $continue = false;
-                  }
-                  else {
+                  } else {
                      $check_result = $this->checkType($injectionClass,
                                                       $option,
                                                       $field,
@@ -951,8 +953,7 @@ class PluginDatainjectionCommonInjectionLib {
                case 'text' :
                   if (sizeof($data) > 255) {
                      return self::ERROR_FIELDSIZE_EXCEEDED;
-                  }
-                  else {
+                  } else {
                      return self::SUCCESS;
                   }
                case 'decimal' :
@@ -982,15 +983,13 @@ class PluginDatainjectionCommonInjectionLib {
                   //Will return SUCCESS if it's not a specific check
                   if (method_exists($injectionClass,'checkType')) {
                      return $injectionClass->checkType($field_name, $data, $mandatory);
-                  }
-                  else {
+                  } else {
                      return self::SUCCESS;
                   }
 
             }
          }
-      }
-      else {
+      } else {
          return self::SUCCESS;
       }
    }
@@ -1083,8 +1082,7 @@ class PluginDatainjectionCommonInjectionLib {
                $this->results['type'] = self::IMPORT_ADD;
             } else {
                   $process = false;
-                  $this->results['status'] = self::FAILED;
-                  $this->results[self::ACTION_INJECT]['status'] = self::ERROR_CANNOT_IMPORT;
+                  $this->results['status'] = self::ERROR_CANNOT_IMPORT;
                   $this->results['type'] = self::IMPORT_ADD;
             }
          } else { //Item found in DB
@@ -1093,9 +1091,10 @@ class PluginDatainjectionCommonInjectionLib {
                $this->results['type'] = self::IMPORT_UPDATE;
             } else {
                   $process = false;
-                  $this->results['status'] = self::FAILED;
-                  $this->results[self::ACTION_INJECT]['status'] = self::ERROR_CANNOT_UPDATE;
+                  $this->results['status'] = self::ERROR_CANNOT_UPDATE;
                   $this->results['type'] = self::IMPORT_UPDATE;
+                  $this->results[$this->primary_type] =
+                                          $this->getValueByItemtypeAndName($this->primary_type,'id');
             }
          }
       }
@@ -1128,8 +1127,7 @@ class PluginDatainjectionCommonInjectionLib {
             $newID  = $this->effectiveAddOrUpdate($this->injectionClass,$add,$item,$values);
             if (!$newID) {
                $this->results['status'] = self::WARNING;
-            }
-            else {
+            } else {
                //If type needs it : process more data after type import
                $this->processAfterInsertOrUpdate();
                $this->results['status'] = self::SUCCESS;
@@ -1148,8 +1146,7 @@ class PluginDatainjectionCommonInjectionLib {
                      if($this->getValueByItemtypeAndName($itemtype,'id') == self::ITEM_NOT_FOUND) {
                         $add = true;
                         $this->unsetValue($itemtype,'id');
-                     }
-                     else {
+                     } else {
                         $add = false;
                      }
                      $values = $this->getValuesForItemtype($itemtype);
@@ -1184,15 +1181,13 @@ class PluginDatainjectionCommonInjectionLib {
 
       if ($item instanceof CommonDropdown && $add) {
          $newID = $item->import($toinject);
-      }
-      else {
+      } else {
          if ($add) {
             if ($newID = $item->add($toinject)) {
                $this->setValueForItemtype(get_class($item),'id',$newID);
                self::logAddOrUpdate($item, $add);
             }
-         }
-         else {
+         } else {
             if ($item->update($toinject)) {
                $newID = $toinject['id'];
                self::logAddOrUpdate($item, $add);
@@ -1214,8 +1209,7 @@ class PluginDatainjectionCommonInjectionLib {
 
          if ($item->delete($this->values[$itemtype])) {
             $this->results['status'] = self::SUCCESS;
-         }
-         else {
+         } else {
             $this->results['status'] = self::FAILED;
          }
          $this->results[$itemtype] = $this->getValueByItemtypeAndName($itemtype,'id');
@@ -1236,8 +1230,7 @@ class PluginDatainjectionCommonInjectionLib {
                $item->getFromDB($value);
                $this->setValueForItemtype($itemtype,'template_name',$item->fields['template_name']);
                $this->setValueForItemtype($itemtype,'_oldID',$value);
-            }
-            else {
+            } else {
                $this->setValueForItemtype($itemtype,$field,$value);
             }
          }
@@ -1296,8 +1289,7 @@ class PluginDatainjectionCommonInjectionLib {
       //Needed parameters are not present : not found
       if (!$continue) {
          $this->values[$itemtype]['id'] = self::ITEM_NOT_FOUND;
-      }
-      else {
+      } else {
          $sql  = "SELECT * FROM `" . $injectionClass->getTable()."`";
 
          $item = new $itemtype;
@@ -1306,8 +1298,7 @@ class PluginDatainjectionCommonInjectionLib {
             //Define the side of the relation to use
             if (method_exists($item,'relationSide')) {
                $side = $injectionClass->relationSide();
-            }
-            else {
+            } else {
                $side = true;
             }
 
@@ -1316,8 +1307,7 @@ class PluginDatainjectionCommonInjectionLib {
                $destination_id = $item->items_id_1;
                $source_itemtype = $item->itemtype_2;
                $destination_itemtype = $item->itemtype_1;
-            }
-            else {
+            } else {
                $source_id = $item->items_id_1;
                $destination_id = $item->items_id_2;
                $source_itemtype = $item->itemtype_1;
@@ -1334,8 +1324,7 @@ class PluginDatainjectionCommonInjectionLib {
             $where .= " AND `".$destination_id."`='";
             $where .= $this->getValueByItemtypeAndName($itemtype,$destination_id)."'";
             $sql   .= " WHERE 1 ".$where;
-         }
-         else {
+         } else {
             //Type is not a relation
 
             //Type can be deleted
@@ -1359,15 +1348,12 @@ class PluginDatainjectionCommonInjectionLib {
                                                              $this->getValueByItemtypeAndName($itemtype,
                                                                                               'entities_id'),
                                                              true);
-               }
-               else {
+               } else {
                   //Type cannot be recursive
                   $where_entity = " AND `entities_id`='" .
                                    $this->getValueByItemtypeAndName($itemtype,'entities_id')."'";
                }
-            }
-            //If no entity assignment for this itemtype
-            else {
+            } else { //If no entity assignment for this itemtype
                $where_entity = "";
             }
 
@@ -1380,8 +1366,7 @@ class PluginDatainjectionCommonInjectionLib {
                      $where .= $this->getValueByItemtypeAndName($itemtype,$field) . "'";
                   }
                }
-            }
-            else {
+            } else {
                //Table contains an itemtype field
                if ($injectionClass->isField('itemtype')) {
                   $where.= " AND `itemtype`='";
@@ -1400,7 +1385,6 @@ class PluginDatainjectionCommonInjectionLib {
             }
             $sql .= " WHERE 1 " . $where_entity . " " . $where;
          }
-
          $result = $DB->query($sql);
          if ($DB->numrows($result) > 0) {
             $db_fields = $DB->fetch_array($result);
@@ -1410,8 +1394,7 @@ class PluginDatainjectionCommonInjectionLib {
                }
             }
             $this->setValueForItemtype($itemtype,'id',$DB->result($result,0,'id'));
-         }
-         else {
+         } else {
             $this->setValueForItemtype($itemtype,'id',self::ITEM_NOT_FOUND);
          }
       }
@@ -1464,8 +1447,7 @@ class PluginDatainjectionCommonInjectionLib {
          if ($add) {
             $changes[2] = $LANG["datainjection"]["result"][8] . " " .
                              $LANG["datainjection"]["history"][1];
-         }
-         else {
+         } else {
             $changes[2] = $LANG["datainjection"]["result"][9] . " " .
                              $LANG["datainjection"]["history"][1];
          }
@@ -1486,8 +1468,7 @@ class PluginDatainjectionCommonInjectionLib {
                        self::IMPORT_DELETE   => $LANG["datainjection"]["result"][9]);
       if (isset($actions[$action])) {
          return  $actions[$action];
-      }
-      else {
+      } else {
          return "";
       }
 
@@ -1514,8 +1495,7 @@ class PluginDatainjectionCommonInjectionLib {
                       self::WARNING_ALREADY_LINKED);
       if (in_array($type,$labels)) {
          return  $LANG["datainjection"]["result"][$type];
-      }
-      else {
+      } else {
          return "";
       }
    }
@@ -1532,16 +1512,14 @@ class PluginDatainjectionCommonInjectionLib {
       foreach ($type_searchOptions as $id => $tmp) {
          if (!is_array($tmp) || in_array($id,$options['ignore_fields'])) {
             unset($type_searchOptions[$id]);
-         }
-         else {
+         } else {
             if (in_array($tmp['field'],$add_linkfield)) {
                $type_searchOptions[$id]['linkfield'] = $add_linkfield[$tmp['field']];
             }
             if (!in_array($id,$options['ignore_fields'])) {
                if (!isset($tmp['linkfield'])) {
                   $type_searchOptions[$id]['injectable'] = self::FIELD_VIRTUAL;
-               }
-               else {
+               } else {
                   $type_searchOptions[$id]['injectable'] = self::FIELD_INJECTABLE;
                }
 

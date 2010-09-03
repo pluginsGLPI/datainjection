@@ -34,6 +34,7 @@
 if (!defined("PLUGIN_DATAINJECTION_UPLOAD_DIR")){
    define("PLUGIN_DATAINJECTION_UPLOAD_DIR",GLPI_PLUGIN_DOC_DIR."/datainjection/");
 }
+include (GLPI_ROOT."/plugins/datainjection/inc/common.functions.php");
 
 function plugin_init_datainjection() {
    global $PLUGIN_HOOKS, $CFG_GLPI, $LANG, $INJECTABLE_TYPES;

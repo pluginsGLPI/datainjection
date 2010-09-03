@@ -168,8 +168,7 @@ class PluginDatainjectionBackendcsv extends PluginDatainjectionBackend
       $data= fgetcsv($this->file_handler,0,$this->getDelimiter());
       if ($data === FALSE) {
          return false;
-      }
-      else {
+      } else {
          $line = array();
          if(count($data) > 1 || $data[0] != PluginDatainjectionCommonInjectionLib::EMPTY_VALUE) {
             $line= self::parseLine($this->file_handler, $data, $this->encoding);
