@@ -446,7 +446,8 @@ class PluginDatainjectionCommonInjectionLib {
                                       $this->entity,
                                       $value);
             }
-            $this->setValueForItemtype($itemtype,$linkfield,$id);
+            // Use EMPTY_VALUE for Mandatory field check
+            $this->setValueForItemtype($itemtype, $linkfield, ($id>0 ? $id : self::EMPTY_VALUE));
             break;
          case 'template':
             $id = self::getTemplateIDByName($itemtype, $value);
