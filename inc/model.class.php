@@ -1079,48 +1079,53 @@ class PluginDatainjectionModel extends CommonDBTM {
 
    static function prepareLogResults($models_id) {
       global $LANG;
-      $results = json_decode(stripslashes_deep(plugin_datainjection_getSessionParam('results')),
-                                               true);
+
+      $results = stripslashes_deep(json_decode(plugin_datainjection_getSessionParam('results'), true));
       $todisplay = array();
       $model = new PluginDatainjectionModel;
       $model->getFromDB($models_id);
       if (!empty($results)) {
          foreach ($results as $result) {
-            $tmp = array();
-            $tmp['line'] = $result['line'];
-            $tmp['status']= $result['status'];
+            $tmp = array(
+               'line'            => $result['line'],
+               'status'          => $result['status'],
+               'check_sumnary'   => PluginDatainjectionCommonInjectionLib::getLogLabel(PluginDatainjectionCommonInjectionLib::SUCCESS),
+               'check_message'   => '',
+               'type'            => '',
+               'status_message'  => PluginDatainjectionCommonInjectionLib::getLogLabel($result['status']),
+               'itemtype'        => $model->fields['itemtype'],
+               'url'             => '',
+               'item'            => ''
+            );
 
             if (isset($result[PluginDatainjectionCommonInjectionLib::ACTION_CHECK])) {
                $check_infos = $result[PluginDatainjectionCommonInjectionLib::ACTION_CHECK];
-               $tmp['check_status'] = $check_infos['status'];
-               if (isset($check_infos['status'])) {
-                  $check_status = $check_infos['status'];
-                  $tmp['check_message'] = PluginDatainjectionCommonInjectionLib::getLogLabel($check_status);
-               } else {
-                  $tmp['check_message'] = "";
+               $tmp['check_status']  = $check_infos['status'];
+               $tmp['check_sumnary'] = PluginDatainjectionCommonInjectionLib::getLogLabel(PluginDatainjectionCommonInjectionLib::FAILED);
+               $tmp['check_message'] = PluginDatainjectionCommonInjectionLib::getLogLabel($check_infos['status']);
+               $first = true;
+               foreach($check_infos as $key => $val) {
+                  if ($key!='status' && $val=$check_infos['status']) {
+                     $tmp['check_message'] .= ($first ? ' (' : ', ').$key;
+                     $first = false;
+                  }
                }
-            } else {
-                  $tmp['check_message'] = "";
+               if (!$first) {
+                  $tmp['check_message'] .= ')';
+               }
             }
 
             //Store the action type (add/update)
             if (isset($result['type'])) {
                $tmp['type'] = PluginDatainjectionCommonInjectionLib::getActionLabel($result['type']);
-            } else {
-               $tmp['type'] = "";
             }
 
-            $tmp['status_message']= PluginDatainjectionCommonInjectionLib::getLogLabel($result['status']);
-            $tmp['itemtype'] = $model->fields['itemtype'];
 
             if (isset($result[$model->fields['itemtype']])) {
                $tmp['item'] = $result[$model->fields['itemtype']];
                $url = getItemTypeFormURL($model->fields['itemtype'])."?id=".
                                                 $result[$model->fields['itemtype']];
                $tmp['url'] = "<a href=\"$url\">".$result[$model->fields['itemtype']]."</a>";
-            } else {
-               $tmp['url'] = "";
-               $tmp['item'] = "";
             }
 
             if ($result['status'] == PluginDatainjectionCommonInjectionLib::SUCCESS) {
@@ -1138,7 +1143,6 @@ class PluginDatainjectionModel extends CommonDBTM {
       global $LANG;
 
       $logresults = self::prepareLogResults($models_id);
-
       if (!empty($logresults)) {
          if (!empty($logresults[PluginDatainjectionCommonInjectionLib::SUCCESS])) {
             echo "<table>\n";
@@ -1253,8 +1257,12 @@ class PluginDatainjectionModel extends CommonDBTM {
 
             $index = 0;
             foreach ($logresults[PluginDatainjectionCommonInjectionLib::FAILED] as $result) {
-               $pdf->displayLine($result['line'],$result['check_message'],$result['status_message'],
+            $pdf->setColumnsSize(6, 16, 26, 26, 26);
+               $pdf->displayLine($result['line'],$result['check_sumnary'],$result['status_message'],
                                  $result['type'],$result['item']);
+               if ($result['check_message']) {
+                  $pdf->displayText($LANG["datainjection"]["log"][9].' :', $result['check_message'],1);
+               }
             }
          }
          $pdf->render();
