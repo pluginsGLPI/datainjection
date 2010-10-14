@@ -44,7 +44,11 @@ if (!defined('GLPI_ROOT')) {
 }
 
 checkCentralAccess();
-// keep session to retrieve previous value PluginDatainjectionModel::cleanSessionVariables();
+
+if (isset($_SESSION['datainjection']['models_id'])
+    && $_SESSION['datainjection']['models_id']!=$_POST['models_id']) {
+   PluginDatainjectionModel::cleanSessionVariables();
+}
 $_SESSION['datainjection']['step'] = PluginDatainjectionClientInjection::STEP_UPLOAD;
 PluginDatainjectionInfo::showAdditionalInformationsForm($_POST);
 ?>
