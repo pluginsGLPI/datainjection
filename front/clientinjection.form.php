@@ -46,11 +46,16 @@ if (isset($_SESSION['datainjection']['go'])) {
    $model->can($_POST['id'], 'r');
    $_SESSION['datainjection']['infos'] = (isset($_POST['info'])?$_POST['info']:array());
 
+logDebug($_FILES);
    //If additional informations provided : check if mandatory infos are present
    if (!$model->checkMandatoryFields($_SESSION['datainjection']['infos'])) {
       addMessageAfterRedirect($LANG["datainjection"]["fillInfoStep"][4],true,ERROR,true);
 
-   } elseif (!empty($_FILES) && !isset($_FILES['name'])) {
+   } else if (isset($_FILES['filename']['name'])
+              && $_FILES['filename']['name']
+              && $_FILES['filename']['tmp_name']
+              && !$_FILES['filename']['error']
+              && $_FILES['filename']['size']) {
 
       //Read file using automatic encoding detection, and do not delete file once readed
       $options = array('file_encoding'=> $_POST['file_encoding'],
