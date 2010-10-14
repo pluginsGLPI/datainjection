@@ -237,8 +237,13 @@ class PluginDatainjectionInfo extends CommonDBTM {
                                              $values = array()) {
       global $LANG;
 
+logDebug("showAdditionalInformation", "Option:", $option, "Session:", $_SESSION['datainjection']['infos']);
       $name = "info[".$option['linkfield']."]";
-      $value = '';
+      if (isset($_SESSION['datainjection']['infos'][$option['linkfield']])) {
+         $value = $_SESSION['datainjection']['infos'][$option['linkfield']];
+      } else {
+         $value = '';
+      }
 
       switch ($option['displaytype']) {
          case 'text' :

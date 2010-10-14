@@ -81,7 +81,7 @@ if (isset($_SESSION['datainjection']['go'])) {
 
    glpi_header($_SERVER['HTTP_REFERER']);
 } else {
-   $clientInjection = new PluginDatainjectionClientInjection;
+   $clientInjection = new PluginDatainjectionClientInjection();
    $clientInjection->title();
    $clientInjection->showForm(0);
 }
