@@ -967,7 +967,9 @@ class PluginDatainjectionModel extends CommonDBTM {
 
       foreach ($this->infos->getAllInfos() as $info) {
          if ($info->isMandatory()) {
-            if (!isset($fields[$info->getValue()]) || $fields[$info->getValue()] == '') {
+            if (!isset($fields[$info->getValue()])
+                || !$fields[$info->getValue()]
+                || $fields[$info->getValue()]=='NULL') {
                $check = false;
                break;
             }

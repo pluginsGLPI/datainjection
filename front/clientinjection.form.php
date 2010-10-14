@@ -40,14 +40,16 @@ commonHeader($LANG["datainjection"]["name"][1], $_SERVER["PHP_SELF"],"plugins","
 if (isset($_SESSION['datainjection']['go'])) {
    $model = unserialize($_SESSION['datainjection']['currentmodel']);
    PluginDatainjectionClientInjection::showInjectionForm($model, $_SESSION['glpiactive_entity']);
+
 } elseif (isset($_POST['upload'])) {
    $model = new PluginDatainjectionModel();
-   $model->getFromDB($_POST['id']);
+   $model->can($_POST['id'], 'r');
    $_SESSION['datainjection']['infos'] = (isset($_POST['info'])?$_POST['info']:array());
 
    //If additional informations provided : check if mandatory infos are present
    if (!$model->checkMandatoryFields($_SESSION['datainjection']['infos'])) {
       addMessageAfterRedirect($LANG["datainjection"]["fillInfoStep"][4],true,ERROR,true);
+
    } elseif (!empty($_FILES) && !isset($_FILES['name'])) {
 
       //Read file using automatic encoding detection, and do not delete file once readed
