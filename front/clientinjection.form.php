@@ -46,7 +46,6 @@ if (isset($_SESSION['datainjection']['go'])) {
    $model->can($_POST['id'], 'r');
    $_SESSION['datainjection']['infos'] = (isset($_POST['info'])?$_POST['info']:array());
 
-logDebug($_FILES);
    //If additional informations provided : check if mandatory infos are present
    if (!$model->checkMandatoryFields($_SESSION['datainjection']['infos'])) {
       addMessageAfterRedirect($LANG["datainjection"]["fillInfoStep"][4],true,ERROR,true);
