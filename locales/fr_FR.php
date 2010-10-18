@@ -190,6 +190,7 @@ $LANG["datainjection"]["result"][8] = "Ajout";
 $LANG["datainjection"]["result"][9] = "Mise à jour";
 $LANG["datainjection"]["result"][10] = "Succès";
 $LANG["datainjection"]["result"][11] = "Echec";
+$LANG["datainjection"]["result"][12] = "Avertissement";
 $LANG["datainjection"]["result"][17] = "Pas de données à insérer";
 $LANG["datainjection"]["result"][18] = "Rapport d'injection du fichier";
 $LANG["datainjection"]["result"][21] = "Import impossible";

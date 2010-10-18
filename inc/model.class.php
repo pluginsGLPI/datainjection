@@ -1092,7 +1092,7 @@ class PluginDatainjectionModel extends CommonDBTM {
                'line'            => $result['line'],
                'status'          => $result['status'],
                'check_sumnary'   => PluginDatainjectionCommonInjectionLib::getLogLabel(PluginDatainjectionCommonInjectionLib::SUCCESS),
-               'check_message'   => '',
+               'check_message'   => PluginDatainjectionCommonInjectionLib::getLogLabel(PluginDatainjectionCommonInjectionLib::SUCCESS),
                'type'            => '',
                'status_message'  => PluginDatainjectionCommonInjectionLib::getLogLabel($result['status']),
                'itemtype'        => $model->fields['itemtype'],
@@ -1103,17 +1103,19 @@ class PluginDatainjectionModel extends CommonDBTM {
             if (isset($result[PluginDatainjectionCommonInjectionLib::ACTION_CHECK])) {
                $check_infos = $result[PluginDatainjectionCommonInjectionLib::ACTION_CHECK];
                $tmp['check_status']  = $check_infos['status'];
-               $tmp['check_sumnary'] = PluginDatainjectionCommonInjectionLib::getLogLabel(PluginDatainjectionCommonInjectionLib::FAILED);
-               $tmp['check_message'] = PluginDatainjectionCommonInjectionLib::getLogLabel($check_infos['status']);
+               $tmp['check_sumnary'] = PluginDatainjectionCommonInjectionLib::getLogLabel($check_infos['status']);
+               $tmp['check_message'] = '';
                $first = true;
                foreach($check_infos as $key => $val) {
-                  if ($key!='status' && $val=$check_infos['status']) {
-                     $tmp['check_message'] .= ($first ? ' (' : ', ').$key;
+                  if ($key!=='status' && $val[0]!=PluginDatainjectionCommonInjectionLib::SUCCESS) {
+                     $tmp['check_message'] .= ($first ? '' : "\n").
+                        PluginDatainjectionCommonInjectionLib::getLogLabel($val[0]).
+                        " (".$val[1].")";
                      $first = false;
                   }
                }
-               if (!$first) {
-                  $tmp['check_message'] .= ')';
+               if ($first) {
+                  $tmp['check_message'] = $tmp['check_sumnary'];
                }
             }
 
@@ -1171,7 +1173,7 @@ class PluginDatainjectionModel extends CommonDBTM {
                echo "<tr class='tab_bg_1'>";
                echo "<td style='height:30px;width:30px'><img src='../pics/ok.png' alt='success' /></td>";
                echo "<td>".$result['line']."</td>";
-               echo "<td>".$result['status_message']."</td>";
+               echo "<td>".nl2br($result['status_message'])."</td>";
                echo "<td>".$result['type']."</td>";
                echo "<td>".$result['url']."</td><tr>\n";
             }
@@ -1203,8 +1205,8 @@ class PluginDatainjectionModel extends CommonDBTM {
                echo "<tr class='tab_bg_1'>";
                echo "<td style='height:30px;width:30px'><img src='../pics/notok.png' alt='success' /></td>";
                echo "<td>".$result['line']."</td>";
-               echo "<td>".$result['check_message']."</td>";
-               echo "<td>".$result['status_message']."</td>";
+               echo "<td>".nl2br($result['check_message'])."</td>";
+               echo "<td>".nl2br($result['status_message'])."</td>";
                echo "<td>".$result['type']."</td>";
                echo "<td>".$result['url']."</td><tr>\n";
             }
@@ -1231,12 +1233,12 @@ class PluginDatainjectionModel extends CommonDBTM {
          if (isset($logresults[PluginDatainjectionCommonInjectionLib::SUCCESS])) {
             $pdf->setColumnsSize(100);
             $pdf->displayTitle('<b>'.$LANG["datainjection"]["log"][4].'</b>');
-            $pdf->setColumnsSize(10,30,30,30);
+            $pdf->setColumnsSize(6,54,20,20);
             $pdf->setColumnsAlign('center','center','center','center');
             $col0 = '<b>'.$LANG["datainjection"]["log"][13].'</b>';
             $col1 = '<b>'.$LANG["datainjection"]["log"][10].'</b>';
-            $col2 = '<b>'.$LANG["datainjection"]["log"][12].'</b>';
-            $col3 = '<b>'.$LANG["datainjection"]["log"][11].'</b>';
+            $col2 = '<b>'.$LANG["datainjection"]["log"][11].'</b>';
+            $col3 = '<b>'.$LANG["datainjection"]["log"][12].'</b>';
             $pdf->displayTitle($col0, $col1, $col2, $col3);
 
             $index = 0;
@@ -1248,7 +1250,7 @@ class PluginDatainjectionModel extends CommonDBTM {
          if (isset($logresults[PluginDatainjectionCommonInjectionLib::FAILED])) {
             $pdf->setColumnsSize(100);
             $pdf->displayTitle('<b>'.$LANG["datainjection"]["log"][5].'</b>');
-            $pdf->setColumnsSize(6, 16, 26, 26, 26);
+            $pdf->setColumnsSize(6, 16, 38, 20, 20);
             $pdf->setColumnsAlign('center','center','center','center','center');
             $col0 = '<b>'.$LANG["datainjection"]["log"][13].'</b>';
             $col1 = '<b>'.$LANG["datainjection"]["log"][9].'</b>';
@@ -1259,11 +1261,12 @@ class PluginDatainjectionModel extends CommonDBTM {
 
             $index = 0;
             foreach ($logresults[PluginDatainjectionCommonInjectionLib::FAILED] as $result) {
-            $pdf->setColumnsSize(6, 16, 26, 26, 26);
+               $pdf->setColumnsSize(6, 16, 38, 20, 20);
+               $pdf->setColumnsAlign('center','center','center','center','center');
                $pdf->displayLine($result['line'],$result['check_sumnary'],$result['status_message'],
                                  $result['type'],$result['item']);
                if ($result['check_message']) {
-                  $pdf->displayText($LANG["datainjection"]["log"][9].' :', $result['check_message'],1);
+                  $pdf->displayText('<b>'.$LANG["datainjection"]["log"][9].'</b> :', $result['check_message'],1);
                }
             }
          }

@@ -230,7 +230,7 @@ class PluginDatainjectionClientInjection {
               number_format($index*100/$nblines,1).'%');
          $line = $backend->getNextLine();
          $index++;
-         logDebug('line '.$index.' of '.$nblines);
+         //logDebug('line '.$index.' of '.$nblines);
       }
 
       //EOF : change progressbar to 100% !

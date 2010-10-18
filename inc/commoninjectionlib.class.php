@@ -251,7 +251,7 @@ class PluginDatainjectionCommonInjectionLib {
                || ($value == self::DROPDOWN_EMPTY_VALUE
                      && self::isFieldADropdown($option['displaytype']))) {
             $status_check = false;
-            $this->results[self::ACTION_CHECK][$option['name']] = self::MANDATORY;
+            $this->results[self::ACTION_CHECK][] = array(self::MANDATORY,$option['name']);
          }
       }
       return $status_check;
@@ -448,6 +448,11 @@ class PluginDatainjectionCommonInjectionLib {
             }
             // Use EMPTY_VALUE for Mandatory field check
             $this->setValueForItemtype($itemtype, $linkfield, ($id>0 ? $id : self::EMPTY_VALUE));
+            if ($id <= 0) {
+                  $this->results['status'] = self::WARNING;
+                  $this->results[self::ACTION_CHECK]['status']   = self::WARNING;
+                  $this->results[self::ACTION_CHECK][] = array(self::WARNING_NOTFOUND, $searchOption['name']."='$value'");
+            }
             break;
          case 'template':
             $id = self::getTemplateIDByName($itemtype, $value);
@@ -680,8 +685,6 @@ class PluginDatainjectionCommonInjectionLib {
     * @return nothing
     */
    private function reformatFirstPass() {
-      //By default check is ok : if it's not the case, the value will be modified later
-      $this->results['status'] = self::SUCCESS;
 
       //Browse all fields & values
       foreach ($this->values as $itemtype => $data) {
@@ -906,8 +909,8 @@ class PluginDatainjectionCommonInjectionLib {
                   if ($value == self::EMPTY_VALUE
                         && $this->mandatory_fields[$itemtype][$field]) {
                      $this->results['status'] = self::FAILED;
-                     $this->results[self::ACTION_CHECK]['status'] = self::MANDATORY;
-                     $this->results[self::ACTION_CHECK][$field] = self::MANDATORY;
+                     $this->results[self::ACTION_CHECK]['status'] = self::FAILED;
+                     $this->results[self::ACTION_CHECK][] = array(self::MANDATORY,$field);
                      $continue = false;
                   } else {
                      $check_result = $this->checkType($injectionClass,
@@ -915,10 +918,10 @@ class PluginDatainjectionCommonInjectionLib {
                                                       $field,
                                                       $value,
                                                       $this->mandatory_fields[$itemtype][$field]);
-                     $this->results[self::ACTION_CHECK][$field] = $check_result;
+                     $this->results[self::ACTION_CHECK][] = array($check_result,$field."='$value'");
 
                      if ($check_result != self::SUCCESS) {
-                        $this->results[self::ACTION_CHECK]['status'] = $check_result;
+                        $this->results[self::ACTION_CHECK]['status'] = self::FAILED;
                         $this->results['status'] = self::FAILED;
                         $continue = false;
                      }
@@ -926,10 +929,6 @@ class PluginDatainjectionCommonInjectionLib {
                }
             }
          }
-      }
-
-      if ($continue) {
-         $this->results[self::ACTION_CHECK]['status'] = self::SUCCESS;
       }
    }
 
@@ -1057,6 +1056,10 @@ class PluginDatainjectionCommonInjectionLib {
       $process = false;
       $add = true;
 
+      // Initial value, will be change when problem
+      $this->results['status'] = self::SUCCESS;
+      $this->results[self::ACTION_CHECK]['status'] = self::SUCCESS;
+
       //Manage fields belonging to relations between tables
       $this->manageRelations();
 
@@ -1068,7 +1071,7 @@ class PluginDatainjectionCommonInjectionLib {
       if (!$this->areTypeMandatoryFieldsOK($this->injectionClass)) {
          $process = false;
          $this->results['status'] = self::FAILED;
-         $this->results[self::ACTION_CHECK]['status'] = self::MANDATORY;
+         $this->results[self::ACTION_CHECK]['status'] = self::FAILED;
       } else {
          //Check is data to be inject still exists in DB (update) or not (add)
          $this->dataAlreadyInDB($this->injectionClass, $this->primary_type);
@@ -1131,7 +1134,7 @@ class PluginDatainjectionCommonInjectionLib {
             } else {
                //If type needs it : process more data after type import
                $this->processAfterInsertOrUpdate();
-               $this->results['status'] = self::SUCCESS;
+               //$this->results['status'] = self::SUCCESS;
                $this->results[get_class($item)] = $newID;
 
                //Process other types
@@ -1484,6 +1487,7 @@ class PluginDatainjectionCommonInjectionLib {
       global $LANG;
 
       $labels = array(self::SUCCESS,
+                      self::WARNING,
                       self::ERROR_CANNOT_IMPORT,
                       self::ERROR_CANNOT_UPDATE,
                       self::ERROR_IMPORT_ALREADY_IMPORTED,

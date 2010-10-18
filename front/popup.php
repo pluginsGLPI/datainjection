@@ -40,7 +40,7 @@ switch ($_GET["popup"]) {
       popFooter();
       break;
    case "log" :
-      popHeader($LANG['ldap'][35],$_SERVER['PHP_SELF']);
+      popHeader($LANG["datainjection"]["result"][18],$_SERVER['PHP_SELF']);
       PluginDatainjectionModel::showLogResults($_GET['models_id']);
       popFooter();
       break;
