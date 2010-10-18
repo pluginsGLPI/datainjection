@@ -1114,9 +1114,6 @@ class PluginDatainjectionModel extends CommonDBTM {
                      $first = false;
                   }
                }
-               if ($first) {
-                  $tmp['check_message'] = $tmp['check_sumnary'];
-               }
             }
 
             //Store the action type (add/update)
