@@ -173,41 +173,44 @@ class PluginDatainjectionInfo extends CommonDBTM {
       $DB->query($query);
    }
 
-   static function showAdditionalInformationsForm($options=array()) {
+   static function showAdditionalInformationsForm(PluginDatainjectionModel $model) {
       global $DB, $LANG;
-      if (isset($options['models_id']) && $options['models_id']) {
-         $infos = getAllDatasFromTable('glpi_plugin_datainjection_infos',
-                                       "`models_id`='". $options['models_id']."'");
 
-         echo "<table class='tab_cadre_fixe'>";
+      $infos = getAllDatasFromTable('glpi_plugin_datainjection_infos',
+                                    "`models_id`='". $model->getField('id')."'");
 
-         if (count($infos)) {
-            $info = new PluginDatainjectionInfo;
+      echo "<table class='tab_cadre_fixe'>";
 
-            echo "<tr>";
-            echo "<th colspan='2'>" . $LANG["datainjection"]["info"][1];
-            echo "&nbsp;(".$LANG["datainjection"]["fillInfoStep"][3].")</th>";
-            echo "</tr>";
+      if (count($infos)) {
+         $info = new PluginDatainjectionInfo;
 
-            foreach ($infos as $tmp) {
-               $info->fields = $tmp;
-               $item = new $tmp['itemtype'];
-               if ($item->can(-1,'w')) {
-                  echo "<tr class='tab_bg_1'>";
-                  self::displayAdditionalInformation($info,
-                                                     $_SESSION['datainjection']['infos']);
-                  echo "</tr>";
-               }
+         echo "<tr>";
+         echo "<th colspan='2'>" . $LANG["datainjection"]["info"][1];
+         echo "&nbsp;(".$LANG["datainjection"]["fillInfoStep"][3].")</th></tr>\n";
+         if ($model->fields['comment']) {
+            echo "<tr  class='tab_bg_2'>";
+            echo "<td colspan='2' class='center'>".nl2br($model->fields['comment'])."</td></tr>\n";
+         }
+
+         foreach ($infos as $tmp) {
+            $info->fields = $tmp;
+            $item = new $tmp['itemtype'];
+            if ($item->can(-1,'w')) {
+               echo "<tr class='tab_bg_1'>";
+               self::displayAdditionalInformation($info,
+                                                  $_SESSION['datainjection']['infos']);
+               echo "</tr>";
             }
          }
-         echo "</table>";
-
-         $options['confirm'] = 'process';
-         PluginDatainjectionClientInjection::showUploadFileForm($options);
-
-         //Store models_id in session for future usage
-         $_SESSION['datainjection']['models_id'] = $options['models_id'];
       }
+      echo "</table>";
+
+      $options['models_id'] = $model->getField('id');
+      $options['confirm'] = 'process';
+      PluginDatainjectionClientInjection::showUploadFileForm($options);
+
+      //Store models_id in session for future usage
+      $_SESSION['datainjection']['models_id'] = $model->getField('id');
    }
 
    static function displayAdditionalInformation(PluginDatainjectionInfo $info,$values = array()) {

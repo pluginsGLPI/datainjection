@@ -380,7 +380,12 @@ class PluginDatainjectionModel extends CommonDBTM {
          } else {
             $selected = "";
          }
-         echo "\n<option value='".$model['id']."' $selected>".$model['name']."</option>";
+         if ($model['comment']) {
+            $comment = "title='".htmlentities($model['comment'],ENT_QUOTES,'UTF-8')."'";
+         } else {
+            $comment = "";
+         }
+         echo "\n<option value='".$model['id']."' $selected $comment>".$model['name']."</option>";
       }
 
       if ($prev >= -1) {
@@ -398,7 +403,7 @@ class PluginDatainjectionModel extends CommonDBTM {
       global $DB;
 
       $models = array ();
-      $query = "SELECT `id`, `name`, `is_private`, `entities_id`, `is_recursive`, `itemtype`, `step` ";
+      $query = "SELECT `id`, `name`, `is_private`, `entities_id`, `is_recursive`, `itemtype`, `step`, `comment` ";
       $query.= "FROM `glpi_plugin_datainjection_models` WHERE 1 ";
       if (!$all) {
          $query.= " AND`step`='".self::READY_TO_USE_STEP."' ";

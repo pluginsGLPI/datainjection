@@ -50,5 +50,8 @@ if (isset($_SESSION['datainjection']['models_id'])
    PluginDatainjectionModel::cleanSessionVariables();
 }
 $_SESSION['datainjection']['step'] = PluginDatainjectionClientInjection::STEP_UPLOAD;
-PluginDatainjectionInfo::showAdditionalInformationsForm($_POST);
+$model = new PluginDatainjectionModel();
+if ($model->can($_POST['models_id'],'r')) {
+   PluginDatainjectionInfo::showAdditionalInformationsForm($model);
+}
 ?>
