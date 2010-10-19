@@ -64,6 +64,9 @@ class PluginDatainjectionEngine {
     * @param index the line number is the file
     */
    function injectLine($line,$index) {
+
+      //logDebug("------------- injectLine($index) ----------");
+
       //Store all fields to injection, sorted by itemtype
       $fields_toinject = array();
       $mandatory_fields = array();
@@ -81,7 +84,7 @@ class PluginDatainjectionEngine {
       for ($i = 0; $i < count($line); $i++) {
          $mapping = $this->getModel()->getMappingByRank($i);
          //If field is mapped with a value in glpi
-         if ($mapping->getItemtype() != PluginDatainjectionInjectionType::NO_VALUE) {
+         if ($mapping!=null && $mapping->getItemtype() != PluginDatainjectionInjectionType::NO_VALUE) {
             $this->addValueToInject($fields_toinject,$searchOptions,$mapping,$line[$i],$several);
          }
       }

@@ -477,6 +477,7 @@ class PluginDatainjectionCommonInjectionLib {
             }
             $this->setValueForItemtype($itemtype,$linkfield,$id);
             break;
+/*
          case 'multiline_text':
             $message = '';
             if ($value != self::EMPTY_VALUE) {
@@ -489,6 +490,7 @@ class PluginDatainjectionCommonInjectionLib {
                $this->setValueForItemtype($itemtype,$linkfield,$message);
             }
             break;
+*/
          default:
             if (method_exists($injectionClass,'getSpecificFieldValue')) {
                $id = $injectionClass->getSpecificFieldValue($itemtype,
@@ -647,12 +649,33 @@ class PluginDatainjectionCommonInjectionLib {
    }
 
    /**
-    * Get values to inject for an itemtype
-    * @param the itemtype
-    * @return an array with all values for this itemtype
+    * Set values to inject for an itemtype
+    *
+    * @param $itemtype
+    * @param $field name
+    * @param $value of the field
+    * @param $fromdb boolean
     */
-   private function setValueForItemtype($itemtype,$field, $value) {
-      $this->values[$itemtype][$field] = $value;
+   private function setValueForItemtype($itemtype, $field, $value, $fromdb=false) {
+
+      // TODO awfull hack, text ftom CSV set more than once, so check if "another" value
+      if (isset($this->values[$itemtype][$field]) && $this->values[$itemtype][$field]!=$value) {
+         // Data set twice (probably CSV + Additional info)
+         $injectionClass = PluginDatainjectionCommonInjectionLib::getInjectionClassInstance($itemtype);
+         $option = PluginDatainjectionCommonInjectionLib::findSearchOption($injectionClass->getOptions($itemtype), $field);
+
+         if (isset($option['displaytype']) && $option['displaytype']=='multiline_text') {
+            if ($fromdb) {
+               $this->values[$itemtype][$field] = $value."\n".$this->values[$itemtype][$field];
+            } else {
+               $this->values[$itemtype][$field] = $this->values[$itemtype][$field]."\n".$value;
+            }
+         } else  if (!$fromdb) { // CSV value override DB value
+            $this->values[$itemtype][$field] = $value;
+         }
+      } else { // First value
+         $this->values[$itemtype][$field] = $value;
+      }
    }
 
    /**
@@ -1172,7 +1195,6 @@ class PluginDatainjectionCommonInjectionLib {
     * @return the id of the object added or updated
     */
    private function effectiveAddOrUpdate($injectionClass, $add=true, $item, $values) {
-      //logDebug("effectiveAddOrUpdate",$values);
       //Insert data using the standard add() method
       $toinject = array();
       $options = $injectionClass->getOptions();
@@ -1391,11 +1413,9 @@ class PluginDatainjectionCommonInjectionLib {
          }
          $result = $DB->query($sql);
          if ($DB->numrows($result) > 0) {
-            $db_fields = $DB->fetch_array($result);
+            $db_fields = $DB->fetch_assoc($result);
             foreach ($db_fields as $key => $value) {
-               if (!$this->getValueByItemtypeAndName($itemtype,$key)) {
-                  $this->setValueForItemtype($itemtype,$key,$value);
-               }
+               $this->setValueForItemtype($itemtype,$key,$value,true);
             }
             $this->setValueForItemtype($itemtype,'id',$DB->result($result,0,'id'));
          } else {
