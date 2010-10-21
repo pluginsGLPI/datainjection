@@ -123,7 +123,7 @@ class PluginDatainjectionInfocomInjection extends Infocom
       $fields_definition = array("date"               => array(4, 5),
                                  "dropdown"           => array(6, 9, 19),
                                  "dropdown_integer"   => array(6, 14),
-                                 "decimal"            => array(8,13,17),
+                                 "decimal"            => array(8, 13, 17),
                                  "sink_type"          => array(15),
                                  "alert"              => array(22),
                                  "multiline_text"     => array(16));

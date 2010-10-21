@@ -428,7 +428,7 @@ class PluginDatainjectionCommonInjectionLib {
          case 'dropdown':
          case 'relation':
             $tmptype = getItemTypeForTable($searchOption['table']);
-            $item = new $tmptype;
+            $item = new $tmptype();
             if ($item instanceof CommonDropdown) {
                if ($item->canCreate() && $this->rights['add_dropdown']) {
                   $canadd = true;
@@ -514,11 +514,20 @@ class PluginDatainjectionCommonInjectionLib {
       $external = array();
       $values = $this->getValuesForItemtype($itemtype);
       $toadd = array('manufacturers_id' => 'manufacturer');
-      foreach ($toadd as $field => $addvalue)
-      if (isset($values[$field])) {
-         $external[$addvalue] = $values[$field];
-      } else {
-         $external[$addvalue] = '';
+      foreach ($toadd as $field => $addvalue) {
+         if (isset($values[$field])) {
+            switch ($addvalue) {
+               case 'manufacturer':
+                  if (intval($values[$field])>0) {
+                     $external[$addvalue] = addslashes(Dropdown::getDropdownName('glpi_manufacturers',$values[$field]));
+                     break;
+                  }
+               default:
+                  $external[$addvalue] = $values[$field];
+            }
+         } else {
+            $external[$addvalue] = '';
+         }
       }
       return $external;
    }
