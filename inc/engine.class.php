@@ -66,6 +66,7 @@ class PluginDatainjectionEngine {
    function injectLine($line,$index) {
 
       //logDebug("------------- injectLine($index) ----------");
+      //logDebug("Line=", $line);
 
       //Store all fields to injection, sorted by itemtype
       $fields_toinject = array();
@@ -170,20 +171,24 @@ class PluginDatainjectionEngine {
     * @param several array of all fields which can be mapping more than one time in the model
     * @return nothing
     */
-   function addValueToInject(&$fields_toinject, $searchOptions, $mapping, $value,
-                                 $several = array()) {
+   function addValueToInject(&$fields_toinject, $searchOptions, $mapping, $value, $several = array()) {
+
+      // Option will be found only for "main" type.
       $option = PluginDatainjectionCommonInjectionLib::findSearchOption($searchOptions,
                                                                         $mapping->getValue());
-      $return_value = '';
+      $return_value = $value;
       if ($option['displaytype'] == 'multiline_text'
             && in_array($mapping->getValue(),$several)
                && $value != PluginDatainjectionCommonInjectionLib::EMPTY_VALUE) {
+         $return_value = '';
          if (isset($fields_toinject[$mapping->getItemtype()][$mapping->getValue()])) {
-            $return_value.= $fields_toinject[$mapping->getItemtype()][$mapping->getValue()];
+            $return_value .= $fields_toinject[$mapping->getItemtype()][$mapping->getValue()];
          }
          $return_value .= $mapping->getMappingName()."=".$value."\n";
       }
+      /*
       else {
+         $return_value = $value;
          //Value is not empty
          if ($value != PluginDatainjectionCommonInjectionLib::EMPTY_VALUE) {
             $return_value = $value;
@@ -195,6 +200,7 @@ class PluginDatainjectionEngine {
             }
          }
       }
+      */
       $fields_toinject[$mapping->getItemtype()][$mapping->getValue()] = $return_value;
    }
 
