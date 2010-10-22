@@ -63,7 +63,7 @@ if ($_POST["id"] >0 && $model->can($_POST["id"],'r')) {
             $options['confirm']   = 'creation';
             $options['models_id'] = $model->fields['id'];
             $options['add_form']  = true;
-            $options['submit']    = $LANG["datainjection"]["fileStep"][13];
+            $options['submit']    = $LANG['datainjection']['fileStep'][13];
             PluginDatainjectionClientInjection::showUploadFileForm($options);
          }
          else {
@@ -80,7 +80,7 @@ if ($_POST["id"] >0 && $model->can($_POST["id"],'r')) {
          $options['confirm']   = 'creation';
          $options['models_id'] = $model->fields['id'];
          $options['add_form']  = true;
-         $options['submit']    = $LANG["datainjection"]["fileStep"][13];
+         $options['submit']    = $LANG['datainjection']['fileStep'][13];
          PluginDatainjectionClientInjection::showUploadFileForm($options);
          break;
       case 4 :

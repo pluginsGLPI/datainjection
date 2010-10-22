@@ -70,16 +70,17 @@ class PluginDatainjectionBackendcsv extends PluginDatainjectionBackend
          if($c <($num -1)
                || ($c ==($num -1)
                   && $data[$num -1] != PluginDatainjectionCommonInjectionLib::EMPTY_VALUE)) {
+            $tmp = trim(mysql_real_escape_string($data[$c]));
             switch($encoding) {
                //If file is ISO8859-1 : encode the datas in utf8
-               case PluginDatainjectionBackend :: ENCODING_ISO8859_1 :
-                  $csv[0][]= utf8_encode(mysql_real_escape_string($data[$c]));
+               case PluginDatainjectionBackend::ENCODING_ISO8859_1 :
+                  $csv[0][]= utf8_encode($tmp);
                   break;
-               case PluginDatainjectionBackend :: ENCODING_UFT8 :
-                  $csv[0][]= mysql_real_escape_string($data[$c]);
+               case PluginDatainjectionBackend::ENCODING_UFT8 :
+                  $csv[0][]= $tmp;
                   break;
                default : //PluginDatainjectionBackend :: ENCODING_AUTO :
-                  $csv[0][]= PluginDatainjectionBackend :: toUTF8(mysql_real_escape_string($data[$c]));
+                  $csv[0][]= PluginDatainjectionBackend::toUTF8($tmp);
                   break;
             }
          }

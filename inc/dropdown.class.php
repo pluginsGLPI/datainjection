@@ -53,18 +53,21 @@ class PluginDatainjectionDropdown {
    static function dropdownDateFormat($format)
    {
       global $LANG;
-      $date_format[PluginDatainjectionCommonInjectionLib::DATE_TYPE_DDMMYYYY]=$LANG["datainjection"]["model"][22];
-      $date_format[PluginDatainjectionCommonInjectionLib::DATE_TYPE_MMDDYYYY]=$LANG["datainjection"]["model"][23];
-      $date_format[PluginDatainjectionCommonInjectionLib::DATE_TYPE_YYYYMMDD]=$LANG["datainjection"]["model"][24];
+
+      $date_format[PluginDatainjectionCommonInjectionLib::DATE_TYPE_DDMMYYYY]=$LANG['datainjection']['model'][22];
+      $date_format[PluginDatainjectionCommonInjectionLib::DATE_TYPE_MMDDYYYY]=$LANG['datainjection']['model'][23];
+      $date_format[PluginDatainjectionCommonInjectionLib::DATE_TYPE_YYYYMMDD]=$LANG['datainjection']['model'][24];
 
       Dropdown::showFromArray('date_format',$date_format,array('value'=>$format));
    }
 
    static function floatFormats() {
       global $LANG;
-      $float_format[PluginDatainjectionCommonInjectionLib::FLOAT_TYPE_DOT]=$LANG["datainjection"]["model"][25];
-      $float_format[PluginDatainjectionCommonInjectionLib::FLOAT_TYPE_COMMA]=$LANG["datainjection"]["model"][26];
-      $float_format[PluginDatainjectionCommonInjectionLib::FLOAT_TYPE_DOT_AND_COM]=$LANG["datainjection"]["model"][27];
+
+      $float_format[PluginDatainjectionCommonInjectionLib::FLOAT_TYPE_DOT]=$LANG['datainjection']['model'][25];
+      $float_format[PluginDatainjectionCommonInjectionLib::FLOAT_TYPE_COMMA]=$LANG['datainjection']['model'][26];
+      $float_format[PluginDatainjectionCommonInjectionLib::FLOAT_TYPE_DOT_AND_COM]=$LANG['datainjection']['model'][27];
+
       return $float_format;
    }
 
@@ -94,17 +97,19 @@ class PluginDatainjectionDropdown {
    }
 
 
-   static function dropdownFileEncoding()
-   {
+   static function dropdownFileEncoding() {
       global $LANG;
-      $values[PluginDatainjectionBackend::ENCODING_AUTO]=$LANG["datainjection"]["fileStep"][10];
-      $values[PluginDatainjectionBackend::ENCODING_UFT8]=$LANG["datainjection"]["fileStep"][11];
-      $values[PluginDatainjectionBackend::ENCODING_ISO8859_1]=$LANG["datainjection"]["fileStep"][12];
+
+      $values[PluginDatainjectionBackend::ENCODING_AUTO]=$LANG['datainjection']['fileStep'][10];
+      $values[PluginDatainjectionBackend::ENCODING_UFT8]=$LANG['datainjection']['fileStep'][11];
+      $values[PluginDatainjectionBackend::ENCODING_ISO8859_1]=$LANG['datainjection']['fileStep'][12];
+
       Dropdown::showFromArray('file_encoding',$values,array('value'=>PluginDatainjectionBackend::ENCODING_AUTO));
    }
 
    static function portUnicityValues() {
       global $LANG;
+
       $values[PluginDatainjectionCommonInjectionLib::UNICITY_NETPORT_LOGICAL_NUMBER] = $LANG["networking"][21];
       $values[PluginDatainjectionCommonInjectionLib::UNICITY_NETPORT_NAME] = $LANG["common"][16];
       $values[PluginDatainjectionCommonInjectionLib::UNICITY_NETPORT_MACADDRESS] = $LANG["device_iface"][2];

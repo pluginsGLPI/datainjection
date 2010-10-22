@@ -115,15 +115,15 @@ class PluginDatainjectionModelcsv extends CommonDBChild {
       $id = $this->getFromDBByModelID($model->fields['id']);
       $canedit=$this->can($id,'w');
 
-      echo "<tr><th colspan='4'>".$LANG["datainjection"]["model"][29]."</th></tr>";
+      echo "<tr><th colspan='4'>".$LANG['datainjection']['model'][29]."</th></tr>";
 
       echo "<tr class='tab_bg_1'>";
 
-      echo "<td>".$LANG["datainjection"]["model"][9].": </td>";
+      echo "<td>".$LANG['datainjection']['model'][9].": </td>";
       echo "<td>";
       Dropdown::showYesNo('is_header_present',$this->isHeaderPresent());
       echo "</td>";
-      echo "<td>".$LANG["datainjection"]["model"][10].": </td>";
+      echo "<td>".$LANG['datainjection']['model'][10].": </td>";
       echo "<td>";
       echo "<input type='text' size='1' name='delimiter' value='".$this->getDelimiter()."'";
       echo "</td>";

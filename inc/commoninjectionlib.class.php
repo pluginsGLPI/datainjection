@@ -511,6 +511,7 @@ class PluginDatainjectionCommonInjectionLib {
     * @return an array with additional options to be added
     */
    private function addExternalDropdownParameters($itemtype) {
+
       $external = array();
       $values = $this->getValuesForItemtype($itemtype);
       $toadd = array('manufacturers_id' => 'manufacturer');
@@ -519,7 +520,8 @@ class PluginDatainjectionCommonInjectionLib {
             switch ($addvalue) {
                case 'manufacturer':
                   if (intval($values[$field])>0) {
-                     $external[$addvalue] = addslashes(Dropdown::getDropdownName('glpi_manufacturers',$values[$field]));
+                     $external[$addvalue]
+                        = mysql_real_escape_string(Dropdown::getDropdownName('glpi_manufacturers',$values[$field]));
                      break;
                   }
                default:
@@ -1087,6 +1089,7 @@ class PluginDatainjectionCommonInjectionLib {
    public function processAddOrUpdate() {
       $process = false;
       $add = true;
+      logDebug("processAddOrUpdate(), start with", $this->values);
 
       // Initial value, will be change when problem
       $this->results['status'] = self::SUCCESS;
@@ -1478,11 +1481,11 @@ class PluginDatainjectionCommonInjectionLib {
          $changes[0] = 0;
 
          if ($add) {
-            $changes[2] = $LANG["datainjection"]["result"][8] . " " .
-                             $LANG["datainjection"]["history"][1];
+            $changes[2] = $LANG['datainjection']['result'][8] . " " .
+                             $LANG['datainjection']['history'][1];
          } else {
-            $changes[2] = $LANG["datainjection"]["result"][9] . " " .
-                             $LANG["datainjection"]["history"][1];
+            $changes[2] = $LANG['datainjection']['result'][9] . " " .
+                             $LANG['datainjection']['history'][1];
          }
          $changes[1] = "";
          Log::history ($item->fields['id'],get_class($item),$changes);
@@ -1496,9 +1499,10 @@ class PluginDatainjectionCommonInjectionLib {
     */
    static function getActionLabel($action) {
       global $LANG;
-      $actions = array(self::IMPORT_ADD      => $LANG["datainjection"]["result"][8],
-                       self::IMPORT_UPDATE   => $LANG["datainjection"]["result"][9],
-                       self::IMPORT_DELETE   => $LANG["datainjection"]["result"][9]);
+
+      $actions = array(self::IMPORT_ADD      => $LANG['datainjection']['result'][8],
+                       self::IMPORT_UPDATE   => $LANG['datainjection']['result'][9],
+                       self::IMPORT_DELETE   => $LANG['datainjection']['result'][9]);
       if (isset($actions[$action])) {
          return  $actions[$action];
       } else {
@@ -1528,7 +1532,7 @@ class PluginDatainjectionCommonInjectionLib {
                       self::WARNING_SEVERAL_VALUES_FOUND,
                       self::WARNING_ALREADY_LINKED);
       if (in_array($type,$labels)) {
-         return  $LANG["datainjection"]["result"][$type];
+         return  $LANG['datainjection']['result'][$type];
       } else {
          return "";
       }

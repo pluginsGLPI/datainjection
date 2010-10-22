@@ -60,11 +60,11 @@ class PluginDatainjectionProfile extends CommonDBTM {
       echo "<table class='tab_cadre_fixe'>";
 
       echo "<tr><th colspan='2' align='center'><strong>";
-      echo $LANG["datainjection"]["name"][1]." ".$profile->fields["name"];
+      echo $LANG['datainjection']['name'][1]." ".$profile->fields["name"];
       echo "</strong></th></tr>";
 
       echo "<tr class='tab_bg_2'>";
-      echo "<td>".$LANG["datainjection"]["profiles"][1].":</td><td>";
+      echo "<td>".$LANG['datainjection']['profiles'][1].":</td><td>";
       Profile::dropdownNoneReadWrite("model",$this->fields["model"],1,1,1);
       echo "</td>";
       echo "</tr>";

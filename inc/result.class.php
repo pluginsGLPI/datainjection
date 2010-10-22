@@ -221,48 +221,48 @@ class PluginDatainjectionResult {
       switch ($type)
       {
          case PluginDatainjectionCommonInjectionLib::ERROR_CANNOT_IMPORT:
-            $message = $LANG["datainjection"]["result"][5];
-         break;
+            $message = $LANG['datainjection']['result'][5];
+            break;
          case PluginDatainjectionCommonInjectionLib::WARNING_NOTEMPTY:
          case PluginDatainjectionCommonInjectionLib::ERROR_CANNOT_UPDATE:
-            $message = $LANG["datainjection"]["result"][6];
-         break;
+            $message = $LANG['datainjection']['result'][6];
+            break;
          case PluginDatainjectionCommonInjectionLib::ERROR_IMPORT_ALREADY_IMPORTED:
-            $message = $LANG["datainjection"]["result"][3];
-         break;
+            $message = $LANG['datainjection']['result'][3];
+            break;
          case PluginDatainjectionCommonInjectionLib::ERROR_IMPORT_WRONG_TYPE:
-            $message = $LANG["datainjection"]["result"][1];
-         break;
+            $message = $LANG['datainjection']['result'][1];
+            break;
          case PluginDatainjectionCommonInjectionLib::ERROR_IMPORT_FIELD_MANDATORY:
-            $message = $LANG["datainjection"]["result"][4];
-         break;
+            $message = $LANG['datainjection']['result'][4];
+            break;
          case PluginDatainjectionCommonInjectionLib::ERROR_IMPORT_LINK_FIELD_MISSING:
-            $message = $LANG["datainjection"]["result"][4];
-         break;
+            $message = $LANG['datainjection']['result'][4];
+            break;
          case PluginDatainjectionCommonInjectionLib::SUCCESS:
-            $message = $LANG["datainjection"]["result"][2];
-         break;
+            $message = $LANG['datainjection']['result'][2];
+            break;
          case PluginDatainjectionCommonInjectionLib::IMPORT_OK:
-            $message = $LANG["datainjection"]["result"][7];
-         break;
+            $message = $LANG['datainjection']['result'][7];
+            break;
          case PluginDatainjectionCommonInjectionLib::WARNING_NOTFOUND:
-            $message = $LANG["datainjection"]["result"][15];
-         break;
+            $message = $LANG['datainjection']['result'][15];
+            break;
          case PluginDatainjectionCommonInjectionLib::WARNING_USED:
-            $message = $LANG["datainjection"]["result"][16];
-         break;
+            $message = $LANG['datainjection']['result'][16];
+            break;
          case PluginDatainjectionCommonInjectionLib::WARNING_ALLEMPTY:
-            $message = $LANG["datainjection"]["result"][17];
-         break;
+            $message = $LANG['datainjection']['result'][17];
+            break;
          case PluginDatainjectionCommonInjectionLib::WARNING_SEVERAL_VALUES_FOUND:
-            $message = $LANG["datainjection"]["result"][19];
-         break;
+            $message = $LANG['datainjection']['result'][19];
+            break;
          case PluginDatainjectionCommonInjectionLib::WARNING_ALREADY_LINKED:
-            $message = $LANG["datainjection"]["result"][20];
-         break;
+            $message = $LANG['datainjection']['result'][20];
+            break;
          case PluginDatainjectionCommonInjectionLib::IMPORT_IMPOSSIBLE:
-            $message = $LANG["datainjection"]["result"][21];
-         break;
+            $message = $LANG['datainjection']['result'][21];
+            break;
       }
       return $message;
    }

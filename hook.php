@@ -88,7 +88,7 @@ function plugin_get_headings_datainjection($item, $withtemplate) {
       case 'Profile' :
          if ($item->fields['interface']=='central') {
             return array(
-               1 => $LANG["datainjection"]["name"][1]
+               1 => $LANG['datainjection']['name'][1]
             );
          } else {
             return array();

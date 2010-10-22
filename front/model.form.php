@@ -80,14 +80,14 @@ elseif (isset($_POST['upload'])) {
          setActiveTab('PluginDatainjectionModel', 4);
       }
       else {
-         addMessageAfterRedirect($LANG["datainjection"]["fileStep"][4],true,ERROR,true);
+         addMessageAfterRedirect($LANG['datainjection']['fileStep'][4],true,ERROR,true);
       }
    }
    glpi_header($_SERVER['HTTP_REFERER']);
 }
 
 
-commonHeader($LANG["datainjection"]["profiles"][1], '', "plugins", "datainjection", "model");
+commonHeader($LANG['datainjection']['profiles'][1], '', "plugins", "datainjection", "model");
 
 $model->showForm($_GET["id"]);
 

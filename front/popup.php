@@ -35,12 +35,12 @@ checkLoginUser();
 
 switch ($_GET["popup"]) {
    case "preview" :
-      popHeader($LANG["datainjection"]["button"][3],$_SERVER['PHP_SELF']);
+      popHeader($LANG['datainjection']['button'][3],$_SERVER['PHP_SELF']);
       PluginDatainjectionModel::showPreviewMappings($_GET['models_id']);
       popFooter();
       break;
    case "log" :
-      popHeader($LANG["datainjection"]["result"][18],$_SERVER['PHP_SELF']);
+      popHeader($LANG['datainjection']['result'][18],$_SERVER['PHP_SELF']);
       PluginDatainjectionModel::showLogResults($_GET['models_id']);
       popFooter();
       break;

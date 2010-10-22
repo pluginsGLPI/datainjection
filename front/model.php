@@ -35,7 +35,7 @@
 define('GLPI_ROOT', '../../..');
 include (GLPI_ROOT . "/inc/includes.php");
 
-commonHeader($LANG["datainjection"]["profiles"][1], '', "plugins", "datainjection", "model");
+commonHeader($LANG['datainjection']['profiles'][1], '', "plugins", "datainjection", "model");
 
 if (plugin_datainjection_haveRight("model", "w")) {
    if (isset($_POST['delete']) && isset($_POST['models'])) {

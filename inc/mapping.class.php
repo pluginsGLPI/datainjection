@@ -146,16 +146,16 @@ class PluginDatainjectionMapping extends CommonDBTM {
               "/plugins/datainjection/front/popup.php?popup=preview&amp;models_id=".$model->fields['id'];
          echo "<a href=#  onClick=\"var w = window.open('$url' ,";
          echo "'glpipopup', 'height=400, width=600, top=100, left=100, scrollbars=yes' );w.focus();\"/>";
-         echo $LANG["datainjection"]["button"][3]."</a>";
+         echo $LANG['datainjection']['button'][3]."</a>";
          echo "</td></tr>";
       }
 
       echo "<table class='tab_cadre_fixe'>";
       echo "<tr>";
-      echo "<th>" . $LANG["datainjection"]["mapping"][2] . "</th>";
-      echo "<th>" . $LANG["datainjection"]["mapping"][3] . "</th>";
-      echo "<th>" . $LANG["datainjection"]["mapping"][4] . "</th>";
-      echo "<th>" . $LANG["datainjection"]["mapping"][5] . "</th>";
+      echo "<th>" . $LANG['datainjection']['mapping'][2] . "</th>";
+      echo "<th>" . $LANG['datainjection']['mapping'][3] . "</th>";
+      echo "<th>" . $LANG['datainjection']['mapping'][4] . "</th>";
+      echo "<th>" . $LANG['datainjection']['mapping'][5] . "</th>";
       echo "</tr>";
 
       $model->loadMappings();

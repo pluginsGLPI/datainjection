@@ -50,13 +50,13 @@ function plugin_init_datainjection() {
       $PLUGIN_HOOKS['headings_action']['datainjection'] = 'plugin_headings_actions_datainjection';
 
       $image_import = "<img src='".$CFG_GLPI["root_doc"]."/pics/actualiser.png' title='";
-      $image_import.= $LANG["datainjection"]["importStep"][1];
-      $image_import.= "' alt='".$LANG["datainjection"]["importStep"][1]."'>";
+      $image_import.= $LANG['datainjection']['importStep'][1];
+      $image_import.= "' alt='".$LANG['datainjection']['importStep'][1]."'>";
 
       if (plugin_datainjection_haveRight("model", "r")) {
          $PLUGIN_HOOKS['menu_entry']['datainjection'] = true;
          $PLUGIN_HOOKS['submenu_entry']['datainjection']['options']['model']['title']  =
-                                                               $LANG["datainjection"]["model"][0];
+                                                               $LANG['datainjection']['model'][0];
          $PLUGIN_HOOKS['submenu_entry']['datainjection']['options']['model']['page']  =
                                                            '/plugins/datainjection/front/model.php';
          $PLUGIN_HOOKS['submenu_entry']['datainjection']['options']['model']['links']['search']  =
@@ -64,8 +64,8 @@ function plugin_init_datainjection() {
          $PLUGIN_HOOKS['submenu_entry']['datainjection']['options']['model']['links']['add'] =
                                                       '/plugins/datainjection/front/model.form.php';
          $image_model = "<img src='".$CFG_GLPI["root_doc"]."/pics/rdv.png' title='";
-         $image_model.= $LANG["datainjection"]["profiles"][1];
-         $image_model.= "' alt='".$LANG["datainjection"]["profiles"][1]."'>";
+         $image_model.= $LANG['datainjection']['profiles'][1];
+         $image_model.= "' alt='".$LANG['datainjection']['profiles'][1]."'>";
          $PLUGIN_HOOKS['submenu_entry']['datainjection'][$image_model] = 'front/model.php';
          $PLUGIN_HOOKS['submenu_entry']['datainjection']['options']['model']['links'][$image_import] = '/plugins/datainjection/index.php';
       }
@@ -101,11 +101,11 @@ function plugin_version_datainjection() {
    global $LANG;
 
    return array (
-      'name' => $LANG["datainjection"]["name"][1],
-      'minGlpiVersion' => '0.78',
-      'author'=>'Walid Nouh & Remi Collet',
-      'homepage'=>'https://forge.indepnet.net/projects/show/datainjection',
-      'version' => '2.0.0'
+      'name'            => $LANG['datainjection']['name'][1],
+      'minGlpiVersion'  => '0.78',
+      'author'          => 'Walid Nouh & Remi Collet',
+      'homepage'        => 'https://forge.indepnet.net/projects/show/datainjection',
+      'version'         => '2.0.0'
    );
 }
 

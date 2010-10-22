@@ -71,9 +71,9 @@ class PluginDatainjectionInfo extends CommonDBTM {
          echo "<form method='post' name=form action='".getItemTypeFormURL(__CLASS__)."'>";
          echo "<table class='tab_cadre_fixe'>";
          echo "<tr>";
-         echo "<th>" . $LANG["datainjection"]["mapping"][3] . "</th>";
-         echo "<th>" . $LANG["datainjection"]["mapping"][4] . "</th>";
-         echo "<th>" . $LANG["datainjection"]["info"][5] . "</th>";
+         echo "<th>" . $LANG['datainjection']['mapping'][3] . "</th>";
+         echo "<th>" . $LANG['datainjection']['mapping'][4] . "</th>";
+         echo "<th>" . $LANG['datainjection']['info'][5] . "</th>";
          echo "</tr>";
          echo "<tr class='tab_bg_1'>";
          echo "<td align='center'>";
@@ -113,9 +113,9 @@ class PluginDatainjectionInfo extends CommonDBTM {
       echo "<form method='post' name=form action='".getItemTypeFormURL(__CLASS__)."'>";
       echo "<table class='tab_cadre_fixe'>";
       echo "<tr>";
-      echo "<th>" . $LANG["datainjection"]["mapping"][3] . "</th>";
-      echo "<th>" . $LANG["datainjection"]["mapping"][4] . "</th>";
-      echo "<th>" . $LANG["datainjection"]["info"][5] . "</th>";
+      echo "<th>" . $LANG['datainjection']['mapping'][3] . "</th>";
+      echo "<th>" . $LANG['datainjection']['mapping'][4] . "</th>";
+      echo "<th>" . $LANG['datainjection']['info'][5] . "</th>";
       echo "</tr>";
 
       $model->loadInfos();
@@ -185,8 +185,8 @@ class PluginDatainjectionInfo extends CommonDBTM {
          $info = new PluginDatainjectionInfo;
 
          echo "<tr>";
-         echo "<th colspan='2'>" . $LANG["datainjection"]["info"][1];
-         echo "&nbsp;(".$LANG["datainjection"]["fillInfoStep"][3].")</th></tr>\n";
+         echo "<th colspan='2'>" . $LANG['datainjection']['info'][1];
+         echo "&nbsp;(".$LANG['datainjection']['fillInfoStep'][3].")</th></tr>\n";
          if ($model->fields['comment']) {
             echo "<tr  class='tab_bg_2'>";
             echo "<td colspan='2' class='center'>".nl2br($model->fields['comment'])."</td></tr>\n";

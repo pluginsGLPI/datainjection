@@ -88,7 +88,7 @@ class PluginDatainjectionInjectionType {
       }
 
       //Add null value
-      $values[PluginDatainjectionInjectionType::NO_VALUE] = $LANG["datainjection"]["mapping"][6];
+      $values[PluginDatainjectionInjectionType::NO_VALUE] = $LANG['datainjection']['mapping'][6];
 
       //Add primary_type to the list of availables types
       $type = new $p['primary_type']();
@@ -145,7 +145,7 @@ class PluginDatainjectionInjectionType {
       }
 
       $fields = array();
-      $fields[PluginDatainjectionInjectionType::NO_VALUE] = $LANG["datainjection"]["mapping"][7];
+      $fields[PluginDatainjectionInjectionType::NO_VALUE] = $LANG['datainjection']['mapping'][7];
 
       //By default field has no default value
       $mapping_value = PluginDatainjectionInjectionType::NO_VALUE;

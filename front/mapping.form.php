@@ -56,7 +56,7 @@ if (isset ($_POST["update"])) {
       $mapping->update($mapping_infos);
    }
    if (!$at_least_one_mandatory) {
-      addMessageAfterRedirect($LANG["datainjection"]["mapping"][11],true,ERROR,true);
+      addMessageAfterRedirect($LANG['datainjection']['mapping'][11],true,ERROR,true);
    }
    else {
       $model = new PluginDatainjectionModel;
@@ -65,7 +65,7 @@ if (isset ($_POST["update"])) {
          PluginDatainjectionModel::changeStep($_POST['models_id'],
                                               PluginDatainjectionModel::OTHERS_STEP);
          setActiveTab('PluginDatainjectionModel',4);
-         addMessageAfterRedirect($LANG["datainjection"]["info"][3]);
+         addMessageAfterRedirect($LANG['datainjection']['info'][3]);
       }
       unset($_SESSION['datainjection']['lines']);
    }
