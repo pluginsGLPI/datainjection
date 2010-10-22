@@ -36,15 +36,16 @@
 if (!extension_loaded("xmlrpc")) {
    die("Extension xmlrpc not loaded\n");
 }
+
 chdir(dirname($_SERVER["SCRIPT_FILENAME"]));
 chdir("../../..");
 $url = "/".basename(getcwd())."/plugins/webservices/xmlrpc.php";
 
-$args=array();
+$args = array();
 if ($_SERVER['argc']>1) {
    for ($i=1 ; $i<count($_SERVER['argv']) ; $i++) {
-      $it = explode("=",$argv[$i],2);
-      $it[0] = preg_replace('/^--/','',$it[0]);
+      $it           = explode("=",$argv[$i],2);
+      $it[0]        = preg_replace('/^--/','',$it[0]);
       $args[$it[0]] = (isset($it[1]) ? $it[1] : true);
    }
 }
@@ -69,21 +70,21 @@ $attrs['login_name']       = (isset($args['username'])?$args['username']:'glpi')
 $attrs['login_password']   = (isset($args['password'])?$args['password']:'glpi');
 $attrs['host']             = (isset($args['host'])?$args['host']:'localhost');
 $attrs['url']              = (isset($args['url'])?$args['url']
-                                                         :'glpi078/plugins/webservices/xmlrpc.php');
+                                                 :'glpi078/plugins/webservices/xmlrpc.php');
 
 $response = call('glpi.doLogin',$attrs);
+
 if ($response) {
-   $attrs['session']= $response['session'];
+   $attrs['session'] = $response['session'];
    echo "User logged in with session=".$response['session']."\n";
-}
-else {
+} else {
    exit(0);
 }
 
 //Set parameters for csv injection
-$attrs['models_id']        = $args['models_id'];
-$attrs['entities_id']      = $args['entities_id'];
-$attrs['uri']              = $args['uri'];
+$attrs['models_id']   = $args['models_id'];
+$attrs['entities_id'] = $args['entities_id'];
+$attrs['uri']         = $args['uri'];
 
 //Inject file
 $response = call('datainjection.inject',$attrs);
@@ -114,8 +115,7 @@ function call($method,$params) {
    if (xmlrpc_is_fault($response)) {
        echo("xmlrpc error(".$response['faultCode']."): ".$response['faultString']."\n");
        return false;
-   } else {
-      return $response;
    }
+   return $response;
 }
 ?>

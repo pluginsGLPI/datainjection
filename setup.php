@@ -31,10 +31,11 @@
 // Original Author of file: Walid Nouh
 // Purpose of file:
 // ----------------------------------------------------------------------
-if (!defined("PLUGIN_DATAINJECTION_UPLOAD_DIR")){
-   define("PLUGIN_DATAINJECTION_UPLOAD_DIR",GLPI_PLUGIN_DOC_DIR."/datainjection/");
+if (!defined("PLUGIN_DATAINJECTION_UPLOAD_DIR")) {
+   define("PLUGIN_DATAINJECTION_UPLOAD_DIR", GLPI_PLUGIN_DOC_DIR."/datainjection/");
 }
 include (GLPI_ROOT."/plugins/datainjection/inc/common.functions.php");
+
 
 function plugin_init_datainjection() {
    global $PLUGIN_HOOKS, $CFG_GLPI, $LANG, $INJECTABLE_TYPES;
@@ -45,30 +46,32 @@ function plugin_init_datainjection() {
    $PLUGIN_HOOKS['migratetypes']['datainjection'] = 'plugin_datainjection_migratetypes_datainjection';
 
    if ($plugin->isInstalled("datainjection") && $plugin->isActivated("datainjection")) {
-
-      $PLUGIN_HOOKS['headings']['datainjection'] = 'plugin_get_headings_datainjection';
+      $PLUGIN_HOOKS['headings']['datainjection']        = 'plugin_get_headings_datainjection';
       $PLUGIN_HOOKS['headings_action']['datainjection'] = 'plugin_headings_actions_datainjection';
 
-      $image_import = "<img src='".$CFG_GLPI["root_doc"]."/pics/actualiser.png' title='";
-      $image_import.= $LANG['datainjection']['importStep'][1];
-      $image_import.= "' alt='".$LANG['datainjection']['importStep'][1]."'>";
+      $image_import  = "<img src='".$CFG_GLPI["root_doc"]."/pics/actualiser.png' title='";
+      $image_import .= $LANG['datainjection']['importStep'][1];
+      $image_import .= "' alt='".$LANG['datainjection']['importStep'][1]."'>";
 
       if (plugin_datainjection_haveRight("model", "r")) {
          $PLUGIN_HOOKS['menu_entry']['datainjection'] = true;
-         $PLUGIN_HOOKS['submenu_entry']['datainjection']['options']['model']['title']  =
-                                                               $LANG['datainjection']['model'][0];
-         $PLUGIN_HOOKS['submenu_entry']['datainjection']['options']['model']['page']  =
-                                                           '/plugins/datainjection/front/model.php';
-         $PLUGIN_HOOKS['submenu_entry']['datainjection']['options']['model']['links']['search']  =
-                                                            '/plugins/datainjection/front/model.php';
-         $PLUGIN_HOOKS['submenu_entry']['datainjection']['options']['model']['links']['add'] =
-                                                      '/plugins/datainjection/front/model.form.php';
-         $image_model = "<img src='".$CFG_GLPI["root_doc"]."/pics/rdv.png' title='";
-         $image_model.= $LANG['datainjection']['profiles'][1];
-         $image_model.= "' alt='".$LANG['datainjection']['profiles'][1]."'>";
+         $PLUGIN_HOOKS['submenu_entry']['datainjection']['options']['model']['title']
+                                                   = $LANG['datainjection']['model'][0];
+         $PLUGIN_HOOKS['submenu_entry']['datainjection']['options']['model']['page']
+                                                   = '/plugins/datainjection/front/model.php';
+         $PLUGIN_HOOKS['submenu_entry']['datainjection']['options']['model']['links']['search']
+                                                   = '/plugins/datainjection/front/model.php';
+         $PLUGIN_HOOKS['submenu_entry']['datainjection']['options']['model']['links']['add']
+                                                   = '/plugins/datainjection/front/model.form.php';
+
+         $image_model  = "<img src='".$CFG_GLPI["root_doc"]."/pics/rdv.png' title='";
+         $image_model .= $LANG['datainjection']['profiles'][1];
+         $image_model .= "' alt='".$LANG['datainjection']['profiles'][1]."'>";
          $PLUGIN_HOOKS['submenu_entry']['datainjection'][$image_model] = 'front/model.php';
-         $PLUGIN_HOOKS['submenu_entry']['datainjection']['options']['model']['links'][$image_import] = '/plugins/datainjection/index.php';
+         $PLUGIN_HOOKS['submenu_entry']['datainjection']['options']['model']['links'][$image_import]
+                                                   = '/plugins/datainjection/index.php';
       }
+
       $PLUGIN_HOOKS['submenu_entry']['datainjection']['add'] = 'index.php';
 
       $PLUGIN_HOOKS['pre_item_delete']['datainjection'] = 'plugin_pre_item_delete_datainjection';
@@ -82,10 +85,11 @@ function plugin_init_datainjection() {
       // Inbtegration with Webservices plugin
       $PLUGIN_HOOKS['webservices']['datainjection'] = 'plugin_datainjection_registerMethods';
 
-      $classes = array ('Model', 'Modelcsv', 'Backend', 'Backendcsv', 'BackendInterface',
-                        'Infos', 'InfosCollection', 'Mapping', 'MappingCollection',
-                        'Profile', 'Data', 'Check', 'InjectionInterface', 'InjectionCommon',
-                        'Result', 'CommonInjectionLib', 'Webservice', 'Result');
+      $classes = array ('Backend', 'Backendcsv', 'BackendInterface','Check', 'CommonInjectionLib',
+                        'Data', 'Infos', 'InfosCollection', 'InjectionCommon', 'InjectionInterface',
+                        'Mapping', 'MappingCollection', 'Model', 'Modelcsv', 'Profile', 'Result',
+                        'Webservice');
+
       foreach ($classes as $value) {
          Plugin::registerClass('PluginDatainjection'.$value);
       }
@@ -97,90 +101,97 @@ function plugin_init_datainjection() {
    }
 }
 
+
 function plugin_version_datainjection() {
    global $LANG;
 
    return array (
-      'name'            => $LANG['datainjection']['name'][1],
-      'minGlpiVersion'  => '0.78',
-      'author'          => 'Walid Nouh & Remi Collet',
-      'homepage'        => 'https://forge.indepnet.net/projects/show/datainjection',
-      'version'         => '2.0.0'
+      'name'           => $LANG['datainjection']['name'][1],
+      'minGlpiVersion' => '0.78',
+      'author'         => 'Walid Nouh & Remi Collet',
+      'homepage'       => 'https://forge.indepnet.net/projects/show/datainjection',
+      'version'        => '2.0.0'
    );
 }
 
+
 function plugin_datainjection_haveRight($module, $right) {
-   $matches = array ("" => array ("", "r","w"), // ne doit pas arriver normalement
-   "r" => array ("r","w"),
-      "w" => array ("w"),
-      "1" => array ("1"),
-      "0" => array ("0","1"), // ne doit pas arriver non plus
-   );
+
+   $matches = array(""  => array ("", "r","w"), // ne doit pas arriver normalement
+                    "r" => array ("r","w"),
+                    "w" => array ("w"),
+                    "1" => array ("1"),
+                    "0" => array ("0","1")); // ne doit pas arriver non plus
+
    if (isset ($_SESSION["glpi_plugin_datainjection_profile"][$module])
-         && in_array($_SESSION["glpi_plugin_datainjection_profile"][$module],
-                     $matches[$right])) {
+       && in_array($_SESSION["glpi_plugin_datainjection_profile"][$module], $matches[$right])) {
       return true;
    }
-   else {
-      return false;
-   }
+   return false;
 }
+
+
 function plugin_datainjection_check_prerequisites() {
+
    if (GLPI_VERSION >= 0.78) {
       return true;
    } else {
-      echo "This plugin requires GLPI 0.78.x";
+      echo "This plugin requires GLPI >= 0.78.1";
    }
 }
+
 
 function plugin_datainjection_check_config($verbose=false) {
    return true;
 }
 
+
 function getTypesToInject() {
    global $INJECTABLE_TYPES,$PLUGIN_HOOKS;
-   $INJECTABLE_TYPES = array('PluginDatainjectionCartridgeItemInjection'      =>'datainjection',
-                             'PluginDatainjectionBudgetInjection'             =>'datainjection',
-                             'PluginDatainjectionComputerInjection'           =>'datainjection',
-                             'PluginDatainjectionComputer_ItemInjection'      =>'datainjection',
-                             'PluginDatainjectionConsumableItemInjection'     =>'datainjection',
-                             'PluginDatainjectionContactInjection'            =>'datainjection',
-                             'PluginDatainjectionContact_SupplierInjection'   =>'datainjection',
-                             'PluginDatainjectionContractInjection'           =>'datainjection',
-                             'PluginDatainjectionContract_ItemInjection'      =>'datainjection',
+   $INJECTABLE_TYPES = array('PluginDatainjectionCartridgeItemInjection'        =>'datainjection',
+                             'PluginDatainjectionBudgetInjection'               =>'datainjection',
+                             'PluginDatainjectionComputerInjection'             =>'datainjection',
+                             'PluginDatainjectionComputer_ItemInjection'        =>'datainjection',
+                             'PluginDatainjectionConsumableItemInjection'       =>'datainjection',
+                             'PluginDatainjectionContactInjection'              =>'datainjection',
+                             'PluginDatainjectionContact_SupplierInjection'     =>'datainjection',
+                             'PluginDatainjectionContractInjection'             =>'datainjection',
+                             'PluginDatainjectionContract_ItemInjection'        =>'datainjection',
                                 //'PluginDatainjectionDocumentInjection'           =>'datainjection',
                                 //'PluginDatainjectionEntityInjection'             =>'datainjection',
-                             'PluginDatainjectionGroupInjection'              =>'datainjection',
-                             'PluginDatainjectionGroup_UserInjection'         =>'datainjection',
-                             'PluginDatainjectionInfocomInjection'            =>'datainjection',
-                             'PluginDatainjectionLocationInjection'           =>'datainjection',
-                             'PluginDatainjectionStateInjection'              =>'datainjection',
-                             'PluginDatainjectionManufacturerInjection'       =>'datainjection',
-                             'PluginDatainjectionMonitorInjection'            =>'datainjection',
-                             'PluginDatainjectionNetworkequipmentInjection'   =>'datainjection',
-                             'PluginDatainjectionPeripheralInjection'         =>'datainjection',
-                             'PluginDatainjectionPhoneInjection'              =>'datainjection',
-                             'PluginDatainjectionPrinterInjection'            =>'datainjection',
-                             'PluginDatainjectionProfileInjection'            =>'datainjection',
-                             'PluginDatainjectionProfile_UserInjection'       =>'datainjection',
-                             'PluginDatainjectionSoftwareInjection'           =>'datainjection',
-                             'PluginDatainjectionSoftwareLicenseInjection'    =>'datainjection',
-                             'PluginDatainjectionSupplierInjection'           =>'datainjection',
-                             'PluginDatainjectionUserInjection'               =>'datainjection',
-                             'PluginDatainjectionNetworkportInjection'        =>'datainjection',
-                             'PluginDatainjectionVlanInjection'               =>'datainjection',
-                             'PluginDatainjectionNetworkport_VlanInjection'   =>'datainjection',
-                             'PluginDatainjectionNetpointInjection'           =>'datainjection',
+                             'PluginDatainjectionGroupInjection'                =>'datainjection',
+                             'PluginDatainjectionGroup_UserInjection'           =>'datainjection',
+                             'PluginDatainjectionInfocomInjection'              =>'datainjection',
+                             'PluginDatainjectionLocationInjection'             =>'datainjection',
+                             'PluginDatainjectionStateInjection'                =>'datainjection',
+                             'PluginDatainjectionManufacturerInjection'         =>'datainjection',
+                             'PluginDatainjectionMonitorInjection'              =>'datainjection',
+                             'PluginDatainjectionNetworkequipmentInjection'     =>'datainjection',
+                             'PluginDatainjectionPeripheralInjection'           =>'datainjection',
+                             'PluginDatainjectionPhoneInjection'                =>'datainjection',
+                             'PluginDatainjectionPrinterInjection'              =>'datainjection',
+                             'PluginDatainjectionProfileInjection'              =>'datainjection',
+                             'PluginDatainjectionProfile_UserInjection'         =>'datainjection',
+                             'PluginDatainjectionSoftwareInjection'             =>'datainjection',
+                             'PluginDatainjectionSoftwareLicenseInjection'      =>'datainjection',
+                             'PluginDatainjectionSupplierInjection'             =>'datainjection',
+                             'PluginDatainjectionUserInjection'                 =>'datainjection',
+                             'PluginDatainjectionNetworkportInjection'          =>'datainjection',
+                             'PluginDatainjectionVlanInjection'                 =>'datainjection',
+                             'PluginDatainjectionNetworkport_VlanInjection'     =>'datainjection',
+                             'PluginDatainjectionNetpointInjection'             =>'datainjection',
                              'PluginDatainjectionKnowbaseItemCategoryInjection' =>'datainjection',
-                             'PluginDatainjectionKnowbaseItemInjection'       =>'datainjection',
+                             'PluginDatainjectionKnowbaseItemInjection'         =>'datainjection',
                              );
    //Add plugins
    doHook('plugin_datainjection_populate');
-
 }
 
+
 function plugin_datainjection_migratetypes_datainjection($types) {
+
    $types[999] = 'NetworkPort';
    return $types;
 }
+
 ?>
