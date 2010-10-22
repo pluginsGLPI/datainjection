@@ -1089,7 +1089,7 @@ class PluginDatainjectionCommonInjectionLib {
    public function processAddOrUpdate() {
       $process = false;
       $add = true;
-      logDebug("processAddOrUpdate(), start with", $this->values);
+      // logDebug("processAddOrUpdate(), start with", $this->values);
 
       // Initial value, will be change when problem
       $this->results['status'] = self::SUCCESS;
