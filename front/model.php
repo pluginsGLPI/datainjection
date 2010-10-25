@@ -40,18 +40,20 @@ commonHeader($LANG['datainjection']['profiles'][1], '', "plugins", "datainjectio
 if (plugin_datainjection_haveRight("model", "w")) {
    if (isset($_POST['delete']) && isset($_POST['models'])) {
       $model = new PluginDatainjectionModel;
+
       foreach ($_POST['models'] as $models_id => $tmp) {
-         $model->delete(array('id'=>$models_id));
+         $model->delete(array('id' => $models_id));
       }
       glpi_header($_SERVER['HTTP_REFERER']);
-   }
-   else {
+
+   } else {
       PluginDatainjectionModel::showModelsList();
    }
+
 } else {
-   echo "<div align='center'><br><br><img src=\"" . $CFG_GLPI["root_doc"] .
-            "/pics/warning.png\" alt=\"warning\"><br><br>";
-   echo "<b>" . $LANG['login'][5] . "</b></div>";
+   echo "<div class='center'><br><br><img src='" . $CFG_GLPI["root_doc"] ."/pics/warning.png'
+          alt='warning'>";
+   echo "<b>" . $LANG['login'][5] . "</b></div><br>";
 }
 
 commonFooter();

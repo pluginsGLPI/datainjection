@@ -34,26 +34,31 @@
 class PluginDatainjectionBackendcsv extends PluginDatainjectionBackend
                                     implements PluginDatainjectionBackendInterface {
 
-   private $delemiter = '';
+   private $delemiter       = '';
    private $isHeaderPresent = true;
-   private $file_handler = null;
+   private $file_handler    = null;
+
 
    function __construct() {
-      $this->errmsg= "";
+      $this->errmsg = "";
    }
+
 
    //Getters & setters
    function getDelimiter() {
       return $this->delimiter;
    }
 
+
    function isHeaderPresent() {
       return $this->isHeaderPresent;
    }
 
+
    function setDelimiter($delimiter) {
       $this->delimiter = $delimiter;
    }
+
 
    function setHeaderPresent($present = true) {
       $this->isHeaderPresent = $present;
@@ -62,57 +67,65 @@ class PluginDatainjectionBackendcsv extends PluginDatainjectionBackend
 
    //CSV File parsing methods
    static function parseLine($fic, $data, $encoding= 1) {
-      $csv= array();
-      $num= count($data);
-      for($c= 0; $c < $num; $c++) {
+
+      $csv = array();
+      $num = count($data);
+
+      for($c=0 ; $c<$num ; $c++) {
          //If field is not the last, or if field is the last of the line and is not empty
 
-         if($c <($num -1)
-               || ($c ==($num -1)
-                  && $data[$num -1] != PluginDatainjectionCommonInjectionLib::EMPTY_VALUE)) {
+         if ($c <($num -1)
+             || ($c ==($num -1)
+                 && $data[$num -1] != PluginDatainjectionCommonInjectionLib::EMPTY_VALUE)) {
             $tmp = trim(mysql_real_escape_string($data[$c]));
-            switch($encoding) {
+
+            switch ($encoding) {
                //If file is ISO8859-1 : encode the datas in utf8
                case PluginDatainjectionBackend::ENCODING_ISO8859_1 :
-                  $csv[0][]= utf8_encode($tmp);
+                  $csv[0][] = utf8_encode($tmp);
                   break;
+
                case PluginDatainjectionBackend::ENCODING_UFT8 :
-                  $csv[0][]= $tmp;
+                  $csv[0][] = $tmp;
                   break;
+
                default : //PluginDatainjectionBackend :: ENCODING_AUTO :
-                  $csv[0][]= PluginDatainjectionBackend::toUTF8($tmp);
-                  break;
+                  $csv[0][] = PluginDatainjectionBackend::toUTF8($tmp);
             }
          }
       }
       return $csv;
    }
 
+
    function init($newfile,$encoding) {
-      $this->file= $newfile;
-      $this->encoding= $encoding;
+
+      $this->file     = $newfile;
+      $this->encoding = $encoding;
    }
+
 
    /**
     * Read a CSV file and store data in an array
-    * @param numberOfLines inumber of lines to be read (-1 means all file)
     *
-    */
+    * @param numberOfLines inumber of lines to be read (-1 means all file)
+   **/
    function read($numberOfLines = 1) {
+
       $injectionData = new PluginDatainjectionData;
       $this->openFile();
       $continue = true;
-      $data = false;
+      $data     = false;
 
-      for ($index = 0; $index < $numberOfLines && $continue; $index++) {
+      for ($index=0 ; $index<$numberOfLines && $continue ; $index++) {
          $data = $this->getNextLine();
          if ($data) {
             $injectionData->addToDatas($data);
-         }
-         else {
+         } else {
             $continue = false;
          }
       }
+
       $this->closeFile();
       return $injectionData;
    }
@@ -120,18 +133,21 @@ class PluginDatainjectionBackendcsv extends PluginDatainjectionBackend
 
    /**
     * Read a CSV file and store data in an array
-    * @param numberOfLines inumber of lines to be read (-1 means all file)
     *
-    */
+    * @param numberOfLines inumber of lines to be read (-1 means all file)
+   **/
    function storeNumberOfLines() {
-      $fic= fopen($this->file, 'r');
+
+      $fic = fopen($this->file, 'r');
 
       $index = 0;
-      while(($data= fgetcsv($fic,0,$this->getDelimiter())) !== FALSE) {
+      while (($data= fgetcsv($fic, 0, $this->getDelimiter())) !== FALSE) {
          //If line is not empty
-         if(count($data) > 1 || $data[0] != PluginDatainjectionCommonInjectionLib::EMPTY_VALUE) {
-            $line= self::parseLine($fic, $data, $this->encoding);
-            if(count($line[0]) > 0) {
+         if (count($data) > 1
+             || $data[0] != PluginDatainjectionCommonInjectionLib::EMPTY_VALUE) {
+
+            $line = self::parseLine($fic, $data, $this->encoding);
+            if (count($line[0]) > 0) {
                $index++;
             }
          }
@@ -145,19 +161,22 @@ class PluginDatainjectionBackendcsv extends PluginDatainjectionBackend
       $this->numberOfLines = $index;
    }
 
+
    function getNumberOfLines() {
       return $this->numberOfLines;
    }
+
    /**
     * Open the csv file
-    */
+   **/
    function openFile() {
       $this->file_handler = fopen($this->file, 'r');
    }
 
+
    /**
     * Close the csv file
-    */
+   **/
    function closeFile() {
       fclose($this->file_handler);
    }
@@ -166,38 +185,44 @@ class PluginDatainjectionBackendcsv extends PluginDatainjectionBackend
     * Read next line of the csv file
     */
    function getNextLine() {
-      $data= fgetcsv($this->file_handler,0,$this->getDelimiter());
+
+      $data = fgetcsv($this->file_handler, 0, $this->getDelimiter());
       if ($data === FALSE) {
          return false;
-      } else {
-         $line = array();
-         if(count($data) > 1 || $data[0] != PluginDatainjectionCommonInjectionLib::EMPTY_VALUE) {
-            $line= self::parseLine($this->file_handler, $data, $this->encoding);
-         }
-         return $line;
       }
+      $line = array();
+      if (count($data) > 1
+         || $data[0] != PluginDatainjectionCommonInjectionLib::EMPTY_VALUE) {
+            $line = self::parseLine($this->file_handler, $data, $this->encoding);
+      }
+      return $line;
    }
+
 
    /**
     * Delete csv file from disk
-    */
+   **/
    function deleteFile() {
       unlink($this->file);
    }
 
+
    function readLinesFromTo($start_line, $end_line) {
-      $row= 0;
-      $fic= fopen($this->file, 'r');
+
+      $row = 0;
+      $fic = fopen($this->file, 'r');
       $injectionData = new PluginDatainjectionData;
 
-      while((($data= fgetcsv($fic, 3000, $this->delimiter)) !== FALSE) && $row <= $end_line) {
-         if($row >= $start_line && $row <= $end_line)
+      while ((($data= fgetcsv($fic, 3000, $this->delimiter)) !== FALSE) && $row <= $end_line) {
+         if ($row >= $start_line && $row <= $end_line) {
             $injectionData->addToDatas(self :: parseLine($fic,$data));
+         }
          $row++;
       }
 
       fclose($fic);
       return $injectionData;
    }
+
 }
 ?>

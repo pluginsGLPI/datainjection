@@ -42,14 +42,16 @@ header_nocache();
 if (!isset($_POST["id"])) {
    exit();
 }
+
 if (!isset($_POST["sort"])) {
    $_POST["sort"] = "";
 }
+
 if (!isset($_POST["order"])) {
    $_POST["order"] = "";
 }
-$model = new PluginDatainjectionModel;
 
+$model = new PluginDatainjectionModel;
 if ($_POST['glpi_tab'] == 1) {
    $model->showAdvancedForm($_POST["id"]);
 }
@@ -65,8 +67,8 @@ if ($_POST["id"] >0 && $model->can($_POST["id"],'r')) {
             $options['add_form']  = true;
             $options['submit']    = $LANG['datainjection']['fileStep'][13];
             PluginDatainjectionClientInjection::showUploadFileForm($options);
-         }
-         else {
+
+         } else {
             if ($model->fields['step'] > PluginDatainjectionModel::FILE_STEP) {
                PluginDatainjectionMapping::showFormMappings($model);
             }
@@ -76,6 +78,7 @@ if ($_POST["id"] >0 && $model->can($_POST["id"],'r')) {
             }
          }
          break;
+
       case 3 :
          $options['confirm']   = 'creation';
          $options['models_id'] = $model->fields['id'];
@@ -83,21 +86,26 @@ if ($_POST["id"] >0 && $model->can($_POST["id"],'r')) {
          $options['submit']    = $LANG['datainjection']['fileStep'][13];
          PluginDatainjectionClientInjection::showUploadFileForm($options);
          break;
+
       case 4 :
          PluginDatainjectionMapping::showFormMappings($model);
          break;
+
       case 5 :
          if ($model->fields['step'] > PluginDatainjectionModel::MAPPING_STEP) {
             PluginDatainjectionInfo::showFormInfos($model);
          }
          break;
+
       case 6 :
          break;
+
       case 7:
          if ($model->fields['step'] > PluginDatainjectionModel::MAPPING_STEP) {
             $model->showValidationForm();
          }
          break;
+
       case 12 :
          Log::showForItem($model);
          break;
@@ -106,6 +114,7 @@ if ($_POST["id"] >0 && $model->can($_POST["id"],'r')) {
          if (!Plugin::displayAction($model,$_POST['glpi_tab'])) {
          }
    }
+
    ajaxFooter();
 }
 

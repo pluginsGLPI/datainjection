@@ -32,16 +32,18 @@
 // ----------------------------------------------------------------------
 
  function plugin_datainjection_getSessionParam($param) {
+
    if (isset($_SESSION['datainjection'][$param])) {
       return $_SESSION['datainjection'][$param];
-   } else {
-      return false;
    }
+   return false;
 }
+
 
 function plugin_datainjection_setSessionParam($param,$results) {
    $_SESSION['datainjection'][$param] = $results;
 }
+
 
 function plugin_datainjection_removeSessionParams() {
    unset($_SESSION['datainjection']);

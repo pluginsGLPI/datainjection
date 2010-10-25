@@ -36,62 +36,68 @@
  */
 class PluginDatainjectionCheck {
 
-   const CHECK_OK = 1;
+   const CHECK_OK    = 1;
    const CHECK_ERROR = 2;
+
 
    /**
     * check one line of data to import
     *
     * @param model the model to use
     * @param line the line of datas
-    * @param result of the check (input/ouput)
+    * @param res : result of the check (input/ouput)
     *
     * @return status of the check
-    */
-   static function checkLine($model,$line,&$res)
-   {
-         global $CONNECT_TO_SOFTWARE_TYPES;
+   **/
+/* TODO NOT USED
+   static function checkLine($model, $line, &$res) {
+      global $CONNECT_TO_SOFTWARE_TYPES;
 
-         //Get all mappings for a model
-         for ($i=0, $mappings = $model->getMappings(); $i < count($mappings); $i++)
-         {
-            $mapping = $mappings[$i];
-            $rank = $mapping->getRank();
+      //Get all mappings for a model
+      for ($i=0, $mappings = $model->getMappings() ; $i<count($mappings) ; $i++) {
+         $mapping = $mappings[$i];
+         $rank    = $mapping->getRank();
 
-            //If field is mandatory AND not mapped -> error
-            if ($mapping->isMandatory() && (!isset($line[$rank]) || $line[$rank] == NULL || $line[$rank] == EMPTY_VALUE || $line[$rank] == -1))
-            {
-               $res->addCheckMessage(ERROR_IMPORT_FIELD_MANDATORY,$mapping->getName());
+         //If field is mandatory AND not mapped -> error
+         if ($mapping->isMandatory()
+             && (!isset($line[$rank])
+                 || $line[$rank] == NULL
+                 || $line[$rank] == EMPTY_VALUE
+                 || $line[$rank] == -1)) {
+            $res->addCheckMessage(ERROR_IMPORT_FIELD_MANDATORY, $mapping->getName());
+            break;
+
+         } else {
+            //If field exists and if field is mapped
+            if (isset($line[$rank])
+                && $line[$rank] != ""
+                && $mapping->getValue() != NOT_MAPPED) {
+
+               //Check type
+               $field          = $line[$rank];
+               $res_check_type = checkType($mapping->getItemtype(), $mapping->getValue(), $field,
+                                           $mapping->isMandatory());
+
+               //If field is not the good type -> error
+               if (!$res->addCheckMessage($res_check_type,$mapping->getName())) {
                   break;
-            }
-            else
-            {
-               //If field exists and if field is mapped
-               if (isset($line[$rank]) && $line[$rank] != "" && $mapping->getValue() != NOT_MAPPED)
-               {
-                  //Check type
-                  $field = $line[$rank];
-                  $res_check_type = checkType($mapping->getItemtype(), $mapping->getValue(), $field,$mapping->isMandatory());
-
-                  //If field is not the good type -> error
-                  if (!$res->addCheckMessage($res_check_type,$mapping->getName())) {
-                     break;
-                  }
                }
             }
          }
 
+      }
+
          //For software's versions & licenses, check if software ID is present
-         if (in_array($model->getDeviceType(),$CONNECT_TO_SOFTWARE_TYPES)) {
+         if (in_array($model->getDeviceType(), $CONNECT_TO_SOFTWARE_TYPES)) {
             if ($model->getMappingByValue('sID') == null) {
-               $res->addCheckMessage(ERROR_IMPORT_LINK_FIELD_MISSING,'sID');
+               $res->addCheckMessage(ERROR_IMPORT_LINK_FIELD_MISSING, 'sID');
                return;
             }
          }
 
          return $res->getStatus(true);
    }
-
+*/
 
    /**
     * check if a network plug exists, if not then create it
@@ -100,18 +106,19 @@ class PluginDatainjectionCheck {
     * @param canadd indicates if a network plug can be created or not
     *
     * @return the network port's ID
-    */
-   static function checkNetpoint($result,$fields,$canadd) {
+   **/
+/* NOT USED
+   static function checkNetpoint($result, $fields, $canadd) {
       global $DB, $LANG;
 
       $primary_type = $fields["device_type"];
-      $entity = $fields["FK_entities"];
-      $location = $fields["location"];
-      $value = $fields["netpoint"];
-      $port_id = $fields["network_port_id"];
+      $entity       = $fields["FK_entities"];
+      $location     = $fields["location"];
+      $value        = $fields["netpoint"];
+      $port_id      = $fields["network_port_id"];
 
       // networking device can use netpoint in all the entity
-      $sql="SELECT ID FROM glpi_dropdown_netpoint WHERE FK_entities=$entity AND name='$value'";
+      $sql = "SELECT ID FROM glpi_dropdown_netpoint WHERE FK_entities=$entity AND name='$value'";
 
       if ($primary_type != NETWORKING_TYPE) {
          // other device can only use netpoint in the location
@@ -151,55 +158,59 @@ class PluginDatainjectionCheck {
          return EMPTY_VALUE;
       }
    }
+*/
+
 
    /**
     * Create a tree of locations
+    *
     * @param location the full tree of locations
     * @param entity the current entity
     * @param canadd indicates if the user has the right to add locations
+    *
     * @return the location ID
-    */
-   static function checkLocation ($location, $entity, $canadd,$comments = EMPTY_VALUE)
-   {
-      $location_id = 0;
-      $locations = explode('>',$location);
+   **/
+/* TODO NOT USED
+   static function checkLocation ($location, $entity, $canadd, $comments = EMPTY_VALUE) {
 
-      if ($comments != EMPTY_VALUE)
-      {
+      $location_id = 0;
+      $locations   = explode('>', $location);
+
+      if ($comments != EMPTY_VALUE) {
          $final_location = count($locations);
          $i = 0;
       }
 
-      foreach ($locations as $location)
-      {
-
-         if ($location_id !== EMPTY_VALUE)
-            $location_id = addLocation(trim($location),
-               $entity,
-               $location_id,
-               $canadd,
-               //Only add comments on the final location
-               ($comments!= EMPTY_VALUE && $i==($final_location-1)?$comments:EMPTY_VALUE)
-            );
-
-         if ($comments != EMPTY_VALUE)
+      foreach ($locations as $location) {
+         if ($location_id !== EMPTY_VALUE) {
+            $location_id = addLocation(trim($location), $entity, $location_id, $canadd,
+                                       //Only add comments on the final location
+                                       ($comments!= EMPTY_VALUE && $i==($final_location-1)
+                                          ?$comments:EMPTY_VALUE));
+         }
+         if ($comments != EMPTY_VALUE) {
             $i++;
+         }
       }
 
       return $location_id;
    }
+*/
 
    /**
     * Add a location at a specified level
+    *
     * @param location the full tree of locations
     * @param entity the current entity
     * @param the parentid ID of the parent location
     * @param canadd indicates if the user has the right to add locations
     * @param comments the dropdown comments
+    *
     * @return the location ID
-    */
-   static function addLocation($location,$entity,$parentid,$canadd,$comments=EMPTY_VALUE)
-   {
+   **/
+   /* TODO A REVOIR COMPLETEMENT
+   static function addLocation($location, $entity, $parentid, $canadd, $comments=EMPTY_VALUE) {
+
       $input["tablename"] = "glpi_dropdown_locations";
       $input["value"] = $location;
       $input["value2"] = $parentid;
@@ -215,20 +226,23 @@ class PluginDatainjectionCheck {
 
       if ($canadd) {
          return addDropdown($input);
-      } else {
-         return EMPTY_VALUE;
       }
+      return EMPTY_VALUE;
    }
+*/
 
    /**
     * Locate an entity
+    *
     * @param location the full tree of locations
     * @param entity the current entity
+    *
     * @return the location ID
     */
-   static function checkEntity ($completename, $entity)
-   {
+    /* TODO NOT USED
+   static function checkEntity ($completename, $entity) {
       global $DB;
+
       $sql = "SELECT ID FROM glpi_entities WHERE completename='".addslashes($completename)."' ".getEntitiesRestrictRequest("AND","glpi_entities","parentID");
       $result = $DB->query($sql);
       if ($DB->numrows($result)==1)
@@ -237,7 +251,9 @@ class PluginDatainjectionCheck {
          return $entity;
 
    }
+*/
 
+/* TODO NOT USED
    static function addEntityPostProcess($common_fields)
    {
       global $DB;
@@ -269,7 +285,9 @@ class PluginDatainjectionCheck {
 
       regenerateTreeCompleteNameUnderID("glpi_entities", $common_fields["FK_entities"]);
    }
+*/
 
+/* TODO NOT USED
    static function findTemplate($entity,$table,$value)
    {
       global $DB;
@@ -281,29 +299,32 @@ class PluginDatainjectionCheck {
       else
          return 0;
    }
+*/
+
 
    /**
     * Function found on php.net page about is_float, because is_float doesn't behave correctly
-    */
-   static function isTrueFloat($val){
-       if (!$val) {
-         return true;
-       }
+   **/
+   static function isTrueFloat($val) {
 
-       $val = floatval($val);
-       if((is_float($val)
-            || ( (float) $val > (int) $val
-               || strlen($val) != strlen( (int) $val) )) ) {
-          return true;
-       }
-       else {
-          return false;
-       }
+      if (!$val) {
+         return true;
+      }
+
+      $val = floatval($val);
+      if ((is_float($val)
+           || ((float) $val > (int) $val
+               || strlen($val) != strlen((int) $val)))) {
+         return true;
+      }
+      return false;
    }
+
 
    /**
     * Check if a document is already associated with an item
     */
+/* TODO NOT USED
    static function isDocumentAssociatedWithObject($document_id,$device_type,$device_id)
    {
       global $DB;
@@ -315,6 +336,8 @@ class PluginDatainjectionCheck {
       else
          return false;
    }
+
+*/
 }
 
 ?>

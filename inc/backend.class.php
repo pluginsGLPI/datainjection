@@ -50,66 +50,72 @@ abstract class PluginDatainjectionBackend {
     * @param file input file to read
     */
 
-   function getError($html=0)
-   {
+   function getError($html=0) {
       return ($html ? nl2br($this->errmsg) : $this->errmsg);
    }
 
-   function setError($msg)
-   {
-      if (!empty($this->errmsg))
+
+   function setError($msg) {
+
+      if (!empty($this->errmsg)) {
          $this->errmsg .= "\n";
+      }
       $this->errmsg .= $msg;
    }
-   function clearError()
-   {
+
+
+   function clearError() {
       $this->errmsg = "";
    }
 
-   /*
+
+   /**
     * Get header of the file
     * @return array with the datas from the header
-    */
-   static function getHeader(PluginDatainjectionData $injectionData, $header_present)
-   {
-      if ($header_present)
-         return $injectionData->getDataAtLine(0);
-      else
-      {
-         $nb = count($injectionData->getDataAtLine(0));
-         for ($i=0; $i < $nb;$i++)
-            $header[] = $i;
+   **/
+   static function getHeader(PluginDatainjectionData $injectionData, $header_present) {
 
-         return $header;
+      if ($header_present) {
+         return $injectionData->getDataAtLine(0);
       }
+
+      $nb = count($injectionData->getDataAtLine(0));
+      for ($i=0 ; $i<$nb ; $i++) {
+         $header[] = $i;
+      }
+      return $header;
    }
 
-   /*
+
+   /**
     * get datas from the file at line
     * @param line_id the id of the line
     * @return array with datas from this line
-    */
-   function getDataAtLine(PluginDatainjectionData $injectionData, $line_id)
-   {
+   **/
+   function getDataAtLine(PluginDatainjectionData $injectionData, $line_id) {
       return $injectionData->getDataAtLine($line_id);
    }
 
-   function getDatasFromLineToLine(PluginDatainjectionData $injectionData,$start_line,$end_line)
-   {
+
+   function getDatasFromLineToLine(PluginDatainjectionData $injectionData, $start_line, $end_line) {
+
       $tmp = array();
-      for ($i=$start_line;$i < count($injectionData) && $i <= $end_line;$i++)
+      for ($i=$start_line ; $i<count($injectionData) && $i <= $end_line ; $i++) {
          $tmp[] = $injectionData->getDataAtLine($i);
+      }
       return $tmp;
    }
 
-   /*
+
+   /**
     * Get the backend implementation by type
-    */
-   static function getInstance($type)
-   {
+   **/
+   static function getInstance($type) {
+
       $class = 'PluginDatainjectionBackend'.$type;
       return new $class();
    }
+
 
    static function is_utf8($string) {
 
@@ -126,12 +132,13 @@ abstract class PluginDatainjectionBackend {
        )*$%xs', $string);
    }
 
-   static function toUTF8($string)
-   {
-      if (!PluginDatainjectionBackend::is_utf8($string))
+
+   static function toUTF8($string) {
+
+      if (!PluginDatainjectionBackend::is_utf8($string)) {
          return utf8_encode($string);
-      else
-         return $string;
+      }
+      return $string;
    }
 
 }
