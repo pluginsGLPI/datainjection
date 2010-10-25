@@ -33,43 +33,50 @@
 // Purpose of file:
 // ----------------------------------------------------------------------
 
-if (!defined('GLPI_ROOT')){
+if (!defined('GLPI_ROOT')) {
    die("Sorry. You can't access directly to this file");
 }
 
 /// Location class
 class PluginDatainjectionEntityInjection extends Entity
-   implements PluginDatainjectionInjectionInterface{
+                                         implements PluginDatainjectionInjectionInterface{
 
    function __construct() {
       $this->table = getTableForItemType('Entity');
    }
 
+
    function isPrimaryType() {
       return true;
    }
+
 
    function connectedTo() {
       return array('Document');
    }
 
+
    function getOptions($primary_type = '') {
       return parent::getSearchOptions();
    }
 
+
    /**
     * Standard method to add an object into glpi
     * WILL BE INTEGRATED INTO THE CORE IN 0.80
+    *
     * @param values fields to add into glpi
     * @param options options used during creation
+    *
     * @return an array of IDs of newly created objects : for example array(Computer=>1, Networkport=>10)
-    */
+   **/
    function addOrUpdateObject($values=array(), $options=array()) {
-      global $LANG;
-      $lib = new PluginDatainjectionCommonInjectionLib($this,$values,$options);
+
+      $lib = new PluginDatainjectionCommonInjectionLib($this, $values, $options);
       $lib->processAddOrUpdate();
       return $lib->getInjectionResults();
    }
+
 }
 
 ?>

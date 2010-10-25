@@ -34,36 +34,36 @@
 /*
  * Class to map datas from the import file
  */
-class PluginDatainjectionData
-{
+class PluginDatainjectionData {
+
    private $injectionDatas;
 
-   function __construct()
-   {
+   function __construct() {
       $injectionDatas = array();
    }
 
-   function setDatas($newDatas)
-   {
+
+   function setDatas($newDatas) {
       $this->injectionDatas = $newDatas;
    }
 
-   function addToDatas($newData)
-   {
+
+   function addToDatas($newData) {
       $this->injectionDatas[] = $newData;
    }
 
-   function getDatas()
-   {
+
+   function getDatas() {
       return $this->injectionDatas;
    }
 
-   function getDataAtLine($line_id)
-   {
-      if (count($this->injectionDatas) >= $line_id)
+
+   function getDataAtLine($line_id) {
+
+      if (count($this->injectionDatas) >= $line_id) {
          return $this->injectionDatas[$line_id][0];
-      else
-         return array();
+      }
+      return array();
    }
 
 }

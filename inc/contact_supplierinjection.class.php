@@ -33,25 +33,28 @@
 // Purpose of file:
 // ----------------------------------------------------------------------
 
-if (!defined('GLPI_ROOT')){
+if (!defined('GLPI_ROOT')) {
    die("Sorry. You can't access directly to this file");
 }
 
 /// Location class
 class PluginDatainjectionContact_SupplierInjection extends Contact_Supplier
-   implements PluginDatainjectionInjectionInterface {
+                                                   implements PluginDatainjectionInjectionInterface {
 
    function __construct() {
       $this->table = getTableForItemType('Contact_Supplier');
    }
 
+
    function isPrimaryType() {
       return false;
    }
 
+
    function connectedTo() {
-      return array('Contact','Supplier');
+      return array('Contact', 'Supplier');
    }
+
 
    function getOptions($primary_type = '') {
       global $LANG;
@@ -66,25 +69,30 @@ class PluginDatainjectionContact_SupplierInjection extends Contact_Supplier
       return $tab;
    }
 
+
    /**
     * Standard method to add an object into glpi
     * WILL BE INTEGRATED INTO THE CORE IN 0.80
+    *
     * @param values fields to add into glpi
     * @param options options used during creation
+    *
     * @return an array of IDs of newly created objects : for example array(Computer=>1, Networkport=>10)
-    */
+   **/
    function addOrUpdateObject($values=array(), $options=array()) {
-      global $LANG;
-      $lib = new PluginDatainjectionCommonInjectionLib($this,$values,$options);
+
+      $lib = new PluginDatainjectionCommonInjectionLib($this, $values, $options);
       $lib->processAddOrUpdate();
       return $lib->getInjectionResults();
    }
 
 
    function addSpecificNeededFields($primary_type,$values) {
+
      $fields[getForeignKeyFieldForTable(getTableForItemType($primary_type))] = $values[$primary_type]['id'];
       return $fields;
    }
+
 }
 
 ?>

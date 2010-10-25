@@ -37,85 +37,93 @@ class PluginDatainjectionInfoCollection {
 
    var $infosCollection;
 
-   function __construct()
-   {
+   function __construct() {
       $this->infosCollection = array();
    }
 
+
    //---- Getter ----//
 
-   /*
+   /**
     * Load all the mappings for a specified model
+    *
     * @param model_id the model ID
-    */
-   function load($models_id)
-   {
+   **/
+   function load($models_id) {
       global $DB;
 
-      $query = "SELECT * FROM `glpi_plugin_datainjection_infos`
-              WHERE `models_id`='".$models_id."' ORDER BY `itemtype` ASC";
-      foreach ($DB->request($query) as $data)
-      {
+      $query = "SELECT *
+                FROM `glpi_plugin_datainjection_infos`
+                WHERE `models_id` = '".$models_id."'
+                ORDER BY `itemtype` ASC";
+
+      foreach ($DB->request($query) as $data) {
          $infos = new PluginDatainjectionInfo;
          $infos->fields = $data;
          $this->infosCollection[] = $infos;
       }
    }
 
-   /*
+
+   /**
     * Return all the mappings for this model
+    *
     * @return the list of all the mappings for this model
-    */
-   function getAllInfos()
-   {
+   **/
+   function getAllInfos()  {
       return $this->infosCollection;
    }
 
+
    //---- Save ----//
 
-   /*
+   /**
     * Save in database the model and all his associated mappings
-    */
-   function saveAllInfos($model_id)
-   {
-      foreach ($this->infosCollection as $infos)
-      {
+   **/
+   function saveAllInfos($model_id) {
+
+      foreach ($this->infosCollection as $infos) {
          $infos->setModelID($model_id);
 
-         if (isset($infos->fields["id"]))
+         if (isset($infos->fields["id"])) {
             $infos->update($infos->fields);
-         else
+         } else {
             $infos->fields["id"] = $infos->add($infos->fields);
+         }
       }
    }
 
+
    //---- Delete ----//
 
-   function deleteInfosFromDB($models_id)
-   {
+   function deleteInfosFromDB($models_id) {
       global $DB;
-      $query = "DELETE FROM `glpi_plugin_datainjection_infos` WHERE `models_id`='$models_id'";
+
+      $query = "DELETE
+                FROM `glpi_plugin_datainjection_infos`
+                WHERE `models_id` = '$models_id'";
       $DB->query($query);
    }
 
+
    //---- Add ----//
 
-   /*
+   /**
     * Add a new mapping to this model (don't write in to DB)
+    *
     * @param mapping the new PluginDatainjectionMapping to add
-    */
-   function addNewInfos($infos)
-   {
+   **/
+   function addNewInfos($infos) {
       $this->infosCollection[] = $infos;
    }
 
-   /*
+
+   /**
     * Replace all the infos for a model
-    * @mappins the array of PluginDatainjectionInfo objects
-    */
-   function replaceInfos($infos)
-   {
+   **/
+   function replaceInfos($infos) {
       $this->infosCollection = $infos;
    }
+
 }
 ?>

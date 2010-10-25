@@ -33,64 +33,73 @@
 // Purpose of file:
 // ----------------------------------------------------------------------
 
-if (!defined('GLPI_ROOT')){
+if (!defined('GLPI_ROOT')) {
    die("Sorry. You can't access directly to this file");
 }
 
 /// Location class
 class PluginDatainjectionContractInjection extends Contract
-   implements PluginDatainjectionInjectionInterface {
+                                           implements PluginDatainjectionInjectionInterface {
 
    function __construct() {
       $this->table = getTableForItemType('Contract');
    }
 
+
    function isPrimaryType() {
       return true;
    }
+
 
    function connectedTo() {
       return array();
    }
 
+
    function getOptions($primary_type = '') {
+
      $tab = parent::getSearchOptions();
 
       $blacklist = PluginDatainjectionCommonInjectionLib::getBlacklistedOptions();
       //Remove some options because some fields cannot be imported
       $notimportable = array(80);
-      $ignore_fields = array_merge($blacklist,$notimportable);
+      $ignore_fields = array_merge($blacklist, $notimportable);
 
       $tab[5]['checktype'] = 'date';
 
-      $tab[6]['minvalue'] = 0;
-      $tab[6]['maxvalue'] = 120;
-      $tab[6]['step'] = 1;
-      $tab[6]['checktype']    = 'integer';
+      $tab[6]['minvalue']  = 0;
+      $tab[6]['maxvalue']  = 120;
+      $tab[6]['step']      = 1;
+      $tab[6]['checktype'] = 'integer';
 
-      $tab[7]['minvalue'] = 0;
-      $tab[7]['maxvalue'] = 120;
-      $tab[7]['step'] = 1;
-      $tab[7]['checktype']    = 'integer';
+      $tab[7]['minvalue']  = 0;
+      $tab[7]['maxvalue']  = 120;
+      $tab[7]['step']      = 1;
+      $tab[7]['checktype'] = 'integer';
 
       $tab[22]['linkfield'] = 'billing';
+
       //Add linkfield for theses fields : no massive action is allowed in the core, but they can be
       //imported using the commonlib
-      $add_linkfield = array('comment' => 'comment', 'notepad' => 'notepad');
+      $add_linkfield = array('comment' => 'comment',
+                             'notepad' => 'notepad');
+
       foreach ($tab as $id => $tmp) {
          if (!is_array($tmp) || in_array($id,$ignore_fields)) {
             unset($tab[$id]);
-         }
-         else {
+
+         } else {
             if (in_array($tmp['field'],$add_linkfield)) {
                $tab[$id]['linkfield'] = $add_linkfield[$tmp['field']];
             }
+
             if (!in_array($id,$ignore_fields)) {
                $tab[$id]['injectable'] = PluginDatainjectionCommonInjectionLib::FIELD_INJECTABLE;
 
                if (isset($tmp['linkfield']) && !isset($tmp['displaytype'])) {
                   $tab[$id]['displaytype'] = 'text';
                }
+
                if (isset($tmp['linkfield']) && !isset($tmp['checktype'])) {
                   $tab[$id]['checktype'] = 'text';
                }
@@ -99,14 +108,15 @@ class PluginDatainjectionContractInjection extends Contract
       }
 
       //Add displaytype value
-      $dropdown = array("dropdown"=>array(4),
-                        "date" => array(5),
-                        "dropdown_integer"=>array(6,7,21),
-                        "bool"   =>array(86),
-                        "alert"=>array(59),
-                        "billing"=>array(22),
-                        "renewal"=>array(23),
-                        "multiline_text" => array(16,90));
+      $dropdown = array("dropdown"         => array(4),
+                        "date"             => array(5),
+                        "dropdown_integer" => array(6,7,21),
+                        "bool"             => array(86),
+                        "alert"            => array(59),
+                        "billing"          => array(22),
+                        "renewal"          => array(23),
+                        "multiline_text"   => array(16,90));
+
       foreach ($dropdown as $type => $tabsID) {
          foreach ($tabsID as $tabID) {
             $tab[$tabID]['displaytype'] = $type;
@@ -116,36 +126,45 @@ class PluginDatainjectionContractInjection extends Contract
       return $tab;
    }
 
+
    /**
     * Standard method to add an object into glpi
     * WILL BE INTEGRATED INTO THE CORE IN 0.80
+    *
     * @param values fields to add into glpi
     * @param options options used during creation
+    *
     * @return an array of IDs of newly created objects : for example array(Computer=>1, Networkport=>10)
-    */
+   **/
    function addOrUpdateObject($values=array(), $options=array()) {
-      global $LANG;
-      $lib = new PluginDatainjectionCommonInjectionLib($this,$values,$options);
+
+      $lib = new PluginDatainjectionCommonInjectionLib($this, $values, $options);
       $lib->processAddOrUpdate();
       return $lib->getInjectionResults();
    }
 
-   function showAdditionalInformation($info = array(),$option = array()) {
+
+   function showAdditionalInformation($info=array(),$option=array()) {
+
       $name = "info[".$option['linkfield']."]";
+
       switch ($option['displaytype']) {
-         case 'alert':
-            Contract::dropdownAlert($name,0);
+         case 'alert' :
+            Contract::dropdownAlert($name, 0);
             break;
+
          case 'renewal' :
-            Contract::dropdownContractRenewal($name,0);
+            Contract::dropdownContractRenewal($name, 0);
             break;
-         case 'billing':
-            Dropdown::showInteger($name,0,12,60,12,array(0=>DROPDOWN_EMPTY_VALUE,
-                                                                        1=>"1",
-                                                                        2=>"2",
-                                                                        3=>"3",
-                                                                        6=>"6"));
+
+         case 'billing' :
+            Dropdown::showInteger($name, 0, 12, 60, 12, array(0 => DROPDOWN_EMPTY_VALUE,
+                                                              1 => "1",
+                                                              2 => "2",
+                                                              3 => "3",
+                                                              6 => "6"));
             break;
+
          default:
             break;
       }
