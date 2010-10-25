@@ -35,117 +35,122 @@ class PluginDatainjectionMapping extends CommonDBTM {
       return plugin_datainjection_haveRight('model','w');
    }
 
+
    function canView() {
       return plugin_datainjection_haveRight('model','r');
    }
 
-   /*
-    *
-    */
-   function equal($field,$value)
-   {
-      if (!isset($this->fields[$field]))
-         return false;
 
-      if ($this->fields[$field] == $value)
-         return true;
-      else
+   /**
+    *
+   **/
+   function equal($field,$value) {
+
+      if (!isset($this->fields[$field])) {
          return false;
+      }
+
+      if ($this->fields[$field] == $value) {
+         return true;
+      }
+
+      return false;
    }
 
-   function isMandatory()
-   {
+
+   function isMandatory() {
       return $this->fields["is_mandatory"];
    }
 
-   function getMappingName()
-   {
+
+   function getMappingName() {
       return $this->fields["name"];
    }
 
-   function getRank()
-   {
+
+   function getRank() {
       return $this->fields["rank"];
    }
 
-   function getValue()
-   {
+
+   function getValue() {
       return $this->fields["value"];
    }
 
-   function getID()
-   {
+
+   function getID() {
       return $this->fields["id"];
    }
 
-   function getModelID()
-   {
+
+   function getModelID() {
       return $this->fields["models_id"];
    }
 
-   function getItemtype()
-   {
+
+   function getItemtype() {
       return $this->fields["itemtype"];
    }
 
-   function setMandatory($mandatory)
-   {
+
+   function setMandatory($mandatory) {
       $this->fields["is_mandatory"] = $mandatory;
    }
 
-   function setName($name)
-   {
+
+   function setName($name) {
       $this->fields["name"] = $name;
    }
 
-   function setRank($rank)
-   {
+
+   function setRank($rank) {
       $this->fields["rank"] = $rank;
    }
 
-   function setValue($value)
-   {
+
+   function setValue($value) {
       $this->fields["value"] = $value;
    }
 
-   function setID($ID)
-   {
+
+   function setID($ID) {
       $this->fields["id"] = $ID;
    }
 
-   function setModelID($model_id)
-   {
+
+   function setModelID($model_id) {
       $this->fields["models_id"] = $model_id;
    }
 
-   function setItemtype($type)
-   {
+
+   function setItemtype($type) {
       $this->fields["itemtype"] = $type;
    }
 
-   static function showFormMappings(PluginDatainjectionModel $model) {
-      global $LANG, $DB,$CFG_GLPI;
 
-      $canedit=$model->can($model->fields['id'],'w');
+   static function showFormMappings(PluginDatainjectionModel $model) {
+      global $LANG, $CFG_GLPI;
+
+      $canedit = $model->can($model->fields['id'],'w');
+
       if (isset($_SESSION['datainjection']['lines'])) {
          $lines = unserialize($_SESSION['datainjection']['lines']);
-      }
-      else {
+      } else {
          $lines = array();
       }
 
       echo "<form method='post' name=form action='".getItemTypeFormURL(__CLASS__)."'>";
 
       //Display link to the preview popup
-      if (isset($_SESSION['datainjection']['lines'])
-            && !empty($lines)) {
+      if (isset($_SESSION['datainjection']['lines']) && !empty($lines)) {
          $nblines = $_SESSION['datainjection']['nblines'];
          echo "<table class='tab_cadre_fixe'>";
-         echo "<tr class='tab_bg_1'><td align='center'>";
+         echo "<tr class='tab_bg_1'><td class='center'>";
          $url = $CFG_GLPI["root_doc"].
-              "/plugins/datainjection/front/popup.php?popup=preview&amp;models_id=".$model->fields['id'];
-         echo "<a href=#  onClick=\"var w = window.open('$url' ,";
-         echo "'glpipopup', 'height=400, width=600, top=100, left=100, scrollbars=yes' );w.focus();\"/>";
+                "/plugins/datainjection/front/popup.php?popup=preview&amp;models_id=".
+                $model->fields['id'];
+         echo "<a href=#  onClick=\"var w = window.open('$url' , 'glpipopup', ".
+                "'height=400, width=600, top=100, left=100, scrollbars=yes' );w.focus();\"/>";
          echo $LANG['datainjection']['button'][3]."</a>";
          echo "</td></tr>";
       }
@@ -162,55 +167,61 @@ class PluginDatainjectionMapping extends CommonDBTM {
 
       foreach ($model->getMappings() as $mapping) {
          $mapping->fields = stripslashes_deep($mapping->fields);
-         $mappings_id = $mapping->fields['id'];
+         $mappings_id     = $mapping->fields['id'];
          echo "<tr class='tab_bg_1'>";
-         echo "<td align='center'>".$mapping->fields['name']."</td>";
-         echo "<td align='center'>";
-         $options =  array('primary_type' => $model->fields['itemtype']);
-         $rand = PluginDatainjectionInjectionType::dropdownLinkedTypes($mapping,$options);
+         echo "<td class='center'>".$mapping->fields['name']."</td>";
+         echo "<td class='center'>";
+         $options = array('primary_type' => $model->fields['itemtype']);
+         $rand = PluginDatainjectionInjectionType::dropdownLinkedTypes($mapping, $options);
          echo "</td>";
-         $options['mapping_or_info']= $mapping->fields;
-         $options['called_by']      = __CLASS__;
-         $options['need_decode']    = false;
-         $options['itemtype']= $mapping->fields['itemtype'];
-         $options['fields_update']= false;
+         $options['mapping_or_info'] = $mapping->fields;
+         $options['called_by']       = __CLASS__;
+         $options['need_decode']     = false;
+         $options['itemtype']        = $mapping->fields['itemtype'];
+         $options['fields_update']   = false;
 
-         echo "<td align='center'><span id='span_field_$mappings_id'>";
+         echo "<td class='center'><span id='span_field_$mappings_id'>";
          //PluginDatainjectionDropdown::dropdownFields($options);
          echo "</span></td>";
          //PluginDatainjectionDropdown::showMandatoryCheckbox($options);
-         echo "<td align='center'><span id='span_mandatory_$mappings_id'></span></td>";
+         echo "<td class='center'><span id='span_mandatory_$mappings_id'></span></td>";
       }
 
       if ($canedit) {
-         echo "<tr>";
-         echo "<td class='tab_bg_2 center' colspan='4'>";
+         echo "<tr> <td class='tab_bg_2 center' colspan='4'>";
          echo "<input type='hidden' name='models_id' value='".$model->fields['id']."'>";
-         echo "<input type='submit' name='update' value=\"".$LANG['buttons'][7]."\" class='submit' >";
+         echo "<input type='submit' name='update' value='".$LANG['buttons'][7]."' class='submit'>";
          echo "</td></tr>";
       }
       echo "</table></form>";
    }
 
+
    /**
     * For multitext only ! Check it there's more than one value to inject in a field
-    * @model the model
-    * @mapping_definition the mapping_definition corresponding to the field
-    * @value the value of the mapping
-    * @line the complete line to inject
+    *
+    * @param models_id the model ID
+    *
     * @return true if more than one value to inject, false if not
-    */
+   **/
    static function getSeveralMappedField($models_id) {
       global $DB;
+
       $several = array();
-      $query  = "SELECT value, COUNT(*) AS `counter` FROM `glpi_plugin_datainjection_mappings` ";
-      $query .= "WHERE `models_id`='$models_id' AND `value` NOT IN ('none') ";
-      $query .= "GROUP BY `value` HAVING `counter` > 1";
+      $query  = "SELECT `value`,
+                        COUNT(*) AS counter
+                 FROM `glpi_plugin_datainjection_mappings`
+                 WHERE `models_id` = '$models_id'
+                       AND `value` NOT IN ('none')
+                 GROUP BY `value`
+                 HAVING `counter` > 1";
+
       foreach ($DB->request($query) as $mapping) {
          $several[] = $mapping['value'];
       }
       return $several;
    }
+
 
    static function getMappingsSortedByRank($models_id) {
      global $DB;
@@ -224,5 +235,6 @@ class PluginDatainjectionMapping extends CommonDBTM {
      }
      return $mappings;
    }
+
 }
 ?>

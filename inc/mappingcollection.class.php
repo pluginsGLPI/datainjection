@@ -32,134 +32,150 @@ class PluginDatainjectionMappingCollection {
 
    private $mappingCollection;
 
-   function __construct()
-   {
+   function __construct() {
       $this->mappingCollection = array();
    }
+
 
    //---- Getter ----//
 
    /**
     * Load all the mappings for a specified model
+    *
     * @param model_ids the model ID
-    */
-   function load($models_id)
-   {
+   **/
+   function load($models_id) {
       global $DB;
 
-      $sql = "SELECT * FROM `glpi_plugin_datainjection_mappings`
-              WHERE `models_id`='".$models_id."' ORDER BY `rank` ASC";
+      $sql = "SELECT *
+              FROM `glpi_plugin_datainjection_mappings`
+              WHERE `models_id` = '$models_id'
+              ORDER BY `rank` ASC";
+
       $this->mappingCollection = array();
-      foreach  ($data = $DB->request($sql) as $data)
-      {
+
+      foreach  ($data = $DB->request($sql) as $data) {
          // Addslashes to conform to value return by PluginDatainjectionBackendcsv::parseLine
          $data["name"] = addslashes($data["name"]);
-
-         $mapping = new PluginDatainjectionMapping;
+         $mapping      = new PluginDatainjectionMapping;
          $mapping->fields = $data;
          $this->mappingCollection[] = $mapping;
       }
    }
 
+
    /**
     * Return all the mappings for this model
+    *
     * @return the list of all the mappings for this model
-    */
-   function getAllMappings()
-   {
+   **/
+   function getAllMappings() {
       return $this->mappingCollection;
    }
 
+
    /**
     * Get a PluginDatainjectionMapping by giving the mapping name
+    *
     * @param name
+    *
     * @return the PluginDatainjectionMapping object associated or null
-    */
-   function getMappingByName($name)
-   {
-      return $this->getMappingsByField("name",$name);
+   **/
+   function getMappingByName($name) {
+      return $this->getMappingsByField("name", $name);
    }
+
 
    /**
     * Get a PluginDatainjectionMapping by giving the mapping rank
+    *
     * @param rank
+    *
     * @return the PluginDatainjectionMapping object associated or null
-    */
-   function getMappingByRank($rank)
-   {
-      return $this->getMappingsByField("rank",$rank);
+   **/
+   function getMappingByRank($rank) {
+      return $this->getMappingsByField("rank", $rank);
    }
+
 
    /**
     * Find a mapping by looking for a specific field
+    *
     * @param field the field to look for
     * @param the value of the field
+    *
     * @return the PluginDatainjectionMapping object associated or null
-    */
-   function getMappingsByField($field,$value)
-   {
-      foreach ($this->mappingCollection as $mapping)
-      {
-         if ($mapping->equal($field,$value))
+   **/
+   function getMappingsByField($field, $value) {
+
+      foreach ($this->mappingCollection as $mapping) {
+         if ($mapping->equal($field,$value)) {
             return $mapping;
+         }
       }
       return null;
    }
+
 
    //---- Save ----//
 
    /**
     * Save in database the model and all his associated mappings
-    */
-   function saveAllMappings()
-   {
-      foreach ($this->mappingCollection as $mapping)
-      {
-         if (isset($mapping->fields["id"]))
+   **/
+   function saveAllMappings() {
+
+      foreach ($this->mappingCollection as $mapping) {
+         if (isset($mapping->fields["id"])) {
             $mapping->update($mapping->fields);
-         else
+         } else {
             $mapping->fields["id"] = $mapping->add($mapping->fields);
+         }
       }
    }
 
+
    //---- Delete ----//
 
-   function deleteMappingsFromDB($model_id)
-   {
+   function deleteMappingsFromDB($model_id) {
       global $DB;
 
-      $sql = "DELETE FROM `glpi_plugin_datainjection_mappings` WHERE `models_id` ='$model_id'";
+      $sql = "DELETE
+              FROM `glpi_plugin_datainjection_mappings`
+              WHERE `models_id` = '$model_id'";
       return $DB->query($sql);
    }
+
 
    //---- Add ----//
 
    /**
     * Add a new mapping to this model (don't write in to DB)
+    *
     * @param mapping the new PluginDatainjectionMapping to add
-    */
-   function addNewMapping($mapping)
-   {
+   **/
+   function addNewMapping($mapping) {
       $this->mappingCollection[] = $mapping;
    }
 
+
    /**
     * Replace all the mappings for a model
-    * @mappins the array of PluginDatainjectionMapping objects
-    */
-   function replaceMappings($mappings)
-   {
+    * @param mappins the array of PluginDatainjectionMapping objects
+   **/
+   function replaceMappings($mappings) {
       $this->mappingCollection = $mappings;
    }
 
+
    /**
     * Check if at least one mapping is defined, and if one mandatory field
-    */
+   */
    static function checkMappings($models_id) {
-
    }
 
+
    function getMandatoryMappings() {
+
       $mandatories = array();
       foreach ($this->mappingCollection as $mapping) {
          if ($mapping->isMandatory()) {
@@ -169,8 +185,10 @@ class PluginDatainjectionMappingCollection {
       return $mandatories;
    }
 
+
    function getNumberOfMappings() {
       return count($this->mappingCollection);
    }
+
 }
 ?>
