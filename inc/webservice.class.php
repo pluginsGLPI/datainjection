@@ -1,6 +1,4 @@
 <?php
-
-
 /*
  ----------------------------------------------------------------------
  GLPI - Gestionnaire Libre de Parc Informatique
@@ -36,11 +34,12 @@
 class PluginDatainjectionWebservice {
 
 
-  static function methodInject($params,$protocol) {
+   static function methodInject($params, $protocol) {
+
       if (isset ($params['help'])) {
-         return array('uri'     => 'string,mandatory',
-                      'base64'  => 'string,optional',
-                      'help'    => 'bool,optional');
+         return array('uri'    => 'string,mandatory',
+                      'base64' => 'string,optional',
+                      'help'   => 'bool,optional');
       }
 
       if (!isset ($_SESSION['glpiID'])) {
@@ -51,7 +50,7 @@ class PluginDatainjectionWebservice {
       if (!isset($params['uri']) && !isset($params['base64'])) {
          return PluginWebservicesMethodCommon::Error($protocol,
                                                      WEBSERVICES_ERROR_MISSINGPARAMETER,
-                                                     '','uri or base64');
+                                                     '', 'uri or base64');
       }
 
       if (!isset ($params['models_id'])) {
@@ -66,30 +65,30 @@ class PluginDatainjectionWebservice {
                                                      'entities_id');
       }
 
-      $model = new PluginDatainjectionModel;
+      $model         = new PluginDatainjectionModel;
       $document_name = basename($params['uri']);
-      $filename = tempnam(PLUGIN_DATAINJECTION_UPLOAD_DIR, 'PWS');
+      $filename      = tempnam(PLUGIN_DATAINJECTION_UPLOAD_DIR, 'PWS');
 
       if (!$model->getFromDB($params['models_id'])) {
          return PluginWebservicesMethodCommon::Error($protocol,
-                                                     WEBSERVICES_ERROR_NOTFOUND,
-                                                     'models_id');
+                                                     WEBSERVICES_ERROR_NOTFOUND, 'models_id');
       }
 
-      $response = PluginWebservicesMethodCommon::uploadDocument($params,
-                                                                $protocol,
-                                                                $filename,
+      $response = PluginWebservicesMethodCommon::uploadDocument($params, $protocol, $filename,
                                                                 $document_name);
-      if (PluginWebservicesMethodCommon::isError($protocol,$response)) {
+
+      if (PluginWebservicesMethodCommon::isError($protocol, $response)) {
          return $response;
       }
 
-      $options = array('file_encoding'=>PluginDatainjectionBackend::ENCODING_AUTO,
-                       'webservice'=>true,
-                       'original_filename'=>$params['uri'],
-                       'unique_filename'=>$filename);
+      $options = array('file_encoding'     => PluginDatainjectionBackend::ENCODING_AUTO,
+                       'webservice'        => true,
+                       'original_filename' => $params['uri'],
+                       'unique_filename'   => $filename);
+
       return $model->readUploadedFile($options);
    }
+
 
    static function methodGetModel($params,$protocol) {
 
@@ -105,12 +104,12 @@ class PluginDatainjectionWebservice {
       if ($model->getFromDB($params['id'])) {
          return $model->fields;
       }
-      else {
-         return array();
-      }
+      return array();
    }
 
-  static function methodListModels($params,$protocol) {
+
+  static function methodListModels($params, $protocol) {
+
       if (isset ($params['help'])) {
          return array('help' => 'bool,optional');
       }
@@ -122,7 +121,9 @@ class PluginDatainjectionWebservice {
       return getAllDatasFromTable('glpi_plugin_datainjection_models');
    }
 
-   static function methodListItemtypes($params,$protocol) {
+
+   static function methodListItemtypes($params, $protocol) {
+
       if (isset ($params['help'])) {
          return array('help' => 'bool,optional');
       }
@@ -133,5 +134,6 @@ class PluginDatainjectionWebservice {
 
       return PluginDatainjectionInjectionType::getItemtypes();
    }
+
 }
 ?>

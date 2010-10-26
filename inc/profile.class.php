@@ -36,11 +36,14 @@ class PluginDatainjectionProfile extends CommonDBTM {
 
    //if profile deleted
    function cleanProfiles($ID) {
-
       global $DB;
-      $query = "DELETE FROM `glpi_plugin_datainjection_profiles` WHERE `id`='$ID' ";
+
+      $query = "DELETE
+                FROM `glpi_plugin_datainjection_profiles`
+                WHERE `id` = '$ID' ";
       $DB->query($query);
    }
+
 
    function showForm($ID){
       global $LANG;
@@ -48,7 +51,9 @@ class PluginDatainjectionProfile extends CommonDBTM {
       if (!haveRight("profile","r"))  {
          return false;
       }
-      $canedit=haveRight("profile","w");
+
+      $canedit = haveRight("profile", "w");
+
       if ($ID) {
          $this->getFromDB($ID);
       }
@@ -59,26 +64,26 @@ class PluginDatainjectionProfile extends CommonDBTM {
       echo "<form action='".getItemTypeFormURL(get_class($this))."' method='post'>";
       echo "<table class='tab_cadre_fixe'>";
 
-      echo "<tr><th colspan='2' align='center'><strong>";
-      echo $LANG['datainjection']['name'][1]." ".$profile->fields["name"];
-      echo "</strong></th></tr>";
+      echo "<tr><th colspan='2'>".$LANG['datainjection']['name'][1]." ".$profile->fields["name"];
+      echo "</th></tr>";
 
       echo "<tr class='tab_bg_2'>";
-      echo "<td>".$LANG['datainjection']['profiles'][1].":</td><td>";
-      Profile::dropdownNoneReadWrite("model",$this->fields["model"],1,1,1);
-      echo "</td>";
-      echo "</tr>";
+      echo "<td>".$LANG['datainjection']['profiles'][1]."&nbsp;:</td><td>";
+      Profile::dropdownNoneReadWrite("model", $this->fields["model"], 1, 1, 1);
+      echo "</td></tr>";
 
       if ($canedit){
          echo "<tr class='tab_bg_1'>";
-         echo "<td align='center' colspan='2'>";
+         echo "<td class='center' colspan='2'>";
          echo "<input type='hidden' name='id' value=$ID>";
-         echo "<input type='submit' name='update_user_profile' value=\"".$LANG['buttons'][7]."\" class='submit'>";
+         echo "<input type='submit' name='update_user_profile' value='".$LANG['buttons'][7]."'
+                class='submit'>";
          echo "</td></tr>";
       }
-      echo "</table></form>";
 
+      echo "</table></form>";
    }
+
 }
 
 ?>

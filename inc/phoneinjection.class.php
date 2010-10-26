@@ -33,27 +33,32 @@
 // Purpose of file:
 // ----------------------------------------------------------------------
 
-if (!defined('GLPI_ROOT')){
+if (!defined('GLPI_ROOT')) {
    die("Sorry. You can't access directly to this file");
 }
 
 /// Location class
 class PluginDatainjectionPhoneInjection extends Phone
-   implements PluginDatainjectionInjectionInterface {
+                                        implements PluginDatainjectionInjectionInterface {
+
 
    function __construct() {
       $this->table = getTableForItemType('Phone');
    }
 
+
    function isPrimaryType() {
       return true;
    }
 
+
    function connectedTo() {
-      return array('Document','Computer');
+      return array('Computer', 'Document');
    }
 
+
    function getOptions($primary_type = '') {
+
      $tab = parent::getSearchOptions();
 
       //Specific to location
@@ -62,30 +67,33 @@ class PluginDatainjectionPhoneInjection extends Phone
       $blacklist = PluginDatainjectionCommonInjectionLib::getBlacklistedOptions();
       //Remove some options because some fields cannot be imported
       $notimportable = array(2, 91, 92, 93, 80, 91, 92, 93);
-      $ignore_fields = array_merge($blacklist,$notimportable);
+      $ignore_fields = array_merge($blacklist, $notimportable);
 
       //Add linkfield for theses fields : no massive action is allowed in the core, but they can be
       //imported using the commonlib
-      $add_linkfield = array('comment' => 'comment', 'notepad' => 'notepad');
+      $add_linkfield = array('comment' => 'comment',
+                             'notepad' => 'notepad');
+
       foreach ($tab as $id => $tmp) {
          if (!is_array($tmp) || in_array($id,$ignore_fields)) {
             unset($tab[$id]);
-         }
-         else {
+
+         } else {
             if (in_array($tmp['field'],$add_linkfield)) {
                $tab[$id]['linkfield'] = $add_linkfield[$tmp['field']];
             }
+
             if (!in_array($id,$ignore_fields)) {
                if (!isset($tmp['linkfield'])) {
                   $tab[$id]['injectable'] = PluginDatainjectionCommonInjectionLib::FIELD_VIRTUAL;
-               }
-               else {
+               } else {
                   $tab[$id]['injectable'] = PluginDatainjectionCommonInjectionLib::FIELD_INJECTABLE;
                }
 
                if (isset($tmp['linkfield']) && !isset($tmp['displaytype'])) {
                   $tab[$id]['displaytype'] = 'text';
                }
+
                if (isset($tmp['linkfield']) && !isset($tmp['checktype'])) {
                   $tab[$id]['checktype'] = 'text';
                }
@@ -97,7 +105,7 @@ class PluginDatainjectionPhoneInjection extends Phone
       $dropdown = array("dropdown"       => array(3, 4, 40, 31, 71, 23, 23, 42),
                         "user"           => array(70, 24),
                         "float"          => array(11),
-                        "bool"          => array(82, 43, 44),
+                        "bool"           => array(82, 43, 44),
                         "multiline_text" => array(16, 90));
       foreach ($dropdown as $type => $tabsID) {
          foreach ($tabsID as $tabID) {
@@ -108,19 +116,23 @@ class PluginDatainjectionPhoneInjection extends Phone
       return $tab;
    }
 
+
    /**
     * Standard method to add an object into glpi
     * WILL BE INTEGRATED INTO THE CORE IN 0.80
+    *
     * @param values fields to add into glpi
     * @param options options used during creation
+    *
     * @return an array of IDs of newly created objects : for example array(Computer=>1, Networkport=>10)
-    */
+   **/
    function addOrUpdateObject($values=array(), $options=array()) {
-      global $LANG;
-      $lib = new PluginDatainjectionCommonInjectionLib($this,$values,$options);
+
+      $lib = new PluginDatainjectionCommonInjectionLib($this, $values, $options);
       $lib->processAddOrUpdate();
       return $lib->getInjectionResults();
    }
+
 }
 
 ?>

@@ -29,7 +29,7 @@
  */
 class PluginDatainjectionResult {
 
-   const IMPORT_OK = 1;
+   const IMPORT_OK     = 1;
    const TYPE_CHECK_OK = 1;
 
    //Overall status of the process
@@ -56,49 +56,53 @@ class PluginDatainjectionResult {
    //ID of the line processed
    private $line_id;
 
-   function __construct()
-   {
+
+   function __construct() {
+
 //    $this->status = -1;
-      $this->check_status = PluginDatainjectionCommonInjectionLib::SUCCESS;
-      $this->injection_status = PluginDatainjectionCommonInjectionLib::SUCCESS;
-      $this->check_message = array();
+      $this->check_status      = PluginDatainjectionCommonInjectionLib::SUCCESS;
+      $this->injection_status  = PluginDatainjectionCommonInjectionLib::SUCCESS;
+      $this->check_message     = array();
       $this->injection_message = array();
-      $this->injection_type = array();
-      $this->injected_id = -1;
-      $this->line_id=-1;
+      $this->injection_type    = array();
+      $this->injected_id       = -1;
+      $this->line_id           = -1;
    }
 
+
    //Getters
-   function getLineID()
-   {
+   function getLineID() {
       return $this->line_id;
    }
 
-   function getStatus($check)
-   {
+
+   function getStatus($check) {
+
       // from checkline
       if ($check){
          return ($this->check_status == PluginDatainjectionCommonInjectionLib::SUCCESS);
       }
-      else  // from report
-         return ($this->check_status == PluginDatainjectionCommonInjectionLib::SUCCESS &&
-            $this->injection_status == PluginDatainjectionCommonInjectionLib::SUCCESS);
+      // from report
+      return ($this->check_status == PluginDatainjectionCommonInjectionLib::SUCCESS
+              && $this->injection_status == PluginDatainjectionCommonInjectionLib::SUCCESS);
    }
 
-   function getCheckStatus()
-   {
+
+   function getCheckStatus() {
       return $this->check_status;
    }
 
-   function getInjectionStatus()
-   {
+
+   function getInjectionStatus() {
       return $this->injection_status;
    }
 
-   function getCheckMessage()
-   {
-      if ($this->check_status == PluginDatainjectionCommonInjectionLib::SUCCESS)
+
+   function getCheckMessage() {
+
+      if ($this->check_status == PluginDatainjectionCommonInjectionLib::SUCCESS) {
          return $this->getLabel(self::TYPE_CHECK_OK);
+      }
 
       $output = "";
       foreach ($this->check_message as $field => $res) {
@@ -108,8 +112,9 @@ class PluginDatainjectionResult {
       return $output;
    }
 
-   function getInjectionMessage()
-   {
+
+   function getInjectionMessage() {
+
       if (count($this->injection_message)) {
          $output = "";
          foreach ($this->injection_message as $field => $res) {
@@ -118,6 +123,7 @@ class PluginDatainjectionResult {
                $output .= " ($field)";
             }
          }
+
       } else {
          $output = $this->getLabel(PluginDatainjectionCommonInjectionLib::SUCCESS);
       }
@@ -125,32 +131,33 @@ class PluginDatainjectionResult {
       return $output;
    }
 
-   function getInjectionType()
-   {
+
+   function getInjectionType() {
       return $this->injection_type;
    }
 
-   function getInjectedId()
-   {
+
+   function getInjectedId() {
       return $this->injected_id;
    }
 
+
    //Setters
 
-   function setInjectionType($type)
-   {
+   function setInjectionType($type) {
       $this->injection_type = $type;
    }
 
-   function setInjectedId($ID)
-   {
+
+   function setInjectedId($ID) {
       $this->injected_id = $ID;
    }
 
-   function setLineId($ID)
-   {
+
+   function setLineId($ID) {
       $this->line_id = $ID;
    }
+
 
    /**
     * Add a message for Check pass
@@ -159,24 +166,26 @@ class PluginDatainjectionResult {
     * @param $field : name (only if error)
     *
     * @return boolean : OK
-    */
-   function addCheckMessage($message, $field="")
-   {
+   **/
+   function addCheckMessage($message, $field="") {
+
       switch ($message) {
-         case PluginDatainjectionCommonInjectionLib::SUCCESS:
+         case PluginDatainjectionCommonInjectionLib::SUCCESS :
             $this->check_status = PluginDatainjectionCommonInjectionLib::SUCCESS;
             break;
-         case PluginDatainjectionCommonInjectionLib::ERROR_IMPORT_LINK_FIELD_MISSING:
-         case PluginDatainjectionCommonInjectionLib::ERROR_IMPORT_WRONG_TYPE:
-         case PluginDatainjectionCommonInjectionLib::ERROR_IMPORT_FIELD_MANDATORY:
-            $this->check_status = PluginDatainjectionCommonInjectionLib::FAILED;
-            $this->injection_status = PluginDatainjectionCommonInjectionLib::FAILED;
 
+         case PluginDatainjectionCommonInjectionLib::ERROR_IMPORT_LINK_FIELD_MISSING :
+         case PluginDatainjectionCommonInjectionLib::ERROR_IMPORT_WRONG_TYPE :
+         case PluginDatainjectionCommonInjectionLib::ERROR_IMPORT_FIELD_MANDATORY :
+            $this->check_status          = PluginDatainjectionCommonInjectionLib::FAILED;
+            $this->injection_status      = PluginDatainjectionCommonInjectionLib::FAILED;
             $this->check_message[$field] = $message;
             break;
       }
+
       return ($this->check_status == PluginDatainjectionCommonInjectionLib::SUCCESS);
    }
+
 
    /**
     * Add a message for Injection pass
@@ -185,25 +194,27 @@ class PluginDatainjectionResult {
     * @param $field : name (optional)
     *
     * @return boolean : OK
-    */
-   function addInjectionMessage($message, $field=false)
-   {
+   **/
+   function addInjectionMessage($message, $field=false) {
+
       switch ($message) {
-         case PluginDatainjectionCommonInjectionLib::ERROR_IMPORT_ALREADY_IMPORTED:
-         case PluginDatainjectionCommonInjectionLib::ERROR_CANNOT_IMPORT:
-         case PluginDatainjectionCommonInjectionLib::ERROR_CANNOT_UPDATE:
+         case PluginDatainjectionCommonInjectionLib::ERROR_IMPORT_ALREADY_IMPORTED :
+         case PluginDatainjectionCommonInjectionLib::ERROR_CANNOT_IMPORT :
+         case PluginDatainjectionCommonInjectionLib::ERROR_CANNOT_UPDATE :
             $this->injection_status = NOT_IMPORTED;
             break;
-         case PluginDatainjectionCommonInjectionLib::WARNING_ALLEMPTY:
-         case PluginDatainjectionCommonInjectionLib::WARNING_NOTEMPTY:
-         case PluginDatainjectionCommonInjectionLib::WARNING_NOTFOUND:
-         case PluginDatainjectionCommonInjectionLib::WARNING_USED:
-         case PluginDatainjectionCommonInjectionLib::WARNING_ALREADY_LINKED:
+
+         case PluginDatainjectionCommonInjectionLib::WARNING_ALLEMPTY :
+         case PluginDatainjectionCommonInjectionLib::WARNING_NOTEMPTY :
+         case PluginDatainjectionCommonInjectionLib::WARNING_NOTFOUND :
+         case PluginDatainjectionCommonInjectionLib::WARNING_USED :
+         case PluginDatainjectionCommonInjectionLib::WARNING_ALREADY_LINKED :
          case PluginDatainjectionCommonInjectionLib::WARNING_SEVERAL_VALUES_FOUND:
-            $this->injection_status =
-                                 PluginDatainjectionCommonInjectionLib::WARNING_PARTIALLY_IMPORTED;
+            $this->injection_status
+                              = PluginDatainjectionCommonInjectionLib::WARNING_PARTIALLY_IMPORTED;
             break;
       }
+
       if ($field) {
          $this->injection_message[$field] = $message;
       } else {
@@ -213,73 +224,90 @@ class PluginDatainjectionResult {
       return ($this->injection_status == PluginDatainjectionCommonInjectionLib::SUCCESS);
    }
 
-   private function getLabel($type)
-   {
+
+   private function getLabel($type) {
       global $LANG;
 
       $message = "";
-      switch ($type)
-      {
-         case PluginDatainjectionCommonInjectionLib::ERROR_CANNOT_IMPORT:
+
+      switch ($type) {
+         case PluginDatainjectionCommonInjectionLib::ERROR_CANNOT_IMPORT :
             $message = $LANG['datainjection']['result'][5];
             break;
-         case PluginDatainjectionCommonInjectionLib::WARNING_NOTEMPTY:
-         case PluginDatainjectionCommonInjectionLib::ERROR_CANNOT_UPDATE:
+
+         case PluginDatainjectionCommonInjectionLib::WARNING_NOTEMPTY :
+         case PluginDatainjectionCommonInjectionLib::ERROR_CANNOT_UPDATE :
             $message = $LANG['datainjection']['result'][6];
             break;
-         case PluginDatainjectionCommonInjectionLib::ERROR_IMPORT_ALREADY_IMPORTED:
+
+         case PluginDatainjectionCommonInjectionLib::ERROR_IMPORT_ALREADY_IMPORTED :
             $message = $LANG['datainjection']['result'][3];
             break;
-         case PluginDatainjectionCommonInjectionLib::ERROR_IMPORT_WRONG_TYPE:
+
+         case PluginDatainjectionCommonInjectionLib::ERROR_IMPORT_WRONG_TYPE :
             $message = $LANG['datainjection']['result'][1];
             break;
-         case PluginDatainjectionCommonInjectionLib::ERROR_IMPORT_FIELD_MANDATORY:
+
+         case PluginDatainjectionCommonInjectionLib::ERROR_IMPORT_FIELD_MANDATORY :
             $message = $LANG['datainjection']['result'][4];
             break;
-         case PluginDatainjectionCommonInjectionLib::ERROR_IMPORT_LINK_FIELD_MISSING:
+
+         case PluginDatainjectionCommonInjectionLib::ERROR_IMPORT_LINK_FIELD_MISSING :
             $message = $LANG['datainjection']['result'][4];
             break;
-         case PluginDatainjectionCommonInjectionLib::SUCCESS:
+
+         case PluginDatainjectionCommonInjectionLib::SUCCESS :
             $message = $LANG['datainjection']['result'][2];
             break;
-         case PluginDatainjectionCommonInjectionLib::IMPORT_OK:
+
+         case PluginDatainjectionCommonInjectionLib::IMPORT_OK :
             $message = $LANG['datainjection']['result'][7];
             break;
-         case PluginDatainjectionCommonInjectionLib::WARNING_NOTFOUND:
+
+         case PluginDatainjectionCommonInjectionLib::WARNING_NOTFOUND :
             $message = $LANG['datainjection']['result'][15];
             break;
-         case PluginDatainjectionCommonInjectionLib::WARNING_USED:
+
+         case PluginDatainjectionCommonInjectionLib::WARNING_USED :
             $message = $LANG['datainjection']['result'][16];
             break;
-         case PluginDatainjectionCommonInjectionLib::WARNING_ALLEMPTY:
+
+         case PluginDatainjectionCommonInjectionLib::WARNING_ALLEMPTY :
             $message = $LANG['datainjection']['result'][17];
             break;
-         case PluginDatainjectionCommonInjectionLib::WARNING_SEVERAL_VALUES_FOUND:
+
+         case PluginDatainjectionCommonInjectionLib::WARNING_SEVERAL_VALUES_FOUND :
             $message = $LANG['datainjection']['result'][19];
             break;
+
          case PluginDatainjectionCommonInjectionLib::WARNING_ALREADY_LINKED:
             $message = $LANG['datainjection']['result'][20];
             break;
+
          case PluginDatainjectionCommonInjectionLib::IMPORT_IMPOSSIBLE:
             $message = $LANG['datainjection']['result'][21];
             break;
       }
+
       return $message;
    }
 
-   static function sort($results)
-   {
+
+   static function sort($results) {
+
       $results_sorted[0] = array();
       $results_sorted[1] = array();
 
-      foreach ($results as $result)
-      {
-         if ($result->getStatus(false))
+      foreach ($results as $result) {
+         if ($result->getStatus(false)) {
             $results_sorted[1][] = $result;
-         else
+         } else {
             $results_sorted[0][] = $result;
+         }
       }
+
       return $results_sorted;
    }
+
 }
 ?>

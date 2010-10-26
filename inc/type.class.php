@@ -36,36 +36,40 @@
  */
 class PluginDatainjectionBackendType extends CommonDBTM{
 
-    function getBackendName()
-    {
+/* NOT USED
+    function getBackendName() {
       return $this->fields["name"];
     }
 
-    function getBackendValue()
-    {
+
+    function getBackendValue() {
       return $this->fields["value"];
     }
 
-    function getBackendClass()
-    {
+
+    function getBackendClass() {
       return $this->fields["class_name"];
     }
 
-   function getBackendID()
-   {
+
+   function getBackendID() {
       return $this->fields["ID"];
    }
+*/
 
-   static function getAllTypes()
-   {
+
+   static function getAllTypes() {
+
       $types = array();
-      foreach (getAllDatasFromTable("glpi_plugin_datainjection_filetype") as $data)
-      {
-         $type = new PluginDatainjectionBackendType;
+
+      foreach (getAllDatasFromTable("glpi_plugin_datainjection_filetype") as $data) {
+         $type         = new PluginDatainjectionBackendType;
          $type->fields = $data;
-         $types[] = $type;
+         $types[]      = $type;
       }
+
       return $types;
    }
+
 }
 ?>

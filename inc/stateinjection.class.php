@@ -33,28 +33,33 @@
 // Purpose of file:
 // ----------------------------------------------------------------------
 
-if (!defined('GLPI_ROOT')){
+if (!defined('GLPI_ROOT')) {
    die("Sorry. You can't access directly to this file");
 }
 
 /// Location class
 class PluginDatainjectionStateInjection extends State
-   implements PluginDatainjectionInjectionInterface {
+                                        implements PluginDatainjectionInjectionInterface {
+
 
    function __construct() {
       //Needed for getSearchOptions !
       $this->table = getTableForItemType('State');
    }
 
+
    function isPrimaryType() {
       return true;
    }
+
 
    function connectedTo() {
       return array();
    }
 
+
    function getOptions($primary_type = '') {
+
       $tab = parent::getSearchOptions();
 
       //Remove some options because some fields cannot be imported
@@ -64,7 +69,8 @@ class PluginDatainjectionStateInjection extends State
       }
 
       //Add displaytype value
-      $fields_definition = array("multiline_text"     => array(16));
+      $fields_definition = array("multiline_text" => array(16));
+
       foreach ($fields_definition as $type => $tabsID) {
          foreach ($tabsID as $tabID) {
             $tab[$tabID]['displaytype'] = $type;
@@ -76,26 +82,32 @@ class PluginDatainjectionStateInjection extends State
          if (isset($tmp['linkfield']) && !isset($tmp['displaytype'])) {
             $tab[$id]['displaytype'] = 'text';
          }
+
          if (isset($tmp['linkfield']) && !isset($tmp['checktype'])) {
             $tab[$id]['checktype'] = 'text';
          }
       }
+
       return $tab;
    }
+
 
    /**
     * Standard method to add an object into glpi
     * WILL BE INTEGRATED INTO THE CORE IN 0.80
+    *
     * @param values fields to add into glpi
     * @param options options used during creation
+    *
     * @return an array of IDs of newly created objects : for example array(Computer=>1, Networkport=>10)
-    */
+   **/
    function addOrUpdateObject($values=array(), $options=array()) {
-      global $LANG;
-      $lib = new PluginDatainjectionCommonInjectionLib($this,$values,$options);
+
+      $lib = new PluginDatainjectionCommonInjectionLib($this, $values, $options);
       $lib->processAddOrUpdate();
       return $lib->getInjectionResults();
    }
+
 }
 
 ?>
