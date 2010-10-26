@@ -44,8 +44,7 @@ interface PluginDatainjectionInjectionInterface {
     *
     * @return a boolean
    */
-   function isPrimaryType() {
-   }
+   function isPrimaryType();
 
 
    /**
@@ -55,8 +54,7 @@ interface PluginDatainjectionInjectionInterface {
     *
     * @return an array of GLPI types
    **/
-   function connectedTo() {
-   }
+   function connectedTo();
 
 
    /**
@@ -66,8 +64,7 @@ interface PluginDatainjectionInjectionInterface {
     *
     * @return an array of search options, as defined in each commondbtm object
    **/
-   function getOptions($primary_type = '') {
-   }
+   function getOptions($primary_type = '');
 
 
    /**
@@ -89,9 +86,7 @@ interface PluginDatainjectionInjectionInterface {
     *
     * @return an array of IDs of newly created objects : for example array(Computer=>1, Networkport=>10)
    **/
-   function addOrUpdateObject($values=array(), $options=array()) {
-   }
-
+   function addOrUpdateObject($values=array(), $options=array());
 
    /**
     * Standard method to delete an object into glpi

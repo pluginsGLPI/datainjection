@@ -33,6 +33,7 @@
 if (!defined('GLPI_ROOT')) {
    define('GLPI_ROOT', '../..');
 }
+
 include (GLPI_ROOT."/inc/includes.php");
 
 PluginDatainjectionModel::cleanSessionVariables();
@@ -40,4 +41,5 @@ $_SESSION['datainjection']['step'] = PluginDatainjectionClientInjection::STEP_UP
 
 //TODO : maybe show a welcome screen, to be discussed...
 glpi_header(getItemTypeFormURL('PluginDatainjectionClientInjection'));
+
 ?>

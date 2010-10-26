@@ -39,6 +39,7 @@ if (strpos($_SERVER['PHP_SELF'],"dropdownSelectModel.php")) {
    header("Content-Type: text/html; charset=UTF-8");
    header_nocache();
 }
+
 if (!defined('GLPI_ROOT')) {
    die("Can not acces directly to this file");
 }
@@ -49,8 +50,10 @@ if (isset($_SESSION['datainjection']['models_id'])
     && $_SESSION['datainjection']['models_id']!=$_POST['models_id']) {
    PluginDatainjectionModel::cleanSessionVariables();
 }
+
 $_SESSION['datainjection']['step'] = PluginDatainjectionClientInjection::STEP_UPLOAD;
 $model = new PluginDatainjectionModel();
+
 if ($model->can($_POST['models_id'],'r')) {
    PluginDatainjectionInfo::showAdditionalInformationsForm($model);
 }

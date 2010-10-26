@@ -39,5 +39,6 @@ include (GLPI_ROOT . "/inc/includes.php");
 if (isset ($_POST["update"])) {
    PluginDatainjectionInfo::manageInfos($_POST['models_id'], $_POST);
 }
+
 glpi_header($_SERVER['HTTP_REFERER']);
 ?>

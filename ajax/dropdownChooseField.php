@@ -39,6 +39,7 @@ if (strpos($_SERVER['PHP_SELF'],"dropdownChooseField.php")) {
    header("Content-Type: text/html; charset=UTF-8");
    header_nocache();
 }
+
 if (!defined('GLPI_ROOT')) {
    die("Can not acces directly to this file");
 }

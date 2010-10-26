@@ -41,7 +41,7 @@ if (!defined('GLPI_ROOT')) {
 class PluginDatainjectionGroupInjection extends Group
                                         implements PluginDatainjectionInjectionInterface {
 
-   function __construct()  {
+   function __construct() {
       $this->table = getTableForItemType('Group');
    }
 
