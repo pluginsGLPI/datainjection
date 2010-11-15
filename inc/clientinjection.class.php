@@ -138,7 +138,7 @@ class PluginDatainjectionClientInjection {
       echo "<tr class='tab_bg_1'>";
       echo "<td>" . $LANG['datainjection']['fileStep'][9] . "</td>";
       echo "<td>".PluginDatainjectionDropdown::dropdownFileEncoding()."</td>";
-      echo "</tr>";
+      echo "</tr>\n";
 
       echo "<tr class='tab_bg_1'>";
       echo "<td colspan='2' class='center'>";
@@ -150,11 +150,13 @@ class PluginDatainjectionClientInjection {
          }
          $alert = "OnClick='return window.confirm(\"$message\");'";
       }
+      if (!isset($options['submit'])) {
+         $options['submit'] = $LANG['datainjection']['import'][0];
+      }
       echo "<input type='submit' class='submit' name='upload' value='".
-             (isset($options['submit']) ? $options['submit'] : $LANG['datainjection']['import'][0]).
-             "' $alert>";
+             htmlentities($options['submit'], ENT_QUOTES, 'UTF-8'). "' $alert>";
       echo "</td>";
-      echo "</tr>";
+      echo "</tr>\n";
       echo "</table>";
       if ($add_form) {
          echo "</form>";

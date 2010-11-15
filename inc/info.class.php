@@ -229,8 +229,9 @@ class PluginDatainjectionInfo extends CommonDBTM {
       $option = PluginDatainjectionCommonInjectionLib::findSearchOption($injectionClass->getOptions($info->fields['itemtype']),
                                                                         $info->fields['value']);
       if ($option) {
-         echo "<td>".$option['name']."</td>";
-         echo "<td>".self::showAdditionalInformation($info, $option, $injectionClass, $values)."</td>";
+         echo "<td>".$option['name']."</td><td>";
+         self::showAdditionalInformation($info, $option, $injectionClass, $values);
+         echo "</td>";
       }
    }
 
