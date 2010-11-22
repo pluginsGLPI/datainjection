@@ -1199,6 +1199,20 @@ class PluginDatainjectionCommonInjectionLib {
    }
 
 
+   /**
+    * Check value before processing import. Last change to stop import of data
+    *
+    * @return nothing
+   **/
+   private function lastCheckBeforeProcess($injectionClass, $values) {
+      //Specific reformat action is itemtype needs it
+      if (method_exists($injectionClass,'lastCheck')) {
+         return $injectionClass->lastCheck($this->values);
+      } else {
+         return true;
+      }
+   }
+
    //--------------------------------------------------//
    //-------- Add /Update/Delete methods -------------//
    //------------------------------------------------//
@@ -1315,7 +1329,9 @@ class PluginDatainjectionCommonInjectionLib {
                         $add = false;
                      }
                      $values = $this->getValuesForItemtype($itemtype);
-                     $tmpID  = $this->effectiveAddOrUpdate($injectionClass, $add, $item, $values);
+                     if ($this->lastCheckBeforeProcess($injectionClass,$values)) {
+                        $tmpID  = $this->effectiveAddOrUpdate($injectionClass, $add, $item, $values);
+                     }
                   }
                }
             }

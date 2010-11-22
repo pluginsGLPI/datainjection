@@ -233,6 +233,19 @@ class PluginDatainjectionNetworkportInjection extends NetworkPort
       return $where;
    }
 
+   /**
+    * Check if at least mac or ip is defined otherwise block import
+    * @param values the values to inject
+    * @return true if check ok, false if not ok
+    */
+   function lastCheck($values = array()) {
+      if (!isset($values['NetworkPort']['mac']) && ! isset($values['NetworkPort']['ip'])) {
+         logDebug("pas de mac ni de ip !");
+         return false;
+      } else {
+         return true;
+      }
+   }
 }
 
 ?>
