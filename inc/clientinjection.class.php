@@ -181,12 +181,11 @@ class PluginDatainjectionClientInjection {
       echo "<th colspan='2'>" . $LANG['datainjection']['import'][1]."</th>";
       echo "</tr>";
 
-      echo "<tr class='tab_bg_1'>";
-      echo "<td>".createProgressBar($LANG['datainjection']['importStep'][1])."</td>" ;
-      echo "</tr>";
+      echo "<tr class='tab_bg_1'><td>";
+      createProgressBar($LANG['datainjection']['importStep'][1]) ;
+      echo "</td></tr>";
+      echo "</table><br>";
 
-      echo "<tr class='tab_bg_1'><td></td></tr>";
-      echo "</table>";
       echo "<span id='span_injection' name='span_injection'></span>";
       self::processInjection($model, $entities_id);
    }
