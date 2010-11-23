@@ -1047,33 +1047,31 @@ class PluginDatainjectionCommonInjectionLib {
          $searchOptions = $injectionClass->getOptions($itemtype);
 
          foreach ($fields as $field => $value) {
-            if ($continue) {
-               $mandatory = false;
-               if (isset($this->mandatory_fields[$itemtype][$field])) {
-                  $mandatory = $this->mandatory_fields[$itemtype][$field];
+            $mandatory = false;
+            if (isset($this->mandatory_fields[$itemtype][$field])) {
+               $mandatory = $this->mandatory_fields[$itemtype][$field];
+            }
+
+            //Get search option associated with the field
+            $option = self::findSearchOption($searchOptions,$field);
+
+            if ($value == self::EMPTY_VALUE && $mandatory) {
+               $this->results['status']                     = self::FAILED;
+               $this->results[self::ACTION_CHECK]['status'] = self::FAILED;
+               $this->results[self::ACTION_CHECK][]         = array(self::MANDATORY, $field);
+               $continue = false;
+
+            } else {
+               $check_result = $this->checkType($injectionClass, $option, $field, $value,
+                                                $mandatory);
+               $this->results[self::ACTION_CHECK][] = array($check_result,
+                                                            $field."='$value'");
+
+               if ($check_result != self::SUCCESS) {
+                  $this->results[self::ACTION_CHECK]['status'] = self::FAILED;
+                  $this->results['status']                     = self::FAILED;
+                  $continue = false;
                }
-                  //Get search option associated with the field
-                  $option = self::findSearchOption($searchOptions,$field);
-
-                  if ($value == self::EMPTY_VALUE && $mandatory) {
-                     $this->results['status']                     = self::FAILED;
-                     $this->results[self::ACTION_CHECK]['status'] = self::FAILED;
-                     $this->results[self::ACTION_CHECK][]         = array(self::MANDATORY, $field);
-                     $continue = false;
-
-                  } else {
-                     $check_result = $this->checkType($injectionClass, $option, $field, $value,
-                                                      $mandatory);
-                     $this->results[self::ACTION_CHECK][] = array($check_result,
-                                                                  $field."='$value'");
-
-                     if ($check_result != self::SUCCESS) {
-                        $this->results[self::ACTION_CHECK]['status'] = self::FAILED;
-                        $this->results['status']                     = self::FAILED;
-                        $continue = false;
-                     }
-                  }
-               //}
             }
          }
       }
@@ -1107,6 +1105,7 @@ logDebug("checkType(", $field_name, $data, $mandatory,')', (empty($option)?'no o
                }
                return self::SUCCESS;
 
+            case 'integer' :
             case 'decimal' :
                return (is_numeric($data)?self::SUCCESS:self::TYPE_MISMATCH);
 
