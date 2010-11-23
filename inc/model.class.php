@@ -1008,15 +1008,12 @@ class PluginDatainjectionModel extends CommonDBTM {
                $error['status']         = PluginDatainjectionCommonInjectionLib::FAILED;
                $error['field_in_error'] = false;
 
-               $error['error_message'] .= $LANG['datainjection']['saveStep'][18];
-               $error['error_message'] .= $name_from_file."\n";
+               $error['error_message'] .= "<br>".$LANG['datainjection']['saveStep'][18];
+               $error['error_message'] .= "'$name_from_file', ";
                $error['error_message'] .=$LANG['datainjection']['saveStep'][19];
-               $error['error_message'] .= $name_from_db."\n";
+               $error['error_message'] .= "'$name_from_db'";
             }
          }
-      }
-      if (PluginDatainjectionCommonInjectionLib::FAILED) {
-         $error['error_message'] = $LANG['datainjection']['saveStep'][12];
       }
       return $error;
    }
