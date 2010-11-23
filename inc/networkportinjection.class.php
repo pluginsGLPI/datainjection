@@ -72,6 +72,12 @@ class PluginDatainjectionNetworkportInjection extends NetworkPort
       $tab[100]['relationclass'] = 'NetworkPort_Vlan';
       $tab[100]['storevaluein']  = $tab[100]['linkfield'];
 
+      $tab[4]['checktype'] = 'mac';
+      $tab[5]['checktype'] = 'ip';
+      $tab[6]['checktype'] = 'ip';
+      $tab[7]['checktype'] = 'ip';
+      $tab[8]['checktype'] = 'ip';
+
       //Remove some options because some fields cannot be imported
       $notimportable = array(20, 21);
       $ignore_fields = array_merge($blacklist, $notimportable);
@@ -239,12 +245,12 @@ class PluginDatainjectionNetworkportInjection extends NetworkPort
     * @return true if check ok, false if not ok
     */
    function lastCheck($values = array()) {
+      //logDebug("PluginDatainjectionNetworkportInjection->lastCheck()", $values['NetworkPort']);
+
       if (!isset($values['NetworkPort']['mac']) && ! isset($values['NetworkPort']['ip'])) {
-         logDebug("pas de mac ni de ip !");
          return false;
-      } else {
-         return true;
       }
+      return true;
    }
 }
 

@@ -1044,15 +1044,18 @@ class PluginDatainjectionCommonInjectionLib {
       foreach ($this->values as $itemtype => $fields) {
          $injectionClass = self::getInjectionClassInstance($itemtype);
          //Get search options associated with the injectionClass
-         $searchOptions = $injectionClass->getOptions($this->primary_type);
+         $searchOptions = $injectionClass->getOptions($itemtype);
 
          foreach ($fields as $field => $value) {
             if ($continue) {
+               $mandatory = false;
                if (isset($this->mandatory_fields[$itemtype][$field])) {
+                  $mandatory = $this->mandatory_fields[$itemtype][$field];
+               }
                   //Get search option associated with the field
                   $option = self::findSearchOption($searchOptions,$field);
 
-                  if ($value == self::EMPTY_VALUE && $this->mandatory_fields[$itemtype][$field]) {
+                  if ($value == self::EMPTY_VALUE && $mandatory) {
                      $this->results['status']                     = self::FAILED;
                      $this->results[self::ACTION_CHECK]['status'] = self::FAILED;
                      $this->results[self::ACTION_CHECK][]         = array(self::MANDATORY, $field);
@@ -1060,7 +1063,7 @@ class PluginDatainjectionCommonInjectionLib {
 
                   } else {
                      $check_result = $this->checkType($injectionClass, $option, $field, $value,
-                                                      $this->mandatory_fields[$itemtype][$field]);
+                                                      $mandatory);
                      $this->results[self::ACTION_CHECK][] = array($check_result,
                                                                   $field."='$value'");
 
@@ -1070,7 +1073,7 @@ class PluginDatainjectionCommonInjectionLib {
                         $continue = false;
                      }
                   }
-               }
+               //}
             }
          }
       }
@@ -1087,6 +1090,7 @@ class PluginDatainjectionCommonInjectionLib {
    **/
    private function checkType($injectionClass, $option, $field_name, $data, $mandatory) {
 
+logDebug("checkType(", $field_name, $data, $mandatory,')', (empty($option)?'no option':$option));
       if (!empty($option)) {
          $field_type = (isset($option['checktype'])?$option['checktype']:'text');
 
