@@ -247,7 +247,9 @@ class PluginDatainjectionNetworkportInjection extends NetworkPort
    function lastCheck($values = array()) {
       //logDebug("PluginDatainjectionNetworkportInjection->lastCheck()", $values['NetworkPort']);
 
-      if (!isset($values['NetworkPort']['mac']) && ! isset($values['NetworkPort']['ip'])) {
+      if ((!isset($values['NetworkPort']['name']) || empty($values['NetworkPort']['name']))
+          && (!isset($values['NetworkPort']['mac']) || empty($values['NetworkPort']['mac']))
+          && (!isset($values['NetworkPort']['ip']) || empty($values['NetworkPort']['ip']))) {
          return false;
       }
       return true;
