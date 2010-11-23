@@ -1088,7 +1088,8 @@ class PluginDatainjectionCommonInjectionLib {
    **/
    private function checkType($injectionClass, $option, $field_name, $data, $mandatory) {
 
-logDebug("checkType(", $field_name, $data, $mandatory,')', (empty($option)?'no option':$option));
+      //logDebug("checkType(", $field_name, $data, $mandatory,')', (empty($option)?'no option':$option));
+
       if (!empty($option)) {
          $field_type = (isset($option['checktype'])?$option['checktype']:'text');
 
@@ -1114,8 +1115,10 @@ logDebug("checkType(", $field_name, $data, $mandatory,')', (empty($option)?'no o
                                                                    :self::TYPE_MISMATCH);
 
             case 'date' :
-               preg_match("/([0-9]{4})[\-]([0-9]{2})[\-]([0-9]{2})/", $data, $regs);
-               return ((count($regs) > 0)?self::SUCCESS:self::TYPE_MISMATCH);
+               // Date is already "reformat" according to getDateFormat()
+               $pat = '/^([0-9]{4})-([0-9]{1,2})-([0-9]{1,2})$/';
+               $res = preg_match($pat, $data, $regs);
+               return ($res ? self::SUCCESS : self::TYPE_MISMATCH);
 
             case 'ip' :
                preg_match("/([0-9]{1,3})\.([0-9]{1,3})\.([0-9]{1,3})\.([0-9]{1,3})/", $data, $regs);
@@ -1130,10 +1133,6 @@ logDebug("checkType(", $field_name, $data, $mandatory,')', (empty($option)?'no o
 
             case 'bool' :
                return (($data == 0 || $data == 1)?self::SUCCESS:self::TYPE_MISMATCH);
-
-            case 'date' :
-               //TODO : check date !!
-               return $data;
 
             default :
                //Not a standard check ? Try checks specific to the injection class
