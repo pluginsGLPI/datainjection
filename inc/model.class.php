@@ -997,8 +997,8 @@ class PluginDatainjectionModel extends CommonDBTM {
 
          } else {
             //If name of the mapping is not equal in the csv file header and in the DB
-            $name_from_file = trim(strtoupper(stripslashes($header[$mapping->getRank()])));
-            $name_from_db   = trim(strtoupper(stripslashes($mapping->getName())));
+            $name_from_file = trim(mb_strtoupper(stripslashes($header[$mapping->getRank()]), 'UTF-8'));
+            $name_from_db   = trim(mb_strtoupper(stripslashes($mapping->getName()), 'UTF-8'));
 
             if ($name_from_db != $name_from_file) {
                if ($error['error_message'] == '') {
