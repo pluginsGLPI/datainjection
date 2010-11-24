@@ -1255,26 +1255,26 @@ class PluginDatainjectionCommonInjectionLib {
          //No item found in DB
          if($this->getValueByItemtypeAndName($this->primary_type,'id') == self::ITEM_NOT_FOUND) {
             //Can add item ?
+            $this->results['type'] = self::IMPORT_ADD;
+
             if ($this->rights['can_add']) {
                $add = true;
                $this->unsetValue($this->primary_type, 'id');
-               $this->results['type'] = self::IMPORT_ADD;
             } else {
-                  $process = false;
-                  $this->results['status'] = self::ERROR_CANNOT_IMPORT;
-                  $this->results['type']   = self::IMPORT_ADD;
+               $process = false;
+               $this->results['status'] = self::ERROR_CANNOT_IMPORT;
             }
 
          } else { //Item found in DB
+            $this->results['type'] = self::IMPORT_UPDATE;
+            $this->results[$this->primary_type]
+                              = $this->getValueByItemtypeAndName($this->primary_type, 'id');
+
             if ($this->rights['can_update']) {
                $add = false;
-               $this->results['type'] = self::IMPORT_UPDATE;
             } else {
-                  $process = false;
-                  $this->results['status'] = self::ERROR_CANNOT_UPDATE;
-                  $this->results['type']   = self::IMPORT_UPDATE;
-                  $this->results[$this->primary_type]
-                                    = $this->getValueByItemtypeAndName($this->primary_type, 'id');
+               $process = false;
+               $this->results['status'] = self::ERROR_CANNOT_UPDATE;
             }
          }
       }
