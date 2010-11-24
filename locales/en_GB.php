@@ -125,6 +125,7 @@ $LANG['datainjection']['button'][8] = "Close";
 
 $LANG['datainjection']['result'][2]  = "Datas to insert are correct";
 $LANG['datainjection']['result'][4]  = "At least one mandatory field is not present";
+$LANG['datainjection']['result'][6]  = "Undetermined";
 $LANG['datainjection']['result'][7]  = "Import is successful";
 $LANG['datainjection']['result'][8]  = "Add";
 $LANG['datainjection']['result'][9]  = "Update";

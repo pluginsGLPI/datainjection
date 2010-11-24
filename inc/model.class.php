@@ -1172,7 +1172,7 @@ class PluginDatainjectionModel extends CommonDBTM {
                          'status'         => $result['status'],
                          'check_sumnary'  => PluginDatainjectionCommonInjectionLib::getLogLabel(PluginDatainjectionCommonInjectionLib::SUCCESS),
                          'check_message'  => PluginDatainjectionCommonInjectionLib::getLogLabel(PluginDatainjectionCommonInjectionLib::SUCCESS),
-                         'type'           => '',
+                         'type'           => $LANG['datainjection']['result'][6],
                          'status_message' => PluginDatainjectionCommonInjectionLib::getLogLabel($result['status']),
                          'itemtype'       => $model->fields['itemtype'],
                          'url'            => '',
