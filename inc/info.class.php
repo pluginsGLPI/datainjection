@@ -260,7 +260,9 @@ class PluginDatainjectionInfo extends CommonDBTM {
       switch ($option['displaytype']) {
          case 'text' :
          case 'decimal' :
-            $value = (isset($option['default'])?$option['default']:'');
+            if (empty($value)) {
+               $value = (isset($option['default'])?$option['default']:'');
+            }
             echo "<input type='text' name='$name' value='$value'";
             if (isset($option['size'])) {
                echo " size='".$option['size']."'";
