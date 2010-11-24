@@ -1363,6 +1363,8 @@ class PluginDatainjectionModel extends CommonDBTM {
       echo "<tr class='tab_bg_1'><th colspan='7'>".$LANG['datainjection']['model'][39]."</th></tr>";
 
       if (!empty($models)) {
+         initNavigateListItems('PluginDatainjectionModel');
+
          echo "<tr class='tab_bg_1'>";
          echo "<th></th>";
          echo "<th>".$LANG['common'][16]."</th>";
@@ -1373,6 +1375,8 @@ class PluginDatainjectionModel extends CommonDBTM {
          echo "<th>".$LANG['joblist'][0]."</th></th>";
 
          foreach ($models as $model) {
+            addToNavigateListItems('PluginDatainjectionModel', $model["id"]);
+
             echo "<tr class='tab_bg_1'>";
             echo "<td width='10px'>";
             $sel = "";
