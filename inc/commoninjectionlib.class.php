@@ -492,7 +492,7 @@ class PluginDatainjectionCommonInjectionLib {
             }
             // Use EMPTY_VALUE for Mandatory field check
             $this->setValueForItemtype($itemtype, $linkfield, ($id>0 ? $id : self::EMPTY_VALUE));
-            if ($id <= 0) {
+            if ($value && $id <= 0) {
                $this->results['status'] = self::WARNING;
                $this->results[self::ACTION_CHECK]['status'] = self::WARNING;
                $this->results[self::ACTION_CHECK][] = array(self::WARNING_NOTFOUND,
