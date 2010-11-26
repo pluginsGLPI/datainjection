@@ -814,10 +814,13 @@ class PluginDatainjectionCommonInjectionLib {
          foreach ($data as $field => $value) {
             if ($value && $value == "NULL") {
                $this->values[$itemtype][$field] = self::EMPTY_VALUE;
-            } else {
+            }
+/*
+            else {
                //Get search option associated with the field
                $option = self::findSearchOption($searchOptions,$field);
 
+logDebug("reformatFirstPass($itemtype, $field, $value)",  $option['checktype']);
                //If field is a dropdown, then use the standard import() table
                if ($option['checktype'] == 'dropdown') {
                   $dropdownItemName = getItemTypeForTable($option['table']);
@@ -826,7 +829,6 @@ class PluginDatainjectionCommonInjectionLib {
                   if ($dropdownClass instanceof CommonTreeDropdown) {
                      $value = self::reformatSpecialChars($value);
                   }
-
                   if ($dropdownClass->canCreate() && $this->canAddDropdownValue()) {
                      $dropdownID = $dropdownClass->import($value);
 
@@ -840,6 +842,7 @@ class PluginDatainjectionCommonInjectionLib {
                   }
                }
             }
+*/
          }
       }
    }
