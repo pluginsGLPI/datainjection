@@ -478,7 +478,16 @@ class PluginDatainjectionCommonInjectionLib {
          case 'relation' :
             $tmptype = getItemTypeForTable($searchOption['table']);
             $item    = new $tmptype();
-            if ($item instanceof CommonDropdown) {
+            if ($item instanceof CommonTreeDropdown) {
+               $input = array ('completename' => $value,
+                               'entities_id'  => $this->entity);
+
+               if ($item->canCreate() && $this->rights['add_dropdown']) {
+                  $id = $item->import($input);
+               } else {
+                  $id = $item->getID($input);
+               }
+            } else  if ($item instanceof CommonDropdown) {
                if ($item->canCreate() && $this->rights['add_dropdown']) {
                   $canadd = true;
                } else {
