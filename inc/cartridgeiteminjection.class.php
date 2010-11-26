@@ -37,7 +37,6 @@ if (!defined('GLPI_ROOT')) {
    die("Sorry. You can't access directly to this file");
 }
 
-/// Location class
 class PluginDatainjectionCartridgeItemInjection extends CartridgeItem
                                                 implements PluginDatainjectionInjectionInterface {
 
