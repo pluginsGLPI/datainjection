@@ -55,17 +55,17 @@ $LANG['datainjection']['model'][26] = "1 234,56";
 $LANG['datainjection']['model'][27] = "1,234.56";
 $LANG['datainjection']['model'][28] = "Float format";
 $LANG['datainjection']['model'][29] = "Specific file format options";
-$LANG['datainjection']['model'][30] = "Vous devez spécifier un nom de modèle";
-$LANG['datainjection']['model'][31] = "Votre modèle doit permettre l'import et/ou la mise à jour de données";
-$LANG['datainjection']['model'][32] = "Le fichier est correct.".
-                     "<br>Vous pouvez à présent faire les correspondances avec les champs de GLPI";
-$LANG['datainjection']['model'][33] = "Aucun modèle n'est disponible actuellement";
-$LANG['datainjection']['model'][34] = "Vous pouvez en créer un en cliquant sur le bouton";
-$LANG['datainjection']['model'][35] = "Modèle en cours de création";
-$LANG['datainjection']['model'][36] = "Modèle utilisable";
+$LANG['datainjection']['model'][30] = "Please enter a name for the model";
+$LANG['datainjection']['model'][31] = "Your model should allow import and/or update of data”";
+$LANG['datainjection']['model'][32] = "The file is ok.".
+                     "<br>You can start doing the mapping with GLPI fields”";
+$LANG['datainjection']['model'][33] = "No model currently available";
+$LANG['datainjection']['model'][34] = "You can start the model creation by hitting the button";
+$LANG['datainjection']['model'][35] = "Creation of the model on going";
+$LANG['datainjection']['model'][36] = "Model available for use";
 $LANG['datainjection']['model'][37] = "Validation";
-$LANG['datainjection']['model'][38] = "Valider le modèle";
-$LANG['datainjection']['model'][39] = "Liste des modèles";
+$LANG['datainjection']['model'][38] = "Validate the model";
+$LANG['datainjection']['model'][39] = "List of the models";
 
 $LANG['datainjection']['fileStep'][3]  = "Choose a file";
 $LANG['datainjection']['fileStep'][4]  = "The file could not be found";
