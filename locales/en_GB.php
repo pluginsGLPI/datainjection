@@ -102,7 +102,7 @@ $LANG['datainjection']['fillInfoStep'][1] = "Watch out, you're about to inject d
 $LANG['datainjection']['fillInfoStep'][3] = "* Mandatory field";
 $LANG['datainjection']['fillInfoStep'][4] = "One mandatory field is not filled";
 
-$LANG['datainjection']['importStep'][1] = "Injection fo the file";
+$LANG['datainjection']['importStep'][1] = "Injection of the file";
 $LANG['datainjection']['importStep'][3] = "Injection finished";
 
 $LANG['datainjection']['log'][1]  = "Injection's results";
