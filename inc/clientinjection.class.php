@@ -136,9 +136,9 @@ class PluginDatainjectionClientInjection {
       echo "</td></tr>";
 
       echo "<tr class='tab_bg_1'>";
-      echo "<td>" . $LANG['datainjection']['fileStep'][9] . "</td>";
-      echo "<td>".PluginDatainjectionDropdown::dropdownFileEncoding()."</td>";
-      echo "</tr>\n";
+      echo "<td>" . $LANG['datainjection']['fileStep'][9] . "</td><td>";
+      PluginDatainjectionDropdown::dropdownFileEncoding();
+      echo "</td></tr>\n";
 
       echo "<tr class='tab_bg_1'>";
       echo "<td colspan='2' class='center'>";
