@@ -54,7 +54,7 @@ if (isset($_SESSION['datainjection']['models_id'])
 $_SESSION['datainjection']['step'] = PluginDatainjectionClientInjection::STEP_UPLOAD;
 $model = new PluginDatainjectionModel();
 
-if ($model->can($_POST['models_id'],'r')) {
+if ($_POST['models_id']>0 && $model->can($_POST['models_id'], 'r')) {
    PluginDatainjectionInfo::showAdditionalInformationsForm($model);
 }
 ?>

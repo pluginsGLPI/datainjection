@@ -92,7 +92,7 @@ class PluginDatainjectionClientInjection {
             echo ". ".$LANG['datainjection']['model'][34].":".$LANG['datainjection']['profiles'][1];
          }
       }
-      echo "</td></tr></table>";
+      echo "</td></tr></table><br>";
 
       echo "<span id='span_injection' name='span_injection'></span>";
       echo "</div></form>";
@@ -157,7 +157,7 @@ class PluginDatainjectionClientInjection {
              htmlentities($options['submit'], ENT_QUOTES, 'UTF-8'). "' $alert>";
       echo "</td>";
       echo "</tr>\n";
-      echo "</table>";
+      echo "</table><br>";
       if ($add_form) {
          echo "</form>";
       }

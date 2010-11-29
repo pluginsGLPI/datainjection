@@ -212,7 +212,7 @@ class PluginDatainjectionInfo extends CommonDBTM {
             }
          }
       }
-      echo "</table>";
+      echo "</table><br>";
 
       $options['models_id'] = $model->getField('id');
       $options['confirm']   = 'process';
