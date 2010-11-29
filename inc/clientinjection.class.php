@@ -194,6 +194,9 @@ class PluginDatainjectionClientInjection {
    static function processInjection(PluginDatainjectionModel $model, $entities_id) {
       global $LANG,$CFG_GLPI;
 
+      // To prevent problem of execution time during injection
+      ini_set("max_execution_time", "0");
+
       $nblines         = plugin_datainjection_getSessionParam('nblines');
       $clientinjection = new PluginDatainjectionClientInjection;
 
