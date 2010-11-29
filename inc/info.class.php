@@ -189,9 +189,9 @@ class PluginDatainjectionInfo extends CommonDBTM {
       $infos = getAllDatasFromTable('glpi_plugin_datainjection_infos',
                                     "`models_id` = '". $model->getField('id')."'");
 
-      echo "<table class='tab_cadre_fixe'>";
-
       if (count($infos)) {
+         echo "<table class='tab_cadre_fixe'>";
+
          $info = new PluginDatainjectionInfo;
 
          echo "<tr><th colspan='2'>" . $LANG['datainjection']['info'][1];
@@ -211,8 +211,8 @@ class PluginDatainjectionInfo extends CommonDBTM {
                echo "</tr>";
             }
          }
+         echo "</table><br>";
       }
-      echo "</table><br>";
 
       $options['models_id'] = $model->getField('id');
       $options['confirm']   = 'process';
