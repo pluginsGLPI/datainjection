@@ -986,6 +986,9 @@ logDebug("reformatFirstPass($itemtype, $field, $value)",  $option['checktype']);
    **/
    static private function reformatDate($original_date, $date_format) {
 
+      if (empty($original_date)) {
+         return "NULL"; // required to avoid "0000-00-00" in the DB
+      }
       switch ($date_format) {
          case self::DATE_TYPE_YYYYMMDD :
             $new_date = preg_replace('/(\d{4})[-\/](\d{1,2})[-\/](\d{1,2})/',
@@ -1377,6 +1380,7 @@ logDebug("reformatFirstPass($itemtype, $field, $value)",  $option['checktype']);
             $toinject[$key] = $value;
          }
       }
+      // logDebug("effectiveAddOrUpdate($add)", "Values:", $values, "ToInject:", $toinject);
 
       if ($item instanceof CommonDropdown && $add) {
          $newID = $item->import($toinject);
