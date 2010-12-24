@@ -154,32 +154,32 @@ class PluginDatainjectionInfo extends CommonDBTM {
    static function manageInfos($models_id, $infos = array()) {
       global $DB;
 
-      $info = new PluginDatainjectionInfo;
-      foreach ($_POST['data'] as $id => $info_infos) {
-         $info_infos['id'] = $id;
-         //If no field selected, reset other values
+      $info = new self();
 
-         if ($info_infos['value'] == PluginDatainjectionInjectionType::NO_VALUE) {
-            $info_infos['itemtype']     = PluginDatainjectionInjectionType::NO_VALUE;
-            $info_infos['is_mandatory'] = 0;
-         } else {
-            $info_infos['is_mandatory'] = (isset($info_infos['is_mandatory'])?1:0);
-         }
+      if (isset($_POST['data']) && is_array($_POST['data']) && count($_POST['data'])) {
+         foreach ($_POST['data'] as $id => $info_infos) {
+            $info_infos['id'] = $id;
+            //If no field selected, reset other values
 
-         if ($id > 0) {
-            $info->update($info_infos);
-         } else {
-            $info_infos['models_id'] = $models_id;
-            unset($info_infos['id']);
-            $info->add($info_infos);
+            if ($info_infos['value'] == PluginDatainjectionInjectionType::NO_VALUE) {
+               $info_infos['itemtype']     = PluginDatainjectionInjectionType::NO_VALUE;
+               $info_infos['is_mandatory'] = 0;
+            } else {
+               $info_infos['is_mandatory'] = (isset($info_infos['is_mandatory'])?1:0);
+            }
+
+            if ($id > 0) {
+               $info->update($info_infos);
+            } else {
+               $info_infos['models_id'] = $models_id;
+               unset($info_infos['id']);
+               $info->add($info_infos);
+            }
          }
       }
 
-      $query = "DELETE
-                FROM `glpi_plugin_datainjection_infos`
-                WHERE `models_id` = '$models_id'
-                      AND `value` = '".PluginDatainjectionInjectionType::NO_VALUE."'";
-      $DB->query($query);
+      $info->deleteByCriteria(array('models_id' => $models_id,
+                                    'value'     => PluginDatainjectionInjectionType::NO_VALUE));
    }
 
 
