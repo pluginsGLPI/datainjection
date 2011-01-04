@@ -1303,6 +1303,10 @@ class PluginDatainjectionModel extends CommonDBTM {
 
       if (!empty($logresults)) {
          $pdf = new PluginPdfSimplePDF('a4', 'landscape');
+         $pdf->setHeader(
+            $LANG['datainjection']['result'][18] . ' - <b>' .
+            plugin_datainjection_getSessionParam('file_name') . '</b> (' . $model->getName() . ')'
+         );
          $pdf->newPage();
 
          if (isset($logresults[PluginDatainjectionCommonInjectionLib::SUCCESS])) {
