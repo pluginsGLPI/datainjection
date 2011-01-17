@@ -889,7 +889,7 @@ logDebug("reformatFirstPass($itemtype, $field, $value)",  $option['checktype']);
             $option = self::findSearchOption($searchOptions,$field);
 
             // Check some types
-            switch ($option['checktype']) {
+            switch (isset($option['checktype']) ? $option['checktype'] : 'text') {
                case "date" :
                   //If the value is a date, try to reformat it if it's not the good type
                   //(dd-mm-yyyy instead of yyyy-mm-dd)
@@ -1376,7 +1376,7 @@ logDebug("reformatFirstPass($itemtype, $field, $value)",  $option['checktype']);
 
       foreach ($values as $key => $value) {
          $option = self::findSearchOption($options, $key);
-         if ($option['checktype'] != self::FIELD_VIRTUAL) {
+         if (!isset($option['checktype']) || $option['checktype'] != self::FIELD_VIRTUAL) {
             $toinject[$key] = $value;
          }
       }
@@ -1466,7 +1466,8 @@ logDebug("reformatFirstPass($itemtype, $field, $value)",  $option['checktype']);
 
          foreach ($searchOptions as $id => $option) {
             //If it's a relation
-            if ($option['displaytype'] == 'relation'
+            if (isset($option['displaytype'])
+                && $option['displaytype'] == 'relation'
                 && isset($this->values[$itemtype][$option['linkfield']])) {
 
                //Get the relation object associated with the field
