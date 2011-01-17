@@ -41,7 +41,9 @@ class PluginDatainjectionInjectionType {
    static function getItemtypes($only_primary=false) {
       global $INJECTABLE_TYPES;
 
-     $values = array();
+      getTypesToInject();
+
+      $values = array();
       foreach ($INJECTABLE_TYPES as $type => $plugin) {
          $injectionclass = new $type();
 
@@ -78,6 +80,8 @@ class PluginDatainjectionInjectionType {
    **/
    static function dropdownLinkedTypes($mapping_or_info, $options=array()) {
       global $INJECTABLE_TYPES, $LANG, $CFG_GLPI;
+
+      getTypesToInject(); // populate $INJECTABLE_TYPES
 
       $p['primary_type']    = '';
       $p['itemtype']        = PluginDatainjectionInjectionType::NO_VALUE;

@@ -85,19 +85,7 @@ function plugin_init_datainjection() {
       // Inbtegration with Webservices plugin
       $PLUGIN_HOOKS['webservices']['datainjection'] = 'plugin_datainjection_registerMethods';
 
-      $classes = array ('Backend', 'Backendcsv', 'BackendInterface','Check', 'CommonInjectionLib',
-                        'Data', 'Infos', 'InfosCollection', 'InjectionCommon', 'InjectionInterface',
-                        'Mapping', 'MappingCollection', 'Model', 'Modelcsv', 'Profile', 'Result',
-                        'Webservice');
-
-      foreach ($classes as $value) {
-         Plugin::registerClass('PluginDatainjection'.$value);
-      }
-
-      getTypesToInject();
-      foreach ($INJECTABLE_TYPES as $type => $plugname) {
-         Plugin::registerClass($type);
-      }
+      $INJECTABLE_TYPES = array();
    }
 }
 
@@ -148,6 +136,12 @@ function plugin_datainjection_check_config($verbose=false) {
 
 function getTypesToInject() {
    global $INJECTABLE_TYPES,$PLUGIN_HOOKS;
+
+   if (count($INJECTABLE_TYPES)) {
+      // already populated
+      return;
+   }
+
    $INJECTABLE_TYPES = array('PluginDatainjectionCartridgeItemInjection'        =>'datainjection',
                              'PluginDatainjectionBudgetInjection'               =>'datainjection',
                              'PluginDatainjectionComputerInjection'             =>'datainjection',
