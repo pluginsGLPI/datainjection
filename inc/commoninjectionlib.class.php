@@ -1093,6 +1093,16 @@ logDebug("reformatFirstPass($itemtype, $field, $value)",  $option['checktype']);
    }
 
 
+   private function isFloat ($val) {
+
+      return is_numeric($val) && ($val == floatval($val));
+   }
+
+   private function isInteger ($val) {
+
+      return is_numeric($val) && ($val == intval($val));
+   }
+
    /**
     * Check one data
     *
@@ -1122,12 +1132,11 @@ logDebug("reformatFirstPass($itemtype, $field, $value)",  $option['checktype']);
                return self::SUCCESS;
 
             case 'integer' :
-            case 'decimal' :
-               return (is_numeric($data)?self::SUCCESS:self::TYPE_MISMATCH);
+               return (self::isInteger($data) ? self::SUCCESS : self::TYPE_MISMATCH);
 
+            case 'decimal' :
             case 'float':
-               return (PluginDatainjectionCheck::isTrueFloat($data)?self::SUCCESS
-                                                                   :self::TYPE_MISMATCH);
+               return (self::isFloat($data) ? self::SUCCESS : self::TYPE_MISMATCH);
 
             case 'date' :
                // Date is already "reformat" according to getDateFormat()
