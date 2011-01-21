@@ -84,6 +84,9 @@ if (isset($_SESSION['datainjection']['go'])) {
    glpi_header($_SERVER['HTTP_REFERER']);
 
 } else {
+   if (isset($_GET['id'])) { // Allow link to a model
+      plugin_datainjection_setSessionParam('models_id', $_GET['id']);
+   }
    $clientInjection = new PluginDatainjectionClientInjection();
    $clientInjection->title();
    $clientInjection->showForm(0);
