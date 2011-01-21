@@ -207,7 +207,12 @@ class PluginDatainjectionInfo extends CommonDBTM {
             $item = new $tmp['itemtype'];
             if ($item->can(-1,'w')) {
                echo "<tr class='tab_bg_1'>";
-               self::displayAdditionalInformation($info, $_SESSION['datainjection']['infos']);
+               self::displayAdditionalInformation(
+                  $info,
+                  (isset($_SESSION['datainjection']['infos'])
+                     ? $_SESSION['datainjection']['infos']
+                     : array())
+               );
                echo "</tr>";
             }
          }
