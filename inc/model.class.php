@@ -90,10 +90,32 @@ class PluginDatainjectionModel extends CommonDBTM {
    }
 
 
+   function canCreateItem() {
+
+      if ($this->isPrivate() && $this->fields['users_id']!=getLoginUserID()) {
+         return false;
+      }
+      if (!$this->isPrivate() && !haveAccessToEntity($this->getEntityID())) {
+         return false;
+      }
+      return self::checkRightOnModel($this->fields['id']);
+   }
+
    function canView() {
       return plugin_datainjection_haveRight('model', 'r');
    }
 
+
+   function canViewItem() {
+
+      if ($this->isPrivate() && $this->fields['users_id']!=getLoginUserID()) {
+         return false;
+      }
+      if (!$this->isPrivate() && !haveAccessToEntity($this->getEntityID(),$this->isRecursive())) {
+         return false;
+      }
+      return self::checkRightOnModel($this->fields['id']);
+   }
 
    function saveMappings() {
       $this->mappings->saveAllMappings($this->fields['id']);
@@ -1360,6 +1382,7 @@ class PluginDatainjectionModel extends CommonDBTM {
    static function showModelsList() {
       global $LANG;
 
+      $modelo = new self();
       $models = self::getModels(getLoginUserID(), 'name', $_SESSION['glpiactive_entity'], true);
 
       echo "<form method='post' id='modelslist' action=\"".getItemTypeSearchURL(__CLASS__)."\">";
@@ -1383,11 +1406,15 @@ class PluginDatainjectionModel extends CommonDBTM {
 
             echo "<tr class='tab_bg_1'>";
             echo "<td width='10px'>";
-            $sel = "";
-            if (isset($_GET["select"]) && $_GET["select"]=="all") {
-               $sel = "checked";
+            if ($modelo->can($model["id"], 'd')) {
+               $sel = "";
+               if (isset($_GET["select"]) && $_GET["select"]=="all") {
+                  $sel = "checked";
+               }
+               echo "<input type='checkbox' name='models[".$model["id"]."]'". $sel.">";
+            } else {
+               echo "&nbsp;";
             }
-            echo "<input type='checkbox' name='models[".$model["id"]."]'". $sel.">";
             echo "</td>";
             echo "<td><a href='".getItemTypeFormURL('PluginDatainjectionModel')."?id=".
                        $model['id']."'>".$model['name']."</a></td>";

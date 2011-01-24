@@ -37,24 +37,20 @@ include (GLPI_ROOT . "/inc/includes.php");
 
 commonHeader($LANG['datainjection']['profiles'][1], '', "plugins", "datainjection", "model");
 
-if (plugin_datainjection_haveRight("model", "w")) {
-   if (isset($_POST['delete']) && isset($_POST['models'])) {
-      $model = new PluginDatainjectionModel;
+$model = new PluginDatainjectionModel();
+$model->checkGlobal('r');
 
-      foreach ($_POST['models'] as $models_id => $tmp) {
+if (isset($_POST['delete']) && isset($_POST['models'])) {
+
+   foreach ($_POST['models'] as $models_id => $tmp) {
+      if ($model->can($models_id, 'd')) {
          $model->delete(array('id' => $models_id));
       }
-      glpi_header($_SERVER['HTTP_REFERER']);
-
-   } else {
-      PluginDatainjectionModel::showModelsList();
    }
+   glpi_header($_SERVER['HTTP_REFERER']);
 
-} else {
-   echo "<div class='center'><br><br><img src='" . $CFG_GLPI["root_doc"] ."/pics/warning.png'
-          alt='warning'>";
-   echo "<b>" . $LANG['login'][5] . "</b></div><br>";
 }
+PluginDatainjectionModel::showModelsList();
 
 commonFooter();
 

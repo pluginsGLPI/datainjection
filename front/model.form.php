@@ -44,6 +44,7 @@ if (!isset ($_GET["withtemplate"])) {
 }
 
 $model = new PluginDatainjectionModel();
+$model->checkGlobal('r');
 
 /* add */
 if (isset ($_POST["add"])) {
