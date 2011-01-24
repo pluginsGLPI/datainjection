@@ -1110,10 +1110,10 @@ class PluginDatainjectionModel extends CommonDBTM {
       $query = "(SELECT `itemtype`
                  FROM `glpi_plugin_datainjection_models`
                  WHERE `id` = '$models_id')
-                UNION (SELECT `itemtype`
+                UNION (SELECT DISTINCT `itemtype`
                        FROM `glpi_plugin_datainjection_mappings`
                        WHERE `models_id` = '$models_id')
-                UNION (SELECT `itemtype`
+                UNION (SELECT DISTINCT `itemtype`
                        FROM `glpi_plugin_datainjection_infos`
                        WHERE `models_id` = '$models_id')";
 
