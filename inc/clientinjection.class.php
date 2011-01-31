@@ -224,6 +224,7 @@ class PluginDatainjectionClientInjection {
 
       //While CSV file is not EOF
       $prev = '';
+      $deb = time();
       while ($line != null) {
          //Inject line
          $injectionline              = $index + ($model->getSpecificModel()->isHeaderPresent()?2:1);
@@ -232,8 +233,10 @@ class PluginDatainjectionClientInjection {
          $pos = number_format($index*100/$nblines,1);
          if ($pos != $prev) {
             $prev = $pos;
+            $fin = time()-$deb;
             changeProgressBarPosition($index, $nblines,
-                                      $LANG['datainjection']['importStep'][1].'... '.$pos.'%');
+                                      $LANG['datainjection']['importStep'][1].'... '.
+                                      $pos.'% ('.timestampToString(time()-$deb, true).')');
          }
          $line = $backend->getNextLine();
          $index++;
@@ -241,7 +244,8 @@ class PluginDatainjectionClientInjection {
       }
 
       //EOF : change progressbar to 100% !
-      changeProgressBarPosition(100, 100, $LANG['datainjection']['importStep'][3]);
+      changeProgressBarPosition(100, 100, $LANG['datainjection']['importStep'][3].
+                                          ' ('.timestampToString(time()-$deb, true).')');
 
       // Restore
       $CFG_GLPI["debug_sql"] = 1;
@@ -271,10 +275,10 @@ class PluginDatainjectionClientInjection {
    static function showResultsForm(PluginDatainjectionModel $model) {
       global $LANG, $CFG_GLPI;
 
-      $results     = json_decode(stripslashes_deep(plugin_datainjection_getSessionParam('results')),
-                                 true);
-      $error_lines = json_decode(stripslashes_deep(plugin_datainjection_getSessionParam('error_lines')),
-                                 true);
+      $results     = stripslashes_deep(json_decode(plugin_datainjection_getSessionParam('results'),
+                                 true));
+      $error_lines = stripslashes_deep(json_decode(plugin_datainjection_getSessionParam('error_lines'),
+                                 true));
       $ok = true;
 
       foreach ($results as $result) {
