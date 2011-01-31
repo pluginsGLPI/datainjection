@@ -197,6 +197,9 @@ class PluginDatainjectionClientInjection {
       // To prevent problem of execution time during injection
       ini_set("max_execution_time", "0");
 
+      // Disable recording each SQL request in $_SESSION
+      $CFG_GLPI["debug_sql"] = 0;
+
       $nblines         = plugin_datainjection_getSessionParam('nblines');
       $clientinjection = new PluginDatainjectionClientInjection;
 
@@ -220,13 +223,18 @@ class PluginDatainjectionClientInjection {
       }
 
       //While CSV file is not EOF
+      $prev = '';
       while ($line != null) {
          //Inject line
          $injectionline              = $index + ($model->getSpecificModel()->isHeaderPresent()?2:1);
          $clientinjection->results[] = $engine->injectLine($line[0],$injectionline);
-         changeProgressBarPosition($index, $nblines,
-                                   $LANG['datainjection']['importStep'][1]."... ".
-                                       number_format($index*100/$nblines,1).'%');
+
+         $pos = number_format($index*100/$nblines,1);
+         if ($pos != $prev) {
+            $prev = $pos;
+            changeProgressBarPosition($index, $nblines,
+                                      $LANG['datainjection']['importStep'][1].'... '.$pos.'%');
+         }
          $line = $backend->getNextLine();
          $index++;
          //logDebug('line '.$index.' of '.$nblines);
@@ -234,6 +242,9 @@ class PluginDatainjectionClientInjection {
 
       //EOF : change progressbar to 100% !
       changeProgressBarPosition(100, 100, $LANG['datainjection']['importStep'][3]);
+
+      // Restore
+      $CFG_GLPI["debug_sql"] = 1;
 
       //Close CSV file
       $backend->closeFile();

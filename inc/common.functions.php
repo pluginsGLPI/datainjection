@@ -33,19 +33,37 @@
 
  function plugin_datainjection_getSessionParam($param) {
 
-   if (isset($_SESSION['datainjection'][$param])) {
-      return $_SESSION['datainjection'][$param];
+   if (!isset($_SESSION['datainjection'][$param])) {
+      return false;
    }
-   return false;
+   if (in_array($param, array('results', 'error_lines'))) {
+      $fic = $_SESSION['datainjection'][$param];
+      return file_get_contents(GLPI_DOC_DIR.'/_tmp/'.$fic);
+   }
+   return $_SESSION['datainjection'][$param];
 }
 
 
 function plugin_datainjection_setSessionParam($param,$results) {
-   $_SESSION['datainjection'][$param] = $results;
+
+   if (in_array($param, array('results', 'error_lines'))) {
+      $fic = getLoginUserID().'_'.$param.'_'.microtime(true);
+      file_put_contents(GLPI_DOC_DIR.'/_tmp/'.$fic, $results);
+      $_SESSION['datainjection'][$param] = $fic;
+   } else {
+      $_SESSION['datainjection'][$param] = $results;
+   }
 }
 
 
 function plugin_datainjection_removeSessionParams() {
+
+   if (isset($_SESSION['datainjection']['results'])) {
+      unlink(GLPI_DOC_DIR.'/_tmp/'.$_SESSION['datainjection']['results']);
+   }
+   if (isset($_SESSION['datainjection']['error_lines'])) {
+      unlink(GLPI_DOC_DIR.'/_tmp/'.$_SESSION['datainjection']['error_lines']);
+   }
    unset($_SESSION['datainjection']);
 }
 ?>
