@@ -272,13 +272,32 @@ class PluginDatainjectionClientInjection {
    }
 
 
+   /**
+    * to be used instead of stripslashes_deep to reduce memory usage
+    * execute stripslashes in place (no copy)
+    *
+    * @param $value array of value
+    */
+   static function stripslashes_array(&$value) {
+
+      if (is_array($value)) {
+         foreach ($value as $key => $val) {
+            self::stripslashes_array($value[$key]);
+         }
+      } else if (!is_null($value)) {
+         $value = stripslashes($value);
+      }
+   }
+
+
    static function showResultsForm(PluginDatainjectionModel $model) {
       global $LANG, $CFG_GLPI;
 
-      $results     = stripslashes_deep(json_decode(plugin_datainjection_getSessionParam('results'),
-                                 true));
-      $error_lines = stripslashes_deep(json_decode(plugin_datainjection_getSessionParam('error_lines'),
-                                 true));
+      $results     = json_decode(plugin_datainjection_getSessionParam('results'), true);
+      self::stripslashes_array($results);
+      $error_lines = json_decode(plugin_datainjection_getSessionParam('error_lines'), true);
+      self::stripslashes_array($error_lines);
+
       $ok = true;
 
       foreach ($results as $result) {
@@ -335,8 +354,8 @@ class PluginDatainjectionClientInjection {
 
    static function exportErrorsInCSV() {
 
-      $error_lines = json_decode(stripslashes_deep(plugin_datainjection_getSessionParam('error_lines')),
-                                 true);
+      $error_lines = json_decode(plugin_datainjection_getSessionParam('error_lines'), true);
+      self::stripslashes_array($error_lines);
 
       if (!empty($error_lines)) {
          $model = unserialize(plugin_datainjection_getSessionParam('currentmodel'));
