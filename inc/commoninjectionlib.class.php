@@ -519,19 +519,19 @@ class PluginDatainjectionCommonInjectionLib {
             break;
 
          case 'contact' :
-            if ($value != self::DROPDOWN_EMPTY_VALUE) {
+            if ($value != DROPDOWN_EMPTY_VALUE) {
                $id = self::findContact($value, $this->entity);
             } else {
-               $id = self::DROPDOWN_EMPTY_VALUE;
+               $id = DROPDOWN_EMPTY_VALUE;
             }
             $this->setValueForItemtype($itemtype, $linkfield, $id);
             break;
 
          case 'user' :
-            if ($value != self::DROPDOWN_EMPTY_VALUE) {
+            if ($value != DROPDOWN_EMPTY_VALUE) {
                $id =  self::findUser($value, $this->entity);
             } else {
-               $id =  self::DROPDOWN_EMPTY_VALUE;
+               $id =  DROPDOWN_EMPTY_VALUE;
             }
             $this->setValueForItemtype($itemtype, $linkfield, $id);
             break;
@@ -614,11 +614,11 @@ class PluginDatainjectionCommonInjectionLib {
                    OR (CONCAT(LOWER(`realname`),' ',LOWER(`firstname`)) = '".strtolower($value)."'
                        OR CONCAT(LOWER(`firstname`),' ',LOWER(`realname`)) = '".strtolower($value)."')";
       $result = $DB->query($sql);
-
+      logDebug($sql);
       if ($DB->numrows($result)>0) {
          //check if user has right on the current entity
          $ID       = $DB->result($result,0,"id");
-         $entities = getUserEntities($ID,true);
+         $entities = Profile_User::getUserEntities($ID,true);
 
          if (in_array($entity,$entities)) {
             return $ID;
@@ -824,34 +824,6 @@ class PluginDatainjectionCommonInjectionLib {
             if ($value && $value == "NULL") {
                $this->values[$itemtype][$field] = self::EMPTY_VALUE;
             }
-/*
-            else {
-               //Get search option associated with the field
-               $option = self::findSearchOption($searchOptions,$field);
-
-logDebug("reformatFirstPass($itemtype, $field, $value)",  $option['checktype']);
-               //If field is a dropdown, then use the standard import() table
-               if ($option['checktype'] == 'dropdown') {
-                  $dropdownItemName = getItemTypeForTable($option['table']);
-                  $dropdownClass    = new $dropdownItemName();
-
-                  if ($dropdownClass instanceof CommonTreeDropdown) {
-                     $value = self::reformatSpecialChars($value);
-                  }
-                  if ($dropdownClass->canCreate() && $this->canAddDropdownValue()) {
-                     $dropdownID = $dropdownClass->import($value);
-
-                     if ($dropdownID) {
-                        $this->values[$itemtype][$field] = Dropdown::getDropdownName($option['table'],
-                                                                                     $dropdownID);
-                     } else {
-                        $this->results['status'] = self::WARNING;
-                        $this->results[$field]   = self::WARNING_NOTFOUND;
-                     }
-                  }
-               }
-            }
-*/
          }
       }
    }
@@ -1126,7 +1098,7 @@ logDebug("reformatFirstPass($itemtype, $field, $value)",  $option['checktype']);
 
          switch ($field_type) {
             case 'text' :
-               if (sizeof($data) > 255) {
+               if (strlen($data) > 255) {
                   return self::ERROR_FIELDSIZE_EXCEEDED;
                }
                return self::SUCCESS;
