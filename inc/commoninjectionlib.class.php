@@ -785,7 +785,7 @@ class PluginDatainjectionCommonInjectionLib {
     * @return name of the template or false is no template found
    **/
    static private function getTemplateIDByName($itemtype, $name) {
-
+      global $DB;
       $item = new $itemtype();
       $query = "SELECT `id`
                 FROM `".getTableForItemType($itemtype)."`
