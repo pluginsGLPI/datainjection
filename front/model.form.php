@@ -90,6 +90,13 @@ if (isset ($_POST["add"])) {
    }
 
    glpi_header($_SERVER['HTTP_REFERER']);
+
+} else if (isset($_GET['sample'])) {
+   $model->check($_GET['sample'], 'r');
+   $modeltype = PluginDatainjectionModel::getInstance($model->getField('filetype'));
+   $modeltype->getFromDBByModelID($model->getField('id'));
+   $modeltype->showSample($model);
+   exit (0);
 }
 
 commonHeader($LANG['datainjection']['profiles'][1], '', "plugins", "datainjection", "model");

@@ -189,18 +189,27 @@ class PluginDatainjectionInfo extends CommonDBTM {
       $infos = getAllDatasFromTable('glpi_plugin_datainjection_infos',
                                     "`models_id` = '". $model->getField('id')."'");
 
-      if (count($infos)) {
+      $table = false;
+      $modeltype = PluginDatainjectionModel::getInstance($model->getField('filetype'));
+      $modeltype->getFromDBByModelID($model->getField('id'));
+
+      if (count($infos) || $modeltype->haveSample() || $model->fields['comment']) {
          echo "<table class='tab_cadre_fixe'>";
-
-         $info = new PluginDatainjectionInfo;
-
          echo "<tr><th colspan='2'>" . $LANG['datainjection']['info'][1];
          echo "&nbsp;(".$LANG['datainjection']['fillInfoStep'][3].")</th></tr>\n";
-
-         if ($model->fields['comment']) {
-            echo "<tr class='tab_bg_2'>";
-            echo "<td colspan='2' class='center'>".nl2br($model->fields['comment'])."</td></tr>\n";
-         }
+         $table = true;
+      }
+      if ($modeltype->haveSample()) {
+         echo "<tr class='tab_bg_1'>";
+         echo "<td colspan='2' class='center'><a href='".$model->getFormURL()."?sample=";
+         echo $model->getField('id')."'>".$LANG['datainjection']['model'][40]."</a></td></tr>\n";
+      }
+      if ($model->fields['comment']) {
+         echo "<tr class='tab_bg_2'>";
+         echo "<td colspan='2' class='center'>".nl2br($model->fields['comment'])."</td></tr>\n";
+      }
+      if (count($infos)) {
+         $info = new PluginDatainjectionInfo;
 
          foreach ($infos as $tmp) {
             $info->fields = $tmp;
@@ -216,6 +225,8 @@ class PluginDatainjectionInfo extends CommonDBTM {
                echo "</tr>";
             }
          }
+      }
+      if ($table) {
          echo "</table><br>";
       }
 

@@ -65,6 +65,7 @@ $LANG['datainjection']['model'][36] = "Modèle utilisable";
 $LANG['datainjection']['model'][37] = "Validation";
 $LANG['datainjection']['model'][38] = "Valider le modèle";
 $LANG['datainjection']['model'][39] = "Liste des modèles";
+$LANG['datainjection']['model'][40] = "Téléchargement fichier example";
 
 $LANG['datainjection']['fileStep'][3]  = "Choix du fichier";
 $LANG['datainjection']['fileStep'][4]  = "Le fichier est introuvable";

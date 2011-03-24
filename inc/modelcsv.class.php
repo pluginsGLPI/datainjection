@@ -69,6 +69,30 @@ class PluginDatainjectionModelcsv extends CommonDBChild {
    }
 
 
+   /**
+    * If a Sample could be generated
+    */
+   function haveSample() {
+      return $this->fields["is_header_present"];
+   }
+
+   /**
+    * Display Sample
+    */
+   function showSample (PluginDatainjectionModel $model) {
+      $headers = PluginDatainjectionMapping::getMappingsSortedByRank($model->fields['id']);
+      $sample = '"'.implode('"'.$this->getDelimiter().'"', $headers)."\"\n";
+
+      header('Content-disposition: attachment; filename="'.str_replace(' ', '_', $model->getName()).'.csv"');
+      header('Content-Type: text/comma-separated-values');
+      header('Content-Transfer-Encoding: UTF-8');
+      header('Content-Length: '.mb_strlen($sample, 'UTF-8'));
+      header('Pragma: no-cache');
+      header('Cache-Control: no-store, no-cache, must-revalidate, post-check=0, pre-check=0');
+      header('Expires: 0');
+      echo $sample;
+   }
+
    //---- Save -----//
    function setDelimiter($delimiter) {
       $this->fields["delimiter"] = $delimiter;

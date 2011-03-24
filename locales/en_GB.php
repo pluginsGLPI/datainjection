@@ -66,6 +66,7 @@ $LANG['datainjection']['model'][36] = "Model available for use";
 $LANG['datainjection']['model'][37] = "Validation";
 $LANG['datainjection']['model'][38] = "Validate the model";
 $LANG['datainjection']['model'][39] = "List of the models";
+$LANG['datainjection']['model'][40] = "Download file sample";
 
 $LANG['datainjection']['fileStep'][3]  = "Choose a file";
 $LANG['datainjection']['fileStep'][4]  = "The file could not be found";
