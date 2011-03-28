@@ -327,7 +327,7 @@ class PluginDatainjectionInfo extends CommonDBTM {
             break;
 
          case 'template' :
-            self::dropdownTemplates($name, getItemTypeForTable($option['table']));
+            self::dropdownTemplates($name, $option['table']);
             break;
 
          default :
@@ -373,17 +373,20 @@ class PluginDatainjectionInfo extends CommonDBTM {
    }
 
 
-   static function dropdownTemplates($name, $itemtype) {
+   static function dropdownTemplates($name, $table) {
+      global $DB;
 
-      $templates = getTemplatesByItem(new $itemtype());
-      $values    = array();
+      $values    = array(0 => DROPDOWN_EMPTY_VALUE);
 
-      foreach ($templates as $data) {
+      $sql = "SELECT `id`, `template_name`
+              FROM `".$table."`
+              WHERE `is_template`=1 ".
+                  getEntitiesRestrictRequest(' AND ', $table).
+             "ORDER BY `template_name`";
+
+      foreach ($DB->request($sql) as $data) {
          $values[$data['id']] = $data['template_name'];
       }
-
-      $values[0] = DROPDOWN_EMPTY_VALUE;
-      asort($values);
       Dropdown::showFromArray($name, $values);
    }
 
