@@ -443,18 +443,18 @@ class PluginDatainjectionModel extends CommonDBTM {
       $models = array ();
       $query = "SELECT `id`, `name`, `is_private`, `entities_id`, `is_recursive`, `itemtype`,
                        `step`, `comment`
-                FROM `glpi_plugin_datainjection_models`
-                WHERE 1 ";
+                FROM `glpi_plugin_datainjection_models` ";
 
       if (!$all) {
-         $query .= " AND`step` = '".self::READY_TO_USE_STEP."' ";
+         $query .= " WHERE `step` = '".self::READY_TO_USE_STEP."' AND (";
+      } else {
+         $query .= " WHERE (";
       }
 
-      $query .= "AND (`is_private` = '" . self::MODEL_PUBLIC."'".
-                      getEntitiesRestrictRequest(" AND", "glpi_plugin_datainjection_models",
-                                                 "entities_id", $entity, true) . ")
-                 OR (`is_private` = '" . self::MODEL_PRIVATE."'
-                     AND `users_id` = '$user_id')
+      $query .= "(`is_private` = '" . self::MODEL_PUBLIC."'".
+                  getEntitiesRestrictRequest(" AND", "glpi_plugin_datainjection_models",
+                                             "entities_id", $entity, true) . ")
+                  OR (`is_private` = '" . self::MODEL_PRIVATE."' AND `users_id` = '$user_id'))
                  ORDER BY `is_private` DESC,
                           `entities_id`, " . ($order == "`name`" ? "`name`" : $order);
 
@@ -463,6 +463,7 @@ class PluginDatainjectionModel extends CommonDBTM {
             $models[] = $data;
          }
       }
+      //logDebug("getModels", $query, $models);
       return $models;
    }
 
