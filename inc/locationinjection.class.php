@@ -110,7 +110,8 @@ class PluginDatainjectionLocationInjection extends Location
       }
 
       //By default completename has no linkfield because it cannot be modified using the massiveaction
-      $tab[1]['linkfield'] = 'completename';
+      $tab[1]['displaytype'] = 'tree';
+      $tab[1]['linkfield']   = 'completename';
 
       return $tab;
    }

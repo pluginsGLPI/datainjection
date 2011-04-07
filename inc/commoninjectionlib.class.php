@@ -279,7 +279,7 @@ class PluginDatainjectionCommonInjectionLib {
    **/
    static function isFieldADropdown($field_type) {
 
-      if (!in_array($field_type, array('text', 'multiline_text', 'date'))) {
+      if (!in_array($field_type, array('tree', 'text', 'multiline_text', 'date'))) {
          return true;
       }
       return false;
@@ -469,6 +469,10 @@ class PluginDatainjectionCommonInjectionLib {
       }
 
       switch ($searchOption['displaytype']) {
+         case 'tree' :
+            $this->setValueForItemtype($itemtype, $linkfield, self::cleanTreeText($value));
+            break;
+
          case 'decimal' :
          case 'text' :
             $this->setValueForItemtype($itemtype, $linkfield, $value);
@@ -614,7 +618,6 @@ class PluginDatainjectionCommonInjectionLib {
                    OR (CONCAT(LOWER(`realname`),' ',LOWER(`firstname`)) = '".strtolower($value)."'
                        OR CONCAT(LOWER(`firstname`),' ',LOWER(`realname`)) = '".strtolower($value)."')";
       $result = $DB->query($sql);
-      logDebug($sql);
       if ($DB->numrows($result)>0) {
          //check if user has right on the current entity
          $ID       = $DB->result($result,0,"id");
@@ -950,6 +953,28 @@ class PluginDatainjectionCommonInjectionLib {
 
 
    /**
+    * reformat text field describing a tree (such as completename)
+    *
+    * @param $value string
+    *
+    * @return string
+    */
+   static private function cleanTreeText($value) {
+
+      $tmp = explode('>', $value);
+      foreach ($tmp as $k => $v) {
+         $v = trim($v);
+         if (empty($v)) {
+            unset($tmp[$k]);
+         } else {
+            $tmp[$k] = $v;
+         }
+      }
+   return implode(' > ', $tmp);
+   }
+
+
+   /**
     * Reformat date from dd-mm-yyyy to yyyy-mm-dd
     *
     * @param original_date the original date
@@ -1097,6 +1122,7 @@ class PluginDatainjectionCommonInjectionLib {
          }
 
          switch ($field_type) {
+            case 'tree' :
             case 'text' :
                if (strlen($data) > 255) {
                   return self::ERROR_FIELDSIZE_EXCEEDED;
