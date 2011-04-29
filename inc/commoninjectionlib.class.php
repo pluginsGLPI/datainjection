@@ -483,7 +483,7 @@ class PluginDatainjectionCommonInjectionLib {
             $tmptype = getItemTypeForTable($searchOption['table']);
             $item    = new $tmptype();
             if ($item instanceof CommonTreeDropdown) {
-               $input = array ('completename' => $value,
+               $input = array ('completename' => self::cleanTreeText($value),
                                'entities_id'  => $this->entity);
 
                if ($item->canCreate() && $this->rights['add_dropdown']) {
