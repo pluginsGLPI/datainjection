@@ -470,6 +470,7 @@ class PluginDatainjectionCommonInjectionLib {
 
       switch ($searchOption['displaytype']) {
          case 'tree' :
+            // TODO 0.80, cleanTreeText probably not needed anymore
             $this->setValueForItemtype($itemtype, $linkfield, self::cleanTreeText($value));
             break;
 
@@ -483,6 +484,8 @@ class PluginDatainjectionCommonInjectionLib {
             $tmptype = getItemTypeForTable($searchOption['table']);
             $item    = new $tmptype();
             if ($item instanceof CommonTreeDropdown) {
+               // TODO 0.80, cleanTreeText not needed
+               // use findID instead of getID
                $input = array ('completename' => self::cleanTreeText($value),
                                'entities_id'  => $this->entity);
 
@@ -953,6 +956,8 @@ class PluginDatainjectionCommonInjectionLib {
 
 
    /**
+    * TODO for 0.80, see CommonTreeDropdown::cleanTreeText()
+    *
     * reformat text field describing a tree (such as completename)
     *
     * @param $value string
