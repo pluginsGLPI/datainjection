@@ -58,7 +58,7 @@ class PluginDatainjectionKnowbaseItemCategoryInjection extends KnowbaseItemCateg
    function getOptions($primary_type = '') {
       global $LANG;
 
-      $tab = parent::getSearchOptions();
+      $tab = Search::getOptions('KnowbaseItemCategory');
 
       $tab[100]['name']        = $LANG['setup'][75];
       $tab[100]['table']       = $this->table;

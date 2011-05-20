@@ -57,7 +57,7 @@ class PluginDatainjectionContractInjection extends Contract
 
    function getOptions($primary_type = '') {
 
-     $tab = parent::getSearchOptions();
+      $tab = Search::getOptions('Contract');
 
       $blacklist = PluginDatainjectionCommonInjectionLib::getBlacklistedOptions();
       //Remove some options because some fields cannot be imported

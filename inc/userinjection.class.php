@@ -59,7 +59,7 @@ class PluginDatainjectionUserInjection extends User
    function getOptions($primary_type = '') {
       global $LANG;
 
-      $tab = parent::getSearchOptions();
+      $tab = Search::getOptions('User');
 
       //Specific to location
       $tab[3]['linkfield'] = 'locations_id';

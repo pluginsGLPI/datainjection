@@ -98,18 +98,18 @@ function plugin_version_datainjection() {
       'minGlpiVersion' => '0.78.2',
       'author'         => 'Walid Nouh & Remi Collet',
       'homepage'       => 'https://forge.indepnet.net/projects/show/datainjection',
-      'version'        => '2.0.1'
+      'version'        => '2.1.0'
    );
 }
 
 
 function plugin_datainjection_haveRight($module, $right) {
 
-   $matches = array(""  => array ("", "r","w"), // ne doit pas arriver normalement
-                    "r" => array ("r","w"),
+   $matches = array(""  => array ("", "r", "w"), // ne doit pas arriver normalement
+                    "r" => array ("r", "w"),
                     "w" => array ("w"),
                     "1" => array ("1"),
-                    "0" => array ("0","1")); // ne doit pas arriver non plus
+                    "0" => array ("0", "1")); // ne doit pas arriver non plus
 
    if (isset ($_SESSION["glpi_plugin_datainjection_profile"][$module])
        && in_array($_SESSION["glpi_plugin_datainjection_profile"][$module], $matches[$right])) {
@@ -133,7 +133,11 @@ function plugin_datainjection_check_config($verbose=false) {
    return true;
 }
 
-
+/**
+ * Return all types that can be injected using datainjection
+ * 
+ * @return an array of injection class => plugin
+ */
 function getTypesToInject() {
    global $INJECTABLE_TYPES,$PLUGIN_HOOKS;
 
@@ -142,40 +146,40 @@ function getTypesToInject() {
       return;
    }
 
-   $INJECTABLE_TYPES = array('PluginDatainjectionCartridgeItemInjection'        =>'datainjection',
-                             'PluginDatainjectionBudgetInjection'               =>'datainjection',
-                             'PluginDatainjectionComputerInjection'             =>'datainjection',
-                             'PluginDatainjectionComputer_ItemInjection'        =>'datainjection',
-                             'PluginDatainjectionConsumableItemInjection'       =>'datainjection',
-                             'PluginDatainjectionContactInjection'              =>'datainjection',
-                             'PluginDatainjectionContact_SupplierInjection'     =>'datainjection',
-                             'PluginDatainjectionContractInjection'             =>'datainjection',
-                             'PluginDatainjectionContract_ItemInjection'        =>'datainjection',
-                                //'PluginDatainjectionDocumentInjection'           =>'datainjection',
-                                //'PluginDatainjectionEntityInjection'             =>'datainjection',
-                             'PluginDatainjectionGroupInjection'                =>'datainjection',
-                             'PluginDatainjectionGroup_UserInjection'           =>'datainjection',
-                             'PluginDatainjectionInfocomInjection'              =>'datainjection',
-                             'PluginDatainjectionLocationInjection'             =>'datainjection',
-                             'PluginDatainjectionStateInjection'                =>'datainjection',
-                             'PluginDatainjectionManufacturerInjection'         =>'datainjection',
-                             'PluginDatainjectionMonitorInjection'              =>'datainjection',
-                             'PluginDatainjectionNetworkequipmentInjection'     =>'datainjection',
-                             'PluginDatainjectionPeripheralInjection'           =>'datainjection',
-                             'PluginDatainjectionPhoneInjection'                =>'datainjection',
-                             'PluginDatainjectionPrinterInjection'              =>'datainjection',
-                             'PluginDatainjectionProfileInjection'              =>'datainjection',
-                             'PluginDatainjectionProfile_UserInjection'         =>'datainjection',
-                             'PluginDatainjectionSoftwareInjection'             =>'datainjection',
-                             'PluginDatainjectionSoftwareLicenseInjection'      =>'datainjection',
-                             'PluginDatainjectionSupplierInjection'             =>'datainjection',
-                             'PluginDatainjectionUserInjection'                 =>'datainjection',
-                             'PluginDatainjectionNetworkportInjection'          =>'datainjection',
-                             'PluginDatainjectionVlanInjection'                 =>'datainjection',
-                             'PluginDatainjectionNetworkport_VlanInjection'     =>'datainjection',
-                             'PluginDatainjectionNetpointInjection'             =>'datainjection',
-                             'PluginDatainjectionKnowbaseItemCategoryInjection' =>'datainjection',
-                             'PluginDatainjectionKnowbaseItemInjection'         =>'datainjection',
+   $INJECTABLE_TYPES = array('PluginDatainjectionCartridgeItemInjection'        => 'datainjection',
+                             'PluginDatainjectionBudgetInjection'               => 'datainjection',
+                             'PluginDatainjectionComputerInjection'             => 'datainjection',
+                             'PluginDatainjectionComputer_ItemInjection'        => 'datainjection',
+                             'PluginDatainjectionConsumableItemInjection'       => 'datainjection',
+                             'PluginDatainjectionContactInjection'              => 'datainjection',
+                             'PluginDatainjectionContact_SupplierInjection'     => 'datainjection',
+                             'PluginDatainjectionContractInjection'             => 'datainjection',
+                             'PluginDatainjectionContract_ItemInjection'        => 'datainjection',
+                                //'PluginDatainjectionDocumentInjection'        => 'datainjection',
+                                //'PluginDatainjectionEntityInjection'          => 'datainjection',
+                             'PluginDatainjectionGroupInjection'                => 'datainjection',
+                             'PluginDatainjectionGroup_UserInjection'           => 'datainjection',
+                             'PluginDatainjectionInfocomInjection'              => 'datainjection',
+                             'PluginDatainjectionLocationInjection'             => 'datainjection',
+                             'PluginDatainjectionStateInjection'                => 'datainjection',
+                             'PluginDatainjectionManufacturerInjection'         => 'datainjection',
+                             'PluginDatainjectionMonitorInjection'              => 'datainjection',
+                             'PluginDatainjectionNetworkequipmentInjection'     => 'datainjection',
+                             'PluginDatainjectionPeripheralInjection'           => 'datainjection',
+                             'PluginDatainjectionPhoneInjection'                => 'datainjection',
+                             'PluginDatainjectionPrinterInjection'              => 'datainjection',
+                             'PluginDatainjectionProfileInjection'              => 'datainjection',
+                             'PluginDatainjectionProfile_UserInjection'         => 'datainjection',
+                             'PluginDatainjectionSoftwareInjection'             => 'datainjection',
+                             'PluginDatainjectionSoftwareLicenseInjection'      => 'datainjection',
+                             'PluginDatainjectionSupplierInjection'             => 'datainjection',
+                             'PluginDatainjectionUserInjection'                 => 'datainjection',
+                             'PluginDatainjectionNetworkportInjection'          => 'datainjection',
+                             'PluginDatainjectionVlanInjection'                 => 'datainjection',
+                             'PluginDatainjectionNetworkport_VlanInjection'     => 'datainjection',
+                             'PluginDatainjectionNetpointInjection'             => 'datainjection',
+                             'PluginDatainjectionKnowbaseItemCategoryInjection' => 'datainjection',
+                             'PluginDatainjectionKnowbaseItemInjection'         => 'datainjection',
                              );
    //Add plugins
    doHook('plugin_datainjection_populate');

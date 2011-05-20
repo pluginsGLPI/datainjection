@@ -53,27 +53,29 @@ class PluginDatainjectionSoftwareLicenseInjection extends SoftwareLicense
 
 
    function connectedTo() {
-      return array();
+      return array('Software');
    }
 
 
    function getOptions($primary_type = '') {
       global $LANG;
 
-      $tab = parent::getSearchOptions();
+
+      $tab = Search::getOptions('SoftwareLicense');
       $options['ignore_fields'] = PluginDatainjectionCommonInjectionLib::getBlacklistedOptions();
       $options['displaytype']   = array("dropdown"       => array(5, 6, 7),
                                         "date"           => array(8),
-                                        "computer"       => array(9),
                                         "multiline_text" => array(16));
 
-      $tab[100]['name']        = $LANG['help'][31];
-      $tab[100]['field']       = 'name';
-      $tab[100]['table']       = getTableForItemType('Software');
-      $tab[100]['linkfield']   = 'softwares_id';
-      $tab[100]['displaytype'] = 'text';
-      $tab[100]['injectable']  = true;
-
+      if ($primary_type == 'SoftwareLicense') {
+         $tab[100]['name']        = $LANG['help'][31];
+         $tab[100]['field']       = 'name';
+         $tab[100]['table']       = getTableForItemType('Software');
+         $tab[100]['linkfield']   = 'softwares_id';
+         $tab[100]['displaytype'] = 'text';
+         $tab[100]['injectable']  = true;
+      }
+      
       return PluginDatainjectionCommonInjectionLib::addToSearchOptions($tab, $options, $this);
    }
 
@@ -118,7 +120,7 @@ class PluginDatainjectionSoftwareLicenseInjection extends SoftwareLicense
 
    function getValueForAdditionalMandatoryFields($fields_toinject=array()) {
       global $DB;
-
+ 
       if (!isset($fields_toinject['SoftwareLicense']['softwares_id'])) {
          return $fields_toinject;
       }
@@ -140,12 +142,11 @@ class PluginDatainjectionSoftwareLicenseInjection extends SoftwareLicense
 
       return $fields_toinject;
    }
-
-
-   //function addSpecificNeededFields($primary_type,$values) {
-   //   $fields['softwares_id'] = $values[$primary_type]['id'];
-   //   return $fields;
-   //}
+   
+   function addSpecificNeededFields($primary_type,$values) {
+      $fields['softwares_id'] = $values[$primary_type]['id'];
+      return $fields;
+   }
 }
 
 ?>

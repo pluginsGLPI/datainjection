@@ -58,7 +58,7 @@ class PluginDatainjectionSupplierInjection extends Supplier
 
    function getOptions($primary_type = '') {
 
-      $tab       = parent::getSearchOptions();
+      $tab       = Search::getOptions('Supplier');
       $blacklist = PluginDatainjectionCommonInjectionLib::getBlacklistedOptions();
 
       //Remove some options because some fields cannot be imported

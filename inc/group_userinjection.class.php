@@ -57,7 +57,7 @@ class PluginDatainjectionGroup_UserInjection extends Group_User
 
    function getOptions($primary_type = '') {
 
-      $tab = parent::getSearchOptions();
+      $tab = Search::getOptions('Group_User');
       unset($tab[2]);
 
       $tab[3]['checktype']   = 'bool';

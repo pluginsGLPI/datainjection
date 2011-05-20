@@ -59,7 +59,7 @@ class PluginDatainjectionNetworkEquipmentInjection extends NetworkEquipment
    function getOptions($primary_type = '') {
       global $LANG;
 
-      $tab = parent::getSearchOptions();
+      $tab = Search::getOptions('NetworkEquipment');
 
       //Specific to location
       $tab[3]['linkfield']  = 'locations_id';

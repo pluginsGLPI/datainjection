@@ -58,7 +58,7 @@ class PluginDatainjectionConsumableItemInjection extends ConsumableItem
    function getOptions($primary_type = '') {
       global $LANG;
 
-      $tab = parent::getSearchOptions();
+      $tab = Search::getOptions('ConsumableItem');
 
       //Specific to location
       $tab[3]['linkfield'] = 'locations_id';

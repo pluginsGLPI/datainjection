@@ -58,7 +58,7 @@ class PluginDatainjectionVlanInjection extends Vlan
 
    function getOptions($primary_type = '') {
 
-      $tab       = parent::getSearchOptions();
+      $tab = Search::getOptions('Vlan');
       $blacklist = PluginDatainjectionCommonInjectionLib::getBlacklistedOptions();
       //Remove some options because some fields cannot be imported
       $notimportable = array();

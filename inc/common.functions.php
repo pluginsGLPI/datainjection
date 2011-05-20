@@ -31,6 +31,13 @@
 // Purpose of file:
 // ----------------------------------------------------------------------
 
+/**
+ * Get a parameter from the HTTP session
+ * 
+ * @param the parameter to get
+ * 
+ * @return the param's value
+ */
  function plugin_datainjection_getSessionParam($param) {
 
    if (!isset($_SESSION['datainjection'][$param])) {
@@ -44,6 +51,14 @@
 }
 
 
+/**
+ * Set a parameter in the HTTP session
+ * 
+ * @param the parameter
+ * @param results the value to store
+ * 
+ * @return nothing
+ */
 function plugin_datainjection_setSessionParam($param,$results) {
 
    if (in_array($param, array('results', 'error_lines'))) {
@@ -55,7 +70,11 @@ function plugin_datainjection_setSessionParam($param,$results) {
    }
 }
 
-
+/**
+ * Remove all parameters from the HTTP session
+ * 
+ * @return nothing
+ */
 function plugin_datainjection_removeSessionParams() {
 
    if (isset($_SESSION['datainjection']['results'])) {

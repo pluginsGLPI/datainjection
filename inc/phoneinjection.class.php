@@ -58,7 +58,7 @@ class PluginDatainjectionPhoneInjection extends Phone
 
    function getOptions($primary_type = '') {
 
-     $tab = parent::getSearchOptions();
+     $tab = Search::getOptions('Phone');
 
       //Specific to location
       $tab[3]['linkfield'] = 'locations_id';

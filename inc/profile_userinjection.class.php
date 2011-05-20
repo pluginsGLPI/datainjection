@@ -58,7 +58,7 @@ class PluginDatainjectionProfile_UserInjection extends Profile_User
 
    function getOptions($primary_type = '') {
 
-      $tab = parent::getSearchOptions();
+      $tab = Search::getOptions('Profiler_User');
       unset($tab[2]);
 
       $tab[3]['checktype']   = 'bool';

@@ -57,7 +57,7 @@ class PluginDatainjectionGroupInjection extends Group
 
    function getOptions($primary_type = '') {
 
-      $tab = parent::getSearchOptions();
+      $tab = Search::getOptions('Group');
 
       $blacklist = PluginDatainjectionCommonInjectionLib::getBlacklistedOptions();
       //Remove some options because some fields cannot be imported

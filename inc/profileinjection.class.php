@@ -57,7 +57,7 @@ class PluginDatainjectionProfileInjection extends Profile
 
 
    function getOptions($primary_type = '') {
-      return parent::getSearchOptions();
+      return Search::getOptions('Profile');
    }
 
 

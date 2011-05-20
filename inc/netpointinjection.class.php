@@ -58,7 +58,7 @@ class PluginDatainjectionNetpointInjection extends Netpoint
 
    function getOptions($primary_type = '') {
 
-      $tab = parent::getSearchOptions();
+      $tab = Search::getOptions('Netpoint');
 
       //Specific to location
       $tab[3]['linkfield'] = 'locations_id';

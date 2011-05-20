@@ -61,7 +61,7 @@ class PluginDatainjectionInfocomInjection extends Infocom
    function getOptions($primary_type = '') {
       global $LANG;
 
-      $tab = parent::getSearchOptions();
+      $tab = Search::getOptions('Infocom');
 
       $tab[4]['checktype'] = 'date';
       $tab[5]['checktype'] = 'date';
@@ -89,7 +89,6 @@ class PluginDatainjectionInfocomInjection extends Infocom
       $tab[17]['default']   = 0;
       $tab[17]['checktype'] = 'integer';
 
-      //$blacklist = PluginDatainjectionCommonInjectionLib::getBlacklistedOptions();
       //Remove some options because some fields cannot be imported
       $notimportable = array(2, 3, 20, 21, 80, 86);
 

@@ -58,7 +58,7 @@ class PluginDatainjectionSoftwareInjection extends Software
 
    function getOptions($primary_type = '') {
 
-      $tab = parent::getSearchOptions();
+      $tab = Search::getOptions('Software');
 
       //Specific to location
       $tab[3]['linkfield']  = 'locations_id';

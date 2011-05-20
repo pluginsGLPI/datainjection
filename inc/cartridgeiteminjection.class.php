@@ -58,7 +58,7 @@ class PluginDatainjectionCartridgeItemInjection extends CartridgeItem
    function getOptions($primary_type = '') {
       global $LANG;
 
-      $tab = parent::getSearchOptions();
+      $tab = Search::getOptions('Cartridge');
 
       //Specific to location
       $tab[3]['linkfield'] = 'locations_id';

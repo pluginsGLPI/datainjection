@@ -58,7 +58,7 @@ class PluginDatainjectionPrinterInjection extends Printer
 
    function getOptions($primary_type = '') {
 
-      $tab = parent::getSearchOptions();
+      $tab = Search::getOptions('Printer');
 
       //Specific to location
       $tab[3]['linkfield'] = 'locations_id';

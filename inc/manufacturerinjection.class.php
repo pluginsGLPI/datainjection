@@ -58,7 +58,7 @@ class PluginDatainjectionManufacturerInjection extends Manufacturer
 
    function getOptions($primary_type = '') {
 
-      $tab = parent::getSearchOptions();
+      $tab = Search::getOptions('Manufacturer');
 
       //Remove some options because some fields cannot be imported
       $remove = array(2);

@@ -59,7 +59,7 @@ class PluginDatainjectionStateInjection extends State
 
    function getOptions($primary_type = '') {
 
-      $tab = parent::getSearchOptions();
+      $tab = Search::getOptions('State');
 
       //Remove some options because some fields cannot be imported
       $remove = array(2);

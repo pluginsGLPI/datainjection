@@ -47,8 +47,9 @@ class PluginDatainjectionInjectionType {
       foreach ($INJECTABLE_TYPES as $type => $plugin) {
          $injectionclass = new $type();
 
-         if (!$only_primary
-             || ($only_primary && $injectionclass->isPrimaryType())) {
+         if (class_exists($type) 
+               && !$only_primary
+                  || ($only_primary && $injectionclass->isPrimaryType())) {
             $typename = PluginDatainjectionInjectionType::getParentObjectName($type);
             $values[$typename] = call_user_func(array($type, 'getTypeName'));
          }
@@ -136,6 +137,13 @@ class PluginDatainjectionInjectionType {
    }
 
 
+   /**
+    * Get name of a parent object for an injection class
+    * 
+    * @param an injection class instance
+    * 
+    * @return the parent object
+    */
    static function getParentObjectName($injectionClass='') {
       return get_parent_class($injectionClass);
    }

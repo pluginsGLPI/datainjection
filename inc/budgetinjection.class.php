@@ -59,7 +59,7 @@ class PluginDatainjectionBudgetInjection extends Budget
 
    function getOptions($primary_type = '') {
 
-      $tab = parent::getSearchOptions();
+      $tab = Search::getOptions('Budget');
 
       $ignore_fields = array(19, 90);
 

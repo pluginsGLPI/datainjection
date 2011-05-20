@@ -56,7 +56,8 @@ class PluginDatainjectionEntityInjection extends Entity
 
 
    function getOptions($primary_type = '') {
-      return parent::getSearchOptions();
+      return Search::getOptions('Entity');
+
    }
 
 

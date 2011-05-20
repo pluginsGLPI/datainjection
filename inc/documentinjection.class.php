@@ -56,7 +56,8 @@ class PluginDatainjectionDocumentInjection extends Document
 
 
    function getOptions($primary_type = '') {
-      return parent::getSearchOptions();
+      return Search::getOptions('Document');
+
    }
 
 

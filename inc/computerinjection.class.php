@@ -59,7 +59,7 @@ class PluginDatainjectionComputerInjection extends Computer
 
    function getOptions($primary_type = '') {
 
-      $tab = parent::getSearchOptions();
+      $tab = Search::getOptions('Computer');
 
       //Specific to location
       $tab[3]['linkfield'] = 'locations_id';

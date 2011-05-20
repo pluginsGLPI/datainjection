@@ -58,7 +58,7 @@ class PluginDatainjectionPeripheralInjection extends Peripheral
 
    function getOptions($primary_type = '') {
 
-     $tab = parent::getSearchOptions();
+     $tab = Search::getOptions('Peripheral');
 
       //Specific to location
       $tab[3]['linkfield'] = 'locations_id';
