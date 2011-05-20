@@ -58,7 +58,7 @@ class PluginDatainjectionKnowbaseItemInjection extends KnowbaseItem
    function getOptions($primary_type = '') {
       global $LANG;
 
-      $tab = parent::getSearchOptions();
+      $tab = Search::getOptions('KnowbaseItem');
 
       //Remove some options because some fields cannot be imported
       $options['ignore_fields'] = array(2, 80, 19);
