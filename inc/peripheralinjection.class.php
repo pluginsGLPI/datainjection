@@ -42,7 +42,7 @@ class PluginDatainjectionPeripheralInjection extends Peripheral
 
 
    function __construct() {
-      $this->table = getTableForItemType('Peripheral');
+      $this->table = getTableForItemType(get_parent_class($this));
    }
 
 
@@ -58,7 +58,7 @@ class PluginDatainjectionPeripheralInjection extends Peripheral
 
    function getOptions($primary_type = '') {
 
-     $tab = Search::getOptions('Peripheral');
+     $tab = Search::getOptions(get_parent_class($this));
 
       //Specific to location
       $tab[3]['linkfield'] = 'locations_id';

@@ -41,7 +41,7 @@ class PluginDatainjectionEntityInjection extends Entity
                                          implements PluginDatainjectionInjectionInterface{
 
    function __construct() {
-      $this->table = getTableForItemType('Entity');
+      $this->table = getTableForItemType(get_parent_class($this));
    }
 
 
@@ -56,10 +56,15 @@ class PluginDatainjectionEntityInjection extends Entity
 
 
    function getOptions($primary_type = '') {
-      return Search::getOptions('Entity');
 
+      $tab = Search::getOptions(get_parent_class($this));
+
+      //Remove some options because some fields cannot be imported
+      $options['ignore_fields'] = array(2, 19);
+      $options['displaytype']   = array("multiline_text" => array(16));
+      $tab = PluginDatainjectionCommonInjectionLib::addToSearchOptions($tab, $options, $this);
+      return $tab;
    }
-
 
    /**
     * Standard method to add an object into glpi

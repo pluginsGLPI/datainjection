@@ -57,12 +57,41 @@ class PluginDatainjectionWebservice {
          return PluginWebservicesMethodCommon::Error($protocol,
                                                      WEBSERVICES_ERROR_MISSINGPARAMETER,
                                                      'models_id');
+      } else {
+         $model = new PluginDatainjectionModel;
+         if (!$model->getFromDB($params['models_id'])) {
+               return PluginWebservicesMethodCommon::Error($protocol,
+                                                           WEBSERVICES_ERROR_NOTFOUND,
+                                                           'Model unknown');
+               
+            } elseif (!$model->can($params['models_id'],'r')) {
+               return PluginWebservicesMethodCommon::Error($protocol,
+                                                           WEBSERVICES_ERROR_NOTALLOWED,
+                                                           'You cannot access this model');
+            }
+
       }
 
+      //Check entity
       if (!isset ($params['entities_id'])) {
          return PluginWebservicesMethodCommon::Error($protocol,
                                                      WEBSERVICES_ERROR_MISSINGPARAMETER,
                                                      'entities_id');
+      } else {
+         $entities_id = $params['entities_id'];
+         if ($entities_id > 0 ) {
+            $entity = new Entity;
+            if (!$entity->getFromDB($entities_id)) {
+               return PluginWebservicesMethodCommon::Error($protocol,
+                                                           WEBSERVICES_ERROR_NOTFOUND,
+                                                           'Entity unknown');
+               
+            } elseif (!haveAccessToEntity($entities_id)) {
+               return PluginWebservicesMethodCommon::Error($protocol,
+                                                           WEBSERVICES_ERROR_NOTALLOWED,
+                                                           'You cannot access this entity');
+            }
+         }
       }
 
       $model         = new PluginDatainjectionModel;
@@ -84,41 +113,35 @@ class PluginDatainjectionWebservice {
       $options = array('file_encoding'     => PluginDatainjectionBackend::ENCODING_AUTO,
                        'webservice'        => true,
                        'original_filename' => $params['uri'],
-                       'unique_filename'   => $filename);
+                       'unique_filename'   => $filename,
+                       'mode'              => PluginDatainjectionModel::PROCESS,
+                       'delete_file'       => false,
+                       'protocol'          => $protocol);
 
-      return $model->readUploadedFile($options);
+      $results = array();
+
+      if ($response = $model->processUploadedFile($options)) {
+         $engine  = new PluginDatainjectionEngine($model, array(), $params['entities_id']);
+         foreach ($model->injectionData->getDatas() as $id => $data) {
+            $results[] = $engine->injectLine($data[0], $id);
+         }
+         $model->cleanData();
+         return $results;
+      } else {
+         return $response;
+      }
    }
 
 
    static function methodGetModel($params,$protocol) {
-
-      if (isset ($params['help'])) {
-         return array('help' => 'bool,optional');
-      }
-
-      if (!isset ($_SESSION['glpiID'])) {
-         return self::Error($protocol, WEBSERVICES_ERROR_NOTAUTHENTICATED);
-      }
-
-      $model = new PluginPluginDatainjectionModel;
-      if ($model->getFromDB($params['id'])) {
-         return $model->fields;
-      }
-      return array();
+      $params['itemtype'] = 'PluginDatainjectionModel';
+      return PluginWebservicesMethodInventaire::methodGetObject($params, $protocol);
    }
 
 
   static function methodListModels($params, $protocol) {
-
-      if (isset ($params['help'])) {
-         return array('help' => 'bool,optional');
-      }
-
-      if (!isset ($_SESSION['glpiID'])) {
-         return self::Error($protocol, WEBSERVICES_ERROR_NOTAUTHENTICATED);
-      }
-
-      return getAllDatasFromTable('glpi_plugin_datainjection_models');
+      $params['itemtype'] = 'PluginDatainjectionModel';
+      return PluginWebservicesMethodInventaire::methodListObjects($params, $protocol);
    }
 
 

@@ -43,7 +43,7 @@ class PluginDatainjectionComputerInjection extends Computer
 
    function __construct() {
       //Needed for getSearchOptions !
-      $this->table = getTableForItemType('Computer');
+      $this->table = getTableForItemType(get_parent_class($this));
    }
 
 
@@ -59,7 +59,7 @@ class PluginDatainjectionComputerInjection extends Computer
 
    function getOptions($primary_type = '') {
 
-      $tab = Search::getOptions('Computer');
+      $tab = Search::getOptions(get_parent_class($this));
 
       //Specific to location
       $tab[3]['linkfield'] = 'locations_id';

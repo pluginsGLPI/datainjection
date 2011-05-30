@@ -164,4 +164,7 @@ $LANG['datainjection']['tabs'][3] = "Fichier à injecter";
 
 $LANG['datainjection']['import'][0] = "Procéder à l'import";
 $LANG['datainjection']['import'][1] = "Etat d'avancement de l'import";
+
+$LANG['datainjection']['port'][1] = "Liaison réseau";
+
 ?>

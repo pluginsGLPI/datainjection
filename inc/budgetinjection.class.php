@@ -73,7 +73,6 @@ class PluginDatainjectionBudgetInjection extends Budget
                                         "decimal"        => array(4));
 
       $tab = PluginDatainjectionCommonInjectionLib::addToSearchOptions($tab, $options, $this);
-      logDebug($tab);
       return $tab;
    }
 

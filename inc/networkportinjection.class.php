@@ -42,7 +42,7 @@ class PluginDatainjectionNetworkportInjection extends NetworkPort
 
 
    function __construct() {
-      $this->table = getTableForItemType('NetworkPort');
+      $this->table = getTableForItemType(get_parent_class($this));
    }
 
 
@@ -59,7 +59,7 @@ class PluginDatainjectionNetworkportInjection extends NetworkPort
    function getOptions($primary_type = '') {
       global $LANG;
 
-      $tab = Search::getOptions('NetworkPort');
+      $tab = Search::getOptions(get_parent_class($this));
       $blacklist = PluginDatainjectionCommonInjectionLib::getBlacklistedOptions();
 
       //To manage vlans : relies on a CommonDBRelation object !
@@ -244,7 +244,6 @@ class PluginDatainjectionNetworkportInjection extends NetworkPort
     * @return true if check ok, false if not ok
     */
    function lastCheck($values = array()) {
-      //logDebug("PluginDatainjectionNetworkportInjection->lastCheck()", $values['NetworkPort']);
 
       if ((!isset($values['NetworkPort']['name']) || empty($values['NetworkPort']['name']))
           && (!isset($values['NetworkPort']['mac']) || empty($values['NetworkPort']['mac']))

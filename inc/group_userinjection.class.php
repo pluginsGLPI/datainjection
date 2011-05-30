@@ -41,7 +41,7 @@ class PluginDatainjectionGroup_UserInjection extends Group_User
                                              implements PluginDatainjectionInjectionInterface {
 
    function __construct()  {
-      $this->table = getTableForItemType('Group_User');
+      $this->table = getTableForItemType(get_parent_class($this));
    }
 
 
@@ -57,7 +57,7 @@ class PluginDatainjectionGroup_UserInjection extends Group_User
 
    function getOptions($primary_type = '') {
 
-      $tab = Search::getOptions('Group_User');
+      $tab = Search::getOptions(get_parent_class($this));
       unset($tab[2]);
 
       $tab[3]['checktype']   = 'bool';

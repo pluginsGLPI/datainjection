@@ -43,7 +43,7 @@ class PluginDatainjectionSoftwareLicenseInjection extends SoftwareLicense
 
 
    function __construct() {
-      $this->table = getTableForItemType('SoftwareLicense');
+      $this->table = getTableForItemType(get_parent_class($this));
    }
 
 
@@ -61,7 +61,7 @@ class PluginDatainjectionSoftwareLicenseInjection extends SoftwareLicense
       global $LANG;
 
 
-      $tab = Search::getOptions('SoftwareLicense');
+      $tab = Search::getOptions(get_parent_class($this));
       $options['ignore_fields'] = PluginDatainjectionCommonInjectionLib::getBlacklistedOptions();
       $options['displaytype']   = array("dropdown"       => array(5, 6, 7),
                                         "date"           => array(8),

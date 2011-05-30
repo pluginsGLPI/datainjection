@@ -42,7 +42,7 @@ class PluginDatainjectionSoftwareInjection extends Software
 
 
    function __construct() {
-      $this->table = getTableForItemType('Software');
+      $this->table = getTableForItemType(get_parent_class($this));
    }
 
 
@@ -58,7 +58,7 @@ class PluginDatainjectionSoftwareInjection extends Software
 
    function getOptions($primary_type = '') {
 
-      $tab = Search::getOptions('Software');
+      $tab = Search::getOptions(get_parent_class($this));
 
       //Specific to location
       $tab[3]['linkfield']  = 'locations_id';

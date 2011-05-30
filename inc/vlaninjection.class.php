@@ -42,7 +42,7 @@ class PluginDatainjectionVlanInjection extends Vlan
 
 
    function __construct() {
-      $this->table = getTableForItemType('Vlan');
+      $this->table = getTableForItemType(get_parent_class($this));
    }
 
 
@@ -58,7 +58,7 @@ class PluginDatainjectionVlanInjection extends Vlan
 
    function getOptions($primary_type = '') {
 
-      $tab = Search::getOptions('Vlan');
+      $tab = Search::getOptions(get_parent_class($this));
       $blacklist = PluginDatainjectionCommonInjectionLib::getBlacklistedOptions();
       //Remove some options because some fields cannot be imported
       $notimportable = array();

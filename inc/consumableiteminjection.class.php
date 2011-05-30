@@ -41,7 +41,7 @@ class PluginDatainjectionConsumableItemInjection extends ConsumableItem
                                                  implements PluginDatainjectionInjectionInterface {
 
    function __construct() {
-      $this->table = getTableForItemType('ConsumableItem');
+      $this->table = getTableForItemType(get_parent_class($this));
    }
 
 
@@ -58,7 +58,7 @@ class PluginDatainjectionConsumableItemInjection extends ConsumableItem
    function getOptions($primary_type = '') {
       global $LANG;
 
-      $tab = Search::getOptions('ConsumableItem');
+      $tab = Search::getOptions(get_parent_class($this));
 
       //Specific to location
       $tab[3]['linkfield'] = 'locations_id';

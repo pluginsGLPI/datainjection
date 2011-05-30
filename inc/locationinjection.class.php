@@ -43,7 +43,7 @@ class PluginDatainjectionLocationInjection extends Location
 
    function __construct() {
       //Needed for getSearchOptions !
-      $this->table = getTableForItemType('Location');
+      $this->table = getTableForItemType(get_parent_class($this));
    }
 
 
@@ -59,7 +59,7 @@ class PluginDatainjectionLocationInjection extends Location
 
    function getOptions($primary_type = '') {
 
-      $tab = Search::getOptions('Location');
+      $tab = Search::getOptions(get_parent_class($this));
 
       $blacklist = PluginDatainjectionCommonInjectionLib::getBlacklistedOptions();
       //Remove some options because some fields cannot be imported

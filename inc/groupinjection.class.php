@@ -41,7 +41,7 @@ class PluginDatainjectionGroupInjection extends Group
                                         implements PluginDatainjectionInjectionInterface {
 
    function __construct() {
-      $this->table = getTableForItemType('Group');
+      $this->table = getTableForItemType(get_parent_class($this));
    }
 
 
@@ -57,7 +57,7 @@ class PluginDatainjectionGroupInjection extends Group
 
    function getOptions($primary_type = '') {
 
-      $tab = Search::getOptions('Group');
+      $tab = Search::getOptions(get_parent_class($this));
 
       $blacklist = PluginDatainjectionCommonInjectionLib::getBlacklistedOptions();
       //Remove some options because some fields cannot be imported

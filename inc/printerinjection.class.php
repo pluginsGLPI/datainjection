@@ -42,7 +42,7 @@ class PluginDatainjectionPrinterInjection extends Printer
 
 
    function __construct() {
-      $this->table = getTableForItemType('Printer');
+      $this->table = getTableForItemType(get_parent_class($this));
    }
 
 
@@ -58,7 +58,7 @@ class PluginDatainjectionPrinterInjection extends Printer
 
    function getOptions($primary_type = '') {
 
-      $tab = Search::getOptions('Printer');
+      $tab = Search::getOptions(get_parent_class($this));
 
       //Specific to location
       $tab[3]['linkfield'] = 'locations_id';

@@ -42,7 +42,7 @@ class PluginDatainjectionPhoneInjection extends Phone
 
 
    function __construct() {
-      $this->table = getTableForItemType('Phone');
+      $this->table = getTableForItemType(get_parent_class($this));
    }
 
 
@@ -58,7 +58,7 @@ class PluginDatainjectionPhoneInjection extends Phone
 
    function getOptions($primary_type = '') {
 
-     $tab = Search::getOptions('Phone');
+     $tab = Search::getOptions(get_parent_class($this));
 
       //Specific to location
       $tab[3]['linkfield'] = 'locations_id';

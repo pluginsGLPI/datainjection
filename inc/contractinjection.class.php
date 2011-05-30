@@ -41,7 +41,7 @@ class PluginDatainjectionContractInjection extends Contract
                                            implements PluginDatainjectionInjectionInterface {
 
    function __construct() {
-      $this->table = getTableForItemType('Contract');
+      $this->table = getTableForItemType(get_parent_class($this));
    }
 
 
@@ -57,7 +57,7 @@ class PluginDatainjectionContractInjection extends Contract
 
    function getOptions($primary_type = '') {
 
-      $tab = Search::getOptions('Contract');
+      $tab = Search::getOptions(get_parent_class($this));
 
       $blacklist = PluginDatainjectionCommonInjectionLib::getBlacklistedOptions();
       //Remove some options because some fields cannot be imported

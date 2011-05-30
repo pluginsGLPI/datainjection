@@ -41,7 +41,7 @@ class PluginDatainjectionDocumentInjection extends Document
                                            implements PluginDatainjectionInjectionInterface {
 
    function __construct() {
-      $this->table = getTableForItemType('Document');
+      $this->table = getTableForItemType(get_parent_class($this));
    }
 
 
@@ -56,7 +56,7 @@ class PluginDatainjectionDocumentInjection extends Document
 
 
    function getOptions($primary_type = '') {
-      return Search::getOptions('Document');
+      return Search::getOptions(get_parent_class($this));
 
    }
 

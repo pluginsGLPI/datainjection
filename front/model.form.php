@@ -59,7 +59,7 @@ if (isset ($_POST["add"])) {
 } else if (isset ($_POST["delete"])) {
    $model->check($_POST['id'],'w');
    $model->delete($_POST);
-   glpi_header(getItemTypeSearchURL('PluginDatainjectionModel'));
+   $model->redirectToList();
 
 /* update */
 } else if (isset ($_POST["update"])) {

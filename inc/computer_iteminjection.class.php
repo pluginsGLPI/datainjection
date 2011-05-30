@@ -48,7 +48,7 @@ class PluginDatainjectionComputer_ItemInjection extends Computer_Item
 
 
    function __construct() {
-      $this->table = getTableForItemType('Computer_Item');
+      $this->table = getTableForItemType(get_parent_class($this));
    }
 
 

@@ -42,7 +42,7 @@ class PluginDatainjectionNetworkport_VlanInjection extends NetworkPort_Vlan
 
 
    function __construct() {
-      $this->table = getTableForItemType('NetworkPort_Vlan');
+      $this->table = getTableForItemType(get_parent_class($this));
    }
 
 

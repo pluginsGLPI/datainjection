@@ -463,7 +463,7 @@ class PluginDatainjectionModel extends CommonDBTM {
             $models[] = $data;
          }
       }
-      //logDebug("getModels", $query, $models);
+
       return $models;
    }
 
@@ -914,7 +914,6 @@ class PluginDatainjectionModel extends CommonDBTM {
       $file_encoding = (isset($options['file_encoding'])?$options['file_encoding']
                                                         :PluginDatainjectionBackend::ENCODING_AUTO);
       $mode          = (isset($options['mode'])?$options['mode']:self::PROCESS);
-      $return_status = true;
 
       //Get model & model specific fields
       $this->loadSpecificModel();
@@ -935,9 +934,16 @@ class PluginDatainjectionModel extends CommonDBTM {
          //There's an error
       if ($check['status']!= PluginDatainjectionCommonInjectionLib::SUCCESS) {
          if ($mode == self::PROCESS) {
-            addMessageAfterRedirect($check['error_message'], true, ERROR);
+            if (!isset($options['webservice'])) {
+               addMessageAfterRedirect($check['error_message'], true, ERROR);
+               return false;
+            } else {
+               return PluginWebservicesMethodCommon::Error($options['protocol'],
+                                                           WEBSERVICES_ERROR_FAILED, 
+                                                           $check['error_message']);
+               
+            }
          }
-         return false;
       }
 
       $mappingCollection = new PluginDatainjectionMappingCollection;
@@ -971,7 +977,7 @@ class PluginDatainjectionModel extends CommonDBTM {
          addMessageAfterRedirect($LANG['datainjection']['model'][32], true, INFO);
       }
 
-      return $return_status;
+      return true;
    }
 
 

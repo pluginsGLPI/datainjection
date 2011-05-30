@@ -42,7 +42,7 @@ class PluginDatainjectionMonitorInjection extends Monitor
 
 
    function __construct() {
-      $this->table = getTableForItemType('Monitor');
+      $this->table = getTableForItemType(get_parent_class($this));
    }
 
 
@@ -58,7 +58,7 @@ class PluginDatainjectionMonitorInjection extends Monitor
 
    function getOptions($primary_type = '') {
 
-     $tab = Search::getOptions('Monitor');
+     $tab = Search::getOptions(get_parent_class($this));
 
       //Specific to location
       $tab[3]['linkfield'] = 'locations_id';

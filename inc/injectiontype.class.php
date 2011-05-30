@@ -194,7 +194,7 @@ class PluginDatainjectionInjectionType {
 
                if ($mapping_value == PluginDatainjectionInjectionType::NO_VALUE
                    && $p['called_by'] == 'PluginDatainjectionMapping'
-                   && PluginDatainjectionInjectionType::isEqual($option, $mapping_or_info)) {
+                     && PluginDatainjectionInjectionType::isEqual($option, $mapping_or_info)) {
 
                   $mapping_value = $option['linkfield'];
                }
@@ -253,7 +253,7 @@ class PluginDatainjectionInjectionType {
             //Basic tests
       if (strtolower($option['field']) == $name
           || strtolower($option['name']) == $name
-          || strtolower($option['linkfield']) == $name) {
+             || strtolower($option['linkfield']) == $name) {
          return true;
       }
       return false;

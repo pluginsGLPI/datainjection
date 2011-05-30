@@ -41,7 +41,7 @@ class PluginDatainjectionCartridgeItemInjection extends CartridgeItem
                                                 implements PluginDatainjectionInjectionInterface {
 
    function __construct() {
-      $this->table = getTableForItemType('CartridgeItem');
+      $this->table = getTableForItemType(get_parent_class($this));
    }
 
 
@@ -58,7 +58,7 @@ class PluginDatainjectionCartridgeItemInjection extends CartridgeItem
    function getOptions($primary_type = '') {
       global $LANG;
 
-      $tab = Search::getOptions('Cartridge');
+      $tab = Search::getOptions(get_parent_class($this));
 
       //Specific to location
       $tab[3]['linkfield'] = 'locations_id';

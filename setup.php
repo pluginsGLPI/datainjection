@@ -156,7 +156,7 @@ function getTypesToInject() {
                              'PluginDatainjectionContractInjection'             => 'datainjection',
                              'PluginDatainjectionContract_ItemInjection'        => 'datainjection',
                                 //'PluginDatainjectionDocumentInjection'        => 'datainjection',
-                                //'PluginDatainjectionEntityInjection'          => 'datainjection',
+                              'PluginDatainjectionEntityInjection'              => 'datainjection',
                              'PluginDatainjectionGroupInjection'                => 'datainjection',
                              'PluginDatainjectionGroup_UserInjection'           => 'datainjection',
                              'PluginDatainjectionInfocomInjection'              => 'datainjection',
@@ -177,11 +177,12 @@ function getTypesToInject() {
                              'PluginDatainjectionNetworkportInjection'          => 'datainjection',
                              'PluginDatainjectionVlanInjection'                 => 'datainjection',
                              'PluginDatainjectionNetworkport_VlanInjection'     => 'datainjection',
+                             'PluginDatainjectionNetworkport_networkPortInjection' => 'datainjection',
                              'PluginDatainjectionNetpointInjection'             => 'datainjection',
                              'PluginDatainjectionKnowbaseItemCategoryInjection' => 'datainjection',
                              'PluginDatainjectionKnowbaseItemInjection'         => 'datainjection',
                              );
-   //Add plugins
+   //Add pluginsq
    doHook('plugin_datainjection_populate');
 }
 

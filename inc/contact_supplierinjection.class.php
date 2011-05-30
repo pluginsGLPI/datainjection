@@ -41,7 +41,7 @@ class PluginDatainjectionContact_SupplierInjection extends Contact_Supplier
                                                    implements PluginDatainjectionInjectionInterface {
 
    function __construct() {
-      $this->table = getTableForItemType('Contact_Supplier');
+      $this->table = getTableForItemType(get_parent_class($this));
    }
 
 

@@ -41,7 +41,7 @@ class PluginDatainjectionKnowbaseItemInjection extends KnowbaseItem
                                                implements PluginDatainjectionInjectionInterface {
 
    function __construct() {
-      $this->table = getTableForItemType('KnowbaseItem');
+      $this->table = getTableForItemType(get_parent_class($this));
    }
 
 
@@ -58,7 +58,7 @@ class PluginDatainjectionKnowbaseItemInjection extends KnowbaseItem
    function getOptions($primary_type = '') {
       global $LANG;
 
-      $tab = Search::getOptions('KnowbaseItem');
+      $tab = Search::getOptions(get_parent_class($this));
 
       //Remove some options because some fields cannot be imported
       $options['ignore_fields'] = array(2, 80, 19);

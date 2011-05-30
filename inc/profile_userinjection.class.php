@@ -42,7 +42,7 @@ class PluginDatainjectionProfile_UserInjection extends Profile_User
 
 
    function __construct()  {
-      $this->table = getTableForItemType('Profile_User');
+      $this->table = getTableForItemType(get_parent_class($this));
    }
 
 
@@ -58,7 +58,7 @@ class PluginDatainjectionProfile_UserInjection extends Profile_User
 
    function getOptions($primary_type = '') {
 
-      $tab = Search::getOptions('Profiler_User');
+      $tab = Search::getOptions(get_parent_class($this));
       unset($tab[2]);
 
       $tab[3]['checktype']   = 'bool';

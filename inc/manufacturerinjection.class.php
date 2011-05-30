@@ -42,7 +42,7 @@ class PluginDatainjectionManufacturerInjection extends Manufacturer
 
    function __construct() {
       //Needed for getSearchOptions !
-      $this->table = getTableForItemType('Manufacturer');
+      $this->table = getTableForItemType(get_parent_class($this));
    }
 
 
@@ -58,7 +58,7 @@ class PluginDatainjectionManufacturerInjection extends Manufacturer
 
    function getOptions($primary_type = '') {
 
-      $tab = Search::getOptions('Manufacturer');
+      $tab = Search::getOptions(get_parent_class($this));
 
       //Remove some options because some fields cannot be imported
       $remove = array(2);

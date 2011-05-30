@@ -42,7 +42,7 @@ class PluginDatainjectionNetworkEquipmentInjection extends NetworkEquipment
 
 
    function __construct() {
-      $this->table = getTableForItemType('NetworkEquipment');
+      $this->table = getTableForItemType(get_parent_class($this));
    }
 
 
@@ -59,7 +59,7 @@ class PluginDatainjectionNetworkEquipmentInjection extends NetworkEquipment
    function getOptions($primary_type = '') {
       global $LANG;
 
-      $tab = Search::getOptions('NetworkEquipment');
+      $tab = Search::getOptions(get_parent_class($this));
 
       //Specific to location
       $tab[3]['linkfield']  = 'locations_id';

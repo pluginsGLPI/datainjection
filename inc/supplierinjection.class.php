@@ -42,7 +42,7 @@ class PluginDatainjectionSupplierInjection extends Supplier
 
 
    function __construct() {
-      $this->table = getTableForItemType('Supplier');
+      $this->table = getTableForItemType(get_parent_class($this));
    }
 
 
@@ -58,7 +58,7 @@ class PluginDatainjectionSupplierInjection extends Supplier
 
    function getOptions($primary_type = '') {
 
-      $tab       = Search::getOptions('Supplier');
+      $tab       = Search::getOptions(get_parent_class($this));
       $blacklist = PluginDatainjectionCommonInjectionLib::getBlacklistedOptions();
 
       //Remove some options because some fields cannot be imported
@@ -98,7 +98,7 @@ class PluginDatainjectionSupplierInjection extends Supplier
       }
 
       //Add displaytype value
-      $dropdown = array("dropdown"       => array(9,8 ),
+      $dropdown = array("dropdown"       => array(9, 8),
                         "multiline_text" => array(16),
                         "bool"           => array(86));
 

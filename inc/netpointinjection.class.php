@@ -42,7 +42,7 @@ class PluginDatainjectionNetpointInjection extends Netpoint
 
 
    function __construct() {
-      $this->table = getTableForItemType('Netpoint');
+      $this->table = getTableForItemType(get_parent_class($this));
    }
 
 
@@ -58,7 +58,7 @@ class PluginDatainjectionNetpointInjection extends Netpoint
 
    function getOptions($primary_type = '') {
 
-      $tab = Search::getOptions('Netpoint');
+      $tab = Search::getOptions(get_parent_class($this));
 
       //Specific to location
       $tab[3]['linkfield'] = 'locations_id';

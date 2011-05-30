@@ -41,7 +41,7 @@ class PluginDatainjectionContactInjection extends Contact
                                           implements PluginDatainjectionInjectionInterface {
 
    function __construct() {
-      $this->table = getTableForItemType('Contact');
+      $this->table = getTableForItemType(get_parent_class($this));
    }
 
 
@@ -58,7 +58,7 @@ class PluginDatainjectionContactInjection extends Contact
    function getOptions($primary_type = '') {
       global $LANG;
 
-      $tab = Search::getOptions('Contact');
+      $tab = Search::getOptions(get_parent_class($this));
 
 
       $blacklist = PluginDatainjectionCommonInjectionLib::getBlacklistedOptions();

@@ -42,7 +42,7 @@ class PluginDatainjectionProfileInjection extends Profile
 
 
    function __construct() {
-      $this->table = getTableForItemType('Profile');
+      $this->table = getTableForItemType(get_parent_class($this));
    }
 
 
@@ -57,7 +57,7 @@ class PluginDatainjectionProfileInjection extends Profile
 
 
    function getOptions($primary_type = '') {
-      return Search::getOptions('Profile');
+      return Search::getOptions(get_parent_class($this));
    }
 
 

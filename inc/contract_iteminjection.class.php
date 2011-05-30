@@ -41,7 +41,7 @@ class PluginDatainjectionContract_ItemInjection extends Contract_Item
                                                 implements PluginDatainjectionInjectionInterface {
 
    function __construct() {
-      $this->table = getTableForItemType('Contract_Item');
+      $this->table = getTableForItemType(get_parent_class($this));
    }
 
 

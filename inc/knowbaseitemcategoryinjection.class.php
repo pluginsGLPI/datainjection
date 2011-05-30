@@ -41,7 +41,7 @@ class PluginDatainjectionKnowbaseItemCategoryInjection extends KnowbaseItemCateg
                                                        implements PluginDatainjectionInjectionInterface {
 
    function __construct() {
-      $this->table = getTableForItemType('KnowbaseItemCategory');
+      $this->table = getTableForItemType(get_parent_class($this));
    }
 
 
@@ -58,7 +58,7 @@ class PluginDatainjectionKnowbaseItemCategoryInjection extends KnowbaseItemCateg
    function getOptions($primary_type = '') {
       global $LANG;
 
-      $tab = Search::getOptions('KnowbaseItemCategory');
+      $tab = Search::getOptions(get_parent_class($this));
 
       $tab[100]['name']        = $LANG['setup'][75];
       $tab[100]['table']       = $this->table;
