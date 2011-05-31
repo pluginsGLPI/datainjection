@@ -59,18 +59,20 @@ if (isset($args['help']) && !isset($args['method'])) {
    echo "\tusername    : User name for security check (optionnal, default : glpi)\n";
    echo "\tpassword    : User password (optionnal, default : glpi)\n";
    echo "\turi         : Absolute path to the csv file to inject\n";
+   echo "\additional[xx]=yy : Additional info to import (xx = field name, yy=value)\n";
    echo "\tmodels_id   : ID of the model to use\n";
    echo "\tentities_id : ID of the entity in whic data should be injected\n";
 
    die( "\nOther options are used for XML-RPC call.\n\n");
 }
-
+print_r($args);
 //First of all, user login
 $attrs['login_name']       = (isset($args['username'])?$args['username']:'glpi');
 $attrs['login_password']   = (isset($args['password'])?$args['password']:'glpi');
 $attrs['host']             = (isset($args['host'])?$args['host']:'localhost');
 $attrs['url']              = (isset($args['url'])?$args['url']
-                                                 :'glpi078/plugins/webservices/xmlrpc.php');
+                                                 :'glpi080/plugins/webservices/xmlrpc.php');
+$attrs['additional']       = (isset($args['additional'])?$args['additional']:array());
 
 $response = call('glpi.doLogin',$attrs);
 

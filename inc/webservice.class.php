@@ -37,11 +37,17 @@ class PluginDatainjectionWebservice {
    static function methodInject($params, $protocol) {
 
       if (isset ($params['help'])) {
-         return array('uri'    => 'string,mandatory',
-                      'base64' => 'string,optional',
-                      'help'   => 'bool,optional');
+         return array('uri'        => 'string,mandatory',
+                      'base64'     => 'string,optional',
+                      'additional' => 'array,optional',
+                      'help'       => 'bool,optional');
       }
 
+      $model = new PluginDatainjectionModel;
+
+      //-----------------------------------------------------------------
+      //-------------------------- Check parameters ---------------------
+      //-----------------------------------------------------------------
       if (!isset ($_SESSION['glpiID'])) {
          return PluginWebservicesMethodCommon::Error($protocol,
                                                      WEBSERVICES_ERROR_NOTAUTHENTICATED);
@@ -58,7 +64,6 @@ class PluginDatainjectionWebservice {
                                                      WEBSERVICES_ERROR_MISSINGPARAMETER,
                                                      'models_id');
       } else {
-         $model = new PluginDatainjectionModel;
          if (!$model->getFromDB($params['models_id'])) {
                return PluginWebservicesMethodCommon::Error($protocol,
                                                            WEBSERVICES_ERROR_NOTFOUND,
@@ -94,15 +99,16 @@ class PluginDatainjectionWebservice {
          }
       }
 
-      $model         = new PluginDatainjectionModel;
+      //Mandatory fields
+      $additional_infos = array();
+      if (isset($params['mandatory']) && is_array($params['mandatory'])) {
+         $additional_infos = $params['mandatory'];
+      }
+      
+      
+      //Upload CSV file
       $document_name = basename($params['uri']);
       $filename      = tempnam(PLUGIN_DATAINJECTION_UPLOAD_DIR, 'PWS');
-
-      if (!$model->getFromDB($params['models_id'])) {
-         return PluginWebservicesMethodCommon::Error($protocol,
-                                                     WEBSERVICES_ERROR_NOTFOUND, 'models_id');
-      }
-
       $response = PluginWebservicesMethodCommon::uploadDocument($params, $protocol, $filename,
                                                                 $document_name);
 
@@ -110,25 +116,26 @@ class PluginDatainjectionWebservice {
          return $response;
       }
 
-      $options = array('file_encoding'     => PluginDatainjectionBackend::ENCODING_AUTO,
-                       'webservice'        => true,
-                       'original_filename' => $params['uri'],
-                       'unique_filename'   => $filename,
+      //Uploade successful : now perform import !
+      $options = array('file_encoding'     => PluginDatainjectionBackend::ENCODING_AUTO, //Detect automatically file encoding
+                       'webservice'        => true, //Use webservice CSV file import
+                       'original_filename' => $params['uri'], //URI to the CSV file
+                       'unique_filename'   => $filename, //Unique filename
                        'mode'              => PluginDatainjectionModel::PROCESS,
-                       'delete_file'       => false,
-                       'protocol'          => $protocol);
+                       'delete_file'       => false, //Do not delete file once imported
+                       'protocol'          => $protocol); //The Webservice protocol used
 
       $results = array();
-
-      if ($response = $model->processUploadedFile($options)) {
-         $engine  = new PluginDatainjectionEngine($model, array(), $params['entities_id']);
+      $response = $model->processUploadedFile($options);
+      if (!PluginWebservicesMethodCommon::isError($protocol, $response)) {
+         $engine  = new PluginDatainjectionEngine($model, $additional_infos, $params['entities_id']);
          foreach ($model->injectionData->getDatas() as $id => $data) {
             $results[] = $engine->injectLine($data[0], $id);
          }
          $model->cleanData();
          return $results;
       } else {
-         return $response;
+          return $response;
       }
    }
 

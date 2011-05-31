@@ -858,7 +858,7 @@ class PluginDatainjectionModel extends CommonDBTM {
          $message .= "<br>".$LANG['datainjection']['fileStep'][6]." csv ";
          $message .= $LANG['datainjection']['fileStep'][7];
          if (!$webservice) {
-            addMessageAfterRedirect($message,true,ERROR,false);
+            addMessageAfterRedirect($message, true, ERROR, false);
          }
          //unlink($temporary_uniquefilename);
          return array('status'  => ERROR,
@@ -917,10 +917,15 @@ class PluginDatainjectionModel extends CommonDBTM {
 
       //Get model & model specific fields
       $this->loadSpecificModel();
-      $this->readUploadedFile($options);
-
+      $response = $this->readUploadedFile($options);
       if (!$this->injectionData) {
-         return false;
+         if (!isset($options['webservice'])) {
+            return false;
+         } else {
+            return PluginWebservicesMethodCommon::Error($options['protocol'],
+                                                        WEBSERVICES_ERROR_FAILED, 
+                                                        'Not data to import');
+         }
       }
 
       if ($mode == self::PROCESS) {
@@ -930,9 +935,9 @@ class PluginDatainjectionModel extends CommonDBTM {
       } else {
          $check['status'] = PluginDatainjectionCommonInjectionLib::SUCCESS;
       }
-
          //There's an error
       if ($check['status']!= PluginDatainjectionCommonInjectionLib::SUCCESS) {
+
          if ($mode == self::PROCESS) {
             if (!isset($options['webservice'])) {
                addMessageAfterRedirect($check['error_message'], true, ERROR);
