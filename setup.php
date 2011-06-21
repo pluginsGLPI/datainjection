@@ -96,7 +96,7 @@ function plugin_version_datainjection() {
 
    return array (
       'name'           => $LANG['datainjection']['name'][1],
-      'minGlpiVersion' => '0.78.2',
+      'minGlpiVersion' => '0.80',
       'author'         => 'Walid Nouh & Remi Collet',
       'homepage'       => 'https://forge.indepnet.net/projects/datainjection',
       'version'        => '2.1.0'
@@ -122,8 +122,8 @@ function plugin_datainjection_haveRight($module, $right) {
 
 function plugin_datainjection_check_prerequisites() {
 
-   if (version_compare(GLPI_VERSION,'0.78.2') < 0) {
-      echo "This plugin requires GLPI >= 0.78.2";
+   if (version_compare(GLPI_VERSION,'0.80','lt') || version_compare(GLPI_VERSION,'0.81','ge')) {
+      echo "This plugin requires GLPI >= 0.80 and < 0.81";
       return false;
    }
    return true;
