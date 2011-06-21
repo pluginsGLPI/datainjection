@@ -798,7 +798,9 @@ class PluginDatainjectionCommonInjectionLib {
                $this->values[$itemtype][$field] = $this->values[$itemtype][$field]."\n".$value;
             }
 
-         } else if (!$fromdb) { // CSV value override DB value
+         } else if (($fromdb && $value && !$this->rights['overwrite_notempty_fields'])
+                    || !$fromdb) {
+            // Overwrite value in DB (from CSV) if allowed in the model option.
             $this->values[$itemtype][$field] = $value;
          }
 
