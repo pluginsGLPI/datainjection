@@ -1475,11 +1475,11 @@ class PluginDatainjectionCommonInjectionLib {
             //We've got the template id, not let's add the template name
             if ($field == 'templates_id') {
                $item = new $itemtype();
-               $item->getFromDB($value);
-               $this->setValueForItemtype($itemtype, 'template_name',
-                                          $item->fields['template_name']);
-               $this->setValueForItemtype($itemtype, '_oldID', $value);
-
+               if ($item->getFromDB($value)) {
+                  $this->setValueForItemtype($itemtype, 'template_name',
+                                             $item->fields['template_name']);
+                  $this->setValueForItemtype($itemtype, '_oldID', $value);
+               }
             } else {
                $this->setValueForItemtype($itemtype, $field, $value);
             }
