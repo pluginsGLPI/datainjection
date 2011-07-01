@@ -43,15 +43,22 @@ class PluginDatainjectionInjectionType {
 
       getTypesToInject();
 
+      $plugin = new Plugin();
       $values = array();
-      foreach ($INJECTABLE_TYPES as $type => $plugin) {
+      foreach ($INJECTABLE_TYPES as $type => $from) {
          $injectionclass = new $type();
 
          if (class_exists($type) 
                && !$only_primary
                   || ($only_primary && $injectionclass->isPrimaryType())) {
             $typename = PluginDatainjectionInjectionType::getParentObjectName($type);
-            $values[$typename] = call_user_func(array($type, 'getTypeName'));
+            $name = '';
+            if ($from != 'datainjection') {
+               $plugin->getFromDBbyDir($from);
+               $name = $plugin->getName().': ';
+            }
+            $name.= call_user_func(array($type, 'getTypeName'));
+            $values[$typename] = $name;
          }
       }
       asort($values);
@@ -109,12 +116,11 @@ class PluginDatainjectionInjectionType {
       //Add primary_type to the list of availables types
       $type = new $p['primary_type']();
       $values[$p['primary_type']] = $type->getTypeName();
-
+      
       foreach ($INJECTABLE_TYPES as $type => $plugin) {
          $injectionClass = new $type();
          $connected_to   = $injectionClass->connectedTo();
-
-         if (in_array($p['primary_type'],$connected_to)) {
+         if (in_array($p['primary_type'], $connected_to)) {
             $typename          = getItemTypeForTable($injectionClass->getTable());
             $values[$typename] = call_user_func(array($type, 'getTypeName'));
          }

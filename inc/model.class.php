@@ -1123,10 +1123,9 @@ class PluginDatainjectionModel extends CommonDBTM {
                 UNION (SELECT DISTINCT `itemtype`
                        FROM `glpi_plugin_datainjection_infos`
                        WHERE `models_id` = '$models_id')";
-
       foreach ($DB->request($query) as $data) {
          if ($data['itemtype'] != PluginDatainjectionInjectionType::NO_VALUE) {
-            $item = new $data['itemtype'];
+            $item                     = new $data['itemtype']();
             $item->fields['itemtype'] = $model->fields['itemtype'];
 
             if (!($item instanceof CommonDBRelation) && !$item->canCreate()) {
