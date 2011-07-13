@@ -454,7 +454,7 @@ class PluginDatainjectionModel extends CommonDBTM {
                           `entities_id`, " . ($order == "`name`" ? "`name`" : $order);
 
       foreach ($DB->request($query) as $data) {
-         if (self::checkRightOnModel($data['id'])) {
+         if (self::checkRightOnModel($data['id']) && class_exists($data['itemtype'])) {
             $models[] = $data;
          }
       }
@@ -1125,12 +1125,14 @@ class PluginDatainjectionModel extends CommonDBTM {
                        WHERE `models_id` = '$models_id')";
       foreach ($DB->request($query) as $data) {
          if ($data['itemtype'] != PluginDatainjectionInjectionType::NO_VALUE) {
-            $item                     = new $data['itemtype']();
-            $item->fields['itemtype'] = $model->fields['itemtype'];
+            if (class_exists($data['itemtype'])) {
+               $item                     = new $data['itemtype']();
+               $item->fields['itemtype'] = $model->fields['itemtype'];
 
-            if (!($item instanceof CommonDBRelation) && !$item->canCreate()) {
-               $continue = false;
-               break;
+               if (!($item instanceof CommonDBRelation) && !$item->canCreate()) {
+                  $continue = false;
+                  break;
+               }
             }
          }
       }
