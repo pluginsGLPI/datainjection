@@ -42,4 +42,3 @@ if (!defined('GLPI_ROOT')) {
 
 checkCentralAccess();
 PluginDatainjectionInjectionType::dropdownFields($_POST);
-?>

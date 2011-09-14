@@ -330,6 +330,10 @@ class PluginDatainjectionInfo extends CommonDBTM {
             self::dropdownTemplates($name, $option['table']);
             break;
 
+         case 'password':
+            echo "<input type='password' name='$name' value='' size='20' autocomplete='off'>";
+            break;
+            
          default :
             if (method_exists($injectionClass,'showAdditionalInformation')) {
                //If type is not a standard type, must be treated by specific injection class

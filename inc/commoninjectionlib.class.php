@@ -126,7 +126,6 @@ class PluginDatainjectionCommonInjectionLib {
    const FIELD_INJECTABLE     = 1;
    const FIELD_VIRTUAL        = 2;
 
-
    /**
     * Set default values for injection parameters
     *
@@ -240,7 +239,7 @@ class PluginDatainjectionCommonInjectionLib {
             $this->mandatory_fields[$itemtype] = $field;
          }
       }
-
+      
       $status_check = true;
       foreach ($this->mandatory_fields[$itemtype] as $field => $value) {
          //Get value associated with the mandatory field
@@ -325,7 +324,7 @@ class PluginDatainjectionCommonInjectionLib {
     * @return the injection class instance
     */
    static function getInjectionClassInstance($itemtype) {
-
+      
       if (!isPluginItemType($itemtype)) {
          $injectionClass = 'PluginDatainjection'.ucfirst($itemtype).'Injection';
       } else {
@@ -500,6 +499,19 @@ class PluginDatainjectionCommonInjectionLib {
             $this->setValueForItemtype($itemtype, $linkfield, $value);
             break;
 
+         case 'password':
+            //To add a user password, it's mandatory is give a password and it's confirmation
+            //Here we cannot detect if it's an add or update. We'll handle updates later in the process
+            if ($add && $itemtype == 'User') {
+               $this->setValueForItemtype($itemtype, $linkfield, $value);
+               //Add field password2 is not already present
+               //(can be present if password was an addtional information)
+               if (!isset($this->values[$itemtype][$field])) {
+                  $this->setValueForItemtype($itemtype, $linkfield."2", $value);
+               }
+            }
+            break;
+            
          case 'dropdown' :
          case 'relation' :
             $tmptype = getItemTypeForTable($searchOption['table']);
@@ -529,10 +541,10 @@ class PluginDatainjectionCommonInjectionLib {
             // Use EMPTY_VALUE for Mandatory field check
             $this->setValueForItemtype($itemtype, $linkfield, ($id>0 ? $id : self::EMPTY_VALUE));
             if ($value && $id <= 0) {
-               $this->results['status'] = self::WARNING;
+               $this->results['status']                     = self::WARNING;
                $this->results[self::ACTION_CHECK]['status'] = self::WARNING;
-               $this->results[self::ACTION_CHECK][] = array(self::WARNING_NOTFOUND,
-                                                            $searchOption['name']."='$value'");
+               $this->results[self::ACTION_CHECK][]         = array(self::WARNING_NOTFOUND,
+                                                                $searchOption['name']."='$value'");
             }
             break;
 
@@ -1288,7 +1300,7 @@ class PluginDatainjectionCommonInjectionLib {
       //Check if the type to inject requires additional fields
       //(for example to link it with another type)
       if (!$this->areTypeMandatoryFieldsOK($this->injectionClass)) {
-         $process = false;
+         $process                                     = false;
          $this->results['status']                     = self::FAILED;
          $this->results[self::ACTION_CHECK]['status'] = self::FAILED;
 
@@ -1298,7 +1310,7 @@ class PluginDatainjectionCommonInjectionLib {
          $process = true;
 
          //No item found in DB
-         if($this->getValueByItemtypeAndName($this->primary_type,'id') == self::ITEM_NOT_FOUND) {
+         if($this->getValueByItemtypeAndName($this->primary_type, 'id') == self::ITEM_NOT_FOUND) {
             //Can add item ?
             $this->results['type'] = self::IMPORT_ADD;
 
@@ -1355,7 +1367,7 @@ class PluginDatainjectionCommonInjectionLib {
 
             } else {
                //If type needs it : process more data after type import
-               $this->processAfterInsertOrUpdate();
+               $this->processAfterInsertOrUpdate($add);
                //$this->results['status'] = self::SUCCESS;
                $this->results[get_class($item)] = $newID;
 
@@ -1365,19 +1377,19 @@ class PluginDatainjectionCommonInjectionLib {
 
                   if ($itemtype != get_class($item)) {
                      $injectionClass = self::getInjectionClassInstance($itemtype);
-                     $item = new $itemtype();
+                     $item           = new $itemtype();
 
                      $this->addNeededFields($injectionClass, $itemtype);
                      $this->dataAlreadyInDB($injectionClass, $itemtype);
 
-                     if ($this->getValueByItemtypeAndName($itemtype,'id') == self::ITEM_NOT_FOUND) {
+                     if ($this->getValueByItemtypeAndName($itemtype, 'id') == self::ITEM_NOT_FOUND) {
                         $add = true;
-                        $this->unsetValue($itemtype,'id');
+                        $this->unsetValue($itemtype, 'id');
                      } else {
                         $add = false;
                      }
                      $values = $this->getValuesForItemtype($itemtype);
-                     if ($this->lastCheckBeforeProcess($injectionClass,$values)) {
+                     if ($this->lastCheckBeforeProcess($injectionClass, $values)) {
                         $tmpID  = $this->effectiveAddOrUpdate($injectionClass, $add, $item, $values);
                      }
                   }
@@ -1483,10 +1495,20 @@ class PluginDatainjectionCommonInjectionLib {
             } else {
                $this->setValueForItemtype($itemtype, $field, $value);
             }
+            $this->addSpecificOptionalInfos($itemtype, $field, $value);
          }
       }
    }
 
+   /**
+    * If an optional info need more processing (for example password)
+    * @param itemtype being injected
+    * @param field the optional info field
+    * @param value the optional info value
+    * @return nothing
+    */
+   protected function addSpecificOptionalInfos($itemtype, $field, $value) {
+   }
 
    /**
     * Manage fields tagged as relations
@@ -1871,15 +1893,15 @@ class PluginDatainjectionCommonInjectionLib {
 
    /**
     * If itemtype injection needs to process things after data is written in DB
-    *
+    * @param add true if an item is created, false if it's an update
     * @return nothing
    **/
-   private function processAfterInsertOrUpdate() {
+   private function processAfterInsertOrUpdate($add = true) {
 
       //If itemtype implements special process after type injection
       if (method_exists($this->injectionClass,'processAfterInsertOrUpdate')) {
          //Invoke it
-         $this->injectionClass->processAfterInsertOrUpdate($this->values);
+         $this->injectionClass->processAfterInsertOrUpdate($this->values, $add);
       }
    }
 

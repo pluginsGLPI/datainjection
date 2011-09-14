@@ -178,10 +178,11 @@ function getTypesToInject() {
                              'PluginDatainjectionNetworkportInjection'          => 'datainjection',
                              'PluginDatainjectionVlanInjection'                 => 'datainjection',
                              'PluginDatainjectionNetworkport_VlanInjection'     => 'datainjection',
-                             'PluginDatainjectionNetworkport_networkPortInjection' => 'datainjection',
+                             'PluginDatainjectionNetworkport_NetworkPortInjection' => 'datainjection',
                              'PluginDatainjectionNetpointInjection'             => 'datainjection',
                              'PluginDatainjectionKnowbaseItemCategoryInjection' => 'datainjection',
                              'PluginDatainjectionKnowbaseItemInjection'         => 'datainjection',
+                             'PluginDatainjectionTicketCategoryInjection'       => 'datainjection',
                              );
    //Add pluginsq
    doHook('plugin_datainjection_populate');

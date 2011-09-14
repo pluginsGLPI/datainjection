@@ -1056,8 +1056,14 @@ class PluginDatainjectionModel extends CommonDBTM {
 
       foreach ($this->infos->getAllInfos() as $info) {
          if ($info->isMandatory()) {
+            //Get search option (need to check dropdown default value)
+            $itemtype = $info->getInfosType();
+            $item     = new $itemtype();
+            $option   = $item->getSearchOptionByField('field', $info->getValue());
+            $tocheck  = (!isset($option['datatype']) || $option['datatype'] != 'bool');
             if (!isset($fields[$info->getValue()])
-                || !$fields[$info->getValue()]
+                //Check if no value defined only when it's not a yes/no
+                || ($tocheck && !$fields[$info->getValue()])
                 || $fields[$info->getValue()]=='NULL') {
                $check = false;
                break;

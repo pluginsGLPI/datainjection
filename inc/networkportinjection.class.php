@@ -52,7 +52,8 @@ class PluginDatainjectionNetworkportInjection extends NetworkPort
 
 
    function connectedTo() {
-      return array('Computer', 'NetworkEquipment', 'Peripheral', 'Phone', 'Printer');
+      global $CFG_GLPI;
+      return $CFG_GLPI["networkport_types"];
    }
 
 

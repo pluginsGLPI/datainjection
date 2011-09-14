@@ -58,7 +58,8 @@ class PluginDatainjectionNetworkport_NetworkPortInjection extends NetworkPort_Ne
 
 
    function connectedTo() {
-      return array('Computer', 'NetworkEquipment', 'Peripheral', 'Phone', 'Printer');
+      global $CFG_GLPI;
+      return $CFG_GLPI["networkport_types"];
    }
 
 
@@ -66,19 +67,24 @@ class PluginDatainjectionNetworkport_NetworkPortInjection extends NetworkPort_Ne
       global $LANG;
 
       //To manage vlans : relies on a CommonDBRelation object !
-      $tab[1]['name']          = $LANG['setup'][90];
-      $tab[1]['field']         = 'itemtype';
-      $tab[1]['table']         = getTableForItemType('Vlan');
-      $tab[1]['linkfield']     = getForeignKeyFieldForTable($tab[100]['table']);
-      $tab[100]['displaytype']   = 'relation';
-      $tab[100]['relationclass'] = 'NetworkPort_Vlan';
-      $tab[100]['storevaluein']  = $tab[100]['linkfield'];
+      $tab[1]['name']          = $LANG['common'][16];
+      $tab[1]['field']         = 'name';
+      $tab[1]['table']         = getTableForItemType('NetworkPort');
+      $tab[1]['linkfield']     = "name";
+      $tab[1]['injectable']    = true;
 
-      $tab[4]['checktype'] = 'mac';
-      $tab[5]['checktype'] = 'ip';
-      $tab[6]['checktype'] = 'ip';
-      $tab[7]['checktype'] = 'ip';
-      $tab[8]['checktype'] = 'ip';
+      $tab[2]['name']          = $LANG['networking'][14];
+      $tab[2]['field']         = 'ip';
+      $tab[2]['table']         = getTableForItemType('NetworkPort');
+      $tab[2]['linkfield']     = "ip";
+      $tab[2]['checktype']     = "ip";
+      $tab[2]['injectable']    = true;
+
+      $tab[3]['name']          = $LANG['networking'][15];
+      $tab[3]['field']         = 'mac';
+      $tab[3]['table']         = getTableForItemType('NetworkPort');
+      $tab[3]['linkfield']     = "mac";
+      $tab[3]['injectable']    = true;
 
       return $tab;
    }
@@ -100,124 +106,6 @@ class PluginDatainjectionNetworkport_NetworkPortInjection extends NetworkPort_Ne
       return $lib->getInjectionResults();
    }
 
-
-   function checkPresent($fields_toinject=array(), $options=array()) {
-      return $this->getUnicityRequest($fields_toinject['NetworkPort'], $options['checks']);
-   }
-
-
-   function checkParameters ($fields_toinject, $options) {
-
-      $fields_tocheck = array();
-      switch ($options['checks']['port_unicity']) {
-         case PluginDatainjectionCommonInjectionLib::UNICITY_NETPORT_LOGICAL_NUMBER :
-            $fields_tocheck = array('logical_number');
-            break;
-
-         case PluginDatainjectionCommonInjectionLib::UNICITY_NETPORT_LOGICAL_NUMBER_MAC :
-            $fields_tocheck = array('logical_number', 'mac');
-            break;
-
-         case PluginDatainjectionCommonInjectionLib::UNICITY_NETPORT_LOGICAL_NUMBER_NAME :
-            $fields_tocheck = array('logical_number', 'name');
-            break;
-
-         case PluginDatainjectionCommonInjectionLib::UNICITY_NETPORT_LOGICAL_NUMBER_NAME_MAC :
-            $fields_tocheck = array('logical_number', 'mac', 'name');
-            break;
-
-         case PluginDatainjectionCommonInjectionLib::UNICITY_NETPORT_MACADDRESS :
-            $fields_tocheck = array('mac');
-            break;
-
-         case PluginDatainjectionCommonInjectionLib::UNICITY_NETPORT_NAME :
-            $fields_tocheck = array('name');
-            break;
-      }
-
-      $check_status = true;
-      foreach ($fields_tocheck as $field) {
-         if (!isset($fields_toinject[$field])
-             || $fields_toinject[$field] == PluginDatainjectionCommonInjectionLib::EMPTY_VALUE) {
-            $check_status = false;
-         }
-      }
-
-      return $check_status;
-   }
-
-
-      /**
-    * Build where sql request to look for a network port
-    *
-    * @param model the model
-    * @param fields the fields to insert into DB
-    *
-    * @return the sql where clause
-   **/
-   function getUnicityRequest($fields_toinject=array(), $options=array()) {
-
-      $where = "";
-
-      switch ($options['port_unicity']) {
-         case PluginDatainjectionCommonInjectionLib::UNICITY_NETPORT_LOGICAL_NUMBER :
-            $where .= " AND `logical_number` = '".(isset ($fields_toinject["logical_number"])
-                                                   ? $fields_toinject["logical_number"] : '')."'";
-            break;
-
-         case PluginDatainjectionCommonInjectionLib::UNICITY_NETPORT_LOGICAL_NUMBER_MAC :
-            $where .= " AND `logical_number` = '".(isset ($fields_toinject["logical_number"])
-                                                   ? $fields_toinject["logical_number"] : '')."'
-                        AND `name` = '".(isset ($fields_toinject["name"])
-                                         ? $fields_toinject["name"] : '')."'
-                        AND `mac` = '".(isset ($fields_toinject["mac"])
-                                        ? $fields_toinject["mac"] : '')."'";
-            break;
-
-         case PluginDatainjectionCommonInjectionLib::UNICITY_NETPORT_LOGICAL_NUMBER_NAME :
-            $where .= " AND `logical_number` = '".(isset ($fields_toinject["logical_number"])
-                                                   ? $fields_toinject["logical_number"] : '')."'
-                        AND `name` = '".(isset ($fields_toinject["name"])
-                                         ? $fields_toinject["name"] : '')."'";
-            break;
-
-         case PluginDatainjectionCommonInjectionLib::UNICITY_NETPORT_LOGICAL_NUMBER_NAME_MAC :
-            $where .= " AND `logical_number` = '".(isset ($fields_toinject["logical_number"])
-                                                   ? $fields_toinject["logical_number"] : '')."'
-                        AND `name` = '".(isset ($fields_toinject["name"])
-                                         ? $fields_toinject["name"] : '')."'
-                        AND `mac` = '".(isset ($fields_toinject["mac"])
-                                        ? $fields_toinject["mac"] : '')."'";
-            break;
-
-         case PluginDatainjectionCommonInjectionLib::UNICITY_NETPORT_MACADDRESS :
-            $where .= " AND `mac` = '".(isset ($fields_toinject["mac"])
-                                        ? $fields_toinject["mac"] : '')."'";
-            break;
-
-         case PluginDatainjectionCommonInjectionLib::UNICITY_NETPORT_NAME :
-            $where .= " AND `name` = '".(isset ($fields_toinject["name"])
-                                         ? $fields_toinject["name"] : '')."'";
-            break;
-      }
-
-      return $where;
-   }
-
-   /**
-    * Check if at least mac or ip is defined otherwise block import
-    * @param values the values to inject
-    * @return true if check ok, false if not ok
-    */
-   function lastCheck($values = array()) {
-
-      if ((!isset($values['NetworkPort']['name']) || empty($values['NetworkPort']['name']))
-          && (!isset($values['NetworkPort']['mac']) || empty($values['NetworkPort']['mac']))
-          && (!isset($values['NetworkPort']['ip']) || empty($values['NetworkPort']['ip']))) {
-         return false;
-      }
-      return true;
-   }
 }
 
 ?>

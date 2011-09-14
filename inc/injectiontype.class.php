@@ -187,7 +187,6 @@ class PluginDatainjectionInjectionType {
          if ($mapping_or_info['value'] != PluginDatainjectionInjectionType::NO_VALUE) {
             $mapping_value = $mapping_or_info['value'];
          }
-
          $injectionClass = PluginDatainjectionCommonInjectionLib::getInjectionClassInstance($p['itemtype']);
 
          foreach ($injectionClass->getOptions($p['primary_type']) as $option) {
