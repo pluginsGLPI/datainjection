@@ -183,6 +183,8 @@ function getTypesToInject() {
                              'PluginDatainjectionKnowbaseItemCategoryInjection' => 'datainjection',
                              'PluginDatainjectionKnowbaseItemInjection'         => 'datainjection',
                              'PluginDatainjectionTicketCategoryInjection'       => 'datainjection',
+                             'PluginDatainjectionTaskCategoryInjection'         => 'datainjection',
+                             'PluginDatainjectionTicketSolutionTypeInjection'   => 'datainjection',
                              );
    //Add pluginsq
    doHook('plugin_datainjection_populate');
