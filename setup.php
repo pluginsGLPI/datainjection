@@ -185,6 +185,8 @@ function getTypesToInject() {
                              'PluginDatainjectionTicketCategoryInjection'       => 'datainjection',
                              'PluginDatainjectionTaskCategoryInjection'         => 'datainjection',
                              'PluginDatainjectionTicketSolutionTypeInjection'   => 'datainjection',
+                             'PluginDatainjectionRequestTypeInjection'          => 'datainjection',
+                             'PluginDatainjectionTicketSolutionTemplateInjection' => 'datainjection',
                              );
    //Add pluginsq
    doHook('plugin_datainjection_populate');
@@ -192,7 +194,7 @@ function getTypesToInject() {
 
 
 function plugin_datainjection_migratetypes_datainjection($types) {
-
+   $types[996] = 'NetworkPort_NetworkPort';
    $types[999] = 'NetworkPort';
    return $types;
 }
