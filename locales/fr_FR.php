@@ -86,6 +86,9 @@ $LANG['datainjection']['mapping'][4]  = "Champs";
 $LANG['datainjection']['mapping'][5]  = "Champs de liaison";
 $LANG['datainjection']['mapping'][6]  = "-------Choisir une table-------";
 $LANG['datainjection']['mapping'][7]  = "-------Choisir un champ-------";
+$LANG["datainjection"]["mapping"][8] = "Connecté à : Nom actif";
+$LANG["datainjection"]["mapping"][9] = "Connecté à : Numéro de port";
+$LANG["datainjection"]["mapping"][10] = "Connecté à : adresse MAC du port";
 $LANG['datainjection']['mapping'][11] = "Au moins un champs de liaison doit être renseigné :<br> il permet de rechercher si les données à insérer existent déjà en base";
 $LANG['datainjection']['mapping'][13] = "Attention : Les données existantes seront écrasées !";
 

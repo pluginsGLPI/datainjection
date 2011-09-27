@@ -178,7 +178,6 @@ function getTypesToInject() {
                              'PluginDatainjectionNetworkportInjection'          => 'datainjection',
                              'PluginDatainjectionVlanInjection'                 => 'datainjection',
                              'PluginDatainjectionNetworkport_VlanInjection'     => 'datainjection',
-                             'PluginDatainjectionNetworkport_NetworkPortInjection' => 'datainjection',
                              'PluginDatainjectionNetpointInjection'             => 'datainjection',
                              'PluginDatainjectionKnowbaseItemCategoryInjection' => 'datainjection',
                              'PluginDatainjectionKnowbaseItemInjection'         => 'datainjection',
@@ -194,7 +193,7 @@ function getTypesToInject() {
 
 
 function plugin_datainjection_migratetypes_datainjection($types) {
-   $types[996] = 'NetworkPort_NetworkPort';
+   $types[996] = 'NetworkPort';
    $types[999] = 'NetworkPort';
    return $types;
 }

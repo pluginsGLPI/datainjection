@@ -114,6 +114,31 @@ class PluginDatainjectionNetworkportInjection extends NetworkPort
             }
          }
       }
+      
+      //To manage vlans : relies on a CommonDBRelation object !
+      $tab[51]['name']          = $LANG["datainjection"]["mapping"][8];
+      $tab[51]['field']         = 'netname';
+      $tab[51]['table']         = getTableForItemType('NetworkPort');
+      $tab[51]['linkfield']     = "netname";
+      $tab[51]['injectable']    = true;
+      $tab[51]['displaytype']   = 'text';
+      $tab[51]['checktype']     = 'text';
+
+      $tab[52]['name']          = $LANG["datainjection"]["mapping"][9];
+      $tab[52]['field']         = 'netport';
+      $tab[52]['table']         = getTableForItemType('NetworkPort');
+      $tab[52]['linkfield']     = "netport";
+      $tab[52]['injectable']    = true;
+      $tab[52]['displaytype']   = 'text';
+      $tab[52]['checktype']     = 'text';
+
+      $tab[53]['name']          = $LANG["datainjection"]["mapping"][10];
+      $tab[53]['field']         = 'netmac';
+      $tab[53]['table']         = getTableForItemType('NetworkPort');
+      $tab[53]['linkfield']     = "netmac";
+      $tab[53]['injectable']    = true;
+      $tab[53]['displaytype']   = 'text';
+      $tab[53]['checktype']     = 'text';
 
       return $tab;
    }
@@ -253,6 +278,59 @@ class PluginDatainjectionNetworkportInjection extends NetworkPort
       }
       return true;
    }
+   
+   function processAfterInsertOrUpdate($values, $add = true) {
+      global $DB;
+      
+      //Should the port be connected to another one ?
+      $params = array();
+      
+      $use_name = (isset ($values['NetworkPort']["netname"]) 
+                     || !empty ($values['NetworkPort']["netname"]));
+      $use_logical_number = (isset ($values['NetworkPort']["netport"]) 
+                     || !empty ($values['NetworkPort']["netport"]));
+      $use_mac = (isset ($values['NetworkPort']["netmac"]) 
+                     || !empty ($values['NetworkPort']["netmac"]));
+   
+      if (!$use_name && !$use_logical_number && !$use_mac) {
+         return false;
+      }
+   
+      // Find port in database
+      $sql = "SELECT `glpi_networkports`.`id` 
+              FROM `glpi_networkports`, `glpi_networkequipments` 
+              WHERE `glpi_networkports`.`itemtype`='NetworkEquipment' 
+                 AND `glpi_networkports`.`items_id` = `glpi_networkequipments`.`id`
+                    AND `glpi_networkequipments`.`is_template`='0' 
+                       AND `glpi_networkequipments`.`entities_id`='" . 
+                         $values['NetworkPort']["entities_id"]."'";
+      if ($use_name) {
+         $sql .= " AND `glpi_networkequipments`.`name`='" . $values['NetworkPort']["netname"] . "'";
+      }
+      if ($use_logical_number) {
+         $sql .= " AND `glpi_networkports`.`logical_number`='" . $values['NetworkPort']["netport"] . "'";
+      }
+      if ($use_mac){
+         $sql .= " AND `glpi_networkports`.`mac`='" . $values['NetworkPort']["netmac"] . "'";
+      }
+      $res = $DB->query($sql);
+      
+      //if at least one parameter is given
+      $nb = $DB->numrows($res);
+      if ($nb == 1) {
+         //Get data for this port
+         $netport         = $DB->fetch_array($res);
+         $netport_netport = new NetworkPort_NetworkPort();
+         //If this port already connected to another one ?
+         if (!$netport_netport->getOppositeContact($netport['id'])) {
+            //No, add a new port to port connection
+            $tmp['networkports_id_1'] = $values['NetworkPort']['id'];
+            $tmp['networkports_id_2'] = $netport['id'];
+            $netport_netport->add($tmp);
+         }
+      } //TODO add injection warning if no port found or more than one
+   }
+
 }
 
 ?>

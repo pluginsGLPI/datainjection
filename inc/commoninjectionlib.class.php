@@ -1367,7 +1367,7 @@ class PluginDatainjectionCommonInjectionLib {
 
             } else {
                //If type needs it : process more data after type import
-               $this->processAfterInsertOrUpdate($add);
+               $this->processAfterInsertOrUpdate($this->injectionClass, $add);
                //$this->results['status'] = self::SUCCESS;
                $this->results[get_class($item)] = $newID;
 
@@ -1391,6 +1391,7 @@ class PluginDatainjectionCommonInjectionLib {
                      $values = $this->getValuesForItemtype($itemtype);
                      if ($this->lastCheckBeforeProcess($injectionClass, $values)) {
                         $tmpID  = $this->effectiveAddOrUpdate($injectionClass, $add, $item, $values);
+                        $this->processAfterInsertOrUpdate($injectionClass, $add);
                      }
                   }
                }
@@ -1896,12 +1897,12 @@ class PluginDatainjectionCommonInjectionLib {
     * @param add true if an item is created, false if it's an update
     * @return nothing
    **/
-   private function processAfterInsertOrUpdate($add = true) {
+   private function processAfterInsertOrUpdate($injectionClass, $add = true) {
 
       //If itemtype implements special process after type injection
-      if (method_exists($this->injectionClass,'processAfterInsertOrUpdate')) {
+      if (method_exists($injectionClass, 'processAfterInsertOrUpdate')) {
          //Invoke it
-         $this->injectionClass->processAfterInsertOrUpdate($this->values, $add);
+         $injectionClass->processAfterInsertOrUpdate($this->values, $add);
       }
    }
 

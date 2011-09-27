@@ -87,6 +87,9 @@ $LANG['datainjection']['mapping'][4]  = "Fields";
 $LANG['datainjection']['mapping'][5]  = "Link field";
 $LANG['datainjection']['mapping'][6]  = "-------Choose a table-------";
 $LANG['datainjection']['mapping'][7]  = "-------Choose a field-------";
+$LANG["datainjection"]["mapping"][8]  = "Connected to : device name";
+$LANG["datainjection"]["mapping"][9]  = "Connected to : port number";
+$LANG["datainjection"]["mapping"][10] = "Connected to : port MAC address";
 $LANG['datainjection']['mapping'][11] = "One link field must be selected :<br> it will be used to check if data already exists";
 $LANG['datainjection']['mapping'][13] = "Warning : existing data will be overridden";
 
