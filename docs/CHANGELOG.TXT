@@ -31,6 +31,24 @@
 // Original Author of file: Walid NOUH & BALPE Dévi & Remi COLLET
 // Purpose of file:
 // ----------------------------------------------------------------------
+Version 2.1.0 for GLPI 0.80
+ #3129 (Feature) Import ticket categories
+ #3128 (Bug) Cannot import users passwords
+ #1956 (Feature) Check files/_plugins/datainjection rights
+ #1558 (Feature) Import CSV files through WebServices
+ 
+Version 2.0.3
+ #2893 (Bug) an_overwrite_if_not_empty config not honored
+
+Version 2.0.0 beta for GLPI 0.78
+ #2130 (Feature) Try to guess more mappings
+ #2129 (Feature) Comments field
+ #1559 (Feature) Rewrite GUI
+  
+Version 1.7.3
+  #1820 (Feature) Better integration with plugins
+  #2132 (Bug) Float format check issue
+
 Version 1.7.2
    #1772 Import new fields in entity
    
