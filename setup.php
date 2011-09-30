@@ -47,6 +47,13 @@ function plugin_init_datainjection() {
    $PLUGIN_HOOKS['migratetypes']['datainjection'] = 'plugin_datainjection_migratetypes_datainjection';
 
    if ($plugin->isInstalled("datainjection") && $plugin->isActivated("datainjection")) {
+      if (!file_exists(PLUGIN_DATAINJECTION_UPLOAD_DIR) 
+      || !is_writable(PLUGIN_DATAINJECTION_UPLOAD_DIR)) {
+         logDebug("[Datainjection plugin] : directory ".PLUGIN_DATAINJECTION_UPLOAD_DIR.
+                     " must exists and be writable for apache user.\n Please check your installation");
+         return false;
+      }
+      
       $PLUGIN_HOOKS['headings']['datainjection']        = 'plugin_get_headings_datainjection';
       $PLUGIN_HOOKS['headings_action']['datainjection'] = 'plugin_headings_actions_datainjection';
 
