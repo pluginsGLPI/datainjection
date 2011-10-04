@@ -261,7 +261,8 @@ class PluginDatainjectionClientInjection {
       $p['nblines']   = $nblines;
 
       unset($_SESSION['datainjection']['go']);
-
+      $_SESSION["MESSAGE_AFTER_REDIRECT"] = "";
+      
       $url = $CFG_GLPI["root_doc"]."/plugins/datainjection/ajax/results.php";
       ajaxUpdateItem("span_injection",$url,$p);
    }

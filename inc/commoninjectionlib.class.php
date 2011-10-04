@@ -524,7 +524,7 @@ class PluginDatainjectionCommonInjectionLib {
                if ($item->canCreate() && $this->rights['add_dropdown']) {
                   $id = $item->import($input);
                } else {
-                  $id = $item->getID($input);
+                  $id = $item->findID($input);
                }
             } else  if ($item instanceof CommonDropdown) {
                if ($item->canCreate() && $this->rights['add_dropdown']) {
@@ -1430,7 +1430,9 @@ class PluginDatainjectionCommonInjectionLib {
          }
       }
       //logDebug("effectiveAddOrUpdate($add)", "Values:", $values, "ToInject:", $toinject);
-
+      
+      //Escape data to inject
+      $toinject = addslashes_deep($toinject);
       if ($item instanceof CommonDropdown && $add) {
          $newID = $item->import($toinject);
 
