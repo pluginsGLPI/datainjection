@@ -1182,15 +1182,23 @@ class PluginDatainjectionCommonInjectionLib {
                return ((count($regs) > 0)?self::SUCCESS:self::TYPE_MISMATCH);
 
             case 'mac' :
-               preg_match("/([0-9a-fA-F]{2}([:-]|$)){6}$/",$data,$regs);
+               preg_match("/([0-9a-fA-F]{2}([:-]|$)){6}$/", $data, $regs);
                return ((count($regs) > 0)?self::SUCCESS:self::TYPE_MISMATCH);
 
             case 'itemtype' :
                return (class_exists($data)?self::SUCCESS:self::TYPE_MISMATCH);
 
             case 'bool' :
-               return (($data == 0 || $data == 1)?self::SUCCESS:self::TYPE_MISMATCH);
-
+               //If not numeric => type mismatch
+               if (!is_numeric($data)) {
+                  return self::TYPE_MISMATCH;
+               }
+               if ($data == 0 || $data == 1) {
+                  return self::SUCCESS;
+               } else {
+                  return self::TYPE_MISMATCH;
+               }
+ 
             default :
                //Not a standard check ? Try checks specific to the injection class
                //Will return SUCCESS if it's not a specific check
