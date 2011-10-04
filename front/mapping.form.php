@@ -34,7 +34,7 @@ include (GLPI_ROOT . "/inc/includes.php");
 /* Update mappings */
 if (isset ($_POST["update"])) {
    $at_least_one_mandatory = false;
-   $mapping = new PluginDatainjectionMapping;
+   $mapping                = new PluginDatainjectionMapping();
 
    foreach ($_POST['data'] as $id => $mapping_infos) {
       $mapping_infos['id'] = $id;
@@ -58,7 +58,7 @@ if (isset ($_POST["update"])) {
    if (!$at_least_one_mandatory) {
       addMessageAfterRedirect($LANG['datainjection']['mapping'][11], true, ERROR, true);
    } else {
-      $model = new PluginDatainjectionModel;
+      $model = new PluginDatainjectionModel();
       $model->getFromDB($_POST['models_id']);
 
       if ($model->fields['step'] != PluginDatainjectionModel::READY_TO_USE_STEP) {

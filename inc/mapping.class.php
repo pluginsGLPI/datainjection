@@ -181,9 +181,7 @@ class PluginDatainjectionMapping extends CommonDBTM {
          $options['fields_update']   = false;
 
          echo "<td class='center'><span id='span_field_$mappings_id'>";
-         //PluginDatainjectionDropdown::dropdownFields($options);
          echo "</span></td>";
-         //PluginDatainjectionDropdown::showMandatoryCheckbox($options);
          echo "<td class='center'><span id='span_mandatory_$mappings_id'></span></td>";
       }
 

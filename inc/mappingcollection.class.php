@@ -56,9 +56,9 @@ class PluginDatainjectionMappingCollection {
 
       foreach  ($data = $DB->request($sql) as $data) {
          // Addslashes to conform to value return by PluginDatainjectionBackendcsv::parseLine
-         $data["name"] = addslashes($data["name"]);
-         $mapping      = new PluginDatainjectionMapping;
-         $mapping->fields = $data;
+         $data["name"]              = addslashes($data["name"]);
+         $mapping                   = new PluginDatainjectionMapping();
+         $mapping->fields           = $data;
          $this->mappingCollection[] = $mapping;
       }
    }
@@ -109,7 +109,7 @@ class PluginDatainjectionMappingCollection {
    function getMappingsByField($field, $value) {
 
       foreach ($this->mappingCollection as $mapping) {
-         if ($mapping->equal($field,$value)) {
+         if ($mapping->equal($field, $value)) {
             return $mapping;
          }
       }
@@ -137,12 +137,8 @@ class PluginDatainjectionMappingCollection {
    //---- Delete ----//
 
    function deleteMappingsFromDB($model_id) {
-      global $DB;
-
-      $sql = "DELETE
-              FROM `glpi_plugin_datainjection_mappings`
-              WHERE `models_id` = '$model_id'";
-      return $DB->query($sql);
+      $mapping = new PluginDatainjectionMapping();
+      $mapping->deleteByCriteria(array('models_id' => $model_id));
    }
 
 

@@ -52,7 +52,7 @@ class PluginDatainjectionInjectionType {
                && !$only_primary
                   || ($only_primary && $injectionclass->isPrimaryType())) {
             $typename = PluginDatainjectionInjectionType::getParentObjectName($type);
-            $name = '';
+            $name     = '';
             if ($from != 'datainjection') {
                $plugin->getFromDBbyDir($from);
                $name = $plugin->getName().': ';
@@ -96,7 +96,6 @@ class PluginDatainjectionInjectionType {
       $p['mapping_or_info'] = json_encode($mapping_or_info->fields);
       $p['called_by']       = get_class($mapping_or_info);
       $p['fields_update']   = true;
-
       foreach ($options as $key => $value) {
          $p[$key] = $value;
       }
@@ -175,7 +174,7 @@ class PluginDatainjectionInjectionType {
       } else {
          $mapping_or_info = $options['mapping_or_info'];
       }
-
+      
       $fields = array();
       $fields[PluginDatainjectionInjectionType::NO_VALUE] = $LANG['datainjection']['mapping'][7];
 
@@ -214,10 +213,8 @@ class PluginDatainjectionInjectionType {
                                             'used'  => $used));
 
       $url = $CFG_GLPI["root_doc"]."/plugins/datainjection/ajax/dropdownMandatory.php";
-      //if ($p['fields_update']) {
       ajaxUpdateItem("span_mandatory_".$mapping_or_info['id'], $url, $p, false,
                      "dropdown_data[".$mapping_or_info['id']."][value]$rand");
-      //}
       ajaxUpdateItemOnSelectEvent("dropdown_data[".$mapping_or_info['id']."][value]$rand",
                                   "span_mandatory_".$mapping_or_info['id'], $url, $p);
    }
@@ -266,8 +263,10 @@ class PluginDatainjectionInjectionType {
 
 
    static function showMandatoryCheckbox($options=array()) {
-
-      if (isset($options['need_decode']) && $options['need_decode']) {
+      //json adds more \ char than needed : when $options['mapping_or_info']['name'] contains a '
+      //json_decode fails to decode it !
+      $options['mapping_or_info'] = str_replace("\\","", $options['mapping_or_info']);
+      if ($options['need_decode']) {
          $mapping_or_info = json_decode(stripslashes_deep($options['mapping_or_info']), true);
       } else {
          $mapping_or_info = $options['mapping_or_info'];
@@ -281,7 +280,6 @@ class PluginDatainjectionInjectionType {
 
       if ($options['called_by'] == 'PluginDatainjectionInfo'
           || ($options['primary_type'] == $options['itemtype'])) {
-
          echo "<input type='checkbox' name='data[".$mapping_or_info['id']."][is_mandatory]' $checked>";
       }
    }
