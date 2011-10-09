@@ -262,7 +262,6 @@ class PluginDatainjectionCommonInjectionLib {
       return $status_check;
    }
 
-
    /**
     * Check if a field type represents a dropdown or not
     *
@@ -272,12 +271,12 @@ class PluginDatainjectionCommonInjectionLib {
    **/
    static function isFieldADropdown($field_type) {
 
-      if (!in_array($field_type, array('tree', 'text', 'multiline_text', 'date'))) {
+      if (!in_array($field_type, array('integer', 'decimal', 'tree', 'text', 'multiline_text', 
+                                       'date'))) {
          return true;
       }
       return false;
    }
-
 
    /**
     * Return an the class of an item by giving his injection class
@@ -864,11 +863,11 @@ class PluginDatainjectionCommonInjectionLib {
          $injectionClass = self::getInjectionClassInstance($itemtype);
 
          //Get search options associated with the injectionClass
-//         $searchOptions = $injectionClass->getOptions($this->primary_type);
+         $searchOptions = $injectionClass->getOptions($itemtype);
 
          foreach ($data as $field => $value) {
             if ($value && $value == "NULL") {
-               if (isset($option['datatype']) && self::isFieldADropdown($field)) 
+               if (isset($option['datatype']) && self::isFieldADropdown($option['displaytype'])) 
                $this->values[$itemtype][$field] = self::EMPTY_VALUE;
             }
          }
@@ -1430,7 +1429,7 @@ class PluginDatainjectionCommonInjectionLib {
          $option = self::findSearchOption($options, $key);
          if (!isset($option['checktype']) || $option['checktype'] != self::FIELD_VIRTUAL) {
             //If field is a dropdown and value is '', then replace it by 0
-            if (self::isFieldADropdown($key) && $value == self::EMPTY_VALUE) {
+            if (self::isFieldADropdown($option['displaytype']) && $value == self::EMPTY_VALUE) {
                $toinject[$key] = self::DROPDOWN_EMPTY_VALUE;
             } else {
                $toinject[$key] = $value;
