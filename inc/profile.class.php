@@ -37,12 +37,8 @@ class PluginDatainjectionProfile extends CommonDBTM {
 
    //if profile deleted
    function cleanProfiles($ID) {
-      global $DB;
-
-      $query = "DELETE
-                FROM `glpi_plugin_datainjection_profiles`
-                WHERE `id` = '$ID' ";
-      $DB->query($query);
+      $profile = new self();
+      $profile->deleteByCriteria(array('id' => $ID));
    }
 
 

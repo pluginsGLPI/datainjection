@@ -531,6 +531,7 @@ class PluginDatainjectionCommonInjectionLib {
                } else {
                   $canadd = false;
                }
+
                $id = $item->importExternal($value, $this->entity,
                                            $this->addExternalDropdownParameters($itemtype),
                                            '', $canadd);
@@ -1439,7 +1440,7 @@ class PluginDatainjectionCommonInjectionLib {
       //logDebug("effectiveAddOrUpdate($add)", "Values:", $values, "ToInject:", $toinject);
       
       //Escape data to inject
-      $toinject = addslashes_deep($toinject);
+      //$toinject = addslashes_deep($toinject);
       if ($item instanceof CommonDropdown && $add) {
          $newID = $item->import($toinject);
 
@@ -1710,11 +1711,11 @@ class PluginDatainjectionCommonInjectionLib {
    private function addTemplateFields($itemtype) {
 
       //If data inserted is not a template
-      if (!$this->getValueByItemtypeAndName($itemtype,'is_template')) {
+      if (!$this->getValueByItemtypeAndName($itemtype, 'is_template')) {
          $template    = new $itemtype();
          $template_id = $this->getValueByItemtypeAndName($itemtype, '_oldID');
 
-         if ($template->getFromDB($template_id)) {
+         if ($template->getFromDB($template_id) && $itemtype != 'Entity') {
             unset ($template->fields["id"]);
             unset ($template->fields["date_mod"]);
             unset ($template->fields["is_template"]);
