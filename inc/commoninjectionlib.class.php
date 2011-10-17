@@ -452,7 +452,7 @@ class PluginDatainjectionCommonInjectionLib {
          $searchOptions  = $injectionClass->getOptions($this->primary_type);
 
          foreach ($data as $field => $value) {
-            if (!in_array($field,$blacklisted_fields)) {
+            if (!in_array($field, $blacklisted_fields)) {
                $searchOption = self::findSearchOption($searchOptions, $field);
                $this->getFieldValue($injectionClass, $itemtype, $searchOption, $field, $value);
             }
@@ -481,7 +481,6 @@ class PluginDatainjectionCommonInjectionLib {
    **/
    private function getFieldValue($injectionClass, $itemtype, $searchOption, $field, $value,
                                   $add=true) {
-
       if (isset($searchOption['storevaluein'])) {
          $linkfield = $searchOption['storevaluein'];
       } else {
@@ -707,10 +706,6 @@ class PluginDatainjectionCommonInjectionLib {
    static private function findSingle($item, $searchOption, $entity, $value) {
       global $DB;
 
-      //List of objects that should inherit from CommonDropdown...
-      //TODO : not needed in 0.80
-      $shouldbetropdowns = array('Budget');
-
       $query = "SELECT `id`
                 FROM `".$item->getTable()."`
                 WHERE 1";
@@ -730,12 +725,12 @@ class PluginDatainjectionCommonInjectionLib {
       if ($DB->numrows($result)>0) {
          //check if user has right on the current entity
          return $DB->result($result, 0, "id");
+      } else {
+         return self::DROPDOWN_EMPTY_VALUE;
       }
-      $id = self::DROPDOWN_EMPTY_VALUE;
-      if (in_array(get_class($item),$shouldbetropdowns)) {
-         $id = $item->add(array($searchOption['field'] => $value));
-      }
-      return $id;
+      //$id = self::DROPDOWN_EMPTY_VALUE;
+      //$id = $item->add(array($searchOption['field'] => $value));
+      //return $id;
    }
 
    /**
@@ -1437,10 +1432,9 @@ class PluginDatainjectionCommonInjectionLib {
             }
          }
       }
+
       //logDebug("effectiveAddOrUpdate($add)", "Values:", $values, "ToInject:", $toinject);
-      
-      //Escape data to inject
-      //$toinject = addslashes_deep($toinject);
+
       if ($item instanceof CommonDropdown && $add) {
          $newID = $item->import($toinject);
 
@@ -1592,7 +1586,7 @@ class PluginDatainjectionCommonInjectionLib {
          if ($item instanceof CommonDBRelation) {
             //Define the side of the relation to use
 
-            if (method_exists($item,'relationSide')) {
+            if (method_exists($item, 'relationSide')) {
                $side = $injectionClass->relationSide();
             } else {
                $side = true;
@@ -1853,7 +1847,7 @@ class PluginDatainjectionCommonInjectionLib {
          }
       }
 
-      foreach (array('displaytype','checktype') as $paramtype) {
+      foreach (array('displaytype', 'checktype') as $paramtype) {
          if (isset($options[$paramtype])) {
             foreach ($options[$paramtype] as $type => $tabsID) {
                foreach ($tabsID as $tabID) {
