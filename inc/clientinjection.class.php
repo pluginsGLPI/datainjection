@@ -371,9 +371,11 @@ class PluginDatainjectionClientInjection {
             fputcsv($tmpfile, $line, $model->getBackend()->getDelimiter());
          }
          fclose($tmpfile);
-
-         header('Content-disposition: attachment; filename=Error-'.plugin_datainjection_getSessionParam('file_name'));
-         header('Content-Type: application/force-download');
+         
+         $name = "Error-".plugin_datainjection_getSessionParam('file_name');
+         $name = str_replace(' ','',$name);
+         header('Content-disposition: attachment; filename='.$name);
+         header('Content-Type: application/octet-stream');
          header('Content-Transfer-Encoding: fichier');
          header('Content-Length: '.filesize($file));
          header('Pragma: no-cache');
