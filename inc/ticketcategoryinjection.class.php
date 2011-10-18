@@ -100,7 +100,7 @@ class PluginDatainjectionTicketCategoryInjection extends TicketCategory
       }
 
       //Add displaytype value
-      $fields_definition = array("bool"           => array(3, 86),
+      $fields_definition = array("bool"           => array(86),
                                  "multiline_text" => array(16),
                                  "dropdown"       => array(71),
                                  "user"           => array(70));
