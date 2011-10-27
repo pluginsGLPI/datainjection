@@ -624,25 +624,15 @@ class PluginDatainjectionModel extends CommonDBTM {
          $itemtype = new $this->fields['itemtype'];
          echo $itemtype->getTypeName();
       }
-      echo "</td>";
-      echo "<td>".$LANG['datainjection']['model'][5]."&nbsp;: </td>";
-      echo "<td>";
-      PluginDatainjectionDropdown::dropdownFileTypes($this->fields['filetype']);
-      echo "</td></tr>";
-
+      echo "</td><td colspan='2'></tr>"; 
       echo "<tr class='tab_bg_1'>";
       echo "<td>".$LANG['datainjection']['model'][6]."&nbsp;: </td>";
       echo "<td>";
       Dropdown::showYesNo("behavior_add", $this->fields['behavior_add']);
-      echo "</td>";
-      echo "<td colspan='2'></td></tr>";
-
-      echo "<tr class='tab_bg_1'>";
-      echo "<td>".$LANG['datainjection']['model'][7]."&nbsp;: </td>";
+      echo "</td><td>".$LANG['datainjection']['model'][7]."&nbsp;: </td>";
       echo "<td>";
       Dropdown::showYesNo("behavior_update", $this->fields['behavior_update']);
-      echo "</td>";
-      echo "<td colspan='2'></td></tr>";
+      echo "</td></tr>";
 
       echo "<tr class='tab_bg_1'><th colspan='4'>".$LANG['datainjection']['model'][15]."</th></tr>";
 
@@ -716,7 +706,6 @@ class PluginDatainjectionModel extends CommonDBTM {
 
          if ($this->fields['step'] > self::MAPPING_STEP) {
             $ong[5] = $LANG['datainjection']['tabs'][1];
-            //$ong[6] = $LANG['datainjection']['tabs'][2];
 
             if ($this->fields['step'] != self::READY_TO_USE_STEP) {
                $ong[7] = $LANG['datainjection']['model'][37];
@@ -730,17 +719,11 @@ class PluginDatainjectionModel extends CommonDBTM {
 
 
    function cleanDBonPurge() {
-      global $DB;
-
-      $tables = array("glpi_plugin_datainjection_modelcsvs",
-                      "glpi_plugin_datainjection_mappings",
-                      "glpi_plugin_datainjection_infos");
-
-      foreach ($tables as $table) {
-         $query = "DELETE
-                   FROM `$table`
-                   WHERE `models_id` = '".$this->fields['id']."'";
-         $DB->query($query);
+      $itemtypes = array("PluginDatainjectionModelcsv", "PluginDatainjectionMapping", 
+                         "PluginDatainjectionInfo");
+      foreach ($itemtypes as $itemtype) {
+         $item = new $itemtype();
+         $item->deleteByCriteria(array("models_id" => $this->getID()));
       }
    }
 
@@ -767,7 +750,7 @@ class PluginDatainjectionModel extends CommonDBTM {
 
    static function changeStep($models_id, $step) {
 
-      $model = new PluginDatainjectionModel;
+      $model = new self();
       if ($model->getFromDB($models_id)) {
          $model->dohistory = false;
          $tmp['id']        = $models_id;
@@ -810,7 +793,7 @@ class PluginDatainjectionModel extends CommonDBTM {
 
    static function getInstanceByModelID($models_id) {
 
-      $model = new PluginDatainjectionModel;
+      $model = new self();
       $model->getFromDB($models_id);
       $specific = self::getInstance($model->getFiletype());
       $specific->getFromDBByModelID($models_id);
@@ -946,7 +929,7 @@ class PluginDatainjectionModel extends CommonDBTM {
          }
       }
 
-      $mappingCollection = new PluginDatainjectionMappingCollection;
+      $mappingCollection = new PluginDatainjectionMappingCollection();
 
       //Delete existing mappings only in model creation mode !!
       if ($mode == self::CREATION) {
@@ -1115,7 +1098,7 @@ class PluginDatainjectionModel extends CommonDBTM {
    static function checkRightOnModel($models_id) {
       global $DB;
 
-      $model = new PluginDatainjectionModel;
+      $model = new self();
       $model->getFromDB($models_id);
 
       $continue = true;
@@ -1162,7 +1145,7 @@ class PluginDatainjectionModel extends CommonDBTM {
          $injectionData = unserialize($_SESSION['datainjection']['lines']);
          $lines         = $injectionData->getDatas();
          $nblines       = $_SESSION['datainjection']['nblines'];
-         $model         = PluginDatainjectionModel::getInstanceByModelID($models_id);
+         $model         = self::getInstanceByModelID($models_id);
 
          $model->loadMappings();
          $mappings = $model->getMappings();
@@ -1199,7 +1182,7 @@ class PluginDatainjectionModel extends CommonDBTM {
       $results   = stripslashes_deep(json_decode(plugin_datainjection_getSessionParam('results'),
                                                  true));
       $todisplay = array();
-      $model     = new PluginDatainjectionModel;
+      $model     = new self();
       $model->getFromDB($models_id);
 
       if (!empty($results)) {
@@ -1334,7 +1317,7 @@ class PluginDatainjectionModel extends CommonDBTM {
       global $LANG;
 
       $logresults = self::prepareLogResults($models_id);
-      $model      = new PluginDatainjectionModel;
+      $model      = new self();
       $model->getFromDB($models_id);
 
       if (!empty($logresults)) {

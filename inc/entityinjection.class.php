@@ -61,14 +61,19 @@ class PluginDatainjectionEntityInjection extends Entity
 
       //Remove some options because some fields cannot be imported
       $options['ignore_fields'] = array(2, 19);
-      $options['displaytype']   = array("multiline_text" => array(16));
+      $options['displaytype']   = array("multiline_text" => array(16, 17), "dropdown" => array(9));
       $tab = PluginDatainjectionCommonInjectionLib::addToSearchOptions($tab, $options, $this);
+      foreach ($tab as $id => $option) {
+         //If table is NOT glpi_entitites but glpi_entitydatas => remove option
+         if ($option['table'] != 'glpi_entities') {
+            unset($tab[$id]);
+         }
+      }
       return $tab;
    }
 
    /**
     * Standard method to add an object into glpi
-    * WILL BE INTEGRATED INTO THE CORE IN 0.80
     *
     * @param values fields to add into glpi
     * @param options options used during creation
@@ -82,6 +87,72 @@ class PluginDatainjectionEntityInjection extends Entity
       return $lib->getInjectionResults();
    }
 
+   function customimport($input = array(), $add = true) {
+
+      if (!isset($input['completename']) || empty($input['completename'])) {
+         return -1;
+      }
+
+      // Import a full tree from completename
+      $names  = explode('>',$input['completename']);
+      $fk     = $this->getForeignKeyField();
+      $i      = count($names);
+      $parent = 0;
+      $entity = new Entity();
+      $level  = 0;
+
+      foreach ($names as $name) {
+         $name = trim($name);
+         $i--;
+         $level++;
+         if (empty($name)) {
+            // Skip empty name (completename starting/endind with >, double >, ...)
+            continue;
+         }
+         $tmp['name'] = $name;
+
+         if (!$i) {
+            // Other fields (comment, ...) only for last node of the tree
+            foreach ($input as $key => $val) {
+               if ($key != 'completename') {
+                  $tmp[$key] = $val;
+               }
+            }
+         }
+         $tmp['level']       = $level;
+         $tmp['entities_id'] = $parent;
+
+         //Does the entity alread exists ?
+         $results = getAllDatasFromTable('glpi_entities', 
+                                         "`name`='$name' AND `entities_id`='$parent'");
+         //Entity doesn't exists => create it
+         if (empty($results)) {
+            $parent = CommonDropdown::import($tmp);
+         } else {
+            //Entity already exists, use the ID as parent
+            $ent    = array_pop($results);
+            $parent = $ent['id'];
+         }
+      }
+      return $parent;
+   }
+   
+   function customDataAlreadyInDB($injectionClass, $values, $options) {
+      if (!isset($values['completename'])) {
+         return false;
+      } else {
+         $results = getAllDatasFromTable('glpi_entities', 
+                                         "`completename`='".$values['completename']."'");
+
+         if (empty($results)) {
+            return false;
+         } else {
+            $ent    = array_pop($results);
+            return $ent['id'];
+         }
+      }
+   }
+   
 }
 
 ?>

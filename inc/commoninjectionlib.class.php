@@ -31,7 +31,6 @@
 // ----------------------------------------------------------------------
 // Original Author of file: Walid Nouh
 // Purpose of file: Common library to import data into GLPI
-// This library *SHOULD* be included in GLPI's core in version 0.80
 // ----------------------------------------------------------------------
 
 class PluginDatainjectionCommonInjectionLib {
@@ -1369,6 +1368,9 @@ class PluginDatainjectionCommonInjectionLib {
                $this->results['status'] = self::WARNING;
 
             } else {
+               //Store id of the injected item
+               $this->setValueForItemtype($this->primary_type, 'id', $newID);
+               
                //If type needs it : process more data after type import
                $this->processAfterInsertOrUpdate($this->injectionClass, $add);
                //$this->results['status'] = self::SUCCESS;
@@ -1434,8 +1436,9 @@ class PluginDatainjectionCommonInjectionLib {
       }
 
       //logDebug("effectiveAddOrUpdate($add)", "Values:", $values, "ToInject:", $toinject);
-
-      if ($item instanceof CommonDropdown && $add) {
+      if (method_exists($injectionClass, 'customimport')) {
+         $newID = call_user_func(array($injectionClass, 'customimport'), $toinject, $add);
+      } elseif ($item instanceof CommonDropdown && $add) {
          $newID = $item->import($toinject);
 
       } else {
@@ -1570,6 +1573,15 @@ class PluginDatainjectionCommonInjectionLib {
       //If injectionClass has a method to check if needed parameters are present
       $values = $this->getValuesForItemtype($itemtype);
 
+      //If an itemtype needs special treatment (for example entity)
+      if (method_exists($injectionClass, 'customDataAlreadyInDB')) {
+         if ($res = $injectionClass->customDataAlreadyInDB($injectionClass, $values, $options)) {
+            $this->setValueForItemtype($itemtype, 'id', $res);
+         } else {
+            $this->setValueForItemtype($itemtype, 'id', self::ITEM_NOT_FOUND);
+         }
+      }
+
       if (method_exists($injectionClass, 'checkParameters')) {
          $continue = $injectionClass->checkParameters($values, $options);
       }
@@ -1679,7 +1691,7 @@ class PluginDatainjectionCommonInjectionLib {
             }
             $sql .= " WHERE 1 " . $where_entity . " " . $where;
          }
-
+         
          $result = $DB->query($sql);
          if ($DB->numrows($result) > 0) {
             $db_fields = $DB->fetch_assoc($result);
@@ -1821,15 +1833,15 @@ class PluginDatainjectionCommonInjectionLib {
                              'notepad' => 'notepad');
 
       foreach ($type_searchOptions as $id => $tmp) {
-         if (!is_array($tmp) || in_array($id,$options['ignore_fields'])) {
+         if (!is_array($tmp) || in_array($id, $options['ignore_fields'])) {
             unset($type_searchOptions[$id]);
 
          } else {
-            if (in_array($tmp['field'],$add_linkfield)) {
+            if (in_array($tmp['field'], $add_linkfield)) {
                $type_searchOptions[$id]['linkfield'] = $add_linkfield[$tmp['field']];
             }
 
-            if (!in_array($id,$options['ignore_fields'])) {
+            if (!in_array($id, $options['ignore_fields'])) {
                if (!isset($tmp['linkfield'])) {
                   $type_searchOptions[$id]['injectable'] = self::FIELD_VIRTUAL;
                } else {

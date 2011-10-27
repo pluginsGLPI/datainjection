@@ -170,5 +170,6 @@ $LANG['datainjection']['import'][0] = "Launch the import";
 $LANG['datainjection']['import'][1] = "Import progress";
 
 $LANG['datainjection']['port'][1] = "Network link";
+$LANG['datainjection']['entity'][1] = "Entity informations";
 
 ?>
