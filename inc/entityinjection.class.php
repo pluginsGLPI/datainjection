@@ -152,6 +152,38 @@ class PluginDatainjectionEntityInjection extends Entity
          }
       }
    }
+
+   function processAfterInsertOrUpdate($values, $add = true) {
+
+      if (isset($values['EntityData'])) {
+         $tmp = $values['EntityData'];
+         $entitydata = new EntityData();
+         $entities = getAllDatasFromTable("glpi_entitydatas", 
+                                          "`entities_id`='".$values['Entity']['id']."'");
+         if (!empty($entities)) {
+            //Update entitydata
+            $tmp = array_pop($entities);
+            foreach ($values['EntityData'] as $key => $value) {
+               $tmp[$key] = $value;
+            }
+            $entitydata->update($tmp);
+         } else {
+            $entitydata->getEmpty();
+            foreach ($entitydata->fields as $key => $value) {
+               if ($value != '') {
+                  $tmp[$key] = $value;
+               }
+            }
+            foreach ($values['EntityData'] as $key => $value) {
+               $tmp[$key] = $value;
+            }
+            $tmp['entities_id'] = $values['Entity']['id'];
+            $entitydata->add($tmp);
+         }
+      
+         unset($values['EntityData']);
+      }
+   }
    
 }
 

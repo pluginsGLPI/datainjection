@@ -63,7 +63,7 @@ if (isset ($_POST["add"])) {
    $model->check($_POST['id'], 'w');
    $model->update($_POST);
 
-   $specific_model = PluginDatainjectionModel::getInstance($_POST['filetype']);
+   $specific_model = PluginDatainjectionModel::getInstance('csv');
    $specific_model->saveFields($_POST);
    glpi_header($_SERVER['HTTP_REFERER']);
 
@@ -77,7 +77,7 @@ if (isset ($_POST["add"])) {
    if (!empty($_FILES)) {
       $model->check($_POST['id'],'w');
 
-      if ($model->processUploadedFile(array('file_encoding' => $_POST['file_encoding'],
+      if ($model->processUploadedFile(array('file_encoding' => 'csv',
                                             'mode'          => PluginDatainjectionModel::CREATION))) {
          setActiveTab('PluginDatainjectionModel', 4);
       }else {

@@ -91,13 +91,6 @@ class PluginDatainjectionEntityDataInjection extends EntityData
       $lib->processAddOrUpdate();
       return $lib->getInjectionResults();
    }
-   
-   function addSpecificNeededFields($primary_type, $values) {
-      if (isset($values[$primary_type])) {
-         $values['EntityData']['entities_id'] = $values[$primary_type]['id'];
-      }
-      return $values;
-   }
 }
 
 ?>

@@ -667,7 +667,7 @@ class PluginDatainjectionModel extends CommonDBTM {
       echo "</td></tr>";
 
       if ($ID > 0) {
-         $tmp = self::getInstance($this->fields['filetype']);
+         $tmp = self::getInstance('csv');
          $tmp->showAdditionnalForm($this);
       }
 
