@@ -104,7 +104,7 @@ class PluginDatainjectionNetworkEquipmentInjection extends NetworkEquipment
    }
 
 
-   function processAfterInsertOrUpdate($values, $add = true) {
+   function processAfterInsertOrUpdate($values, $add = true, $rights = array()) {
 
       if (isset($values['NetworkEquipment']['nb_ports'])) {
          for ($i=1 ; $i<=$values['NetworkEquipment']['nb_ports'] ; $i++) {

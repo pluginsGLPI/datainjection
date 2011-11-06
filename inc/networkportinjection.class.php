@@ -279,7 +279,7 @@ class PluginDatainjectionNetworkportInjection extends NetworkPort
       return true;
    }
    
-   function processAfterInsertOrUpdate($values, $add = true) {
+   function processAfterInsertOrUpdate($values, $add = true, $rights = array()) {
       global $DB;
       
       //Should the port be connected to another one ?

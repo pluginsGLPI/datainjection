@@ -727,9 +727,6 @@ class PluginDatainjectionCommonInjectionLib {
       } else {
          return self::DROPDOWN_EMPTY_VALUE;
       }
-      //$id = self::DROPDOWN_EMPTY_VALUE;
-      //$id = $item->add(array($searchOption['field'] => $value));
-      //return $id;
    }
 
    /**
@@ -1437,7 +1434,8 @@ class PluginDatainjectionCommonInjectionLib {
 
       //logDebug("effectiveAddOrUpdate($add)", "Values:", $values, "ToInject:", $toinject);
       if (method_exists($injectionClass, 'customimport')) {
-         $newID = call_user_func(array($injectionClass, 'customimport'), $toinject, $add);
+         $newID = call_user_func(array($injectionClass, 'customimport'), $toinject, $add, 
+                                 $this->rights);
       } elseif ($item instanceof CommonDropdown && $add) {
          $newID = $item->import($toinject);
 
@@ -1580,128 +1578,128 @@ class PluginDatainjectionCommonInjectionLib {
          } else {
             $this->setValueForItemtype($itemtype, 'id', self::ITEM_NOT_FOUND);
          }
-      }
-
-      if (method_exists($injectionClass, 'checkParameters')) {
-         $continue = $injectionClass->checkParameters($values, $options);
-      }
-
-      //Needed parameters are not present : not found
-      if (!$continue) {
-         $this->values[$itemtype]['id'] = self::ITEM_NOT_FOUND;
       } else {
-         $sql = "SELECT *
-                 FROM `" . $injectionClass->getTable()."`";
-
-         $item = new $itemtype;
-         //Type is a relation : check it this relation still exists
-         if ($item instanceof CommonDBRelation) {
-            //Define the side of the relation to use
-
-            if (method_exists($item, 'relationSide')) {
-               $side = $injectionClass->relationSide();
-            } else {
-               $side = true;
-            }
-
-            if ($side) {
-               $source_id            = $item->items_id_2;
-               $destination_id       = $item->items_id_1;
-               $source_itemtype      = $item->itemtype_2;
-               $destination_itemtype = $item->itemtype_1;
-            } else {
-               $source_id            = $item->items_id_1;
-               $destination_id       = $item->items_id_2;
-               $source_itemtype      = $item->itemtype_1;
-               $destination_itemtype = $item->itemtype_2;
-            }
-
-            $where .= " AND `$source_id`='".
-               $this->getValueByItemtypeAndName($itemtype,$source_id)."'";
-
-            if ($item->isField('itemtype')) {
-               $where .= " AND `$source_itemtype`='".
-                  $this->getValueByItemtypeAndName($itemtype, $source_itemtype)."'";
-            }
-
-            $where .= " AND `".$destination_id."`='".
-               $this->getValueByItemtypeAndName($itemtype, $destination_id)."'";
-            $sql   .= " WHERE 1 ".$where;
-
+         if (method_exists($injectionClass, 'checkParameters')) {
+            $continue = $injectionClass->checkParameters($values, $options);
+         }
+   
+         //Needed parameters are not present : not found
+         if (!$continue) {
+            $this->values[$itemtype]['id'] = self::ITEM_NOT_FOUND;
          } else {
-            //Type is not a relation
-
-            //Type can be deleted
-            if ($injectionClass->maybeDeleted()) {
-               $where .= " AND `is_deleted` = '0' ";
-            }
-
-            //Type can be a template
-            if ($injectionClass->maybeTemplate()) {
-               $where .= " AND `is_template` = '0' ";
-            }
-
-            //Type can be assigned to an entity
-            if ($injectionClass->isEntityAssign()) {
-
-               //Type can be recursive
-               if ($injectionClass->maybeRecursive()) {
-                  $where_entity = getEntitiesRestrictRequest(" AND", $injectionClass->getTable(),
-                                                             "entities_id",
-                                                             $this->getValueByItemtypeAndName($itemtype,
-                                                                                              'entities_id'),
-                                                             true);
+            $sql = "SELECT *
+                    FROM `" . $injectionClass->getTable()."`";
+   
+            $item = new $itemtype;
+            //Type is a relation : check it this relation still exists
+            if ($item instanceof CommonDBRelation) {
+               //Define the side of the relation to use
+   
+               if (method_exists($item, 'relationSide')) {
+                  $side = $injectionClass->relationSide();
                } else {
-                  //Type cannot be recursive
-                  $where_entity = " AND `entities_id` = '".
-                     $this->getValueByItemtypeAndName($itemtype, 'entities_id')."'";
+                  $side = true;
                }
-
-            } else { //If no entity assignment for this itemtype
-               $where_entity = "";
-            }
-
-            //Add mandatory fields to the query only if it's the primary_type to be injected
-            if ($itemtype == $this->primary_type) {
-               foreach ($this->mandatory_fields[$itemtype] as $field => $is_mandatory) {
-                  if ($is_mandatory) {
-                     $option = self::findSearchOption($searchOptions, $field);
-                     $where .= " AND `" . $field . "`='".
-                        $this->getValueByItemtypeAndName($itemtype, $field) . "'";
+   
+               if ($side) {
+                  $source_id            = $item->items_id_2;
+                  $destination_id       = $item->items_id_1;
+                  $source_itemtype      = $item->itemtype_2;
+                  $destination_itemtype = $item->itemtype_1;
+               } else {
+                  $source_id            = $item->items_id_1;
+                  $destination_id       = $item->items_id_2;
+                  $source_itemtype      = $item->itemtype_1;
+                  $destination_itemtype = $item->itemtype_2;
+               }
+   
+               $where .= " AND `$source_id`='".
+                  $this->getValueByItemtypeAndName($itemtype,$source_id)."'";
+   
+               if ($item->isField('itemtype')) {
+                  $where .= " AND `$source_itemtype`='".
+                     $this->getValueByItemtypeAndName($itemtype, $source_itemtype)."'";
+               }
+   
+               $where .= " AND `".$destination_id."`='".
+                  $this->getValueByItemtypeAndName($itemtype, $destination_id)."'";
+               $sql   .= " WHERE 1 ".$where;
+   
+            } else {
+               //Type is not a relation
+   
+               //Type can be deleted
+               if ($injectionClass->maybeDeleted()) {
+                  $where .= " AND `is_deleted` = '0' ";
+               }
+   
+               //Type can be a template
+               if ($injectionClass->maybeTemplate()) {
+                  $where .= " AND `is_template` = '0' ";
+               }
+   
+               //Type can be assigned to an entity
+               if ($injectionClass->isEntityAssign()) {
+   
+                  //Type can be recursive
+                  if ($injectionClass->maybeRecursive()) {
+                     $where_entity = getEntitiesRestrictRequest(" AND", $injectionClass->getTable(),
+                                                                "entities_id",
+                                                                $this->getValueByItemtypeAndName($itemtype,
+                                                                                                 'entities_id'),
+                                                                true);
+                  } else {
+                     //Type cannot be recursive
+                     $where_entity = " AND `entities_id` = '".
+                        $this->getValueByItemtypeAndName($itemtype, 'entities_id')."'";
+                  }
+   
+               } else { //If no entity assignment for this itemtype
+                  $where_entity = "";
+               }
+   
+               //Add mandatory fields to the query only if it's the primary_type to be injected
+               if ($itemtype == $this->primary_type) {
+                  foreach ($this->mandatory_fields[$itemtype] as $field => $is_mandatory) {
+                     if ($is_mandatory) {
+                        $option = self::findSearchOption($searchOptions, $field);
+                        $where .= " AND `" . $field . "`='".
+                           $this->getValueByItemtypeAndName($itemtype, $field) . "'";
+                     }
+                  }
+   
+               } else {
+                  //Table contains an itemtype field
+                  if ($injectionClass->isField('itemtype')) {
+                     $where .= " AND `itemtype` = '".$this->getValueByItemtypeAndName($itemtype,
+                                                                                      'itemtype')."'";
+                  }
+   
+                  //Table contains an items_id field
+                  if ($injectionClass->isField('items_id')) {
+                     $where .= " AND `items_id` = '".$this->getValueByItemtypeAndName($itemtype,
+                                                                                      'items_id')."'";
                   }
                }
-
+   
+               //Add additional parameters specific to this itemtype (or function checkPresent exists)
+               if (method_exists($injectionClass,'checkPresent')) {
+                  $where .= $injectionClass->checkPresent($this->values, $options);
+               }
+               $sql .= " WHERE 1 " . $where_entity . " " . $where;
+            }
+   
+            $result = $DB->query($sql);
+            if ($DB->numrows($result) > 0) {
+               $db_fields = $DB->fetch_assoc($result);
+               foreach ($db_fields as $key => $value) {
+                  $this->setValueForItemtype($itemtype, $key, $value, true);
+               }
+               $this->setValueForItemtype($itemtype, 'id', $DB->result($result, 0, 'id'));
+   
             } else {
-               //Table contains an itemtype field
-               if ($injectionClass->isField('itemtype')) {
-                  $where .= " AND `itemtype` = '".$this->getValueByItemtypeAndName($itemtype,
-                                                                                   'itemtype')."'";
-               }
-
-               //Table contains an items_id field
-               if ($injectionClass->isField('items_id')) {
-                  $where .= " AND `items_id` = '".$this->getValueByItemtypeAndName($itemtype,
-                                                                                   'items_id')."'";
-               }
+               $this->setValueForItemtype($itemtype, 'id', self::ITEM_NOT_FOUND);
             }
-
-            //Add additional parameters specific to this itemtype (or function checkPresent exists)
-            if (method_exists($injectionClass,'checkPresent')) {
-               $where .= $injectionClass->checkPresent($this->values, $options);
-            }
-            $sql .= " WHERE 1 " . $where_entity . " " . $where;
-         }
-         
-         $result = $DB->query($sql);
-         if ($DB->numrows($result) > 0) {
-            $db_fields = $DB->fetch_assoc($result);
-            foreach ($db_fields as $key => $value) {
-               $this->setValueForItemtype($itemtype, $key, $value, true);
-            }
-            $this->setValueForItemtype($itemtype, 'id', $DB->result($result, 0, 'id'));
-
-         } else {
-            $this->setValueForItemtype($itemtype, 'id', self::ITEM_NOT_FOUND);
          }
       }
    }
@@ -1918,7 +1916,7 @@ class PluginDatainjectionCommonInjectionLib {
       //If itemtype implements special process after type injection
       if (method_exists($injectionClass, 'processAfterInsertOrUpdate')) {
          //Invoke it
-         $injectionClass->processAfterInsertOrUpdate($this->values, $add);
+         $injectionClass->processAfterInsertOrUpdate($this->values, $add, $this->rights);
       }
    }
 

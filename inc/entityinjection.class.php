@@ -87,7 +87,7 @@ class PluginDatainjectionEntityInjection extends Entity
       return $lib->getInjectionResults();
    }
 
-   function customimport($input = array(), $add = true) {
+   function customimport($input = array(), $add = true, $rights = array()) {
 
       if (!isset($input['completename']) || empty($input['completename'])) {
          return -1;
@@ -153,9 +153,11 @@ class PluginDatainjectionEntityInjection extends Entity
       }
    }
 
-   function processAfterInsertOrUpdate($values, $add = true) {
+   function processAfterInsertOrUpdate($values, $add = true, $rights = array()) {
 
       if (isset($values['EntityData'])) {
+         $can_overwrite = $rights['overwrite_notempty_fields'];
+
          $tmp = $values['EntityData'];
          $entitydata = new EntityData();
          $entities = getAllDatasFromTable("glpi_entitydatas", 
@@ -164,7 +166,10 @@ class PluginDatainjectionEntityInjection extends Entity
             //Update entitydata
             $tmp = array_pop($entities);
             foreach ($values['EntityData'] as $key => $value) {
+               if ($can_overwrite || (!$can_overwrite 
+                  && (!isset($tmp[$key]) || $tmp[$key] == ''))) {
                $tmp[$key] = $value;
+               }
             }
             $entitydata->update($tmp);
          } else {

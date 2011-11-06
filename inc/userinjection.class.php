@@ -123,7 +123,7 @@ class PluginDatainjectionUserInjection extends User
       return $lib->getInjectionResults();
    }
 
-   function processAfterInsertOrUpdate($values, $add = true) {
+   function processAfterInsertOrUpdate($values, $add = true, $rights = array()) {
       global $DB;
       if (!$add && isset($values['User']['password']) && $values['User']['password'] != '') {
          //We use an SQL request because updating the password is unesasy 
