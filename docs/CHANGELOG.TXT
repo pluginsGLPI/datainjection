@@ -26,6 +26,8 @@
  @link      http://www.glpi-project.org/
  @since     2009
  ---------------------------------------------------------------------- */
+Version 2.1.1 for GLPI 0.80
+ see https://forge.indepnet.net/projects/datainjection/issues?query_id=13
  
 Version 2.1.0 for GLPI 0.80
  #3129 (Feature) Import ticket categories
