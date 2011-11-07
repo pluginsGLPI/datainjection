@@ -140,7 +140,7 @@ class PluginDatainjectionMapping extends CommonDBTM {
          $lines = array();
       }
 
-      echo "<form method='post' name=form action='".getItemTypeFormURL(__CLASS__)."'>";
+      echo "<form method='post' name=form action='".Toolbox::getItemTypeFormURL(__CLASS__)."'>";
 
       //Display link to the preview popup
       if (isset($_SESSION['datainjection']['lines']) && !empty($lines)) {
@@ -167,7 +167,7 @@ class PluginDatainjectionMapping extends CommonDBTM {
       $model->loadMappings();
 
       foreach ($model->getMappings() as $mapping) {
-         $mapping->fields = stripslashes_deep($mapping->fields);
+         $mapping->fields = Toolbox::stripslashes_deep($mapping->fields);
          $mappings_id     = $mapping->fields['id'];
          echo "<tr class='tab_bg_1'>";
          echo "<td class='center'>".$mapping->fields['name']."</td>";

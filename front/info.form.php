@@ -36,5 +36,5 @@ if (isset ($_POST["update"])) {
    PluginDatainjectionInfo::manageInfos($_POST['models_id'], $_POST);
 }
 
-glpi_header($_SERVER['HTTP_REFERER']);
+Html::redirect($_SERVER['HTTP_REFERER']);
 ?>

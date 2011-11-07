@@ -89,7 +89,7 @@ class PluginDatainjectionWebservice {
                                                            WEBSERVICES_ERROR_NOTFOUND,
                                                            'Entity unknown');
                
-            } elseif (!haveAccessToEntity($entities_id)) {
+            } elseif (!Session::haveAccessToEntity($entities_id)) {
                return PluginWebservicesMethodCommon::Error($protocol,
                                                            WEBSERVICES_ERROR_NOTALLOWED,
                                                            'You cannot access this entity');

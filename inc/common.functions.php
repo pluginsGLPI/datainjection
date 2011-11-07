@@ -59,7 +59,7 @@
 function plugin_datainjection_setSessionParam($param,$results) {
 
    if (in_array($param, array('results', 'error_lines'))) {
-      $fic = getLoginUserID().'_'.$param.'_'.microtime(true);
+      $fic = Session::getLoginUserID().'_'.$param.'_'.microtime(true);
       file_put_contents(GLPI_DOC_DIR.'/_tmp/'.$fic, $results);
       $_SESSION['datainjection'][$param] = $fic;
    } else {

@@ -48,8 +48,8 @@ if (isset ($_POST["add"])) {
    $newID = $model->add($_POST);
 
    //Set display to the advanced options tab
-   setActiveTab('PluginDatainjectionModel', 2);
-   glpi_header(getItemTypeFormURL('PluginDatainjectionModel')."?id=$newID");
+   Session::setActiveTab('PluginDatainjectionModel', 2);
+   Html::redirect(Toolbox::getItemTypeFormURL('PluginDatainjectionModel')."?id=$newID");
 
 /* delete */
 } else if (isset ($_POST["delete"])) {
@@ -65,13 +65,13 @@ if (isset ($_POST["add"])) {
 
    $specific_model = PluginDatainjectionModel::getInstance('csv');
    $specific_model->saveFields($_POST);
-   glpi_header($_SERVER['HTTP_REFERER']);
+   Html::redirect($_SERVER['HTTP_REFERER']);
 
 /* update order */
 } else if (isset ($_POST["validate"])) {
    $model->check($_POST['id'],'w');
    $model->switchReadyToUse();
-   glpi_header($_SERVER['HTTP_REFERER']);
+   Html::redirect($_SERVER['HTTP_REFERER']);
 
 } else if (isset($_POST['upload'])) {
    if (!empty($_FILES)) {
@@ -79,13 +79,13 @@ if (isset ($_POST["add"])) {
 
       if ($model->processUploadedFile(array('file_encoding' => 'csv',
                                             'mode'          => PluginDatainjectionModel::CREATION))) {
-         setActiveTab('PluginDatainjectionModel', 4);
+         Session::setActiveTab('PluginDatainjectionModel', 4);
       }else {
-         addMessageAfterRedirect($LANG['datainjection']['fileStep'][4], true, ERROR, true);
+         Session::addMessageAfterRedirect($LANG['datainjection']['fileStep'][4], true, ERROR, true);
       }
    }
 
-   glpi_header($_SERVER['HTTP_REFERER']);
+   Html::redirect($_SERVER['HTTP_REFERER']);
 
 } else if (isset($_GET['sample'])) {
    $model->check($_GET['sample'], 'r');
@@ -95,10 +95,10 @@ if (isset ($_POST["add"])) {
    exit (0);
 }
 
-commonHeader($LANG['datainjection']['profiles'][1], '', "plugins", "datainjection", "model");
+Html::header($LANG['datainjection']['profiles'][1], '', "plugins", "datainjection", "model");
 
 $model->showForm($_GET["id"]);
 
-commonFooter();
+Html::footer();
 
 ?>

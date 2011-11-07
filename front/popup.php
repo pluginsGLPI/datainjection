@@ -31,19 +31,19 @@
 define('GLPI_ROOT', '../../..');
 include (GLPI_ROOT . "/inc/includes.php");
 
-checkLoginUser();
+Session::checkLoginUser();
 
 switch ($_GET["popup"]) {
    case "preview" :
-      popHeader($LANG['datainjection']['button'][3], $_SERVER['PHP_SELF']);
+      Html::popHeader($LANG['datainjection']['button'][3], $_SERVER['PHP_SELF']);
       PluginDatainjectionModel::showPreviewMappings($_GET['models_id']);
-      popFooter();
+      Html::popFooter();
       break;
 
    case "log" :
-      popHeader($LANG['datainjection']['result'][18], $_SERVER['PHP_SELF']);
+      Html::popHeader($LANG['datainjection']['result'][18], $_SERVER['PHP_SELF']);
       PluginDatainjectionModel::showLogResults($_GET['models_id']);
-      popFooter();
+      Html::popFooter();
       break;
 }
 ?>

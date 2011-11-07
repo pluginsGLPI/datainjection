@@ -72,7 +72,7 @@ class PluginDatainjectionInfo extends CommonDBTM {
       global $LANG;
 
       if ($canedit) {
-         echo "<form method='post' name=form action='".getItemTypeFormURL(__CLASS__)."'>";
+         echo "<form method='post' name=form action='".Toolbox::getItemTypeFormURL(__CLASS__)."'>";
          echo "<table class='tab_cadre_fixe'>";
          echo "<tr>";
          echo "<th>" . $LANG['datainjection']['mapping'][3] . "</th>";
@@ -117,7 +117,7 @@ class PluginDatainjectionInfo extends CommonDBTM {
 
       PluginDatainjectionInfo::showAddInfo($model, $canedit);
 
-      echo "<form method='post' name=form action='".getItemTypeFormURL(__CLASS__)."'>";
+      echo "<form method='post' name=form action='".Toolbox::getItemTypeFormURL(__CLASS__)."'>";
       echo "<table class='tab_cadre_fixe'>";
       echo "<tr>";
       echo "<th>" . $LANG['datainjection']['mapping'][3] . "</th>";
@@ -128,7 +128,7 @@ class PluginDatainjectionInfo extends CommonDBTM {
       $model->loadInfos();
 
       foreach ($model->getInfos() as $info) {
-         $info->fields = stripslashes_deep($info->fields);
+         $info->fields = Toolbox::stripslashes_deep($info->fields);
          $infos_id     = $info->fields['id'];
          echo "<tr class='tab_bg_1'>";
          echo "<td class='center'>";
@@ -381,7 +381,7 @@ class PluginDatainjectionInfo extends CommonDBTM {
    static function dropdownTemplates($name, $table) {
       global $DB;
 
-      $values    = array(0 => DROPDOWN_EMPTY_VALUE);
+      $values    = array(0 => Dropdown::EMPTY_VALUE);
 
       $sql = "SELECT `id`, `template_name`
               FROM `".$table."`

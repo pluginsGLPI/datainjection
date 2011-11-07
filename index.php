@@ -38,6 +38,6 @@ PluginDatainjectionModel::cleanSessionVariables();
 $_SESSION['datainjection']['step'] = PluginDatainjectionClientInjection::STEP_UPLOAD;
 
 //TODO : maybe show a welcome screen, to be discussed...
-glpi_header(getItemTypeFormURL('PluginDatainjectionClientInjection'));
+Html::redirect(Toolbox::getItemTypeFormURL('PluginDatainjectionClientInjection'));
 
 ?>

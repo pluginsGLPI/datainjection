@@ -31,7 +31,7 @@
 define('GLPI_ROOT', '../../..');
 include (GLPI_ROOT . "/inc/includes.php");
 
-commonHeader($LANG['datainjection']['profiles'][1], '', "plugins", "datainjection", "model");
+Html::header($LANG['datainjection']['profiles'][1], '', "plugins", "datainjection", "model");
 
 $model = new PluginDatainjectionModel();
 $model->checkGlobal('r');
@@ -43,11 +43,11 @@ if (isset($_POST['delete']) && isset($_POST['models'])) {
          $model->delete(array('id' => $models_id));
       }
    }
-   glpi_header($_SERVER['HTTP_REFERER']);
+   Html::redirect($_SERVER['HTTP_REFERER']);
 
 }
 PluginDatainjectionModel::showModelsList();
 
-commonFooter();
+Html::footer();
 
 ?>

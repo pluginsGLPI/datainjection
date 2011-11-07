@@ -55,10 +55,10 @@
       $buttons = array ();
       $title   = "";
       if (plugin_datainjection_haveRight("model", "w") ) {
-         $url           = getItemTypeSearchURL('PluginDatainjectionModel');
+         $url           = Toolbox::getItemTypeSearchURL('PluginDatainjectionModel');
          $buttons[$url] = $LANG['datainjection']['profiles'][1];
          $title         = "";
-         displayTitle($CFG_GLPI["root_doc"] . "/plugins/datainjection/pics/datainjection.png",
+         Html::displayTitle($CFG_GLPI["root_doc"] . "/plugins/datainjection/pics/datainjection.png",
                       $LANG['Menu'][36], $title, $buttons);
       }
    }
@@ -67,12 +67,12 @@
    function showForm($ID, $options=array()) {
       global $LANG, $CFG_GLPI;
 
-      echo "<form method='post' name=form action='".getItemTypeFormURL(__CLASS__)."'".
+      echo "<form method='post' name=form action='".Toolbox::getItemTypeFormURL(__CLASS__)."'".
             "enctype='multipart/form-data'>";
       echo "<div class='center'>";
       echo "<table class='tab_cadre_fixe'>";
 
-      $models = PluginDatainjectionModel::getModels(getLoginUserID(), 'name',
+      $models = PluginDatainjectionModel::getModels(Session::getLoginUserID(), 'name',
                                                     $_SESSION['glpiactive_entity'], false);
 
       echo "<tr><th>" . $LANG['datainjection']['choiceStep'][6]."</th></tr>";
@@ -99,12 +99,12 @@
          switch (plugin_datainjection_getSessionParam('step')) {
             case self::STEP_UPLOAD :
                $url = $CFG_GLPI["root_doc"]."/plugins/datainjection/ajax/dropdownSelectModel.php";
-               ajaxUpdateItem("span_injection", $url, $p);
+               Ajax::updateItem("span_injection", $url, $p);
                break;
 
             case self::STEP_RESULT :
                $url = $CFG_GLPI["root_doc"]."/plugins/datainjection/ajax/results.php";
-               ajaxUpdateItem("span_injection", $url, $p);
+               Ajax::updateItem("span_injection", $url, $p);
                break;
          }
       }
@@ -116,8 +116,8 @@
 
       $add_form = (isset($options['add_form']) && $options['add_form']);
       $confirm  = (isset($options['confirm']) && $options['confirm']);
-      $url      = ($confirm == 'creation'?getItemTypeFormURL('PluginDatainjectionModel')
-                                         :getItemTypeFormURL(__CLASS__));
+      $url      = ($confirm == 'creation'?Toolbox::getItemTypeFormURL('PluginDatainjectionModel')
+                                         :Toolbox::getItemTypeFormURL(__CLASS__));
       if ($add_form) {
          echo "<form method='post' name='form' action='$url' enctype='multipart/form-data'>";
       }
@@ -178,7 +178,7 @@
       echo "</tr>";
 
       echo "<tr class='tab_bg_1'><td>";
-      createProgressBar($LANG['datainjection']['importStep'][1]) ;
+      Html::createProgressBar($LANG['datainjection']['importStep'][1]) ;
       echo "</td></tr>";
       echo "</table><br>";
 
@@ -265,12 +265,12 @@
       $_SESSION["MESSAGE_AFTER_REDIRECT"] = "";
       
       $url = $CFG_GLPI["root_doc"]."/plugins/datainjection/ajax/results.php";
-      ajaxUpdateItem("span_injection",$url,$p);
+      Ajax::updateItem("span_injection",$url,$p);
    }
 
 
    /**
-    * to be used instead of stripslashes_deep to reduce memory usage
+    * to be used instead of Toolbox::stripslashes_deep to reduce memory usage
     * execute stripslashes in place (no copy)
     *
     * @param $value array of value

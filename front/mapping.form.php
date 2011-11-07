@@ -56,7 +56,7 @@ if (isset ($_POST["update"])) {
    }
 
    if (!$at_least_one_mandatory) {
-      addMessageAfterRedirect($LANG['datainjection']['mapping'][11], true, ERROR, true);
+      Session::addMessageAfterRedirect($LANG['datainjection']['mapping'][11], true, ERROR, true);
    } else {
       $model = new PluginDatainjectionModel();
       $model->getFromDB($_POST['models_id']);
@@ -64,11 +64,11 @@ if (isset ($_POST["update"])) {
       if ($model->fields['step'] != PluginDatainjectionModel::READY_TO_USE_STEP) {
          PluginDatainjectionModel::changeStep($_POST['models_id'],
                                               PluginDatainjectionModel::OTHERS_STEP);
-         setActiveTab('PluginDatainjectionModel', 4);
-         addMessageAfterRedirect($LANG['datainjection']['info'][3]);
+         Session::setActiveTab('PluginDatainjectionModel', 4);
+         Session::addMessageAfterRedirect($LANG['datainjection']['info'][3]);
       }
       unset($_SESSION['datainjection']['lines']);
    }
 }
-glpi_header($_SERVER['HTTP_REFERER']);
+Html::redirect($_SERVER['HTTP_REFERER']);
 ?>

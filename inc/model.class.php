@@ -75,8 +75,8 @@ class PluginDatainjectionModel extends CommonDBTM {
 
    function __construct() {
 
-      $this->mappings = new PluginDatainjectionMappingCollection;
-      $this->infos    = new PluginDatainjectionInfoCollection;
+      $this->mappings = new PluginDatainjectionMappingCollection();
+      $this->infos    = new PluginDatainjectionInfoCollection();
    }
 
 
@@ -87,10 +87,10 @@ class PluginDatainjectionModel extends CommonDBTM {
 
    function canCreateItem() {
 
-      if ($this->isPrivate() && $this->fields['users_id']!=getLoginUserID()) {
+      if ($this->isPrivate() && $this->fields['users_id']!=Session::getLoginUserID()) {
          return false;
       }
-      if (!$this->isPrivate() && !haveAccessToEntity($this->getEntityID())) {
+      if (!$this->isPrivate() && !Session::haveAccessToEntity($this->getEntityID())) {
          return false;
       }
       return self::checkRightOnModel($this->fields['id']);
@@ -103,10 +103,10 @@ class PluginDatainjectionModel extends CommonDBTM {
 
    function canViewItem() {
 
-      if ($this->isPrivate() && $this->fields['users_id']!=getLoginUserID()) {
+      if ($this->isPrivate() && $this->fields['users_id']!=Session::getLoginUserID()) {
          return false;
       }
-      if (!$this->isPrivate() && !haveAccessToEntity($this->getEntityID(),$this->isRecursive())) {
+      if (!$this->isPrivate() && !Session::haveAccessToEntity($this->getEntityID(),$this->isRecursive())) {
          return false;
       }
       return self::checkRightOnModel($this->fields['id']);
@@ -379,7 +379,7 @@ class PluginDatainjectionModel extends CommonDBTM {
    static function dropdown($options=array()) {
       global $CFG_GLPI, $LANG;
 
-      $models = self::getModels(getLoginUserID(), 'name', $_SESSION['glpiactive_entity'], false);
+      $models = self::getModels(Session::getLoginUserID(), 'name', $_SESSION['glpiactive_entity'], false);
       $p = array('models_id' => '__VALUE__');
 
       if (isset($_SESSION['datainjection']['models_id'])) {
@@ -391,7 +391,7 @@ class PluginDatainjectionModel extends CommonDBTM {
       $rand = mt_rand();
       echo "\n<select name='dropdown_models' id='dropdown_models$rand'>";
       $prev = -2;
-      echo "\n<option value='0'>".DROPDOWN_EMPTY_VALUE."</option>";
+      echo "\n<option value='0'>".Dropdown::EMPTY_VALUE."</option>";
 
       foreach ($models as $model) {
          if ($model['entities_id'] != $prev) {
@@ -428,7 +428,7 @@ class PluginDatainjectionModel extends CommonDBTM {
       echo "</select>";
 
       $url = $CFG_GLPI["root_doc"]."/plugins/datainjection/ajax/dropdownSelectModel.php";
-      ajaxUpdateItemOnSelectEvent("dropdown_models$rand", "span_injection", $url, $p);
+      Ajax::updateItemOnSelectEvent("dropdown_models$rand", "span_injection", $url, $p);
    }
 
 
@@ -586,7 +586,7 @@ class PluginDatainjectionModel extends CommonDBTM {
          echo "<input type='hidden' name='step' value='1'>";
       }
 
-      echo "<form name='form' method='post' action='".getItemTypeFormURL(__CLASS__)."'>";
+      echo "<form name='form' method='post' action='".Toolbox::getItemTypeFormURL(__CLASS__)."'>";
       echo "<div class='center' id='tabsbody'>";
       echo "<table class='tab_cadre_fixe'>";
 
@@ -594,10 +594,10 @@ class PluginDatainjectionModel extends CommonDBTM {
       echo "<th colspan='2'>".$this->getStatusLabel()."</th></tr>";
 
       echo "<tr class='tab_bg_1'>";
-      echo "<td><input type='hidden' name='users_id' value='".getLoginUserID()."'>".
+      echo "<td><input type='hidden' name='users_id' value='".Session::getLoginUserID()."'>".
                  $LANG['common'][16]."&nbsp;: </td>";
       echo "<td>";
-      autocompletionTextField($this, "name");
+      Html::autocompletionTextField($this, "name");
       echo "</td>";
       echo "<td colspan='2'></td></tr>";
 
@@ -679,7 +679,7 @@ class PluginDatainjectionModel extends CommonDBTM {
    function showValidationForm() {
       global $LANG;
 
-      echo "<form method='post' name=form action='".getItemTypeFormURL(__CLASS__)."'>";
+      echo "<form method='post' name=form action='".Toolbox::getItemTypeFormURL(__CLASS__)."'>";
       echo "<table class='tab_cadre_fixe'>";
       echo "<tr class='tab_bg_1'><th colspan='4'>".$LANG['datainjection']['model'][37]."</th></tr>";
       echo "<tr class='tab_bg_1'>";
@@ -766,12 +766,12 @@ class PluginDatainjectionModel extends CommonDBTM {
 
       //If no behavior selected
       if (!isset($input['name']) || $input['name'] == '') {
-         addMessageAfterRedirect($LANG['datainjection']['model'][30], true, ERROR, true);
+         Session::addMessageAfterRedirect($LANG['datainjection']['model'][30], true, ERROR, true);
          return false;
       }
 
       if (!$input['behavior_add'] && !$input['behavior_update']) {
-         addMessageAfterRedirect($LANG['datainjection']['model'][31], true, ERROR, true);
+         Session::addMessageAfterRedirect($LANG['datainjection']['model'][31], true, ERROR, true);
          return false;
       }
       return $input;
@@ -836,7 +836,7 @@ class PluginDatainjectionModel extends CommonDBTM {
          $message .= "<br>".$LANG['datainjection']['fileStep'][6]." csv ";
          $message .= $LANG['datainjection']['fileStep'][7];
          if (!$webservice) {
-            addMessageAfterRedirect($message, true, ERROR, false);
+            Session::addMessageAfterRedirect($message, true, ERROR, false);
          }
          //unlink($temporary_uniquefilename);
          return array('status'  => ERROR,
@@ -918,7 +918,7 @@ class PluginDatainjectionModel extends CommonDBTM {
 
          if ($mode == self::PROCESS) {
             if (!isset($options['webservice'])) {
-               addMessageAfterRedirect($check['error_message'], true, ERROR);
+               Session::addMessageAfterRedirect($check['error_message'], true, ERROR);
                return false;
             } else {
                return PluginWebservicesMethodCommon::Error($options['protocol'],
@@ -957,7 +957,7 @@ class PluginDatainjectionModel extends CommonDBTM {
          self::changeStep($this->fields['id'], self::MAPPING_STEP);
 
          //Add redirect message
-         addMessageAfterRedirect($LANG['datainjection']['model'][32], true, INFO);
+         Session::addMessageAfterRedirect($LANG['datainjection']['model'][32], true, INFO);
       }
 
       return true;
@@ -1179,7 +1179,7 @@ class PluginDatainjectionModel extends CommonDBTM {
    static function prepareLogResults($models_id) {
       global $LANG;
 
-      $results   = stripslashes_deep(json_decode(plugin_datainjection_getSessionParam('results'),
+      $results   = Toolbox::stripslashes_deep(json_decode(plugin_datainjection_getSessionParam('results'),
                                                  true));
       $todisplay = array();
       $model     = new self();
@@ -1222,7 +1222,7 @@ class PluginDatainjectionModel extends CommonDBTM {
 
             if (isset($result[$model->fields['itemtype']])) {
                $tmp['item'] = $result[$model->fields['itemtype']];
-               $url         = getItemTypeFormURL($model->fields['itemtype'])."?id=".
+               $url         = Toolbox::getItemTypeFormURL($model->fields['itemtype'])."?id=".
                                                    $result[$model->fields['itemtype']];
                $tmp['url']  = "<a href='$url'>".$result[$model->fields['itemtype']]."</a>";
             }
@@ -1380,14 +1380,14 @@ class PluginDatainjectionModel extends CommonDBTM {
       global $LANG;
 
       $modelo = new self();
-      $models = self::getModels(getLoginUserID(), 'name', $_SESSION['glpiactive_entity'], true);
+      $models = self::getModels(Session::getLoginUserID(), 'name', $_SESSION['glpiactive_entity'], true);
 
-      echo "<form method='post' id='modelslist' action=\"".getItemTypeSearchURL(__CLASS__)."\">";
+      echo "<form method='post' id='modelslist' action=\"".Toolbox::getItemTypeSearchURL(__CLASS__)."\">";
       echo "<table class='tab_cadrehov'>";
       echo "<tr class='tab_bg_1'><th colspan='7'>".$LANG['datainjection']['model'][39]."</th></tr>";
 
       if (!empty($models)) {
-         initNavigateListItems('PluginDatainjectionModel');
+         Session::initNavigateListItems('PluginDatainjectionModel');
 
          echo "<tr class='tab_bg_1'>";
          echo "<th></th>";
@@ -1399,7 +1399,7 @@ class PluginDatainjectionModel extends CommonDBTM {
          echo "<th>".$LANG['joblist'][0]."</th></th>";
 
          foreach ($models as $model) {
-            addToNavigateListItems('PluginDatainjectionModel', $model["id"]);
+            Session::addToNavigateListItems('PluginDatainjectionModel', $model["id"]);
 
             echo "<tr class='tab_bg_1'>";
             echo "<td width='10px'>";
@@ -1413,7 +1413,7 @@ class PluginDatainjectionModel extends CommonDBTM {
                echo "&nbsp;";
             }
             echo "</td>";
-            echo "<td><a href='".getItemTypeFormURL('PluginDatainjectionModel')."?id=".
+            echo "<td><a href='".Toolbox::getItemTypeFormURL('PluginDatainjectionModel')."?id=".
                        $model['id']."'>".$model['name']."</a></td>";
             echo "<td>";
             echo Dropdown::getYesNo($model['is_private']);
@@ -1443,8 +1443,8 @@ class PluginDatainjectionModel extends CommonDBTM {
          }
 
          echo "</table>";
-         openArrowMassive("modelslist");
-         closeArrowMassive('delete', $LANG['buttons'][6]);
+         Html::openArrowMassives("modelslist");
+         Html::closeArrowMassives('delete', $LANG['buttons'][6]);
 
       } else {
          echo "<tr class='tab_bg_1'><td>".$LANG['search'][15]."</table></td>";

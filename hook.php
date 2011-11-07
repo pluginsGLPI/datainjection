@@ -1011,7 +1011,7 @@ function plugin_datainjection_update170_20() {
                                                                      'glpi_networkequipments',
                                                                      'glpi_softwares'))));
 
-    $foreignkeys = doHookFunction("plugin_datainjection_migratefields",$foreignkeys);
+    $foreignkeys = Plugin::doHookFunction("plugin_datainjection_migratefields",$foreignkeys);
     $query = "SELECT `itemtype`, `value`
               FROM `glpi_plugin_datainjection_mappings`
               WHERE `itemtype` NOT IN ('none')
@@ -1038,19 +1038,6 @@ function plugin_datainjection_update170_20() {
          }
       }
    }
-
-/*
-    $otherfields = array('comments' => 'comment', 'notes'=>'notepad');
-    foreach ($otherfields as $old => $new) {
-               $query = "UPDATE `glpi_plugin_datainjection_mappings`
-                         SET `value`='".$new."'
-                         WHERE `value`='".$old."'";
-               $DB->query($query) or die ("Datainjection : error converting mapping field $old");
-               $query = "UPDATE `glpi_plugin_datainjection_infos`
-                         SET `value`='".$new."'
-                         WHERE `value`='".$old."'";
-               $DB->query($query) or die ("Datainjection : error converting infos field $old");
-    }*/
 }
 
 
@@ -1058,7 +1045,7 @@ function plugin_datainjection_createaccess($ID) {
    global $DB;
 
    $Profile = new Profile();
-   $Profile->GetfromDB($ID);
+   $Profile->getFromDB($ID);
    $name    = $Profile->fields["name"];
 
    $query = "INSERT INTO `glpi_plugin_datainjection_profiles`
@@ -1075,11 +1062,11 @@ function plugin_datainjection_checkRight($module, $right) {
    if (!plugin_datainjection_haveRight($module, $right)) {
       // Gestion timeout session
       if (!isset ($_SESSION["glpiID"])) {
-         glpi_header($CFG_GLPI["root_doc"] . "/index.php");
+         Html::redirect($CFG_GLPI["root_doc"] . "/index.php");
          exit ();
       }
 
-      displayRightError();
+      Html::displayRightError();
    }
 }
 
@@ -1090,13 +1077,13 @@ function plugin_datainjection_loadHook($hook_name, $params = array ()) {
    if (!empty ($params)) {
       $type = $params["type"];
       //If a plugin type is defined
-      doOneHook($PLUGIN_HOOKS['plugin_types'][$type], 'datainjection_' . $hook_name);
+      Plugin::doOneHook($PLUGIN_HOOKS['plugin_types'][$type], 'datainjection_' . $hook_name);
 
    } else {
       if (isset ($PLUGIN_HOOKS['plugin_types'])) {
          //Browse all plugins
          foreach ($PLUGIN_HOOKS['plugin_types'] as $type => $name) {
-            doOneHook($name, 'datainjection_' . $hook_name);
+            Plugin::doOneHook($name, 'datainjection_' . $hook_name);
          }
       }
    }

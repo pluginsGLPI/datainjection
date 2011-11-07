@@ -53,7 +53,7 @@ class PluginDatainjectionProfile extends CommonDBTM {
       $profile = new Profile;
       $profile->getFromDB($ID);
 
-      echo "<form action='".getItemTypeFormURL(get_class($this))."' method='post'>";
+      echo "<form action='".Toolbox::getItemTypeFormURL(get_class($this))."' method='post'>";
       echo "<table class='tab_cadre_fixe'>";
 
       echo "<tr><th colspan='2'>".$LANG['datainjection']['name'][1]." ".$profile->fields["name"];

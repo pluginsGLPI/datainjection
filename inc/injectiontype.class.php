@@ -135,9 +135,9 @@ class PluginDatainjectionInjectionType {
 
       $url_field     = $CFG_GLPI["root_doc"]."/plugins/datainjection/ajax/dropdownChooseField.php";
       $url_mandatory = $CFG_GLPI["root_doc"]."/plugins/datainjection/ajax/dropdownMandatory.php";
-      ajaxUpdateItem("span_field_".$mapping_or_info->fields['id'], $url_field,$p, false,
+      Ajax::updateItem("span_field_".$mapping_or_info->fields['id'], $url_field,$p, false,
                      "dropdown_data[".$mapping_or_info->fields['id']."][itemtype]$rand");
-      ajaxUpdateItemOnSelectEvent("dropdown_data[".$mapping_or_info->fields['id']."][itemtype]$rand",
+      Ajax::updateItemOnSelectEvent("dropdown_data[".$mapping_or_info->fields['id']."][itemtype]$rand",
                                   "span_field_".$mapping_or_info->fields['id'], $url_field, $p);
       return $rand;
    }
@@ -171,7 +171,7 @@ class PluginDatainjectionInjectionType {
       }
 
       if ($p['need_decode']) {
-         $mapping_or_info = json_decode(stripslashes_deep($options['mapping_or_info']), true);
+         $mapping_or_info = json_decode(Toolbox::stripslashes_deep($options['mapping_or_info']), true);
       } else {
          $mapping_or_info = $options['mapping_or_info'];
       }
@@ -214,9 +214,9 @@ class PluginDatainjectionInjectionType {
                                             'used'  => $used));
 
       $url = $CFG_GLPI["root_doc"]."/plugins/datainjection/ajax/dropdownMandatory.php";
-      ajaxUpdateItem("span_mandatory_".$mapping_or_info['id'], $url, $p, false,
+      Ajax::updateItem("span_mandatory_".$mapping_or_info['id'], $url, $p, false,
                      "dropdown_data[".$mapping_or_info['id']."][value]$rand");
-      ajaxUpdateItemOnSelectEvent("dropdown_data[".$mapping_or_info['id']."][value]$rand",
+      Ajax::updateItemOnSelectEvent("dropdown_data[".$mapping_or_info['id']."][value]$rand",
                                   "span_mandatory_".$mapping_or_info['id'], $url, $p);
    }
 
@@ -268,7 +268,7 @@ class PluginDatainjectionInjectionType {
       //json_decode fails to decode it !
       $options['mapping_or_info'] = str_replace("\\","", $options['mapping_or_info']);
       if ($options['need_decode']) {
-         $mapping_or_info = json_decode(stripslashes_deep($options['mapping_or_info']), true);
+         $mapping_or_info = json_decode(Toolbox::stripslashes_deep($options['mapping_or_info']), true);
       } else {
          $mapping_or_info = $options['mapping_or_info'];
       }
@@ -300,7 +300,7 @@ class PluginDatainjectionInjectionType {
       }
 
       if ($p['need_decode']) {
-         $mapping_or_info = json_decode(stripslashes_deep($options['mapping_or_info']), true);
+         $mapping_or_info = json_decode(Toolbox::stripslashes_deep($options['mapping_or_info']), true);
       } else {
          $mapping_or_info = $options['mapping_or_info'];
       }

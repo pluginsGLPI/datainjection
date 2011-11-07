@@ -34,7 +34,7 @@ if (!defined('GLPI_ROOT')) {
 
 include (GLPI_ROOT."/inc/includes.php");
 
-commonHeader($LANG['datainjection']['name'][1], $_SERVER["PHP_SELF"], "plugins", "datainjection");
+Html::header($LANG['datainjection']['name'][1], $_SERVER["PHP_SELF"], "plugins", "datainjection");
 
 if (isset($_SESSION['datainjection']['go'])) {
    $model = unserialize($_SESSION['datainjection']['currentmodel']);
@@ -47,7 +47,7 @@ if (isset($_SESSION['datainjection']['go'])) {
 
    //If additional informations provided : check if mandatory infos are present
    if (!$model->checkMandatoryFields($_SESSION['datainjection']['infos'])) {
-      addMessageAfterRedirect($LANG['datainjection']['fillInfoStep'][4], true, ERROR, true);
+      Session::addMessageAfterRedirect($LANG['datainjection']['fillInfoStep'][4], true, ERROR, true);
 
    } else if (isset($_FILES['filename']['name'])
               && $_FILES['filename']['name']
@@ -76,10 +76,10 @@ if (isset($_SESSION['datainjection']['go'])) {
       }
 
    } else {
-      addMessageAfterRedirect($LANG['datainjection']['fileStep'][4], true, ERROR, true);
+      Session::addMessageAfterRedirect($LANG['datainjection']['fileStep'][4], true, ERROR, true);
    }
 
-   glpi_header($_SERVER['HTTP_REFERER']);
+   Html::redirect($_SERVER['HTTP_REFERER']);
 
 } else {
    if (isset($_GET['id'])) { // Allow link to a model
@@ -90,5 +90,5 @@ if (isset($_SESSION['datainjection']['go'])) {
    $clientInjection->showForm(0);
 }
 
-commonFooter();
+Html::footer();
 ?>

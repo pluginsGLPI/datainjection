@@ -31,9 +31,9 @@
 define('GLPI_ROOT', '../../..');
 include (GLPI_ROOT."/inc/includes.php");
 header("Content-Type: text/html; charset=UTF-8");
-header_nocache();
+Session::header_nocache();
 
-checkRight("profile","r");
+Session::checkRight("profile","r");
 
 $prof=new PluginDatainjectionProfile();
 $prof->showDataInjectionForm($_POST["ID"]);

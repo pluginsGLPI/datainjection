@@ -78,7 +78,7 @@
             switch ($encoding) {
                //If file is ISO8859-1 : encode the datas in utf8
                case PluginDatainjectionBackend::ENCODING_ISO8859_1 :
-                  if (!seems_utf8($tmp)) {
+                  if (!Toolbox::seems_utf8($tmp)) {
                      $csv[0][] = utf8_encode($tmp);
                   } else {
                      $csv[0][] = $tmp;

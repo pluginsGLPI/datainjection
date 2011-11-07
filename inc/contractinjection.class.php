@@ -152,7 +152,7 @@ class PluginDatainjectionContractInjection extends Contract
             break;
 
          case 'billing' :
-            Dropdown::showInteger($name, 0, 12, 60, 12, array(0 => DROPDOWN_EMPTY_VALUE,
+            Dropdown::showInteger($name, 0, 12, 60, 12, array(0 => Dropdown::EMPTY_VALUE,
                                                               1 => "1",
                                                               2 => "2",
                                                               3 => "3",
