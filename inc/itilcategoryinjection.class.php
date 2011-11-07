@@ -32,7 +32,7 @@ if (!defined('GLPI_ROOT')) {
    die("Sorry. You can't access directly to this file");
 }
 
-class PluginDatainjectionTicketCategoryInjection extends TicketCategory
+class PluginDatainjectionITILCategoryInjection extends ITILCategory
                                         implements PluginDatainjectionInjectionInterface {
 
 
