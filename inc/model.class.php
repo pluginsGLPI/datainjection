@@ -1209,8 +1209,8 @@ class PluginDatainjectionModel extends CommonDBTM {
    static function cleanSessionVariables() {
 
       //Reset parameters stored in session
-      plugin_datainjection_removeSessionParams();
-      plugin_datainjection_setSessionParam('infos', array());
+      PluginDatainjectionSession::removeParams();
+      PluginDatainjectionSession::setParam('infos', array());
    }
 
 
@@ -1256,7 +1256,7 @@ class PluginDatainjectionModel extends CommonDBTM {
    static function prepareLogResults($models_id) {
       global $LANG;
 
-      $results   = Toolbox::stripslashes_deep(json_decode(plugin_datainjection_getSessionParam('results'),
+      $results   = Toolbox::stripslashes_deep(json_decode(PluginDatainjectionSession::getParam('results'),
                                                  true));
       $todisplay = array();
       $model     = new self();
@@ -1401,7 +1401,7 @@ class PluginDatainjectionModel extends CommonDBTM {
          $pdf = new PluginPdfSimplePDF('a4', 'landscape');
          $pdf->setHeader(
             $LANG['datainjection']['result'][18] . ' - <b>' .
-            plugin_datainjection_getSessionParam('file_name') . '</b> (' . $model->getName() . ')'
+            PluginDatainjectionSession::getParam('file_name') . '</b> (' . $model->getName() . ')'
          );
          $pdf->newPage();
 

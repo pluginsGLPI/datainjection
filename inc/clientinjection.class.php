@@ -93,10 +93,10 @@
       echo "<span id='span_injection' name='span_injection'></span>";
       echo "</div></form>";
 
-      if (plugin_datainjection_getSessionParam('models_id')) {
-         $p['models_id'] = plugin_datainjection_getSessionParam('models_id');
+      if (PluginDatainjectionSession::getParam('models_id')) {
+         $p['models_id'] = PluginDatainjectionSession::getParam('models_id');
 
-         switch (plugin_datainjection_getSessionParam('step')) {
+         switch (PluginDatainjectionSession::getParam('step')) {
             case self::STEP_UPLOAD :
                $url = $CFG_GLPI["root_doc"]."/plugins/datainjection/ajax/dropdownSelectModel.php";
                Ajax::updateItem("span_injection", $url, $p);
@@ -163,8 +163,8 @@
    static function showInjectionForm(PluginDatainjectionModel $model, $entities_id) {
       global $LANG;
 
-      if (!plugin_datainjection_getSessionParam('infos')) {
-         plugin_datainjection_setSessionParam('infos', array());
+      if (!PluginDatainjectionSession::getParam('infos')) {
+         PluginDatainjectionSession::setParam('infos', array());
       }
       echo "<table class='tab_cadre_fixe'>";
       echo "<tr class='tab_bg_1'>";
@@ -196,11 +196,11 @@
       // Disable recording each SQL request in $_SESSION
       $CFG_GLPI["debug_sql"] = 0;
 
-      $nblines         = plugin_datainjection_getSessionParam('nblines');
+      $nblines         = PluginDatainjectionSession::getParam('nblines');
       $clientinjection = new PluginDatainjectionClientInjection;
 
       //New injection engine
-      $engine = new PluginDatainjectionEngine($model, plugin_datainjection_getSessionParam('infos'),
+      $engine = new PluginDatainjectionEngine($model, PluginDatainjectionSession::getParam('infos'),
                                               $entities_id);
       $backend = $model->getBackend();
       $model->loadSpecificModel();
@@ -256,8 +256,8 @@
       $_SESSION['datainjection']['step'] = self::STEP_RESULT;
 
       //Display results form
-      plugin_datainjection_setSessionParam('results', json_encode($clientinjection->results));
-      plugin_datainjection_setSessionParam('error_lines', json_encode($engine->getLinesInError()));
+      PluginDatainjectionSession::setParam('results', json_encode($clientinjection->results));
+      PluginDatainjectionSession::setParam('error_lines', json_encode($engine->getLinesInError()));
       $p['models_id'] = $model->fields['id'];
       $p['nblines']   = $nblines;
 
@@ -290,9 +290,9 @@
    static function showResultsForm(PluginDatainjectionModel $model) {
       global $LANG, $CFG_GLPI;
 
-      $results     = json_decode(plugin_datainjection_getSessionParam('results'), true);
+      $results     = json_decode(PluginDatainjectionSession::getParam('results'), true);
       self::stripslashes_array($results);
-      $error_lines = json_decode(plugin_datainjection_getSessionParam('error_lines'), true);
+      $error_lines = json_decode(PluginDatainjectionSession::getParam('error_lines'), true);
       self::stripslashes_array($error_lines);
 
       $ok = true;
@@ -351,12 +351,12 @@
 
    static function exportErrorsInCSV() {
 
-      $error_lines = json_decode(plugin_datainjection_getSessionParam('error_lines'), true);
+      $error_lines = json_decode(PluginDatainjectionSession::getParam('error_lines'), true);
       self::stripslashes_array($error_lines);
 
       if (!empty($error_lines)) {
-         $model = unserialize(plugin_datainjection_getSessionParam('currentmodel'));
-         $file  = PLUGIN_DATAINJECTION_UPLOAD_DIR . plugin_datainjection_getSessionParam('file_name');
+         $model = unserialize(PluginDatainjectionSession::getParam('currentmodel'));
+         $file  = PLUGIN_DATAINJECTION_UPLOAD_DIR . PluginDatainjectionSession::getParam('file_name');
 
          $mappings = $model->getMappings();
          $tmpfile  = fopen($file, "w");
@@ -373,7 +373,7 @@
          }
          fclose($tmpfile);
          
-         $name = "Error-".plugin_datainjection_getSessionParam('file_name');
+         $name = "Error-".PluginDatainjectionSession::getParam('file_name');
          $name = str_replace(' ','',$name);
          header('Content-disposition: attachment; filename='.$name);
          header('Content-Type: application/octet-stream');
