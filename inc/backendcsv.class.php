@@ -109,7 +109,7 @@
    **/
    function read($numberOfLines = 1) {
 
-      $injectionData = new PluginDatainjectionData;
+      $injectionData = new PluginDatainjectionData();
       $this->openFile();
       $continue = true;
       $data     = false;
@@ -208,7 +208,7 @@
 
       $row = 0;
       $fic = fopen($this->file, 'r');
-      $injectionData = new PluginDatainjectionData;
+      $injectionData = new PluginDatainjectionData();
 
       while ((($data= fgetcsv($fic, 3000, $this->delimiter)) !== FALSE) && $row <= $end_line) {
          if ($row >= $start_line && $row <= $end_line) {

@@ -37,10 +37,11 @@ class PluginDatainjectionWebservice {
          return array('uri'        => 'string,mandatory',
                       'base64'     => 'string,optional',
                       'additional' => 'array,optional',
+                      'models_id'  => 'integer, mandatory',
                       'help'       => 'bool,optional');
       }
 
-      $model = new PluginDatainjectionModel;
+      $model = new PluginDatainjectionModel();
 
       //-----------------------------------------------------------------
       //-------------------------- Check parameters ---------------------
@@ -66,7 +67,7 @@ class PluginDatainjectionWebservice {
                                                            WEBSERVICES_ERROR_NOTFOUND,
                                                            'Model unknown');
                
-            } elseif (!$model->can($params['models_id'],'r')) {
+            } elseif (!$model->can($params['models_id'], 'r')) {
                return PluginWebservicesMethodCommon::Error($protocol,
                                                            WEBSERVICES_ERROR_NOTALLOWED,
                                                            'You cannot access this model');
@@ -82,7 +83,7 @@ class PluginDatainjectionWebservice {
       } else {
          $entities_id = $params['entities_id'];
          if ($entities_id > 0 ) {
-            $entity = new Entity;
+            $entity = new Entity();
             if (!$entity->getFromDB($entities_id)) {
                return PluginWebservicesMethodCommon::Error($protocol,
                                                            WEBSERVICES_ERROR_NOTFOUND,
@@ -106,8 +107,8 @@ class PluginDatainjectionWebservice {
       //Upload CSV file
       $document_name = basename($params['uri']);
       $filename      = tempnam(PLUGIN_DATAINJECTION_UPLOAD_DIR, 'PWS');
-      $response = PluginWebservicesMethodCommon::uploadDocument($params, $protocol, $filename,
-                                                                $document_name);
+      $response      = PluginWebservicesMethodCommon::uploadDocument($params, $protocol, $filename,
+                                                                     $document_name);
 
       if (PluginWebservicesMethodCommon::isError($protocol, $response)) {
          return $response;
@@ -122,12 +123,18 @@ class PluginDatainjectionWebservice {
                        'delete_file'       => false, //Do not delete file once imported
                        'protocol'          => $protocol); //The Webservice protocol used
 
-      $results = array();
+      $results  = array();
       $response = $model->processUploadedFile($options);
       if (!PluginWebservicesMethodCommon::isError($protocol, $response)) {
          $engine  = new PluginDatainjectionEngine($model, $additional_infos, $params['entities_id']);
+         //Remove first line if header is present
+         $first = true;
          foreach ($model->injectionData->getDatas() as $id => $data) {
-            $results[] = $engine->injectLine($data[0], $id);
+            if ($first && $model->getSpecificModel()->isHeaderPresent()) {
+               $first = false;
+            } else {
+               $results[] = $engine->injectLine($data[0], $id);
+            }
          }
          $model->cleanData();
          return $results;

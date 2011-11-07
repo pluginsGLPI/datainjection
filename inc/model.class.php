@@ -846,11 +846,11 @@ class PluginDatainjectionModel extends CommonDBTM {
          //Initialise a new backend
           $backend = PluginDatainjectionBackend::getInstance($this->fields['filetype']);
          //Init backend with needed values
-         $backend->init($unique_filename,$file_encoding);
+         $backend->init($unique_filename, $file_encoding);
          $backend->setHeaderPresent($this->specific_model->fields['is_header_present']);
          $backend->setDelimiter($this->specific_model->fields['delimiter']);
 
-         //Read 1 line from the CSV file
+         //Read n line from the CSV file
          $injectionData = $backend->read(20);
 
          //Read the whole file and store the number of lines found
