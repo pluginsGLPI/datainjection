@@ -75,11 +75,14 @@
              || ($c ==($num -1)
                  && $data[$num -1] != PluginDatainjectionCommonInjectionLib::EMPTY_VALUE)) {
             $tmp = trim(mysql_real_escape_string($data[$c]));
-
             switch ($encoding) {
                //If file is ISO8859-1 : encode the datas in utf8
                case PluginDatainjectionBackend::ENCODING_ISO8859_1 :
-                  $csv[0][] = utf8_encode($tmp);
+                  if (!seems_utf8($tmp)) {
+                     $csv[0][] = utf8_encode($tmp);
+                  } else {
+                     $csv[0][] = $tmp;
+                  }
                   break;
 
                case PluginDatainjectionBackend::ENCODING_UFT8 :
