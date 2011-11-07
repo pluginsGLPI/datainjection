@@ -570,6 +570,10 @@ class PluginDatainjectionModel extends CommonDBTM {
       $this->showTabs($options);
       $this->addDivForTabs();
 
+      if ($this->isNewID($ID)) {
+         $this->showAdvancedForm($ID);
+      }
+
       return true;
    }
 
@@ -695,6 +699,75 @@ class PluginDatainjectionModel extends CommonDBTM {
    }
 
 
+   //Tabs management
+   function defineTabs($options = array()) {
+      $tabs = array();
+      $this->addStandardTab(__CLASS__, $tabs, $options);
+      $this->addStandardTab(Log, $tabs, $options);
+      return $tabs;
+   }
+
+   //Tabs management
+   function getTabNameForItem(CommonGLPI $item, $withtemplate=0) {
+      global $LANG;
+
+      if (!$withtemplate) {
+         switch ($item->getType()) {
+            case __CLASS__ :
+               $tabs[1] = $LANG['title'][26];
+               if (!$this->isNewID()) {
+                  $tabs[3] = $LANG['datainjection']['tabs'][3];
+                  $tabs[4] = $LANG['datainjection']['tabs'][0];
+         
+                  if ($this->fields['step'] > self::MAPPING_STEP) {
+                     $tabs[5] = $LANG['datainjection']['tabs'][1];
+         
+                     if ($this->fields['step'] != self::READY_TO_USE_STEP) {
+                        $tabs[7] = $LANG['datainjection']['model'][37];
+                     }
+                  }
+               }
+               return $tabs;
+            default:
+               return '';
+         }
+      }
+   }
+
+   static function displayTabContentForItem(CommonGLPI $item, $tabnum=1, $withtemplate=0) {
+      global $LANG;
+      
+      if ($item->getType() == __CLASS__) {
+         switch ($tabnum) {
+            case 1 :
+               $item->showAdvancedForm($_POST["id"]);
+               break;
+                  
+            case 3:
+               $options['confirm']   = 'creation';
+               $options['models_id'] = $item->fields['id'];
+               $options['add_form']  = true;
+               $options['submit']    = $LANG['datainjection']['fileStep'][13];
+               PluginDatainjectionClientInjection::showUploadFileForm($options);
+               break;
+               
+            case 5:
+               if ($item->fields['step'] > PluginDatainjectionModel::MAPPING_STEP) {
+                  PluginDatainjectionInfo::showFormInfos($this);
+               }
+               break;
+   
+            case 6:
+               if ($item->fields['step'] > PluginDatainjectionModel::MAPPING_STEP) {
+                  $item->showValidationForm();
+               }
+               break;
+         }
+      }
+      return true;
+   }
+
+/*
    function defineTabs($options=array()) {
       global $LANG;
 
@@ -716,7 +789,7 @@ class PluginDatainjectionModel extends CommonDBTM {
       }
       return $ong;
    }
-
+*/
 
    function cleanDBonPurge() {
       $itemtypes = array("PluginDatainjectionModelcsv", "PluginDatainjectionMapping", 
