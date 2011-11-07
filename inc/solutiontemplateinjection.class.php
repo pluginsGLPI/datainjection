@@ -32,7 +32,7 @@ if (!defined('GLPI_ROOT')) {
    die("Sorry. You can't access directly to this file");
 }
 
-class PluginDatainjectionTicketSolutionTemplateInjection extends TicketSolutionTemplate
+class PluginDatainjectionSolutionTemplateInjection extends SolutionTemplate
                                         implements PluginDatainjectionInjectionInterface {
 
 
@@ -116,8 +116,8 @@ class PluginDatainjectionTicketSolutionTemplateInjection extends TicketSolutionT
 
       $tab[3]['name']        = $LANG['job'][48];
       $tab[3]['field']       = 'name';
-      $tab[3]['table']       = getTableForItemType('TicketSolutionType');
-      $tab[3]['linkfield']   = 'ticketsolutiontypes_id';
+      $tab[3]['table']       = getTableForItemType('SolutionType');
+      $tab[3]['linkfield']   = 'solutiontypes_id';
       $tab[3]['injectable']  = true;
       $tab[3]['displaytype'] = 'dropdown';
 

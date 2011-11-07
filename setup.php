@@ -186,14 +186,14 @@ function getTypesToInject() {
                              'PluginDatainjectionNetpointInjection'             => 'datainjection',
                              'PluginDatainjectionKnowbaseItemCategoryInjection' => 'datainjection',
                              'PluginDatainjectionKnowbaseItemInjection'         => 'datainjection',
-                             'PluginDatainjectionTicketCategoryInjection'       => 'datainjection',
+                             'PluginDatainjectionITILCategoryInjection'         => 'datainjection',
                              'PluginDatainjectionTaskCategoryInjection'         => 'datainjection',
-                             'PluginDatainjectionTicketSolutionTypeInjection'   => 'datainjection',
+                             'PluginDatainjectionSolutionTypeInjection'         => 'datainjection',
                              'PluginDatainjectionRequestTypeInjection'          => 'datainjection',
-                             'PluginDatainjectionTicketSolutionTemplateInjection' => 'datainjection',
+                             'PluginDatainjectionSolutionTemplateInjection'     => 'datainjection',
                              );
    //Add pluginsq
-   doHook('plugin_datainjection_populate');
+   Plugin::doHook('plugin_datainjection_populate');
 }
 
 

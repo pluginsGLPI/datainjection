@@ -32,7 +32,7 @@ if (!defined('GLPI_ROOT')) {
    die("Sorry. You can't access directly to this file");
 }
 
-class PluginDatainjectionTicketSolutionTypeInjection extends TicketSolutionType
+class PluginDatainjectionSolutionTypeInjection extends SolutionType
                                         implements PluginDatainjectionInjectionInterface {
 
 

@@ -229,6 +229,9 @@ function plugin_datainjection_install() {
          if (!TableExists("glpi_plugin_datainjection_modelcsvs")) {
             plugin_datainjection_update170_20();
          }
+         
+         plugin_datainjection_update210_220();
+       
          break;
    }
 
@@ -1040,6 +1043,18 @@ function plugin_datainjection_update170_20() {
    }
 }
 
+function plugin_datainjection_update210_220() {
+   global $DB;
+
+   foreach (array('glpi_plugin_datainjection_mappings', 'glpi_plugin_datainjection_infos') 
+      as $table) {
+      $move = array('TicketCategory' => 'ITILCategory', 'TicketSolutionType' => 'SolutionType');
+      foreach ($move as $old => $new) {
+         $query = "UPDATE `$table` SET `itemtype`='$new' WHERE `itemtype`='$old'";
+         $DB->query($query);
+      }
+   }
+}
 
 function plugin_datainjection_createaccess($ID) {
    global $DB;

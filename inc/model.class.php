@@ -703,26 +703,26 @@ class PluginDatainjectionModel extends CommonDBTM {
    function defineTabs($options = array()) {
       $tabs = array();
       $this->addStandardTab(__CLASS__, $tabs, $options);
-      $this->addStandardTab(Log, $tabs, $options);
+      $this->addStandardTab('Log', $tabs, $options);
       return $tabs;
    }
 
    //Tabs management
    function getTabNameForItem(CommonGLPI $item, $withtemplate=0) {
       global $LANG;
-
+      
       if (!$withtemplate) {
          switch ($item->getType()) {
             case __CLASS__ :
                $tabs[1] = $LANG['title'][26];
-               if (!$this->isNewID()) {
+               if (!$this->isNewID($item->fields['id'])) {
                   $tabs[3] = $LANG['datainjection']['tabs'][3];
                   $tabs[4] = $LANG['datainjection']['tabs'][0];
          
-                  if ($this->fields['step'] > self::MAPPING_STEP) {
+                  if ($item->fields['step'] > self::MAPPING_STEP) {
                      $tabs[5] = $LANG['datainjection']['tabs'][1];
          
-                     if ($this->fields['step'] != self::READY_TO_USE_STEP) {
+                     if ($item->fields['step'] != self::READY_TO_USE_STEP) {
                         $tabs[7] = $LANG['datainjection']['model'][37];
                      }
                   }
@@ -742,7 +742,7 @@ class PluginDatainjectionModel extends CommonDBTM {
             case 1 :
                $item->showAdvancedForm($_POST["id"]);
                break;
-                  
+
             case 3:
                $options['confirm']   = 'creation';
                $options['models_id'] = $item->fields['id'];
@@ -750,7 +750,11 @@ class PluginDatainjectionModel extends CommonDBTM {
                $options['submit']    = $LANG['datainjection']['fileStep'][13];
                PluginDatainjectionClientInjection::showUploadFileForm($options);
                break;
-               
+
+            case 4 :
+               PluginDatainjectionMapping::showFormMappings($item);
+               break;
+
             case 5:
                if ($item->fields['step'] > PluginDatainjectionModel::MAPPING_STEP) {
                   PluginDatainjectionInfo::showFormInfos($this);
