@@ -149,7 +149,7 @@ class PluginDatainjectionMapping extends CommonDBTM {
          echo "<tr class='tab_bg_1'><td class='center'>";
          $url = $CFG_GLPI["root_doc"].
                 "/plugins/datainjection/front/popup.php?popup=preview&amp;models_id=".
-                $model->fields['id'];
+                $model->getID();
          echo "<a href=#  onClick=\"var w = window.open('$url' , 'glpipopup', ".
                 "'height=400, width=600, top=100, left=100, scrollbars=yes' );w.focus();\"/>";
          echo $LANG['datainjection']['button'][3]."</a>";
@@ -168,19 +168,13 @@ class PluginDatainjectionMapping extends CommonDBTM {
 
       foreach ($model->getMappings() as $mapping) {
          $mapping->fields = Toolbox::stripslashes_deep($mapping->fields);
-         $mappings_id     = $mapping->fields['id'];
+         $mappings_id     = $mapping->getID();
          echo "<tr class='tab_bg_1'>";
          echo "<td class='center'>".$mapping->fields['name']."</td>";
          echo "<td class='center'>";
          $options = array('primary_type' => $model->fields['itemtype']);
-         $rand = PluginDatainjectionInjectionType::dropdownLinkedTypes($mapping, $options);
+         PluginDatainjectionInjectionType::dropdownLinkedTypes($mapping, $options);
          echo "</td>";
-         $options['mapping_or_info'] = $mapping->fields;
-         $options['called_by']       = __CLASS__;
-         $options['need_decode']     = false;
-         $options['itemtype']        = $mapping->fields['itemtype'];
-         $options['fields_update']   = false;
-
          echo "<td class='center'><span id='span_field_$mappings_id'>";
          echo "</span></td>";
          echo "<td class='center'><span id='span_mandatory_$mappings_id'></span></td>";

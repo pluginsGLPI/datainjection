@@ -230,9 +230,9 @@
          if ($pos != $prev) {
             $prev = $pos;
             $fin = time()-$deb;
-            changeProgressBarPosition($index, $nblines,
-                                      $LANG['datainjection']['importStep'][1].'... '.
-                                      $pos.'% ('.timestampToString(time()-$deb, true).')');
+            Html::changeProgressBarPosition($index, $nblines,
+                                            $LANG['datainjection']['importStep'][1].'... '.
+                                            $pos.'% ('.Html::timestampToString(time()-$deb, true).')');
          }
          $line = $backend->getNextLine();
          $index++;
@@ -240,8 +240,8 @@
       }
 
       //EOF : change progressbar to 100% !
-      changeProgressBarPosition(100, 100, $LANG['datainjection']['importStep'][3].
-                                          ' ('.timestampToString(time()-$deb, true).')');
+      Html::changeProgressBarPosition(100, 100, $LANG['datainjection']['importStep'][3].
+                                                 ' ('.Html::timestampToString(time()-$deb, true).')');
 
       // Restore
       $CFG_GLPI["debug_sql"] = 1;

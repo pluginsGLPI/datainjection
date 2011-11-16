@@ -27,13 +27,13 @@
  @link      http://www.glpi-project.org/
  @since     2009
  ---------------------------------------------------------------------- */
- 
+
 // Direct access to file
 if (strpos($_SERVER['PHP_SELF'],"dropdownChooseField.php")) {
    define('GLPI_ROOT', '../../..');
    include (GLPI_ROOT."/inc/includes.php");
    header("Content-Type: text/html; charset=UTF-8");
-   Session::header_nocache();
+   Html::header_nocache();
 }
 
 if (!defined('GLPI_ROOT')) {

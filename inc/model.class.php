@@ -723,7 +723,7 @@ class PluginDatainjectionModel extends CommonDBTM {
                      $tabs[5] = $LANG['datainjection']['tabs'][1];
          
                      if ($item->fields['step'] != self::READY_TO_USE_STEP) {
-                        $tabs[7] = $LANG['datainjection']['model'][37];
+                        $tabs[6] = $LANG['datainjection']['model'][37];
                      }
                   }
                }
@@ -757,7 +757,7 @@ class PluginDatainjectionModel extends CommonDBTM {
 
             case 5:
                if ($item->fields['step'] > PluginDatainjectionModel::MAPPING_STEP) {
-                  PluginDatainjectionInfo::showFormInfos($this);
+                  PluginDatainjectionInfo::showFormInfos($item);
                }
                break;
    
@@ -927,8 +927,13 @@ class PluginDatainjectionModel extends CommonDBTM {
          $backend->setHeaderPresent($this->specific_model->fields['is_header_present']);
          $backend->setDelimiter($this->specific_model->fields['delimiter']);
 
-         //Read n line from the CSV file
-         $injectionData = $backend->read(20);
+         if (!$webservice) {
+            //Read n line from the CSV file if not webservice
+            $injectionData = $backend->read(20);
+         } else {
+            //Read the whole file
+            $injectionData = $backend->read(-1);
+         }
 
          //Read the whole file and store the number of lines found
          $backend->storeNumberOfLines();
@@ -1521,7 +1526,7 @@ class PluginDatainjectionModel extends CommonDBTM {
 
          echo "</table>";
          Html::openArrowMassives("modelslist");
-         Html::closeArrowMassives('delete', $LANG['buttons'][6]);
+         Html::closeArrowMassives(array('delete' => $LANG['buttons'][6]));
 
       } else {
          echo "<tr class='tab_bg_1'><td>".$LANG['search'][15]."</table></td>";

@@ -1053,6 +1053,11 @@ function plugin_datainjection_update210_220() {
          $query = "UPDATE `$table` SET `itemtype`='$new' WHERE `itemtype`='$old'";
          $DB->query($query);
       }
+      
+      //emails are now dropdowns
+      $query = "UPDATE `$table` SET `value`='useremails_id' " .
+               "WHERE `itemtype`='User' AND `value`='email'";
+      $DB->query($query);
    }
 }
 

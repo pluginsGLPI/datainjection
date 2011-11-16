@@ -87,7 +87,7 @@ class PluginDatainjectionUserInjection extends User
 
       $blacklist = PluginDatainjectionCommonInjectionLib::getBlacklistedOptions();
       //Remove some options because some fields cannot be imported
-      $notimportable = array(13, 14, 15, 20, 80, 91, 92, 93,);
+      $notimportable = array(13, 14, 15, 20, 80, 91, 92, 93, 5);
 
       //Add displaytype value
       $dropdown                 = array("dropdown"       => array(3, 81, 82),
@@ -120,11 +120,25 @@ class PluginDatainjectionUserInjection extends User
 
    function processAfterInsertOrUpdate($values, $add = true, $rights = array()) {
       global $DB;
+      
+      //Manage user emails
+      if (isset($values['User']['useremails_id']) 
+         && $rights['add_dropdown'] && Session::haveRight('user', 'w')) {
+           if (!countElementsInTable("glpi_useremails", 
+                                     "`users_id`='".$values['User']['id']."' 
+                                       AND `email`='".$values['User']['useremails_id']."'")) {
+            $useremail = new UserEmail();
+            $tmp['users_id'] = $values['User']['id'];
+            $tmp['email']    = $values['User']['useremails_id'];
+            $useremail->add($tmp);
+         } 
+      }
+      
       if (!$add && isset($values['User']['password']) && $values['User']['password'] != '') {
          //We use an SQL request because updating the password is unesasy 
          //(self reset password process in $user->prepareInputForUpdate())
          $password
-                 = sha1(unclean_cross_side_scripting_deep(stripslashes($values['User']["password"])));
+                 = sha1(Toolbox::unclean_cross_side_scripting_deep(stripslashes($values['User']["password"])));
          $query = "UPDATE `glpi_users` SET `password`='$password' " .
                   "WHERE `id`='".$values['User']['id']."'";
          $DB->query($query);

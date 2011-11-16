@@ -71,6 +71,10 @@ class PluginDatainjectionWebservice {
                return PluginWebservicesMethodCommon::Error($protocol,
                                                            WEBSERVICES_ERROR_NOTALLOWED,
                                                            'You cannot access this model');
+            } elseif ($model->fields['step'] < PluginDatainjectionModel::READY_TO_USE_STEP) {
+               return PluginWebservicesMethodCommon::Error($protocol,
+                                                           WEBSERVICES_ERROR_NOTALLOWED,
+                                                           'You cannot access this model');
             }
 
       }

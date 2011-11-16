@@ -95,10 +95,11 @@ class PluginDatainjectionITILCategoryInjection extends ITILCategory
       }
 
       //Add displaytype value
-      $fields_definition = array("bool"           => array(86),
+      $fields_definition = array("bool"           => array(86, 74, 75, 76),
                                  "multiline_text" => array(16),
                                  "dropdown"       => array(71),
-                                 "user"           => array(70));
+                                 "user"           => array(70),
+                                 "single"         => array(72, 73));
 
       foreach ($fields_definition as $type => $tabsID) {
          foreach ($tabsID as $tabID) {

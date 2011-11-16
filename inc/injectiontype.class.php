@@ -114,7 +114,7 @@ class PluginDatainjectionInjectionType {
       $values[PluginDatainjectionInjectionType::NO_VALUE] = $LANG['datainjection']['mapping'][6];
 
       //Add primary_type to the list of availables types
-      $type = new $p['primary_type']();
+      $type                       = new $p['primary_type']();
       $values[$p['primary_type']] = $type->getTypeName();
       
       foreach ($INJECTABLE_TYPES as $type => $plugin) {
@@ -127,18 +127,16 @@ class PluginDatainjectionInjectionType {
       }
       asort($values);
 
-
-      $rand = Dropdown::showFromArray("data[".$mapping_or_info->fields['id']."][itemtype]",
+      $rand = Dropdown::showFromArray("data[".$mappings_id."][itemtype]",
                                       $values, array('value' => $p['itemtype']));
 
       $p['itemtype'] = '__VALUE__';
-
       $url_field     = $CFG_GLPI["root_doc"]."/plugins/datainjection/ajax/dropdownChooseField.php";
       $url_mandatory = $CFG_GLPI["root_doc"]."/plugins/datainjection/ajax/dropdownMandatory.php";
-      Ajax::updateItem("span_field_".$mapping_or_info->fields['id'], $url_field,$p, false,
-                     "dropdown_data[".$mapping_or_info->fields['id']."][itemtype]$rand");
-      Ajax::updateItemOnSelectEvent("dropdown_data[".$mapping_or_info->fields['id']."][itemtype]$rand",
-                                  "span_field_".$mapping_or_info->fields['id'], $url_field, $p);
+      $toobserve     = "dropdown_data[".$mapping_or_info->getID()."][itemtype]$rand";
+      $toupdate      = "span_field_".$mappings_id;
+      Ajax::updateItem($toupdate, $url_field, $p, $toobserve);
+      Ajax::updateItemOnSelectEvent($toobserve, $toupdate, $url_field, $p);
       return $rand;
    }
 
@@ -214,7 +212,7 @@ class PluginDatainjectionInjectionType {
                                             'used'  => $used));
 
       $url = $CFG_GLPI["root_doc"]."/plugins/datainjection/ajax/dropdownMandatory.php";
-      Ajax::updateItem("span_mandatory_".$mapping_or_info['id'], $url, $p, false,
+      Ajax::updateItem("span_mandatory_".$mapping_or_info['id'], $url, $p, 
                      "dropdown_data[".$mapping_or_info['id']."][value]$rand");
       Ajax::updateItemOnSelectEvent("dropdown_data[".$mapping_or_info['id']."][value]$rand",
                                   "span_mandatory_".$mapping_or_info['id'], $url, $p);

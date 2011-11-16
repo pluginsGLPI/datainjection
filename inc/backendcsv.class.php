@@ -117,7 +117,7 @@
       $continue = true;
       $data     = false;
 
-      for ($index=0 ; $index<$numberOfLines && $continue ; $index++) {
+      for ($index = 0 ; ($numberOfLines == -1 || $index < $numberOfLines) && $continue ; $index++) {
          $data = $this->getNextLine();
          if ($data) {
             $injectionData->addToDatas($data);

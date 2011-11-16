@@ -65,7 +65,7 @@ class PluginDatainjectionComputerInjection extends Computer
                              150, 151, 152, 153, 154, 155, 156, 101, 102, 103, 110, 111, 19);
       $options['ignore_fields'] = array_merge($blacklist, $notimportable);
       $options['displaytype'] = array("dropdown"       => array(3, 4, 40, 31, 45, 46, 41, 71, 32,
-                                                                33, 23, 42),
+                                                                33, 23, 42, 49),
                                       "user"           => array(70, 24),
                                       "multiline_text" => array(16, 90));
 

@@ -36,7 +36,7 @@ if (!defined("PLUGIN_DATAINJECTION_UPLOAD_DIR")) {
 function plugin_init_datainjection() {
    global $PLUGIN_HOOKS, $CFG_GLPI, $LANG, $INJECTABLE_TYPES;
 
-   $plugin = new Plugin;
+   $plugin = new Plugin();
    $PLUGIN_HOOKS['change_profile']['datainjection'] = 'plugin_datainjection_changeprofile';
 
    $PLUGIN_HOOKS['migratetypes']['datainjection'] = 'plugin_datainjection_migratetypes_datainjection';
@@ -44,7 +44,7 @@ function plugin_init_datainjection() {
    if ($plugin->isInstalled("datainjection") && $plugin->isActivated("datainjection")) {
       if (!file_exists(PLUGIN_DATAINJECTION_UPLOAD_DIR) 
       || !is_writable(PLUGIN_DATAINJECTION_UPLOAD_DIR)) {
-         logDebug("[Datainjection plugin] : directory ".PLUGIN_DATAINJECTION_UPLOAD_DIR.
+         Toolbox::logDebug("[Datainjection plugin] : directory ".PLUGIN_DATAINJECTION_UPLOAD_DIR.
                      " must exists and be writable for apache user.\n Please check your installation");
          return false;
       }
@@ -101,6 +101,7 @@ function plugin_version_datainjection() {
       'minGlpiVersion' => '0.83',
       'author'         => 'Walid Nouh & Remi Collet',
       'homepage'       => 'https://forge.indepnet.net/projects/datainjection',
+      'license'        => 'GPLv2+',
       'version'        => '2.2.0'
    );
 }
