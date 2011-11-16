@@ -63,7 +63,7 @@ class PluginDatainjectionSolutionTypeInjection extends SolutionType
       //Remove some options because some fields cannot be imported
       $options['ignore_fields'] = array(80, 19);
       $options['displaytype']   = array("multiline_text" => array(16),
-                                        "dropdown"       => array(86));
+                                        "bool"           => array(86));
       $tab = PluginDatainjectionCommonInjectionLib::addToSearchOptions($tab, $options, $this);
       return $tab;
    }

@@ -57,31 +57,9 @@ class PluginDatainjectionStateInjection extends State
       $tab = Search::getOptions(get_parent_class($this));
 
       //Remove some options because some fields cannot be imported
-      $remove = array(2);
-      foreach ($remove as $tmp) {
-         unset($tab[$tmp]);
-      }
-
-      //Add displaytype value
-      $fields_definition = array("multiline_text" => array(16));
-
-      foreach ($fields_definition as $type => $tabsID) {
-         foreach ($tabsID as $tabID) {
-            $tab[$tabID]['displaytype'] = $type;
-         }
-      }
-
-      //Add default displaytype (text)
-      foreach ($tab as $id => $tmp) {
-         if (isset($tmp['linkfield']) && !isset($tmp['displaytype'])) {
-            $tab[$id]['displaytype'] = 'text';
-         }
-
-         if (isset($tmp['linkfield']) && !isset($tmp['checktype'])) {
-            $tab[$id]['checktype'] = 'text';
-         }
-      }
-
+      $options['ignore_fields'] = array(2, 19, 14);
+      $options['displaytype']   = array("multiline_text" => array(16));
+      $tab = PluginDatainjectionCommonInjectionLib::addToSearchOptions($tab, $options, $this);
       return $tab;
    }
 
