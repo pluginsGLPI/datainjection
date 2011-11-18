@@ -1,6 +1,6 @@
 <?php
 /*
- * @version $Id$
+ * @version $Id: SoftwareVersioninjection.class.php 614 2011-11-06 17:55:33Z walid $
  LICENSE
 
  This file is part of the order plugin.
@@ -32,8 +32,8 @@ if (!defined('GLPI_ROOT')) {
    die("Sorry. You can't access directly to this file");
 }
 
-/// SoftwareLicense class
-class PluginDatainjectionSoftwareLicenseInjection extends SoftwareLicense
+/// SoftwareVersion class
+class PluginDatainjectionSoftwareVersionInjection extends SoftwareVersion
                                                   implements PluginDatainjectionInjectionInterface {
 
 
@@ -57,13 +57,11 @@ class PluginDatainjectionSoftwareLicenseInjection extends SoftwareLicense
 
 
       $tab = Search::getOptions(get_parent_class($this));
-      $tab[8]['checktype'] = 'date';
-      $options['ignore_fields'] = array(50,122);
-      $options['displaytype']   = array("dropdown"       => array(5, 6, 7),
-                                        "date"           => array(8),
+      $options['ignore_fields'] = array();
+      $options['displaytype']   = array("dropdown"       => array(4,31),
                                         "multiline_text" => array(16));
 
-      if ($primary_type == 'SoftwareLicense') {
+      if ($primary_type == 'SoftwareVersion') {
          $tab[100]['name']        = $LANG['help'][31];
          $tab[100]['field']       = 'name';
          $tab[100]['table']       = getTableForItemType('Software');
@@ -117,23 +115,23 @@ class PluginDatainjectionSoftwareLicenseInjection extends SoftwareLicense
    function getValueForAdditionalMandatoryFields($fields_toinject=array()) {
       global $DB;
  
-      if (!isset($fields_toinject['SoftwareLicense']['softwares_id'])) {
+      if (!isset($fields_toinject['SoftwareVersion']['softwares_id'])) {
          return $fields_toinject;
       }
 
       $query = "SELECT `id`
                 FROM `glpi_softwares`
-                WHERE `name` = '".$fields_toinject['SoftwareLicense']['softwares_id']."'";
+                WHERE `name` = '".$fields_toinject['SoftwareVersion']['softwares_id']."'";
       $result = $DB->query($query);
 
       if ($DB->numrows($result) > 0) {
          $id = $DB->result($result,0,'id');
          //Add softwares_id to the array
-         $fields_toinject['SoftwareLicense']['softwares_id'] = $id;
+         $fields_toinject['SoftwareVersion']['softwares_id'] = $id;
 
       } else {
          //Remove software name
-         unset($fields_toinject['SoftwareLicense']['softwares_id']);
+         unset($fields_toinject['SoftwareVersion']['softwares_id']);
       }
 
       return $fields_toinject;

@@ -229,9 +229,7 @@ class PluginDatainjectionCommonInjectionLib {
       if (method_exists($injectionClass,'addSpecificMandatoryFields')) {
          $fields = $injectionClass->addSpecificMandatoryFields();
 
-         foreach ($fields as $field) {
-            $this->mandatory_fields[$itemtype] = $field;
-         }
+         $this->mandatory_fields[$itemtype] = $field;
       }
       
       $status_check = true;
@@ -1660,6 +1658,10 @@ class PluginDatainjectionCommonInjectionLib {
                         $option = self::findSearchOption($searchOptions, $field);
                         $where .= " AND `" . $field . "`='".
                            $this->getValueByItemtypeAndName($itemtype, $field) . "'";
+                        if ($itemtype =='SoftwareVersion' || $itemtype =='SoftwareLicense') {
+                           $where .= " AND `name`='".
+                           $this->getValueByItemtypeAndName($itemtype, "name") . "'";
+                        }
                      }
                   }
    

@@ -594,7 +594,7 @@ function plugin_datainjection_update170_20() {
                                                              'glpi_networkequipments', 'glpi_peripherals',
                                                              'glpi_phones', 'glpi_printers',
                                                              'glpi_reminders', 'glpi_rules',
-                                                             'glpi_softwares', 'glpi_softwarelicenses',
+                                                             'glpi_softwares', 'glpi_softwarelicenses','glpi_softwareversions'
                                                              'glpi_tickets', 'glpi_users',
                                                              'glpi_profiles_users'),
                                           'default' => array('glpi_bookmarks' => "-1"))),

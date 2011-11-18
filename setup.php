@@ -177,6 +177,7 @@ function getTypesToInject() {
                              'PluginDatainjectionProfile_UserInjection'         => 'datainjection',
                              'PluginDatainjectionSoftwareInjection'             => 'datainjection',
                              'PluginDatainjectionSoftwareLicenseInjection'      => 'datainjection',
+                             'PluginDatainjectionSoftwareVersionInjection'      => 'datainjection',
                              'PluginDatainjectionSupplierInjection'             => 'datainjection',
                              'PluginDatainjectionUserInjection'                 => 'datainjection',
                              'PluginDatainjectionNetworkportInjection'          => 'datainjection',
