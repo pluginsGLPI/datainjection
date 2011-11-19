@@ -54,7 +54,9 @@ class PluginDatainjectionKnowbaseItemInjection extends KnowbaseItem
       global $LANG;
 
       $tab = Search::getOptions(get_parent_class($this));
-
+      
+      $tab[5]['checktype'] = 'date';
+      
       //Remove some options because some fields cannot be imported
       $options['ignore_fields'] = array(2, 80, 19);
       $options['displaytype']   = array("dropdown"       => array(4),
