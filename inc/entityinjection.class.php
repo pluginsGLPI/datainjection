@@ -55,7 +55,7 @@ class PluginDatainjectionEntityInjection extends Entity
       $tab = Search::getOptions(get_parent_class($this));
 
       //Remove some options because some fields cannot be imported
-      $options['ignore_fields'] = array(2, 19);
+      $options['ignore_fields'] = array(2, 19, 14);
       $options['displaytype']   = array("multiline_text" => array(16, 17), "dropdown" => array(9));
       $tab = PluginDatainjectionCommonInjectionLib::addToSearchOptions($tab, $options, $this);
       foreach ($tab as $id => $option) {
