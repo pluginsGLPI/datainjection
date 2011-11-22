@@ -62,7 +62,7 @@ class PluginDatainjectionComputerInjection extends Computer
       $blacklist = PluginDatainjectionCommonInjectionLib::getBlacklistedOptions();
       //Remove some options because some fields cannot be imported
       $notimportable = array(2, 91, 92, 93, 80, 100, 7, 10, 11, 12, 13, 15, 34, 35, 36, 39, 14,
-                             150, 151, 152, 153, 154, 155, 156, 101, 102, 103, 110, 111, 19);
+                             150, 151, 152, 153, 154, 155, 156, 101, 102, 103, 110, 111, 19, 50, 122);
       $options['ignore_fields'] = array_merge($blacklist, $notimportable);
       $options['displaytype'] = array("dropdown"       => array(3, 4, 40, 31, 45, 46, 41, 71, 32,
                                                                 33, 23, 42, 49),

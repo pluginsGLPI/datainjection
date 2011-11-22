@@ -60,7 +60,7 @@ class PluginDatainjectionMonitorInjection extends Monitor
 
       $blacklist = PluginDatainjectionCommonInjectionLib::getBlacklistedOptions();
       //Remove some options because some fields cannot be imported
-      $notimportable = array(2, 91, 92, 93, 80, 100, 32, 33);
+      $notimportable = array(2, 91, 92, 93, 80, 100, 32, 33, 50, 122);
       $ignore_fields = array_merge($blacklist, $notimportable);
 
       //Add linkfield for theses fields : no massive action is allowed in the core, but they can be

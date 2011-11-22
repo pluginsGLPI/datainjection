@@ -72,7 +72,7 @@ class PluginDatainjectionNetworkEquipmentInjection extends NetworkEquipment
 
       $blacklist = PluginDatainjectionCommonInjectionLib::getBlacklistedOptions();
       //Remove some options because some fields cannot be imported
-      $notimportable = array(2, 91, 92, 93, 80, 100);
+      $notimportable = array(2, 91, 92, 93, 80, 100, 50, 122);
       $options['ignore_fields'] = array_merge($blacklist, $notimportable);
       $options['displaytype'] = array("dropdown"       => array(3, 4, 40, 31, 71, 11, 32, 33, 23),
                                       "bool"           => array(86),
