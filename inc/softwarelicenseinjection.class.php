@@ -124,6 +124,8 @@ class PluginDatainjectionSoftwareLicenseInjection extends SoftwareLicense
       $query = "SELECT `id`
                 FROM `glpi_softwares`
                 WHERE `name` = '".$fields_toinject['SoftwareLicense']['softwares_id']."'";
+      $query .= getEntitiesRestrictRequest(" AND", "glpi_softwares", "entities_id", 
+                                           $_SESSION['glpiactive_entity'], true);
       $result = $DB->query($query);
 
       if ($DB->numrows($result) > 0) {
