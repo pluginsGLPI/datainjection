@@ -1731,12 +1731,16 @@ class PluginDatainjectionCommonInjectionLib {
                   $this->setValueForItemtype($itemtype, $key, $value);
                }
             }
-            $name = autoName($this->values[$itemtype]['name'], "name", true, $itemtype,
-                             $this->values[$itemtype]['entities_id']);
-            $this->setValueForItemtype($itemtype, 'name', $name);
-            $otherserial = autoName($this->values[$itemtype]['otherserial'], "otherserial", true,
-                                    $itemtype, $this->values[$itemtype]['entities_id']);
-            $this->setValueForItemtype($itemtype, 'otherserial', $otherserial);
+            if (isset($this->values[$itemtype]['name'])) {
+               $name = autoName($this->values[$itemtype]['name'], "name", true, $itemtype,
+                                $this->values[$itemtype]['entities_id']);
+               $this->setValueForItemtype($itemtype, 'name', $name);
+            }
+            if (isset($this->values[$itemtype]['otherserial'])) {
+               $otherserial = autoName($this->values[$itemtype]['otherserial'], "otherserial", true,
+                                       $itemtype, $this->values[$itemtype]['entities_id']);
+               $this->setValueForItemtype($itemtype, 'otherserial', $otherserial);
+            }
          }
       }
    }
@@ -1819,7 +1823,8 @@ class PluginDatainjectionCommonInjectionLib {
    **/
    static function addToSearchOptions($type_searchOptions = array(), $options = array(),
                                       $injectionClass) {
-
+      global $LANG;
+      
       self::addTemplateSearchOptions($injectionClass, $type_searchOptions);
 
       //Add linkfield for theses fields : no massive action is allowed in the core, but they can be

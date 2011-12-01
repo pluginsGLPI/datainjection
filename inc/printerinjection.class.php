@@ -74,7 +74,7 @@ class PluginDatainjectionPrinterInjection extends Printer
 
    /**
     * Standard method to add an object into glpi
-    * WILL BE INTEGRATED INTO THE CORE IN 0.80
+ 
     *
     * @param values fields to add into glpi
     * @param options options used during creation

@@ -54,11 +54,7 @@ class PluginDatainjectionContractInjection extends Contract
 
       $tab = Search::getOptions(get_parent_class($this));
 
-      $blacklist = PluginDatainjectionCommonInjectionLib::getBlacklistedOptions();
-      //Remove some options because some fields cannot be imported
-      $notimportable = array(80);
-      $ignore_fields = array_merge($blacklist, $notimportable);
-
+      //Specific to location
       $tab[5]['checktype'] = 'date';
 
       $tab[6]['minvalue']  = 0;
@@ -73,57 +69,24 @@ class PluginDatainjectionContractInjection extends Contract
 
       $tab[22]['linkfield'] = 'billing';
 
-      //Add linkfield for theses fields : no massive action is allowed in the core, but they can be
-      //imported using the commonlib
-      $add_linkfield = array('comment' => 'comment',
-                             'notepad' => 'notepad');
-
-      foreach ($tab as $id => $tmp) {
-         if (!is_array($tmp) || in_array($id,$ignore_fields)) {
-            unset($tab[$id]);
-
-         } else {
-            if (in_array($tmp['field'],$add_linkfield)) {
-               $tab[$id]['linkfield'] = $add_linkfield[$tmp['field']];
-            }
-
-            if (!in_array($id,$ignore_fields)) {
-               $tab[$id]['injectable'] = PluginDatainjectionCommonInjectionLib::FIELD_INJECTABLE;
-
-               if (isset($tmp['linkfield']) && !isset($tmp['displaytype'])) {
-                  $tab[$id]['displaytype'] = 'text';
-               }
-
-               if (isset($tmp['linkfield']) && !isset($tmp['checktype'])) {
-                  $tab[$id]['checktype'] = 'text';
-               }
-            }
-         }
-      }
-
-      //Add displaytype value
-      $dropdown = array("dropdown"         => array(4),
-                        "date"             => array(5),
-                        "dropdown_integer" => array(6,7,21),
-                        "bool"             => array(86),
-                        "alert"            => array(59),
-                        "billing"          => array(22),
-                        "renewal"          => array(23),
-                        "multiline_text"   => array(16,90));
-
-      foreach ($dropdown as $type => $tabsID) {
-         foreach ($tabsID as $tabID) {
-            $tab[$tabID]['displaytype'] = $type;
-         }
-      }
-
+      //Remove some options because some fields cannot be imported
+      $options['ignore_fields'] = array(2, 19, 80);
+      $options['displaytype']   = array("dropdown"         => array(4),
+                                        "date"             => array(5),
+                                        "dropdown_integer" => array(6,7,21),
+                                        "bool"             => array(86),
+                                        "alert"            => array(59),
+                                        "billing"          => array(22),
+                                        "renewal"          => array(23),
+                                        "multiline_text"   => array(16,90));
+      $tab = PluginDatainjectionCommonInjectionLib::addToSearchOptions($tab, $options, $this);
       return $tab;
    }
 
 
    /**
     * Standard method to add an object into glpi
-    * WILL BE INTEGRATED INTO THE CORE IN 0.80
+ 
     *
     * @param values fields to add into glpi
     * @param options options used during creation
