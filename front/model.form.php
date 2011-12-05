@@ -48,7 +48,7 @@ if (isset ($_POST["add"])) {
    $newID = $model->add($_POST);
 
    //Set display to the advanced options tab
-   Session::setActiveTab('PluginDatainjectionModel', 2);
+   Session::setActiveTab('PluginDatainjectionModel', 3);
    Html::redirect(Toolbox::getItemTypeFormURL('PluginDatainjectionModel')."?id=$newID");
 
 /* delete */
@@ -65,29 +65,29 @@ if (isset ($_POST["add"])) {
 
    $specific_model = PluginDatainjectionModel::getInstance('csv');
    $specific_model->saveFields($_POST);
-   Html::redirect($_SERVER['HTTP_REFERER']);
+   Html::back();
 
 /* update order */
-} else if (isset ($_POST["validate"])) {
+} elseif (isset ($_POST["validate"])) {
    $model->check($_POST['id'],'w');
    $model->switchReadyToUse();
-   Html::redirect($_SERVER['HTTP_REFERER']);
+   Html::back();
 
-} else if (isset($_POST['upload'])) {
+} elseif (isset($_POST['upload'])) {
    if (!empty($_FILES)) {
       $model->check($_POST['id'],'w');
 
       if ($model->processUploadedFile(array('file_encoding' => 'csv',
                                             'mode'          => PluginDatainjectionModel::CREATION))) {
          Session::setActiveTab('PluginDatainjectionModel', 4);
-      }else {
+      } else {
          Session::addMessageAfterRedirect($LANG['datainjection']['fileStep'][4], true, ERROR, true);
       }
    }
 
-   Html::redirect($_SERVER['HTTP_REFERER']);
+   Html::back();
 
-} else if (isset($_GET['sample'])) {
+} elseif (isset($_GET['sample'])) {
    $model->check($_GET['sample'], 'r');
    $modeltype = PluginDatainjectionModel::getInstance($model->getField('filetype'));
    $modeltype->getFromDBByModelID($model->getField('id'));
@@ -96,9 +96,5 @@ if (isset ($_POST["add"])) {
 }
 
 Html::header($LANG['datainjection']['profiles'][1], '', "plugins", "datainjection", "model");
-
 $model->showForm($_GET["id"]);
-
 Html::footer();
-
-?>

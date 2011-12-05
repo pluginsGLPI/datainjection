@@ -771,30 +771,6 @@ class PluginDatainjectionModel extends CommonDBTM {
       return true;
    }
 
-/*
-   function defineTabs($options=array()) {
-      global $LANG;
-
-      $ong[1] = $LANG['title'][26];
-
-      if ($this->fields['id'] > 0) {
-         $ong[3] = $LANG['datainjection']['tabs'][3];
-         $ong[4] = $LANG['datainjection']['tabs'][0];
-
-         if ($this->fields['step'] > self::MAPPING_STEP) {
-            $ong[5] = $LANG['datainjection']['tabs'][1];
-
-            if ($this->fields['step'] != self::READY_TO_USE_STEP) {
-               $ong[7] = $LANG['datainjection']['model'][37];
-            }
-         }
-
-         $ong[12] = $LANG['title'][38];
-      }
-      return $ong;
-   }
-*/
-
    function cleanDBonPurge() {
       $itemtypes = array("PluginDatainjectionModelcsv", "PluginDatainjectionMapping", 
                          "PluginDatainjectionInfo");

@@ -64,10 +64,10 @@ class PluginDatainjectionPrinterInjection extends Printer
       $options['ignore_fields'] = array_merge($blacklist,$notimportable);
       $options['displaytype'] = array("dropdown"       => array(3, 4, 40, 23, 32, 33, 45, 46, 71,
                                                                 32, 33, 23, 31),
-                                      "bool"           => array(42,43,44,45,46,86),
+                                      "bool"           => array(42, 43, 44, 45, 46, 86),
                                       "user"           => array(70, 24),
                                       "multiline_text" => array(16, 90));
-      $options['checktype'] = array("bool" => array(42,43,44,45,46,86));
+      $options['checktype'] = array("bool" => array(42, 43, 44, 45, 46, 86));
       return PluginDatainjectionCommonInjectionLib::addToSearchOptions($tab, $options, $this);
    }
 

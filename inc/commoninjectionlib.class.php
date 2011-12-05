@@ -229,7 +229,7 @@ class PluginDatainjectionCommonInjectionLib {
       if (method_exists($injectionClass,'addSpecificMandatoryFields')) {
          $fields = $injectionClass->addSpecificMandatoryFields();
 
-         $this->mandatory_fields[$itemtype] = $field;
+         $this->mandatory_fields[$itemtype] = $fields;
       }
       
       $status_check = true;

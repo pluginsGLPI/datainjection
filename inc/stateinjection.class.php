@@ -56,6 +56,10 @@ class PluginDatainjectionStateInjection extends State
 
       $tab = Search::getOptions(get_parent_class($this));
 
+      //By default completename has no linkfield because it cannot be modified using the massiveaction
+      $tab[1]['displaytype'] = 'tree';
+      $tab[1]['linkfield']   = 'completename';
+
       //Remove some options because some fields cannot be imported
       $options['ignore_fields'] = array(2, 19, 14);
       $options['displaytype']   = array("multiline_text" => array(16));
