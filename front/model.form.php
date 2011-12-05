@@ -48,7 +48,7 @@ if (isset ($_POST["add"])) {
    $newID = $model->add($_POST);
 
    //Set display to the advanced options tab
-   Session::setActiveTab('PluginDatainjectionModel', 3);
+   Session::setActiveTab('PluginDatainjectionModel', 'PluginDatainjectionModel$3');
    Html::redirect(Toolbox::getItemTypeFormURL('PluginDatainjectionModel')."?id=$newID");
 
 /* delete */
@@ -79,7 +79,7 @@ if (isset ($_POST["add"])) {
 
       if ($model->processUploadedFile(array('file_encoding' => 'csv',
                                             'mode'          => PluginDatainjectionModel::CREATION))) {
-         Session::setActiveTab('PluginDatainjectionModel', 4);
+         Session::setActiveTab('PluginDatainjectionModel', 'PluginDatainjectionModel$4');
       } else {
          Session::addMessageAfterRedirect($LANG['datainjection']['fileStep'][4], true, ERROR, true);
       }
