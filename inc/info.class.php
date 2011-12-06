@@ -311,7 +311,7 @@ class PluginDatainjectionInfo extends CommonDBTM {
             break;
 
          case 'date' :
-            showDateFormItem($name, $value, true, true);
+            Html::showDateFormItem($name, $value, true, true);
             break;
 
          case 'multiline_text' :
