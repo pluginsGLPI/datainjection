@@ -63,7 +63,7 @@ class PluginDatainjectionKnowbaseItemInjection extends KnowbaseItem
                                         "date"           => array(5),
                                         "multiline_text" => array(6,7),
                                         "bool"           => array(8,9,86),
-                                        "dropdown_users" => array(70));
+                                        "user"           => array(70));
       
       $options['checktype']   = array("multiline_text" => array(6,7));
                                         
