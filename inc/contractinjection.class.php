@@ -62,6 +62,8 @@ class PluginDatainjectionContractInjection extends Contract
       $tab[6]['step']      = 1;
       $tab[6]['checktype'] = 'integer';
 
+      $tab[11]['checktype'] = 'float';
+
       $tab[7]['minvalue']  = 0;
       $tab[7]['maxvalue']  = 120;
       $tab[7]['step']      = 1;
