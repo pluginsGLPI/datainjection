@@ -327,7 +327,7 @@ class PluginDatainjectionCommonInjectionLib {
 
    static function getBlacklistedOptions() {
       //2 : id, 19 : date_mod
-      return array(2, 19);
+      return array(19);
    }
 
 
@@ -1208,6 +1208,13 @@ class PluginDatainjectionCommonInjectionLib {
    **/
    private function addNecessaryFields() {
      $this->setValueForItemtype($this->primary_type, 'entities_id', $this->entity);
+     if (method_exists($this->injectionClass,'addSpecificNeededFields')) {
+        $specific_fields = $this->injectionClass->addSpecificNeededFields($this->primary_type,
+                                                                          $this->values);
+        foreach ($specific_fields as $field => $value) {
+           $this->setValueForItemtype($this->primary_type, $field, $value);
+        }
+      }
    }
 
 
@@ -1582,10 +1589,15 @@ class PluginDatainjectionCommonInjectionLib {
          } else {
             $sql = "SELECT *
                     FROM `" . $injectionClass->getTable()."`";
-   
-            $item = new $itemtype;
-            //Type is a relation : check it this relation still exists
-            if ($item instanceof CommonDBRelation) {
+ 
+            $item = new $itemtype();
+            //If it's a computer device
+            if ($item instanceof CommonDevice) {
+                $sql.= " WHERE `designation` = '" . 
+                          $this->getValueByItemtypeAndName($itemtype, 'designation') . "'";
+               
+            } elseif ($item instanceof CommonDBRelation) {
+               //Type is a relation : check it this relation still exists
                //Define the side of the relation to use
    
                if (method_exists($item, 'relationSide')) {
@@ -1685,7 +1697,7 @@ class PluginDatainjectionCommonInjectionLib {
                }
                $sql .= " WHERE 1 " . $where_entity . " " . $where;
             }
-   
+
             $result = $DB->query($sql);
             if ($DB->numrows($result) > 0) {
                $db_fields = $DB->fetch_assoc($result);

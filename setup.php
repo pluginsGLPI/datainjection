@@ -224,6 +224,13 @@ function getTypesToInject() {
                              'PluginDatainjectionNetworkInterfaceInjection'     => 'datainjection',
                              'PluginDatainjectionDomainInjection'               => 'datainjection',
                              'PluginDatainjectionNetworkInjection'              => 'datainjection',
+                             'PluginDatainjectionDeviceCaseInjection'           => 'datainjection',
+                             'PluginDatainjectionDeviceProcessorInjection'      => 'datainjection',
+                             'PluginDatainjectionDeviceMemoryInjection'         => 'datainjection',
+                             'PluginDatainjectionDeviceHardDriveInjection'      => 'datainjection',
+                             'PluginDatainjectionDeviceMotherboardInjection'    => 'datainjection',
+                             'PluginDatainjectionDeviceDriveInjection'          => 'datainjection',
+                             'PluginDatainjectionDeviceNetworkCardInjection'    => 'datainjection'
                              );
    //Add pluginsq
    Plugin::doHook('plugin_datainjection_populate');
