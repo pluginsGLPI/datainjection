@@ -142,10 +142,21 @@ class PluginDatainjectionSoftwareLicenseInjection extends SoftwareLicense
    }
    
    function addSpecificNeededFields($primary_type,$values) {
+      $fields = array();
       if ($primary_type != get_parent_class()) {
          $fields['softwares_id'] = $values[$primary_type]['id'];
       }
       return $fields;
+   }
+
+   function checkPresent($fields_toinject=array(), $options=array()) {
+      if (get_parent_class() != 'SoftwareLicense') {
+         $where = " AND `softwares_id`='".$fields_toinject['Software']['id']."' " .
+                  "AND `name`='".$fields_toinject['SoftwareLicense']['name']."'";
+         return $where;
+      } else {
+         return "";
+      }
    }
 }
 

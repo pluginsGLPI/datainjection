@@ -228,8 +228,9 @@ class PluginDatainjectionCommonInjectionLib {
       //Add new mandatory fields to check, needed by other itemtypes to inject
       if (method_exists($injectionClass,'addSpecificMandatoryFields')) {
          $fields = $injectionClass->addSpecificMandatoryFields();
-
-         $this->mandatory_fields[$itemtype] = $fields;
+         foreach ($fields as $key => $value) {
+            $this->mandatory_fields[$itemtype][$key] = $value;
+         }
       }
       
       $status_check = true;
@@ -1662,7 +1663,7 @@ class PluginDatainjectionCommonInjectionLib {
                } else { //If no entity assignment for this itemtype
                   $where_entity = "";
                }
-   
+
                //Add mandatory fields to the query only if it's the primary_type to be injected
                if ($itemtype == $this->primary_type) {
                   foreach ($this->mandatory_fields[$itemtype] as $field => $is_mandatory) {
@@ -1670,13 +1671,9 @@ class PluginDatainjectionCommonInjectionLib {
                         $option = self::findSearchOption($searchOptions, $field);
                         $where .= " AND `" . $field . "`='".
                            $this->getValueByItemtypeAndName($itemtype, $field) . "'";
-                        if ($itemtype =='SoftwareVersion' || $itemtype =='SoftwareLicense') {
-                           $where .= " AND `name`='".
-                           $this->getValueByItemtypeAndName($itemtype, "name") . "'";
-                        }
                      }
                   }
-   
+
                } else {
                   //Table contains an itemtype field
                   if ($injectionClass->isField('itemtype')) {
@@ -1697,7 +1694,6 @@ class PluginDatainjectionCommonInjectionLib {
                }
                $sql .= " WHERE 1 " . $where_entity . " " . $where;
             }
-
             $result = $DB->query($sql);
             if ($DB->numrows($result) > 0) {
                $db_fields = $DB->fetch_assoc($result);
