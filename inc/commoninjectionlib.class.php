@@ -239,12 +239,11 @@ class PluginDatainjectionCommonInjectionLib {
          $value = $this->getValueByItemtypeAndName($itemtype,$field);
 
          //Get search option associated with the mandatory field
-         $option = self::findSearchOption($injectionClass->getOptions(),$field);
+         $option = self::findSearchOption($injectionClass->getOptions($itemtype),$field);
 
          //If field not defined, or if value is the dropdown's default value
          //If no value found or value is 0 and field is a dropdown,
          //then mandatory field management failed
-         //if (!$value) {
          if ($value == false
              || ($value == self::DROPDOWN_EMPTY_VALUE
                  && self::isFieldADropdown($option['displaytype']))) {
