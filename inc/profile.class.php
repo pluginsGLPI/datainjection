@@ -40,11 +40,11 @@ class PluginDatainjectionProfile extends CommonDBTM {
    function showForm($ID){
       global $LANG;
 
-      if (!haveRight("profile","r"))  {
+      if (!Session::haveRight("profile","r"))  {
          return false;
       }
 
-      $canedit = haveRight("profile", "w");
+      $canedit = Session::haveRight("profile", "w");
 
       if ($ID) {
          $this->getFromDB($ID);
