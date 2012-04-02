@@ -49,7 +49,7 @@ class PluginDatainjectionInjectionType {
       foreach ($INJECTABLE_TYPES as $type => $from) {
          $injectionclass = new $type();
 
-         if (class_exists($type) 
+         if (class_exists($type)
                && !$only_primary
                   || ($only_primary && $injectionclass->isPrimaryType())) {
             $typename = PluginDatainjectionInjectionType::getParentObjectName($type);
@@ -143,9 +143,9 @@ class PluginDatainjectionInjectionType {
 
    /**
     * Get name of a parent object for an injection class
-    * 
+    *
     * @param an injection class instance
-    * 
+    *
     * @return the parent object
     */
    static function getParentObjectName($injectionClass='') {
@@ -191,7 +191,8 @@ class PluginDatainjectionInjectionType {
             //If it's a real option (not a group label) and if field is not blacklisted
             //and if a linkfield is defined (meaning that the field can be updated)
             if (is_array($option)
-                && $option['injectable'] == PluginDatainjectionCommonInjectionLib::FIELD_INJECTABLE) {
+               && isset($option['injectable'])
+                  && $option['injectable'] == PluginDatainjectionCommonInjectionLib::FIELD_INJECTABLE) {
 
                $fields[$option['linkfield']] = $option['name'];
 
@@ -212,7 +213,7 @@ class PluginDatainjectionInjectionType {
                                             'used'  => $used));
 
       $url = $CFG_GLPI["root_doc"]."/plugins/datainjection/ajax/dropdownMandatory.php";
-      Ajax::updateItem("span_mandatory_".$mapping_or_info['id'], $url, $p, 
+      Ajax::updateItem("span_mandatory_".$mapping_or_info['id'], $url, $p,
                      "dropdown_data[".$mapping_or_info['id']."][value]$rand");
       Ajax::updateItemOnSelectEvent("dropdown_data[".$mapping_or_info['id']."][value]$rand",
                                   "span_mandatory_".$mapping_or_info['id'], $url, $p);
