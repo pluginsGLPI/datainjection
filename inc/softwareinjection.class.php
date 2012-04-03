@@ -61,7 +61,7 @@ class PluginDatainjectionSoftwareInjection extends Software
 
       $blacklist = PluginDatainjectionCommonInjectionLib::getBlacklistedOptions();
       //Remove some options because some fields cannot be imported
-      $notimportable = array(7, 72, 5, 31, 170, 160, 161, 162, 163, 164, 165, 166);
+      $notimportable = array(7, 72, 5, 31, 91, 92, 93, 170, 160, 161, 162, 163, 164, 165, 166);
       $options['ignore_fields'] = array_merge($blacklist,$notimportable);
       $options['displaytype']   = array("dropdown"       => array(3, 4, 62, 23, 71),
                                         "bool"           => array(61,86),
