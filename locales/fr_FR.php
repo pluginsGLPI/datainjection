@@ -167,4 +167,7 @@ $LANG['datainjection']['import'][1] = "Etat d'avancement de l'import";
 
 $LANG['datainjection']['port'][1] = "Liaison réseau";
 $LANG['datainjection']['entity'][1] = "Informations entité";
+
+$LANG['datainjection']['install'][1] = "doit exister et accessible en écriture pour l'utilisateur du serveur Web";
+
 ?>

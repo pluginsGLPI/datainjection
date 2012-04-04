@@ -126,7 +126,6 @@ class PluginDatainjectionInfocomInjection extends Infocom
    }
 
    function reformat(&$values = array()) {
-      logDebug("reformat values", $values);
       foreach (array('order_date', 'buy_date', 'warranty_date', 'delivery_date',
                      'inventory_date') as $date) {
          if (!isset($values['Infocom'][$date])

@@ -42,10 +42,10 @@ function plugin_init_datainjection() {
    $PLUGIN_HOOKS['migratetypes']['datainjection'] = 'plugin_datainjection_migratetypes_datainjection';
 
    if ($plugin->isInstalled("datainjection") && $plugin->isActivated("datainjection")) {
-      if (!file_exists(PLUGIN_DATAINJECTION_UPLOAD_DIR) 
-      || !is_writable(PLUGIN_DATAINJECTION_UPLOAD_DIR)) {
-         Toolbox::logDebug("[Datainjection plugin] : directory ".PLUGIN_DATAINJECTION_UPLOAD_DIR.
-                     " must exists and be writable for apache user.\n Please check your installation");
+      if ($plugin->isInstalled("datainjection") && $plugin->isActivated("datainjection")) {
+      if (!plugin_datainjection_checkDirectories()) {
+         logDebug("[Datainjection plugin] ".PLUGIN_DATAINJECTION_UPLOAD_DIR.
+                     " ".$LANG['datainjection']['install'][1]);
          return false;
       }
       
@@ -124,7 +124,11 @@ function plugin_datainjection_haveRight($module, $right) {
 
 
 function plugin_datainjection_check_prerequisites() {
-
+  global $LANG;
+  if (!plugin_datainjection_checkDirectories()) {
+      echo PLUGIN_DATAINJECTION_UPLOAD_DIR. " ".$LANG['datainjection']['install'][1];
+      return false;
+   }
    if (version_compare(GLPI_VERSION,'0.83','lt') || version_compare(GLPI_VERSION,'0.84','ge')) {
       echo "This plugin requires GLPI >= 0.83 and < 0.83";
       return false;
@@ -243,4 +247,12 @@ function plugin_datainjection_migratetypes_datainjection($types) {
    return $types;
 }
 
+function plugin_datainjection_checkDirectories() {
+   if (!file_exists(PLUGIN_DATAINJECTION_UPLOAD_DIR)
+     || !is_writable(PLUGIN_DATAINJECTION_UPLOAD_DIR)) {
+         return false;
+   } else {
+      return true;
+   }
+}
 ?>

@@ -168,4 +168,5 @@ $LANG['datainjection']['import'][1] = "Import progress";
 $LANG['datainjection']['port'][1] = "Network link";
 $LANG['datainjection']['entity'][1] = "Entity informations";
 
+$LANG['datainjection']['install'][1] = "must exists and be writable for web server user";
 ?>
