@@ -56,16 +56,15 @@ class PluginDatainjectionInfocomInjection extends Infocom
    function getOptions($primary_type = '') {
       global $LANG;
 
-      $tab = Search::getOptions('Infocom');
+      $tab = Search::getOptions(get_parent_class($this));
 
-      $tab[4]['checktype'] = 'date';
-      $tab[5]['checktype'] = 'date';
+      $tab[4]['checktype']  = 'date';
+      $tab[5]['checktype']  = 'date';
       $tab[23]['checktype'] = 'date';
       $tab[24]['checktype'] = 'date';
       $tab[25]['checktype'] = 'date';
       $tab[26]['checktype'] = 'date';
-
-
+      
       //Warranty_duration
       $tab[6]['minvalue']  = 0;
       $tab[6]['maxvalue']  = 120;
@@ -73,7 +72,10 @@ class PluginDatainjectionInfocomInjection extends Infocom
       $tab[6]['-1']        = $LANG['financial'][2];
       $tab[6]['checktype'] = 'integer';
 
-      $tab[8]['checktype'] = 'float';
+      $tab[8]['minvalue']  = 0;
+      $tab[8]['maxvalue']  = 120;
+      $tab[8]['step']      = 1;
+      $tab[8]['checktype'] = 'integer';
 
       $tab[13]['checktype'] = 'float';
 
@@ -86,57 +88,21 @@ class PluginDatainjectionInfocomInjection extends Infocom
       $tab[17]['default']   = 0;
       $tab[17]['checktype'] = 'integer';
 
+      $tab[15]['minvalue']  = 0;
+      $tab[15]['maxvalue']  = 2;
+      $tab[15]['step']      = 1;
+      $tab[15]['checktype'] = 'integer';
+
       //Remove some options because some fields cannot be imported
-      $notimportable = array(2, 3, 20, 21, 80, 86);
-
-      //Add linkfield for theses fields : no massive action is allowed in the core, but they can be
-      //imported using the commonlib
-      $add_linkfield = array('comment' => 'comment',
-                             'notepad' => 'notepad');
-
-      //Add default displaytype (text)
-      foreach ($tab as $id => $tmp) {
-         if (!is_array($tmp) || in_array($id,$notimportable)) {
-            unset($tab[$id]);
-
-         } else {
-            if (in_array($tmp['field'],$add_linkfield)) {
-               $tab[$id]['linkfield'] = $add_linkfield[$tmp['field']];
-            }
-
-            if (!in_array($id,$notimportable)) {
-               if (!isset($tmp['linkfield'])) {
-                  $tab[$id]['injectable'] = PluginDatainjectionCommonInjectionLib::FIELD_VIRTUAL;
-               } else {
-                  $tab[$id]['injectable'] = PluginDatainjectionCommonInjectionLib::FIELD_INJECTABLE;
-               }
-
-               if (isset($tmp['linkfield']) && !isset($tmp['displaytype'])) {
-                  $tab[$id]['displaytype'] = 'text';
-               }
-
-               if (isset($tmp['linkfield']) && !isset($tmp['checktype'])) {
-                  $tab[$id]['checktype'] = 'text';
-               }
-            }
-         }
-      }
-
-      //Add displaytype value
-      $fields_definition = array("date"             => array(4, 5, 23, 24, 25, 26),
-                                 "dropdown"         => array(6, 9, 19),
-                                 "dropdown_integer" => array(6, 14),
-                                 "decimal"          => array(8, 13, 17),
-                                 "sink_type"        => array(15),
-                                 "alert"            => array(22),
-                                 "multiline_text"   => array(16));
-
-      foreach ($fields_definition as $type => $tabsID) {
-         foreach ($tabsID as $tabID) {
-            $tab[$tabID]['displaytype'] = $type;
-         }
-      }
-
+      $options['ignore_fields'] = array(2, 3, 20, 21, 80, 86);
+      $options['displaytype']   = array("date"             => array(4, 5,23,24,25,26),
+                                        "dropdown"         => array(6, 9, 19),
+                                        "dropdown_integer" => array(6, 14),
+                                        "decimal"          => array(8, 13, 17),
+                                        "sink_type"        => array(15),
+                                        "alert"            => array(22),
+                                        "multiline_text"   => array(16));
+      $tab = PluginDatainjectionCommonInjectionLib::addToSearchOptions($tab, $options, $this);
       return $tab;
    }
 
@@ -159,7 +125,17 @@ class PluginDatainjectionInfocomInjection extends Infocom
       }
    }
 
-
+   function reformat(&$values = array()) {
+      logDebug("reformat values", $values);
+      foreach (array('order_date', 'buy_date', 'warranty_date', 'delivery_date',
+                     'inventory_date') as $date) {
+         if (!isset($values['Infocom'][$date])
+            || $values['Infocom'][$date] == PluginDatainjectionCommonInjectionLib::EMPTY_VALUE) {
+            $values['Infocom'][$date] = "NULL";
+         }
+      }
+   }
+   
    /**
     * Standard method to add an object into glpi
  

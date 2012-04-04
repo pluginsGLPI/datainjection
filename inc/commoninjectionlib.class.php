@@ -263,7 +263,7 @@ class PluginDatainjectionCommonInjectionLib {
    **/
    static function isFieldADropdown($field_type) {
 
-      if (!in_array($field_type, array('integer', 'decimal', 'tree', 'text', 'multiline_text', 
+      if (!in_array($field_type, array('integer', 'decimal', 'tree', 'text', 'multiline_text',
                                        'date'))) {
          return true;
       }
@@ -272,9 +272,9 @@ class PluginDatainjectionCommonInjectionLib {
 
    /**
     * Return an the class of an item by giving his injection class
-    * 
+    *
     * @param the injection class name
-    * 
+    *
     * @return an instance of the itemtype associated to the injection class name
     */
    static function getItemtypeInstanceByInjection($injectionClassName) {
@@ -285,9 +285,9 @@ class PluginDatainjectionCommonInjectionLib {
 
    /**
     * Get an itemtype name by giving his injection class name
-    * 
+    *
     * @param the injection class name
-    * 
+    *
     * @return the itemtype associated
     */
    static function getItemtypeByInjection($injectionClassName) {
@@ -297,9 +297,9 @@ class PluginDatainjectionCommonInjectionLib {
 
    /**
     * Get an itemtype by giving an injection class object
-    * 
+    *
     * @param an injection class object
-    * 
+    *
     * @return an instance of the itemtype associated to the injection class
     */
    static function getItemtypeByInjectionClass($injectionClass) {
@@ -309,9 +309,9 @@ class PluginDatainjectionCommonInjectionLib {
 
    /**
     * Get an injection class instance for an itemtype
-    * 
+    *
     * @param the itemtype
-    * 
+    *
     * @return the injection class instance
     */
    static function getInjectionClassInstance($itemtype) {
@@ -852,7 +852,7 @@ class PluginDatainjectionCommonInjectionLib {
 
          foreach ($data as $field => $value) {
             if ($value && $value == "NULL") {
-               if (isset($option['datatype']) && self::isFieldADropdown($option['displaytype'])) 
+               if (isset($option['datatype']) && self::isFieldADropdown($option['displaytype']))
                $this->values[$itemtype][$field] = self::EMPTY_VALUE;
             }
          }
@@ -866,10 +866,12 @@ class PluginDatainjectionCommonInjectionLib {
     * @return nothing
    **/
    private function reformatSecondPass() {
-
-      //Specific reformat action is itemtype needs it
-      if (method_exists($this->injectionClass,'reformat')) {
-         $this->injectionClass->reformat($this->values);
+      foreach ($this->values as $itemtype => $data) {
+         $injectionClass = self::getInjectionClassInstance($itemtype);
+         if (method_exists($injectionClass,'reformat')) {
+            //Specific reformat action is itemtype needs it
+            $injectionClass->reformat($this->values);
+         }
       }
    }
 
@@ -1099,9 +1101,9 @@ class PluginDatainjectionCommonInjectionLib {
 
    /**
     * Is a value a float ?
-    * 
+    *
     * @param val the value to check
-    * 
+    *
     * @return true if it's a float, false otherwise
     */
    private function isFloat ($val) {
@@ -1111,9 +1113,9 @@ class PluginDatainjectionCommonInjectionLib {
 
    /**
     * Is a value an integer ?
-    * 
+    *
     * @param val the value to check
-    * 
+    *
     * @return true if it's an integer, false otherwise
     */
    private function isInteger ($val) {
@@ -1434,7 +1436,7 @@ class PluginDatainjectionCommonInjectionLib {
 
       //logDebug("effectiveAddOrUpdate($add)", "Values:", $values, "ToInject:", $toinject);
       if (method_exists($injectionClass, 'customimport')) {
-         $newID = call_user_func(array($injectionClass, 'customimport'), $toinject, $add, 
+         $newID = call_user_func(array($injectionClass, 'customimport'), $toinject, $add,
                                  $this->rights);
       } elseif ($item instanceof CommonDropdown && $add) {
          $newID = $item->import($toinject);
@@ -1593,7 +1595,7 @@ class PluginDatainjectionCommonInjectionLib {
             $item = new $itemtype();
             //If it's a computer device
             if ($item instanceof CommonDevice) {
-                $sql.= " WHERE `designation` = '" . 
+                $sql.= " WHERE `designation` = '" .
                           $this->getValueByItemtypeAndName($itemtype, 'designation') . "'";
                
             } elseif ($item instanceof CommonDBRelation) {
@@ -1812,10 +1814,10 @@ class PluginDatainjectionCommonInjectionLib {
    static function getLogLabel($type) {
       global $LANG;
 
-      $labels = array(self::SUCCESS, self::WARNING, self::ERROR_CANNOT_IMPORT, 
+      $labels = array(self::SUCCESS, self::WARNING, self::ERROR_CANNOT_IMPORT,
                       self::ERROR_CANNOT_UPDATE, self::ERROR_IMPORT_ALREADY_IMPORTED,
                       self::TYPE_MISMATCH, self::MANDATORY, self::FAILED, self::WARNING_NOTFOUND,
-                      self::WARNING_USED, self::WARNING_SEVERAL_VALUES_FOUND, 
+                      self::WARNING_USED, self::WARNING_SEVERAL_VALUES_FOUND,
                       self::WARNING_ALREADY_LINKED);
 
       if (in_array($type,$labels)) {
