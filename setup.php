@@ -248,8 +248,10 @@ function plugin_datainjection_migratetypes_datainjection($types) {
 }
 
 function plugin_datainjection_checkDirectories() {
-   if (!file_exists(PLUGIN_DATAINJECTION_UPLOAD_DIR)
-     || !is_writable(PLUGIN_DATAINJECTION_UPLOAD_DIR)) {
+   $plugin = new Plugin();
+   if ($plugin->isInstalled('datainjection') 
+     && (!file_exists(PLUGIN_DATAINJECTION_UPLOAD_DIR)
+        || !is_writable(PLUGIN_DATAINJECTION_UPLOAD_DIR))) {
          return false;
    } else {
       return true;
