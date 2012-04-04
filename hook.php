@@ -4,7 +4,7 @@
  * @version $Id: HEADER 14684 2011-06-11 06:32:40Z remi $
  LICENSE
 
- This file is part of the order plugin.
+ This file is part of the datainjection plugin.
 
  Datainjection plugin is free software; you can redistribute it and/or modify
  it under the terms of the GNU General Public License as published by
