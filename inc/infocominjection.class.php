@@ -72,10 +72,7 @@ class PluginDatainjectionInfocomInjection extends Infocom
       $tab[6]['-1']        = $LANG['financial'][2];
       $tab[6]['checktype'] = 'integer';
 
-      $tab[8]['minvalue']  = 0;
-      $tab[8]['maxvalue']  = 120;
-      $tab[8]['step']      = 1;
-      $tab[8]['checktype'] = 'integer';
+      $tab[8]['checktype'] = 'float';
 
       $tab[13]['checktype'] = 'float';
 
