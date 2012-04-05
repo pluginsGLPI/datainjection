@@ -208,7 +208,7 @@ function plugin_datainjection_install() {
 
          //Old temporary directory, needs to be removed !
          if (is_dir(GLPI_PLUGIN_DOC_DIR."/data_injection/")) {
-            deleteDir(GLPI_PLUGIN_DOC_DIR."/data_injection/");
+            Toolbox::deleteDir(GLPI_PLUGIN_DOC_DIR."/data_injection/");
          }
 
          if (TableExists("glpi_plugin_data_injection_models")
@@ -276,7 +276,7 @@ function plugin_datainjection_uninstall() {
    }
 
    if (is_dir(PLUGIN_DATAINJECTION_UPLOAD_DIR)) {
-      deleteDir(PLUGIN_DATAINJECTION_UPLOAD_DIR);
+      Toolbox::deleteDir(PLUGIN_DATAINJECTION_UPLOAD_DIR);
    }
 
    plugin_init_datainjection();
@@ -1046,7 +1046,7 @@ function plugin_datainjection_update170_20() {
 function plugin_datainjection_update210_220() {
    global $DB;
 
-   foreach (array('glpi_plugin_datainjection_mappings', 'glpi_plugin_datainjection_infos') 
+   foreach (array('glpi_plugin_datainjection_mappings', 'glpi_plugin_datainjection_infos')
       as $table) {
       $move = array('TicketCategory' => 'ITILCategory', 'TicketSolutionType' => 'SolutionType');
       foreach ($move as $old => $new) {

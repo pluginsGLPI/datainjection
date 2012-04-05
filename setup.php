@@ -42,9 +42,8 @@ function plugin_init_datainjection() {
    $PLUGIN_HOOKS['migratetypes']['datainjection'] = 'plugin_datainjection_migratetypes_datainjection';
 
    if ($plugin->isInstalled("datainjection") && $plugin->isActivated("datainjection")) {
-      if ($plugin->isInstalled("datainjection") && $plugin->isActivated("datainjection")) {
       if (!plugin_datainjection_checkDirectories()) {
-         logDebug("[Datainjection plugin] ".PLUGIN_DATAINJECTION_UPLOAD_DIR.
+         Toolbox::logDebug("[Datainjection plugin] ".PLUGIN_DATAINJECTION_UPLOAD_DIR.
                      " ".$LANG['datainjection']['install'][1]);
          return false;
       }
@@ -249,7 +248,8 @@ function plugin_datainjection_migratetypes_datainjection($types) {
 
 function plugin_datainjection_checkDirectories() {
    $plugin = new Plugin();
-   if ($plugin->isInstalled('datainjection') 
+
+   if ($plugin->isInstalled('datainjection')
      && (!file_exists(PLUGIN_DATAINJECTION_UPLOAD_DIR)
         || !is_writable(PLUGIN_DATAINJECTION_UPLOAD_DIR))) {
          return false;
