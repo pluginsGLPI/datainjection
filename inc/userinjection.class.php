@@ -67,6 +67,8 @@ class PluginDatainjectionUserInjection extends User
       $tab[4]['name']          = $LANG['login'][7];
       $tab[4]['displaytype']   = 'password';
 
+      $tab[5]['displaytype']   = 'text';
+      
       //To manage groups : relies on a CommonDBRelation object !
       $tab[100]['name']          = $LANG['common'][35];
       $tab[100]['field']         = 'name';
@@ -87,7 +89,7 @@ class PluginDatainjectionUserInjection extends User
 
       $blacklist = PluginDatainjectionCommonInjectionLib::getBlacklistedOptions();
       //Remove some options because some fields cannot be imported
-      $notimportable = array(13, 14, 15, 20, 80, 91, 92, 93, 5);
+      $notimportable = array(13, 14, 15, 20, 80, 91, 92, 93);
 
       //Add displaytype value
       $dropdown                 = array("dropdown"       => array(3, 81, 82),
@@ -122,20 +124,20 @@ class PluginDatainjectionUserInjection extends User
       global $DB;
       
       //Manage user emails
-      if (isset($values['User']['useremails_id']) 
+      if (isset($values['User']['useremails_id'])
          && $rights['add_dropdown'] && Session::haveRight('user', 'w')) {
-           if (!countElementsInTable("glpi_useremails", 
-                                     "`users_id`='".$values['User']['id']."' 
+           if (!countElementsInTable("glpi_useremails",
+                                     "`users_id`='".$values['User']['id']."'
                                        AND `email`='".$values['User']['useremails_id']."'")) {
             $useremail = new UserEmail();
             $tmp['users_id'] = $values['User']['id'];
             $tmp['email']    = $values['User']['useremails_id'];
             $useremail->add($tmp);
-         } 
+         }
       }
       
       if (!$add && isset($values['User']['password']) && $values['User']['password'] != '') {
-         //We use an SQL request because updating the password is unesasy 
+         //We use an SQL request because updating the password is unesasy
          //(self reset password process in $user->prepareInputForUpdate())
          $password
                  = sha1(Toolbox::unclean_cross_side_scripting_deep(stripslashes($values['User']["password"])));
@@ -146,7 +148,7 @@ class PluginDatainjectionUserInjection extends User
    }
 
    protected function addSpecificOptionalInfos($itemtype, $field, $value) {
-      //If info is a password, then fill also password2, needed for prepareInputForAdd 
+      //If info is a password, then fill also password2, needed for prepareInputForAdd
       if ($field == 'password') {
          $this->setValueForItemtype($itemtype, "password2", $value);
       }
