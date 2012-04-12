@@ -1444,7 +1444,6 @@ class PluginDatainjectionCommonInjectionLib {
       } else {
          if ($add) {
             if ($newID = $item->add($toinject)) {
-               $this->setValueForItemtype(get_class($item), 'id', $newID);
                self::logAddOrUpdate($item, $add);
             }
          } else {
@@ -1454,6 +1453,7 @@ class PluginDatainjectionCommonInjectionLib {
             }
          }
       }
+      $this->setValueForItemtype(get_class($item), 'id', $newID);
       return $newID;
    }
 
