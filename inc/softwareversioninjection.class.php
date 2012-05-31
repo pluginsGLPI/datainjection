@@ -138,7 +138,7 @@ class PluginDatainjectionSoftwareVersionInjection extends SoftwareVersion
       return $fields_toinject;
    }
    
-   function addSpecificNeededFields($primary_type,$values) {
+   function addSpecificNeededFields($primary_type, $values) {
       $fields = array();
       if ($primary_type == 'Software') {
          $fields['softwares_id'] = $values['Software']['id'];
@@ -147,13 +147,9 @@ class PluginDatainjectionSoftwareVersionInjection extends SoftwareVersion
    }
    
    function checkPresent($fields_toinject=array(), $options=array()) {
-      if (get_parent_class() != 'SoftwareVersion') {
          $where = " AND `softwares_id`='".$fields_toinject['Software']['id']."' " .
                   "AND `name`='".$fields_toinject['SoftwareVersion']['name']."'";
          return $where;
-      } else {
-         return "";
-      }
    }
 }
 

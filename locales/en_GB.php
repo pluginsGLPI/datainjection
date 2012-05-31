@@ -147,6 +147,7 @@ $LANG['datainjection']['result'][34] = "Data already used";
 $LANG['datainjection']['result'][35] = "More than one value fouond";
 $LANG['datainjection']['result'][36] = "Object is already linked";
 $LANG['datainjection']['result'][37] = "Maximum field size exceeded";
+$LANG['datainjection']['result'][39] = "Import refused by the dictionnary";
 
 $LANG['datainjection']['profiles'][1] = "Model management";
 

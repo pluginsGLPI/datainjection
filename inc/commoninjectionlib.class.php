@@ -92,7 +92,8 @@ class PluginDatainjectionCommonInjectionLib {
    const WARNING_ALREADY_LINKED         = 36;
    const ERROR_FIELDSIZE_EXCEEDED       = 37;
    const WARNING_PARTIALLY_IMPORTED     = 38;
-
+   const ERROR_IMPORT_REFUSED           = 39; //Dictionnary explicitly refuse import
+   
    //Empty values
    const EMPTY_VALUE          = '';
    const DROPDOWN_EMPTY_VALUE = 0;
@@ -155,7 +156,7 @@ class PluginDatainjectionCommonInjectionLib {
     * @param values values to injection into GLPI
     * @param injection_options options that can be used during the injection (maybe an empty array)
     *
-    * @return nothing
+    * @return nothinActiong
    **/
    function __construct($injectionClass, $values = array(), $injection_options = array()) {
 
@@ -1284,8 +1285,10 @@ class PluginDatainjectionCommonInjectionLib {
    **/
    public function processAddOrUpdate() {
 
-      $process = false;
-      $add     = true;
+      $process  = false;
+      $add      = true;
+      $accepted = false;
+      
       // logDebug("processAddOrUpdate(), start with", $this->values);
 
       // Initial value, will be change when problem
@@ -1295,6 +1298,8 @@ class PluginDatainjectionCommonInjectionLib {
       //Manage fields belonging to relations between tables
       $this->manageRelations();
 
+      $accepted = $this->processDictionnariesIfNeeded();
+      
       //Get real value for fields (ie dropdown, etc)
       $this->manageFieldValues();
 
@@ -1314,13 +1319,17 @@ class PluginDatainjectionCommonInjectionLib {
          if($this->getValueByItemtypeAndName($this->primary_type, 'id') == self::ITEM_NOT_FOUND) {
             //Can add item ?
             $this->results['type'] = self::IMPORT_ADD;
-
-            if ($this->rights['can_add']) {
-               $add = true;
-               $this->unsetValue($this->primary_type, 'id');
-            } else {
+            if (!$accepted) {
+               $this->results['status'] = self::ERROR_IMPORT_REFUSED;
                $process = false;
-               $this->results['status'] = self::ERROR_CANNOT_IMPORT;
+            } else {
+               if ($this->rights['can_add']) {
+                  $add = true;
+                  $this->unsetValue($this->primary_type, 'id');
+               } else {
+                  $process = false;
+                  $this->results['status'] = self::ERROR_CANNOT_IMPORT;
+               }
             }
 
          } else { //Item found in DB
@@ -1359,7 +1368,6 @@ class PluginDatainjectionCommonInjectionLib {
                //If needed, manage templates
                $this->addTemplateFields($this->primary_type);
             }
-
             $values = $this->getValuesForItemtype($this->primary_type);
             $newID  = $this->effectiveAddOrUpdate($this->injectionClass, $add, $item, $values);
 
@@ -1518,6 +1526,21 @@ class PluginDatainjectionCommonInjectionLib {
    protected function addSpecificOptionalInfos($itemtype, $field, $value) {
    }
 
+   /**
+    * Process dictionnaries if needed
+    * @since 2.1.6
+    * @return nothing
+    */
+   protected function processDictionnariesIfNeeded() {
+      //If itemtype implements special process after type injection
+      if (method_exists($this->injectionClass, 'processDictionnariesIfNeeded')) {
+         //Invoke it
+         return $this->injectionClass->processDictionnariesIfNeeded($this->values);
+      } else {
+         return true;
+      }
+   }
+   
    /**
     * Manage fields tagged as relations
     *
@@ -1695,6 +1718,7 @@ class PluginDatainjectionCommonInjectionLib {
                }
                $sql .= " WHERE 1 " . $where_entity . " " . $where;
             }
+            
             $result = $DB->query($sql);
             if ($DB->numrows($result) > 0) {
                $db_fields = $DB->fetch_assoc($result);
@@ -1818,7 +1842,7 @@ class PluginDatainjectionCommonInjectionLib {
                       self::ERROR_CANNOT_UPDATE, self::ERROR_IMPORT_ALREADY_IMPORTED,
                       self::TYPE_MISMATCH, self::MANDATORY, self::FAILED, self::WARNING_NOTFOUND,
                       self::WARNING_USED, self::WARNING_SEVERAL_VALUES_FOUND,
-                      self::WARNING_ALREADY_LINKED);
+                      self::WARNING_ALREADY_LINKED, self::ERROR_IMPORT_REFUSED);
 
       if (in_array($type,$labels)) {
          return  $LANG['datainjection']['result'][$type];

@@ -88,6 +88,47 @@ class PluginDatainjectionPrinterInjection extends Printer
       return $lib->getInjectionResults();
    }
 
+   /**
+    * Play printers dictionnary
+   **/
+   function processDictionnariesIfNeeded(&$values) {
+
+      $matchings = array('name' => 'name', 'manufacturer' => 'manufacturers_id',
+                         'comment' => 'comment');
+      foreach ($matchings as $name => $value) {
+         if (isset($values['Printer'][$value])) {
+            $params[$name] = $values['Printer'][$value];
+         } else {
+            $params[$name] = '';
+         }
+      }
+         
+      $rulecollection = new RuleDictionnaryPrinterCollection();
+      $res_rule       = $rulecollection->processAllRules($params, array(), array());
+
+      if (!isset($res_rule['_no_rule_matches'])) {
+         //Printers dictionnary explicitly refuse import
+         if (isset($res_rule['_ignore_ocs_import']) && $res_rule['_ignore_ocs_import']) {
+            return false;
+         }
+         if (isset($res_rule['is_global'])) {
+            $values['Printer']['is_global'] = $res_rule['is_global'];
+         }
+            
+         if (isset($res_rule['name'])) {
+            $values['Printer']['name'] = $res_rule['name'];
+         }
+   
+         if (isset($res_rule['supplier'])) {
+            if (isset($values['supplier'])) {
+               $values['Printer']['manufacturers_id'] = Dropdown::getDropdownName('glpi_suppliers',
+                                                                                  $res_rule['supplier']);
+            }
+         }
+      }
+      return true;
+   }
+   
 }
 
 ?>

@@ -73,28 +73,44 @@ class PluginDatainjectionSoftwareInjection extends Software
 
 
    /**
-    * Play software's dictionnary
+    * Play software dictionnary
    **/
-   function reformat(&$values = array()) {
-
-      foreach ($values as $field => $value) {
-         $supplier       = (isset($values['supplier'])?$values['supplier']:'');
-         $rulecollection = new  RuleDictionnarySoftwareCollection;
-         $res_rule       = $rulecollection->processAllRules(array("name"         => $value,
-                                                                  "manufacturer" => $supplier),
-                                                            array(), array());
-
-         if (isset($res_rule['name'])) {
-            $values['name'] = $res_rule['name'];
+   function processDictionnariesIfNeeded(&$values) {
+         $params['entities_id'] = $_SESSION['glpiactive_entity'];
+         $params['name']        = $values['Software']['name'];
+         if (isset($values['Software']['manufacturers_id'])) {
+            $params['manufacturer'] = $values['Software']['manufacturers_id'];
+         } else {
+            $params['manufacturer'] = '';
          }
+         $rulecollection = new RuleDictionnarySoftwareCollection();
+         $res_rule       = $rulecollection->processAllRules($params, array(), array());
 
-         if (isset($res_rule['supplier'])) {
-            if (isset($values['supplier'])) {
-               $values['supplier'] = Dropdown::getDropdownName('glpi_suppliers',
-                                                               $res_rule['supplier']);
+         if (!isset($res_rule['_no_rule_matches'])) {
+            //Software dictionnary explicitly refuse import
+            if (isset($res_rule['_ignore_ocs_import']) && $res_rule['_ignore_ocs_import']) {
+               return false;
+            }
+            if (isset($res_rule['is_helpdesk_visible'])) {
+               $values['Software']['is_helpdesk_visible'] = $res_rule['is_helpdesk_visible'];
+            }
+   
+            if (isset($res_rule['version'])) {
+               $values['SoftwareVersion']['name'] = $res_rule['version'];
+            }
+            
+            if (isset($res_rule['name'])) {
+               $values['Software']['name'] = $res_rule['name'];
+            }
+   
+            if (isset($res_rule['supplier'])) {
+               if (isset($values['supplier'])) {
+                  $values['Software']['manufacturers_id'] = Dropdown::getDropdownName('glpi_suppliers',
+                                                                                      $res_rule['supplier']);
+               }
             }
          }
-      }
+         return true;
    }
 
 
