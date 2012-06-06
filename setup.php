@@ -47,7 +47,7 @@ function plugin_init_datainjection() {
                      " ".$LANG['datainjection']['install'][1]);
          return false;
       }
-      
+
       $PLUGIN_HOOKS['headings']['datainjection']        = 'plugin_get_headings_datainjection';
       $PLUGIN_HOOKS['headings_action']['datainjection'] = 'plugin_headings_actions_datainjection';
 
@@ -162,6 +162,7 @@ function getTypesToInject() {
                              'PluginDatainjectionContact_SupplierInjection'     => 'datainjection',
                              'PluginDatainjectionContractInjection'             => 'datainjection',
                              'PluginDatainjectionContract_ItemInjection'        => 'datainjection',
+                             'PluginDatainjectionContract_SupplierInjection'    => 'datainjection',
                                 //'PluginDatainjectionDocumentInjection'        => 'datainjection',
                              'PluginDatainjectionEntityInjection'               => 'datainjection',
                              'PluginDatainjectionEntityDataInjection'           => 'datainjection',

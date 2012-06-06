@@ -27,7 +27,7 @@
  @link      http://www.glpi-project.org/
  @since     2009
  ---------------------------------------------------------------------- */
- 
+
 if (!defined('GLPI_ROOT')) {
    die("Sorry. You can't access directly to this file");
 }
@@ -51,6 +51,7 @@ class PluginDatainjectionContractInjection extends Contract
 
 
    function getOptions($primary_type = '') {
+      global $LANG;
 
       $tab = Search::getOptions(get_parent_class($this));
 
@@ -71,6 +72,12 @@ class PluginDatainjectionContractInjection extends Contract
 
       $tab[22]['linkfield'] = 'billing';
 
+      // Associated suppliers
+      $tab[29]['linkfield']     = 'suppliers_id';
+      $tab[29]['displaytype']   = 'relation';
+      $tab[29]['relationclass'] = 'Contract_Supplier';
+      $tab[29]['relationfield'] = $tab[29]['linkfield'];
+
       //Remove some options because some fields cannot be imported
       $options['ignore_fields'] = array(2, 19, 80);
       $options['displaytype']   = array("dropdown"         => array(4),
@@ -88,7 +95,7 @@ class PluginDatainjectionContractInjection extends Contract
 
    /**
     * Standard method to add an object into glpi
- 
+
     *
     * @param values fields to add into glpi
     * @param options options used during creation
