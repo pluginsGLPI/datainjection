@@ -628,7 +628,7 @@ class PluginDatainjectionModel extends CommonDBTM {
          $itemtype = new $this->fields['itemtype'];
          echo $itemtype->getTypeName();
       }
-      echo "</td><td colspan='2'></tr>"; 
+      echo "</td><td colspan='2'></tr>";
       echo "<tr class='tab_bg_1'>";
       echo "<td>".$LANG['datainjection']['model'][6]."&nbsp;: </td>";
       echo "<td>";
@@ -772,7 +772,7 @@ class PluginDatainjectionModel extends CommonDBTM {
    }
 
    function cleanDBonPurge() {
-      $itemtypes = array("PluginDatainjectionModelcsv", "PluginDatainjectionMapping", 
+      $itemtypes = array("PluginDatainjectionModelcsv", "PluginDatainjectionMapping",
                          "PluginDatainjectionInfo");
       foreach ($itemtypes as $itemtype) {
          $item = new $itemtype();
@@ -922,6 +922,7 @@ class PluginDatainjectionModel extends CommonDBTM {
          $this->setBackend($backend);
       }
       $this->injectionData = $injectionData;
+      return true;
    }
 
 
@@ -959,7 +960,7 @@ class PluginDatainjectionModel extends CommonDBTM {
             return false;
          } else {
             return PluginWebservicesMethodCommon::Error($options['protocol'],
-                                                        WEBSERVICES_ERROR_FAILED, 
+                                                        WEBSERVICES_ERROR_FAILED,
                                                         'Not data to import');
          }
       }
@@ -980,7 +981,7 @@ class PluginDatainjectionModel extends CommonDBTM {
                return false;
             } else {
                return PluginWebservicesMethodCommon::Error($options['protocol'],
-                                                           WEBSERVICES_ERROR_FAILED, 
+                                                           WEBSERVICES_ERROR_FAILED,
                                                            $check['error_message']);
                
             }
@@ -1050,7 +1051,7 @@ class PluginDatainjectionModel extends CommonDBTM {
 
       //If no header in the CSV file, exit method
       if (!$this->specific_model->isHeaderPresent()) {
-         return array('status'         => PluginDatainjectionCommonInjectionLib::FAILED,
+         return array('status'         => PluginDatainjectionCommonInjectionLib::SUCESS,
                       'field_in_error' => false,
                       'error_message'  => '');
       }
