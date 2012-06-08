@@ -1051,7 +1051,7 @@ class PluginDatainjectionModel extends CommonDBTM {
 
       //If no header in the CSV file, exit method
       if (!$this->specific_model->isHeaderPresent()) {
-         return array('status'         => PluginDatainjectionCommonInjectionLib::SUCESS,
+         return array('status'         => PluginDatainjectionCommonInjectionLib::SUCCESS,
                       'field_in_error' => false,
                       'error_message'  => '');
       }
