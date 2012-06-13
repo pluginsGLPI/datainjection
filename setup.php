@@ -101,7 +101,7 @@ function plugin_version_datainjection() {
       'author'         => 'Walid Nouh & Remi Collet',
       'homepage'       => 'https://forge.indepnet.net/projects/datainjection',
       'license'        => 'GPLv2+',
-      'version'        => '2.2.0'
+      'version'        => '2.2.1'
    );
 }
 
