@@ -91,7 +91,8 @@
       echo "</td></tr></table><br>";
 
       echo "<span id='span_injection' name='span_injection'></span>";
-      echo "</div></form>";
+      Html::closeForm();
+      echo "</div>";
 
       if (PluginDatainjectionSession::getParam('models_id')) {
          $p['models_id'] = PluginDatainjectionSession::getParam('models_id');
@@ -155,7 +156,7 @@
       echo "</tr>\n";
       echo "</table><br>";
       if ($add_form) {
-         echo "</form>";
+         Html::closeForm();
       }
    }
 
@@ -345,7 +346,8 @@
       echo "<input class='submit' type='submit' name='finish' value='".
              $LANG['datainjection']['button'][6]."'>";
       echo "</td></tr>";
-      echo "</table></form>";
+      echo "</table>";
+      Html::closeForm();
    }
 
 

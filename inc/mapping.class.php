@@ -186,7 +186,8 @@ class PluginDatainjectionMapping extends CommonDBTM {
          echo "<input type='submit' name='update' value='".$LANG['buttons'][7]."' class='submit'>";
          echo "</td></tr>";
       }
-      echo "</table></form>";
+      echo "</table>";
+      Html::closeForm();
    }
 
 

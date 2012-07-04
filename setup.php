@@ -86,8 +86,9 @@ function plugin_init_datainjection() {
 
       // Inbtegration with Webservices plugin
       $PLUGIN_HOOKS['webservices']['datainjection'] = 'plugin_datainjection_registerMethods';
-
       $INJECTABLE_TYPES = array();
+
+      $PLUGIN_HOOKS['csrf_compliant']['datainjection'] = true;
    }
 }
 
@@ -97,11 +98,11 @@ function plugin_version_datainjection() {
 
    return array (
       'name'           => $LANG['datainjection']['name'][1],
-      'minGlpiVersion' => '0.83',
+      'minGlpiVersion' => '0.83.3',
       'author'         => 'Walid Nouh & Remi Collet',
       'homepage'       => 'https://forge.indepnet.net/projects/datainjection',
       'license'        => 'GPLv2+',
-      'version'        => '2.2.1'
+      'version'        => '2.2.2'
    );
 }
 
@@ -128,8 +129,8 @@ function plugin_datainjection_check_prerequisites() {
       echo PLUGIN_DATAINJECTION_UPLOAD_DIR. " ".$LANG['datainjection']['install'][1];
       return false;
    }
-   if (version_compare(GLPI_VERSION,'0.83','lt') || version_compare(GLPI_VERSION,'0.84','ge')) {
-      echo "This plugin requires GLPI >= 0.83 and < 0.83";
+   if (version_compare(GLPI_VERSION,'0.83.3','lt') || version_compare(GLPI_VERSION,'0.84','ge')) {
+      echo "This plugin requires GLPI >= 0.83.3 and < 0.83";
       return false;
    }
    return true;

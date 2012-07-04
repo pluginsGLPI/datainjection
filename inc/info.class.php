@@ -104,7 +104,9 @@ class PluginDatainjectionInfo extends CommonDBTM {
          echo "</td></tr>";
 
 
-         echo "</table></form><br/>";
+         echo "</table>";
+         Html::closeForm();
+         echo "<br/>";
      }
 
    }
@@ -148,7 +150,8 @@ class PluginDatainjectionInfo extends CommonDBTM {
          echo "<input type='submit' name='update' value='".$LANG['buttons'][7]."' class='submit'>";
          echo "</td></tr>";
       }
-      echo "</table></form>";
+      echo "</table>";
+      Html::closeForm();
    }
 
 
@@ -204,6 +207,9 @@ class PluginDatainjectionInfo extends CommonDBTM {
          echo "<tr class='tab_bg_1'>";
          echo "<td colspan='2' class='center'><a href='".$model->getFormURL()."?sample=";
          echo $model->getField('id')."'>".$LANG['datainjection']['model'][40]."</a></td></tr>\n";
+         Html::showMinimalForm($model->getFormURL(),
+                                  'sample', $LANG['datainjection']['model'][40],
+                                  array('sample' => $model->getField('id')));
       }
       if ($model->fields['comment']) {
          echo "<tr class='tab_bg_2'>";

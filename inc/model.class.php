@@ -693,7 +693,8 @@ class PluginDatainjectionModel extends CommonDBTM {
       echo "<input type='hidden' name='id' value='".$this->fields['id']."'>";
       echo "</td>";
       echo "</tr>";
-      echo "</table></form>";
+      echo "</table>";
+      Html::closeForm();
 
       return true;
    }
@@ -1228,7 +1229,7 @@ class PluginDatainjectionModel extends CommonDBTM {
             echo "</tr>";
          }
       }
-      echo "</table>";
+      Html::closeForm();
       echo "<div style='margin-top:15px;text-align:center'>";
       echo "<a href='javascript:window.close()'>" . $LANG['datainjection']['button'][8] . "</a>";
       echo "</div>";
@@ -1501,14 +1502,14 @@ class PluginDatainjectionModel extends CommonDBTM {
             echo "</tr>";
          }
 
-         echo "</table>";
+         Html::closeForm();
          Html::openArrowMassives("modelslist");
          Html::closeArrowMassives(array('delete' => $LANG['buttons'][6]));
 
       } else {
          echo "<tr class='tab_bg_1'><td>".$LANG['search'][15]."</table></td>";
       }
-      echo "</form>";
+      Html::closeForm();
    }
 
 
