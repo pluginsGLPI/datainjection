@@ -36,6 +36,8 @@ if (!defined("PLUGIN_DATAINJECTION_UPLOAD_DIR")) {
 function plugin_init_datainjection() {
    global $PLUGIN_HOOKS, $CFG_GLPI, $LANG, $INJECTABLE_TYPES;
 
+   $PLUGIN_HOOKS['csrf_compliant']['datainjection'] = true;
+
    $plugin = new Plugin();
    $PLUGIN_HOOKS['change_profile']['datainjection'] = 'plugin_datainjection_changeprofile';
 
@@ -88,7 +90,6 @@ function plugin_init_datainjection() {
       $PLUGIN_HOOKS['webservices']['datainjection'] = 'plugin_datainjection_registerMethods';
       $INJECTABLE_TYPES = array();
 
-      $PLUGIN_HOOKS['csrf_compliant']['datainjection'] = true;
    }
 }
 
