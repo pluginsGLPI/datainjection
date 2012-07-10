@@ -207,7 +207,7 @@ class PluginDatainjectionInfo extends CommonDBTM {
          echo "<tr class='tab_bg_1'>";
          echo "<td colspan='2' class='center'><a href='".$model->getFormURL()."?sample=";
          echo $model->getField('id')."'>".$LANG['datainjection']['model'][40]."</a></td></tr>\n";
-         Html::showMinimalForm($model->getFormURL(),
+         Html::showSimpleForm($model->getFormURL(),
                                   'sample', $LANG['datainjection']['model'][40],
                                   array('sample' => $model->getField('id')));
       }
