@@ -116,7 +116,7 @@ class PluginDatainjectionInjectionType {
       //Add primary_type to the list of availables types
       $type                       = new $p['primary_type']();
       $values[$p['primary_type']] = $type->getTypeName();
-      
+
       foreach ($INJECTABLE_TYPES as $type => $plugin) {
          $injectionClass = new $type();
          $connected_to   = $injectionClass->connectedTo();
@@ -173,7 +173,7 @@ class PluginDatainjectionInjectionType {
       } else {
          $mapping_or_info = $options['mapping_or_info'];
       }
-      
+
       $fields = array();
       $fields[PluginDatainjectionInjectionType::NO_VALUE] = $LANG['datainjection']['mapping'][7];
 
@@ -316,7 +316,8 @@ class PluginDatainjectionInjectionType {
       foreach ($datas as $data) {
          if ($data['value'] != PluginDatainjectionInjectionType::NO_VALUE) {
             foreach ($options as $option) {
-               if ($option['table'] == getItemTypeForTable($data['itemtype'])
+               if (isset($option['table'])
+                   && $option['table'] == getItemTypeForTable($data['itemtype'])
                    && $option['linkfield'] == $data['value']
                    && $option['displaytype'] != 'multiline_text'
                    && $mapping_or_info['value'] != $data['value']) {
