@@ -34,10 +34,13 @@ class PluginDatainjectionWebservice {
    static function methodInject($params, $protocol) {
 
       if (isset ($params['help'])) {
-         return array('uri'        => 'string,mandatory',
+         return array('uri'      => 'string,mandatory',
                       'base64'     => 'string,optional',
                       'additional' => 'array,optional',
                       'models_id'  => 'integer, mandatory',
+                      'entities_id'=> 'integer,mandatory',
+                      'mandatory'  => 'array,optional',
+                      'uri'        => 'uri,mandatory',
                       'help'       => 'bool,optional');
       }
 
