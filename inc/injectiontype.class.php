@@ -52,6 +52,11 @@ class PluginDatainjectionInjectionType {
          if (class_exists($type)
                && !$only_primary
                   || ($only_primary && $injectionclass->isPrimaryType())) {
+            $instance = new $type();
+            //If user has no right to create an object of this type, do not display type in the list
+            if (!$instance->canCreate()) {
+               continue;
+            }
             $typename = PluginDatainjectionInjectionType::getParentObjectName($type);
             $name     = '';
             if ($from != 'datainjection') {

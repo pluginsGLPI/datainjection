@@ -379,7 +379,8 @@ class PluginDatainjectionModel extends CommonDBTM {
    static function dropdown($options=array()) {
       global $CFG_GLPI, $LANG;
 
-      $models = self::getModels(Session::getLoginUserID(), 'name', $_SESSION['glpiactive_entity'], false);
+      $models = self::getModels(Session::getLoginUserID(), 'name', $_SESSION['glpiactive_entity'],
+                                false);
       $p = array('models_id' => '__VALUE__');
 
       if (isset($_SESSION['datainjection']['models_id'])) {
