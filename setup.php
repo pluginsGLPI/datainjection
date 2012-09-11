@@ -126,12 +126,13 @@ function plugin_datainjection_haveRight($module, $right) {
 
 function plugin_datainjection_check_prerequisites() {
   global $LANG;
+
   if (!plugin_datainjection_checkDirectories()) {
       echo PLUGIN_DATAINJECTION_UPLOAD_DIR. " ".$LANG['datainjection']['install'][1];
       return false;
    }
    if (version_compare(GLPI_VERSION,'0.83.3','lt') || version_compare(GLPI_VERSION,'0.84','ge')) {
-      echo "This plugin requires GLPI >= 0.83.3 and < 0.83";
+      echo "This plugin requires GLPI >= 0.83.3 and < 0.84";
       return false;
    }
    return true;
