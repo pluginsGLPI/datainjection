@@ -207,14 +207,9 @@ class PluginDatainjectionInfo extends CommonDBTM {
          echo "<tr class='tab_bg_1'>";
          echo "<td colspan='2' class='center'><a href='".$model->getFormURL()."?sample=";
          echo $model->getField('id')."'>".$LANG['datainjection']['model'][40]."</a></td></tr>\n";
-<<<<<<< .mine
-         Html::showSimpleForm($model->getFormURL(), 'sample', $LANG['datainjection']['model'][40],
-                              array('sample' => $model->getField('id')));
-=======
          Html::showSimpleForm($model->getFormURL(),
                                   'sample', $LANG['datainjection']['model'][40],
                                   array('sample' => $model->getField('id')));
->>>>>>> .r723
       }
       if ($model->fields['comment']) {
          echo "<tr class='tab_bg_2'>";
@@ -345,7 +340,7 @@ class PluginDatainjectionInfo extends CommonDBTM {
          case 'password':
             echo "<input type='password' name='$name' value='' size='20' autocomplete='off'>";
             break;
-
+            
          default :
             if (method_exists($injectionClass,'showAdditionalInformation')) {
                //If type is not a standard type, must be treated by specific injection class
