@@ -20,7 +20,7 @@
  --------------------------------------------------------------------------
  @package   datainjection
  @author    the datainjection plugin team
- @copyright Copyright (c) 2010-2011 Order plugin team
+ @copyright Copyright (c) 2010-2013 Datainjection plugin team
  @license   GPLv2+
             http://www.gnu.org/licenses/gpl.txt
  @link      https://forge.indepnet.net/projects/datainjection
@@ -107,7 +107,7 @@ $LANG['datainjection']['importStep'][1] = "Injection of the file";
 $LANG['datainjection']['importStep'][3] = "Injection finished";
 
 $LANG['datainjection']['log'][1]  = "Injection's results";
-$LANG['datainjection']['log'][3]  = "Injection's successful";
+$LANG['datainjection']['log'][3]  = "Injection successful";
 $LANG['datainjection']['log'][4]  = "Array of successful injections";
 $LANG['datainjection']['log'][5]  = "Array of unsuccessful injections";
 $LANG['datainjection']['log'][8]  = "Injection encounters errors";
@@ -159,7 +159,7 @@ $LANG['datainjection']['history'][1] = "from CSV file";
 $LANG['datainjection']['model'][0] = "Model";
 
 $LANG['datainjection']['tabs'][0] = "Mappings";
-$LANG['datainjection']['tabs'][1] = "Additional Infoormation";
+$LANG['datainjection']['tabs'][1] = "Additional Information";
 $LANG['datainjection']['tabs'][2] = "Fixed values";
 $LANG['datainjection']['tabs'][3] = "File to inject";
 

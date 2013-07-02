@@ -20,7 +20,7 @@
  --------------------------------------------------------------------------
  @package   datainjection
  @author    the datainjection plugin team
- @copyright Copyright (c) 2010-2011 Order plugin team
+ @copyright Copyright (c) 2010-2013 Datainjection plugin team
  @license   GPLv2+
             http://www.gnu.org/licenses/gpl.txt
  @link      https://forge.indepnet.net/projects/datainjection
@@ -53,12 +53,11 @@ class PluginDatainjectionContract_ItemInjection extends Contract_Item
 
 
    function getOptions($primary_type = '') {
-      global $LANG;
 
       $tab[100]['table']         = 'glpi_contracts';
       $tab[100]['field']         = 'name';
       $tab[100]['linkfield']     = 'name';
-      $tab[100]['name']          = $LANG['common'][16];
+      $tab[100]['name']          = __('Name');
       $tab[100]['injectable']    = true;
       $tab[100]['checktype']     = 'text';
       $tab[100]['displaytype']   = 'relation';
@@ -68,7 +67,7 @@ class PluginDatainjectionContract_ItemInjection extends Contract_Item
       $tab[101]['table']         = 'glpi_contracts';
       $tab[101]['field']         = 'num';
       $tab[101]['linkfield']     = 'num';
-      $tab[101]['name']          = $LANG['common'][19];
+      $tab[101]['name']          = __('Serial Number');
       $tab[101]['injectable']    = true;
       $tab[101]['checktype']     = 'text';
       $tab[101]['displaytype']   = 'relation';

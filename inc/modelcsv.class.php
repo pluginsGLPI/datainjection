@@ -20,7 +20,7 @@
  --------------------------------------------------------------------------
  @package   datainjection
  @author    the datainjection plugin team
- @copyright Copyright (c) 2010-2011 Order plugin team
+ @copyright Copyright (c) 2010-2013 Datainjection plugin team
  @license   GPLv2+
             http://www.gnu.org/licenses/gpl.txt
  @link      https://forge.indepnet.net/projects/datainjection
@@ -31,8 +31,8 @@ class PluginDatainjectionModelcsv extends CommonDBChild {
    var $specific_fields;
 
    // From CommonDBChild
-   public $itemtype  = 'PluginDatainjectionModel';
-   public $items_id  = 'models_id';
+   static public $itemtype  = 'PluginDatainjectionModel';
+   static public $items_id  = 'models_id';
    public $dohistory = true;
 
 
@@ -43,12 +43,12 @@ class PluginDatainjectionModelcsv extends CommonDBChild {
    }
 
 
-   function canCreate() {
+   static function canCreate() {
       return plugin_datainjection_haveRight('model', 'w');
    }
 
 
-   function canView() {
+   static function canView() {
       return plugin_datainjection_haveRight('model', 'r');
    }
 
@@ -151,19 +151,18 @@ class PluginDatainjectionModelcsv extends CommonDBChild {
 
 
    function showAdditionnalForm(PluginDatainjectionModel $model, $options=array()) {
-      global $LANG;
 
       $id      = $this->getFromDBByModelID($model->fields['id']);
       $canedit = $this->can($id, 'w');
 
-      echo "<tr><th colspan='4'>".$LANG['datainjection']['model'][29]."</th></tr>";
+      echo "<tr><th colspan='4'>".__('Specific file format options', 'datainjection')."</th></tr>";
 
       echo "<tr class='tab_bg_1'>";
-      echo "<td>".$LANG['datainjection']['model'][9]."&nbsp;: </td>";
+      echo "<td>".__("Header's presence", 'datainjection')."&nbsp;: </td>";
       echo "<td>";
       Dropdown::showYesNo('is_header_present', $this->isHeaderPresent());
       echo "</td>";
-      echo "<td>".$LANG['datainjection']['model'][10]."&nbsp;: </td>";
+      echo "<td>".__('File delimitor', 'datainjection')."&nbsp;: </td>";
       echo "<td>";
       echo "<input type='text' size='1' name='delimiter' value='".$this->getDelimiter()."'";
       echo "</td>";
@@ -183,4 +182,5 @@ class PluginDatainjectionModelcsv extends CommonDBChild {
    }
 
 }
+
 ?>

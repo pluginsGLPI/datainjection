@@ -20,7 +20,7 @@
  --------------------------------------------------------------------------
  @package   datainjection
  @author    the datainjection plugin team
- @copyright Copyright (c) 2010-2011 Order plugin team
+ @copyright Copyright (c) 2010-2013 Datainjection plugin team
  @license   GPLv2+
             http://www.gnu.org/licenses/gpl.txt
  @link      https://forge.indepnet.net/projects/datainjection
@@ -28,14 +28,14 @@
  @since     2009
  ---------------------------------------------------------------------- */
 
-define('GLPI_ROOT', '../../..');
-include (GLPI_ROOT."/inc/includes.php");
+include ('../../../inc/includes.php');
+
 Session::checkRight("profile","r");
 
 $prof = new PluginDatainjectionProfile();
 
 //Save profile
-if (isset ($_POST['update_user_profile'])) {
+if (isset ($_POST['update'])) {
    $prof->update($_POST);
    Html::redirect($_SERVER['HTTP_REFERER']);
 }

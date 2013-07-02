@@ -20,7 +20,7 @@
  --------------------------------------------------------------------------
  @package   datainjection
  @author    the datainjection plugin team
- @copyright Copyright (c) 2010-2011 Order plugin team
+ @copyright Copyright (c) 2010-2013 Datainjection plugin team
  @license   GPLv2+
             http://www.gnu.org/licenses/gpl.txt
  @link      https://forge.indepnet.net/projects/datainjection
@@ -53,13 +53,12 @@ class PluginDatainjectionNetworkportInjection extends NetworkPort
 
 
    function getOptions($primary_type = '') {
-      global $LANG;
 
       $tab = Search::getOptions(get_parent_class($this));
       $blacklist = PluginDatainjectionCommonInjectionLib::getBlacklistedOptions();
 
       //To manage vlans : relies on a CommonDBRelation object !
-      $tab[100]['name']          = $LANG['setup'][90];
+      $tab[100]['name']          = __('VLAN');
       $tab[100]['field']         = 'name';
       $tab[100]['table']         = getTableForItemType('Vlan');
       $tab[100]['linkfield']     = getForeignKeyFieldForTable($tab[100]['table']);
@@ -111,7 +110,7 @@ class PluginDatainjectionNetworkportInjection extends NetworkPort
       }
       
       //To manage vlans : relies on a CommonDBRelation object !
-      $tab[51]['name']          = $LANG["datainjection"]["mapping"][8];
+      $tab[51]['name']          = __('Connected to : device name', 'datainjection');
       $tab[51]['field']         = 'netname';
       $tab[51]['table']         = getTableForItemType('NetworkPort');
       $tab[51]['linkfield']     = "netname";
@@ -119,7 +118,7 @@ class PluginDatainjectionNetworkportInjection extends NetworkPort
       $tab[51]['displaytype']   = 'text';
       $tab[51]['checktype']     = 'text';
 
-      $tab[52]['name']          = $LANG["datainjection"]["mapping"][9];
+      $tab[52]['name']          = __('Connected to : port number', 'datainjection');
       $tab[52]['field']         = 'netport';
       $tab[52]['table']         = getTableForItemType('NetworkPort');
       $tab[52]['linkfield']     = "netport";
@@ -127,7 +126,7 @@ class PluginDatainjectionNetworkportInjection extends NetworkPort
       $tab[52]['displaytype']   = 'text';
       $tab[52]['checktype']     = 'text';
 
-      $tab[53]['name']          = $LANG["datainjection"]["mapping"][10];
+      $tab[53]['name']          = __('Connected to : port MAC address', 'datainjection');
       $tab[53]['field']         = 'netmac';
       $tab[53]['table']         = getTableForItemType('NetworkPort');
       $tab[53]['linkfield']     = "netmac";

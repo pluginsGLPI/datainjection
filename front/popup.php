@@ -20,7 +20,7 @@
  --------------------------------------------------------------------------
  @package   datainjection
  @author    the datainjection plugin team
- @copyright Copyright (c) 2010-2011 Order plugin team
+ @copyright Copyright (c) 2010-2013 Datainjection plugin team
  @license   GPLv2+
             http://www.gnu.org/licenses/gpl.txt
  @link      https://forge.indepnet.net/projects/datainjection
@@ -28,22 +28,22 @@
  @since     2009
  ---------------------------------------------------------------------- */
  
-define('GLPI_ROOT', '../../..');
-include (GLPI_ROOT . "/inc/includes.php");
+include ('../../../inc/includes.php');
 
 Session::checkLoginUser();
 
 switch ($_GET["popup"]) {
    case "preview" :
-      Html::popHeader($LANG['datainjection']['button'][3], $_SERVER['PHP_SELF']);
+      Html::popHeader(__('See the file', 'datainjection'), $_SERVER['PHP_SELF']);
       PluginDatainjectionModel::showPreviewMappings($_GET['models_id']);
       Html::popFooter();
       break;
 
    case "log" :
-      Html::popHeader($LANG['datainjection']['result'][18], $_SERVER['PHP_SELF']);
+      Html::popHeader(__('File injection report', 'datainjection'), $_SERVER['PHP_SELF']);
       PluginDatainjectionModel::showLogResults($_GET['models_id']);
       Html::popFooter();
       break;
 }
+
 ?>

@@ -20,7 +20,7 @@
  --------------------------------------------------------------------------
  @package   datainjection
  @author    the datainjection plugin team
- @copyright Copyright (c) 2010-2011 Order plugin team
+ @copyright Copyright (c) 2010-2013 Datainjection plugin team
  @license   GPLv2+
             http://www.gnu.org/licenses/gpl.txt
  @link      https://forge.indepnet.net/projects/datainjection
@@ -51,12 +51,11 @@ class PluginDatainjectionContact_SupplierInjection extends Contact_Supplier
 
 
    function getOptions($primary_type = '') {
-      global $LANG;
 
       $tab[100]['table']         = 'glpi_suppliers';
       $tab[100]['field']         = 'name';
       $tab[100]['linkfield']     = 'suppliers_id';
-      $tab[100]['name']          = $LANG['financial'][65];
+      $tab[100]['name']          = __('Associated suppliers');
       $tab[100]['displaytype']   = 'relation';
       $tab[100]['relationclass'] = 'Contact_Supplier';
       $tab[100]['injectable']    = true;

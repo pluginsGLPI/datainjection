@@ -20,7 +20,7 @@
  --------------------------------------------------------------------------
  @package   datainjection
  @author    the datainjection plugin team
- @copyright Copyright (c) 2010-2011 Order plugin team
+ @copyright Copyright (c) 2010-2013 Datainjection plugin team
  @license   GPLv2+
             http://www.gnu.org/licenses/gpl.txt
  @link      https://forge.indepnet.net/projects/datainjection
@@ -226,67 +226,69 @@ class PluginDatainjectionResult {
    }
 
 
-   private function getLabel($type) {
-      global $LANG;
+   public function getLabel($type) {
 
       $message = "";
 
       switch ($type) {
          case PluginDatainjectionCommonInjectionLib::ERROR_CANNOT_IMPORT :
-            $message = $LANG['datainjection']['result'][5];
+            $message = __('No right to import data', 'datainjection');
             break;
 
          case PluginDatainjectionCommonInjectionLib::WARNING_NOTEMPTY :
+            $message = __('Undetermined', 'datainjection');
+            break;
+            
          case PluginDatainjectionCommonInjectionLib::ERROR_CANNOT_UPDATE :
-            $message = $LANG['datainjection']['result'][6];
+            $message = __('No right to update data', 'datainjection');
             break;
 
          case PluginDatainjectionCommonInjectionLib::ERROR_IMPORT_ALREADY_IMPORTED :
-            $message = $LANG['datainjection']['result'][3];
+            $message = __('Datas are still in the database', 'datainjection');
             break;
 
          case PluginDatainjectionCommonInjectionLib::ERROR_IMPORT_WRONG_TYPE :
-            $message = $LANG['datainjection']['result'][1];
+            $message = __('One data is not the good type', 'datainjection');
             break;
 
          case PluginDatainjectionCommonInjectionLib::ERROR_IMPORT_FIELD_MANDATORY :
-            $message = $LANG['datainjection']['result'][4];
+            $message = __('At least one mandatory field is not present', 'datainjection');
             break;
 
          case PluginDatainjectionCommonInjectionLib::ERROR_IMPORT_LINK_FIELD_MISSING :
-            $message = $LANG['datainjection']['result'][4];
+            $message = __('At least one mandatory field is not present', 'datainjection');
             break;
 
          case PluginDatainjectionCommonInjectionLib::SUCCESS :
-            $message = $LANG['datainjection']['result'][2];
+            $message = __('Datas to insert are correct', 'datainjection');
             break;
 
          case PluginDatainjectionCommonInjectionLib::IMPORT_OK :
-            $message = $LANG['datainjection']['result'][7];
+            $message = __('Import is successful', 'datainjection');
             break;
 
          case PluginDatainjectionCommonInjectionLib::WARNING_NOTFOUND :
-            $message = $LANG['datainjection']['result'][15];
+            $message = __('Data not found', 'datainjection');
             break;
 
          case PluginDatainjectionCommonInjectionLib::WARNING_USED :
-            $message = $LANG['datainjection']['result'][16];
+            $message = __('Data already used', 'datainjection');
             break;
 
          case PluginDatainjectionCommonInjectionLib::WARNING_ALLEMPTY :
-            $message = $LANG['datainjection']['result'][17];
+            $message = __('No data to insert', 'datainjection');
             break;
 
          case PluginDatainjectionCommonInjectionLib::WARNING_SEVERAL_VALUES_FOUND :
-            $message = $LANG['datainjection']['result'][19];
+            $message = __('More than one value found', 'datainjection');
             break;
 
          case PluginDatainjectionCommonInjectionLib::WARNING_ALREADY_LINKED:
-            $message = $LANG['datainjection']['result'][20];
+            $message = __('Object is already linked', 'datainjection');
             break;
 
          case PluginDatainjectionCommonInjectionLib::IMPORT_IMPOSSIBLE:
-            $message = $LANG['datainjection']['result'][21];
+            $message = __('Import is impossible', 'datainjection');
             break;
       }
 

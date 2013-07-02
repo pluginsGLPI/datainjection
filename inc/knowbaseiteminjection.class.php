@@ -20,7 +20,7 @@
  --------------------------------------------------------------------------
  @package   datainjection
  @author    the datainjection plugin team
- @copyright Copyright (c) 2010-2011 Order plugin team
+ @copyright Copyright (c) 2010-2013 Datainjection plugin team
  @license   GPLv2+
             http://www.gnu.org/licenses/gpl.txt
  @link      https://forge.indepnet.net/projects/datainjection
@@ -51,7 +51,6 @@ class PluginDatainjectionKnowbaseItemInjection extends KnowbaseItem
 
 
    function getOptions($primary_type = '') {
-      global $LANG;
 
       $tab = Search::getOptions(get_parent_class($this));
       

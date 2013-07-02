@@ -20,7 +20,7 @@
  --------------------------------------------------------------------------
  @package   datainjection
  @author    the datainjection plugin team
- @copyright Copyright (c) 2010-2011 Order plugin team
+ @copyright Copyright (c) 2010-2013 Datainjection plugin team
  @license   GPLv2+
             http://www.gnu.org/licenses/gpl.txt
  @link      https://forge.indepnet.net/projects/datainjection
@@ -69,15 +69,14 @@ class PluginDatainjectionInfo extends CommonDBTM {
 
 
    static function showAddInfo(PluginDatainjectionModel $model, $canedit=false) {
-      global $LANG;
 
       if ($canedit) {
          echo "<form method='post' name=form action='".Toolbox::getItemTypeFormURL(__CLASS__)."'>";
          echo "<table class='tab_cadre_fixe'>";
          echo "<tr>";
-         echo "<th>" . $LANG['datainjection']['mapping'][3] . "</th>";
-         echo "<th>" . $LANG['datainjection']['mapping'][4] . "</th>";
-         echo "<th>" . $LANG['datainjection']['info'][5] . "</th>";
+         echo "<th>" . __('Tables', 'datainjection') . "</th>";
+         echo "<th>" . __('Fields', 'datainjection') . "</th>";
+         echo "<th>" . __('Mandatory information', 'datainjection') . "</th>";
          echo "</tr>";
 
          echo "<tr class='tab_bg_1'>";
@@ -100,7 +99,7 @@ class PluginDatainjectionInfo extends CommonDBTM {
          echo "<tr>";
          echo "<td class='tab_bg_2 center' colspan='4'>";
          echo "<input type='hidden' name='models_id' value='".$model->fields['id']."'>";
-         echo "<input type='submit' name='update' value='".$LANG['buttons'][8]."' class='submit' >";
+         echo "<input type='submit' name='update' value='"._sx('button', 'Save')."' class='submit' >";
          echo "</td></tr>";
 
 
@@ -113,7 +112,6 @@ class PluginDatainjectionInfo extends CommonDBTM {
 
 
    static function showFormInfos(PluginDatainjectionModel $model) {
-      global $LANG;
 
       $canedit = $model->can($model->fields['id'], 'w');
 
@@ -122,9 +120,9 @@ class PluginDatainjectionInfo extends CommonDBTM {
       echo "<form method='post' name=form action='".Toolbox::getItemTypeFormURL(__CLASS__)."'>";
       echo "<table class='tab_cadre_fixe'>";
       echo "<tr>";
-      echo "<th>" . $LANG['datainjection']['mapping'][3] . "</th>";
-      echo "<th>" . $LANG['datainjection']['mapping'][4] . "</th>";
-      echo "<th>" . $LANG['datainjection']['info'][5] . "</th>";
+      echo "<th>" . __('Tables', 'datainjection') . "</th>";
+      echo "<th>" . __('Fields', 'datainjection') . "</th>";
+      echo "<th>" . __('Mandatory information', 'datainjection') . "</th>";
       echo "</tr>";
 
       $model->loadInfos();
@@ -147,7 +145,7 @@ class PluginDatainjectionInfo extends CommonDBTM {
          echo "<tr>";
          echo "<td class='tab_bg_2 center' colspan='4'>";
          echo "<input type='hidden' name='models_id' value='".$model->fields['id']."'>";
-         echo "<input type='submit' name='update' value='".$LANG['buttons'][7]."' class='submit'>";
+         echo "<input type='submit' name='update' value='"._sx('button', 'Save')."' class='submit'>";
          echo "</td></tr>";
       }
       echo "</table>";
@@ -188,7 +186,6 @@ class PluginDatainjectionInfo extends CommonDBTM {
 
 
    static function showAdditionalInformationsForm(PluginDatainjectionModel $model) {
-      global $LANG;
 
       $infos = getAllDatasFromTable('glpi_plugin_datainjection_infos',
                                     "`models_id` = '". $model->getField('id')."'");
@@ -199,16 +196,16 @@ class PluginDatainjectionInfo extends CommonDBTM {
 
       if (count($infos) || $modeltype->haveSample() || $model->fields['comment']) {
          echo "<table class='tab_cadre_fixe'>";
-         echo "<tr><th colspan='2'>" . $LANG['datainjection']['info'][1];
-         echo "&nbsp;(".$LANG['datainjection']['fillInfoStep'][3].")</th></tr>\n";
+         echo "<tr><th colspan='2'>" . __('Complementary informations', 'datainjection');
+         echo "&nbsp;(".__('Choose a file', 'datainjection').")</th></tr>\n";
          $table = true;
       }
       if ($modeltype->haveSample()) {
          echo "<tr class='tab_bg_1'>";
          echo "<td colspan='2' class='center'><a href='".$model->getFormURL()."?sample=";
-         echo $model->getField('id')."'>".$LANG['datainjection']['model'][40]."</a></td></tr>\n";
+         echo $model->getField('id')."'>".__('Download file sample', 'datainjection')."</a></td></tr>\n";
          Html::showSimpleForm($model->getFormURL(),
-                                  'sample', $LANG['datainjection']['model'][40],
+                                  'sample', __('Download file sample', 'datainjection'),
                                   array('sample' => $model->getField('id')));
       }
       if ($model->fields['comment']) {
@@ -270,7 +267,6 @@ class PluginDatainjectionInfo extends CommonDBTM {
    **/
    static function showAdditionalInformation(PluginDatainjectionInfo $info, $option = array(),
                                              $injectionClass, $values = array()) {
-      global $LANG;
 
       $name = "info[".$option['linkfield']."]";
 

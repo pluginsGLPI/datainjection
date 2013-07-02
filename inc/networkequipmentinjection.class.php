@@ -20,7 +20,7 @@
  --------------------------------------------------------------------------
  @package   datainjection
  @author    the datainjection plugin team
- @copyright Copyright (c) 2010-2011 Order plugin team
+ @copyright Copyright (c) 2010-2013 Datainjection plugin team
  @license   GPLv2+
             http://www.gnu.org/licenses/gpl.txt
  @link      https://forge.indepnet.net/projects/datainjection
@@ -52,7 +52,6 @@ class PluginDatainjectionNetworkEquipmentInjection extends NetworkEquipment
 
 
    function getOptions($primary_type = '') {
-      global $LANG;
 
       $tab = Search::getOptions(get_parent_class($this));
 
@@ -64,7 +63,7 @@ class PluginDatainjectionNetworkEquipmentInjection extends NetworkEquipment
       //Virtual type : need to be processed at the end !
       $tab[200]['table']       = 'glpi_networking';
       $tab[200]['field']       = 'nb_ports';
-      $tab[200]['name']        = $LANG['datainjection']['mappings'][1];
+      $tab[200]['name']        = __('Number of ports', 'datainjection');
       $tab[200]['checktype']   = 'integer';
       $tab[200]['displaytype'] = 'virtual';
       $tab[200]['linkfield']   = 'nb_ports';

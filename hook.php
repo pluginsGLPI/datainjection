@@ -21,7 +21,7 @@
  --------------------------------------------------------------------------
  @package   datainjection
  @author    the datainjection plugin team
- @copyright Copyright (c) 2010-2011 Order plugin team
+ @copyright Copyright (c) 2010-2013 Datainjection plugin team
  @license   GPLv2+
             http://www.gnu.org/licenses/gpl.txt
  @link      https://forge.indepnet.net/projects/datainjection
@@ -63,7 +63,7 @@ function plugin_datainjection_changeprofile() {
 
    $plugin = new Plugin;
 
-   if ($plugin->isInstalled("datainjection") && $plugin->isActivated("datainjection")) {
+   if ($plugin->isActivated("datainjection")) {
       $prof = new PluginDatainjectionProfile();
 
       if ($prof->getFromDB($_SESSION['glpiactiveprofile']['id'])) {
@@ -74,7 +74,7 @@ function plugin_datainjection_changeprofile() {
    }
 }
 
-
+/*XACA TODO ?
 function plugin_headings_actions_datainjection($item) {
 
    switch (get_class($item)) {
@@ -115,7 +115,7 @@ function plugin_headings_datainjection($item,$withtemplate=0) {
          break;
    }
 }
-
+*/
 
 function plugin_datainjection_install() {
    global $DB;
@@ -203,7 +203,7 @@ function plugin_datainjection_install() {
          //When updating, check if the upload folder is already present
          if (!is_dir(PLUGIN_DATAINJECTION_UPLOAD_DIR)) {
             @ mkdir(PLUGIN_DATAINJECTION_UPLOAD_DIR)
-               or die("Can't create folder " . PLUGIN_DATAINJECTION_UPLOAD_DIR);
+               or die(__("Can't create folder", 'datainjection'). " " . PLUGIN_DATAINJECTION_UPLOAD_DIR);
          }
 
          //Old temporary directory, needs to be removed !
@@ -1127,7 +1127,7 @@ function plugin_datainjection_needUpdateOrInstall() {
 
 
 function plugin_datainjection_giveItem($type, $ID, $data, $num) {
-   global $DB, $CFG_GLPI, $LANG;
+   global $DB, $CFG_GLPI;
 
    $searchopt = &Search::getOptions($type);
    $table     = $searchopt[$ID]["table"];

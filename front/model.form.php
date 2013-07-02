@@ -20,7 +20,7 @@
  --------------------------------------------------------------------------
  @package   datainjection
  @author    the datainjection plugin team
- @copyright Copyright (c) 2010-2011 Order plugin team
+ @copyright Copyright (c) 2010-2013 Datainjection plugin team
  @license   GPLv2+
             http://www.gnu.org/licenses/gpl.txt
  @link      https://forge.indepnet.net/projects/datainjection
@@ -28,8 +28,7 @@
  @since     2009
  ---------------------------------------------------------------------- */
  
-define('GLPI_ROOT', '../../..');
-include (GLPI_ROOT . "/inc/includes.php");
+include ('../../../inc/includes.php');
 
 if (!isset ($_GET["id"])) {
    $_GET["id"] = "";
@@ -81,7 +80,7 @@ if (isset ($_POST["add"])) {
                                             'mode'          => PluginDatainjectionModel::CREATION))) {
          Session::setActiveTab('PluginDatainjectionModel', 'PluginDatainjectionModel$4');
       } else {
-         Session::addMessageAfterRedirect($LANG['datainjection']['fileStep'][4], true, ERROR, true);
+         Session::addMessageAfterRedirect(__('The file could not be found', 'datainjection'), true, ERROR, true);
       }
    }
 
@@ -95,6 +94,10 @@ if (isset ($_POST["add"])) {
    exit (0);
 }
 
-Html::header($LANG['datainjection']['profiles'][1], '', "plugins", "datainjection", "model");
+Html::header(PluginDatainjectionModel::getTypeName(), '', "plugins", "datainjection", "model");
+
 $model->showForm($_GET["id"]);
+
 Html::footer();
+
+?>

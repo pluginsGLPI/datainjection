@@ -19,19 +19,18 @@
  --------------------------------------------------------------------------
  @package   datainjection
  @author    the datainjection plugin team
- @copyright Copyright (c) 2010-2011 Order plugin team
+ @copyright Copyright (c) 2010-2013 Datainjection plugin team
  @license   GPLv2+
             http://www.gnu.org/licenses/gpl.txt
  @link      https://forge.indepnet.net/projects/datainjection
  @link      http://www.glpi-project.org/
  @since     2009
  ---------------------------------------------------------------------- */
-if (!defined('GLPI_ROOT')) {
-   define('GLPI_ROOT', '../../..');
-}
+
+include ('../../../inc/includes.php');
 
 include (GLPI_ROOT."/lib/ezpdf/class.ezpdf.php");
-include (GLPI_ROOT."/inc/includes.php");
 
 PluginDatainjectionModel::exportAsPDF($_GET['models_id']);
+
 ?>

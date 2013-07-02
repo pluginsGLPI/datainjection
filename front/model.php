@@ -20,7 +20,7 @@
  --------------------------------------------------------------------------
  @package   datainjection
  @author    the datainjection plugin team
- @copyright Copyright (c) 2010-2011 Order plugin team
+ @copyright Copyright (c) 2010-2013 Datainjection plugin team
  @license   GPLv2+
             http://www.gnu.org/licenses/gpl.txt
  @link      https://forge.indepnet.net/projects/datainjection
@@ -28,15 +28,15 @@
  @since     2009
  ---------------------------------------------------------------------- */
  
-define('GLPI_ROOT', '../../..');
-include (GLPI_ROOT . "/inc/includes.php");
+include ('../../../inc/includes.php');
 
-Html::header($LANG['datainjection']['profiles'][1], '', "plugins", "datainjection", "model");
+Html::header(PluginDatainjectionModel::getTypeName(), '', "plugins", "datainjection", "model");
 
 $model = new PluginDatainjectionModel();
 $model->checkGlobal('r');
 
-if (isset($_POST['delete']) && isset($_POST['models'])) {
+if (isset($_POST['delete']) 
+      && isset($_POST['models'])) {
 
    foreach ($_POST['models'] as $models_id => $tmp) {
       if ($model->can($models_id, 'd')) {
@@ -46,6 +46,7 @@ if (isset($_POST['delete']) && isset($_POST['models'])) {
    Html::redirect($_SERVER['HTTP_REFERER']);
 
 }
+
 PluginDatainjectionModel::showModelsList();
 
 Html::footer();

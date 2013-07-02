@@ -20,7 +20,7 @@
  --------------------------------------------------------------------------
  @package   datainjection
  @author    the datainjection plugin team
- @copyright Copyright (c) 2010-2011 Order plugin team
+ @copyright Copyright (c) 2010-2013 Datainjection plugin team
  @license   GPLv2+
             http://www.gnu.org/licenses/gpl.txt
  @link      https://forge.indepnet.net/projects/datainjection
@@ -28,8 +28,7 @@
  @since     2009
  ---------------------------------------------------------------------- */
  
-define('GLPI_ROOT', '../../..');
-include (GLPI_ROOT . "/inc/includes.php");
+include ('../../../inc/includes.php');
 
 /* Update mappings */
 if (isset ($_POST["update"])) {
@@ -56,7 +55,7 @@ if (isset ($_POST["update"])) {
    }
 
    if (!$at_least_one_mandatory) {
-      Session::addMessageAfterRedirect($LANG['datainjection']['mapping'][11], true, ERROR, true);
+      Session::addMessageAfterRedirect(__('One link field must be selected : it will be used to check if data already exists', 'datainjection'), true, ERROR, true);
    } else {
       $model = new PluginDatainjectionModel();
       $model->getFromDB($_POST['models_id']);
@@ -65,10 +64,12 @@ if (isset ($_POST["update"])) {
          PluginDatainjectionModel::changeStep($_POST['models_id'],
                                               PluginDatainjectionModel::OTHERS_STEP);
          Session::setActiveTab('PluginDatainjectionModel', 4);
-         Session::addMessageAfterRedirect($LANG['datainjection']['info'][3]);
+         Session::addMessageAfterRedirect(__("This step allows you to add informations not present in the file. You'll be asked for theses informations while using the model.", 'datainjection'));
       }
       unset($_SESSION['datainjection']['lines']);
    }
 }
+
 Html::redirect($_SERVER['HTTP_REFERER']);
+
 ?>

@@ -20,7 +20,7 @@
  --------------------------------------------------------------------------
  @package   datainjection
  @author    the datainjection plugin team
- @copyright Copyright (c) 2010-2011 Order plugin team
+ @copyright Copyright (c) 2010-2013 Datainjection plugin team
  @license   GPLv2+
             http://www.gnu.org/licenses/gpl.txt
  @link      https://forge.indepnet.net/projects/datainjection
@@ -1792,17 +1792,14 @@ class PluginDatainjectionCommonInjectionLib {
     * @return nothing
    **/
    static function logAddOrUpdate($item, $add=true) {
-      global $LANG;
 
       if ($item->dohistory) {
          $changes[0] = 0;
 
          if ($add) {
-            $changes[2] = $LANG['datainjection']['result'][8]." ".
-               $LANG['datainjection']['history'][1];
+            $changes[2] = __('Add from CSV file', 'datainjection');
          } else {
-            $changes[2] = $LANG['datainjection']['result'][9]." ".
-               $LANG['datainjection']['history'][1];
+            $changes[2] = __('Update from CSV file', 'datainjection');
          }
          $changes[1] = "";
          Log::history ($item->fields['id'], get_class($item), $changes);
@@ -1818,11 +1815,10 @@ class PluginDatainjectionCommonInjectionLib {
     * @return label associated with the code
    **/
    static function getActionLabel($action) {
-      global $LANG;
 
-      $actions = array(self::IMPORT_ADD    => $LANG['datainjection']['result'][8],
-                       self::IMPORT_UPDATE => $LANG['datainjection']['result'][9],
-                       self::IMPORT_DELETE => $LANG['datainjection']['result'][9]);
+      $actions = array(self::IMPORT_ADD    => __('Add'),
+                       self::IMPORT_UPDATE => __('Update'),
+                       self::IMPORT_DELETE => __('Delete'));
 
       if (isset($actions[$action])) {
          return  $actions[$action];
@@ -1839,7 +1835,6 @@ class PluginDatainjectionCommonInjectionLib {
     * @return label associated with the code
    **/
    static function getLogLabel($type) {
-      global $LANG;
 
       $labels = array(self::SUCCESS, self::WARNING, self::ERROR_CANNOT_IMPORT,
                       self::ERROR_CANNOT_UPDATE, self::ERROR_IMPORT_ALREADY_IMPORTED,
@@ -1848,7 +1843,10 @@ class PluginDatainjectionCommonInjectionLib {
                       self::WARNING_ALREADY_LINKED, self::ERROR_IMPORT_REFUSED);
 
       if (in_array($type,$labels)) {
-         return  $LANG['datainjection']['result'][$type];
+         
+         $res = new PluginDatainjectionResult();
+         return $res->getLabel($type);
+         //return  $LANG['datainjection']['result'][$type];
       }
       return "";
    }
@@ -1859,7 +1857,6 @@ class PluginDatainjectionCommonInjectionLib {
    **/
    static function addToSearchOptions($type_searchOptions = array(), $options = array(),
                                       $injectionClass) {
-      global $LANG;
 
       self::addTemplateSearchOptions($injectionClass, $type_searchOptions);
 
@@ -1918,7 +1915,6 @@ class PluginDatainjectionCommonInjectionLib {
     * @return nothing
    **/
    static function addTemplateSearchOptions($injectionClass,&$tab) {
-      global $LANG;
 
       $itemtype = self::getItemtypeByInjectionClass($injectionClass) ;
       $item     = new $itemtype;
@@ -1927,7 +1923,7 @@ class PluginDatainjectionCommonInjectionLib {
          $tab[300]['table']       = $item->getTable();
          $tab[300]['field']       = 'is_template';
          $tab[300]['linkfield']   = 'is_template';
-         $tab[300]['name']        = $LANG["rulesengine"][0] . " " . $LANG["common"][13] . " ?";
+         $tab[300]['name']        = __('is') . " " . __('Template') . " ?";
          $tab[300]['type']        = 'integer';
          $tab[300]['injectable']  = 1;
          $tab[300]['checktype']   = 'integer';
@@ -1935,7 +1931,7 @@ class PluginDatainjectionCommonInjectionLib {
 
          $tab[301]['table']       = $item->getTable();
          $tab[301]['field']       = 'template_name';
-         $tab[301]['name']        = $LANG["common"][13];
+         $tab[301]['name']        = __('Template');
          $tab[301]['injectable']  = 1;
          $tab[301]['checktype']   = 'text';
          $tab[301]['displaytype'] = 'template';

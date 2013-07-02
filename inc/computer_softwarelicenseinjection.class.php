@@ -20,7 +20,7 @@
  --------------------------------------------------------------------------
  @package   datainjection
  @author    the datainjection plugin team
- @copyright Copyright (c) 2010-2011 Order plugin team
+ @copyright Copyright (c) 2010-2013 Datainjection plugin team
  @license   GPLv2+
             http://www.gnu.org/licenses/gpl.txt
  @link      https://forge.indepnet.net/projects/datainjection
@@ -36,9 +36,8 @@ class PluginDatainjectionComputer_SoftwareLicenseInjection extends Computer_Soft
                                                 implements PluginDatainjectionInjectionInterface {
 
    static function getTypeName($nb=0) {
-      global $LANG;
 
-      return $LANG['Menu'][0];
+      return __('Computers');
    }
 
 
@@ -58,12 +57,11 @@ class PluginDatainjectionComputer_SoftwareLicenseInjection extends Computer_Soft
 
 
    function getOptions($primary_type = '') {
-      global $LANG;
 
       $tab[110]['table']        = 'glpi_computers';
       $tab[110]['field']        = 'name';
       $tab[110]['linkfield']    = 'name';
-      $tab[110]['name']         = $LANG["common"][16];
+      $tab[110]['name']         = __('Name');
       $tab[110]['injectable']   = true;
       $tab[110]['displaytype']  = 'dropdown';
       $tab[110]['checktype']    = 'text';
@@ -72,7 +70,7 @@ class PluginDatainjectionComputer_SoftwareLicenseInjection extends Computer_Soft
       $tab[111]['table']        = 'glpi_computers';
       $tab[111]['field']        = 'serial';
       $tab[111]['linkfield']    = 'serial';
-      $tab[111]['name']         = $LANG["common"][19];
+      $tab[111]['name']         = __('Serial Number');
       $tab[111]['injectable']   = true;
       $tab[111]['displaytype']  = 'dropdown';
       $tab[111]['checktype']    = 'text';
@@ -81,7 +79,7 @@ class PluginDatainjectionComputer_SoftwareLicenseInjection extends Computer_Soft
       $tab[112]['table']        = 'glpi_computers';
       $tab[112]['field']        = 'otherserial';
       $tab[112]['linkfield']    = 'otherserial';
-      $tab[112]['name']         = $LANG["common"][20];
+      $tab[112]['name']         = __('Inventory number');
       $tab[112]['injectable']   = true;
       $tab[112]['displaytype']  = 'dropdown';
       $tab[112]['checktype']    = 'text';
@@ -101,7 +99,6 @@ class PluginDatainjectionComputer_SoftwareLicenseInjection extends Computer_Soft
     *
    **/
    function addOrUpdateObject($values=array(), $options=array()) {
-      global $LANG;
 
       $lib = new PluginDatainjectionCommonInjectionLib($this, $values, $options);
       $lib->processAddOrUpdate();

@@ -20,7 +20,7 @@
  --------------------------------------------------------------------------
  @package   datainjection
  @author    the datainjection plugin team
- @copyright Copyright (c) 2010-2011 Order plugin team
+ @copyright Copyright (c) 2010-2013 Datainjection plugin team
  @license   GPLv2+
             http://www.gnu.org/licenses/gpl.txt
  @link      https://forge.indepnet.net/projects/datainjection
@@ -53,7 +53,6 @@ class PluginDatainjectionSoftwareVersionInjection extends SoftwareVersion
 
 
    function getOptions($primary_type = '') {
-      global $LANG;
 
 
       $tab = Search::getOptions(get_parent_class($this));
@@ -62,7 +61,7 @@ class PluginDatainjectionSoftwareVersionInjection extends SoftwareVersion
                                         "multiline_text" => array(16));
 
       if ($primary_type == 'SoftwareVersion') {
-         $tab[100]['name']        = $LANG['help'][31];
+         $tab[100]['name']        = __('Software');
          $tab[100]['field']       = 'name';
          $tab[100]['table']       = getTableForItemType('Software');
          $tab[100]['linkfield']   = 'softwares_id';

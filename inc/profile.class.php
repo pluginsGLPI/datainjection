@@ -20,7 +20,7 @@
  --------------------------------------------------------------------------
  @package   datainjection
  @author    the datainjection plugin team
- @copyright Copyright (c) 2010-2011 Order plugin team
+ @copyright Copyright (c) 2010-2013 Datainjection plugin team
  @license   GPLv2+
             http://www.gnu.org/licenses/gpl.txt
  @link      https://forge.indepnet.net/projects/datainjection
@@ -29,7 +29,15 @@
  ---------------------------------------------------------------------- */
  
 class PluginDatainjectionProfile extends CommonDBTM {
+   
+   static function canCreate() {
+      return Session::haveRight('profile', 'w');
+   }
 
+   static function canView() {
+      return Session::haveRight('profile', 'r');
+   }
+   
    //if profile deleted
    function cleanProfiles($ID) {
       $profile = new self();
@@ -37,8 +45,7 @@ class PluginDatainjectionProfile extends CommonDBTM {
    }
 
 
-   function showForm($ID){
-      global $LANG;
+   function showForm($ID,$options=array()){
 
       if (!Session::haveRight("profile","r"))  {
          return false;
@@ -48,33 +55,25 @@ class PluginDatainjectionProfile extends CommonDBTM {
 
       if ($ID) {
          $this->getFromDB($ID);
+      } else {
+         $this->getEmpty();
       }
 
-      $profile = new Profile;
-      $profile->getFromDB($ID);
+      $options['colspan'] = 1;
+      $this->showFormHeader($options);
 
-      echo "<form action='".Toolbox::getItemTypeFormURL(get_class($this))."' method='post'>";
-      echo "<table class='tab_cadre_fixe'>";
-
-      echo "<tr><th colspan='2'>".$LANG['datainjection']['name'][1]." ".$profile->fields["name"];
+      echo "<tr><th colspan='2'>".__('File injection', 'datainjection')." ".$profile->fields["name"];
       echo "</th></tr>";
 
       echo "<tr class='tab_bg_2'>";
-      echo "<td>".$LANG['datainjection']['profiles'][1]."&nbsp;:</td><td>";
+      echo "<td>".PluginDatainjectionModel::getTypeName()."</td><td>";
       Profile::dropdownNoneReadWrite("model", $this->fields["model"], 1, 1, 1);
       echo "</td></tr>";
-
-      if ($canedit){
-         echo "<tr class='tab_bg_1'>";
-         echo "<td class='center' colspan='2'>";
-         echo "<input type='hidden' name='id' value=$ID>";
-         echo "<input type='submit' name='update_user_profile' value='".$LANG['buttons'][7]."'
-                class='submit'>";
-         echo "</td></tr>";
-      }
-
-      echo "</table>";
-      Html::closeForm();
+      
+      echo "<input type='hidden' name='id' value=".$this->fields["id"].">";
+      
+      $options['candel'] = false;
+      $this->showFormButtons($options);
    }
 
 }

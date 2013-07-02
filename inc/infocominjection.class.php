@@ -20,7 +20,7 @@
  --------------------------------------------------------------------------
  @package   datainjection
  @author    the datainjection plugin team
- @copyright Copyright (c) 2010-2011 Order plugin team
+ @copyright Copyright (c) 2010-2013 Datainjection plugin team
  @license   GPLv2+
             http://www.gnu.org/licenses/gpl.txt
  @link      https://forge.indepnet.net/projects/datainjection
@@ -54,7 +54,6 @@ class PluginDatainjectionInfocomInjection extends Infocom
 
 
    function getOptions($primary_type = '') {
-      global $LANG;
 
       $tab = Search::getOptions(get_parent_class($this));
 
@@ -69,7 +68,7 @@ class PluginDatainjectionInfocomInjection extends Infocom
       $tab[6]['minvalue']  = 0;
       $tab[6]['maxvalue']  = 120;
       $tab[6]['step']      = 1;
-      $tab[6]['-1']        = $LANG['financial'][2];
+      $tab[6]['-1']        = __('Contract');
       $tab[6]['checktype'] = 'integer';
 
       $tab[8]['checktype'] = 'float';

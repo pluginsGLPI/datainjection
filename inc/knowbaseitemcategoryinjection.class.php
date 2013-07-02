@@ -20,7 +20,7 @@
  --------------------------------------------------------------------------
  @package   datainjection
  @author    the datainjection plugin team
- @copyright Copyright (c) 2010-2011 Order plugin team
+ @copyright Copyright (c) 2010-2013 Datainjection plugin team
  @license   GPLv2+
             http://www.gnu.org/licenses/gpl.txt
  @link      https://forge.indepnet.net/projects/datainjection
@@ -51,11 +51,10 @@ class PluginDatainjectionKnowbaseItemCategoryInjection extends KnowbaseItemCateg
 
 
    function getOptions($primary_type = '') {
-      global $LANG;
 
       $tab = Search::getOptions(get_parent_class($this));
 
-      $tab[100]['name']        = $LANG['setup'][75];
+      $tab[100]['name']        = __('As child of');
       $tab[100]['table']       = $this->table;
       $tab[100]['field']       = 'completename';
       $tab[100]['linkfield']   = 'completename';

@@ -20,7 +20,7 @@
  --------------------------------------------------------------------------
  @package   datainjection
  @author    the datainjection plugin team
- @copyright Copyright (c) 2010-2011 Order plugin team
+ @copyright Copyright (c) 2010-2013 Datainjection plugin team
  @license   GPLv2+
             http://www.gnu.org/licenses/gpl.txt
  @link      https://forge.indepnet.net/projects/datainjection
@@ -52,7 +52,6 @@ class PluginDatainjectionUserInjection extends User
 
 
    function getOptions($primary_type = '') {
-      global $LANG;
 
       $tab = Search::getOptions(get_parent_class($this));
 
@@ -64,13 +63,13 @@ class PluginDatainjectionUserInjection extends User
       $tab[4]['table']         = $this->getTable();
       $tab[4]['field']         = 'password';
       $tab[4]['linkfield']     = 'password';
-      $tab[4]['name']          = $LANG['login'][7];
+      $tab[4]['name']          = __('Password');
       $tab[4]['displaytype']   = 'password';
 
       $tab[5]['displaytype']   = 'text';
       
       //To manage groups : relies on a CommonDBRelation object !
-      $tab[100]['name']          = $LANG['common'][35];
+      $tab[100]['name']          = __('Group');
       $tab[100]['field']         = 'name';
       $tab[100]['table']         = getTableForItemType('Group');
       $tab[100]['linkfield']     = getForeignKeyFieldForTable($tab[100]['table']);
@@ -79,7 +78,7 @@ class PluginDatainjectionUserInjection extends User
       $tab[100]['relationfield'] = $tab[100]['linkfield'];
 
       //To manage groups : relies on a CommonDBRelation object !
-      $tab[101]['name']          = $LANG['Menu'][35];
+      $tab[101]['name']          = _n('Profile', 'Profiles', 2);
       $tab[101]['field']         = 'name';
       $tab[101]['table']         = getTableForItemType('Profile');
       $tab[101]['linkfield']     = getForeignKeyFieldForTable($tab[101]['table']);

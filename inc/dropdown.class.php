@@ -20,7 +20,7 @@
  --------------------------------------------------------------------------
  @package   datainjection
  @author    the datainjection plugin team
- @copyright Copyright (c) 2010-2011 Order plugin team
+ @copyright Copyright (c) 2010-2013 Datainjection plugin team
  @license   GPLv2+
             http://www.gnu.org/licenses/gpl.txt
  @link      https://forge.indepnet.net/projects/datainjection
@@ -31,28 +31,26 @@
 class PluginDatainjectionDropdown {
 
    static function dropdownDateFormat($format) {
-      global $LANG;
 
       $date_format[PluginDatainjectionCommonInjectionLib::DATE_TYPE_DDMMYYYY]
-                                                            = $LANG['datainjection']['model'][22];
+                                                            = __('dd-mm-yyyy', 'datainjection');
       $date_format[PluginDatainjectionCommonInjectionLib::DATE_TYPE_MMDDYYYY]
-                                                            = $LANG['datainjection']['model'][23];
+                                                            = __('mm-dd-yyyy', 'datainjection');
       $date_format[PluginDatainjectionCommonInjectionLib::DATE_TYPE_YYYYMMDD]
-                                                            = $LANG['datainjection']['model'][24];
+                                                            = __('yyyy-mm-dd', 'datainjection');
 
       Dropdown::showFromArray('date_format', $date_format, array('value' => $format));
    }
 
 
    static function floatFormats() {
-      global $LANG;
 
       $float_format[PluginDatainjectionCommonInjectionLib::FLOAT_TYPE_DOT]
-                                                            = $LANG['datainjection']['model'][25];
+                                                            = __('1 234.56', 'datainjection');
       $float_format[PluginDatainjectionCommonInjectionLib::FLOAT_TYPE_COMMA]
-                                                            = $LANG['datainjection']['model'][26];
+                                                            = __('1 234,56', 'datainjection');
       $float_format[PluginDatainjectionCommonInjectionLib::FLOAT_TYPE_DOT_AND_COM]
-                                                            = $LANG['datainjection']['model'][27];
+                                                            = __('1,234.56', 'datainjection');
 
       return $float_format;
    }
@@ -83,11 +81,10 @@ class PluginDatainjectionDropdown {
 
 
    static function dropdownFileEncoding() {
-      global $LANG;
 
-      $values[PluginDatainjectionBackend::ENCODING_AUTO]      = $LANG['datainjection']['fileStep'][10];
-      $values[PluginDatainjectionBackend::ENCODING_UFT8]      = $LANG['datainjection']['fileStep'][11];
-      $values[PluginDatainjectionBackend::ENCODING_ISO8859_1] = $LANG['datainjection']['fileStep'][12];
+      $values[PluginDatainjectionBackend::ENCODING_AUTO]      = __('Automatic detection', 'datainjection');
+      $values[PluginDatainjectionBackend::ENCODING_UFT8]      = __('UTF-8', 'datainjection');
+      $values[PluginDatainjectionBackend::ENCODING_ISO8859_1] = __('ISO8859-1', 'datainjection');
 
       Dropdown::showFromArray('file_encoding', $values,
                               array('value' => PluginDatainjectionBackend::ENCODING_AUTO));
@@ -95,21 +92,20 @@ class PluginDatainjectionDropdown {
 
 
    static function portUnicityValues() {
-      global $LANG;
 
       $values[PluginDatainjectionCommonInjectionLib::UNICITY_NETPORT_LOGICAL_NUMBER]
-                                             = $LANG["networking"][21];
+                                             = __('Port number');
       $values[PluginDatainjectionCommonInjectionLib::UNICITY_NETPORT_NAME]
-                                             = $LANG["common"][16];
+                                             = __('Name');
       $values[PluginDatainjectionCommonInjectionLib::UNICITY_NETPORT_MACADDRESS]
-                                             = $LANG["device_iface"][2];
+                                             = __('Mac address');
       $values[PluginDatainjectionCommonInjectionLib::UNICITY_NETPORT_LOGICAL_NUMBER_NAME]
-                                             = $LANG["networking"][21]."+".$LANG["common"][16];
+                                             = __('Port number')."+".__('Name');
       $values[PluginDatainjectionCommonInjectionLib::UNICITY_NETPORT_LOGICAL_NUMBER_MAC]
-                                             = $LANG["networking"][21]."+".$LANG["device_iface"][2];
+                                             = __('Port number')."+".__('Mac address');
       $values[PluginDatainjectionCommonInjectionLib::UNICITY_NETPORT_LOGICAL_NUMBER_NAME_MAC]
-                                             = $LANG["networking"][21]."+".$LANG["common"][16]."+".
-                                               $LANG["device_iface"][2];
+                                             = __('Port number')."+".__('Name')."+".
+                                               __('Mac address');
       return $values;
    }
 

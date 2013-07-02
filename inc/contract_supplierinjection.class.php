@@ -20,7 +20,7 @@
  --------------------------------------------------------------------------
  @package   datainjection
  @author    the datainjection plugin team
- @copyright Copyright (c) 2010-2011 Order plugin team
+ @copyright Copyright (c) 2010-2013 Datainjection plugin team
  @license   GPLv2+
             http://www.gnu.org/licenses/gpl.txt
  @link      https://forge.indepnet.net/projects/datainjection
@@ -52,17 +52,16 @@ class PluginDatainjectionContract_SupplierInjection extends Contract_Supplier
 
 
    function getOptions($primary_type = '') {
-      global $LANG;
 
       $tab[4]['table']        = 'glpi_contracts';
       $tab[4]['field']        = 'name';
-      $tab[4]['name']         = $LANG['financial'][1];
+      $tab[4]['name']         = __('Contract');
       $tab[4]['checktype']    = 'text';
       $tab[4]['displaytype']  = 'dropdown';
 
       $tab[5]['table']        = 'glpi_suppliers';
       $tab[5]['field']        = 'name';
-      $tab[5]['name']         = $LANG['financial'][26];
+      $tab[5]['name']         = __('Supplier');
       $tab[5]['checktype']    = 'text';
       $tab[5]['displaytype']  = 'dropdown';
 

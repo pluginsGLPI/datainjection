@@ -20,7 +20,7 @@
  --------------------------------------------------------------------------
  @package   datainjection
  @author    the datainjection plugin team
- @copyright Copyright (c) 2010-2011 Order plugin team
+ @copyright Copyright (c) 2010-2013 Datainjection plugin team
  @license   GPLv2+
             http://www.gnu.org/licenses/gpl.txt
  @link      https://forge.indepnet.net/projects/datainjection
@@ -50,22 +50,22 @@
     *@return nothing (display)
    **/
    function title() {
-      global $LANG, $CFG_GLPI;
+      global $CFG_GLPI;
 
       $buttons = array ();
       $title   = "";
       if (plugin_datainjection_haveRight("model", "w") ) {
          $url           = Toolbox::getItemTypeSearchURL('PluginDatainjectionModel');
-         $buttons[$url] = $LANG['datainjection']['profiles'][1];
+         $buttons[$url] = PluginDatainjectionModel::getTypeName();
          $title         = "";
          Html::displayTitle($CFG_GLPI["root_doc"] . "/plugins/datainjection/pics/datainjection.png",
-                      $LANG['Menu'][36], $title, $buttons);
+                      _n('Group', 'Groups', 2), $title, $buttons);
       }
    }
 
 
    function showForm($ID, $options=array()) {
-      global $LANG, $CFG_GLPI;
+      global $CFG_GLPI;
 
       echo "<form method='post' name=form action='".Toolbox::getItemTypeFormURL(__CLASS__)."'".
             "enctype='multipart/form-data'>";
@@ -75,17 +75,17 @@
       $models = PluginDatainjectionModel::getModels(Session::getLoginUserID(), 'name',
                                                     $_SESSION['glpiactive_entity'], false);
 
-      echo "<tr><th>" . $LANG['datainjection']['choiceStep'][6]."</th></tr>";
+      echo "<tr><th>" .__('Use an existing model', 'datainjection') ."</th></tr>";
 
       echo "<tr class='tab_bg_1'>";
       if (count($models) > 0) {
-         echo "<td class='center'>".$LANG['common'][22]."&nbsp;:";
+         echo "<td class='center'>".__('Model')."&nbsp;:";
          PluginDatainjectionModel::dropdown();
 
       } else {
-         echo "<td class='center' colspan='2'>".$LANG['datainjection']['model'][33];
+         echo "<td class='center' colspan='2'>".__('No model currently available', 'datainjection');
          if (plugin_datainjection_haveRight('model','w')) {
-            echo ". ".$LANG['datainjection']['model'][34].":".$LANG['datainjection']['profiles'][1];
+            echo ". ".__('You can start the model creation by hitting the button', 'datainjection').":".PluginDatainjectionModel::getTypeName();
          }
       }
       echo "</td></tr></table><br>";
@@ -113,7 +113,6 @@
 
 
    static function showUploadFileForm($options = array()) {
-      global $LANG;
 
       $add_form = (isset($options['add_form']) && $options['add_form']);
       $confirm  = (isset($options['confirm']) && $options['confirm']);
@@ -124,16 +123,16 @@
       }
       echo "<table class='tab_cadre_fixe'>";
       //Show file selection
-      echo "<tr><th colspan='2'>" . $LANG['datainjection']['tabs'][3]."</th></tr>";
+      echo "<tr><th colspan='2'>" . __('File to inject', 'datainjection')."</th></tr>";
 
       echo "<tr class='tab_bg_1'>";
-      echo "<td>" . $LANG['datainjection']['fileStep'][3] . "</td>";
+      echo "<td>" . __('Choose a file', 'datainjection') . "</td>";
       echo "<td><input type='file' name='filename'>";
       echo "<input type='hidden' name='id' value='".$options['models_id']."'>";
       echo "</td></tr>";
 
       echo "<tr class='tab_bg_1'>";
-      echo "<td>" . $LANG['datainjection']['fileStep'][9] . "</td><td>";
+      echo "<td>" . __('File encoding', 'datainjection') . "</td><td>";
       PluginDatainjectionDropdown::dropdownFileEncoding();
       echo "</td></tr>\n";
 
@@ -141,14 +140,14 @@
       echo "<td colspan='2' class='center'>";
       if ($confirm) {
          if ($confirm == 'creation') {
-            $message = $LANG['datainjection']['mapping'][13];
+            $message = __('Warning : existing data will be overridden', 'datainjection');
          } else {
-            $message = $LANG['datainjection']['fillInfoStep'][1];
+            $message = __("Watch out, you're about to inject datas into GLPI. Are you sure you want to do it ?", 'datainjection');
          }
          $alert = "OnClick='return window.confirm(\"$message\");'";
       }
       if (!isset($options['submit'])) {
-         $options['submit'] = $LANG['datainjection']['import'][0];
+         $options['submit'] = __('Launch the import', 'datainjection');
       }
       echo "<input type='submit' class='submit' name='upload' value='".
              htmlentities($options['submit'], ENT_QUOTES, 'UTF-8'). "' $alert>";
@@ -162,24 +161,23 @@
 
 
    static function showInjectionForm(PluginDatainjectionModel $model, $entities_id) {
-      global $LANG;
 
       if (!PluginDatainjectionSession::getParam('infos')) {
          PluginDatainjectionSession::setParam('infos', array());
       }
       echo "<table class='tab_cadre_fixe'>";
       echo "<tr class='tab_bg_1'>";
-      echo "<th colspan='2'>".$LANG['datainjection']['model'][0]." : ".$model->fields['name']."</th>";
+      echo "<th colspan='2'>".__('Model')." : ".$model->fields['name']."</th>";
       echo "</tr>";
       echo "</table><br>";
 
       echo "<table class='tab_cadre_fixe'>";
       echo "<tr class='tab_bg_1'>";
-      echo "<th colspan='2'>" . $LANG['datainjection']['import'][1]."</th>";
+      echo "<th colspan='2'>" . __('Import progress', 'datainjection')."</th>";
       echo "</tr>";
 
       echo "<tr class='tab_bg_1'><td>";
-      Html::createProgressBar($LANG['datainjection']['importStep'][1]) ;
+      Html::createProgressBar(__('Injection of the file', 'datainjection')) ;
       echo "</td></tr>";
       echo "</table><br>";
 
@@ -189,7 +187,7 @@
 
 
    static function processInjection(PluginDatainjectionModel $model, $entities_id) {
-      global $LANG,$CFG_GLPI;
+      global $CFG_GLPI;
 
       // To prevent problem of execution time during injection
       ini_set("max_execution_time", "0");
@@ -232,7 +230,7 @@
             $prev = $pos;
             $fin = time()-$deb;
             Html::changeProgressBarPosition($index, $nblines,
-                                            $LANG['datainjection']['importStep'][1].'... '.
+                                            __('Injection of the file', 'datainjection').'... '.
                                             $pos.'% ('.Html::timestampToString(time()-$deb, true).')');
          }
          $line = $backend->getNextLine();
@@ -241,7 +239,7 @@
       }
 
       //EOF : change progressbar to 100% !
-      Html::changeProgressBarPosition(100, 100, $LANG['datainjection']['importStep'][3].
+      Html::changeProgressBarPosition(100, 100, __('Injection finished', 'datainjection').
                                                  ' ('.Html::timestampToString(time()-$deb, true).')');
 
       // Restore
@@ -289,7 +287,7 @@
 
 
    static function showResultsForm(PluginDatainjectionModel $model) {
-      global $LANG, $CFG_GLPI;
+      global $CFG_GLPI;
 
       $results     = json_decode(PluginDatainjectionSession::getParam('results'), true);
       self::stripslashes_array($results);
@@ -307,15 +305,15 @@
 
       echo "<form method='post' action='".$CFG_GLPI['root_doc']."/plugins/datainjection/index.php'>";
       echo "<table class='tab_cadre_fixe'>";
-      echo "<tr class='tab_bg_1'><th>" . $LANG['datainjection']['log'][1]."</th></tr>";
+      echo "<tr class='tab_bg_1'><th>" . __("Injection's results", 'datainjection')."</th></tr>";
 
       echo "<tr class='tab_bg_1'><td class='center'>";
       if ($ok) {
          echo "<img src='".$CFG_GLPI['root_doc']."/plugins/datainjection/pics/ok.png'>";
-         echo $LANG['datainjection']['log'][3];
+         _e('Injection successful', 'datainjection');
       } else {
          echo "<img src='".$CFG_GLPI['root_doc']."/plugins/datainjection/pics/danger.png'>";
-         echo $LANG['datainjection']['log'][8];
+         _e('Injection encounters errors', 'datainjection');
       }
       echo "</td></tr>";
 
@@ -324,19 +322,19 @@
              $model->fields['id'];
       echo "<a href='#' onClick=\"var w = window.open('$url' , 'glpipopup', ".
              "'height=400, width=800, top=100, left=100, scrollbars=yes' );w.focus();\"/' ".
-             "title='".addslashes($LANG['datainjection']['button'][4])."'>";
+             "title='".__('See the log', 'datainjection')."'>";
       echo "<img src='".$CFG_GLPI['root_doc']."/plugins/datainjection/pics/seereport.png'></a>";
 
       $plugin = new Plugin;
       if ($plugin->isInstalled('pdf') && $plugin->isActivated('pdf')) {
          echo "&nbsp;<a href='#' onclick=\"location.href='export.pdf.php?models_id=".
-                      $model->fields['id']."'\" title='".addslashes($LANG['datainjection']['button'][7])."'>";
+                      $model->fields['id']."'\" title='".__('Export rapport in PDF', 'datainjection')."'>";
          echo "<img src='".$CFG_GLPI['root_doc']."/plugins/datainjection/pics/reportpdf.png'></a>";
       }
 
       if (!empty($error_lines)) {
          echo "&nbsp;<a href='#' onclick=\"location.href='export.csv.php'\"title='".
-                      addslashes($LANG['datainjection']['button'][5])."'>";
+                      __('Export the log', 'datainjection')."'>";
          echo "<img src='".$CFG_GLPI['root_doc']."/plugins/datainjection/pics/failedcsv.png'></a>";
       }
 
@@ -344,7 +342,7 @@
 
       echo "<tr class='tab_bg_1'><td class='center'>";
       echo "<input class='submit' type='submit' name='finish' value='".
-             $LANG['datainjection']['button'][6]."'>";
+             __('Finish', 'datainjection')."'>";
       echo "</td></tr>";
       echo "</table>";
       Html::closeForm();

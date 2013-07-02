@@ -20,7 +20,7 @@
  --------------------------------------------------------------------------
  @package   datainjection
  @author    the datainjection plugin team
- @copyright Copyright (c) 2010-2011 Order plugin team
+ @copyright Copyright (c) 2010-2013 Datainjection plugin team
  @license   GPLv2+
             http://www.gnu.org/licenses/gpl.txt
  @link      https://forge.indepnet.net/projects/datainjection
@@ -93,7 +93,7 @@ class PluginDatainjectionInjectionType {
     * @param value
    **/
    static function dropdownLinkedTypes($mapping_or_info, $options=array()) {
-      global $INJECTABLE_TYPES, $LANG, $CFG_GLPI;
+      global $INJECTABLE_TYPES, $CFG_GLPI;
 
       getTypesToInject(); // populate $INJECTABLE_TYPES
 
@@ -116,7 +116,7 @@ class PluginDatainjectionInjectionType {
       }
 
       //Add null value
-      $values[PluginDatainjectionInjectionType::NO_VALUE] = $LANG['datainjection']['mapping'][6];
+      $values[PluginDatainjectionInjectionType::NO_VALUE] = __('-------Choose a table-------', 'datainjection');
 
       //Add primary_type to the list of availables types
       $type                       = new $p['primary_type']();
@@ -159,7 +159,7 @@ class PluginDatainjectionInjectionType {
 
 
    static function dropdownFields($options = array()) {
-      global $LANG, $CFG_GLPI;
+      global $CFG_GLPI;
 
       $used = array();
       $p['itemtype']        = PluginDatainjectionInjectionType::NO_VALUE;
@@ -180,7 +180,7 @@ class PluginDatainjectionInjectionType {
       }
 
       $fields = array();
-      $fields[PluginDatainjectionInjectionType::NO_VALUE] = $LANG['datainjection']['mapping'][7];
+      $fields[PluginDatainjectionInjectionType::NO_VALUE] = __('-------Choose a field-------', 'datainjection');
 
       //By default field has no default value
       $mapping_value = PluginDatainjectionInjectionType::NO_VALUE;
@@ -234,7 +234,6 @@ class PluginDatainjectionInjectionType {
     * @return boolean the value matches the searchOption or not
    **/
    static function isEqual($option = array(), $mapping) {
-      global $LANG;
 
       $name = strtolower($mapping['name']);
       if (self::testBasicEqual(strtolower($mapping['name']), $option)) {
@@ -242,7 +241,7 @@ class PluginDatainjectionInjectionType {
       }
 
       //Manage mappings begining with N° or n°
-      $new_name = preg_replace("/[n|N]°/",$LANG['financial'][4],$name);
+      $new_name = preg_replace("/[n|N]°/",__('Lifelong'),$name);
       if (self::testBasicEqual(strtolower($new_name), $option)) {
          return true;
       }

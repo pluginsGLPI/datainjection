@@ -20,7 +20,7 @@
  --------------------------------------------------------------------------
  @package   datainjection
  @author    the datainjection plugin team
- @copyright Copyright (c) 2010-2011 Order plugin team
+ @copyright Copyright (c) 2010-2013 Datainjection plugin team
  @license   GPLv2+
             http://www.gnu.org/licenses/gpl.txt
  @link      https://forge.indepnet.net/projects/datainjection
@@ -32,12 +32,12 @@ class PluginDatainjectionMapping extends CommonDBTM {
 
    //const NOT_MAPPED = -1;
 
-   function canCreate() {
+   static function canCreate() {
       return plugin_datainjection_haveRight('model','w');
    }
 
 
-   function canView() {
+   static function canView() {
       return plugin_datainjection_haveRight('model','r');
    }
 
@@ -130,7 +130,7 @@ class PluginDatainjectionMapping extends CommonDBTM {
 
 
    static function showFormMappings(PluginDatainjectionModel $model) {
-      global $LANG, $CFG_GLPI;
+      global $CFG_GLPI;
 
       $canedit = $model->can($model->fields['id'],'w');
 
@@ -152,16 +152,16 @@ class PluginDatainjectionMapping extends CommonDBTM {
                 $model->getID();
          echo "<a href=#  onClick=\"var w = window.open('$url' , 'glpipopup', ".
                 "'height=400, width=600, top=100, left=100, scrollbars=yes' );w.focus();\"/>";
-         echo $LANG['datainjection']['button'][3]."</a>";
+         echo __('See the log', 'datainjection')."</a>";
          echo "</td></tr>";
       }
 
       echo "<table class='tab_cadre_fixe'>";
       echo "<tr>";
-      echo "<th>" . $LANG['datainjection']['mapping'][2] . "</th>";
-      echo "<th>" . $LANG['datainjection']['mapping'][3] . "</th>";
-      echo "<th>" . $LANG['datainjection']['mapping'][4] . "</th>";
-      echo "<th>" . $LANG['datainjection']['mapping'][5] . "</th>";
+      echo "<th>" . __('Header of the file', 'datainjection') . "</th>";
+      echo "<th>" . __('Tables', 'datainjection') . "</th>";
+      echo "<th>" . __('Fields', 'datainjection') . "</th>";
+      echo "<th>" . __('Link field', 'datainjection') . "</th>";
       echo "</tr>";
 
       $model->loadMappings();
@@ -183,7 +183,7 @@ class PluginDatainjectionMapping extends CommonDBTM {
       if ($canedit) {
          echo "<tr> <td class='tab_bg_2 center' colspan='4'>";
          echo "<input type='hidden' name='models_id' value='".$model->fields['id']."'>";
-         echo "<input type='submit' name='update' value='".$LANG['buttons'][7]."' class='submit'>";
+         echo "<input type='submit' name='update' value='"._sx('button', 'Save')."' class='submit'>";
          echo "</td></tr>";
       }
       echo "</table>";

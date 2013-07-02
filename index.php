@@ -20,7 +20,7 @@
  --------------------------------------------------------------------------
  @package   datainjection
  @author    the datainjection plugin team
- @copyright Copyright (c) 2010-2011 Order plugin team
+ @copyright Copyright (c) 2010-2013 Datainjection plugin team
  @license   GPLv2+
             http://www.gnu.org/licenses/gpl.txt
  @link      https://forge.indepnet.net/projects/datainjection
@@ -28,11 +28,7 @@
  @since     2009
  ---------------------------------------------------------------------- */
 
-if (!defined('GLPI_ROOT')) {
-   define('GLPI_ROOT', '../..');
-}
-
-include (GLPI_ROOT."/inc/includes.php");
+include ('../../inc/includes.php');
 
 PluginDatainjectionModel::cleanSessionVariables();
 $_SESSION['datainjection']['step'] = PluginDatainjectionClientInjection::STEP_UPLOAD;

@@ -20,7 +20,7 @@
  --------------------------------------------------------------------------
  @package   datainjection
  @author    the datainjection plugin team
- @copyright Copyright (c) 2010-2011 Order plugin team
+ @copyright Copyright (c) 2010-2013 Datainjection plugin team
  @license   GPLv2+
             http://www.gnu.org/licenses/gpl.txt
  @link      https://forge.indepnet.net/projects/datainjection
@@ -28,13 +28,9 @@
  @since     2009
  ---------------------------------------------------------------------- */
  
-if (!defined('GLPI_ROOT')) {
-   define('GLPI_ROOT', '../../..');
-}
+include ('../../../inc/includes.php');
 
-include (GLPI_ROOT."/inc/includes.php");
-
-Html::header($LANG['datainjection']['name'][1], $_SERVER["PHP_SELF"], "plugins", "datainjection");
+Html::header(__('File injection', 'datainjection'), $_SERVER["PHP_SELF"], "plugins", "datainjection");
 
 if (isset($_SESSION['datainjection']['go'])) {
    $model = unserialize($_SESSION['datainjection']['currentmodel']);
@@ -47,7 +43,7 @@ if (isset($_SESSION['datainjection']['go'])) {
 
    //If additional informations provided : check if mandatory infos are present
    if (!$model->checkMandatoryFields($_SESSION['datainjection']['infos'])) {
-      Session::addMessageAfterRedirect($LANG['datainjection']['fillInfoStep'][4], true, ERROR, true);
+      Session::addMessageAfterRedirect(__('One mandatory field is not filled', 'datainjection'), true, ERROR, true);
 
    } else if (isset($_FILES['filename']['name'])
               && $_FILES['filename']['name']
@@ -76,7 +72,7 @@ if (isset($_SESSION['datainjection']['go'])) {
       }
 
    } else {
-      Session::addMessageAfterRedirect($LANG['datainjection']['fileStep'][4], true, ERROR, true);
+      Session::addMessageAfterRedirect(__('The file could not be found', 'datainjection'), true, ERROR, true);
    }
 
    Html::redirect($_SERVER['HTTP_REFERER']);
@@ -91,4 +87,5 @@ if (isset($_SESSION['datainjection']['go'])) {
 }
 
 Html::footer();
+
 ?>
