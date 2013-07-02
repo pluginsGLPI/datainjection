@@ -1,0 +1,462 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR Datainjection Development Team
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: GLPI - Datainjection plugin 2.2.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2013-07-02 17:26+0200\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: hook.php:206
+msgid "Can't create folder"
+msgstr "Can't create folder"
+
+#: setup.php:49 setup.php:129
+msgid "must exists and be writable for web server user"
+msgstr "must exists and be writable for web server user"
+
+#: setup.php:57 setup.php:58 inc/clientinjection.class.php:180
+#: inc/clientinjection.class.php:233
+msgid "Injection of the file"
+msgstr "Injection of the file"
+
+#: setup.php:100 front/clientinjection.form.php:33 inc/profile.class.php:65
+msgid "File injection"
+msgstr "File injection"
+
+#: setup.php:134
+msgid "This plugin requires GLPI >= 0.84"
+msgstr "This plugin requires GLPI >= 0.84"
+
+#: front/clientinjection.form.php:46
+msgid "One mandatory field is not filled"
+msgstr "One mandatory field is not filled"
+
+#: front/clientinjection.form.php:75 front/model.form.php:83
+msgid "The file could not be found"
+msgstr "The file could not be found"
+
+#: front/mapping.form.php:58
+msgid ""
+"One link field must be selected : it will be used to check if data already "
+"exists"
+msgstr "One link field must be selected : it will be used to check if data already exists"
+
+#: front/mapping.form.php:67
+msgid ""
+"This step allows you to add informations not present in the file. You'll be "
+"asked for theses informations while using the model."
+msgstr "This step allows you to add informations not present in the file. You'll be asked for theses informations while using the model."
+
+#: front/popup.php:37
+msgid "See the file"
+msgstr "See the file"
+
+#: front/popup.php:43 inc/model.class.php:1374
+msgid "File injection report"
+msgstr "File injection report"
+
+#: inc/clientinjection.class.php:78
+msgid "Use an existing model"
+msgstr "Use an existing model"
+
+#: inc/clientinjection.class.php:86
+msgid "No model currently available"
+msgstr "No model currently available"
+
+#: inc/clientinjection.class.php:88
+msgid "You can start the model creation by hitting the button"
+msgstr "You can start the model creation by hitting the button"
+
+#: inc/clientinjection.class.php:126 inc/model.class.php:718
+msgid "File to inject"
+msgstr "File to inject"
+
+#: inc/clientinjection.class.php:129 inc/info.class.php:200
+msgid "Choose a file"
+msgstr "Choose a file"
+
+#: inc/clientinjection.class.php:135
+msgid "File encoding"
+msgstr "File encoding"
+
+#: inc/clientinjection.class.php:143
+msgid "Warning : existing data will be overridden"
+msgstr "Warning : existing data will be overridden"
+
+#: inc/clientinjection.class.php:145
+msgid ""
+"Watch out, you're about to inject datas into GLPI. Are you sure you want to "
+"do it ?"
+msgstr "Watch out, you're about to inject datas into GLPI. Are you sure you want to do it ?"
+
+#: inc/clientinjection.class.php:150
+msgid "Launch the import"
+msgstr "Launch the import"
+
+#: inc/clientinjection.class.php:176
+msgid "Import progress"
+msgstr "Import progress"
+
+#: inc/clientinjection.class.php:242
+msgid "Injection finished"
+msgstr "Injection finished"
+
+#: inc/clientinjection.class.php:308
+msgid "Injection's results"
+msgstr "Injection's results"
+
+#: inc/clientinjection.class.php:313
+msgid "Injection successful"
+msgstr "Injection successful"
+
+#: inc/clientinjection.class.php:316
+msgid "Injection encounters errors"
+msgstr "Injection encounters errors"
+
+#: inc/clientinjection.class.php:325 inc/mapping.class.php:155
+msgid "See the log"
+msgstr "See the log"
+
+#: inc/clientinjection.class.php:331
+msgid "Export rapport in PDF"
+msgstr "Export rapport in PDF"
+
+#: inc/clientinjection.class.php:337
+msgid "Export the log"
+msgstr "Export the log"
+
+#: inc/clientinjection.class.php:345
+msgid "Finish"
+msgstr "Finish"
+
+#: inc/commoninjectionlib.class.php:1800
+msgid "Add from CSV file"
+msgstr "Add from CSV file"
+
+#: inc/commoninjectionlib.class.php:1802
+msgid "Update from CSV file"
+msgstr "Update from CSV file"
+
+#: inc/dropdown.class.php:36
+msgid "dd-mm-yyyy"
+msgstr "dd-mm-yyyy"
+
+#: inc/dropdown.class.php:38
+msgid "mm-dd-yyyy"
+msgstr "mm-dd-yyyy"
+
+#: inc/dropdown.class.php:40
+msgid "yyyy-mm-dd"
+msgstr "yyyy-mm-dd"
+
+#: inc/dropdown.class.php:49
+msgid "1 234.56"
+msgstr "1 234.56"
+
+#: inc/dropdown.class.php:51
+msgid "1 234,56"
+msgstr "1 234,56"
+
+#: inc/dropdown.class.php:53
+msgid "1,234.56"
+msgstr "1,234.56"
+
+#: inc/dropdown.class.php:85
+msgid "Automatic detection"
+msgstr "Automatic detection"
+
+#: inc/dropdown.class.php:86
+msgid "UTF-8"
+msgstr "UTF-8"
+
+#: inc/dropdown.class.php:87
+msgid "ISO8859-1"
+msgstr "ISO8859-1"
+
+#: inc/entitydatainjection.class.php:45
+msgid "Entity informations"
+msgstr "Entity informations"
+
+#: inc/info.class.php:77 inc/info.class.php:123 inc/mapping.class.php:162
+msgid "Tables"
+msgstr "Tables"
+
+#: inc/info.class.php:78 inc/info.class.php:124 inc/mapping.class.php:163
+msgid "Fields"
+msgstr "Fields"
+
+#: inc/info.class.php:79 inc/info.class.php:125
+msgid "Mandatory information"
+msgstr "Mandatory information"
+
+#: inc/info.class.php:199
+msgid "Complementary informations"
+msgstr "Complementary informations"
+
+#: inc/info.class.php:206 inc/info.class.php:208
+msgid "Download file sample"
+msgstr "Download file sample"
+
+#: inc/injectiontype.class.php:119
+msgid "-------Choose a table-------"
+msgstr "-------Choose a table-------"
+
+#: inc/injectiontype.class.php:183
+msgid "-------Choose a field-------"
+msgstr "-------Choose a field-------"
+
+#: inc/mapping.class.php:161
+msgid "Header of the file"
+msgstr "Header of the file"
+
+#: inc/mapping.class.php:164
+msgid "Link field"
+msgstr "Link field"
+
+#: inc/model.class.php:71
+msgid "Model management"
+msgstr "Model management"
+
+#: inc/model.class.php:490 inc/model.class.php:633
+msgid "Allow lines creation"
+msgstr "Allow lines creation"
+
+#: inc/model.class.php:496 inc/model.class.php:636
+msgid "Allow lines update"
+msgstr "Allow lines update"
+
+#: inc/model.class.php:502 inc/model.class.php:621
+msgid "Type of datas to import"
+msgstr "Type of datas to import"
+
+#: inc/model.class.php:508 inc/model.class.php:644
+msgid "Allow creation of dropdowns"
+msgstr "Allow creation of dropdowns"
+
+#: inc/model.class.php:514 inc/model.class.php:648
+msgid "Dates format"
+msgstr "Dates format"
+
+#: inc/model.class.php:520 inc/model.class.php:658
+msgid "Float format"
+msgstr "Float format"
+
+#: inc/model.class.php:526 inc/model.class.php:664
+msgid "Try to establish network connection is possible"
+msgstr "Try to establish network connection is possible"
+
+#: inc/model.class.php:532 inc/model.class.php:668
+msgid "Port unicity criteria"
+msgstr "Port unicity criteria"
+
+#: inc/model.class.php:641
+msgid "Advanced options"
+msgstr "Advanced options"
+
+#: inc/model.class.php:654
+msgid "Allow update of existing fields"
+msgstr "Allow update of existing fields"
+
+#: inc/model.class.php:691
+msgctxt "button"
+msgid "Validate the model"
+msgstr "Validate the model"
+
+#: inc/model.class.php:719
+msgid "Mappings"
+msgstr "Mappings"
+
+#: inc/model.class.php:722
+msgid "Additional Information"
+msgstr "Additional Information"
+
+#: inc/model.class.php:748
+msgid "Load this file"
+msgstr "Load this file"
+
+#: inc/model.class.php:819
+msgid "Please enter a name for the model"
+msgstr "Please enter a name for the model"
+
+#: inc/model.class.php:824
+msgid "Your model should allow import and/or update of data"
+msgstr "Your model should allow import and/or update of data"
+
+#: inc/model.class.php:877
+msgid "Impossible to copy the file in"
+msgstr "Impossible to copy the file in"
+
+#: inc/model.class.php:884
+msgid "File format is wrong"
+msgstr "File format is wrong"
+
+#: inc/model.class.php:886
+msgid "required"
+msgstr "required"
+
+#: inc/model.class.php:1014
+msgid "The file is ok."
+msgstr "The file is ok."
+
+#: inc/model.class.php:1036
+msgid "The number of columns of the file is incorrect."
+msgstr "The number of columns of the file is incorrect."
+
+#: inc/model.class.php:1038
+msgid "awaited column(s)"
+msgstr "awaited column(s)"
+
+#: inc/model.class.php:1039
+msgid "found column(s)"
+msgstr "found column(s)"
+
+#: inc/model.class.php:1070
+msgid "At least one column is incorrect"
+msgstr "At least one column is incorrect"
+
+#: inc/model.class.php:1076
+msgid "Into the file :"
+msgstr "Into the file :"
+
+#: inc/model.class.php:1078
+msgid "From the model :"
+msgstr "From the model :"
+
+#: inc/model.class.php:1132 inc/model.class.php:1486
+msgid "Model available for use"
+msgstr "Model available for use"
+
+#: inc/model.class.php:1134 inc/model.class.php:1484
+msgid "Creation of the model on going"
+msgstr "Creation of the model on going"
+
+#: inc/model.class.php:1244 inc/result.class.php:239
+msgid "Undetermined"
+msgstr "Undetermined"
+
+#: inc/model.class.php:1302 inc/model.class.php:1381
+msgid "Array of successful injections"
+msgstr "Array of successful injections"
+
+#: inc/model.class.php:1309 inc/model.class.php:1339 inc/model.class.php:1384
+#: inc/model.class.php:1402
+msgid "Line"
+msgstr "Line"
+
+#: inc/model.class.php:1310 inc/model.class.php:1341 inc/model.class.php:1385
+#: inc/model.class.php:1404
+msgid "Data Import"
+msgstr "Data Import"
+
+#: inc/model.class.php:1311 inc/model.class.php:1342 inc/model.class.php:1386
+#: inc/model.class.php:1405
+msgid "Injection type"
+msgstr "Injection type"
+
+#: inc/model.class.php:1312 inc/model.class.php:1343 inc/model.class.php:1387
+#: inc/model.class.php:1406
+msgid "Object Identifier"
+msgstr "Object Identifier"
+
+#: inc/model.class.php:1332 inc/model.class.php:1399
+msgid "Array of unsuccessful injections"
+msgstr "Array of unsuccessful injections"
+
+#: inc/model.class.php:1340 inc/model.class.php:1403 inc/model.class.php:1417
+msgid "Data check"
+msgstr "Data check"
+
+#: inc/model.class.php:1434
+msgid "List of the models"
+msgstr "List of the models"
+
+#: inc/modelcsv.class.php:158
+msgid "Specific file format options"
+msgstr "Specific file format options"
+
+#: inc/modelcsv.class.php:161
+msgid "Header's presence"
+msgstr "Header's presence"
+
+#: inc/modelcsv.class.php:165
+msgid "File delimitor"
+msgstr "File delimitor"
+
+#: inc/networkequipmentinjection.class.php:66
+msgid "Number of ports"
+msgstr "Number of ports"
+
+#: inc/networkportinjection.class.php:113
+msgid "Connected to : device name"
+msgstr "Connected to : device name"
+
+#: inc/networkportinjection.class.php:121
+msgid "Connected to : port number"
+msgstr "Connected to : port number"
+
+#: inc/networkportinjection.class.php:129
+msgid "Connected to : port MAC address"
+msgstr "Connected to : port MAC address"
+
+#: inc/result.class.php:235
+msgid "No right to import data"
+msgstr "No right to import data"
+
+#: inc/result.class.php:243
+msgid "No right to update data"
+msgstr "No right to update data"
+
+#: inc/result.class.php:247
+msgid "Datas are still in the database"
+msgstr "Datas are still in the database"
+
+#: inc/result.class.php:251
+msgid "One data is not the good type"
+msgstr "One data is not the good type"
+
+#: inc/result.class.php:255 inc/result.class.php:259
+msgid "At least one mandatory field is not present"
+msgstr "At least one mandatory field is not present"
+
+#: inc/result.class.php:263
+msgid "Datas to insert are correct"
+msgstr "Datas to insert are correct"
+
+#: inc/result.class.php:267
+msgid "Import is successful"
+msgstr "Import is successful"
+
+#: inc/result.class.php:271
+msgid "Data not found"
+msgstr "Data not found"
+
+#: inc/result.class.php:275
+msgid "Data already used"
+msgstr "Data already used"
+
+#: inc/result.class.php:279
+msgid "No data to insert"
+msgstr "No data to insert"
+
+#: inc/result.class.php:283
+msgid "More than one value found"
+msgstr "More than one value found"
+
+#: inc/result.class.php:287
+msgid "Object is already linked"
+msgstr "Object is already linked"
+
+#: inc/result.class.php:291
+msgid "Import is impossible"
+msgstr "Import is impossible"
