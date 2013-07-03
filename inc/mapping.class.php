@@ -152,7 +152,7 @@ class PluginDatainjectionMapping extends CommonDBTM {
                 $model->getID();
          echo "<a href=#  onClick=\"var w = window.open('$url' , 'glpipopup', ".
                 "'height=400, width=600, top=100, left=100, scrollbars=yes' );w.focus();\"/>";
-         echo __('See the log', 'datainjection')."</a>";
+         echo __('See the file', 'datainjection')."</a>";
          echo "</td></tr>";
       }
 

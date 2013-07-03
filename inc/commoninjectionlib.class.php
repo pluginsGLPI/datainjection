@@ -75,7 +75,7 @@ class PluginDatainjectionCommonInjectionLib {
    const SUCCESS                        = 10; //Injection OK
    const FAILED                         = 11; //Error during injection
    const WARNING                        = 12; //Injection ok but partial
-
+   
    //Field check return constants
    const ALREADY_EXISTS                 = 21;
    const TYPE_MISMATCH                  = 22;
@@ -83,17 +83,22 @@ class PluginDatainjectionCommonInjectionLib {
    const ITEM_NOT_FOUND                 = 24;
 
    //Injection Message
-   const ERROR_IMPORT_ALREADY_IMPORTED  = 30;
-   const ERROR_CANNOT_IMPORT            = 31;
-   const ERROR_CANNOT_UPDATE            = 32;
-   const WARNING_NOTFOUND               = 33;
-   const WARNING_USED                   = 34;
-   const WARNING_SEVERAL_VALUES_FOUND   = 35;
-   const WARNING_ALREADY_LINKED         = 36;
-   const ERROR_FIELDSIZE_EXCEEDED       = 37;
-   const WARNING_PARTIALLY_IMPORTED     = 38;
-   const ERROR_IMPORT_REFUSED           = 39; //Dictionnary explicitly refuse import
-
+   const ERROR_IMPORT_ALREADY_IMPORTED    = 30;
+   const ERROR_CANNOT_IMPORT              = 31;
+   const ERROR_CANNOT_UPDATE              = 32;
+   const WARNING_NOTFOUND                 = 33;
+   const WARNING_USED                     = 34;
+   const WARNING_SEVERAL_VALUES_FOUND     = 35;
+   const WARNING_ALREADY_LINKED           = 36;
+   const ERROR_FIELDSIZE_EXCEEDED         = 37;
+   const WARNING_PARTIALLY_IMPORTED       = 38;
+   const ERROR_IMPORT_REFUSED             = 39; //Dictionnary explicitly refuse import
+   const WARNING_NOTEMPTY                 = 40; //0.84 added
+   const ERROR_IMPORT_WRONG_TYPE          = 41; //0.84 added
+   const ERROR_IMPORT_FIELD_MANDATORY     = 42; //0.84 added
+   const ERROR_IMPORT_LINK_FIELD_MISSING  = 43; //0.84 added
+   const WARNING_ALLEMPTY                 = 44; //0.84 added
+   
    //Empty values
    const EMPTY_VALUE          = '';
    const DROPDOWN_EMPTY_VALUE = 0;
@@ -304,7 +309,7 @@ class PluginDatainjectionCommonInjectionLib {
     * @return an instance of the itemtype associated to the injection class
     */
    static function getItemtypeByInjectionClass($injectionClass) {
-      return getItemTypeForTable($injectionClass->getTable());
+      return getItemTypeForTable($injectionClass->table);
    }
 
 
@@ -600,7 +605,8 @@ class PluginDatainjectionCommonInjectionLib {
     * @return an array with additional options to be added
    **/
    private function addExternalDropdownParameters($itemtype) {
-
+      global $DB;
+      
       $external = array();
       $values   = $this->getValuesForItemtype($itemtype);
       $toadd    = array('manufacturers_id' => 'manufacturer');
@@ -611,7 +617,7 @@ class PluginDatainjectionCommonInjectionLib {
                case 'manufacturer' :
                   if (intval($values[$field])>0) {
                      $external[$addvalue]
-                        = mysql_real_escape_string(Dropdown::getDropdownName('glpi_manufacturers',
+                        = $DB->escape(Dropdown::getDropdownName('glpi_manufacturers',
                                                                              $values[$field]));
                      break;
                   }
@@ -1616,7 +1622,7 @@ class PluginDatainjectionCommonInjectionLib {
             $this->values[$itemtype]['id'] = self::ITEM_NOT_FOUND;
          } else {
             $sql = "SELECT *
-                    FROM `" . $injectionClass->getTable()."`";
+                    FROM `" . $injectionClass->table."`";
 
             $item = new $itemtype();
             //If it's a computer device
@@ -1676,7 +1682,7 @@ class PluginDatainjectionCommonInjectionLib {
 
                   //Type can be recursive
                   if ($injectionClass->maybeRecursive()) {
-                     $where_entity = getEntitiesRestrictRequest(" AND", $injectionClass->getTable(),
+                     $where_entity = getEntitiesRestrictRequest(" AND", $injectionClass->table,
                                                                 "entities_id",
                                                                 $this->getValueByItemtypeAndName($itemtype,
                                                                                                  'entities_id'),
@@ -1916,8 +1922,8 @@ class PluginDatainjectionCommonInjectionLib {
    **/
    static function addTemplateSearchOptions($injectionClass,&$tab) {
 
-      $itemtype = self::getItemtypeByInjectionClass($injectionClass) ;
-      $item     = new $itemtype;
+      $itemtype = self::getItemtypeByInjectionClass($injectionClass);
+      $item     = new $itemtype();
 
       if ($item->maybeTemplate()) {
          $tab[300]['table']       = $item->getTable();

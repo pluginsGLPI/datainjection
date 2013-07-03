@@ -44,17 +44,76 @@ class PluginDatainjectionProfile extends CommonDBTM {
       $profile->deleteByCriteria(array('id' => $ID));
    }
 
+   
+   static function changeProfile() {
+
+      $prof = new self();
+      if ($prof->getFromDB($_SESSION['glpiactiveprofile']['id'])) {
+         $_SESSION["glpi_plugin_datainjection_profile"] = $prof->fields;
+      } else {
+         unset ($_SESSION["glpi_plugin_datainjection_profile"]);
+      }
+   }
+   
+   function getTabNameForItem(CommonGLPI $item, $withtemplate=0) {
+
+      if ($item->getType() == 'Profile') {
+         if ($item->getField('interface') == 'central') {
+            return __('File injection', 'datainjection');
+         }
+         return '';
+      }
+      return '';
+   }
+
+
+   static function displayTabContentForItem(CommonGLPI $item, $tabnum=1, $withtemplate=0) {
+
+      if ($item->getType() == 'Profile') {
+         $prof = new self();
+         $ID = $item->getField('id');
+         if (!$prof->GetfromDB($ID)) {
+            $prof->createUserAccess($item);
+         }
+         $prof->showForm($ID);
+      }
+      return true;
+   }
+   
+   function createUserAccess($profile) {
+
+      return $this->add(array('id'      => $profile->getField('id'),
+                              'name' => addslashes($profile->getField('name'))));
+   }
+   
+   static function createFirstAccess($ID) {
+      
+      include_once(GLPI_ROOT."/plugins/datainjection/inc/profile.class.php");
+      $firstProf = new self();
+      if (!$firstProf->GetfromDB($ID)) {
+         $profile = new Profile();
+         $profile->getFromDB($ID);
+         $name = addslashes($profile->fields["name"]);
+
+         $firstProf->add(array('id'          => $ID,
+                               'profile'     => $name,
+                               'is_default'  => 0,
+                               'model'       => 'w'));
+      }
+   }
+   
 
    function showForm($ID,$options=array()){
 
       if (!Session::haveRight("profile","r"))  {
          return false;
       }
-
-      $canedit = Session::haveRight("profile", "w");
-
-      if ($ID) {
+      
+      $profile = new Profile();
+      
+      if ($ID){
          $this->getFromDB($ID);
+         $profile->getFromDB($ID);
       } else {
          $this->getEmpty();
       }

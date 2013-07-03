@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: GLPI - Datainjection plugin 2.2.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2013-07-02 17:26+0200\n"
-"PO-Revision-Date: 2013-07-02 17:40+0100\n"
+"PO-Revision-Date: 2013-07-03 12:02+0100\n"
 "Last-Translator: Xavier CAILLAUD <tsmr@thetsmr.fr>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -212,7 +212,7 @@ msgstr "Informations complémentaires"
 
 #: inc/info.class.php:206 inc/info.class.php:208
 msgid "Download file sample"
-msgstr "Téléchargement fichier example"
+msgstr "Téléchargement fichier exemple"
 
 #: inc/injectiontype.class.php:119
 msgid "-------Choose a table-------"

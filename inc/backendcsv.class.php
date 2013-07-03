@@ -64,7 +64,8 @@
 
    //CSV File parsing methods
    static function parseLine($fic, $data, $encoding= 1) {
-
+      global $DB;
+      
       $csv = array();
       $num = count($data);
 
@@ -74,7 +75,7 @@
          if ($c <($num -1)
              || ($c ==($num -1)
                  && $data[$num -1] != PluginDatainjectionCommonInjectionLib::EMPTY_VALUE)) {
-            $tmp = trim(mysql_real_escape_string($data[$c]));
+            $tmp = trim($DB->escape($data[$c]));
             switch ($encoding) {
                //If file is ISO8859-1 : encode the datas in utf8
                case PluginDatainjectionBackend::ENCODING_ISO8859_1 :

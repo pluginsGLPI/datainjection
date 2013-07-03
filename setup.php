@@ -37,21 +37,21 @@ function plugin_init_datainjection() {
    global $PLUGIN_HOOKS, $CFG_GLPI, $INJECTABLE_TYPES;
 
    $PLUGIN_HOOKS['csrf_compliant']['datainjection'] = true;
+   
+   Plugin::registerClass('PluginDatainjectionProfile',
+                         array('addtabon' => array('Profile')));
 
-   $plugin = new Plugin();
-   $PLUGIN_HOOKS['change_profile']['datainjection'] = 'plugin_datainjection_changeprofile';
+   $PLUGIN_HOOKS['change_profile']['datainjection'] = array('PluginDatainjectionProfile', 'changeProfile');
 
    $PLUGIN_HOOKS['migratetypes']['datainjection'] = 'plugin_datainjection_migratetypes_datainjection';
-
+   
+   $plugin = new Plugin();
    if ($plugin->isActivated("datainjection")) {
       if (!plugin_datainjection_checkDirectories()) {
          Toolbox::logDebug("[Datainjection plugin] ".PLUGIN_DATAINJECTION_UPLOAD_DIR.
                      " ".__('must exists and be writable for web server user', 'datainjection'));
          return false;
       }
-
-      $PLUGIN_HOOKS['headings']['datainjection']        = 'plugin_get_headings_datainjection';
-      $PLUGIN_HOOKS['headings_action']['datainjection'] = 'plugin_headings_actions_datainjection';
 
       $image_import  = "<img src='".$CFG_GLPI["root_doc"]."/pics/actualiser.png' title='";
       $image_import .= __('Injection of the file', 'datainjection');

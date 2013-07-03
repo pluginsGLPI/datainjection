@@ -63,7 +63,7 @@ if (isset ($_POST["update"])) {
       if ($model->fields['step'] != PluginDatainjectionModel::READY_TO_USE_STEP) {
          PluginDatainjectionModel::changeStep($_POST['models_id'],
                                               PluginDatainjectionModel::OTHERS_STEP);
-         Session::setActiveTab('PluginDatainjectionModel', 4);
+         Session::setActiveTab('PluginDatainjectionModel', 'PluginDatainjectionModel$5');
          Session::addMessageAfterRedirect(__("This step allows you to add informations not present in the file. You'll be asked for theses informations while using the model.", 'datainjection'));
       }
       unset($_SESSION['datainjection']['lines']);

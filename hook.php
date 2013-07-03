@@ -58,65 +58,6 @@ function plugin_pre_item_delete_datainjection($input) {
    return $input;
 }
 
-
-function plugin_datainjection_changeprofile() {
-
-   $plugin = new Plugin;
-
-   if ($plugin->isActivated("datainjection")) {
-      $prof = new PluginDatainjectionProfile();
-
-      if ($prof->getFromDB($_SESSION['glpiactiveprofile']['id'])) {
-         $_SESSION["glpi_plugin_datainjection_profile"] = $prof->fields;
-      } else {
-         unset ($_SESSION["glpi_plugin_datainjection_profile"]);
-      }
-   }
-}
-
-/*XACA TODO ?
-function plugin_headings_actions_datainjection($item) {
-
-   switch (get_class($item)) {
-      case 'Profile' :
-         return array(1 => "plugin_headings_datainjection");
-   }
-   return false;
-}
-
-
-function plugin_get_headings_datainjection($item, $withtemplate) {
-   global $LANG;
-
-   switch (get_class($item)) {
-      case 'Profile' :
-         if ($item->fields['interface']=='central') {
-            return array(1 => $LANG['datainjection']['name'][1]);
-         }
-         return array();
-   }
-   return false;
-}
-
-
-function plugin_headings_datainjection($item,$withtemplate=0) {
-   global $CFG_GLPI;
-
-   switch (get_class($item)) {
-      case 'Profile' :
-         $profile = new PluginDatainjectionProfile;
-         if (!$profile->getFromDB($item->fields['id'])) {
-            plugin_datainjection_createaccess($item->fields['id']);
-         }
-         $profile->showForm($item->fields['id']);
-         break;
-
-      default :
-         break;
-   }
-}
-*/
-
 function plugin_datainjection_install() {
    global $DB;
 
@@ -192,7 +133,7 @@ function plugin_datainjection_install() {
             @ mkdir(PLUGIN_DATAINJECTION_UPLOAD_DIR)
                or die("Can't create folder " . PLUGIN_DATAINJECTION_UPLOAD_DIR);
 
-            plugin_datainjection_createfirstaccess($_SESSION["glpiactiveprofile"]["id"]);
+            PluginDatainjectionProfile::createFirstAccess($_SESSION["glpiactiveprofile"]["id"]);
          }
          break;
 
@@ -235,7 +176,6 @@ function plugin_datainjection_install() {
          break;
    }
 
-   plugin_datainjection_changeprofile();
    return true;
 }
 
@@ -1059,20 +999,6 @@ function plugin_datainjection_update210_220() {
                "WHERE `itemtype`='User' AND `value`='email'";
       $DB->query($query);
    }
-}
-
-function plugin_datainjection_createaccess($ID) {
-   global $DB;
-
-   $Profile = new Profile();
-   $Profile->getFromDB($ID);
-   $name    = $Profile->fields["name"];
-
-   $query = "INSERT INTO `glpi_plugin_datainjection_profiles`
-                    (`ID`, `name` , `is_default`, `model`)
-             VALUES ('$ID', '$name','0',NULL)";
-
-   $DB->query($query);
 }
 
 

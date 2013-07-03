@@ -869,7 +869,7 @@ class PluginDatainjectionModel extends CommonDBTM {
       if (!$webservice) {
          //Get and store uploaded file
          $original_filename           = $_FILES['filename']['name'];
-         $temporary_uploaded_filename = $_FILES["filename"]["tmp_name"];
+         $temporary_uploaded_filename = stripslashes($_FILES["filename"]["tmp_name"]);
          $unique_filename             = tempnam (realpath(PLUGIN_DATAINJECTION_UPLOAD_DIR), "PWS");
 
          if (!move_uploaded_file($temporary_uploaded_filename, $unique_filename)) {
@@ -1222,7 +1222,7 @@ class PluginDatainjectionModel extends CommonDBTM {
       }
       Html::closeForm();
       echo "<div style='margin-top:15px;text-align:center'>";
-      echo "<a href='javascript:window.close()'>" . __('Undetermined') . "</a>";
+      echo "<a href='javascript:window.close()'>" . __('Close') . "</a>";
       echo "</div>";
    }
 

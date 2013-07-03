@@ -30,7 +30,6 @@
 
 class PluginDatainjectionResult {
 
-   const IMPORT_OK     = 1;
    const TYPE_CHECK_OK = 1;
 
    //Overall status of the process
@@ -263,10 +262,6 @@ class PluginDatainjectionResult {
             $message = __('Datas to insert are correct', 'datainjection');
             break;
 
-         case PluginDatainjectionCommonInjectionLib::IMPORT_OK :
-            $message = __('Import is successful', 'datainjection');
-            break;
-
          case PluginDatainjectionCommonInjectionLib::WARNING_NOTFOUND :
             $message = __('Data not found', 'datainjection');
             break;
@@ -287,9 +282,6 @@ class PluginDatainjectionResult {
             $message = __('Object is already linked', 'datainjection');
             break;
 
-         case PluginDatainjectionCommonInjectionLib::IMPORT_IMPOSSIBLE:
-            $message = __('Import is impossible', 'datainjection');
-            break;
       }
 
       return $message;

@@ -202,11 +202,10 @@ class PluginDatainjectionInfo extends CommonDBTM {
       }
       if ($modeltype->haveSample()) {
          echo "<tr class='tab_bg_1'>";
-         echo "<td colspan='2' class='center'><a href='".$model->getFormURL()."?sample=";
-         echo $model->getField('id')."'>".__('Download file sample', 'datainjection')."</a></td></tr>\n";
-         Html::showSimpleForm($model->getFormURL(),
-                                  'sample', __('Download file sample', 'datainjection'),
-                                  array('sample' => $model->getField('id')));
+         echo "<td colspan='2' class='center'>";
+         echo "<a href='".$model->getFormURL()."?sample=";
+         echo $model->getField('id')."' class='vsubmit'>".__('Download file sample', 'datainjection')."</a>";
+         echo "</td></tr>\n";
       }
       if ($model->fields['comment']) {
          echo "<tr class='tab_bg_2'>";
