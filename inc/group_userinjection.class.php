@@ -34,11 +34,19 @@ if (!defined('GLPI_ROOT')) {
 
 class PluginDatainjectionGroup_UserInjection extends Group_User
                                              implements PluginDatainjectionInjectionInterface {
-
-   function __construct()  {
-      $this->table = getTableForItemType(get_parent_class($this));
+   
+   
+   static function getTypeName($nb=0) {
+      
+      return __('Group')." - ".__('User');
    }
-
+   
+   static function getTable() {
+   
+      $parenttype = get_parent_class();
+      return $parenttype::getTable();
+      
+   }
 
    function isPrimaryType() {
       return false;
@@ -46,28 +54,33 @@ class PluginDatainjectionGroup_UserInjection extends Group_User
 
 
    function connectedTo() {
-      return array();
+      //return array();
+      return array('Group');
    }
 
 
+   
    function getOptions($primary_type = '') {
+      
+      $tab                    = Search::getOptions(get_parent_class($this));
+      
+      $tab[3]['checktype']    = 'bool';
+      $tab[3]['displaytype']  = 'bool';
 
-      $tab = Search::getOptions(get_parent_class($this));
-      unset($tab[2]);
+      $tab[4]['checktype']    = 'text';
+      $tab[4]['displaytype']  = 'dropdown';
+      
+      //Remove some options because some fields cannot be imported
+      $blacklist = PluginDatainjectionCommonInjectionLib::getBlacklistedOptions(get_parent_class($this));
+      $notimportable = array(4);
+      $options['ignore_fields'] = array_merge($blacklist, $notimportable);
+      
+      $options['displaytype']   = array("bool"    => array(3, 6, 7),
+                                        "dropdown" => array(4));
+                                        
+      return PluginDatainjectionCommonInjectionLib::addToSearchOptions($tab, $options, $this);
 
-      $tab[3]['checktype']   = 'bool';
-      $tab[3]['displaytype'] = 'bool';
-
-      $tab[4]['checktype']   = 'text';
-      $tab[4]['displaytype'] = 'dropdown';
-
-      $tab[5]['checktype']   = 'text';
-      $tab[5]['displaytype'] = 'dropdown';
-
-      return $tab;
    }
-
-
    /**
     * Standard method to add an object into glpi
  
@@ -87,7 +100,13 @@ class PluginDatainjectionGroup_UserInjection extends Group_User
 
    function addSpecificNeededFields($primary_type, $values) {
 
-      $fields['users_id'] = $values['User']['id'];
+      if ($primary_type == "User") {
+         $fields['users_id'] = $values['User']['id'];
+      } else if ($primary_type == "Group") {
+         $fields['users_id'] = $values['Group_User']['users_id'];
+         $fields['groups_id'] = $values['Group']['id'];
+      }
+      
       return $fields;
    }
 

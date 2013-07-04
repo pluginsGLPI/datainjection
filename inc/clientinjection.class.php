@@ -321,12 +321,12 @@
       $url = $CFG_GLPI["root_doc"]."/plugins/datainjection/front/popup.php?popup=log&amp;models_id=".
              $model->fields['id'];
       echo "<a href='#' onClick=\"var w = window.open('$url' , 'glpipopup', ".
-             "'height=400, width=800, top=100, left=100, scrollbars=yes' );w.focus();\"/' ".
+             "'height=400, width=1000, top=100, left=100, scrollbars=yes' );w.focus();\"/' ".
              "title='".__('See the log', 'datainjection')."'>";
       echo "<img src='".$CFG_GLPI['root_doc']."/plugins/datainjection/pics/seereport.png'></a>";
 
       $plugin = new Plugin;
-      if ($plugin->isInstalled('pdf') && $plugin->isActivated('pdf')) {
+      if ($plugin->isActivated('pdf')) {
          echo "&nbsp;<a href='#' onclick=\"location.href='export.pdf.php?models_id=".
                       $model->fields['id']."'\" title='".__('Export rapport in PDF', 'datainjection')."'>";
          echo "<img src='".$CFG_GLPI['root_doc']."/plugins/datainjection/pics/reportpdf.png'></a>";

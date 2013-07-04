@@ -36,8 +36,11 @@ class PluginDatainjectionVlanInjection extends Vlan
                                        implements PluginDatainjectionInjectionInterface {
 
 
-   function __construct() {
-      $this->table = getTableForItemType(get_parent_class($this));
+   static function getTable() {
+   
+      $parenttype = get_parent_class();
+      return $parenttype::getTable();
+      
    }
 
 
@@ -56,9 +59,13 @@ class PluginDatainjectionVlanInjection extends Vlan
       $tab = Search::getOptions(get_parent_class($this));
 
       //Remove some options because some fields cannot be imported
-      $options['ignore_fields'] = array(2, 19);
+      $blacklist = PluginDatainjectionCommonInjectionLib::getBlacklistedOptions(get_parent_class($this));
+      $notimportable = array();
+      $options['ignore_fields'] = array_merge($blacklist, $notimportable);
+      
       $options['displaytype']   = array("bool"           => array(86),
                                         "multiline_text" => array(16));
+                                        
       return PluginDatainjectionCommonInjectionLib::addToSearchOptions($tab, $options, $this);
    }
 

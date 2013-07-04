@@ -35,8 +35,11 @@ if (!defined('GLPI_ROOT')) {
 class PluginDatainjectionKnowbaseItemCategoryInjection extends KnowbaseItemCategory
                                                        implements PluginDatainjectionInjectionInterface {
 
-   function __construct() {
-      $this->table = getTableForItemType(get_parent_class($this));
+   static function getTable() {
+   
+      $parenttype = get_parent_class();
+      return $parenttype::getTable();
+      
    }
 
 
@@ -54,20 +57,15 @@ class PluginDatainjectionKnowbaseItemCategoryInjection extends KnowbaseItemCateg
 
       $tab = Search::getOptions(get_parent_class($this));
 
-      $tab[100]['name']        = __('As child of');
-      $tab[100]['table']       = $this->table;
-      $tab[100]['field']       = 'completename';
-      $tab[100]['linkfield']   = 'completename';
-      $tab[100]['injectable']  = 1;
-      $tab[100]['checktype']   = 'text';
-      $tab[100]['displaytype'] = 'dropdown_kb_category';
-
       //Remove some options because some fields cannot be imported
-      $options['ignore_fields'] = array(1, 80, 2, 19);
+      $blacklist = PluginDatainjectionCommonInjectionLib::getBlacklistedOptions(get_parent_class($this));
+      $notimportable = array(14);
+      $options['ignore_fields'] = array_merge($blacklist, $notimportable);
+      
       $options['displaytype']   = array("multiline_text" => array(16));
-      $tab = PluginDatainjectionCommonInjectionLib::addToSearchOptions($tab, $options, $this);
+      
+      return PluginDatainjectionCommonInjectionLib::addToSearchOptions($tab, $options, $this);
 
-      return $tab;
    }
 
 
@@ -85,30 +83,6 @@ class PluginDatainjectionKnowbaseItemCategoryInjection extends KnowbaseItemCateg
       $lib = new PluginDatainjectionCommonInjectionLib($this, $values, $options);
       $lib->processAddOrUpdate();
       return $lib->getInjectionResults();
-   }
-
-
-   function getSpecificFieldValue($itemtype, $searchOption, $field, &$values) {
-      global $DB;
-
-      $parent = $values[$itemtype]['name'];
-      $value  = $values[$itemtype][$field];
-
-      switch ($searchOption['displaytype']) {
-         case "dropdown_kb_category" :
-            $query = "SELECT `level`, `completename`
-                      FROM `glpi_knowbaseitemcategories`
-                      WHERE `completename` = '$value'";
-            $result = $DB->query($query);
-            if ($DB->numrows($result) > 0) {
-               $parent = $value . ' > '.$values[$itemtype]['name'];
-               $values[$itemtype]['level'] = ($DB->result($result,0,'level') + 1);
-            } else {
-               $values[$itemtype]['level'] = 1;
-            }
-            break;
-      }
-      return $parent;
    }
 
 }

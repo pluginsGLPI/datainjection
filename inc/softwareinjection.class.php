@@ -36,8 +36,11 @@ class PluginDatainjectionSoftwareInjection extends Software
                                            implements PluginDatainjectionInjectionInterface {
 
 
-   function __construct() {
-      $this->table = getTableForItemType(get_parent_class($this));
+   static function getTable() {
+   
+      $parenttype = get_parent_class();
+      return $parenttype::getTable();
+      
    }
 
 
@@ -53,19 +56,19 @@ class PluginDatainjectionSoftwareInjection extends Software
 
    function getOptions($primary_type = '') {
 
-      $tab = Search::getOptions(get_parent_class($this));
+      $tab                    = Search::getOptions(get_parent_class($this));
 
       //Specific to location
-      $tab[3]['linkfield']  = 'locations_id';
-      $tab[86]['linkfield'] = 'is_recursive';
+      $tab[3]['linkfield']    = 'locations_id';
 
-      $blacklist = PluginDatainjectionCommonInjectionLib::getBlacklistedOptions();
       //Remove some options because some fields cannot be imported
-      $notimportable = array(7, 72, 5, 31, 91, 92, 93, 170, 160, 161, 162, 163, 164, 165, 166);
-      $options['ignore_fields'] = array_merge($blacklist,$notimportable);
-      $options['displaytype']   = array("dropdown"       => array(3, 4, 62, 23, 71),
-                                        "bool"           => array(61,86),
-                                        "user"           => array(70, 24),
+      $blacklist = PluginDatainjectionCommonInjectionLib::getBlacklistedOptions(get_parent_class($this));
+      $notimportable = array(4, 5, 31, 72, 91, 92, 93, 160, 161, 162, 163, 164, 165, 166, 170);
+      $options['ignore_fields'] = array_merge($blacklist, $notimportable);
+
+      $options['displaytype']   = array("dropdown"       => array(3, 23, 49, 62, 71),
+                                        "bool"           => array(61, 86),
+                                        "user"           => array(24, 70),
                                         "multiline_text" => array(16, 90));
 
       return PluginDatainjectionCommonInjectionLib::addToSearchOptions($tab, $options, $this);

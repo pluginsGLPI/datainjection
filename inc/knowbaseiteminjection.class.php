@@ -35,10 +35,12 @@ if (!defined('GLPI_ROOT')) {
 class PluginDatainjectionKnowbaseItemInjection extends KnowbaseItem
                                                implements PluginDatainjectionInjectionInterface {
 
-   function __construct() {
-      $this->table = getTableForItemType(get_parent_class($this));
+   static function getTable() {
+   
+      $parenttype = get_parent_class();
+      return $parenttype::getTable();
+      
    }
-
 
    function isPrimaryType() {
       return true;
@@ -52,23 +54,24 @@ class PluginDatainjectionKnowbaseItemInjection extends KnowbaseItem
 
    function getOptions($primary_type = '') {
 
-      $tab = Search::getOptions(get_parent_class($this));
       
-      $tab[5]['checktype'] = 'date';
+      $tab                 = Search::getOptions(get_parent_class($this));
+      
+      $tab[5]['checktype'] = 'datetime';
       
       //Remove some options because some fields cannot be imported
-      $options['ignore_fields'] = array(2, 80, 19);
+      $blacklist = PluginDatainjectionCommonInjectionLib::getBlacklistedOptions(get_parent_class($this));
+      $notimportable = array();
+      $options['ignore_fields'] = array_merge($blacklist, $notimportable);
+      
       $options['displaytype']   = array("dropdown"       => array(4),
                                         "date"           => array(5),
                                         "multiline_text" => array(6,7),
-                                        "bool"           => array(8,9,86),
+                                        "bool"           => array(8, 9, 86),
                                         "user"           => array(70));
-      
-      $options['checktype']   = array("multiline_text" => array(6,7));
                                         
-      $tab = PluginDatainjectionCommonInjectionLib::addToSearchOptions($tab, $options, $this);
+      return PluginDatainjectionCommonInjectionLib::addToSearchOptions($tab, $options, $this);
 
-      return $tab;
    }
 
 

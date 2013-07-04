@@ -36,9 +36,11 @@ class PluginDatainjectionStateInjection extends State
                                         implements PluginDatainjectionInjectionInterface {
 
 
-   function __construct() {
-      //Needed for getSearchOptions !
-      $this->table = getTableForItemType(get_parent_class($this));
+   static function getTable() {
+   
+      $parenttype = get_parent_class();
+      return $parenttype::getTable();
+      
    }
 
 
@@ -56,15 +58,15 @@ class PluginDatainjectionStateInjection extends State
 
       $tab = Search::getOptions(get_parent_class($this));
 
-      //By default completename has no linkfield because it cannot be modified using the massiveaction
-      $tab[1]['displaytype'] = 'tree';
-      $tab[1]['linkfield']   = 'completename';
-
       //Remove some options because some fields cannot be imported
-      $options['ignore_fields'] = array(2, 19, 14);
+      $blacklist = PluginDatainjectionCommonInjectionLib::getBlacklistedOptions(get_parent_class($this));
+      $notimportable = array(14);
+      $options['ignore_fields'] = array_merge($blacklist, $notimportable);
+      
       $options['displaytype']   = array("multiline_text" => array(16));
-      $tab = PluginDatainjectionCommonInjectionLib::addToSearchOptions($tab, $options, $this);
-      return $tab;
+      
+      return PluginDatainjectionCommonInjectionLib::addToSearchOptions($tab, $options, $this);
+
    }
 
 

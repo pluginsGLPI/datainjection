@@ -35,9 +35,11 @@ if (!defined('GLPI_ROOT')) {
 class PluginDatainjectionManufacturerInjection extends Manufacturer
                                                implements PluginDatainjectionInjectionInterface {
 
-   function __construct() {
-      //Needed for getSearchOptions !
-      $this->table = getTableForItemType(get_parent_class($this));
+   static function getTable() {
+   
+      $parenttype = get_parent_class();
+      return $parenttype::getTable();
+      
    }
 
 
@@ -56,9 +58,12 @@ class PluginDatainjectionManufacturerInjection extends Manufacturer
       $tab = Search::getOptions(get_parent_class($this));
 
       //Remove some options because some fields cannot be imported
-      $options['ignore_fields'] = array(2);
-      $tab = PluginDatainjectionCommonInjectionLib::addToSearchOptions($tab, $options, $this);
-      return $tab;
+      $blacklist = PluginDatainjectionCommonInjectionLib::getBlacklistedOptions(get_parent_class($this));
+      $notimportable = array();
+      $options['ignore_fields'] = array_merge($blacklist, $notimportable);
+      
+      return PluginDatainjectionCommonInjectionLib::addToSearchOptions($tab, $options, $this);
+
    }
 
 

@@ -36,8 +36,11 @@ class PluginDatainjectionNetworkEquipmentInjection extends NetworkEquipment
                                                    implements PluginDatainjectionInjectionInterface {
 
 
-   function __construct() {
-      $this->table = getTableForItemType(get_parent_class($this));
+   static function getTable() {
+   
+      $parenttype = get_parent_class();
+      return $parenttype::getTable();
+      
    }
 
 
@@ -53,30 +56,31 @@ class PluginDatainjectionNetworkEquipmentInjection extends NetworkEquipment
 
    function getOptions($primary_type = '') {
 
-      $tab = Search::getOptions(get_parent_class($this));
+      $tab                       = Search::getOptions(get_parent_class($this));
 
       //Specific to location
-      $tab[3]['linkfield']  = 'locations_id';
-      $tab[12]['checktype'] = 'ip';
-      $tab[13]['checktype'] = 'mac';
+      $tab[3]['linkfield']       = 'locations_id';
 
       //Virtual type : need to be processed at the end !
-      $tab[200]['table']       = 'glpi_networking';
-      $tab[200]['field']       = 'nb_ports';
-      $tab[200]['name']        = __('Number of ports', 'datainjection');
-      $tab[200]['checktype']   = 'integer';
-      $tab[200]['displaytype'] = 'virtual';
-      $tab[200]['linkfield']   = 'nb_ports';
-      $tab[200]['injectable']  = PluginDatainjectionCommonInjectionLib::FIELD_VIRTUAL;
+      $tab[200]['table']         = 'glpi_networkequipments';
+      $tab[200]['field']         = 'nb_ports';
+      $tab[200]['name']          = __('Number of ports', 'datainjection');
+      $tab[200]['checktype']     = 'integer';
+      $tab[200]['displaytype']   = 'virtual';
+      $tab[200]['linkfield']     = 'nb_ports';
+      $tab[200]['injectable']    = PluginDatainjectionCommonInjectionLib::FIELD_VIRTUAL;
 
-      $blacklist = PluginDatainjectionCommonInjectionLib::getBlacklistedOptions();
       //Remove some options because some fields cannot be imported
-      $notimportable = array(2, 91, 92, 93, 80, 100, 50, 122);
+      $blacklist = PluginDatainjectionCommonInjectionLib::getBlacklistedOptions(get_parent_class($this));
+      $notimportable = array(91, 92, 93);
       $options['ignore_fields'] = array_merge($blacklist, $notimportable);
-      $options['displaytype'] = array("dropdown"       => array(3, 4, 40, 31, 71, 11, 32, 33, 23),
+      
+      
+      $options['displaytype'] = array("dropdown"       => array(3, 4, 11, 23, 31, 32, 33, 40, 49, 71),
                                       "bool"           => array(86),
-                                      "user"           => array(70, 24),
+                                      "user"           => array(24, 70),
                                       "multiline_text" => array(16, 90));
+                                      
       return PluginDatainjectionCommonInjectionLib::addToSearchOptions($tab, $options, $this);
    }
 

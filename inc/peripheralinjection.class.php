@@ -36,10 +36,12 @@ class PluginDatainjectionPeripheralInjection extends Peripheral
                                              implements PluginDatainjectionInjectionInterface {
 
 
-   function __construct() {
-      $this->table = getTableForItemType(get_parent_class($this));
+   static function getTable() {
+   
+      $parenttype = get_parent_class();
+      return $parenttype::getTable();
+      
    }
-
 
    function isPrimaryType() {
       return true;
@@ -53,18 +55,21 @@ class PluginDatainjectionPeripheralInjection extends Peripheral
 
    function getOptions($primary_type = '') {
 
-      $tab = Search::getOptions(get_parent_class($this));
+      $tab                 = Search::getOptions(get_parent_class($this));
 
       //Specific to location
       $tab[3]['linkfield'] = 'locations_id';
 
       //Remove some options because some fields cannot be imported
-      $options['ignore_fields'] = array(2, 19, 91, 92, 93, 80, 91, 92, 93, 50, 122);
-      $options['displaytype']   = array("dropdown"       => array(3, 4, 40, 31, 71, 23, 23),
-                                        "user"           => array(70, 24),
-                                        "float"          => array(11),
+      $blacklist = PluginDatainjectionCommonInjectionLib::getBlacklistedOptions(get_parent_class($this));
+      $notimportable = array(91, 92, 93);
+      $options['ignore_fields'] = array_merge($blacklist, $notimportable);
+      
+      $options['displaytype']   = array("dropdown"       => array(3, 4, 23, 31, 40, 49, 71),
+                                        "user"           => array(24, 70),
                                         "bool"           => array(82),
                                         "multiline_text" => array(16, 90));
+                                        
       return PluginDatainjectionCommonInjectionLib::addToSearchOptions($tab, $options, $this);
    }
 

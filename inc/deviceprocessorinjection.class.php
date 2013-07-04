@@ -35,9 +35,11 @@ if (!defined('GLPI_ROOT')) {
 class PluginDatainjectionDeviceProcessorInjection extends DeviceProcessor
                                                implements PluginDatainjectionInjectionInterface {
 
-   function __construct() {
-      //Needed for getSearchOptions !
-      $this->table = getTableForItemType(get_parent_class($this));
+   static function getTable() {
+   
+      $parenttype = get_parent_class();
+      return $parenttype::getTable();
+      
    }
 
 
@@ -54,32 +56,43 @@ class PluginDatainjectionDeviceProcessorInjection extends DeviceProcessor
    function getOptions($primary_type = '') {
 
       $tab                      = Search::getOptions(get_parent_class($this));
-      $options['ignore_fields'] = array();
+      
+      //Remove some options because some fields cannot be imported
+      $blacklist = PluginDatainjectionCommonInjectionLib::getBlacklistedOptions(get_parent_class($this));
+      $notimportable = array();
+      $options['ignore_fields'] = array_merge($blacklist, $notimportable);
+      
       $options['displaytype']   = array("multiline_text" => array(16),
                                         "dropdown"       => array(23));
 
-      $tab = PluginDatainjectionCommonInjectionLib::addToSearchOptions($tab, $options, $this);
+      return PluginDatainjectionCommonInjectionLib::addToSearchOptions($tab, $options, $this);
 
-      return $tab;
    }
 
-
+   
    function processAfterInsertOrUpdate($values, $add = true, $rights = array()) {
       if (isset($values['Computer']['id'])) {
-         $computer_device   = new Computer_Device(get_parent_class($this));
+         
+         $class = "Item_".get_parent_class($this);
+         $item   = new $class();
+         $foreign = getForeignKeyFieldForTable(getTableForItemType(get_parent_class($this)));
 
-         if (!countElementsInTable($computer_device->getTable(), 
-                                   "`deviceprocessors_id`='".$values[get_parent_class($this)]['id']."' 
-                                       AND `computers_id`='".$values['Computer']['id']."'")) {
-            $tmp['deviceprocessors_id'] = $values[get_parent_class($this)]['id'];
-            if (isset($values['DeviceProcessor']['specificity'])) {
-               $tmp['specificity'] = $values['DeviceProcessor']['specificity'];
+         $where = "`$foreign`='".$values[get_parent_class($this)]['id']."'
+                                       AND `itemtype`='Computer'
+                                          AND `items_id`='".$values['Computer']['id']."'";
+         if (!countElementsInTable($item->getTable(), $where)) {
+            
+            if (isset($values[get_parent_class($this)]['frequency'])
+                  && $values[get_parent_class($this)]['frequency'] > 0) {
+               $tmp['frequency'] = $values[get_parent_class($this)]['frequency'];
             } else {
-               $tmp['specificity'] = '';
+               $tmp['frequency'] = 0;
             }
-            $tmp['computers_id']        = $values['Computer']['id'];
-            $tmp['itemtype']            = get_parent_class($this);
-            $computer_device->add($tmp); 
+         
+            $tmp[$foreign]  = $values[get_parent_class($this)]['id'];
+            $tmp['items_id']    = $values['Computer']['id'];
+            $tmp['itemtype']    = 'Computer';
+            $item->add($tmp);
          }
       }
    }
@@ -101,12 +114,13 @@ class PluginDatainjectionDeviceProcessorInjection extends DeviceProcessor
    }
 
    function addSpecificNeededFields($primary_type, $values) {
+      
       $fields = array();
-      if (!isset($values['specif_default'])) {
-         if (isset($values['DeviceProcessor']['frequence'])) {
-            $fields['specif_default'] = $values['DeviceProcessor']['frequence']; 
+      if (!isset($values['frequency_default'])) {
+         if (isset($values[get_parent_class($this)]['frequency'])) {
+            $fields['frequency_default'] = $values[get_parent_class($this)]['frequency']; 
          } else {
-            $fields['specif_default'] = 0; 
+            $fields['frequency_default'] = 0; 
          }
       }
       return $fields;

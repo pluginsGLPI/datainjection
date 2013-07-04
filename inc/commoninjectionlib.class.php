@@ -309,7 +309,7 @@ class PluginDatainjectionCommonInjectionLib {
     * @return an instance of the itemtype associated to the injection class
     */
    static function getItemtypeByInjectionClass($injectionClass) {
-      return getItemTypeForTable($injectionClass->table);
+      return getItemTypeForTable($injectionClass->getTable());
    }
 
 
@@ -331,9 +331,68 @@ class PluginDatainjectionCommonInjectionLib {
    }
 
 
-   static function getBlacklistedOptions() {
-      //2 : id, 19 : date_mod
-      return array(19);
+   static function getBlacklistedOptions($itemtype) {
+      global $CFG_GLPI;
+      
+      //2 : id
+      // 19 : date_mod
+      // 80 : entity
+      $blacklist = array(2, 19, 80);
+      
+      //add document fields
+      if (in_array($itemtype, $CFG_GLPI["document_types"])) {
+         $tabs = Document::getSearchOptionsToAdd($itemtype);
+         $document_fields = array();
+         unset($tabs['document']);
+         foreach ($tabs as $k => $v) {
+            $document_fields[] = $k;
+         }
+      
+         $blacklist = array_merge($blacklist, $document_fields);
+      }
+      
+      //add infocoms fields
+      if (in_array($itemtype, $CFG_GLPI["infocom_types"])) {
+         $tabs = Infocom::getSearchOptionsToAdd($itemtype);
+         $infocom_fields = array();
+         unset($tabs['financial']);
+         foreach ($tabs as $k => $v) {
+            $infocom_fields[] = $k;
+         }
+      
+         $blacklist = array_merge($blacklist, $infocom_fields);
+      }
+      //add contract fields
+      if (in_array($itemtype, $CFG_GLPI["contract_types"])) {
+         $tabs = Contract::getSearchOptionsToAdd($itemtype);
+         $contract_fields = array();
+         unset($tabs['contract']);
+         foreach ($tabs as $k => $v) {
+            $contract_fields[] = $k;
+         }
+         
+         $blacklist = array_merge($blacklist, $contract_fields);
+      }
+      
+      //add networkport fields
+      if (in_array($itemtype, $CFG_GLPI["networkport_types"])) {
+         $tabs = NetworkPort::getSearchOptionsToAdd($itemtype);
+         $networkport_fields = array();
+         unset($tabs['network']);
+         foreach ($tabs as $k => $v) {
+            $networkport_fields[] = $k;
+         }
+         
+         $blacklist = array_merge($blacklist, $networkport_fields);
+      }
+      
+      //add ticket_types fields
+      if (in_array($itemtype, $CFG_GLPI["ticket_types"])) {
+         $ticket_fields = array(60, 140);    
+         $blacklist = array_merge($blacklist, $ticket_fields);
+      }
+      
+      return $blacklist;
    }
 
 
@@ -1622,7 +1681,7 @@ class PluginDatainjectionCommonInjectionLib {
             $this->values[$itemtype]['id'] = self::ITEM_NOT_FOUND;
          } else {
             $sql = "SELECT *
-                    FROM `" . $injectionClass->table."`";
+                    FROM `" . $injectionClass->getTable()."`";
 
             $item = new $itemtype();
             //If it's a computer device
@@ -1641,15 +1700,15 @@ class PluginDatainjectionCommonInjectionLib {
                }
 
                if ($side) {
-                  $source_id            = $item->items_id_2;
-                  $destination_id       = $item->items_id_1;
-                  $source_itemtype      = $item->itemtype_2;
-                  $destination_itemtype = $item->itemtype_1;
+                  $source_id            = $item::$items_id_2;
+                  $destination_id       = $item::$items_id_1;
+                  $source_itemtype      = $item::$itemtype_2;
+                  $destination_itemtype = $item::$itemtype_1;
                } else {
-                  $source_id            = $item->items_id_1;
-                  $destination_id       = $item->items_id_2;
-                  $source_itemtype      = $item->itemtype_1;
-                  $destination_itemtype = $item->itemtype_2;
+                  $source_id            = $item::$items_id_1;
+                  $destination_id       = $item::$items_id_2;
+                  $source_itemtype      = $item::$itemtype_1;
+                  $destination_itemtype = $item::$itemtype_2;
                }
 
                $where .= " AND `$source_id`='".
@@ -1682,7 +1741,7 @@ class PluginDatainjectionCommonInjectionLib {
 
                   //Type can be recursive
                   if ($injectionClass->maybeRecursive()) {
-                     $where_entity = getEntitiesRestrictRequest(" AND", $injectionClass->table,
+                     $where_entity = getEntitiesRestrictRequest(" AND", $injectionClass->getTable(),
                                                                 "entities_id",
                                                                 $this->getValueByItemtypeAndName($itemtype,
                                                                                                  'entities_id'),
@@ -1852,7 +1911,6 @@ class PluginDatainjectionCommonInjectionLib {
          
          $res = new PluginDatainjectionResult();
          return $res->getLabel($type);
-         //return  $LANG['datainjection']['result'][$type];
       }
       return "";
    }
@@ -1880,7 +1938,7 @@ class PluginDatainjectionCommonInjectionLib {
                $type_searchOptions[$id]['linkfield'] = $add_linkfield[$tmp['field']];
             }
 
-            if (!in_array($id, $options['ignore_fields'])) {
+            if (!in_array($id, $options['ignore_fields']) && $id < 1000) {
                if (!isset($tmp['linkfield'])) {
                   $type_searchOptions[$id]['injectable'] = self::FIELD_VIRTUAL;
                } else {

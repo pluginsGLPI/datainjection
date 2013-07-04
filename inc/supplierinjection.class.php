@@ -36,8 +36,11 @@ class PluginDatainjectionSupplierInjection extends Supplier
                                            implements PluginDatainjectionInjectionInterface {
 
 
-   function __construct() {
-      $this->table = getTableForItemType(get_parent_class($this));
+   static function getTable() {
+   
+      $parenttype = get_parent_class();
+      return $parenttype::getTable();
+      
    }
 
 
@@ -56,10 +59,14 @@ class PluginDatainjectionSupplierInjection extends Supplier
       $tab = Search::getOptions(get_parent_class($this));
 
       //Remove some options because some fields cannot be imported
-      $options['ignore_fields'] = array(2, 19);
-      $options['displaytype']   = array("dropdown"       => array(9, 8),
-                                        "multiline_text" => array(16),
+      $blacklist = PluginDatainjectionCommonInjectionLib::getBlacklistedOptions(get_parent_class($this));
+      $notimportable = array(8, 29);
+      $options['ignore_fields'] = array_merge($blacklist, $notimportable);
+      
+      $options['displaytype']   = array("dropdown"       => array(9),
+                                        "multiline_text" => array(3, 16, 90),
                                         "bool"           => array(86));
+                                        
       return PluginDatainjectionCommonInjectionLib::addToSearchOptions($tab, $options, $this);
    }
 

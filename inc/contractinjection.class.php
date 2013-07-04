@@ -35,8 +35,11 @@ if (!defined('GLPI_ROOT')) {
 class PluginDatainjectionContractInjection extends Contract
                                            implements PluginDatainjectionInjectionInterface {
 
-   function __construct() {
-      $this->table = getTableForItemType(get_parent_class($this));
+   static function getTable() {
+   
+      $parenttype = get_parent_class();
+      return $parenttype::getTable();
+      
    }
 
 
@@ -52,43 +55,49 @@ class PluginDatainjectionContractInjection extends Contract
 
    function getOptions($primary_type = '') {
 
-      $tab = Search::getOptions(get_parent_class($this));
+      $tab                    = Search::getOptions(get_parent_class($this));
 
       //Specific to location
-      $tab[5]['checktype'] = 'date';
+      $tab[5]['checktype']       = 'date';
 
-      $tab[6]['minvalue']  = 0;
-      $tab[6]['maxvalue']  = 120;
-      $tab[6]['step']      = 1;
-      $tab[6]['checktype'] = 'integer';
-
-      $tab[11]['checktype'] = 'float';
-
-      $tab[7]['minvalue']  = 0;
-      $tab[7]['maxvalue']  = 120;
-      $tab[7]['step']      = 1;
-      $tab[7]['checktype'] = 'integer';
-
-      $tab[22]['linkfield'] = 'billing';
+      $tab[6]['minvalue']        = 0;
+      $tab[6]['maxvalue']        = 120;
+      $tab[6]['step']            = 1;
+      $tab[6]['checktype']       = 'integer';
+      
+      $tab[7]['minvalue']        = 0;
+      $tab[7]['maxvalue']        = 120;
+      $tab[7]['step']            = 1;
+      $tab[7]['checktype']       = 'integer';
+      
+      $tab[11]['checktype']      = 'float';
+      
+      $tab[20]['checktype']      = 'date';
+      
+      $tab[22]['linkfield']      = 'billing';
 
       // Associated suppliers
-      $tab[29]['linkfield']     = 'suppliers_id';
-      $tab[29]['displaytype']   = 'relation';
-      $tab[29]['relationclass'] = 'Contract_Supplier';
-      $tab[29]['relationfield'] = $tab[29]['linkfield'];
-
+      $tab[29]['linkfield']      = 'suppliers_id';
+      $tab[29]['displaytype']    = 'relation';
+      $tab[29]['relationclass']  = 'Contract_Supplier';
+      $tab[29]['relationfield']  = $tab[29]['linkfield'];
+      
       //Remove some options because some fields cannot be imported
-      $options['ignore_fields'] = array(2, 19, 80);
+      $blacklist = PluginDatainjectionCommonInjectionLib::getBlacklistedOptions(get_parent_class($this));
+      $notimportable = array(12, 13, 20, 29, 41, 42, 43, 44, 45, 72);
+      $options['ignore_fields'] = array_merge($blacklist, $notimportable);
+
       $options['displaytype']   = array("dropdown"         => array(4),
                                         "date"             => array(5),
-                                        "dropdown_integer" => array(6,7,21),
+                                        "dropdown_integer" => array(6, 7, 21),
                                         "bool"             => array(86),
                                         "alert"            => array(59),
                                         "billing"          => array(22),
                                         "renewal"          => array(23),
-                                        "multiline_text"   => array(16,90));
-      $tab = PluginDatainjectionCommonInjectionLib::addToSearchOptions($tab, $options, $this);
-      return $tab;
+                                        "multiline_text"   => array(16 ,90));
+                                        
+      return PluginDatainjectionCommonInjectionLib::addToSearchOptions($tab, $options, $this);
+
    }
 
 

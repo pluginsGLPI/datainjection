@@ -39,10 +39,12 @@ class PluginDatainjectionComputer_SoftwareVersionInjection extends Computer_Soft
       
       return __('Computers');
    }
-
-
-   function __construct() {
-      $this->table = getTableForItemType(get_parent_class($this));
+   
+   static function getTable() {
+   
+      $parenttype = get_parent_class();
+      return $parenttype::getTable();
+      
    }
 
 

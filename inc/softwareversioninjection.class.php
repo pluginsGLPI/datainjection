@@ -37,8 +37,11 @@ class PluginDatainjectionSoftwareVersionInjection extends SoftwareVersion
                                                   implements PluginDatainjectionInjectionInterface {
 
 
-   function __construct() {
-      $this->table = getTableForItemType(get_parent_class($this));
+   static function getTable() {
+   
+      $parenttype = get_parent_class();
+      return $parenttype::getTable();
+      
    }
 
 
@@ -56,10 +59,7 @@ class PluginDatainjectionSoftwareVersionInjection extends SoftwareVersion
 
 
       $tab = Search::getOptions(get_parent_class($this));
-      $options['ignore_fields'] = array();
-      $options['displaytype']   = array("dropdown"       => array(4,31),
-                                        "multiline_text" => array(16));
-
+      
       if ($primary_type == 'SoftwareVersion') {
          $tab[100]['name']        = __('Software');
          $tab[100]['field']       = 'name';
@@ -69,6 +69,14 @@ class PluginDatainjectionSoftwareVersionInjection extends SoftwareVersion
          $tab[100]['injectable']  = true;
       }
       
+      //Remove some options because some fields cannot be imported
+      $blacklist = PluginDatainjectionCommonInjectionLib::getBlacklistedOptions(get_parent_class($this));
+      $notimportable = array();
+      $options['ignore_fields'] = array_merge($blacklist, $notimportable);
+      
+      $options['displaytype']   = array("dropdown"       => array(4,31),
+                                        "multiline_text" => array(16));
+
       return PluginDatainjectionCommonInjectionLib::addToSearchOptions($tab, $options, $this);
    }
 

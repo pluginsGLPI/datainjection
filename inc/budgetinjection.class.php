@@ -36,11 +36,12 @@ if (!defined('GLPI_ROOT')) {
 class PluginDatainjectionBudgetInjection extends Budget
                                          implements PluginDatainjectionInjectionInterface {
 
-   function __construct() {
-      //Needed for getSearchOptions !
-      $this->table = getTableForItemType(get_parent_class($this));
+   static function getTable() {
+   
+      $parenttype = get_parent_class();
+      return $parenttype::getTable();
+      
    }
-
 
    function isPrimaryType() {
       return true;
@@ -54,21 +55,25 @@ class PluginDatainjectionBudgetInjection extends Budget
 
    function getOptions($primary_type = '') {
 
-      $tab = Search::getOptions(get_parent_class($this));
+      $tab                 = Search::getOptions(get_parent_class($this));
 
-      $tab[2]['checktype'] = 'date';
       $tab[3]['checktype'] = 'date';
       $tab[4]['checktype'] = 'float';
+      $tab[5]['checktype'] = 'date';
 
       //Remove some options because some fields cannot be imported
-      $options['ignore_fields'] = array(19, 80);
-      $options['displaytype']   = array("date"           => array(2, 3),
+      $blacklist = PluginDatainjectionCommonInjectionLib::getBlacklistedOptions(get_parent_class($this));
+      $notimportable = array();
+      $options['ignore_fields'] = array_merge($blacklist, $notimportable);
+      
+      
+
+      $options['displaytype']   = array("date"           => array(3,5),
                                         "yesno"          => array(86),
-                                        "multiline_text" => array(16),
+                                        "multiline_text" => array(16, 90),
                                         "decimal"        => array(4));
 
-      $tab = PluginDatainjectionCommonInjectionLib::addToSearchOptions($tab, $options, $this);
-      return $tab;
+      return PluginDatainjectionCommonInjectionLib::addToSearchOptions($tab, $options, $this);
    }
 
 

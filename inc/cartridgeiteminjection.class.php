@@ -35,11 +35,13 @@ if (!defined('GLPI_ROOT')) {
 class PluginDatainjectionCartridgeItemInjection extends CartridgeItem
                                                 implements PluginDatainjectionInjectionInterface {
 
-   function __construct() {
-      $this->table = getTableForItemType(get_parent_class($this));
+   static function getTable() {
+   
+      $parenttype = get_parent_class();
+      return $parenttype::getTable();
+      
    }
-
-
+   
    function isPrimaryType() {
       return true;
    }
@@ -52,29 +54,29 @@ class PluginDatainjectionCartridgeItemInjection extends CartridgeItem
 
    function getOptions($primary_type = '') {
 
-      $tab = Search::getOptions(get_parent_class($this));
+      $tab                 = Search::getOptions(get_parent_class($this));
 
       //Specific to location
       $tab[3]['linkfield'] = 'locations_id';
 
-      $tab[8]['minvalue'] = '1';
-      $tab[8]['maxvalue'] = '100';
-      $tab[8]['step']     = 1;
-      $tab[8]['-1']       = __('Never');
-
-      $blacklist = PluginDatainjectionCommonInjectionLib::getBlacklistedOptions();
+      $tab[8]['minvalue']  = '1';
+      $tab[8]['maxvalue']  = '100';
+      $tab[8]['step']      = 1;
+      $tab[8]['-1']        = __('Never');
 
       //Remove some options because some fields cannot be imported
-      $notimportable = array(80, 91, 92, 93);
+      $blacklist = PluginDatainjectionCommonInjectionLib::getBlacklistedOptions(get_parent_class($this));
+      $notimportable = array(91, 92, 93);
       $options['ignore_fields'] = array_merge($blacklist, $notimportable);
-      $options['displaytype']   = array("dropdown"         => array(3, 4,23),
+      
+      $options['displaytype']   = array("dropdown"         => array(3, 4, 23, 49),
                                         "user"             => array(24),
                                         "multiline_text"   => array(16, 90),
                                         "dropdown_integer" => array(8));
+                                        
       $options['checktype']     = array("integer" => array(8));
-      $tab = PluginDatainjectionCommonInjectionLib::addToSearchOptions($tab, $options, $this);
 
-      return $tab;
+      return $PluginDatainjectionCommonInjectionLib::addToSearchOptions($tab, $options, $this);
    }
 
 

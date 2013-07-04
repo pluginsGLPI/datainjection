@@ -55,7 +55,7 @@ class PluginDatainjectionNetworkportInjection extends NetworkPort
    function getOptions($primary_type = '') {
 
       $tab = Search::getOptions(get_parent_class($this));
-      $blacklist = PluginDatainjectionCommonInjectionLib::getBlacklistedOptions();
+      $blacklist = PluginDatainjectionCommonInjectionLib::getBlacklistedOptions(get_parent_class($this));
 
       //To manage vlans : relies on a CommonDBRelation object !
       $tab[100]['name']          = __('VLAN');

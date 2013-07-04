@@ -35,8 +35,11 @@ if (!defined('GLPI_ROOT')) {
 class PluginDatainjectionGroupInjection extends Group
                                         implements PluginDatainjectionInjectionInterface {
 
-   function __construct() {
-      $this->table = getTableForItemType(get_parent_class($this));
+   static function getTable() {
+   
+      $parenttype = get_parent_class();
+      return $parenttype::getTable();
+      
    }
 
 
@@ -55,9 +58,13 @@ class PluginDatainjectionGroupInjection extends Group
       $tab = Search::getOptions(get_parent_class($this));
 
       //Remove some options because some fields cannot be imported
-      $options['ignore_fields'] = array(2, 19, 80);
-      $options['displaytype']   = array("bool"           => array(11, 12, 13, 14 ,15),
+      $blacklist = PluginDatainjectionCommonInjectionLib::getBlacklistedOptions(get_parent_class($this));
+      $notimportable = array(14, 70, 71);
+      $options['ignore_fields'] = array_merge($blacklist, $notimportable);
+
+      $options['displaytype']   = array("bool"           => array(11, 12, 13, 14 ,15, 17),
                                         "multiline_text" => array(16));
+                                        
       return PluginDatainjectionCommonInjectionLib::addToSearchOptions($tab, $options, $this);
    }
 

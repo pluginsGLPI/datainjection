@@ -35,9 +35,11 @@ if (!defined('GLPI_ROOT')) {
 class PluginDatainjectionDeviceMemoryInjection extends DeviceMemory
                                                implements PluginDatainjectionInjectionInterface {
 
-   function __construct() {
-      //Needed for getSearchOptions !
-      $this->table = getTableForItemType(get_parent_class($this));
+   static function getTable() {
+   
+      $parenttype = get_parent_class();
+      return $parenttype::getTable();
+      
    }
 
 
@@ -54,33 +56,43 @@ class PluginDatainjectionDeviceMemoryInjection extends DeviceMemory
    function getOptions($primary_type = '') {
 
       $tab                      = Search::getOptions(get_parent_class($this));
-      $options['ignore_fields'] = array();
+      
+      //Remove some options because some fields cannot be imported
+      $blacklist = PluginDatainjectionCommonInjectionLib::getBlacklistedOptions(get_parent_class($this));
+      $notimportable = array();
+      $options['ignore_fields'] = array_merge($blacklist, $notimportable);
+      
       $options['displaytype']   = array("multiline_text" => array(16),
-                                        "dropdown"       => array(23, 13));
+                                        "dropdown"       => array(13, 23));
 
-      $tab = PluginDatainjectionCommonInjectionLib::addToSearchOptions($tab, $options, $this);
+      return PluginDatainjectionCommonInjectionLib::addToSearchOptions($tab, $options, $this);
 
-      return $tab;
    }
 
 
    function processAfterInsertOrUpdate($values, $add = true, $rights = array()) {
       if (isset($values['Computer']['id'])) {
-         $computer_device          = new Computer_Device(get_parent_class($this));
-         $tmp['devicememories_id'] = $values[get_parent_class($this)]['id'];
-         if (isset($values['DeviceProcessor']['specificity'])
-            && $values['DeviceProcessor']['specificity'] > 0) {
-            $tmp['specificity'] = $values['DeviceMemory']['specificity'];
-         } else {
-            $tmp['specificity'] = '';
-         }
-         $tmp['computers_id'] = $values['Computer']['id'];
-         $tmp['itemtype']     = get_parent_class($this);
+         
+         $class = "Item_".get_parent_class($this);
+         $item   = new $class();
+         $foreign = getForeignKeyFieldForTable(getTableForItemType(get_parent_class($this)));
 
-         $where = "`devicememories_id`='".$values[get_parent_class($this)]['id']."'
-                                       AND `computers_id`='".$values['Computer']['id']."'";
-         if (!countElementsInTable($computer_device->getTable(), $where)) {
-            $computer_device->add($tmp);
+         $where = "`$foreign`='".$values[get_parent_class($this)]['id']."'
+                                       AND `itemtype`='Computer'
+                                          AND `items_id`='".$values['Computer']['id']."'";
+         if (!countElementsInTable($item->getTable(), $where)) {
+            
+            if (isset($values[get_parent_class($this)]['size'])
+                  && $values[get_parent_class($this)]['size'] > 0) {
+               $tmp['size'] = $values[get_parent_class($this)]['size'];
+            } else {
+               $tmp['size'] = 0;
+            }
+         
+            $tmp[$foreign]  = $values[get_parent_class($this)]['id'];
+            $tmp['items_id']    = $values['Computer']['id'];
+            $tmp['itemtype']    = 'Computer';
+            $item->add($tmp);
          }
       }
    }
@@ -103,8 +115,12 @@ class PluginDatainjectionDeviceMemoryInjection extends DeviceMemory
 
    function addSpecificNeededFields($primary_type, $values) {
       $fields = array();
-      if (!isset($values['DeviceMemory']['specif_default'])) {
-         $fields['specif_default'] = 0;
+      if (!isset($values['size_default'])) {
+         if (isset($values[get_parent_class($this)]['size'])) {
+            $fields['size_default'] = $values[get_parent_class($this)]['size']; 
+         } else {
+            $fields['size_default'] = 0; 
+         }
       }
       return $fields;
    }

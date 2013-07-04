@@ -35,31 +35,34 @@ if (!defined('GLPI_ROOT')) {
 class PluginDatainjectionComputerTypeInjection extends ComputerType
                                                implements PluginDatainjectionInjectionInterface {
 
-   function __construct() {
-      //Needed for getSearchOptions !
-      $this->table = getTableForItemType(get_parent_class($this));
-   }
-
 
    function isPrimaryType() {
       return true;
    }
 
-
    function connectedTo() {
       return array();
    }
-
+   
+   static function getTable() {
+   
+      $parenttype = get_parent_class();
+      return $parenttype::getTable();
+      
+   }
 
    function getOptions($primary_type = '') {
 
-      $tab                      = Search::getOptions(get_parent_class($this));
-      $options['ignore_fields'] = array(2, 19);
+      $tab = Search::getOptions(get_parent_class($this));
+      
+      //Remove some options because some fields cannot be imported
+      $blacklist = PluginDatainjectionCommonInjectionLib::getBlacklistedOptions(get_parent_class($this));
+      $notimportable = array();
+      $options['ignore_fields'] = array_merge($blacklist, $notimportable);
+      
       $options['displaytype']   = array("multiline_text" => array(16));
 
-      $tab = PluginDatainjectionCommonInjectionLib::addToSearchOptions($tab, $options, $this);
-
-      return $tab;
+      return PluginDatainjectionCommonInjectionLib::addToSearchOptions($tab, $options, $this);
    }
 
 

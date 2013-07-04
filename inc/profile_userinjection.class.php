@@ -36,8 +36,11 @@ class PluginDatainjectionProfile_UserInjection extends Profile_User
                                                implements PluginDatainjectionInjectionInterface {
 
 
-   function __construct()  {
-      $this->table = getTableForItemType(get_parent_class($this));
+   static function getTable() {
+   
+      $parenttype = get_parent_class();
+      return $parenttype::getTable();
+      
    }
 
 
@@ -54,8 +57,7 @@ class PluginDatainjectionProfile_UserInjection extends Profile_User
    function getOptions($primary_type = '') {
 
       $tab = Search::getOptions(get_parent_class($this));
-      unset($tab[2]);
-
+      
       $tab[3]['checktype']   = 'bool';
       $tab[3]['displaytype'] = 'bool';
 
@@ -64,8 +66,16 @@ class PluginDatainjectionProfile_UserInjection extends Profile_User
 
       $tab[5]['checktype']   = 'text';
       $tab[5]['displaytype'] = 'dropdown';
-
-      return $tab;
+      
+      //Remove some options because some fields cannot be imported
+      $blacklist = PluginDatainjectionCommonInjectionLib::getBlacklistedOptions(get_parent_class($this));
+      $notimportable = array();
+      $options['ignore_fields'] = array_merge($blacklist, $notimportable);
+      
+      $options['displaytype']   = array("bool"           => array(86));
+                                        
+      return PluginDatainjectionCommonInjectionLib::addToSearchOptions($tab, $options, $this);
+      
    }
 
 

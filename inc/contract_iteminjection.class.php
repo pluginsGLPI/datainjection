@@ -31,8 +31,11 @@
 class PluginDatainjectionContract_ItemInjection extends Contract_Item
                                                 implements PluginDatainjectionInjectionInterface {
 
-   function __construct() {
-      $this->table = getTableForItemType(get_parent_class($this));
+   static function getTable() {
+   
+      $parenttype = get_parent_class();
+      return $parenttype::getTable();
+      
    }
 
 
@@ -47,8 +50,9 @@ class PluginDatainjectionContract_ItemInjection extends Contract_Item
 
 
    function connectedTo() {
-      return array('Computer', 'Monitor', 'NetworkEquipment', 'Peripheral', 'Phone', 'Printer',
-                   'Software');
+      global $CFG_GLPI;
+
+      return $CFG_GLPI["contract_types"];
    }
 
 

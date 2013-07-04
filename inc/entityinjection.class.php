@@ -35,8 +35,11 @@ if (!defined('GLPI_ROOT')) {
 class PluginDatainjectionEntityInjection extends Entity
                                          implements PluginDatainjectionInjectionInterface{
 
-   function __construct() {
-      $this->table = getTableForItemType(get_parent_class($this));
+   static function getTable() {
+   
+      $parenttype = get_parent_class();
+      return $parenttype::getTable();
+      
    }
 
 
@@ -55,16 +58,15 @@ class PluginDatainjectionEntityInjection extends Entity
       $tab = Search::getOptions(get_parent_class($this));
 
       //Remove some options because some fields cannot be imported
-      $options['ignore_fields'] = array(2, 19, 14);
-      $options['displaytype']   = array("multiline_text" => array(16, 17), "dropdown" => array(9));
-      $tab = PluginDatainjectionCommonInjectionLib::addToSearchOptions($tab, $options, $this);
-      foreach ($tab as $id => $option) {
-         //If table is NOT glpi_entitites but glpi_entitydatas => remove option
-         if ($option['table'] != 'glpi_entities') {
-            unset($tab[$id]);
-         }
-      }
-      return $tab;
+      $blacklist = PluginDatainjectionCommonInjectionLib::getBlacklistedOptions(get_parent_class($this));
+      $notimportable = array(14, 26, 27, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 47, 48, 49,50, 51, 52, 53, 54, 55, 91, 92, 93);
+      $options['ignore_fields'] = array_merge($blacklist, $notimportable);
+      
+      $options['displaytype']   = array("multiline_text" => array(3, 16, 17, 24),
+                                       "dropdown" => array(9));
+                                       
+      return PluginDatainjectionCommonInjectionLib::addToSearchOptions($tab, $options, $this);
+
    }
 
    /**
@@ -147,44 +149,6 @@ class PluginDatainjectionEntityInjection extends Entity
          }
       }
    }
-
-   function processAfterInsertOrUpdate($values, $add = true, $rights = array()) {
-
-      if (isset($values['EntityData'])) {
-         $can_overwrite = $rights['overwrite_notempty_fields'];
-
-         $tmp = $values['EntityData'];
-         $entitydata = new EntityData();
-         $entities = getAllDatasFromTable("glpi_entitydatas", 
-                                          "`entities_id`='".$values['Entity']['id']."'");
-         if (!empty($entities)) {
-            //Update entitydata
-            $tmp = array_pop($entities);
-            foreach ($values['EntityData'] as $key => $value) {
-               if ($can_overwrite || (!$can_overwrite 
-                  && (!isset($tmp[$key]) || $tmp[$key] == ''))) {
-               $tmp[$key] = $value;
-               }
-            }
-            $entitydata->update($tmp);
-         } else {
-            $entitydata->getEmpty();
-            foreach ($entitydata->fields as $key => $value) {
-               if ($value != '') {
-                  $tmp[$key] = $value;
-               }
-            }
-            foreach ($values['EntityData'] as $key => $value) {
-               $tmp[$key] = $value;
-            }
-            $tmp['entities_id'] = $values['Entity']['id'];
-            $entitydata->add($tmp);
-         }
-      
-         unset($values['EntityData']);
-      }
-   }
-   
 }
 
 ?>

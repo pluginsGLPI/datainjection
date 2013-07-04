@@ -35,12 +35,14 @@ if (!defined('GLPI_ROOT')) {
 /// Computer class
 class PluginDatainjectionComputerInjection extends Computer
                                            implements PluginDatainjectionInjectionInterface {
-
-   function __construct() {
-      //Needed for getSearchOptions !
-      $this->table = getTableForItemType(get_parent_class($this));
+   
+   static function getTable() {
+   
+      $parenttype = get_parent_class();
+      return $parenttype::getTable();
+      
    }
-
+   
 
    function isPrimaryType() {
       return true;
@@ -54,24 +56,24 @@ class PluginDatainjectionComputerInjection extends Computer
 
    function getOptions($primary_type = '') {
 
-      $tab = Search::getOptions(get_parent_class($this));
+      $tab                 = Search::getOptions(get_parent_class($this));
 
       //Specific to location
       $tab[3]['linkfield'] = 'locations_id';
-
-      $blacklist = PluginDatainjectionCommonInjectionLib::getBlacklistedOptions();
+      
       //Remove some options because some fields cannot be imported
-      $notimportable = array(2, 91, 92, 93, 80, 100, 7, 10, 11, 12, 13, 15, 34, 35, 36, 39, 14,
-                             150, 151, 152, 153, 154, 155, 156, 101, 102, 103, 110, 111, 19, 50, 122);
+      $blacklist = PluginDatainjectionCommonInjectionLib::getBlacklistedOptions(get_parent_class($this));
+      $notimportable = array(7, 10, 11, 12, 13, 14, 15, 19, 34, 35, 36, 39, 91, 92, 93,
+                               150, 151, 152, 153, 154, 155, 156, 160, 161, 162, 163, 164 ,165, 166);
       $options['ignore_fields'] = array_merge($blacklist, $notimportable);
-      $options['displaytype'] = array("dropdown"       => array(3, 4, 40, 31, 45, 46, 41, 71, 32,
-                                                                33, 23, 42, 49),
-                                      "user"           => array(70, 24),
+      
+      $options['displaytype'] = array("dropdown"       => array(3, 4, 23, 31, 32,
+                                                                33, 40, 41, 42, 45, 46, 49, 71),
+                                      "user"           => array(24, 70),
                                       "multiline_text" => array(16, 90));
 
-      $tab = PluginDatainjectionCommonInjectionLib::addToSearchOptions($tab, $options, $this);
+      return PluginDatainjectionCommonInjectionLib::addToSearchOptions($tab, $options, $this);
 
-      return $tab;
    }
 
 

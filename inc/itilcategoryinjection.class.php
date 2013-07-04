@@ -36,9 +36,11 @@ class PluginDatainjectionITILCategoryInjection extends ITILCategory
                                         implements PluginDatainjectionInjectionInterface {
 
 
-   function __construct() {
-      //Needed for getSearchOptions !
-      $this->table = getTableForItemType(get_parent_class($this));
+   static function getTable() {
+   
+      $parenttype = get_parent_class();
+      return $parenttype::getTable();
+      
    }
 
 
@@ -53,64 +55,21 @@ class PluginDatainjectionITILCategoryInjection extends ITILCategory
 
 
    function getOptions($primary_type = '') {
-
+      
       $tab = Search::getOptions(get_parent_class($this));
 
-      $blacklist = PluginDatainjectionCommonInjectionLib::getBlacklistedOptions();
       //Remove some options because some fields cannot be imported
-      $notimportable = array(14, 80, 19);
-      $ignore_fields = array_merge($blacklist, $notimportable);
+      $blacklist = PluginDatainjectionCommonInjectionLib::getBlacklistedOptions(get_parent_class($this));
+      $notimportable = array(14, 77, 78);
+      $options['ignore_fields'] = array_merge($blacklist, $notimportable);
+      
+      $options['displaytype'] = array("dropdown"       => array(71, 72, 73),
+                                      "bool"           => array(3, 74, 75, 76, 86),
+                                      "user"           => array(70),
+                                      "multiline_text" => array(16));
 
-      //Add linkfield for theses fields : no massive action is allowed in the core, but they can be
-      //imported using the commonlib
-      $add_linkfield = array('comment' => 'comment',
-                             'notepad' => 'notepad');
+      return PluginDatainjectionCommonInjectionLib::addToSearchOptions($tab, $options, $this);
 
-      //Add default displaytype (text)
-      foreach ($tab as $id => $tmp) {
-         if (!is_array($tmp) || in_array($id,$ignore_fields)) {
-            unset($tab[$id]);
-
-         } else {
-            if (in_array($tmp['field'],$add_linkfield)) {
-               $tab[$id]['linkfield'] = $add_linkfield[$tmp['field']];
-            }
-
-            if (!in_array($id,$ignore_fields)) {
-               if (!isset($tmp['linkfield'])) {
-                  $tab[$id]['injectable'] = PluginDatainjectionCommonInjectionLib::FIELD_VIRTUAL;
-               } else {
-                  $tab[$id]['injectable'] = PluginDatainjectionCommonInjectionLib::FIELD_INJECTABLE;
-               }
-
-               if (isset($tmp['linkfield']) && !isset($tmp['displaytype'])) {
-                  $tab[$id]['displaytype'] = 'text';
-               }
-
-               if (isset($tmp['linkfield']) && !isset($tmp['checktype'])) {
-                  $tab[$id]['checktype'] = 'text';
-               }
-            }
-         }
-      }
-
-      //Add displaytype value
-      $fields_definition = array("bool"           => array(86, 74, 75, 76),
-                                 "multiline_text" => array(16),
-                                 "dropdown"       => array(71),
-                                 "user"           => array(70),
-                                 "single"         => array(72, 73));
-
-      foreach ($fields_definition as $type => $tabsID) {
-         foreach ($tabsID as $tabID) {
-            $tab[$tabID]['displaytype'] = $type;
-         }
-      }
-
-      //By default completename has no linkfield because it cannot be modified using the massiveaction
-      $tab[1]['displaytype'] = 'tree';
-      $tab[1]['linkfield']   = 'completename';
-      return $tab;
    }
 
    /**

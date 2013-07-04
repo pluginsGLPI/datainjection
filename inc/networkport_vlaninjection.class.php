@@ -36,8 +36,11 @@ class PluginDatainjectionNetworkport_VlanInjection extends NetworkPort_Vlan
                                                    implements PluginDatainjectionInjectionInterface {
 
 
-   function __construct() {
-      $this->table = getTableForItemType(get_parent_class($this));
+   static function getTable() {
+   
+      $parenttype = get_parent_class();
+      return $parenttype::getTable();
+      
    }
 
 
@@ -52,13 +55,17 @@ class PluginDatainjectionNetworkport_VlanInjection extends NetworkPort_Vlan
 
 
    function getOptions($primary_type = '') {
-
+      
+      $tab                      = Search::getOptions(get_parent_class($this));
+      
       //Remove some options because some fields cannot be imported
-      $options['ignore_fields'] = PluginDatainjectionCommonInjectionLib::getBlacklistedOptions();
-      $options['displaytype']   = array();
+      $blacklist = PluginDatainjectionCommonInjectionLib::getBlacklistedOptions(get_parent_class($this));
+      $notimportable = array();
+      $options['ignore_fields'] = array_merge($blacklist, $notimportable);
+      
+      $options['displaytype']   = array("dropdown" => array(4));
 
-      return PluginDatainjectionCommonInjectionLib::addToSearchOptions(parent::getSearchOptions(),
-                                                                       $options, $this);
+      return PluginDatainjectionCommonInjectionLib::addToSearchOptions($tab, $options, $this);
    }
 
 

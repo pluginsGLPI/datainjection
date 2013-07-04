@@ -126,7 +126,7 @@ class PluginDatainjectionInjectionType {
          $injectionClass = new $type();
          $connected_to   = $injectionClass->connectedTo();
          if (in_array($p['primary_type'], $connected_to)) {
-            $typename          = getItemTypeForTable($injectionClass->table);
+            $typename          = getItemTypeForTable($injectionClass->getTable());
             $values[$typename] = call_user_func(array($type, 'getTypeName'));
          }
       }

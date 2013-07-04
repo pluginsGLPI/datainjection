@@ -20,7 +20,7 @@
  --------------------------------------------------------------------------
  @package   datainjection
  @author    the datainjection plugin team
- @copyright Copyright (c) 2010-2013 Datainjection plugin team
+ @copyright Copyright (c) 2010-2011 Order plugin team
  @license   GPLv2+
             http://www.gnu.org/licenses/gpl.txt
  @link      https://forge.indepnet.net/projects/datainjection
@@ -36,8 +36,11 @@ class PluginDatainjectionUserInjection extends User
                                        implements PluginDatainjectionInjectionInterface {
 
 
-   function __construct() {
-      $this->table = getTableForItemType(get_parent_class($this));
+   static function getTable() {
+   
+      $parenttype = get_parent_class();
+      return $parenttype::getTable();
+      
    }
 
 
@@ -53,20 +56,20 @@ class PluginDatainjectionUserInjection extends User
 
    function getOptions($primary_type = '') {
 
-      $tab = Search::getOptions(get_parent_class($this));
+      $tab                       = Search::getOptions(get_parent_class($this));
 
       //Specific to location
-      $tab[3]['linkfield'] = 'locations_id';
-      $tab[1]['linkfield'] = 'name';
+      $tab[1]['linkfield']       = 'name';
+      $tab[3]['linkfield']       = 'locations_id';
 
       //Manage password
-      $tab[4]['table']         = $this->getTable();
-      $tab[4]['field']         = 'password';
-      $tab[4]['linkfield']     = 'password';
-      $tab[4]['name']          = __('Password');
-      $tab[4]['displaytype']   = 'password';
+      $tab[4]['table']           = $this->getTable();
+      $tab[4]['field']           = 'password';
+      $tab[4]['linkfield']       = 'password';
+      $tab[4]['name']            = __('Password');
+      $tab[4]['displaytype']     = 'password';
 
-      $tab[5]['displaytype']   = 'text';
+      $tab[5]['displaytype']     = 'text';
       
       //To manage groups : relies on a CommonDBRelation object !
       $tab[100]['name']          = __('Group');
@@ -78,7 +81,7 @@ class PluginDatainjectionUserInjection extends User
       $tab[100]['relationfield'] = $tab[100]['linkfield'];
 
       //To manage groups : relies on a CommonDBRelation object !
-      $tab[101]['name']          = _n('Profile', 'Profiles', 2);
+      $tab[101]['name']          = __('Profile');
       $tab[101]['field']         = 'name';
       $tab[101]['table']         = getTableForItemType('Profile');
       $tab[101]['linkfield']     = getForeignKeyFieldForTable($tab[101]['table']);
@@ -86,21 +89,20 @@ class PluginDatainjectionUserInjection extends User
       $tab[101]['relationclass'] = 'Profile_User';
       $tab[101]['relationfield'] = $tab[101]['linkfield'];
 
-      $blacklist = PluginDatainjectionCommonInjectionLib::getBlacklistedOptions();
+      
       //Remove some options because some fields cannot be imported
-      $notimportable = array(13, 14, 15, 20, 80, 91, 92, 93);
-
+      $blacklist = PluginDatainjectionCommonInjectionLib::getBlacklistedOptions(get_parent_class($this));
+      $notimportable = array(13, 14, 15, 17, 20, 23, 30, 31, 60, 61, 91, 92, 93);
+      $options['ignore_fields']  = array_merge($blacklist, $notimportable);
+      
       //Add displaytype value
-      $dropdown                 = array("dropdown"       => array(3, 81, 82),
+      $options['displaytype']    = array("dropdown"       => array(3, 77, 79, 81, 82),
                                         "multiline_text" => array(16),
                                         "bool"           => array(8),
                                         "password"       => array(4));
-      $options['displaytype']   = $dropdown;
-      $options['ignore_fields'] = array_merge($blacklist, $notimportable);
       
-      $tab = PluginDatainjectionCommonInjectionLib::addToSearchOptions($tab, $options, $this);
+      return PluginDatainjectionCommonInjectionLib::addToSearchOptions($tab, $options, $this);
 
-      return $tab;
    }
 
    /**

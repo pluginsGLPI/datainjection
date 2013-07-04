@@ -35,12 +35,18 @@ if (!defined('GLPI_ROOT')) {
 class PluginDatainjectionComputer_ItemInjection extends Computer_Item
                                                 implements PluginDatainjectionInjectionInterface {
 
-   static function getTypeName($nb=0) {
-
-      return __('Direct Connections');
+   static function getTable() {
+   
+      $parenttype = get_parent_class();
+      return $parenttype::getTable();
+      
    }
-
-
+   
+   static function getTypeName($nb=0) {
+      
+      return __('Direct connections');
+   }
+   
    function __construct() {
       $this->table = getTableForItemType(get_parent_class($this));
    }
@@ -52,7 +58,9 @@ class PluginDatainjectionComputer_ItemInjection extends Computer_Item
 
 
    function connectedTo() {
-      return array('Monitor', 'NetworkEquipment', 'Peripheral', 'Phone', 'Printer');
+      global $CFG_GLPI;
+
+      return $CFG_GLPI["directconnect_types"];
    }
 
 
@@ -79,7 +87,7 @@ class PluginDatainjectionComputer_ItemInjection extends Computer_Item
       $tab[112]['table']        = 'glpi_computers';
       $tab[112]['field']        = 'otherserial';
       $tab[112]['linkfield']    = 'otherserial';
-      $tab[112]['name']         = __('Inventory Number');
+      $tab[112]['name']         = __('Inventory number');
       $tab[112]['injectable']   = true;
       $tab[112]['displaytype']  = 'dropdown';
       $tab[112]['checktype']    = 'text';

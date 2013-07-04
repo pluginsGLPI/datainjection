@@ -35,9 +35,11 @@ if (!defined('GLPI_ROOT')) {
 class PluginDatainjectionDeviceMotherboardInjection extends DeviceMotherboard
                                                implements PluginDatainjectionInjectionInterface {
 
-   function __construct() {
-      //Needed for getSearchOptions !
-      $this->table = getTableForItemType(get_parent_class($this));
+   static function getTable() {
+   
+      $parenttype = get_parent_class();
+      return $parenttype::getTable();
+      
    }
 
 
@@ -54,30 +56,40 @@ class PluginDatainjectionDeviceMotherboardInjection extends DeviceMotherboard
    function getOptions($primary_type = '') {
 
       $tab                      = Search::getOptions(get_parent_class($this));
-      $options['ignore_fields'] = array();
+      
+      //Remove some options because some fields cannot be imported
+      $blacklist = PluginDatainjectionCommonInjectionLib::getBlacklistedOptions(get_parent_class($this));
+      $notimportable = array();
+      $options['ignore_fields'] = array_merge($blacklist, $notimportable);
+      
       $options['displaytype']   = array("multiline_text" => array(16),
                                         "dropdown"       => array(23));
 
-      $tab = PluginDatainjectionCommonInjectionLib::addToSearchOptions($tab, $options, $this);
+      return PluginDatainjectionCommonInjectionLib::addToSearchOptions($tab, $options, $this);
 
-      return $tab;
    }
 
-
+   
    function processAfterInsertOrUpdate($values, $add = true, $rights = array()) {
+      
       if (isset($values['Computer']['id'])) {
-         $computer_device   = new Computer_Device(get_parent_class($this));
+         
+         $class = "Item_".get_parent_class($this);
+         $item   = new $class();
+         $foreign = getForeignKeyFieldForTable(getTableForItemType(get_parent_class($this)));
 
-         if (!countElementsInTable($computer_device->getTable(), 
-                                   "`devicemotherboards_id`='".$values[get_parent_class($this)]['id']."' 
-                                       AND `computers_id`='".$values['Computer']['id']."'")) {
-            $tmp['devicemotherboards_id'] = $values[get_parent_class($this)]['id'];
-            $tmp['computers_id']          = $values['Computer']['id'];
-            $tmp['itemtype']              = get_parent_class($this);
-            $computer_device->add($tmp);
+         if (!countElementsInTable($item->getTable(), 
+                                   "`$foreign`='".$values[get_parent_class($this)]['id']."' 
+                                       AND `itemtype`='Computer'
+                                          AND `items_id`='".$values['Computer']['id']."'")) {
+            $tmp[$foreign]  = $values[get_parent_class($this)]['id'];
+            $tmp['items_id']    = $values['Computer']['id'];
+            $tmp['itemtype']        = 'Computer';
+            $item->add($tmp);
          }
       }
    }
+
    
    /**
     * Standard method to add an object into glpi

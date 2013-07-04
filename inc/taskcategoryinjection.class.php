@@ -36,9 +36,11 @@ class PluginDatainjectionTaskCategoryInjection extends TaskCategory
                                         implements PluginDatainjectionInjectionInterface {
 
 
-   function __construct() {
-      //Needed for getSearchOptions !
-      $this->table = getTableForItemType(get_parent_class($this));
+   static function getTable() {
+   
+      $parenttype = get_parent_class();
+      return $parenttype::getTable();
+      
    }
 
 
@@ -56,14 +58,14 @@ class PluginDatainjectionTaskCategoryInjection extends TaskCategory
 
       $tab = Search::getOptions(get_parent_class($this));
 
-      //By default completename has no linkfield because it cannot be modified using the massiveaction
-      $tab[1]['displaytype'] = 'tree';
-      $tab[1]['linkfield']   = 'completename';
-
       //Remove some options because some fields cannot be imported
-      $options['ignore_fields'] = array(2, 14, 80, 19);
+      $blacklist = PluginDatainjectionCommonInjectionLib::getBlacklistedOptions(get_parent_class($this));
+      $notimportable = array(14);
+      $options['ignore_fields'] = array_merge($blacklist, $notimportable);
+      
       $options['displaytype']   = array("bool"           => array(86),
                                         "multiline_text" => array(16));
+                                        
       return PluginDatainjectionCommonInjectionLib::addToSearchOptions($tab, $options, $this);
    }
 

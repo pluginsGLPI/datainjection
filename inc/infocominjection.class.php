@@ -35,9 +35,11 @@ if (!defined('GLPI_ROOT')) {
 class PluginDatainjectionInfocomInjection extends Infocom
                                           implements PluginDatainjectionInjectionInterface {
 
-   function __construct() {
-      //Needed for getSearchOptions !
-      $this->table = getTableForItemType('Infocom');
+   static function getTable() {
+   
+      $parenttype = get_parent_class();
+      return $parenttype::getTable();
+      
    }
 
 
@@ -55,51 +57,56 @@ class PluginDatainjectionInfocomInjection extends Infocom
 
    function getOptions($primary_type = '') {
 
-      $tab = Search::getOptions(get_parent_class($this));
+      $tab                    = Search::getOptions(get_parent_class($this));
 
-      $tab[4]['checktype']  = 'date';
-      $tab[5]['checktype']  = 'date';
-      $tab[23]['checktype'] = 'date';
-      $tab[24]['checktype'] = 'date';
-      $tab[25]['checktype'] = 'date';
-      $tab[26]['checktype'] = 'date';
+      $tab[4]['checktype']    = 'date';
+      $tab[5]['checktype']    = 'date';
       
       //Warranty_duration
-      $tab[6]['minvalue']  = 0;
-      $tab[6]['maxvalue']  = 120;
-      $tab[6]['step']      = 1;
-      $tab[6]['-1']        = __('Contract');
-      $tab[6]['checktype'] = 'integer';
+      $tab[6]['minvalue']     = 0;
+      $tab[6]['maxvalue']     = 120;
+      $tab[6]['step']         = 1;
+      $tab[6]['-1']           = __('Lifelong');
+      $tab[6]['checktype']    = 'integer';
 
-      $tab[8]['checktype'] = 'float';
+      $tab[8]['checktype']    = 'float';
 
-      $tab[13]['checktype'] = 'float';
+      $tab[13]['checktype']   = 'float';
 
-      $tab[14]['minvalue']  = 0;
-      $tab[14]['maxvalue']  = 15;
-      $tab[14]['step']      = 1;
-      $tab[14]['checktype'] = 'integer';
+      $tab[14]['minvalue']    = 0;
+      $tab[14]['maxvalue']    = 15;
+      $tab[14]['step']        = 1;
+      $tab[14]['checktype']   = 'integer';
 
-      $tab[17]['size']      = 14;
-      $tab[17]['default']   = 0;
-      $tab[17]['checktype'] = 'integer';
+      $tab[17]['size']        = 14;
+      $tab[17]['default']     = 0;
+      $tab[17]['checktype']   = 'integer';
 
-      $tab[15]['minvalue']  = 0;
-      $tab[15]['maxvalue']  = 2;
-      $tab[15]['step']      = 1;
-      $tab[15]['checktype'] = 'integer';
-
+      $tab[15]['minvalue']    = 0;
+      $tab[15]['maxvalue']    = 2;
+      $tab[15]['step']        = 1;
+      $tab[15]['checktype']   = 'integer';
+      
+      $tab[23]['checktype']   = 'date';
+      $tab[24]['checktype']   = 'date';
+      $tab[25]['checktype']   = 'date';
+      $tab[26]['checktype']   = 'date';
+      
       //Remove some options because some fields cannot be imported
-      $options['ignore_fields'] = array(2, 3, 20, 21, 80, 86);
-      $options['displaytype']   = array("date"             => array(4, 5,23,24,25,26),
+      $blacklist = PluginDatainjectionCommonInjectionLib::getBlacklistedOptions(get_parent_class($this));
+      $notimportable = array(20, 21, 86);
+      $options['ignore_fields'] = array_merge($blacklist, $notimportable);
+
+      $options['displaytype']   = array("date"             => array(4, 5, 23, 24, 25, 26),
                                         "dropdown"         => array(6, 9, 19),
                                         "dropdown_integer" => array(6, 14),
                                         "decimal"          => array(8, 13, 17),
                                         "sink_type"        => array(15),
                                         "alert"            => array(22),
                                         "multiline_text"   => array(16));
-      $tab = PluginDatainjectionCommonInjectionLib::addToSearchOptions($tab, $options, $this);
-      return $tab;
+                                        
+      return PluginDatainjectionCommonInjectionLib::addToSearchOptions($tab, $options, $this);
+
    }
 
 
@@ -122,7 +129,7 @@ class PluginDatainjectionInfocomInjection extends Infocom
    }
 
    function reformat(&$values = array()) {
-      foreach (array('order_date', 'buy_date', 'warranty_date', 'delivery_date',
+      foreach (array('order_date', 'use_date', 'buy_date', 'warranty_date', 'delivery_date',
                      'inventory_date') as $date) {
          if (!isset($values['Infocom'][$date])
             || $values['Infocom'][$date] == PluginDatainjectionCommonInjectionLib::EMPTY_VALUE) {

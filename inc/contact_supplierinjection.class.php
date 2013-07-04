@@ -35,10 +35,12 @@ if (!defined('GLPI_ROOT')) {
 class PluginDatainjectionContact_SupplierInjection extends Contact_Supplier
                                                    implements PluginDatainjectionInjectionInterface {
 
-   function __construct() {
-      $this->table = getTableForItemType(get_parent_class($this));
+   static function getTable() {
+   
+      $parenttype = get_parent_class();
+      return $parenttype::getTable();
+      
    }
-
 
    function isPrimaryType() {
       return false;
@@ -59,6 +61,7 @@ class PluginDatainjectionContact_SupplierInjection extends Contact_Supplier
       $tab[100]['displaytype']   = 'relation';
       $tab[100]['relationclass'] = 'Contact_Supplier';
       $tab[100]['injectable']    = true;
+      
       return $tab;
    }
 

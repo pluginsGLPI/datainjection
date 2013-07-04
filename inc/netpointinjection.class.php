@@ -58,9 +58,9 @@ class PluginDatainjectionNetpointInjection extends Netpoint
       //Specific to location
       $tab[3]['linkfield'] = 'locations_id';
 
-      $blacklist = PluginDatainjectionCommonInjectionLib::getBlacklistedOptions();
+      $blacklist = PluginDatainjectionCommonInjectionLib::getBlacklistedOptions(get_parent_class($this));
       //Remove some options because some fields cannot be imported
-      $notimportable = array(80, 86, 91, 92, 93);
+      $notimportable = array(80, 91, 92, 93);
       $options['ignore_fields'] = array_merge($blacklist, $notimportable);
       $options['displaytype'] = array("dropdown"       => array(3),
                                       "multiline_text" => array(16));
