@@ -35,7 +35,7 @@ if (isset ($_POST["update"])) {
    PluginDatainjectionInfo::manageInfos($_POST['models_id'], $_POST);
 }
 
-Session::setActiveTab('PluginDatainjectionModel', 'PluginDatainjectionModel$6');
+Session::setActiveTab('PluginDatainjectionModel', 'PluginDatainjectionModel$5');
 Html::redirect($_SERVER['HTTP_REFERER']);
 
 ?>

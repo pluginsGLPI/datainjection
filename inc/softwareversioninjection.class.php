@@ -74,6 +74,10 @@ class PluginDatainjectionSoftwareVersionInjection extends SoftwareVersion
       $notimportable = array();
       $options['ignore_fields'] = array_merge($blacklist, $notimportable);
       
+      $key = array_search(2, $options['ignore_fields']);
+      unset($options['ignore_fields'][$key]);
+      
+      
       $options['displaytype']   = array("dropdown"       => array(4,31),
                                         "multiline_text" => array(16));
 

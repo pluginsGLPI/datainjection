@@ -124,19 +124,21 @@ class PluginDatainjectionContractInjection extends Contract
 
       switch ($option['displaytype']) {
          case 'alert' :
-            Contract::dropdownAlert($name, 0);
+            Contract::dropdownAlert(array('name' => $name));
             break;
 
          case 'renewal' :
-            Contract::dropdownContractRenewal($name, 0);
+            Contract::dropdownContractRenewal($name);
             break;
 
          case 'billing' :
-            Dropdown::showInteger($name, 0, 12, 60, 12, array(0 => Dropdown::EMPTY_VALUE,
-                                                              1 => "1",
-                                                              2 => "2",
-                                                              3 => "3",
-                                                              6 => "6"));
+            Dropdown::showInteger($name, 0, 12, 60, 12,
+                            array(0 => Dropdown::EMPTY_VALUE,
+                                  1 => sprintf(_n('%d month', '%d months', 1), 1),
+                                  2 => sprintf(_n('%d month', '%d months', 2), 2),
+                                  3 => sprintf(_n('%d month', '%d months', 3), 3),
+                                  6 => sprintf(_n('%d month', '%d months', 6), 6)),
+                            array('unit' => 'month'));
             break;
 
          default:

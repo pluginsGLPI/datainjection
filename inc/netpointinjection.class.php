@@ -36,8 +36,11 @@ class PluginDatainjectionNetpointInjection extends Netpoint
                                            implements PluginDatainjectionInjectionInterface {
 
 
-   function __construct() {
-      $this->table = getTableForItemType(get_parent_class($this));
+   static function getTable() {
+   
+      $parenttype = get_parent_class();
+      return $parenttype::getTable();
+      
    }
 
 
@@ -53,20 +56,20 @@ class PluginDatainjectionNetpointInjection extends Netpoint
 
    function getOptions($primary_type = '') {
 
-      $tab = Search::getOptions(get_parent_class($this));
+      $tab                 = Search::getOptions(get_parent_class($this));
 
       //Specific to location
       $tab[3]['linkfield'] = 'locations_id';
-
-      $blacklist = PluginDatainjectionCommonInjectionLib::getBlacklistedOptions(get_parent_class($this));
+      
       //Remove some options because some fields cannot be imported
-      $notimportable = array(80, 91, 92, 93);
+      $blacklist = PluginDatainjectionCommonInjectionLib::getBlacklistedOptions(get_parent_class($this));
+      $notimportable = array(91, 92, 93);
       $options['ignore_fields'] = array_merge($blacklist, $notimportable);
+
       $options['displaytype'] = array("dropdown"       => array(3),
                                       "multiline_text" => array(16));
 
-      $tab = PluginDatainjectionCommonInjectionLib::addToSearchOptions($tab, $options, $this);
-      return $tab;
+      return PluginDatainjectionCommonInjectionLib::addToSearchOptions($tab, $options, $this);
    }
 
 
@@ -87,15 +90,19 @@ class PluginDatainjectionNetpointInjection extends Netpoint
    }
 
 
-   function addSpecificNeededFields($primary_type, $fields_toinject) {
+   function addSpecificNeededFields($primary_type, $values) {
 
       //If netpoint is not the primary type to inject, then get the locations_id from the primary_type
+      $fields['locations_id'] = $values[$primary_type]['locations_id'];
       if ($primary_type != 'Netpoint') {
-         if (isset($fields_toinject[$primary_type]['locations_id'])) {
-            return array('locations_id', $fields_toinject[$primary_type]['locations_id']);
+         if (isset($values[$primary_type]['locations_id'])) {
+            $fields['locations_id'] = $values[$primary_type]['locations_id'];
+         } else {
+            $fields['locations_id'] = 0;
          }
-         return array('locations_id',0);
       }
+      
+      return $fields;
    }
 
 }

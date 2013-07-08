@@ -37,7 +37,7 @@ class PluginDatainjectionComputer_SoftwareLicenseInjection extends Computer_Soft
 
    static function getTypeName($nb=0) {
 
-      return __('Computers');
+      return __('Computer');
    }
    
    static function getTable() {
@@ -63,7 +63,7 @@ class PluginDatainjectionComputer_SoftwareLicenseInjection extends Computer_Soft
       $tab[110]['table']        = 'glpi_computers';
       $tab[110]['field']        = 'name';
       $tab[110]['linkfield']    = 'name';
-      $tab[110]['name']         = __('Name');
+      $tab[110]['name']         = self::getTypeName()." - ".__('Name');
       $tab[110]['injectable']   = true;
       $tab[110]['displaytype']  = 'dropdown';
       $tab[110]['checktype']    = 'text';
@@ -72,7 +72,7 @@ class PluginDatainjectionComputer_SoftwareLicenseInjection extends Computer_Soft
       $tab[111]['table']        = 'glpi_computers';
       $tab[111]['field']        = 'serial';
       $tab[111]['linkfield']    = 'serial';
-      $tab[111]['name']         = __('Serial Number');
+      $tab[111]['name']         = self::getTypeName()." - ".__('Serial Number');
       $tab[111]['injectable']   = true;
       $tab[111]['displaytype']  = 'dropdown';
       $tab[111]['checktype']    = 'text';
@@ -81,7 +81,7 @@ class PluginDatainjectionComputer_SoftwareLicenseInjection extends Computer_Soft
       $tab[112]['table']        = 'glpi_computers';
       $tab[112]['field']        = 'otherserial';
       $tab[112]['linkfield']    = 'otherserial';
-      $tab[112]['name']         = __('Inventory number');
+      $tab[112]['name']         = self::getTypeName()." - ".__('Inventory number');
       $tab[112]['injectable']   = true;
       $tab[112]['displaytype']  = 'dropdown';
       $tab[112]['checktype']    = 'text';

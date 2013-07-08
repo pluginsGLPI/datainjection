@@ -36,10 +36,12 @@ class PluginDatainjectionNetworkportInjection extends NetworkPort
                                               implements PluginDatainjectionInjectionInterface {
 
 
-   function __construct() {
-      $this->table = getTableForItemType(get_parent_class($this));
+   static function getTable() {
+   
+      $parenttype = get_parent_class();
+      return $parenttype::getTable();
+      
    }
-
 
    function isPrimaryType() {
       return false;
@@ -54,60 +56,9 @@ class PluginDatainjectionNetworkportInjection extends NetworkPort
 
    function getOptions($primary_type = '') {
 
-      $tab = Search::getOptions(get_parent_class($this));
-      $blacklist = PluginDatainjectionCommonInjectionLib::getBlacklistedOptions(get_parent_class($this));
-
-      //To manage vlans : relies on a CommonDBRelation object !
-      $tab[100]['name']          = __('VLAN');
-      $tab[100]['field']         = 'name';
-      $tab[100]['table']         = getTableForItemType('Vlan');
-      $tab[100]['linkfield']     = getForeignKeyFieldForTable($tab[100]['table']);
-      $tab[100]['displaytype']   = 'relation';
-      $tab[100]['relationclass'] = 'NetworkPort_Vlan';
-      $tab[100]['storevaluein']  = $tab[100]['linkfield'];
-
-      $tab[4]['checktype'] = 'mac';
-      $tab[5]['checktype'] = 'ip';
-      $tab[6]['checktype'] = 'ip';
-      $tab[7]['checktype'] = 'ip';
-      $tab[8]['checktype'] = 'ip';
-
-      //Remove some options because some fields cannot be imported
-      $notimportable = array(20, 21);
-      $ignore_fields = array_merge($blacklist, $notimportable);
-
-      //Add linkfield for theses fields : no massive action is allowed in the core, but they can be
-      //imported using the commonlib
-      $add_linkfield = array('comment' => 'comment',
-                             'notepad' => 'notepad');
-
-      //Add default displaytype (text)
-      foreach ($tab as $id => $tmp) {
-         if (!is_array($tmp) || in_array($id,$ignore_fields)) {
-            unset($tab[$id]);
-
-         } else {
-            if (in_array($tmp['field'],$add_linkfield)) {
-               $tab[$id]['linkfield'] = $add_linkfield[$tmp['field']];
-            }
-
-            if (!in_array($id,$ignore_fields)) {
-               if (!isset($tmp['linkfield'])) {
-                  $tab[$id]['injectable'] = PluginDatainjectionCommonInjectionLib::FIELD_VIRTUAL;
-               } else {
-                  $tab[$id]['injectable'] = PluginDatainjectionCommonInjectionLib::FIELD_INJECTABLE;
-               }
-
-               if (isset($tmp['linkfield']) && !isset($tmp['displaytype'])) {
-                  $tab[$id]['displaytype'] = 'text';
-               }
-
-               if (isset($tmp['linkfield']) && !isset($tmp['checktype'])) {
-                  $tab[$id]['checktype'] = 'text';
-               }
-            }
-         }
-      }
+      $tab                    = Search::getOptions(get_parent_class($this));
+      
+      $tab[4]['checktype']    = 'mac';
       
       //To manage vlans : relies on a CommonDBRelation object !
       $tab[51]['name']          = __('Connected to : device name', 'datainjection');
@@ -133,8 +84,49 @@ class PluginDatainjectionNetworkportInjection extends NetworkPort
       $tab[53]['injectable']    = true;
       $tab[53]['displaytype']   = 'text';
       $tab[53]['checktype']     = 'text';
+      
+      //To manage vlans : relies on a CommonDBRelation object !
+      $tab[100]['name']          = __('VLAN');
+      $tab[100]['field']         = 'name';
+      $tab[100]['table']         = getTableForItemType('Vlan');
+      $tab[100]['linkfield']     = getForeignKeyFieldForTable($tab[100]['table']);
+      $tab[100]['displaytype']   = 'relation';
+      $tab[100]['relationclass'] = 'NetworkPort_Vlan';
+      $tab[100]['storevaluein']  = $tab[100]['linkfield'];
+      
+      $blacklist = PluginDatainjectionCommonInjectionLib::getBlacklistedOptions(get_parent_class($this));
+      $notimportable = array(20, 21);
+      $options['ignore_fields'] = array_merge($blacklist, $notimportable);
+      
+      $options['displaytype']   = array("dropdown" => array(9),
+                                          "multiline_text" => array(16),
+                                          "instantiation_type" => array(87));
 
-      return $tab;
+      return PluginDatainjectionCommonInjectionLib::addToSearchOptions($tab, $options, $this);
+   }
+   
+   function showAdditionalInformation($info=array(), $option=array()) {
+
+      $name = "info[".$option['linkfield']."]";
+
+      switch ($option['displaytype']) {
+         case 'instantiation_type' :
+            
+            $instantiations = array();
+            $class = get_parent_class($this);
+            foreach ($class::getNetworkPortInstantiations() as $inst_type) {
+               if (call_user_func(array($inst_type, 'canCreate'))) {
+                  $instantiations[$inst_type] = call_user_func(array($inst_type, 'getTypeName'));
+               }
+            }
+            Dropdown::showFromArray('instantiation_type', $instantiations,
+                                    array('value' => 'NetworkPortEthernet'));
+
+            break;
+
+         default:
+            break;
+      }
    }
 
 
@@ -267,7 +259,8 @@ class PluginDatainjectionNetworkportInjection extends NetworkPort
 
       if ((!isset($values['NetworkPort']['name']) || empty($values['NetworkPort']['name']))
           && (!isset($values['NetworkPort']['mac']) || empty($values['NetworkPort']['mac']))
-          && (!isset($values['NetworkPort']['ip']) || empty($values['NetworkPort']['ip']))) {
+          && (!isset($values['NetworkPort']['instantiation_type']) || empty($values['NetworkPort']['instantiation_type']))
+          ) {
          return false;
       }
       return true;

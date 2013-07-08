@@ -46,11 +46,6 @@ class PluginDatainjectionComputer_ItemInjection extends Computer_Item
       
       return __('Direct connections');
    }
-   
-   function __construct() {
-      $this->table = getTableForItemType(get_parent_class($this));
-   }
-
 
    function isPrimaryType() {
       return false;

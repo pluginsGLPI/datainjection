@@ -75,6 +75,9 @@ class PluginDatainjectionSoftwareLicenseInjection extends SoftwareLicense
       $notimportable = array();
       $options['ignore_fields'] = array_merge($blacklist, $notimportable);
       
+      $key = array_search(2, $options['ignore_fields']);
+      unset($options['ignore_fields'][$key]);
+      
       $options['displaytype']   = array("dropdown"       => array(5, 6, 7),
                                         "date"           => array(8),
                                         "multiline_text" => array(16));

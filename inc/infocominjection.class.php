@@ -120,7 +120,7 @@ class PluginDatainjectionInfocomInjection extends Infocom
             break;
 
          case 'alert' :
-            Infocom::dropdownAlert($name);
+            Infocom::dropdownAlert(array('name' => $name));
             break;
 
          default:
