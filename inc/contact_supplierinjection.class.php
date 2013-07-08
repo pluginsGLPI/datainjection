@@ -85,7 +85,7 @@ class PluginDatainjectionContact_SupplierInjection extends Contact_Supplier
 
    function addSpecificNeededFields($primary_type,$values) {
 
-     $fields[getForeignKeyFieldForTable(getTableForItemType($primary_type))] = $values[$primary_type]['id'];
+      $fields[getForeignKeyFieldForTable(getTableForItemType($primary_type))] = $values[$primary_type]['id'];
       return $fields;
    }
 

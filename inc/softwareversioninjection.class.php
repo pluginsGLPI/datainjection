@@ -65,7 +65,8 @@ class PluginDatainjectionSoftwareVersionInjection extends SoftwareVersion
          $tab[100]['field']       = 'name';
          $tab[100]['table']       = getTableForItemType('Software');
          $tab[100]['linkfield']   = 'softwares_id';
-         $tab[100]['displaytype'] = 'text';
+         $tab[100]['displaytype']   = 'dropdown';
+         $tab[100]['checktype']     = 'text';
          $tab[100]['injectable']  = true;
       }
       
@@ -79,7 +80,8 @@ class PluginDatainjectionSoftwareVersionInjection extends SoftwareVersion
       
       
       $options['displaytype']   = array("dropdown"       => array(4,31),
-                                        "multiline_text" => array(16));
+                                        "multiline_text" => array(16),
+                                        "software" => array(100));
 
       return PluginDatainjectionCommonInjectionLib::addToSearchOptions($tab, $options, $this);
    }
@@ -94,7 +96,12 @@ class PluginDatainjectionSoftwareVersionInjection extends SoftwareVersion
                                              'comment' => true,
                                              'entity'  => $_SESSION['glpiactive_entity']));
             break;
-
+         
+         case 'software' :
+            Dropdown::show('Software', array('name'    => $name,
+                                             'comment' => true,
+                                             'entity'  => $_SESSION['glpiactive_entity']));
+            break;
          default :
             break;
       }
@@ -117,11 +124,6 @@ class PluginDatainjectionSoftwareVersionInjection extends SoftwareVersion
    }
 
 
-   function addSpecificMandatoryFields() {
-      return array('softwares_id' => 1);
-   }
-
-
    function getValueForAdditionalMandatoryFields($fields_toinject=array()) {
       global $DB;
  
@@ -131,9 +133,9 @@ class PluginDatainjectionSoftwareVersionInjection extends SoftwareVersion
 
       $query = "SELECT `id`
                 FROM `glpi_softwares`
-                WHERE `name` = '".$fields_toinject['SoftwareLicense']['softwares_id']."'";
+                WHERE `name` = '".$fields_toinject['SoftwareVersion']['softwares_id']."'";
       $query .= getEntitiesRestrictRequest(" AND", "glpi_softwares", "entities_id", 
-                                           $_SESSION['glpiactive_entity'], true);
+                                           $fields_toinject['SoftwareVersion']['entities_id'], true);
       $result = $DB->query($query);
 
       if ($DB->numrows($result) > 0) {
@@ -152,15 +154,20 @@ class PluginDatainjectionSoftwareVersionInjection extends SoftwareVersion
    function addSpecificNeededFields($primary_type, $values) {
       $fields = array();
       if ($primary_type == 'Software') {
-         $fields['softwares_id'] = $values['Software']['id'];
+         $fields['softwares_id'] = $values[$primary_type]['id'];
       }
       return $fields;
    }
    
    function checkPresent($fields_toinject=array(), $options=array()) {
+      
+      if ($options['itemtype'] != 'SoftwareVersion') {
          $where = " AND `softwares_id`='".$fields_toinject['Software']['id']."' " .
                   "AND `name`='".$fields_toinject['SoftwareVersion']['name']."'";
          return $where;
+      } else {
+         return "";
+      }
    }
 }
 

@@ -91,7 +91,7 @@ class PluginDatainjectionSoftwareInjection extends Software
 
          if (!isset($res_rule['_no_rule_matches'])) {
             //Software dictionnary explicitly refuse import
-            if (isset($res_rule['_ignore_ocs_import']) && $res_rule['_ignore_ocs_import']) {
+            if (isset($res_rule['_ignore_import']) && $res_rule['_ignore_import']) {
                return false;
             }
             if (isset($res_rule['is_helpdesk_visible'])) {

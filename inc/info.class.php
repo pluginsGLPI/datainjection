@@ -66,12 +66,20 @@ class PluginDatainjectionInfo extends CommonDBTM {
    function getInfosType() {
       return $this->fields["itemtype"];
    }
+   
+   static function canView() {
+      return plugin_datainjection_haveRight('model', 'r');
+   }
+   
 
+   static function canCreate() {
+      return plugin_datainjection_haveRight('model', 'w');
+   }
 
    static function showAddInfo(PluginDatainjectionModel $model, $canedit=false) {
 
       if ($canedit) {
-         echo "<form method='post' name=form action='".Toolbox::getItemTypeFormURL(__CLASS__)."'>";
+         echo "<form method='post' name='form' id='form' action='".Toolbox::getItemTypeFormURL(__CLASS__)."'>";
          echo "<table class='tab_cadre_fixe'>";
          echo "<tr>";
          echo "<th>" . __('Tables', 'datainjection') . "</th>";
@@ -99,7 +107,7 @@ class PluginDatainjectionInfo extends CommonDBTM {
          echo "<tr>";
          echo "<td class='tab_bg_2 center' colspan='4'>";
          echo "<input type='hidden' name='models_id' value='".$model->fields['id']."'>";
-         echo "<input type='submit' name='update' value='"._sx('button', 'Save')."' class='submit' >";
+         echo "<input type='submit' name='update' value='"._sx('button', 'Add')."' class='submit' >";
          echo "</td></tr>";
 
 
@@ -114,42 +122,59 @@ class PluginDatainjectionInfo extends CommonDBTM {
    static function showFormInfos(PluginDatainjectionModel $model) {
 
       $canedit = $model->can($model->fields['id'], 'w');
-
       PluginDatainjectionInfo::showAddInfo($model, $canedit);
-
-      echo "<form method='post' name=form action='".Toolbox::getItemTypeFormURL(__CLASS__)."'>";
-      echo "<table class='tab_cadre_fixe'>";
-      echo "<tr>";
-      echo "<th>" . __('Tables', 'datainjection') . "</th>";
-      echo "<th>" . __('Fields', 'datainjection') . "</th>";
-      echo "<th>" . __('Mandatory information', 'datainjection') . "</th>";
-      echo "</tr>";
-
+      
       $model->loadInfos();
-
-      foreach ($model->getInfos() as $info) {
-         $info->fields = Toolbox::stripslashes_deep($info->fields);
-         $infos_id     = $info->fields['id'];
-         echo "<tr class='tab_bg_1'>";
-         echo "<td class='center'>";
-         $rand = PluginDatainjectionInjectionType::dropdownLinkedTypes($info,
-                                                                       array('primary_type'
-                                                                           => $model->fields['itemtype'])
-                                                                      );
-         echo "</td>";
-         echo "<td class='center'><span id='span_field_$infos_id'></span></td>";
-         echo "<td class='center'><span id='span_mandatory_$infos_id'></span></td></tr>";
-      }
-
-      if ($canedit) {
+      $nb = count($model->getInfos());
+      
+      if ($nb > 0) {
+         echo "<form method='post' name='info_form' id='info_form' action='".Toolbox::getItemTypeFormURL(__CLASS__)."'>";
+         echo "<table class='tab_cadre_fixe'>";
          echo "<tr>";
-         echo "<td class='tab_bg_2 center' colspan='4'>";
-         echo "<input type='hidden' name='models_id' value='".$model->fields['id']."'>";
-         echo "<input type='submit' name='update' value='"._sx('button', 'Save')."' class='submit'>";
-         echo "</td></tr>";
+         if ($canedit) {
+            echo "<th>&nbsp;</th>";
+         }
+         echo "<th>" . __('Tables', 'datainjection') . "</th>";
+         echo "<th>" . __('Fields', 'datainjection') . "</th>";
+         echo "<th>" . __('Mandatory information', 'datainjection') . "</th>";
+         echo "</tr>";
+
+         foreach ($model->getInfos() as $info) {
+            $info->fields = Toolbox::stripslashes_deep($info->fields);
+            $infos_id     = $info->fields['id'];
+            echo "<tr class='tab_bg_1'>";
+            if ($canedit) {
+               echo "<td width='10'>";
+               $sel = "";
+               if (isset($_GET["select"]) && ($_GET["select"] == "all")) {
+                  $sel = "checked";
+               }
+               echo "<input type='checkbox' name='item[".$infos_id."]' value='1' $sel>";
+               echo "</td>";
+            }
+            echo "<td class='center'>";
+            $rand = PluginDatainjectionInjectionType::dropdownLinkedTypes($info,
+                                                                          array('primary_type'
+                                                                              => $model->fields['itemtype'])
+                                                                         );
+            echo "</td>";
+            echo "<td class='center'><span id='span_field_$infos_id'></span></td>";
+            echo "<td class='center'><span id='span_mandatory_$infos_id'></span></td></tr>";
+         }
+
+         if ($canedit) {
+            echo "<tr>";
+            echo "<td class='tab_bg_2 center' colspan='4'>";
+            echo "<input type='hidden' name='models_id' value='".$model->fields['id']."'>";
+            echo "<input type='submit' name='update' value='"._sx('button', 'Save')."' class='submit'>";
+            echo "</td></tr>";
+            
+            Html::openArrowMassives("info_form", true);
+            Html::closeArrowMassives(array('delete' => __('Delete permanently')));
+         }
+         echo "</table>";
+         Html::closeForm();
       }
-      echo "</table>";
-      Html::closeForm();
    }
 
 

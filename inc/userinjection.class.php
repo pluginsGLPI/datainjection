@@ -92,11 +92,11 @@ class PluginDatainjectionUserInjection extends User
       
       //Remove some options because some fields cannot be imported
       $blacklist = PluginDatainjectionCommonInjectionLib::getBlacklistedOptions(get_parent_class($this));
-      $notimportable = array(13, 14, 15, 17, 20, 23, 30, 31, 60, 61, 91, 92, 93);
+      $notimportable = array(13, 14, 15, 17, 20, 23, 30, 31, 60, 61, 77, 91, 92, 93);
       $options['ignore_fields']  = array_merge($blacklist, $notimportable);
       
       //Add displaytype value
-      $options['displaytype']    = array("dropdown"       => array(3, 77, 79, 81, 82),
+      $options['displaytype']    = array("dropdown"       => array(3, 79, 81, 82),
                                         "multiline_text" => array(16),
                                         "bool"           => array(8),
                                         "password"       => array(4));
@@ -120,6 +120,16 @@ class PluginDatainjectionUserInjection extends User
       $lib->processAddOrUpdate();
       return $lib->getInjectionResults();
    }
+   
+   function addSpecificNeededFields($primary_type,$values) {
+
+      if (isset($values[$primary_type]['name'])) {
+         $fields['name'] = $values[$primary_type]['name'];
+      } else {
+         $fields['name'] = "none";
+      }
+      return $fields;
+   }
 
    function processAfterInsertOrUpdate($values, $add = true, $rights = array()) {
       global $DB;
@@ -137,7 +147,7 @@ class PluginDatainjectionUserInjection extends User
          }
       }
       
-      if (!$add && isset($values['User']['password']) && $values['User']['password'] != '') {
+      if (isset($values['User']['password']) && $values['User']['password'] != '') {
          //We use an SQL request because updating the password is unesasy
          //(self reset password process in $user->prepareInputForUpdate())
          $password

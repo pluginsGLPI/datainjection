@@ -32,7 +32,21 @@ include ('../../../inc/includes.php');
 
 /* Update mappings */
 if (isset ($_POST["update"])) {
+
    PluginDatainjectionInfo::manageInfos($_POST['models_id'], $_POST);
+   
+} else if (isset($_POST["delete"])) {
+   
+   $info = new PluginDatainjectionInfo();
+   foreach ($_POST["item"] as $key => $val) {
+      $input = array('id' => $key);
+      if ($val == 1) {
+         $info->check($key, 'w');
+         $info->delete($input);
+      }
+   }
+   Html::back();
+
 }
 
 Session::setActiveTab('PluginDatainjectionModel', 'PluginDatainjectionModel$5');
