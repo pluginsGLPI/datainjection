@@ -96,6 +96,9 @@ class PluginDatainjectionInfocomInjection extends Infocom
       $blacklist = PluginDatainjectionCommonInjectionLib::getBlacklistedOptions(get_parent_class($this));
       $notimportable = array(20, 21, 86);
       $options['ignore_fields'] = array_merge($blacklist, $notimportable);
+      
+      $key = array_search(19, $options['ignore_fields']);
+      unset($options['ignore_fields'][$key]);
 
       $options['displaytype']   = array("date"             => array(4, 5, 23, 24, 25, 26),
                                         "dropdown"         => array(6, 9, 19),
