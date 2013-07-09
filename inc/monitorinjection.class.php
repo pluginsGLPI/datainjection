@@ -92,7 +92,18 @@ class PluginDatainjectionMonitorInjection extends Monitor
       $lib->processAddOrUpdate();
       return $lib->getInjectionResults();
    }
+   
+   function addSpecificNeededFields($primary_type,$values) {
 
+      if (isset($values[$primary_type]['is_global'])) {
+         if (empty($values[$primary_type]['is_global'])) {
+            $fields['is_global'] = 0;
+         } else {
+            $fields['is_global'] = $values[$primary_type]['is_global'];
+         }
+      }
+      return $fields;
+   }
 }
 
 ?>
