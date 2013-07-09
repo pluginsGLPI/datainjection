@@ -105,6 +105,16 @@ class PluginDatainjectionNetworkportInjection extends NetworkPort
       return PluginDatainjectionCommonInjectionLib::addToSearchOptions($tab, $options, $this);
    }
    
+   function addSpecificNeededFields($primary_type,$values) {
+
+      if (isset($values[$primary_type]['instantiation_type'])) {
+         $fields['instantiation_type'] = $values[$primary_type]['instantiation_type'];
+      } else {
+         $fields['instantiation_type'] = "NetworkPortEthernet";
+      }
+      return $fields;
+   }
+   
    function showAdditionalInformation($info=array(), $option=array()) {
 
       $name = "info[".$option['linkfield']."]";

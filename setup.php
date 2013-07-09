@@ -190,6 +190,7 @@ function getTypesToInject() {
                              'PluginDatainjectionNetworkportInjection'                 => 'datainjection',
                              'PluginDatainjectionVlanInjection'                        => 'datainjection',
                              'PluginDatainjectionNetworkport_VlanInjection'            => 'datainjection',
+                             'PluginDatainjectionNetworkNameInjection'                 => 'datainjection',
                              'PluginDatainjectionNetpointInjection'                    => 'datainjection',
                              'PluginDatainjectionKnowbaseItemCategoryInjection'        => 'datainjection',
                              'PluginDatainjectionKnowbaseItemInjection'                => 'datainjection',
