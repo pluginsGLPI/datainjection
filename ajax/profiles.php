@@ -34,7 +34,7 @@ Html::header_nocache();
 
 Session::checkRight("profile","r");
 
-$prof=new PluginDatainjectionProfile();
+$prof = new PluginDatainjectionProfile();
+// TODO this function doesn't exists
 $prof->showDataInjectionForm($_POST["ID"]);
-
 ?>

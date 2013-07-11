@@ -37,7 +37,6 @@ $prof = new PluginDatainjectionProfile();
 //Save profile
 if (isset ($_POST['update'])) {
    $prof->update($_POST);
-   Html::redirect($_SERVER['HTTP_REFERER']);
+   Html::back();
 }
-
 ?>

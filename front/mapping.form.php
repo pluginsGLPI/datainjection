@@ -27,7 +27,7 @@
  @link      http://www.glpi-project.org/
  @since     2009
  ---------------------------------------------------------------------- */
- 
+
 include ('../../../inc/includes.php');
 
 /* Update mappings */
@@ -55,7 +55,8 @@ if (isset ($_POST["update"])) {
    }
 
    if (!$at_least_one_mandatory) {
-      Session::addMessageAfterRedirect(__('One link field must be selected : it will be used to check if data already exists', 'datainjection'), true, ERROR, true);
+      Session::addMessageAfterRedirect(__('One link field must be selected: it will be used to check if data already exists',
+                                          'datainjection'), true, ERROR, true);
    } else {
       $model = new PluginDatainjectionModel();
       $model->getFromDB($_POST['models_id']);
@@ -64,12 +65,12 @@ if (isset ($_POST["update"])) {
          PluginDatainjectionModel::changeStep($_POST['models_id'],
                                               PluginDatainjectionModel::OTHERS_STEP);
          Session::setActiveTab('PluginDatainjectionModel', 'PluginDatainjectionModel$5');
-         Session::addMessageAfterRedirect(__("This step allows you to add informations not present in the file. You'll be asked for theses informations while using the model.", 'datainjection'));
+         Session::addMessageAfterRedirect(__("This step allows you to add informations not present in the file. You'll be asked for theses informations while using the model.",
+                                             'datainjection'));
       }
       unset($_SESSION['datainjection']['lines']);
    }
 }
 
-Html::redirect($_SERVER['HTTP_REFERER']);
-
+Html::back();
 ?>

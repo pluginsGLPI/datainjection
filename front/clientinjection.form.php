@@ -27,10 +27,11 @@
  @link      http://www.glpi-project.org/
  @since     2009
  ---------------------------------------------------------------------- */
- 
+
 include ('../../../inc/includes.php');
 
-Html::header(__('File injection', 'datainjection'), $_SERVER["PHP_SELF"], "plugins", "datainjection");
+Html::header(__('File injection', 'datainjection'), $_SERVER["PHP_SELF"], "plugins",
+             "datainjection");
 
 if (isset($_SESSION['datainjection']['go'])) {
    $model = unserialize($_SESSION['datainjection']['currentmodel']);
@@ -43,7 +44,8 @@ if (isset($_SESSION['datainjection']['go'])) {
 
    //If additional informations provided : check if mandatory infos are present
    if (!$model->checkMandatoryFields($_SESSION['datainjection']['infos'])) {
-      Session::addMessageAfterRedirect(__('One mandatory field is not filled', 'datainjection'), true, ERROR, true);
+      Session::addMessageAfterRedirect(__('One mandatory field is not filled', 'datainjection'),
+                                       true, ERROR, true);
 
    } else if (isset($_FILES['filename']['name'])
               && $_FILES['filename']['name']
@@ -72,10 +74,11 @@ if (isset($_SESSION['datainjection']['go'])) {
       }
 
    } else {
-      Session::addMessageAfterRedirect(__('The file could not be found', 'datainjection'), true, ERROR, true);
+      Session::addMessageAfterRedirect(__('The file could not be found', 'datainjection'),
+                                       true, ERROR, true);
    }
 
-   Html::redirect($_SERVER['HTTP_REFERER']);
+   Html::back();
 
 } else {
    if (isset($_GET['id'])) { // Allow link to a model
@@ -87,5 +90,4 @@ if (isset($_SESSION['datainjection']['go'])) {
 }
 
 Html::footer();
-
 ?>

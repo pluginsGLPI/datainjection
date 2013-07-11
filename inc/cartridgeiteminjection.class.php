@@ -27,7 +27,7 @@
  @link      http://www.glpi-project.org/
  @since     2009
  ---------------------------------------------------------------------- */
- 
+
 if (!defined('GLPI_ROOT')) {
    die("Sorry. You can't access directly to this file");
 }
@@ -35,13 +35,15 @@ if (!defined('GLPI_ROOT')) {
 class PluginDatainjectionCartridgeItemInjection extends CartridgeItem
                                                 implements PluginDatainjectionInjectionInterface {
 
+
    static function getTable() {
-   
+
       $parenttype = get_parent_class();
       return $parenttype::getTable();
-      
+
    }
-   
+
+
    function isPrimaryType() {
       return true;
    }
@@ -66,26 +68,26 @@ class PluginDatainjectionCartridgeItemInjection extends CartridgeItem
 
       //Remove some options because some fields cannot be imported
       $blacklist = PluginDatainjectionCommonInjectionLib::getBlacklistedOptions(get_parent_class($this));
-      $notimportable = array(91, 92, 93);
+      $notimportable            = array(91, 92, 93);
       $options['ignore_fields'] = array_merge($blacklist, $notimportable);
-      
+
       $options['displaytype']   = array("dropdown"         => array(3, 4, 23, 49),
                                         "user"             => array(24),
                                         "multiline_text"   => array(16, 90),
                                         "dropdown_integer" => array(8));
-                                        
+
       $options['checktype']     = array("integer" => array(8));
 
-      return $PluginDatainjectionCommonInjectionLib::addToSearchOptions($tab, $options, $this);
+      return PluginDatainjectionCommonInjectionLib::addToSearchOptions($tab, $options, $this);
    }
 
 
    /**
     * Standard method to add an object into glpi
- 
     *
-    * @param values fields to add into glpi
-    * @param options options used during creation
+    * @param values  array fields to add into glpi
+    * @param options array options used during creation
+    *
     * @return an array of IDs of newly created objects : for example array(Computer=>1, Networkport=>10)
     *
    **/
@@ -97,5 +99,4 @@ class PluginDatainjectionCartridgeItemInjection extends CartridgeItem
    }
 
 }
-
 ?>

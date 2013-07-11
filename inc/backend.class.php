@@ -41,16 +41,16 @@ abstract class PluginDatainjectionBackend {
    const ENCODING_ISO8859_1 = 0;
    const ENCODING_UFT8      = 1;
    const ENCODING_AUTO      = 2;
-   /*
-    * Constructor
-    * @param file input file to read
-    */
 
+
+
+   // TODO function never used
    function getError($html=0) {
       return ($html ? nl2br($this->errmsg) : $this->errmsg);
    }
 
 
+   // TODO function never used
    function setError($msg) {
 
       if (!empty($this->errmsg)) {
@@ -60,6 +60,7 @@ abstract class PluginDatainjectionBackend {
    }
 
 
+   // TODO function never used
    function clearError() {
       $this->errmsg = "";
    }
@@ -67,6 +68,10 @@ abstract class PluginDatainjectionBackend {
 
    /**
     * Get header of the file
+    *
+    * @param $injectionData
+    * @param $header_present
+    *
     * @return array with the datas from the header
    **/
    static function getHeader(PluginDatainjectionData $injectionData, $header_present) {
@@ -85,14 +90,18 @@ abstract class PluginDatainjectionBackend {
 
    /**
     * get datas from the file at line
+    *
+    * @param $injectionData
     * @param line_id the id of the line
+    *
     * @return array with datas from this line
    **/
+  // TODO à quoi sert cette fonction ? pour moi jamais utilisée
    function getDataAtLine(PluginDatainjectionData $injectionData, $line_id) {
       return $injectionData->getDataAtLine($line_id);
    }
 
-
+   // TODO à quoi sert cette fonction ? pour moi jamais utilisée
    function getDatasFromLineToLine(PluginDatainjectionData $injectionData, $start_line, $end_line) {
 
       $tmp = array();
@@ -138,5 +147,4 @@ abstract class PluginDatainjectionBackend {
    }
 
 }
-
 ?>

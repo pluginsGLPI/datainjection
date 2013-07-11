@@ -1,5 +1,4 @@
 <?php
-
 /*
  * @version $Id: HEADER 14684 2011-06-11 06:32:40Z remi $
  LICENSE
@@ -52,29 +51,41 @@
    }
 
 
+   /**
+    * @param $delimiter
+   **/
    function setDelimiter($delimiter) {
       $this->delimiter = $delimiter;
    }
 
 
-   function setHeaderPresent($present = true) {
+   /**
+    * @param $present (true by default)
+   **/
+   function setHeaderPresent($present=true) {
       $this->isHeaderPresent = $present;
    }
 
 
-   //CSV File parsing methods
-   static function parseLine($fic, $data, $encoding= 1) {
+   /**
+    * CSV File parsing methods
+    *
+    * @param $fic
+    * @param $data
+    * @param $encoding  (default 1)
+   **/
+   static function parseLine($fic, $data, $encoding=1) {
       global $DB;
-      
+
       $csv = array();
       $num = count($data);
 
       for($c=0 ; $c<$num ; $c++) {
          //If field is not the last, or if field is the last of the line and is not empty
 
-         if ($c <($num -1)
-             || ($c ==($num -1)
-                 && $data[$num -1] != PluginDatainjectionCommonInjectionLib::EMPTY_VALUE)) {
+         if (($c < ($num -1))
+             || (($c == ($num -1))
+                 && ($data[$num -1] != PluginDatainjectionCommonInjectionLib::EMPTY_VALUE))) {
             $tmp = trim($DB->escape($data[$c]));
             switch ($encoding) {
                //If file is ISO8859-1 : encode the datas in utf8
@@ -99,6 +110,10 @@
    }
 
 
+   /**
+    * @param $newfile
+    * @param $encoding
+   **/
    function init($newfile,$encoding) {
 
       $this->file     = $newfile;
@@ -109,16 +124,16 @@
    /**
     * Read a CSV file and store data in an array
     *
-    * @param numberOfLines inumber of lines to be read (-1 means all file)
+    * @param numberOfLines inumber of lines to be read (-1 means all file) (default 1)
    **/
-   function read($numberOfLines = 1) {
+   function read($numberOfLines=1) {
 
       $injectionData = new PluginDatainjectionData();
       $this->openFile();
       $continue = true;
       $data     = false;
 
-      for ($index = 0 ; ($numberOfLines == -1 || $index < $numberOfLines) && $continue ; $index++) {
+      for ($index = 0 ; (($numberOfLines == -1) || ($index < $numberOfLines)) && $continue ; $index++) {
          $data = $this->getNextLine();
          if ($data) {
             $injectionData->addToDatas($data);
@@ -142,10 +157,10 @@
       $fic = fopen($this->file, 'r');
 
       $index = 0;
-      while (($data= fgetcsv($fic, 0, $this->getDelimiter())) !== FALSE) {
+      while (($data = fgetcsv($fic, 0, $this->getDelimiter())) !== FALSE) {
          //If line is not empty
-         if (count($data) > 1
-             || $data[0] != PluginDatainjectionCommonInjectionLib::EMPTY_VALUE) {
+         if ((count($data) > 1)
+             || ($data[0] != PluginDatainjectionCommonInjectionLib::EMPTY_VALUE)) {
 
             $line = self::parseLine($fic, $data, $this->encoding);
             if (count($line[0]) > 0) {
@@ -182,9 +197,10 @@
       fclose($this->file_handler);
    }
 
+
    /**
     * Read next line of the csv file
-    */
+   **/
    function getNextLine() {
 
       $data = fgetcsv($this->file_handler, 0, $this->getDelimiter());
@@ -192,9 +208,9 @@
          return false;
       }
       $line = array();
-      if (count($data) > 1
-         || $data[0] != PluginDatainjectionCommonInjectionLib::EMPTY_VALUE) {
-            $line = self::parseLine($this->file_handler, $data, $this->encoding);
+      if ((count($data) > 1)
+          || ($data[0] != PluginDatainjectionCommonInjectionLib::EMPTY_VALUE)) {
+         $line = self::parseLine($this->file_handler, $data, $this->encoding);
       }
       return $line;
    }
@@ -210,13 +226,15 @@
 
    function readLinesFromTo($start_line, $end_line) {
 
-      $row = 0;
-      $fic = fopen($this->file, 'r');
+      $row           = 0;
+      $fic           = fopen($this->file, 'r');
       $injectionData = new PluginDatainjectionData();
 
-      while ((($data= fgetcsv($fic, 3000, $this->delimiter)) !== FALSE) && $row <= $end_line) {
-         if ($row >= $start_line && $row <= $end_line) {
-            $injectionData->addToDatas(self :: parseLine($fic,$data));
+      while ((($data = fgetcsv($fic, 3000, $this->delimiter)) !== FALSE)
+             && ($row <= $end_line)) {
+
+         if (($row >= $start_line) && ($row <= $end_line)) {
+            $injectionData->addToDatas(self::parseLine($fic,$data));
          }
          $row++;
       }

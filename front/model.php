@@ -27,7 +27,7 @@
  @link      http://www.glpi-project.org/
  @since     2009
  ---------------------------------------------------------------------- */
- 
+
 include ('../../../inc/includes.php');
 
 Html::header(PluginDatainjectionModel::getTypeName(), '', "plugins", "datainjection", "model");
@@ -35,7 +35,7 @@ Html::header(PluginDatainjectionModel::getTypeName(), '', "plugins", "datainject
 $model = new PluginDatainjectionModel();
 $model->checkGlobal('r');
 
-if (isset($_POST['delete']) 
+if (isset($_POST['delete'])
       && isset($_POST['models'])) {
 
    foreach ($_POST['models'] as $models_id => $tmp) {
@@ -43,12 +43,10 @@ if (isset($_POST['delete'])
          $model->delete(array('id' => $models_id));
       }
    }
-   Html::redirect($_SERVER['HTTP_REFERER']);
-
+   Html::back();
 }
 
 PluginDatainjectionModel::showModelsList();
 
 Html::footer();
-
 ?>

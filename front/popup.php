@@ -27,7 +27,7 @@
  @link      http://www.glpi-project.org/
  @since     2009
  ---------------------------------------------------------------------- */
- 
+
 include ('../../../inc/includes.php');
 
 Session::checkLoginUser();
@@ -45,5 +45,4 @@ switch ($_GET["popup"]) {
       Html::popFooter();
       break;
 }
-
 ?>

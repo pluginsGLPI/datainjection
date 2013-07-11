@@ -27,21 +27,23 @@
  @link      http://www.glpi-project.org/
  @since     2009
  ---------------------------------------------------------------------- */
- 
+
 if (!defined('GLPI_ROOT')) {
    die("Sorry. You can't access directly to this file");
 }
 
-/// Computer class
+
 class PluginDatainjectionBudgetInjection extends Budget
                                          implements PluginDatainjectionInjectionInterface {
 
+
    static function getTable() {
-   
+
       $parenttype = get_parent_class();
       return $parenttype::getTable();
-      
+
    }
+
 
    function isPrimaryType() {
       return true;
@@ -63,10 +65,8 @@ class PluginDatainjectionBudgetInjection extends Budget
 
       //Remove some options because some fields cannot be imported
       $blacklist = PluginDatainjectionCommonInjectionLib::getBlacklistedOptions(get_parent_class($this));
-      $notimportable = array();
+      $notimportable            = array();
       $options['ignore_fields'] = array_merge($blacklist, $notimportable);
-      
-      
 
       $options['displaytype']   = array("date"           => array(3,5),
                                         "yesno"          => array(86),
@@ -79,10 +79,9 @@ class PluginDatainjectionBudgetInjection extends Budget
 
    /**
     * Standard method to add an object into glpi
- 
     *
-    * @param values fields to add into glpi
-    * @param options options used during creation
+    * @param values  array fields to add into glpi
+    * @param options array options used during creation
     *
     * @return an array of IDs of newly created objects : for example array(Computer=>1, Networkport=>10)
    **/
@@ -94,5 +93,4 @@ class PluginDatainjectionBudgetInjection extends Budget
    }
 
 }
-
 ?>

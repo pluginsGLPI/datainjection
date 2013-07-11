@@ -28,9 +28,7 @@
  ---------------------------------------------------------------------- */
 
 include ('../../../inc/includes.php');
-
-include (GLPI_ROOT."/lib/ezpdf/class.ezpdf.php");
+include ("../../../lib/ezpdf/class.ezpdf.php");
 
 PluginDatainjectionModel::exportAsPDF($_GET['models_id']);
-
 ?>

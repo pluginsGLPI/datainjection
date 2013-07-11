@@ -27,7 +27,7 @@
  @link      http://www.glpi-project.org/
  @since     2009
  ---------------------------------------------------------------------- */
- 
+
  class PluginDatainjectionClientInjection {
 
    const STEP_UPLOAD  = 0;
@@ -59,7 +59,7 @@
          $buttons[$url] = PluginDatainjectionModel::getTypeName();
          $title         = "";
          Html::displayTitle($CFG_GLPI["root_doc"] . "/plugins/datainjection/pics/datainjection.png",
-                      _n('Group', 'Groups', 2), $title, $buttons);
+                            _n('Group', 'Groups', 2), $title, $buttons);
       }
    }
 
@@ -79,14 +79,20 @@
 
       echo "<tr class='tab_bg_1'>";
       if (count($models) > 0) {
-         echo "<td class='center'>".__('Model')."&nbsp;:";
+         echo "<td class='center'>".__('Model')."&nbsp;";
          PluginDatainjectionModel::dropdown();
 
       } else {
-         echo "<td class='center' colspan='2'>".__('No model currently available', 'datainjection');
+         $text = __('No model currently available', 'datainjection');
          if (plugin_datainjection_haveRight('model','w')) {
-            echo ". ".__('You can start the model creation by hitting the button', 'datainjection').":".PluginDatainjectionModel::getTypeName();
+            $text = sprintf(__('%1$s %2$s'), $text.". ",
+                            sprintf(__('%1$s: %2$s'),
+                                    __('You can start the model creation by hitting the button',
+                                       'datainjection'),
+                                    PluginDatainjectionModel::getTypeName()));
          }
+         echo "<td class='center' colspan='2'>".$text;
+
       }
       echo "</td></tr></table><br>";
 
@@ -112,14 +118,17 @@
    }
 
 
-   static function showUploadFileForm($options = array()) {
+   /**
+    * @param $options   array
+   **/
+   static function showUploadFileForm($options=array()) {
 
       $add_form = (isset($options['add_form']) && $options['add_form']);
       $confirm  = (isset($options['confirm']) && $options['confirm']);
-      $url      = ($confirm == 'creation'?Toolbox::getItemTypeFormURL('PluginDatainjectionModel')
-                                         :Toolbox::getItemTypeFormURL(__CLASS__));
+      $url      = (($confirm == 'creation')?Toolbox::getItemTypeFormURL('PluginDatainjectionModel')
+                                           :Toolbox::getItemTypeFormURL(__CLASS__));
       if ($add_form) {
-         echo "<form method='post' name='form' action='$url' enctype='multipart/form-data'>";
+         echo "<form method='post' name='form' action='".$url."' enctype='multipart/form-data'>";
       }
       echo "<table class='tab_cadre_fixe'>";
       //Show file selection
@@ -142,7 +151,8 @@
          if ($confirm == 'creation') {
             $message = __('Warning : existing data will be overridden', 'datainjection');
          } else {
-            $message = __("Watch out, you're about to inject datas into GLPI. Are you sure you want to do it ?", 'datainjection');
+            $message = __("Watch out, you're about to inject datas into GLPI. Are you sure you want to do it ?",
+                          'datainjection');
          }
          $alert = "OnClick='return window.confirm(\"$message\");'";
       }
@@ -151,8 +161,7 @@
       }
       echo "<input type='submit' class='submit' name='upload' value='".
              htmlentities($options['submit'], ENT_QUOTES, 'UTF-8'). "' $alert>";
-      echo "</td>";
-      echo "</tr>\n";
+      echo "</td></tr>\n";
       echo "</table><br>";
       if ($add_form) {
          Html::closeForm();
@@ -160,6 +169,10 @@
    }
 
 
+   /**
+    * @param PluginDatainjectionModel $model
+    * @param $entities_id
+   **/
    static function showInjectionForm(PluginDatainjectionModel $model, $entities_id) {
 
       if (!PluginDatainjectionSession::getParam('infos')) {
@@ -167,7 +180,7 @@
       }
       echo "<table class='tab_cadre_fixe'>";
       echo "<tr class='tab_bg_1'>";
-      echo "<th colspan='2'>".__('Model')." : ".$model->fields['name']."</th>";
+      echo "<th colspan='2'>".sprintf(__('%1$s: %2$s'), __('Model'), $model->fields['name'])."</th>";
       echo "</tr>";
       echo "</table><br>";
 
@@ -186,6 +199,10 @@
    }
 
 
+   /**
+    * @param PluginDatainjectionModel $model
+    * @param $entities_id
+   **/
    static function processInjection(PluginDatainjectionModel $model, $entities_id) {
       global $CFG_GLPI;
 
@@ -219,7 +236,7 @@
 
       //While CSV file is not EOF
       $prev = '';
-      $deb = time();
+      $deb  = time();
       while ($line != null) {
          //Inject line
          $injectionline              = $index + ($model->getSpecificModel()->isHeaderPresent()?2:1);
@@ -228,7 +245,8 @@
          $pos = number_format($index*100/$nblines,1);
          if ($pos != $prev) {
             $prev = $pos;
-            $fin = time()-$deb;
+            $fin  = time()-$deb;
+            //TODO yllen
             Html::changeProgressBarPosition($index, $nblines,
                                             __('Injection of the file', 'datainjection').'... '.
                                             $pos.'% ('.Html::timestampToString(time()-$deb, true).')');
@@ -262,7 +280,7 @@
 
       unset($_SESSION['datainjection']['go']);
       $_SESSION["MESSAGE_AFTER_REDIRECT"] = "";
-      
+
       $url = $CFG_GLPI["root_doc"]."/plugins/datainjection/ajax/results.php";
       Ajax::updateItem("span_injection",$url,$p);
    }
@@ -372,7 +390,7 @@
             fputcsv($tmpfile, $line, $model->getBackend()->getDelimiter());
          }
          fclose($tmpfile);
-         
+
          $name = "Error-".PluginDatainjectionSession::getParam('file_name');
          $name = str_replace(' ','',$name);
          header('Content-disposition: attachment; filename='.$name);

@@ -27,7 +27,7 @@
  @link      http://www.glpi-project.org/
  @since     2009
  ---------------------------------------------------------------------- */
- 
+
 /**
  * Interface to be implemented for each injection backend
 **/
@@ -36,14 +36,20 @@ interface PluginDatainjectionBackendInterface {
 
    /**
     * Read from file
-  **/
-   function read($numberOfLines = 1);
+    *
+    * @param $numberOfLines (default 1)
+   **/
+   function read($numberOfLines=1);
 
 
    /**
     * Read n lines from the input files
-   */
+    *
+    * @param $start_line
+    * @param $end_line
+   **/
    function readLinesFromTo($start_line, $end_line);
+
 
    /**
     * Delete file
@@ -69,5 +75,4 @@ interface PluginDatainjectionBackendInterface {
    function getNumberOfLines();
 
 }
-
 ?>

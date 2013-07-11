@@ -27,7 +27,7 @@
  @link      http://www.glpi-project.org/
  @since     2009
  ---------------------------------------------------------------------- */
- 
+
 include ('../../../inc/includes.php');
 
 if (!isset ($_GET["id"])) {
@@ -80,10 +80,10 @@ if (isset ($_POST["add"])) {
                                             'mode'          => PluginDatainjectionModel::CREATION))) {
          Session::setActiveTab('PluginDatainjectionModel', 'PluginDatainjectionModel$4');
       } else {
-         Session::addMessageAfterRedirect(__('The file could not be found', 'datainjection'), true, ERROR, true);
+         Session::addMessageAfterRedirect(__('The file could not be found', 'datainjection'),
+                                          true, ERROR, true);
       }
    }
-
    Html::back();
 
 } elseif (isset($_GET['sample'])) {
@@ -99,5 +99,4 @@ Html::header(PluginDatainjectionModel::getTypeName(), '', "plugins", "datainject
 $model->showForm($_GET["id"]);
 
 Html::footer();
-
 ?>
