@@ -122,7 +122,7 @@ class PluginDatainjectionInfo extends CommonDBTM {
    static function showFormInfos(PluginDatainjectionModel $model) {
 
       $canedit = $model->can($model->fields['id'], 'w');
-      PluginDatainjectionInfo::showAddInfo($model, $canedit);
+      self::showAddInfo($model, $canedit);
       
       $model->loadInfos();
       $nb = count($model->getInfos());
@@ -419,4 +419,5 @@ class PluginDatainjectionInfo extends CommonDBTM {
    }
 
 }
+
 ?>

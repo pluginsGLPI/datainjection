@@ -223,8 +223,8 @@
       unlink($this->file);
    }
 
-
-   function readLinesFromTo($start_line, $end_line) {
+   //TODO Not Used
+   /*function readLinesFromTo($start_line, $end_line) {
 
       $row           = 0;
       $fic           = fopen($this->file, 'r');
@@ -241,7 +241,8 @@
 
       fclose($fic);
       return $injectionData;
-   }
+   }*/
 
 }
+
 ?>

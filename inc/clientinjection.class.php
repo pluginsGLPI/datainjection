@@ -321,7 +321,7 @@
          }
       }
 
-      echo "<form method='post' action='".$CFG_GLPI['root_doc']."/plugins/datainjection/index.php'>";
+      echo "<form method='post' action='".$CFG_GLPI['root_doc']."/plugins/datainjection/front/clientinjection.form.php'>";
       echo "<table class='tab_cadre_fixe'>";
       echo "<tr class='tab_bg_1'><th>" . __("Injection's results", 'datainjection')."</th></tr>";
 
@@ -406,4 +406,5 @@
    }
 
 }
+
 ?>

@@ -48,8 +48,9 @@ interface PluginDatainjectionBackendInterface {
     * @param $start_line
     * @param $end_line
    **/
-   function readLinesFromTo($start_line, $end_line);
-
+   //TODO Not Used
+   /*function readLinesFromTo($start_line, $end_line);
+   */
 
    /**
     * Delete file

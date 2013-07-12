@@ -75,6 +75,8 @@ class PluginDatainjectionInfoCollection {
    /**
     * Save in database the model and all his associated mappings
    **/
+   //TODO Not USed
+   /*
    function saveAllInfos($model_id) {
 
       foreach ($this->infosCollection as $infos) {
@@ -86,11 +88,12 @@ class PluginDatainjectionInfoCollection {
             $infos->fields["id"] = $infos->add($infos->fields);
          }
       }
-   }
+   }*/
 
 
    //---- Delete ----//
-
+   //TODO Not USed
+   /*
    function deleteInfosFromDB($models_id) {
       global $DB;
 
@@ -98,7 +101,7 @@ class PluginDatainjectionInfoCollection {
                 FROM `glpi_plugin_datainjection_infos`
                 WHERE `models_id` = '$models_id'";
       $DB->query($query);
-   }
+   }*/
 
 
    //---- Add ----//
@@ -108,17 +111,21 @@ class PluginDatainjectionInfoCollection {
     *
     * @param mapping the new PluginDatainjectionMapping to add
    **/
+   //TODO Not USed
+   /*
    function addNewInfos($infos) {
       $this->infosCollection[] = $infos;
-   }
+   }*/
 
 
    /**
     * Replace all the infos for a model
    **/
+   //TODO Not USed
+   /*
    function replaceInfos($infos) {
       $this->infosCollection = $infos;
-   }
+   }*/
 
 }
 

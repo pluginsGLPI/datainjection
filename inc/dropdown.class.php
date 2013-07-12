@@ -58,7 +58,7 @@ class PluginDatainjectionDropdown {
 
    static function getFloatFormat($format) {
 
-      $formats = PluginDatainjectionDropdown::floatFormats();
+      $formats = self::floatFormats();
       if (isset($formats[$format])) {
          return $formats[$format];
       }
@@ -68,16 +68,17 @@ class PluginDatainjectionDropdown {
 
    static function dropdownFloatFormat($format) {
 
-      Dropdown::showFromArray('float_format', PluginDatainjectionDropdown::floatFormats(),
+      Dropdown::showFromArray('float_format', self::floatFormats(),
                               array('value' => $format));
    }
 
-
+   //TODO Not Used
+   /*
    static function dropdownFileTypes($value) {
 
       $values['csv'] = "CSV";
       Dropdown::showFromArray('filetype', $values, array('value' => $value));
-   }
+   }*/
 
 
    static function dropdownFileEncoding() {
@@ -112,14 +113,14 @@ class PluginDatainjectionDropdown {
 
    static function dropdownPortUnicity($value) {
 
-      $values = PluginDatainjectionDropdown::portUnicityValues();
+      $values = self::portUnicityValues();
       Dropdown::showFromArray('port_unicity', $values, array('value' => $value));
    }
 
 
    static function getPortUnitictyValues($value) {
 
-      $values = PluginDatainjectionDropdown::portUnicityValues();
+      $values = self::portUnicityValues();
       if (isset($values[$value])) {
          return $values[$value];
       }
@@ -127,4 +128,5 @@ class PluginDatainjectionDropdown {
    }
 
 }
+
 ?>

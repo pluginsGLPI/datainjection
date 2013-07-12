@@ -79,7 +79,11 @@ if (isset($_SESSION['datainjection']['go'])) {
    }
 
    Html::back();
+} else if (isset($_POST['finish'])) {
 
+   PluginDatainjectionSession::removeParams();
+   Html::redirect(Toolbox::getItemTypeFormURL('PluginDatainjectionClientInjection'));
+   
 } else {
    if (isset($_GET['id'])) { // Allow link to a model
       PluginDatainjectionSession::setParam('models_id', $_GET['id']);
@@ -90,4 +94,5 @@ if (isset($_SESSION['datainjection']['go'])) {
 }
 
 Html::footer();
+
 ?>

@@ -27,6 +27,7 @@
  @link      http://www.glpi-project.org/
  @since     2009
  ---------------------------------------------------------------------- */
+ 
 class PluginDatainjectionModelcsv extends CommonDBChild {
    var $specific_fields;
 

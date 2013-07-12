@@ -330,7 +330,14 @@ class PluginDatainjectionCommonInjectionLib {
       return new $injectionClass();
    }
 
-
+   
+   /**
+    * Add blacklisted fields for an itemtype
+    *
+    * @param the itemtype
+    *
+    * @return the array of all blacklisted fields
+    */
    static function getBlacklistedOptions($itemtype) {
       global $CFG_GLPI;
       
@@ -1005,11 +1012,12 @@ class PluginDatainjectionCommonInjectionLib {
     * @param value to inject
     * $value modified
    **/
-   static function reformatSpecialChars($value) {
+   //TODO Not used
+   /*static function reformatSpecialChars($value) {
       return str_replace(array('<', '>'),
                          array("&lt;", "&gt;"),
                          $value);
-   }
+   }*/
 
 
    /**
@@ -1539,6 +1547,8 @@ class PluginDatainjectionCommonInjectionLib {
     *
     * @return nothing
    **/
+   //TODO Not USed
+   /*
    function deleteObject() {
 
       $itemtype = $this->getItemtype();
@@ -1554,7 +1564,7 @@ class PluginDatainjectionCommonInjectionLib {
          }
          $this->results[$itemtype] = $this->getValueByItemtypeAndName($itemtype,'id');
       }
-   }
+   }*/
 
 
    /**
@@ -1891,7 +1901,7 @@ class PluginDatainjectionCommonInjectionLib {
       return "";
    }
 
-
+   //TODO Check Which is really Used into logs
    /**
     * Get label associated with an injection result
     *
@@ -1899,22 +1909,90 @@ class PluginDatainjectionCommonInjectionLib {
     *
     * @return label associated with the code
    **/
-   static function getLogLabel($type) {
+   public static function getLogLabel($type) {
 
-      $labels = array(self::SUCCESS, self::WARNING, self::ERROR_CANNOT_IMPORT,
-                      self::ERROR_CANNOT_UPDATE, self::ERROR_IMPORT_ALREADY_IMPORTED,
-                      self::TYPE_MISMATCH, self::MANDATORY, self::FAILED, self::WARNING_NOTFOUND,
-                      self::WARNING_USED, self::WARNING_SEVERAL_VALUES_FOUND,
-                      self::WARNING_ALREADY_LINKED, self::ERROR_IMPORT_REFUSED);
+      $message = "";
 
-      if (in_array($type,$labels)) {
+      switch ($type) {
+         case self::ERROR_CANNOT_IMPORT :
+            $message = __('No right to import data', 'datainjection');
+            break;
          
-         $res = new PluginDatainjectionResult();
-         return $res->getLabel($type);
-      }
-      return "";
-   }
+         case self::ERROR_CANNOT_UPDATE :
+            $message = __('No right to update data', 'datainjection');
+            break;
+         
+         case self::ERROR_IMPORT_ALREADY_IMPORTED :
+            $message = __('Datas are still in the database', 'datainjection');
+            break;
+         
+         case self::ERROR_IMPORT_FIELD_MANDATORY :
+            $message = __('At least one mandatory field is not present', 'datainjection');
+            break;
+               
+         case self::ERROR_IMPORT_LINK_FIELD_MISSING :
+            $message = __('At least one mandatory field is not present', 'datainjection');
+            break;
+            
+         case self::ERROR_IMPORT_REFUSED :
+            $message = __('Import not allowed', 'datainjection');
+            break;
+            
+         case self::ERROR_IMPORT_WRONG_TYPE :
+            $message = __('One data is not the good type', 'datainjection');
+            break;
+         
+         case self::FAILED :
+            $message = __('Import failed', 'datainjection');
+            break;  
+         
+         case self::MANDATORY :
+            $message = __('At least one mandatory field is not present', 'datainjection');
+            break;
 
+         case self::SUCCESS :
+            $message = __('Datas to insert are correct', 'datainjection');
+            break;
+         
+         case self::TYPE_MISMATCH :
+            $message = __('One data is not the good type', 'datainjection');
+            break;
+         
+         case self::WARNING :
+            $message = __('Warning', 'datainjection');
+            break;
+         
+         case self::WARNING_NOTFOUND :
+            $message = __('Data not found', 'datainjection');
+            break;
+         
+         case self::WARNING_USED :
+            $message = __('Data already used', 'datainjection');
+            break;
+
+         case self::WARNING_SEVERAL_VALUES_FOUND :
+            $message = __('More than one value found', 'datainjection');
+            break;
+         
+         case self::WARNING_ALREADY_LINKED:
+            $message = __('Object is already linked', 'datainjection');
+            break;
+
+         case self::WARNING_ALLEMPTY :
+            $message = __('No data to insert', 'datainjection');
+            break;
+         
+         case self::WARNING_NOTEMPTY :
+            $message = __('Undetermined', 'datainjection');
+            break;
+         
+         default :
+            $message = __('Undetermined', 'datainjection');
+            break;
+      }
+
+      return $message;
+   }
 
    /**
     * Manage search options

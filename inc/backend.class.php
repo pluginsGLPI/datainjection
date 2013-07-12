@@ -93,7 +93,7 @@ abstract class PluginDatainjectionBackend {
 
    static function toUTF8($string) {
 
-      if (!PluginDatainjectionBackend::is_utf8($string)) {
+      if (!self::is_utf8($string)) {
          return utf8_encode($string);
       }
       return $string;

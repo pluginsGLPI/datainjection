@@ -754,13 +754,13 @@ class PluginDatainjectionModel extends CommonDBTM {
                break;
 
             case 5:
-               if ($item->fields['step'] > PluginDatainjectionModel::MAPPING_STEP) {
+               if ($item->fields['step'] > self::MAPPING_STEP) {
                   PluginDatainjectionInfo::showFormInfos($item);
                }
                break;
    
             case 6:
-               if ($item->fields['step'] > PluginDatainjectionModel::MAPPING_STEP) {
+               if ($item->fields['step'] > self::MAPPING_STEP) {
                   $item->showValidationForm();
                }
                break;
@@ -1141,10 +1141,12 @@ class PluginDatainjectionModel extends CommonDBTM {
                            = PluginDatainjectionMapping::getSeveralMappedField($this->fields['id']);
    }
 
-
+   
+   //TODO NOT Used
+   /*
    function getSeveraltimesMappedFields() {
       return $this->severaltimes_mapped;
-   }
+   }*/
 
 
    static function checkRightOnModel($models_id) {
@@ -1434,7 +1436,7 @@ class PluginDatainjectionModel extends CommonDBTM {
       echo "<tr class='tab_bg_1'><th colspan='7'>".__('List of the models', 'datainjection')."</th></tr>";
 
       if (!empty($models)) {
-         Session::initNavigateListItems('PluginDatainjectionModel');
+         Session::initNavigateListItems($modelo->getType());
 
          echo "<tr class='tab_bg_1'>";
          echo "<th></th>";
@@ -1446,7 +1448,7 @@ class PluginDatainjectionModel extends CommonDBTM {
          echo "<th>".__('Status')."</th></th>";
 
          foreach ($models as $model) {
-            Session::addToNavigateListItems('PluginDatainjectionModel', $model["id"]);
+            Session::addToNavigateListItems($modelo->getType(), $model["id"]);
 
             echo "<tr class='tab_bg_1'>";
             echo "<td width='10px'>";
@@ -1460,7 +1462,7 @@ class PluginDatainjectionModel extends CommonDBTM {
                echo "&nbsp;";
             }
             echo "</td>";
-            echo "<td><a href='".Toolbox::getItemTypeFormURL('PluginDatainjectionModel')."?id=".
+            echo "<td><a href='".Toolbox::getItemTypeFormURL($modelo->getType())."?id=".
                        $model['id']."'>".$model['name']."</a></td>";
             echo "<td>";
             echo Dropdown::getYesNo($model['is_private']);

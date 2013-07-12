@@ -31,4 +31,5 @@ include ('../../../inc/includes.php');
 include ("../../../lib/ezpdf/class.ezpdf.php");
 
 PluginDatainjectionModel::exportAsPDF($_GET['models_id']);
+
 ?>

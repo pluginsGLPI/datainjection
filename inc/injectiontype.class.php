@@ -57,7 +57,7 @@ class PluginDatainjectionInjectionType {
             if (!$instance->canCreate()) {
                continue;
             }
-            $typename = PluginDatainjectionInjectionType::getParentObjectName($type);
+            $typename = self::getParentObjectName($type);
             $name     = '';
             if ($from != 'datainjection') {
                $plugin->getFromDBbyDir($from);
@@ -98,7 +98,7 @@ class PluginDatainjectionInjectionType {
       getTypesToInject(); // populate $INJECTABLE_TYPES
 
       $p['primary_type']    = '';
-      $p['itemtype']        = PluginDatainjectionInjectionType::NO_VALUE;
+      $p['itemtype']        = self::NO_VALUE;
       $p['mapping_or_info'] = json_encode($mapping_or_info->fields);
       $p['called_by']       = get_class($mapping_or_info);
       $p['fields_update']   = true;
@@ -109,14 +109,14 @@ class PluginDatainjectionInjectionType {
       $mappings_id = $mapping_or_info->fields['id'];
       $values      = array();
 
-      if ($p['itemtype'] == PluginDatainjectionInjectionType::NO_VALUE
-          && $mapping_or_info->fields['itemtype'] != PluginDatainjectionInjectionType::NO_VALUE) {
+      if ($p['itemtype'] == self::NO_VALUE
+          && $mapping_or_info->fields['itemtype'] != self::NO_VALUE) {
 
          $p['itemtype'] = $mapping_or_info->fields['itemtype'];
       }
 
       //Add null value
-      $values[PluginDatainjectionInjectionType::NO_VALUE] = __('-------Choose a table-------', 'datainjection');
+      $values[self::NO_VALUE] = __('-------Choose a table-------', 'datainjection');
 
       //Add primary_type to the list of availables types
       $type                       = new $p['primary_type']();
@@ -162,7 +162,7 @@ class PluginDatainjectionInjectionType {
       global $CFG_GLPI;
 
       $used = array();
-      $p['itemtype']        = PluginDatainjectionInjectionType::NO_VALUE;
+      $p['itemtype']        = self::NO_VALUE;
       $p['primary_type']    = '';
       $p['mapping_or_info'] = array();
       $p['called_by']       = '';
@@ -180,14 +180,14 @@ class PluginDatainjectionInjectionType {
       }
 
       $fields = array();
-      $fields[PluginDatainjectionInjectionType::NO_VALUE] = __('-------Choose a field-------', 'datainjection');
+      $fields[self::NO_VALUE] = __('-------Choose a field-------', 'datainjection');
 
       //By default field has no default value
-      $mapping_value = PluginDatainjectionInjectionType::NO_VALUE;
+      $mapping_value = self::NO_VALUE;
 
-      if ($p['itemtype'] != PluginDatainjectionInjectionType::NO_VALUE) {
+      if ($p['itemtype'] != self::NO_VALUE) {
          //If a value is still present for this mapping
-         if ($mapping_or_info['value'] != PluginDatainjectionInjectionType::NO_VALUE) {
+         if ($mapping_or_info['value'] != self::NO_VALUE) {
             $mapping_value = $mapping_or_info['value'];
          }
          $injectionClass = PluginDatainjectionCommonInjectionLib::getInjectionClassInstance($p['itemtype']);
@@ -201,9 +201,9 @@ class PluginDatainjectionInjectionType {
 
                $fields[$option['linkfield']] = $option['name'];
 
-               if ($mapping_value == PluginDatainjectionInjectionType::NO_VALUE
+               if ($mapping_value == self::NO_VALUE
                    && $p['called_by'] == 'PluginDatainjectionMapping'
-                     && PluginDatainjectionInjectionType::isEqual($option, $mapping_or_info)) {
+                     && self::isEqual($option, $mapping_or_info)) {
 
                   $mapping_value = $option['linkfield'];
                }
@@ -265,7 +265,6 @@ class PluginDatainjectionInjectionType {
       return false;
    }
 
-
    static function showMandatoryCheckbox($options=array()) {
       //json adds more \ char than needed : when $options['mapping_or_info']['name'] contains a '
       //json_decode fails to decode it !
@@ -292,7 +291,7 @@ class PluginDatainjectionInjectionType {
    static function getUsedMappingsOrInfos($options=array()) {
       global $DB;
 
-      $p['itemtype']        = PluginDatainjectionInjectionType::NO_VALUE;
+      $p['itemtype']        = self::NO_VALUE;
       $p['primary_type']    = '';
       $p['mapping_or_info'] = array();
       $p['called_by']       = '';
@@ -318,7 +317,7 @@ class PluginDatainjectionInjectionType {
       $options        = $injectionClass->getOptions();
 
       foreach ($datas as $data) {
-         if ($data['value'] != PluginDatainjectionInjectionType::NO_VALUE) {
+         if ($data['value'] != self::NO_VALUE) {
             foreach ($options as $option) {
                if (isset($option['table'])
                    && $option['table'] == getItemTypeForTable($data['itemtype'])
@@ -337,4 +336,5 @@ class PluginDatainjectionInjectionType {
    }
 
 }
+
 ?>
