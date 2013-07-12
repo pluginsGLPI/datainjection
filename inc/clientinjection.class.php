@@ -59,7 +59,7 @@
          $buttons[$url] = PluginDatainjectionModel::getTypeName();
          $title         = "";
          Html::displayTitle($CFG_GLPI["root_doc"] . "/plugins/datainjection/pics/datainjection.png",
-                            _n('Group', 'Groups', 2), $title, $buttons);
+                            PluginDatainjectionModel::getTypeName(), $title, $buttons);
       }
    }
 

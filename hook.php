@@ -44,20 +44,6 @@ function plugin_datainjection_registerMethods() {
 }
 
 
-function plugin_pre_item_delete_datainjection($input) {
-
-   if (isset ($input["_item_type_"])) {
-      switch ($input["_item_type_"]) {
-         case 'Profile' :
-            // Manipulate data if needed
-            $PluginDatainjectionProfile = new PluginDatainjectionProfile;
-            $PluginDatainjectionProfile->cleanProfiles($input["ID"]);
-            break;
-      }
-   }
-   return $input;
-}
-
 function plugin_datainjection_install() {
    global $DB;
 
@@ -177,25 +163,6 @@ function plugin_datainjection_install() {
    }
 
    return true;
-}
-
-
-function plugin_datainjection_createfirstaccess($ID) {
-   global $DB;
-
-   include_once(GLPI_ROOT."/plugins/datainjection/inc/profile.class.php");
-   $PluginDatainjectionProfile = new PluginDatainjectionProfile();
-
-   if (!$PluginDatainjectionProfile->getFromDB($ID)) {
-      $Profile = new Profile();
-      $Profile->getFromDB($ID);
-      $name    = $Profile->fields["name"];
-
-      $query = "INSERT INTO `glpi_plugin_datainjection_profiles`
-                       (`id`, `name` , `is_default`, `model`)
-                VALUES ('$ID', '$name', '0', 'w');";
-      $DB->query($query);
-   }
 }
 
 
@@ -1002,21 +969,6 @@ function plugin_datainjection_update210_220() {
 }
 
 
-function plugin_datainjection_checkRight($module, $right) {
-   global $CFG_GLPI;
-
-   if (!plugin_datainjection_haveRight($module, $right)) {
-      // Gestion timeout session
-      if (!isset ($_SESSION["glpiID"])) {
-         Html::redirect($CFG_GLPI["root_doc"] . "/index.php");
-         exit ();
-      }
-
-      Html::displayRightError();
-   }
-}
-
-
 function plugin_datainjection_loadHook($hook_name, $params = array ()) {
    global $PLUGIN_HOOKS;
 
@@ -1051,7 +1003,33 @@ function plugin_datainjection_needUpdateOrInstall() {
    return 1;
 }
 
+//Tsmr / Yllen TODO Decision : use Search::show('PluginDatainjectionModel') ? 
+/*
+function plugin_datainjection_addDefaultWhere($itemtype) {
 
+   switch ($itemtype) {
+      case 'PluginDatainjectionModel' :
+         
+         $models = PluginDatainjectionModel::getModels(Session::getLoginUserID(), 'name', $_SESSION['glpiactive_entity'], true);
+         
+         if (count($models) > 0) {
+            $tab = array();
+            foreach ($models as $model) {
+               $tab[]= $model['id'];
+            }
+            if (count($tab) > 0) {
+               $where = "`glpi_plugin_datainjection_models`.`id` IN ('".implode("','", $tab)."')";
+            }
+            
+            return $where;
+         }
+         
+         return false;
+         break;
+   }
+}
+
+//NOT USED
 function plugin_datainjection_giveItem($type, $ID, $data, $num) {
    global $DB, $CFG_GLPI;
 
@@ -1067,6 +1045,6 @@ function plugin_datainjection_giveItem($type, $ID, $data, $num) {
          return PluginDatainjectionDropdown::getFloatFormat($data['ITEM_'.$num]);
    }
    return "";
-}
+}*/
 
 ?>

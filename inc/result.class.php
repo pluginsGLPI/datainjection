@@ -305,4 +305,5 @@ class PluginDatainjectionResult {
    }
 
 }
+
 ?>

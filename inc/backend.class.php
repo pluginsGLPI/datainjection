@@ -43,29 +43,6 @@ abstract class PluginDatainjectionBackend {
    const ENCODING_AUTO      = 2;
 
 
-
-   // TODO function never used
-   function getError($html=0) {
-      return ($html ? nl2br($this->errmsg) : $this->errmsg);
-   }
-
-
-   // TODO function never used
-   function setError($msg) {
-
-      if (!empty($this->errmsg)) {
-         $this->errmsg .= "\n";
-      }
-      $this->errmsg .= $msg;
-   }
-
-
-   // TODO function never used
-   function clearError() {
-      $this->errmsg = "";
-   }
-
-
    /**
     * Get header of the file
     *
@@ -85,30 +62,6 @@ abstract class PluginDatainjectionBackend {
          $header[] = $i;
       }
       return $header;
-   }
-
-
-   /**
-    * get datas from the file at line
-    *
-    * @param $injectionData
-    * @param line_id the id of the line
-    *
-    * @return array with datas from this line
-   **/
-  // TODO à quoi sert cette fonction ? pour moi jamais utilisée
-   function getDataAtLine(PluginDatainjectionData $injectionData, $line_id) {
-      return $injectionData->getDataAtLine($line_id);
-   }
-
-   // TODO à quoi sert cette fonction ? pour moi jamais utilisée
-   function getDatasFromLineToLine(PluginDatainjectionData $injectionData, $start_line, $end_line) {
-
-      $tmp = array();
-      for ($i=$start_line ; $i<count($injectionData) && $i <= $end_line ; $i++) {
-         $tmp[] = $injectionData->getDataAtLine($i);
-      }
-      return $tmp;
    }
 
 

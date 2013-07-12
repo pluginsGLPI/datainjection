@@ -56,9 +56,11 @@ function plugin_init_datainjection() {
       $image_import  = "<img src='".$CFG_GLPI["root_doc"]."/pics/actualiser.png' title='";
       $image_import .= __('Injection of the file', 'datainjection');
       $image_import .= "' alt='".__('Injection of the file', 'datainjection')."'>";
-
+      
+      $PLUGIN_HOOKS['menu_entry']['datainjection'] = 'front/clientinjection.form.php';
+      
       if (plugin_datainjection_haveRight("model", "r")) {
-         $PLUGIN_HOOKS['menu_entry']['datainjection'] = true;
+         
          $PLUGIN_HOOKS['submenu_entry']['datainjection']['options']['model']['title']
                                                    = PluginDatainjectionModel::getTypeName();
          $PLUGIN_HOOKS['submenu_entry']['datainjection']['options']['model']['page']
@@ -73,12 +75,13 @@ function plugin_init_datainjection() {
          $image_model .= "' alt='".PluginDatainjectionModel::getTypeName()."'>";
          $PLUGIN_HOOKS['submenu_entry']['datainjection'][$image_model] = 'front/model.php';
          $PLUGIN_HOOKS['submenu_entry']['datainjection']['options']['model']['links'][$image_import]
-                                                   = '/plugins/datainjection/index.php';
+                                                   = '/plugins/datainjection/front/clientinjection.form.php';
       }
 
-      $PLUGIN_HOOKS['submenu_entry']['datainjection']['add'] = 'index.php';
-
-      $PLUGIN_HOOKS['pre_item_delete']['datainjection'] = 'plugin_pre_item_delete_datainjection';
+      $PLUGIN_HOOKS['submenu_entry']['datainjection']['add'] = 'front/clientinjection.form.php';
+      
+      $PLUGIN_HOOKS['pre_item_purge']['datainjection']
+         = array('Profile'=>array('PluginDatainjectionProfile', 'purgeProfiles'));
 
       // Css file
       $PLUGIN_HOOKS['add_css']['datainjection'] = 'css/datainjection.css';
