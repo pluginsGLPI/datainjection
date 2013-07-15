@@ -67,6 +67,8 @@ abstract class PluginDatainjectionBackend {
 
    /**
     * Get the backend implementation by type
+    *
+    * @param $type
    **/
    static function getInstance($type) {
 

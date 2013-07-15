@@ -170,7 +170,7 @@
 
 
    /**
-    * @param PluginDatainjectionModel $model
+    * @param $model        PluginDatainjectionModel object
     * @param $entities_id
    **/
    static function showInjectionForm(PluginDatainjectionModel $model, $entities_id) {
@@ -200,7 +200,7 @@
 
 
    /**
-    * @param PluginDatainjectionModel $model
+    * @param $model        PluginDatainjectionModel object
     * @param $entities_id
    **/
    static function processInjection(PluginDatainjectionModel $model, $entities_id) {
@@ -248,17 +248,20 @@
             $fin  = time()-$deb;
             //TODO yllen
             Html::changeProgressBarPosition($index, $nblines,
-                                            __('Injection of the file', 'datainjection').'... '.
-                                            $pos.'% ('.Html::timestampToString(time()-$deb, true).')');
+                                            sprintf(__('%1$s (%2$s)'),
+                                                    sprintf(__('Injection of the file... %d%%',
+                                                               'datainjection'), $pos),
+                                                    Html::timestampToString(time()-$deb, true)));
          }
          $line = $backend->getNextLine();
          $index++;
-         //logDebug('line '.$index.' of '.$nblines);
       }
 
       //EOF : change progressbar to 100% !
-      Html::changeProgressBarPosition(100, 100, __('Injection finished', 'datainjection').
-                                                 ' ('.Html::timestampToString(time()-$deb, true).')');
+      Html::changeProgressBarPosition(100, 100,
+                                      sprintf(__('%1$s (%2$s)'),
+                                              __('Injection finished', 'datainjection'),
+                                              Html::timestampToString(time()-$deb, true)));
 
       // Restore
       $CFG_GLPI["debug_sql"] = 1;
@@ -304,6 +307,9 @@
    }
 
 
+   /**
+    * @param $model  PluginDatainjectionModel object
+   **/
    static function showResultsForm(PluginDatainjectionModel $model) {
       global $CFG_GLPI;
 
@@ -321,7 +327,8 @@
          }
       }
 
-      echo "<form method='post' action='".$CFG_GLPI['root_doc']."/plugins/datainjection/front/clientinjection.form.php'>";
+      echo "<form method='post' action='".$CFG_GLPI['root_doc'].
+             "/plugins/datainjection/front/clientinjection.form.php'>";
       echo "<table class='tab_cadre_fixe'>";
       echo "<tr class='tab_bg_1'><th>" . __("Injection's results", 'datainjection')."</th></tr>";
 
@@ -374,7 +381,7 @@
 
       if (!empty($error_lines)) {
          $model = unserialize(PluginDatainjectionSession::getParam('currentmodel'));
-         $file  = PLUGIN_DATAINJECTION_UPLOAD_DIR . PluginDatainjectionSession::getParam('file_name');
+         $file  = PLUGIN_DATAINJECTION_UPLOAD_DIR.PluginDatainjectionSession::getParam('file_name');
 
          $mappings = $model->getMappings();
          $tmpfile  = fopen($file, "w");
@@ -406,5 +413,4 @@
    }
 
 }
-
 ?>

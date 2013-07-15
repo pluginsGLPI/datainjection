@@ -124,7 +124,7 @@
    /**
     * Read a CSV file and store data in an array
     *
-    * @param numberOfLines inumber of lines to be read (-1 means all file) (default 1)
+    * @param $numberOfLines inumber of lines to be read (-1 means all file) (default 1)
    **/
    function read($numberOfLines=1) {
 
@@ -148,9 +148,9 @@
 
 
    /**
-    * Read a CSV file and store data in an array
+    * Store the number of lines red from the file
     *
-    * @param numberOfLines inumber of lines to be read (-1 means all file)
+    * @see plugins/datainjection/inc/PluginDatainjectionBackendInterface::storeNumberOfLines()
    **/
    function storeNumberOfLines() {
 
@@ -223,26 +223,5 @@
       unlink($this->file);
    }
 
-   //TODO Not Used
-   /*function readLinesFromTo($start_line, $end_line) {
-
-      $row           = 0;
-      $fic           = fopen($this->file, 'r');
-      $injectionData = new PluginDatainjectionData();
-
-      while ((($data = fgetcsv($fic, 3000, $this->delimiter)) !== FALSE)
-             && ($row <= $end_line)) {
-
-         if (($row >= $start_line) && ($row <= $end_line)) {
-            $injectionData->addToDatas(self::parseLine($fic,$data));
-         }
-         $row++;
-      }
-
-      fclose($fic);
-      return $injectionData;
-   }*/
-
 }
-
 ?>

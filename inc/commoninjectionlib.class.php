@@ -63,6 +63,7 @@ class PluginDatainjectionCommonInjectionLib {
    private $entity = 0;
 
    const ACTION_CHECK  = 0;
+   // TODO constante never used
    const ACTION_INJECT = 1;
 
    //Type of action to perform
@@ -75,9 +76,11 @@ class PluginDatainjectionCommonInjectionLib {
    const SUCCESS                        = 10; //Injection OK
    const FAILED                         = 11; //Error during injection
    const WARNING                        = 12; //Injection ok but partial
-   
+
    //Field check return constants
+   // TODO constante never used
    const ALREADY_EXISTS                 = 21;
+
    const TYPE_MISMATCH                  = 22;
    const MANDATORY                      = 23;
    const ITEM_NOT_FOUND                 = 24;
@@ -91,14 +94,16 @@ class PluginDatainjectionCommonInjectionLib {
    const WARNING_SEVERAL_VALUES_FOUND     = 35;
    const WARNING_ALREADY_LINKED           = 36;
    const ERROR_FIELDSIZE_EXCEEDED         = 37;
+   //TODO constante never used
    const WARNING_PARTIALLY_IMPORTED       = 38;
+
    const ERROR_IMPORT_REFUSED             = 39; //Dictionnary explicitly refuse import
    const WARNING_NOTEMPTY                 = 40; //0.84 added
    const ERROR_IMPORT_WRONG_TYPE          = 41; //0.84 added
    const ERROR_IMPORT_FIELD_MANDATORY     = 42; //0.84 added
    const ERROR_IMPORT_LINK_FIELD_MISSING  = 43; //0.84 added
    const WARNING_ALLEMPTY                 = 44; //0.84 added
-   
+
    //Empty values
    const EMPTY_VALUE          = '';
    const DROPDOWN_EMPTY_VALUE = 0;
@@ -122,9 +127,13 @@ class PluginDatainjectionCommonInjectionLib {
    const UNICITY_NETPORT_LOGICAL_NUMBER_NAME_MAC   = 5;
 
    //Field status must evolve when ticket #2216 will be resolved
+   //TODO constante never used
    const FIELD_NOT_INJECTABLE = 0;
+
    const FIELD_INJECTABLE     = 1;
    const FIELD_VIRTUAL        = 2;
+
+
 
    /**
     * Set default values for injection parameters
@@ -132,6 +141,7 @@ class PluginDatainjectionCommonInjectionLib {
     * @return nothing
    **/
    function setDefaultValues() {
+
       $this->checks = array('ip'           => false, 'mac'          => false,
                             'integer'      => false, 'yes'          => false,
                             'bool'         => false, 'date'         => false,
@@ -156,14 +166,15 @@ class PluginDatainjectionCommonInjectionLib {
    /**
     * Constructor : store all needed options into the library
     *
-    * @param injectionClass class which represents the itemtype to injection
-    *                         (in 0.80, will be directly the itemtype class)
-    * @param values values to injection into GLPI
-    * @param injection_options options that can be used during the injection (maybe an empty array)
+    * @param $injectionClass            class which represents the itemtype to injection
+    *                                   (in 0.80, will be directly the itemtype class)
+    * @param $values              array values to injection into GLPI
+    * @param $injection_options   array options that can be used during the injection
+    *                                   (maybe an empty array)
     *
     * @return nothinActiong
    **/
-   function __construct($injectionClass, $values = array(), $injection_options = array()) {
+   function __construct($injectionClass, $values=array(), $injection_options=array()) {
 
       $this->setDefaultValues();
 
@@ -220,7 +231,7 @@ class PluginDatainjectionCommonInjectionLib {
     * Check and add fields for itemtype which depend on other itemtypes
     * (for example SoftwareLicense needs to be linked to a Software)
     *
-    * @param injectionClass class to use for injection
+    * @param $injectionClass class to use for injection
    **/
    function areTypeMandatoryFieldsOK($injectionClass) {
 
@@ -250,8 +261,8 @@ class PluginDatainjectionCommonInjectionLib {
          //If field not defined, or if value is the dropdown's default value
          //If no value found or value is 0 and field is a dropdown,
          //then mandatory field management failed
-         if ($value == false
-             || ($value == self::DROPDOWN_EMPTY_VALUE
+         if (($value == false)
+             || (($value == self::DROPDOWN_EMPTY_VALUE)
                  && self::isFieldADropdown($option['displaytype']))) {
             $status_check = false;
             $this->results[self::ACTION_CHECK][] = array(self::MANDATORY,$option['name']);
@@ -260,10 +271,11 @@ class PluginDatainjectionCommonInjectionLib {
       return $status_check;
    }
 
+
    /**
     * Check if a field type represents a dropdown or not
     *
-    * @param field_type the type of field
+    * @param $field_type the type of field
     *
     * @return true if it's a dropdown type, false if not
    **/
@@ -276,14 +288,16 @@ class PluginDatainjectionCommonInjectionLib {
       return false;
    }
 
+
    /**
     * Return an the class of an item by giving his injection class
     *
-    * @param the injection class name
+    * @param $injectionClassName the injection class name
     *
     * @return an instance of the itemtype associated to the injection class name
     */
    static function getItemtypeInstanceByInjection($injectionClassName) {
+
       $injection = self::getItemtypeByInjectionClass(new $injectionClassName);
       return new $injection;
    }
@@ -292,7 +306,7 @@ class PluginDatainjectionCommonInjectionLib {
    /**
     * Get an itemtype name by giving his injection class name
     *
-    * @param the injection class name
+    * @param $injectionClassName the injection class name
     *
     * @return the itemtype associated
     */
@@ -304,7 +318,7 @@ class PluginDatainjectionCommonInjectionLib {
    /**
     * Get an itemtype by giving an injection class object
     *
-    * @param an injection class object
+    * @param $injectionClassName the injection class object
     *
     * @return an instance of the itemtype associated to the injection class
     */
@@ -316,7 +330,7 @@ class PluginDatainjectionCommonInjectionLib {
    /**
     * Get an injection class instance for an itemtype
     *
-    * @param the itemtype
+    * @param $itemtype  the itemtype
     *
     * @return the injection class instance
     */
@@ -330,75 +344,75 @@ class PluginDatainjectionCommonInjectionLib {
       return new $injectionClass();
    }
 
-   
+
    /**
     * Add blacklisted fields for an itemtype
     *
-    * @param the itemtype
+    * @param $itemtype the itemtype
     *
     * @return the array of all blacklisted fields
     */
    static function getBlacklistedOptions($itemtype) {
       global $CFG_GLPI;
-      
+
       //2 : id
       // 19 : date_mod
       // 80 : entity
       $blacklist = array(2, 19, 80);
-      
+
       //add document fields
       if (in_array($itemtype, $CFG_GLPI["document_types"])) {
-         $tabs = Document::getSearchOptionsToAdd($itemtype);
+         $tabs            = Document::getSearchOptionsToAdd();
          $document_fields = array();
          unset($tabs['document']);
          foreach ($tabs as $k => $v) {
             $document_fields[] = $k;
          }
-      
+
          $blacklist = array_merge($blacklist, $document_fields);
       }
-      
+
       //add infocoms fields
       if (in_array($itemtype, $CFG_GLPI["infocom_types"])) {
-         $tabs = Infocom::getSearchOptionsToAdd($itemtype);
+         $tabs           = Infocom::getSearchOptionsToAdd($itemtype);
          $infocom_fields = array();
          unset($tabs['financial']);
          foreach ($tabs as $k => $v) {
             $infocom_fields[] = $k;
          }
-      
+
          $blacklist = array_merge($blacklist, $infocom_fields);
       }
       //add contract fields
       if (in_array($itemtype, $CFG_GLPI["contract_types"])) {
-         $tabs = Contract::getSearchOptionsToAdd($itemtype);
+         $tabs            = Contract::getSearchOptionsToAdd();
          $contract_fields = array();
          unset($tabs['contract']);
          foreach ($tabs as $k => $v) {
             $contract_fields[] = $k;
          }
-         
+
          $blacklist = array_merge($blacklist, $contract_fields);
       }
-      
+
       //add networkport fields
       if (in_array($itemtype, $CFG_GLPI["networkport_types"])) {
-         $tabs = NetworkPort::getSearchOptionsToAdd($itemtype);
+         $tabs               = NetworkPort::getSearchOptionsToAdd($itemtype);
          $networkport_fields = array();
          unset($tabs['network']);
          foreach ($tabs as $k => $v) {
             $networkport_fields[] = $k;
          }
-         
+
          $blacklist = array_merge($blacklist, $networkport_fields);
       }
-      
+
       //add ticket_types fields
       if (in_array($itemtype, $CFG_GLPI["ticket_types"])) {
-         $ticket_fields = array(60, 140);    
-         $blacklist = array_merge($blacklist, $ticket_fields);
+         $ticket_fields = array(60, 140);
+         $blacklist     = array_merge($blacklist, $ticket_fields);
       }
-      
+
       return $blacklist;
    }
 
@@ -406,8 +420,8 @@ class PluginDatainjectionCommonInjectionLib {
    /**
     * Find and return the right search option
     *
-    * @param options the search options array
-    * @param lookfor the search option we're looking for
+    * @param $options the search options array
+    * @param $lookfor the search option we're looking for
     *
     * @return the search option matching lookfor parameter or false it not found
    **/
@@ -415,10 +429,8 @@ class PluginDatainjectionCommonInjectionLib {
 
       $found = false;
       foreach ($options as $option) {
-         if (isset($option['injectable'])
-             && $option['injectable'] == self::FIELD_INJECTABLE
-             && isset($option['linkfield'])
-             && $option['linkfield'] == $lookfor) {
+         if (isset($option['injectable']) && ($option['injectable'] == self::FIELD_INJECTABLE)
+             && isset($option['linkfield']) && ($option['linkfield'] == $lookfor)) {
 
             $found = $option;
          }
@@ -672,7 +684,7 @@ class PluginDatainjectionCommonInjectionLib {
    **/
    private function addExternalDropdownParameters($itemtype) {
       global $DB;
-      
+
       $external = array();
       $values   = $this->getValuesForItemtype($itemtype);
       $toadd    = array('manufacturers_id' => 'manufacturer');
@@ -1917,35 +1929,35 @@ class PluginDatainjectionCommonInjectionLib {
          case self::ERROR_CANNOT_IMPORT :
             $message = __('No right to import data', 'datainjection');
             break;
-         
+
          case self::ERROR_CANNOT_UPDATE :
             $message = __('No right to update data', 'datainjection');
             break;
-         
+
          case self::ERROR_IMPORT_ALREADY_IMPORTED :
             $message = __('Datas are still in the database', 'datainjection');
             break;
-         
+
          case self::ERROR_IMPORT_FIELD_MANDATORY :
             $message = __('At least one mandatory field is not present', 'datainjection');
             break;
-               
+
          case self::ERROR_IMPORT_LINK_FIELD_MISSING :
             $message = __('At least one mandatory field is not present', 'datainjection');
             break;
-            
+
          case self::ERROR_IMPORT_REFUSED :
             $message = __('Import not allowed', 'datainjection');
             break;
-            
+
          case self::ERROR_IMPORT_WRONG_TYPE :
             $message = __('One data is not the good type', 'datainjection');
             break;
-         
+
          case self::FAILED :
             $message = __('Import failed', 'datainjection');
-            break;  
-         
+            break;
+
          case self::MANDATORY :
             $message = __('At least one mandatory field is not present', 'datainjection');
             break;
@@ -1953,19 +1965,19 @@ class PluginDatainjectionCommonInjectionLib {
          case self::SUCCESS :
             $message = __('Datas to insert are correct', 'datainjection');
             break;
-         
+
          case self::TYPE_MISMATCH :
             $message = __('One data is not the good type', 'datainjection');
             break;
-         
+
          case self::WARNING :
             $message = __('Warning', 'datainjection');
             break;
-         
+
          case self::WARNING_NOTFOUND :
             $message = __('Data not found', 'datainjection');
             break;
-         
+
          case self::WARNING_USED :
             $message = __('Data already used', 'datainjection');
             break;
@@ -1973,7 +1985,7 @@ class PluginDatainjectionCommonInjectionLib {
          case self::WARNING_SEVERAL_VALUES_FOUND :
             $message = __('More than one value found', 'datainjection');
             break;
-         
+
          case self::WARNING_ALREADY_LINKED:
             $message = __('Object is already linked', 'datainjection');
             break;
@@ -1981,11 +1993,11 @@ class PluginDatainjectionCommonInjectionLib {
          case self::WARNING_ALLEMPTY :
             $message = __('No data to insert', 'datainjection');
             break;
-         
+
          case self::WARNING_NOTEMPTY :
             $message = __('Undetermined', 'datainjection');
             break;
-         
+
          default :
             $message = __('Undetermined', 'datainjection');
             break;

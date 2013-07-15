@@ -71,8 +71,8 @@ class PluginDatainjectionAutoUpdateSystemInjection extends AutoUpdateSystem
    /**
     * Standard method to add an object into glpi
     *
-    * @param values  array fields to add into glpi
-    * @param options array options used during creation
+    * @param $values  array fields to add into glpi
+    * @param $options array options used during creation
     *
     * @return an array of IDs of newly created objects : for example array(Computer=>1, Networkport=>10)
    **/
