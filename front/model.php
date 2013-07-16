@@ -35,17 +35,6 @@ Html::header(PluginDatainjectionModel::getTypeName(), '', "plugins", "datainject
 $model = new PluginDatainjectionModel();
 $model->checkGlobal('r');
 
-if (isset($_POST['delete'])
-      && isset($_POST['models'])) {
-
-   foreach ($_POST['models'] as $models_id => $tmp) {
-      if ($model->can($models_id, 'd')) {
-         $model->delete(array('id' => $models_id));
-      }
-   }
-   Html::back();
-}
-
 Search::show('PluginDatainjectionModel');
 
 Html::footer();
