@@ -29,18 +29,9 @@
  ---------------------------------------------------------------------- */
 
 class PluginDatainjectionDropdown {
-   
+
    static function dateFormats() {
 
-<<<<<<< .mine
-
-   /**
-    * @param $format
-   **/
-   static function dropdownDateFormat($format) {
-
-=======
->>>>>>> .r762
       $date_format[PluginDatainjectionCommonInjectionLib::DATE_TYPE_DDMMYYYY]
                                                             = __('dd-mm-yyyy', 'datainjection');
       $date_format[PluginDatainjectionCommonInjectionLib::DATE_TYPE_MMDDYYYY]
@@ -50,8 +41,8 @@ class PluginDatainjectionDropdown {
 
       return $date_format;
    }
-   
-   
+
+
    static function getDateFormat($date) {
 
       $dates = self::dateFormats();
@@ -60,14 +51,7 @@ class PluginDatainjectionDropdown {
       }
       return "";
    }
-   
-   
-   static function dropdownDateFormat($format) {
 
-      Dropdown::showFromArray('date_format', self::dateFormats(),
-                              array('value' => $format));
-   }
-   
 
    static function floatFormats() {
 
@@ -95,27 +79,20 @@ class PluginDatainjectionDropdown {
    }
 
 
-<<<<<<< .mine
-=======
-   static function dropdownFloatFormat($format) {
-
-      Dropdown::showFromArray('float_format', self::floatFormats(),
-                              array('value' => $format));
-   }
-   
-   
-      
    static function statusLabels() {
-      
-      $states[0] = Dropdown::EMPTY_VALUE;
+
+      $states[0]                                            = Dropdown::EMPTY_VALUE;
       //$states[PluginDatainjectionModel::INITIAL_STEP] = __('Creation of the model on going', 'datainjection');
-      $states[PluginDatainjectionModel::FILE_STEP] = __('File to inject', 'datainjection');
-      $states[PluginDatainjectionModel::MAPPING_STEP] = __('Mappings', 'datainjection');
-      $states[PluginDatainjectionModel::OTHERS_STEP] = __('Additional Information', 'datainjection');
-      $states[PluginDatainjectionModel::READY_TO_USE_STEP] = __('Model available for use', 'datainjection');
+      $states[PluginDatainjectionModel::FILE_STEP]          = __('File to inject', 'datainjection');
+      $states[PluginDatainjectionModel::MAPPING_STEP]       = __('Mappings', 'datainjection');
+      $states[PluginDatainjectionModel::OTHERS_STEP]        = __('Additional Information',
+                                                                 'datainjection');
+      $states[PluginDatainjectionModel::READY_TO_USE_STEP]  = __('Model available for use',
+                                                                 'datainjection');
       return $states;
    }
-   
+
+
    /**
     * Return current status of the model
     *
@@ -130,29 +107,7 @@ class PluginDatainjectionDropdown {
       return "";
    }
 
-   
-   /**
-    * Return current status of the model
-    *
-    * @return nothing
-   **/
-   static function dropdownStatusLabel($states) {
-      
-      Dropdown::showFromArray('step', self::statusLabels(),
-                              array('value' => $states));
 
-   }
-
-   //TODO Not Used
-   /*
-   static function dropdownFileTypes($value) {
-
-      $values['csv'] = "CSV";
-      Dropdown::showFromArray('filetype', $values, array('value' => $value));
-   }*/
-
-
->>>>>>> .r762
    static function dropdownFileEncoding() {
 
       $values[PluginDatainjectionBackend::ENCODING_AUTO]      = __('Automatic detection',
@@ -192,17 +147,6 @@ class PluginDatainjectionDropdown {
       $values = self::portUnicityValues();
       Dropdown::showFromArray('port_unicity', $values, array('value' => $value));
    }
-
-
-   //TODO function never called
-/*   static function getPortUnitictyValues($value) {
-
-      $values = self::portUnicityValues();
-      if (isset($values[$value])) {
-         return $values[$value];
-      }
-      return "";
-   }*/
 
 }
 ?>

@@ -27,7 +27,7 @@
  @link      http://www.glpi-project.org/
  @since     2009
  ---------------------------------------------------------------------- */
- 
+
 class PluginDatainjectionModel extends CommonDBTM {
 
    //Store mappings informations
@@ -67,7 +67,7 @@ class PluginDatainjectionModel extends CommonDBTM {
 
 
    static function getTypeName($nb=0) {
-   
+
       return __('Model management', 'datainjection');
    }
 
@@ -77,17 +77,17 @@ class PluginDatainjectionModel extends CommonDBTM {
       $this->mappings = new PluginDatainjectionMappingCollection();
       $this->infos    = new PluginDatainjectionInfoCollection();
    }
-   
-   
+
+
    static function canView() {
       return plugin_datainjection_haveRight('model', 'r');
    }
-   
+
 
    static function canCreate() {
       return plugin_datainjection_haveRight('model', 'w');
    }
-   
+
 
    function canViewItem() {
 
@@ -99,7 +99,7 @@ class PluginDatainjectionModel extends CommonDBTM {
       }
       return self::checkRightOnModel($this->fields['id']);
    }
-   
+
 
    function canCreateItem() {
 
@@ -111,7 +111,7 @@ class PluginDatainjectionModel extends CommonDBTM {
       }
       return self::checkRightOnModel($this->fields['id']);
    }
-   
+
 
    function saveMappings() {
       $this->mappings->saveAllMappings($this->fields['id']);
@@ -487,20 +487,20 @@ class PluginDatainjectionModel extends CommonDBTM {
       $tab[3]['name']            = __('Allow lines creation', 'datainjection');
       $tab[3]['datatype']        = 'bool';
       $tab[3]['massiveaction']   = false;
-      
+
       $tab[4]['table']           = $this->getTable();
       $tab[4]['field']           = 'behavior_update';
       $tab[4]['name']            = __('Allow lines update', 'datainjection');
       $tab[4]['datatype']        = 'bool';
       $tab[4]['massiveaction']   = false;
-      
+
       $tab[5]['table']           = $this->getTable();
       $tab[5]['field']           = 'itemtype';
       $tab[5]['name']            = __('Type of datas to import', 'datainjection');
       $tab[5]['datatype']        = 'itemtypename';
       $tab[5]['nosearch']        = true;
       $tab[5]['massiveaction']   = false;
-      
+
       $tab[6]['table']           = $this->getTable();
       $tab[6]['field']           = 'can_add_dropdown';
       $tab[6]['name']            = __('Allow creation of dropdowns', 'datainjection');
@@ -511,7 +511,7 @@ class PluginDatainjectionModel extends CommonDBTM {
       $tab[7]['name']            = __('Dates format', 'datainjection');
       $tab[7]['datatype']        = 'specific';
       $tab[7]['searchtype']      = 'equals';
-      
+
       $tab[8]['table']           = $this->getTable();
       $tab[8]['field']           = 'float_format';
       $tab[8]['name']            = __('Float format', 'datainjection');
@@ -534,14 +534,14 @@ class PluginDatainjectionModel extends CommonDBTM {
       $tab[11]['name']           = __('Private');
       $tab[11]['datatype']       = 'bool';
       $tab[11]['massiveaction']  = false;
-      
+
       $tab[12]['table']          = $this->getTable();
       $tab[12]['field']          = 'step';
       $tab[12]['name']           = __('Status');
       $tab[12]['massiveaction']  = false;
       $tab[12]['datatype']       = 'specific';
       $tab[12]['searchtype']     = 'equals';
-      
+
       $tab[16]['table']          = $this->getTable();
       $tab[16]['field']          = 'comment';
       $tab[16]['name']           = __('Comments');
@@ -551,15 +551,15 @@ class PluginDatainjectionModel extends CommonDBTM {
       $tab[80]['field']          = 'completename';
       $tab[80]['name']           = __('Entity');
       $tab[80]['datatype']       = 'dropdown';
-      
+
       $tab[86]['table']          = $this->getTable();
       $tab[86]['field']          = 'is_recursive';
       $tab[86]['name']           = __('Child entities');
       $tab[86]['datatype']       = 'bool';
-      
+
       return $tab;
    }
-   
+
    /**
     * @since version 0.84
     *
@@ -579,16 +579,16 @@ class PluginDatainjectionModel extends CommonDBTM {
 
          case "float_format" :
             return PluginDatainjectionDropdown::getFloatFormat($values['float_format']);
-         
+
          case "date_format" :
             return PluginDatainjectionDropdown::getDateFormat($values['date_format']);
-         
+
          case "step" :
             return PluginDatainjectionDropdown::getStatusLabel($values['step']);
       }
       return parent::getSpecificValueToDisplay($field, $values, $options);
    }
-   
+
    /**
     * @since version 0.84
     *
@@ -627,7 +627,7 @@ class PluginDatainjectionModel extends CommonDBTM {
       }
       return parent::getSpecificValueToSelect($field, $name, $values, $options);
    }
-   
+
 
    function showForm($ID, $options = array()) {
 
@@ -718,7 +718,8 @@ class PluginDatainjectionModel extends CommonDBTM {
       echo "</td>";
       echo "<td>".__('Dates format', 'datainjection')."</td>";
       echo "<td>";
-      PluginDatainjectionDropdown::dropdownDateFormat($this->fields['date_format']);
+      Dropdown::showFromArray('date_format', self::dateFormats(),
+                              array('value' => $this->fields['date_format']));
       echo "</td></tr>";
 
       echo "<tr class='tab_bg_1'>";
@@ -728,7 +729,8 @@ class PluginDatainjectionModel extends CommonDBTM {
       echo "</td>";
       echo "<td>".__('Float format', 'datainjection')."</td>";
       echo "<td>";
-      PluginDatainjectionDropdown::dropdownFloatFormat($this->fields['float_format']);
+      Dropdown::showFromArray('float_format', self::floatFormats(),
+                              array('value' => $this->fields['float_format']));
       echo "</td></tr>";
 
       echo "<tr class='tab_bg_1'>";
@@ -780,7 +782,7 @@ class PluginDatainjectionModel extends CommonDBTM {
 
    //Tabs management
    function getTabNameForItem(CommonGLPI $item, $withtemplate=0) {
-      
+
       if (!$withtemplate) {
          switch ($item->getType()) {
             case __CLASS__ :
@@ -788,10 +790,10 @@ class PluginDatainjectionModel extends CommonDBTM {
                if (!$this->isNewID($item->fields['id'])) {
                   $tabs[3] = __('File to inject', 'datainjection');
                   $tabs[4] = __('Mappings', 'datainjection');
-         
+
                   if ($item->fields['step'] > self::MAPPING_STEP) {
                      $tabs[5] = __('Additional Information', 'datainjection');
-         
+
                      if ($item->fields['step'] != self::READY_TO_USE_STEP) {
                         $tabs[6] = __('Validation');
                      }
@@ -805,7 +807,7 @@ class PluginDatainjectionModel extends CommonDBTM {
    }
 
    static function displayTabContentForItem(CommonGLPI $item, $tabnum=1, $withtemplate=0) {
-      
+
       if ($item->getType() == __CLASS__) {
          switch ($tabnum) {
             case 1 :
@@ -829,7 +831,7 @@ class PluginDatainjectionModel extends CommonDBTM {
                   PluginDatainjectionInfo::showFormInfos($item);
                }
                break;
-   
+
             case 6:
                if ($item->fields['step'] > self::MAPPING_STEP) {
                   $item->showValidationForm();
@@ -895,21 +897,21 @@ class PluginDatainjectionModel extends CommonDBTM {
          Session::addMessageAfterRedirect(__('Your model should allow import and/or update of data', 'datainjection'), true, ERROR, true);
          return false;
       }
-      
+
       if (isset($input['is_private'])
             && $input['is_private'] == 1) {
          $input['entities_id'] = $_SESSION['glpiactive_entity'];
          $input['is_recursive'] = 1;
       }
       $input['step'] = self::FILE_STEP;
-      
+
       return $input;
    }
-   
-   
+
+
 
    function prepareInputForUpdate($input) {
-      
+
       if (isset($input['is_private'])
             && $input['is_private'] == 1) {
          $input['entities_id'] = $_SESSION['glpiactive_entity'];
@@ -1073,7 +1075,7 @@ class PluginDatainjectionModel extends CommonDBTM {
                return PluginWebservicesMethodCommon::Error($options['protocol'],
                                                            WEBSERVICES_ERROR_FAILED,
                                                            $check['error_message']);
-               
+
             }
          }
       }
@@ -1222,7 +1224,7 @@ class PluginDatainjectionModel extends CommonDBTM {
                            = PluginDatainjectionMapping::getSeveralMappedField($this->fields['id']);
    }
 
-   
+
    //TODO NOT Used
    /*
    function getSeveraltimesMappedFields() {
