@@ -27,7 +27,7 @@
  @link      http://www.glpi-project.org/
  @since     2009
  ---------------------------------------------------------------------- */
- 
+
 if (!defined('GLPI_ROOT')) {
    die("Sorry. You can't access directly to this file");
 }
@@ -35,11 +35,11 @@ if (!defined('GLPI_ROOT')) {
 class PluginDatainjectionInfocomInjection extends Infocom
                                           implements PluginDatainjectionInjectionInterface {
 
+
    static function getTable() {
-   
+
       $parenttype = get_parent_class();
       return $parenttype::getTable();
-      
    }
 
 
@@ -55,13 +55,16 @@ class PluginDatainjectionInfocomInjection extends Infocom
    }
 
 
-   function getOptions($primary_type = '') {
+   /**
+    * @see plugins/datainjection/inc/PluginDatainjectionInjectionInterface::getOptions()
+   **/
+   function getOptions($primary_type='') {
 
       $tab                    = Search::getOptions(get_parent_class($this));
 
       $tab[4]['checktype']    = 'date';
       $tab[5]['checktype']    = 'date';
-      
+
       //Warranty_duration
       $tab[6]['minvalue']     = 0;
       $tab[6]['maxvalue']     = 120;
@@ -86,18 +89,19 @@ class PluginDatainjectionInfocomInjection extends Infocom
       $tab[15]['maxvalue']    = 2;
       $tab[15]['step']        = 1;
       $tab[15]['checktype']   = 'integer';
-      
+
       $tab[23]['checktype']   = 'date';
       $tab[24]['checktype']   = 'date';
       $tab[25]['checktype']   = 'date';
       $tab[26]['checktype']   = 'date';
-      
+
       //Remove some options because some fields cannot be imported
-      $blacklist = PluginDatainjectionCommonInjectionLib::getBlacklistedOptions(get_parent_class($this));
+      $blacklist     = PluginDatainjectionCommonInjectionLib::getBlacklistedOptions(get_parent_class($this));
       $notimportable = array(20, 21, 86);
+
       $options['ignore_fields'] = array_merge($blacklist, $notimportable);
-      
-      $key = array_search(19, $options['ignore_fields']);
+
+      $key                      = array_search(19, $options['ignore_fields']);
       unset($options['ignore_fields'][$key]);
 
       $options['displaytype']   = array("date"             => array(4, 5, 23, 24, 25, 26),
@@ -107,12 +111,15 @@ class PluginDatainjectionInfocomInjection extends Infocom
                                         "sink_type"        => array(15),
                                         "alert"            => array(22),
                                         "multiline_text"   => array(16));
-                                        
-      return PluginDatainjectionCommonInjectionLib::addToSearchOptions($tab, $options, $this);
 
+      return PluginDatainjectionCommonInjectionLib::addToSearchOptions($tab, $options, $this);
    }
 
 
+   /**
+    * @param $info      array
+    * @param $option    array
+   **/
    function showAdditionalInformation($info=array(), $option=array()) {
 
       $name = "info[".$option['linkfield']."]";
@@ -131,24 +138,25 @@ class PluginDatainjectionInfocomInjection extends Infocom
       }
    }
 
-   function reformat(&$values = array()) {
+
+   /**
+    * @param $values    array
+   **/
+   function reformat(&$values=array()) {
+
       foreach (array('order_date', 'use_date', 'buy_date', 'warranty_date', 'delivery_date',
                      'inventory_date') as $date) {
+
          if (!isset($values['Infocom'][$date])
-            || $values['Infocom'][$date] == PluginDatainjectionCommonInjectionLib::EMPTY_VALUE) {
+             || ($values['Infocom'][$date] == PluginDatainjectionCommonInjectionLib::EMPTY_VALUE)) {
             $values['Infocom'][$date] = "NULL";
          }
       }
    }
-   
+
+
    /**
-    * Standard method to add an object into glpi
- 
-    *
-    * @param values fields to add into glpi
-    * @param options options used during creation
-    *
-    * @return an array of IDs of newly created objects : for example array(Computer=>1, Networkport=>10)
+    * @see plugins/datainjection/inc/PluginDatainjectionInjectionInterface::addOrUpdateObject()
    **/
    function addOrUpdateObject($values=array(), $options=array()) {
 
@@ -158,5 +166,4 @@ class PluginDatainjectionInfocomInjection extends Infocom
    }
 
 }
-
 ?>

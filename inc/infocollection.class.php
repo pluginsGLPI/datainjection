@@ -27,10 +27,11 @@
  @link      http://www.glpi-project.org/
  @since     2009
  ---------------------------------------------------------------------- */
- 
+
 class PluginDatainjectionInfoCollection {
 
    var $infosCollection;
+
 
    function __construct() {
       $this->infosCollection = array();
@@ -59,74 +60,15 @@ class PluginDatainjectionInfoCollection {
       }
    }
 
-
+   //TODO function never called
    /**
     * Return all the mappings for this model
     *
     * @return the list of all the mappings for this model
    **/
-   function getAllInfos()  {
+/*   function getAllInfos() {
       return $this->infosCollection;
-   }
-
-
-   //---- Save ----//
-
-   /**
-    * Save in database the model and all his associated mappings
-   **/
-   //TODO Not USed
-   /*
-   function saveAllInfos($model_id) {
-
-      foreach ($this->infosCollection as $infos) {
-         $infos->setModelID($model_id);
-
-         if (isset($infos->fields["id"])) {
-            $infos->update($infos->fields);
-         } else {
-            $infos->fields["id"] = $infos->add($infos->fields);
-         }
-      }
-   }*/
-
-
-   //---- Delete ----//
-   //TODO Not USed
-   /*
-   function deleteInfosFromDB($models_id) {
-      global $DB;
-
-      $query = "DELETE
-                FROM `glpi_plugin_datainjection_infos`
-                WHERE `models_id` = '$models_id'";
-      $DB->query($query);
-   }*/
-
-
-   //---- Add ----//
-
-   /**
-    * Add a new mapping to this model (don't write in to DB)
-    *
-    * @param mapping the new PluginDatainjectionMapping to add
-   **/
-   //TODO Not USed
-   /*
-   function addNewInfos($infos) {
-      $this->infosCollection[] = $infos;
-   }*/
-
-
-   /**
-    * Replace all the infos for a model
-   **/
-   //TODO Not USed
-   /*
-   function replaceInfos($infos) {
-      $this->infosCollection = $infos;
    }*/
 
 }
-
 ?>

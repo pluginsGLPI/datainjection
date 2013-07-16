@@ -27,7 +27,7 @@
  @link      http://www.glpi-project.org/
  @since     2009
  ---------------------------------------------------------------------- */
- 
+
 if (!defined('GLPI_ROOT')) {
    die("Sorry. You can't access directly to this file");
 }
@@ -37,10 +37,9 @@ class PluginDatainjectionITILCategoryInjection extends ITILCategory
 
 
    static function getTable() {
-   
+
       $parenttype = get_parent_class();
       return $parenttype::getTable();
-      
    }
 
 
@@ -54,23 +53,27 @@ class PluginDatainjectionITILCategoryInjection extends ITILCategory
    }
 
 
-   function getOptions($primary_type = '') {
-      
-      $tab = Search::getOptions(get_parent_class($this));
+   /**
+    * @see plugins/datainjection/inc/PluginDatainjectionInjectionInterface::getOptions()
+   **/
+   function getOptions($primary_type='') {
+
+      $tab           = Search::getOptions(get_parent_class($this));
 
       //Remove some options because some fields cannot be imported
-      $blacklist = PluginDatainjectionCommonInjectionLib::getBlacklistedOptions(get_parent_class($this));
+      $blacklist     = PluginDatainjectionCommonInjectionLib::getBlacklistedOptions(get_parent_class($this));
       $notimportable = array(14, 77, 78);
+
       $options['ignore_fields'] = array_merge($blacklist, $notimportable);
-      
+
       $options['displaytype'] = array("dropdown"       => array(71, 72, 73),
                                       "bool"           => array(3, 74, 75, 76, 86),
                                       "user"           => array(70),
                                       "multiline_text" => array(16));
 
       return PluginDatainjectionCommonInjectionLib::addToSearchOptions($tab, $options, $this);
-
    }
+
 
    /**
     * Standard method to add an object into glpi
