@@ -87,49 +87,7 @@ class PluginDatainjectionMapping extends CommonDBTM {
    function getItemtype() {
       return $this->fields["itemtype"];
    }
-
-
-   //TODO function never called
-/*   function setMandatory($mandatory) {
-      $this->fields["is_mandatory"] = $mandatory;
-   }*/
-
-
-   //TODO function never called
-/*   function setName($name) {
-      $this->fields["name"] = $name;
-   }*/
-
-
-   //TODO function never called
-/*   function setRank($rank) {
-      $this->fields["rank"] = $rank;
-   }
-*/
-
-   //TODO function never called
-/*   function setValue($value) {
-      $this->fields["value"] = $value;
-   }
-*/
-
-    //TODO function never called
-/*   function setID($ID) {
-      $this->fields["id"] = $ID;
-   }
-
-   //TODO function never called
-   function setModelID($model_id) {
-      $this->fields["models_id"] = $model_id;
-   }
-*/
-
-   //TODO function never called
-/*   function setItemtype($type) {
-      $this->fields["itemtype"] = $type;
-   }
-   */
-
+   
 
    /**
     * @param $model  PluginDatainjectionModel object
