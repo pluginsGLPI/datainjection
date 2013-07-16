@@ -30,7 +30,6 @@
 
 class PluginDatainjectionMapping extends CommonDBTM {
 
-   //const NOT_MAPPED = -1;
 
    static function canCreate() {
       return plugin_datainjection_haveRight('model','w');
@@ -43,7 +42,8 @@ class PluginDatainjectionMapping extends CommonDBTM {
 
 
    /**
-    *
+    * @param $field
+    * @param $value
    **/
    function equal($field,$value) {
 
@@ -64,16 +64,6 @@ class PluginDatainjectionMapping extends CommonDBTM {
    }
 
 
-   function getMappingName() {
-      return $this->fields["name"];
-   }
-
-
-   function getRank() {
-      return $this->fields["rank"];
-   }
-
-
    function getValue() {
       return $this->fields["value"];
    }
@@ -84,51 +74,56 @@ class PluginDatainjectionMapping extends CommonDBTM {
    }
 
 
-   function getModelID() {
-      return $this->fields["models_id"];
-   }
-
-
    function getItemtype() {
       return $this->fields["itemtype"];
    }
 
 
-   function setMandatory($mandatory) {
+   //TODO function never called
+/*   function setMandatory($mandatory) {
       $this->fields["is_mandatory"] = $mandatory;
-   }
+   }*/
 
 
-   function setName($name) {
+   //TODO function never called
+/*   function setName($name) {
       $this->fields["name"] = $name;
-   }
+   }*/
 
 
-   function setRank($rank) {
+   //TODO function never called
+/*   function setRank($rank) {
       $this->fields["rank"] = $rank;
    }
+*/
 
-
-   function setValue($value) {
+   //TODO function never called
+/*   function setValue($value) {
       $this->fields["value"] = $value;
    }
+*/
 
-
-   function setID($ID) {
+    //TODO function never called
+/*   function setID($ID) {
       $this->fields["id"] = $ID;
    }
 
-
+   //TODO function never called
    function setModelID($model_id) {
       $this->fields["models_id"] = $model_id;
    }
+*/
 
-
-   function setItemtype($type) {
+   //TODO function never called
+/*   function setItemtype($type) {
       $this->fields["itemtype"] = $type;
    }
+   */
 
 
+   /**
+    * @param $model  PluginDatainjectionModel object
+   **/
    static function showFormMappings(PluginDatainjectionModel $model) {
       global $CFG_GLPI;
 
@@ -160,7 +155,7 @@ class PluginDatainjectionMapping extends CommonDBTM {
       echo "<tr>";
       echo "<th>" . __('Header of the file', 'datainjection') . "</th>";
       echo "<th>" . __('Tables', 'datainjection') . "</th>";
-      echo "<th>" . __('Fields', 'datainjection') . "</th>";
+      echo "<th>" . _n('Field', 'Fields', 2) . "</th>";
       echo "<th>" . __('Link field', 'datainjection') . "</th>";
       echo "</tr>";
 
@@ -194,7 +189,7 @@ class PluginDatainjectionMapping extends CommonDBTM {
    /**
     * For multitext only ! Check it there's more than one value to inject in a field
     *
-    * @param models_id the model ID
+    * @param $models_id the model ID
     *
     * @return true if more than one value to inject, false if not
    **/
@@ -205,7 +200,7 @@ class PluginDatainjectionMapping extends CommonDBTM {
       $query  = "SELECT `value`,
                         COUNT(*) AS counter
                  FROM `glpi_plugin_datainjection_mappings`
-                 WHERE `models_id` = '$models_id'
+                 WHERE `models_id` = '".$models_id."'
                        AND `value` NOT IN ('none')
                  GROUP BY `value`
                  HAVING `counter` > 1";
@@ -217,13 +212,17 @@ class PluginDatainjectionMapping extends CommonDBTM {
    }
 
 
+   /**
+    * @param $models_id
+   **/
    static function getMappingsSortedByRank($models_id) {
      global $DB;
+
      $mappings = array();
-     $query = "SELECT `name`
-               FROM `glpi_plugin_datainjection_mappings`
-               WHERE `models_id`='$models_id'
-               ORDER BY `rank` ASC";
+     $query    = "SELECT `name`
+                  FROM `glpi_plugin_datainjection_mappings`
+                  WHERE `models_id` = '".$models_id."'
+                  ORDER BY `rank` ASC";
      foreach($DB->request($query) as $data) {
         $mappings[] = $data['name'];
      }

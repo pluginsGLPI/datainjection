@@ -195,7 +195,7 @@ class PluginDatainjectionEngine {
          if (isset($fields_toinject[$mapping->getItemtype()][$mapping->getValue()])) {
             $return_value .= $fields_toinject[$mapping->getItemtype()][$mapping->getValue()];
          }
-         $return_value .= $mapping->getMappingName()."=".$value."\n";
+         $return_value .= $this->fields["name"]."=".$value."\n";
       }
       $fields_toinject[$mapping->getItemtype()][$mapping->getValue()] = $return_value;
    }

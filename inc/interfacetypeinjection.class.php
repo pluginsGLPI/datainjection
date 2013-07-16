@@ -78,8 +78,8 @@ class PluginDatainjectionInterfaceTypeInjection extends InterfaceType
     * @param $options   array options used during creation
     *
     * @return an array of IDs of newly created objects:
-    * for example array(Computer=>1, Networkport=>10)
-   **/
+    *         for example array(Computer=>1, Networkport=>10)
+  **/
    function addOrUpdateObject($values=array(), $options=array()) {
 
       $lib = new PluginDatainjectionCommonInjectionLib($this, $values, $options);
