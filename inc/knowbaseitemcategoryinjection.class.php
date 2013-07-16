@@ -27,7 +27,7 @@
  @link      http://www.glpi-project.org/
  @since     2009
  ---------------------------------------------------------------------- */
- 
+
 if (!defined('GLPI_ROOT')) {
    die("Sorry. You can't access directly to this file");
 }
@@ -36,10 +36,9 @@ class PluginDatainjectionKnowbaseItemCategoryInjection extends KnowbaseItemCateg
                                                        implements PluginDatainjectionInjectionInterface {
 
    static function getTable() {
-   
+
       $parenttype = get_parent_class();
       return $parenttype::getTable();
-      
    }
 
 
@@ -53,28 +52,29 @@ class PluginDatainjectionKnowbaseItemCategoryInjection extends KnowbaseItemCateg
    }
 
 
-   function getOptions($primary_type = '') {
+   /**
+    * @see plugins/datainjection/inc/PluginDatainjectionInjectionInterface::getOptions()
+   **/
+   function getOptions($primary_type='') {
 
-      $tab = Search::getOptions(get_parent_class($this));
+      $tab           = Search::getOptions(get_parent_class($this));
 
       //Remove some options because some fields cannot be imported
-      $blacklist = PluginDatainjectionCommonInjectionLib::getBlacklistedOptions(get_parent_class($this));
+      $blacklist     = PluginDatainjectionCommonInjectionLib::getBlacklistedOptions(get_parent_class($this));
       $notimportable = array(14);
-      $options['ignore_fields'] = array_merge($blacklist, $notimportable);
-      
-      $options['displaytype']   = array("multiline_text" => array(16));
-      
-      return PluginDatainjectionCommonInjectionLib::addToSearchOptions($tab, $options, $this);
 
+      $options['ignore_fields'] = array_merge($blacklist, $notimportable);
+      $options['displaytype']   = array("multiline_text" => array(16));
+
+      return PluginDatainjectionCommonInjectionLib::addToSearchOptions($tab, $options, $this);
    }
 
 
    /**
     * Standard method to add an object into glpi
- 
     *
-    * @param values fields to add into glpi
-    * @param options options used during creation
+    * @param $values    array  fields to add into glpi
+    * @param $options   array  options used during creation
     *
     * @return an array of IDs of newly created objects : for example array(Computer=>1, Networkport=>10)
    **/
@@ -86,5 +86,4 @@ class PluginDatainjectionKnowbaseItemCategoryInjection extends KnowbaseItemCateg
    }
 
 }
-
 ?>

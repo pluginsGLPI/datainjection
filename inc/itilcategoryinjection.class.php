@@ -79,10 +79,11 @@ class PluginDatainjectionITILCategoryInjection extends ITILCategory
     * Standard method to add an object into glpi
     * WILL BE INTEGRATED INTO THE CORE IN 0.80
     *
-    * @param values fields to add into glpi
-    * @param options options used during creation
+    * @param $values    array fields to add into glpi
+    * @param $options   array options used during creation
     *
-    * @return an array of IDs of newly created objects : for example array(Computer=>1, Networkport=>10)
+    * @return an array of IDs of newly created objects:
+    * for example array(Computer=>1, Networkport=>10)
    **/
    function addOrUpdateObject($values=array(), $options=array()) {
 
@@ -92,5 +93,4 @@ class PluginDatainjectionITILCategoryInjection extends ITILCategory
    }
 
 }
-
 ?>
