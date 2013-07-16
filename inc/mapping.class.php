@@ -57,6 +57,16 @@ class PluginDatainjectionMapping extends CommonDBTM {
 
       return false;
    }
+   
+   
+   function getMappingName() {
+      return $this->fields["name"];
+   }
+
+
+   function getRank() {
+      return $this->fields["rank"];
+   }
 
 
    function isMandatory() {
