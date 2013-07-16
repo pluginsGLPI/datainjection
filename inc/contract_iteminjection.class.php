@@ -31,11 +31,11 @@
 class PluginDatainjectionContract_ItemInjection extends Contract_Item
                                                 implements PluginDatainjectionInjectionInterface {
 
+
    static function getTable() {
-   
+
       $parenttype = get_parent_class();
       return $parenttype::getTable();
-      
    }
 
 
@@ -56,7 +56,10 @@ class PluginDatainjectionContract_ItemInjection extends Contract_Item
    }
 
 
-   function getOptions($primary_type = '') {
+   /**
+    * @see plugins/datainjection/inc/PluginDatainjectionInjectionInterface::getOptions()
+   **/
+   function getOptions($primary_type='') {
 
       $tab[100]['table']         = 'glpi_contracts';
       $tab[100]['field']         = 'name';
@@ -71,7 +74,7 @@ class PluginDatainjectionContract_ItemInjection extends Contract_Item
       $tab[101]['table']         = 'glpi_contracts';
       $tab[101]['field']         = 'num';
       $tab[101]['linkfield']     = 'num';
-      $tab[101]['name']          = __('Serial Number');
+      $tab[101]['name']          = __('Serial number');
       $tab[101]['injectable']    = true;
       $tab[101]['checktype']     = 'text';
       $tab[101]['displaytype']   = 'relation';
@@ -83,13 +86,7 @@ class PluginDatainjectionContract_ItemInjection extends Contract_Item
 
 
    /**
-    * Standard method to add an object into glpi
- 
-    *
-    * @param values fields to add into glpi
-    * @param options options used during creation
-    *
-    * @return an array of IDs of newly created objects : for example array(Computer=>1, Networkport=>10)
+    * @see plugins/datainjection/inc/PluginDatainjectionInjectionInterface::addOrUpdateObject()
    **/
    function addOrUpdateObject($values=array(), $options=array()) {
 
@@ -99,6 +96,10 @@ class PluginDatainjectionContract_ItemInjection extends Contract_Item
    }
 
 
+   /**
+    * @param $primary_type
+    * @param $values
+   **/
    function addSpecificNeededFields($primary_type, $values) {
 
       $fields['items_id'] = $values[$primary_type]['id'];
@@ -107,5 +108,4 @@ class PluginDatainjectionContract_ItemInjection extends Contract_Item
    }
 
 }
-
 ?>

@@ -35,17 +35,19 @@ if (!defined('GLPI_ROOT')) {
 class PluginDatainjectionComputer_ItemInjection extends Computer_Item
                                                 implements PluginDatainjectionInjectionInterface {
 
+
    static function getTable() {
-   
+
       $parenttype = get_parent_class();
       return $parenttype::getTable();
-      
+
    }
-   
+
+
    static function getTypeName($nb=0) {
-      
       return __('Direct connections');
    }
+
 
    function isPrimaryType() {
       return false;
@@ -59,7 +61,10 @@ class PluginDatainjectionComputer_ItemInjection extends Computer_Item
    }
 
 
-   function getOptions($primary_type = '') {
+   /**
+    * @see plugins/datainjection/inc/PluginDatainjectionInjectionInterface::getOptions()
+   **/
+   function getOptions($primary_type='') {
 
       $tab[110]['table']        = 'glpi_computers';
       $tab[110]['field']        = 'name';
@@ -73,7 +78,7 @@ class PluginDatainjectionComputer_ItemInjection extends Computer_Item
       $tab[111]['table']        = 'glpi_computers';
       $tab[111]['field']        = 'serial';
       $tab[111]['linkfield']    = 'serial';
-      $tab[111]['name']         = __('Serial Number');
+      $tab[111]['name']         = __('Serial number');
       $tab[111]['injectable']   = true;
       $tab[111]['displaytype']  = 'dropdown';
       $tab[111]['checktype']    = 'text';
@@ -93,13 +98,7 @@ class PluginDatainjectionComputer_ItemInjection extends Computer_Item
 
 
    /**
-    * Standard method to add an object into glpi
- 
-    *
-    * @param values fields to add into glpi
-    * @param options options used during creation
-    * @return an array of IDs of newly created objects : for example array(Computer=>1, Networkport=>10)
-    *
+    * @see plugins/datainjection/inc/PluginDatainjectionInjectionInterface::addOrUpdateObject()
    **/
    function addOrUpdateObject($values=array(), $options=array()) {
 
@@ -109,6 +108,10 @@ class PluginDatainjectionComputer_ItemInjection extends Computer_Item
    }
 
 
+   /**
+    * @param $primary_type
+    * @param $values
+   **/
    function addSpecificNeededFields($primary_type, $values) {
 
       $fields['items_id'] = $values[$primary_type]['id'];
@@ -117,5 +120,4 @@ class PluginDatainjectionComputer_ItemInjection extends Computer_Item
    }
 
 }
-
 ?>

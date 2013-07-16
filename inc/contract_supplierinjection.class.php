@@ -37,10 +37,10 @@ class PluginDatainjectionContract_SupplierInjection extends Contract_Supplier
 
 
    static function getTable() {
-   
+
       $parenttype = get_parent_class();
       return $parenttype::getTable();
-      
+
    }
 
 
@@ -54,7 +54,10 @@ class PluginDatainjectionContract_SupplierInjection extends Contract_Supplier
    }
 
 
-   function getOptions($primary_type = '') {
+   /**
+    * @see plugins/datainjection/inc/PluginDatainjectionInjectionInterface::getOptions()
+   **/
+   function getOptions($primary_type='') {
 
       $tab[4]['table']        = 'glpi_contracts';
       $tab[4]['field']        = 'name';
@@ -73,13 +76,7 @@ class PluginDatainjectionContract_SupplierInjection extends Contract_Supplier
 
 
    /**
-    * Standard method to add an object into glpi
-
-    *
-    * @param values fields to add into glpi
-    * @param options options used during creation
-    *
-    * @return an array of IDs of newly created objects : for example array(Computer=>1, Networkport=>10)
+    * @see plugins/datainjection/inc/PluginDatainjectionInjectionInterface::addOrUpdateObject()
    **/
    function addOrUpdateObject($values=array(), $options=array()) {
 
@@ -89,10 +86,14 @@ class PluginDatainjectionContract_SupplierInjection extends Contract_Supplier
    }
 
 
+   /**
+    * @param $primary_type
+    * @param $values
+   **/
    function addSpecificNeededFields($primary_type, $values) {
 
-      return array(getForeignKeyFieldForTable(getTableForItemType($primary_type)) => $values[$primary_type]['id']);
+      return array(getForeignKeyFieldForTable(getTableForItemType($primary_type))
+               => $values[$primary_type]['id']);
    }
 }
-
 ?>

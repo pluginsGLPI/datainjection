@@ -35,11 +35,11 @@ if (!defined('GLPI_ROOT')) {
 class PluginDatainjectionContractInjection extends Contract
                                            implements PluginDatainjectionInjectionInterface {
 
+
    static function getTable() {
-   
+
       $parenttype = get_parent_class();
       return $parenttype::getTable();
-      
    }
 
 
@@ -53,9 +53,12 @@ class PluginDatainjectionContractInjection extends Contract
    }
 
 
-   function getOptions($primary_type = '') {
+   /**
+    * @see plugins/datainjection/inc/PluginDatainjectionInjectionInterface::getOptions()
+   **/
+   function getOptions($primary_type='') {
 
-      $tab                    = Search::getOptions(get_parent_class($this));
+      $tab                       = Search::getOptions(get_parent_class($this));
 
       //Specific to location
       $tab[5]['checktype']       = 'date';
@@ -64,16 +67,16 @@ class PluginDatainjectionContractInjection extends Contract
       $tab[6]['maxvalue']        = 120;
       $tab[6]['step']            = 1;
       $tab[6]['checktype']       = 'integer';
-      
+
       $tab[7]['minvalue']        = 0;
       $tab[7]['maxvalue']        = 120;
       $tab[7]['step']            = 1;
       $tab[7]['checktype']       = 'integer';
-      
+
       $tab[11]['checktype']      = 'float';
-      
+
       $tab[20]['checktype']      = 'date';
-      
+
       $tab[22]['linkfield']      = 'billing';
 
       // Associated suppliers
@@ -81,10 +84,11 @@ class PluginDatainjectionContractInjection extends Contract
       $tab[29]['displaytype']    = 'relation';
       $tab[29]['relationclass']  = 'Contract_Supplier';
       $tab[29]['relationfield']  = $tab[29]['linkfield'];
-      
+
       //Remove some options because some fields cannot be imported
-      $blacklist = PluginDatainjectionCommonInjectionLib::getBlacklistedOptions(get_parent_class($this));
+      $blacklist     = PluginDatainjectionCommonInjectionLib::getBlacklistedOptions(get_parent_class($this));
       $notimportable = array(12, 13, 20, 29, 41, 42, 43, 44, 45, 72);
+
       $options['ignore_fields'] = array_merge($blacklist, $notimportable);
 
       $options['displaytype']   = array("dropdown"         => array(4),
@@ -95,20 +99,13 @@ class PluginDatainjectionContractInjection extends Contract
                                         "billing"          => array(22),
                                         "renewal"          => array(23),
                                         "multiline_text"   => array(16 ,90));
-                                        
-      return PluginDatainjectionCommonInjectionLib::addToSearchOptions($tab, $options, $this);
 
+      return PluginDatainjectionCommonInjectionLib::addToSearchOptions($tab, $options, $this);
    }
 
 
    /**
-    * Standard method to add an object into glpi
-
-    *
-    * @param values fields to add into glpi
-    * @param options options used during creation
-    *
-    * @return an array of IDs of newly created objects : for example array(Computer=>1, Networkport=>10)
+    * @see plugins/datainjection/inc/PluginDatainjectionInjectionInterface::addOrUpdateObject()
    **/
    function addOrUpdateObject($values=array(), $options=array()) {
 
@@ -118,6 +115,10 @@ class PluginDatainjectionContractInjection extends Contract
    }
 
 
+   /**
+    * @param $info      array
+    * @param $option    array
+   **/
    function showAdditionalInformation($info=array(),$option=array()) {
 
       $name = "info[".$option['linkfield']."]";
@@ -132,13 +133,20 @@ class PluginDatainjectionContractInjection extends Contract
             break;
 
          case 'billing' :
-            Dropdown::showInteger($name, 0, 12, 60, 12,
-                            array(0 => Dropdown::EMPTY_VALUE,
-                                  1 => sprintf(_n('%d month', '%d months', 1), 1),
-                                  2 => sprintf(_n('%d month', '%d months', 2), 2),
-                                  3 => sprintf(_n('%d month', '%d months', 3), 3),
-                                  6 => sprintf(_n('%d month', '%d months', 6), 6)),
-                            array('unit' => 'month'));
+            Dropdown::showNumber($name, array('value' => 0,
+                                              'min'   => 12,
+                                              'max'   => 60,
+                                              'step'  => 12,
+                                              'toadd' => array(0 => Dropdown::EMPTY_VALUE,
+                                                               1 => sprintf(_n('%d month',
+                                                                            '%d months', 1), 1),
+                                                               2 => sprintf(_n('%d month',
+                                                                            '%d months', 2), 2),
+                                                               3 => sprintf(_n('%d month',
+                                                                            '%d months', 3), 3),
+                                                               6 => sprintf(_n('%d month',
+                                                                            '%d months', 6), 6))),
+                                 array('unit' => 'month'));
             break;
 
          default:
@@ -147,5 +155,4 @@ class PluginDatainjectionContractInjection extends Contract
    }
 
 }
-
 ?>

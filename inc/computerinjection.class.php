@@ -27,7 +27,7 @@
  @link      http://www.glpi-project.org/
  @since     2009
  ---------------------------------------------------------------------- */
- 
+
 if (!defined('GLPI_ROOT')) {
    die("Sorry. You can't access directly to this file");
 }
@@ -35,14 +35,15 @@ if (!defined('GLPI_ROOT')) {
 /// Computer class
 class PluginDatainjectionComputerInjection extends Computer
                                            implements PluginDatainjectionInjectionInterface {
-   
+
+
    static function getTable() {
-   
+
       $parenttype = get_parent_class();
       return $parenttype::getTable();
-      
+
    }
-   
+
 
    function isPrimaryType() {
       return true;
@@ -54,37 +55,34 @@ class PluginDatainjectionComputerInjection extends Computer
    }
 
 
-   function getOptions($primary_type = '') {
+   /**
+    * @see plugins/datainjection/inc/PluginDatainjectionInjectionInterface::getOptions()
+   **/
+   function getOptions($primary_type='') {
 
       $tab                 = Search::getOptions(get_parent_class($this));
 
       //Specific to location
       $tab[3]['linkfield'] = 'locations_id';
-      
+
       //Remove some options because some fields cannot be imported
-      $blacklist = PluginDatainjectionCommonInjectionLib::getBlacklistedOptions(get_parent_class($this));
+      $blacklist     = PluginDatainjectionCommonInjectionLib::getBlacklistedOptions(get_parent_class($this));
       $notimportable = array(7, 10, 11, 12, 13, 14, 15, 19, 34, 35, 36, 39, 91, 92, 93,
-                               150, 151, 152, 153, 154, 155, 156, 160, 161, 162, 163, 164 ,165, 166);
-      $options['ignore_fields'] = array_merge($blacklist, $notimportable);
-      
-      $options['displaytype'] = array("dropdown"       => array(3, 4, 23, 31, 32,
-                                                                33, 40, 41, 42, 45, 46, 49, 71),
-                                      "user"           => array(24, 70),
-                                      "multiline_text" => array(16, 90));
+                             150, 151, 152, 153, 154, 155, 156, 160, 161, 162, 163, 164 ,165, 166);
+
+                             $options['ignore_fields'] = array_merge($blacklist, $notimportable);
+
+      $options['displaytype']   = array("dropdown"       => array(3, 4, 23, 31, 32, 33, 40,
+                                                                  41, 42, 45, 46, 49, 71),
+                                        "user"           => array(24, 70),
+                                        "multiline_text" => array(16, 90));
 
       return PluginDatainjectionCommonInjectionLib::addToSearchOptions($tab, $options, $this);
-
    }
 
 
    /**
-    * Standard method to add an object into glpi
- 
-    *
-    * @param values fields to add into glpi
-    * @param options options used during creation
-    * @return an array of IDs of newly created objects : for example array(Computer=>1, Networkport=>10)
-    *
+    * @see plugins/datainjection/inc/PluginDatainjectionInjectionInterface::addOrUpdateObject()
    **/
    function addOrUpdateObject($values=array(), $options=array()) {
 
@@ -94,5 +92,4 @@ class PluginDatainjectionComputerInjection extends Computer
    }
 
 }
-
 ?>

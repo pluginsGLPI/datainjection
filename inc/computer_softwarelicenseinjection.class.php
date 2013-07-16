@@ -35,16 +35,17 @@ if (!defined('GLPI_ROOT')) {
 class PluginDatainjectionComputer_SoftwareLicenseInjection extends Computer_SoftwareLicense
                                                 implements PluginDatainjectionInjectionInterface {
 
-   static function getTypeName($nb=0) {
 
+   static function getTypeName($nb=0) {
       return __('Computer');
    }
-   
+
+
    static function getTable() {
-   
+
       $parenttype = get_parent_class();
       return $parenttype::getTable();
-      
+
    }
 
 
@@ -58,12 +59,15 @@ class PluginDatainjectionComputer_SoftwareLicenseInjection extends Computer_Soft
    }
 
 
-   function getOptions($primary_type = '') {
+   /**
+    * @see plugins/datainjection/inc/PluginDatainjectionInjectionInterface::getOptions()
+   **/
+   function getOptions($primary_type='') {
 
       $tab[110]['table']        = 'glpi_computers';
       $tab[110]['field']        = 'name';
       $tab[110]['linkfield']    = 'name';
-      $tab[110]['name']         = self::getTypeName()." - ".__('Name');
+      $tab[110]['name']         = sprintf(__('%1$s - %2$s'), self::getTypeName(), __('Name'));
       $tab[110]['injectable']   = true;
       $tab[110]['displaytype']  = 'dropdown';
       $tab[110]['checktype']    = 'text';
@@ -72,7 +76,8 @@ class PluginDatainjectionComputer_SoftwareLicenseInjection extends Computer_Soft
       $tab[111]['table']        = 'glpi_computers';
       $tab[111]['field']        = 'serial';
       $tab[111]['linkfield']    = 'serial';
-      $tab[111]['name']         = self::getTypeName()." - ".__('Serial Number');
+      $tab[111]['name']         = sprintf(__('%1$s - %2$s'), self::getTypeName(),
+                                          __('Serial number'));
       $tab[111]['injectable']   = true;
       $tab[111]['displaytype']  = 'dropdown';
       $tab[111]['checktype']    = 'text';
@@ -81,7 +86,8 @@ class PluginDatainjectionComputer_SoftwareLicenseInjection extends Computer_Soft
       $tab[112]['table']        = 'glpi_computers';
       $tab[112]['field']        = 'otherserial';
       $tab[112]['linkfield']    = 'otherserial';
-      $tab[112]['name']         = self::getTypeName()." - ".__('Inventory number');
+      $tab[112]['name']         = sprintf(__('%1$s - %2$s'), self::getTypeName(),
+                                          __('Inventory number'));
       $tab[112]['injectable']   = true;
       $tab[112]['displaytype']  = 'dropdown';
       $tab[112]['checktype']    = 'text';
@@ -92,13 +98,7 @@ class PluginDatainjectionComputer_SoftwareLicenseInjection extends Computer_Soft
 
 
    /**
-    * Standard method to add an object into glpi
- 
-    *
-    * @param values fields to add into glpi
-    * @param options options used during creation
-    * @return an array of IDs of newly created objects : for example array(Computer=>1, Networkport=>10)
-    *
+    * @see plugins/datainjection/inc/PluginDatainjectionInjectionInterface::addOrUpdateObject()
    **/
    function addOrUpdateObject($values=array(), $options=array()) {
 
@@ -107,16 +107,25 @@ class PluginDatainjectionComputer_SoftwareLicenseInjection extends Computer_Soft
       return $lib->getInjectionResults();
    }
 
+
    function addSpecificMandatoryFields() {
-      return array('computers_id' => 1, 'softwarelicenses_id' => 1);
+
+      return array('computers_id'        => 1,
+                   'softwarelicenses_id' => 1);
    }
-   
+
+
+   /**
+    * @param $primary_type
+    * @param $values
+   **/
    function addSpecificNeededFields($primary_type, $values) {
+
       if (isset($values['SoftwareLicense'])) {
          $fields['softwarelicenses_id'] = $values['SoftwareLicense']['id'];
       }
       return $fields;
    }
-}
 
+}
 ?>

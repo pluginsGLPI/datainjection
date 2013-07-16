@@ -464,18 +464,19 @@ class PluginDatainjectionCommonInjectionLib {
    }
 
 
+   // TODO function never used
    /**
     * Is allowed to add values to dropdowns ?
     *
     * @return boolean
    **/
-   private function canAddDropdownValue() {
+/*   private function canAddDropdownValue() {
 
       if (isset($this->rights['add_dropdown'])) {
          return $this->rights['add_dropdown'];
       }
       return true;
-   }
+   }*/
 
 
    /**
@@ -515,8 +516,6 @@ class PluginDatainjectionCommonInjectionLib {
    /**
     * Get ID associate to the value from the CSV file is needed (for example for dropdown tables)
     *
-    * @param data to be added (true) or updaes(false)
-    *
     * @return nothing
    **/
    private function manageFieldValues() {
@@ -547,11 +546,12 @@ class PluginDatainjectionCommonInjectionLib {
    /**
     * Get the ID associated with a value from the CSV file
     *
-    * @param itemtype itemtype of the values to inject
-    * @param searchOption option associated with the field to check
-    * @param field the field to check
-    * @param value the value coming from the CSV file
-    * @param add is insertion (true) or update (false)
+    * @param $injectionClass
+    * @param $itemtype               itemtype of the values to inject
+    * @param $searchOption           option associated with the field to check
+    * @param $field                  the field to check
+    * @param $value                  the value coming from the CSV file
+    * @param $add                    is insertion (true) or update (false) (true by default)
     *
     * @return nothing
    **/
