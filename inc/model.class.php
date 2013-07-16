@@ -66,8 +66,8 @@ class PluginDatainjectionModel extends CommonDBTM {
    const CREATION = 1;
 
 
-   static function getTypeName($nb=0) {
 
+   static function getTypeName($nb=0) {
       return __('Model management', 'datainjection');
    }
 
@@ -91,28 +91,36 @@ class PluginDatainjectionModel extends CommonDBTM {
 
    function canViewItem() {
 
-      if ($this->isPrivate() && $this->fields['users_id']!=Session::getLoginUserID()) {
+      if ($this->isPrivate() && $this->fields['users_id'] != Session::getLoginUserID()) {
          return false;
       }
-      if (!$this->isPrivate() && !Session::haveAccessToEntity($this->getEntityID(),$this->isRecursive())) {
+
+      if (!$this->isPrivate()
+          && !Session::haveAccessToEntity($this->getEntityID(),$this->isRecursive())) {
          return false;
       }
+
       return self::checkRightOnModel($this->fields['id']);
    }
 
 
    function canCreateItem() {
 
-      if ($this->isPrivate() && $this->fields['users_id']!=Session::getLoginUserID()) {
+      if ($this->isPrivate()
+          && ($this->fields['users_id'] != Session::getLoginUserID())) {
          return false;
       }
-      if (!$this->isPrivate() && !Session::haveAccessToEntity($this->getEntityID())) {
+
+      if (!$this->isPrivate()
+          && !Session::haveAccessToEntity($this->getEntityID())) {
          return false;
       }
+
       return self::checkRightOnModel($this->fields['id']);
    }
 
 
+   //TODO function never called
    function saveMappings() {
       $this->mappings->saveAllMappings($this->fields['id']);
    }
@@ -162,19 +170,22 @@ class PluginDatainjectionModel extends CommonDBTM {
    }
 
 
-   function getMappingByValue($value) {
+   //TODO function never called
+/*   function getMappingByValue($value) {
       return $this->mappings->getMappingsByField("value", $value);
-   }
+   }*/
 
 
-   function getModelInfos() {
+   //TODO function never called
+/*   function getModelInfos() {
       return $this->fields;
-   }
+   }*/
 
 
-   function getModelName() {
+   //TODO function never called
+/*   function getModelName() {
       return $this->fields["name"];
-   }
+   }*/
 
 
    function getFiletype() {
@@ -182,9 +193,10 @@ class PluginDatainjectionModel extends CommonDBTM {
    }
 
 
-   function getModelComments() {
+   //TODO function never called
+/*   function getModelComments() {
       return $this->fields["comment"];
-   }
+   }*/
 
 
    function getBehaviorAdd() {
@@ -194,11 +206,6 @@ class PluginDatainjectionModel extends CommonDBTM {
 
    function getBehaviorUpdate() {
       return $this->fields["behavior_update"];
-   }
-
-
-   function getModelID() {
-      return $this->fields["id"];
    }
 
 
@@ -222,14 +229,16 @@ class PluginDatainjectionModel extends CommonDBTM {
    }
 
 
-   function getUserID() {
+   //TODO function never called
+/*   function getUserID() {
       return $this->fields["users_id"];
-   }
+   }*/
 
 
-   function getPerformNetworkConnection() {
+   //TODO function never called
+/*   function getPerformNetworkConnection() {
       return $this->fields["perform_network_connection"];
-   }
+   }*/
 
 
    function getDateFormat() {
@@ -242,14 +251,16 @@ class PluginDatainjectionModel extends CommonDBTM {
    }
 
 
-   function getRecursive() {
+   //TODO function never called
+/*   function getRecursive() {
       return $this->fields["is_recursive"];
-   }
+   }*/
 
 
-   function getPrivate() {
+   //TODO function never called
+/*   function getPrivate() {
       return $this->fields["is_private"];
-   }
+   }*/
 
 
    function getPortUnicity() {
@@ -267,64 +278,66 @@ class PluginDatainjectionModel extends CommonDBTM {
 
 
    //---- Save -----//
-   function setModelType($type) {
+   //TODO function never called
+/*   function setModelType($type) {
       $this->fields["filetype"] = $type;
-   }
+   }*/
 
-
-   function setName($name) {
+//TODO function never called
+/*   function setName($name) {
       $this->fields["name"] = $name;
-   }
+   }*/
 
 
-   function setComments($comments) {
+   //TODO function never called
+/*   function setComments($comments) {
       $this->fields["comment"] = $comments;
-   }
+   }*/
 
 
-   function setBehaviorAdd($add) {
+   //TODO function never called
+/*   function setBehaviorAdd($add) {
       $this->fields["behavior_add"] = $add;
-   }
+   }*/
 
-
-   function setBehaviorUpdate($update) {
+   //TODO function never called
+/*   function setBehaviorUpdate($update) {
       $this->fields["behavior_update"] = $update;
-   }
+   }*/
 
 
-   function setModelID($ID) {
+   //TODO function never called
+/*   function setModelID($ID) {
       $this->fields["id"] = $ID;
-   }
+   }*/
 
 
-   function setMappings($mappings) {
+   //TODO function never called
+/*   function setMappings($mappings) {
       $this->mappings = $mappings;
-   }
+   }*/
 
 
-   function setInfos($infos) {
+   //TODO function never called
+/*   function setInfos($infos) {
       $this->infos = $infos;
-   }
+   }*/
 
-
-   function setBackend($backend) {
-      $this->backend = $backend;
-   }
-
-
-   function setDeviceType($device_type) {
+   //TODO function never called
+/*  function setDeviceType($device_type) {
       $this->fields["itemtype"] = $device_type;
-   }
+   }*/
 
 
-   function setEntity($entity) {
+   //TODO function never called
+/*   function setEntity($entity) {
       $this->fields["entities_id"] = $entity;
-   }
+   }*/
 
-
-   function setCanAddDropdown($canadd) {
-      $this->fields["can_add_dropdown"] = $canadd;
-   }
+//TODO function never called
+/*   function setCanAddDropdown($canadd) {
+      $this->fields["can_add_dropdown"] = $canadd;Name
+   }*/
 
 
    function setCanOverwriteIfNotEmpty($canoverwrite) {
@@ -1013,7 +1026,7 @@ class PluginDatainjectionModel extends CommonDBTM {
          if ($delete_file) {
             $backend->deleteFile();
          }
-         $this->setBackend($backend);
+         $this->backend = $backend;
       }
       $this->injectionData = $injectionData;
       return true;
@@ -1160,7 +1173,7 @@ class PluginDatainjectionModel extends CommonDBTM {
 
          } else {
             //If name of the mapping is not equal in the csv file header and in the DB
-            $name_from_file = trim(mb_strtoupper(stripslashes($header[$mapping->getRank()]), 'UTF-8'));
+            $name_from_file = trim(mb_strtoupper(stripslashes($header[$this->fields["rank"]]), 'UTF-8'));
             $name_from_db   = trim(mb_strtoupper(stripslashes($mapping->getName()), 'UTF-8'));
 
             if ($name_from_db != $name_from_file) {
