@@ -27,7 +27,7 @@
  @link      http://www.glpi-project.org/
  @since     2009
  ---------------------------------------------------------------------- */
- 
+
 class PluginDatainjectionEngine {
    //Model informations
    private $model;
@@ -42,7 +42,12 @@ class PluginDatainjectionEngine {
    private $error_lines = array();
 
 
-   function __construct($model, $infos = array(), $entity = 0) {
+   /**
+    * @param $model
+    * @param $infos     array
+    * @param $entity             (default 0)
+    */
+   function __construct($model, $infos=array(), $entity=0) {
 
       //Instanciate model
       $this->model = $model;
@@ -59,13 +64,10 @@ class PluginDatainjectionEngine {
    /**
     * Inject one line of datas
     *
-    * @param line one line of data to import
-    * @param index the line number is the file
+    * @param $line   one line of data to import
+    * @param $index  the line number is the file
    **/
    function injectLine($line, $index) {
-
-      //logDebug("------------- injectLine($index) ----------");
-      //logDebug("Line=", $line);
 
       //Store all fields to injection, sorted by itemtype
       $fields_toinject  = array();
@@ -74,7 +76,7 @@ class PluginDatainjectionEngine {
       //Get the injectionclass associated to the itemtype
       $itemtype       = $this->getModel()->getItemtype();
       $injectionClass = PluginDatainjectionCommonInjectionLib::getInjectionClassInstance($itemtype);
-      $several = PluginDatainjectionMapping::getSeveralMappedField($this->getModel()->fields['id']);
+      $several        = PluginDatainjectionMapping::getSeveralMappedField($this->getModel()->fields['id']);
 
       //First of all : transform $line which is an array of values to inject into another array
       //which looks like this :
@@ -85,8 +87,8 @@ class PluginDatainjectionEngine {
       for ($i=0 ; $i<count($line) ; $i++) {
          $mapping = $this->getModel()->getMappingByRank($i);
          //If field is mapped with a value in glpi
-         if ($mapping!=null
-             && $mapping->getItemtype() != PluginDatainjectionInjectionType::NO_VALUE) {
+         if (($mapping != null)
+             && ($mapping->getItemtype() != PluginDatainjectionInjectionType::NO_VALUE)) {
             $this->addValueToInject($fields_toinject, $searchOptions, $mapping, $line[$i], $several);
          }
       }
@@ -154,12 +156,12 @@ class PluginDatainjectionEngine {
    /**
     * Add fields needed for injection
     *
-    * @param itemtype the itemtype to inject
-    * @param fields_toinject the list of fields representing the object
+    * @param $itemtype                    the itemtype to inject
+    * @param $fields_toinject    array    the list of fields representing the object
     *
     * @return nothing
    **/
-   function addRequiredFields($itemtype, &$fields_toinject = array()) {
+   function addRequiredFields($itemtype, &$fields_toinject=array()) {
 
       //Add entity to the primary type
       $fields_toinject[$itemtype]['entities_id'] = $this->entity;
@@ -169,25 +171,25 @@ class PluginDatainjectionEngine {
    /**
     * Add a value to the fields to inject
     *
-    * @param $fields_toinject the fields
-    * @param searchOptions options related to the itemtype to inject
-    * @param mapping the mapping which matches the field
-    * @param value the value for this field, as readed from the CSV file
-    * @param several array of all fields which can be mapping more than one time in the model
-    *
+    * @param $fields_toinject                the fields
+    * @param $searchOptions                  options related to the itemtype to inject
+    * @param $mapping                        the mapping which matches the field
+    * @param $value                          the value for this field, as readed from the CSV file
+    * @param $several            array       of all fields which can be mapping more than one time
+    *                                        in the model
     * @return nothing
    **/
    function addValueToInject(&$fields_toinject, $searchOptions, $mapping, $value,
                              $several = array()) {
 
       // Option will be found only for "main" type.
-      $option = PluginDatainjectionCommonInjectionLib::findSearchOption($searchOptions,
-                                                                        $mapping->getValue());
+      $option       = PluginDatainjectionCommonInjectionLib::findSearchOption($searchOptions,
+                                                                              $mapping->getValue());
       $return_value = $value;
 
-      if ($option['displaytype'] == 'multiline_text'
+      if (($option['displaytype'] == 'multiline_text')
           && in_array($mapping->getValue(), $several)
-          && $value != PluginDatainjectionCommonInjectionLib::EMPTY_VALUE) {
+          && ($value != PluginDatainjectionCommonInjectionLib::EMPTY_VALUE)) {
          $return_value = '';
 
          if (isset($fields_toinject[$mapping->getItemtype()][$mapping->getValue()])) {
@@ -195,21 +197,6 @@ class PluginDatainjectionEngine {
          }
          $return_value .= $mapping->getMappingName()."=".$value."\n";
       }
-      /*
-      else {
-         $return_value = $value;
-         //Value is not empty
-         if ($value != PluginDatainjectionCommonInjectionLib::EMPTY_VALUE) {
-            $return_value = $value;
-         }
-         else {
-            //Value is empty : use the right default value regarding the field's type
-            if (!in_array($option['displaytype'],array('text','multiline_text'))) {
-               $return_value = PluginDatainjectionCommonInjectionLib::Dropdown::EMPTY_VALUE;
-            }
-         }
-      }
-      */
       $fields_toinject[$mapping->getItemtype()][$mapping->getValue()] = $return_value;
    }
 
@@ -226,7 +213,8 @@ class PluginDatainjectionEngine {
          if (isset($this->infos[$info->getValue()])
              && PluginDatainjectionInfo::keepInfo($info, $this->infos[$info->getValue()])) {
 
-            $additional_infos[$info->getInfosType()][$info->getValue()] = $this->infos[$info->getValue()];
+            $additional_infos[$info->getInfosType()][$info->getValue()]
+                              = $this->infos[$info->getValue()];
          }
       }
       return $additional_infos;
@@ -249,5 +237,4 @@ class PluginDatainjectionEngine {
    }
 
 }
-
 ?>

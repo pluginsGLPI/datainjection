@@ -27,7 +27,7 @@
  @link      http://www.glpi-project.org/
  @since     2009
  ---------------------------------------------------------------------- */
- 
+
 if (!defined('GLPI_ROOT')) {
    die("Sorry. You can't access directly to this file");
 }
@@ -35,11 +35,11 @@ if (!defined('GLPI_ROOT')) {
 class PluginDatainjectionEntityInjection extends Entity
                                          implements PluginDatainjectionInjectionInterface{
 
+
    static function getTable() {
-   
+
       $parenttype = get_parent_class();
       return $parenttype::getTable();
-      
    }
 
 
@@ -53,29 +53,28 @@ class PluginDatainjectionEntityInjection extends Entity
    }
 
 
-   function getOptions($primary_type = '') {
+   /**
+    * @see plugins/datainjection/inc/PluginDatainjectionInjectionInterface::getOptions()
+   **/
+   function getOptions($primary_type='') {
 
-      $tab = Search::getOptions(get_parent_class($this));
+      $tab           = Search::getOptions(get_parent_class($this));
 
       //Remove some options because some fields cannot be imported
-      $blacklist = PluginDatainjectionCommonInjectionLib::getBlacklistedOptions(get_parent_class($this));
-      $notimportable = array(14, 26, 27, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 47, 48, 49,50, 51, 52, 53, 54, 55, 91, 92, 93);
-      $options['ignore_fields'] = array_merge($blacklist, $notimportable);
-      
-      $options['displaytype']   = array("multiline_text" => array(3, 16, 17, 24),
-                                       "dropdown" => array(9));
-                                       
-      return PluginDatainjectionCommonInjectionLib::addToSearchOptions($tab, $options, $this);
+      $blacklist     = PluginDatainjectionCommonInjectionLib::getBlacklistedOptions(get_parent_class($this));
+      $notimportable = array(14, 26, 27, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41,
+                             42, 43, 44, 45, 47, 48, 49,50, 51, 52, 53, 54, 55, 91, 92, 93);
 
+      $options['ignore_fields'] = array_merge($blacklist, $notimportable);
+      $options['displaytype']   = array("multiline_text" => array(3, 16, 17, 24),
+                                        "dropdown"       => array(9));
+
+      return PluginDatainjectionCommonInjectionLib::addToSearchOptions($tab, $options, $this);
    }
 
+
    /**
-    * Standard method to add an object into glpi
-    *
-    * @param values fields to add into glpi
-    * @param options options used during creation
-    *
-    * @return an array of IDs of newly created objects : for example array(Computer=>1, Networkport=>10)
+    * @see plugins/datainjection/inc/PluginDatainjectionInjectionInterface::addOrUpdateObject()
    **/
    function addOrUpdateObject($values=array(), $options=array()) {
 
@@ -84,7 +83,13 @@ class PluginDatainjectionEntityInjection extends Entity
       return $lib->getInjectionResults();
    }
 
-   function customimport($input = array(), $add = true, $rights = array()) {
+
+   /**
+    * @param $input     array
+    * @param $add                (true by default)
+    * @param $rights    array
+   **/
+   function customimport($input=array(), $add=true, $rights=array()) {
 
       if (!isset($input['completename']) || empty($input['completename'])) {
          return -1;
@@ -120,7 +125,7 @@ class PluginDatainjectionEntityInjection extends Entity
          $tmp['entities_id'] = $parent;
 
          //Does the entity alread exists ?
-         $results = getAllDatasFromTable('glpi_entities', 
+         $results = getAllDatasFromTable('glpi_entities',
                                          "`name`='$name' AND `entities_id`='$parent'");
          //Entity doesn't exists => create it
          if (empty($results)) {
@@ -133,22 +138,28 @@ class PluginDatainjectionEntityInjection extends Entity
       }
       return $parent;
    }
-   
+
+
+   /**
+    * @param $injectionClass
+    * @param $values
+    * @param $options
+   **/
    function customDataAlreadyInDB($injectionClass, $values, $options) {
+
       if (!isset($values['completename'])) {
          return false;
-      } else {
-         $results = getAllDatasFromTable('glpi_entities', 
-                                         "`completename`='".$values['completename']."'");
-
-         if (empty($results)) {
-            return false;
-         } else {
-            $ent    = array_pop($results);
-            return $ent['id'];
-         }
       }
-   }
-}
+      $results = getAllDatasFromTable('glpi_entities',
+                                      "`completename`='".$values['completename']."'");
 
+      if (empty($results)) {
+         return false;
+      }
+
+      $ent    = array_pop($results);
+      return $ent['id'];
+   }
+
+}
 ?>

@@ -32,6 +32,15 @@ class PluginDatainjectionDropdown {
    
    static function dateFormats() {
 
+<<<<<<< .mine
+
+   /**
+    * @param $format
+   **/
+   static function dropdownDateFormat($format) {
+
+=======
+>>>>>>> .r762
       $date_format[PluginDatainjectionCommonInjectionLib::DATE_TYPE_DDMMYYYY]
                                                             = __('dd-mm-yyyy', 'datainjection');
       $date_format[PluginDatainjectionCommonInjectionLib::DATE_TYPE_MMDDYYYY]
@@ -73,6 +82,9 @@ class PluginDatainjectionDropdown {
    }
 
 
+   /**
+    * @param $format
+   **/
    static function getFloatFormat($format) {
 
       $formats = self::floatFormats();
@@ -83,6 +95,8 @@ class PluginDatainjectionDropdown {
    }
 
 
+<<<<<<< .mine
+=======
    static function dropdownFloatFormat($format) {
 
       Dropdown::showFromArray('float_format', self::floatFormats(),
@@ -138,9 +152,11 @@ class PluginDatainjectionDropdown {
    }*/
 
 
+>>>>>>> .r762
    static function dropdownFileEncoding() {
 
-      $values[PluginDatainjectionBackend::ENCODING_AUTO]      = __('Automatic detection', 'datainjection');
+      $values[PluginDatainjectionBackend::ENCODING_AUTO]      = __('Automatic detection',
+                                                                   'datainjection');
       $values[PluginDatainjectionBackend::ENCODING_UFT8]      = __('UTF-8', 'datainjection');
       $values[PluginDatainjectionBackend::ENCODING_ISO8859_1] = __('ISO8859-1', 'datainjection');
 
@@ -168,6 +184,9 @@ class PluginDatainjectionDropdown {
    }
 
 
+   /**
+    * @param $value
+   **/
    static function dropdownPortUnicity($value) {
 
       $values = self::portUnicityValues();
@@ -175,15 +194,15 @@ class PluginDatainjectionDropdown {
    }
 
 
-   static function getPortUnitictyValues($value) {
+   //TODO function never called
+/*   static function getPortUnitictyValues($value) {
 
       $values = self::portUnicityValues();
       if (isset($values[$value])) {
          return $values[$value];
       }
       return "";
-   }
+   }*/
 
 }
-
 ?>

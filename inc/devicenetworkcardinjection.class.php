@@ -27,7 +27,7 @@
  @link      http://www.glpi-project.org/
  @since     2009
  ---------------------------------------------------------------------- */
- 
+
 if (!defined('GLPI_ROOT')) {
    die("Sorry. You can't access directly to this file");
 }
@@ -35,11 +35,11 @@ if (!defined('GLPI_ROOT')) {
 class PluginDatainjectionDeviceNetworkCardInjection extends DeviceNetworkCard
                                                implements PluginDatainjectionInjectionInterface {
 
+
    static function getTable() {
-   
+
       $parenttype = get_parent_class();
       return $parenttype::getTable();
-      
    }
 
 
@@ -53,51 +53,52 @@ class PluginDatainjectionDeviceNetworkCardInjection extends DeviceNetworkCard
    }
 
 
-   function getOptions($primary_type = '') {
+   /**
+    * @see plugins/datainjection/inc/PluginDatainjectionInjectionInterface::getOptions()
+    */
+   function getOptions($primary_type='') {
 
-      $tab                      = Search::getOptions(get_parent_class($this));
-      
+      $tab           = Search::getOptions(get_parent_class($this));
+
       //Remove some options because some fields cannot be imported
-      $blacklist = PluginDatainjectionCommonInjectionLib::getBlacklistedOptions(get_parent_class($this));
+      $blacklist     = PluginDatainjectionCommonInjectionLib::getBlacklistedOptions(get_parent_class($this));
       $notimportable = array();
+
       $options['ignore_fields'] = array_merge($blacklist, $notimportable);
-      
       $options['displaytype']   = array("multiline_text" => array(16),
                                         "dropdown"       => array(23));
 
       return PluginDatainjectionCommonInjectionLib::addToSearchOptions($tab, $options, $this);
-
    }
 
-   
-   function processAfterInsertOrUpdate($values, $add = true, $rights = array()) {
-      
+
+   /**
+    * @param $values
+    * @param $add                (true by default)
+    * @param $rights    array
+    */
+   function processAfterInsertOrUpdate($values, $add=true, $rights=array()) {
+
       if (isset($values['Computer']['id'])) {
-         
-         $class = "Item_".get_parent_class($this);
-         $item   = new $class();
+         $class   = "Item_".get_parent_class($this);
+         $item    = new $class();
          $foreign = getForeignKeyFieldForTable(getTableForItemType(get_parent_class($this)));
 
-         if (!countElementsInTable($item->getTable(), 
-                                   "`$foreign`='".$values[get_parent_class($this)]['id']."' 
+         if (!countElementsInTable($item->getTable(),
+                                   "`$foreign`='".$values[get_parent_class($this)]['id']."'
                                        AND `itemtype`='Computer'
-                                          AND `items_id`='".$values['Computer']['id']."'")) {
-            $tmp[$foreign]  = $values[get_parent_class($this)]['id'];
-            $tmp['items_id']    = $values['Computer']['id'];
-            $tmp['itemtype']        = 'Computer';
+                                       AND `items_id`='".$values['Computer']['id']."'")) {
+            $tmp[$foreign]   = $values[get_parent_class($this)]['id'];
+            $tmp['items_id'] = $values['Computer']['id'];
+            $tmp['itemtype'] = 'Computer';
             $item->add($tmp);
          }
       }
    }
-   
+
+
    /**
-    * Standard method to add an object into glpi
- 
-    *
-    * @param values fields to add into glpi
-    * @param options options used during creation
-    *
-    * @return an array of IDs of newly created objects : for example array(Computer=>1, Networkport=>10)
+    * @see plugins/datainjection/inc/PluginDatainjectionInjectionInterface::addOrUpdateObject()
    **/
    function addOrUpdateObject($values=array(), $options=array()) {
 
@@ -107,5 +108,4 @@ class PluginDatainjectionDeviceNetworkCardInjection extends DeviceNetworkCard
    }
 
 }
-
 ?>

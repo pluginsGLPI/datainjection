@@ -27,21 +27,26 @@
  @link      http://www.glpi-project.org/
  @since     2009
  ---------------------------------------------------------------------- */
- 
+
 class PluginDatainjectionData {
 
    private $injectionDatas;
+
 
    function __construct() {
       $injectionDatas = array();
    }
 
 
-   function setDatas($newDatas) {
+   // TODO function never called
+/*   function setDatas($newDatas) {
       $this->injectionDatas = $newDatas;
-   }
+   }*/
 
 
+   /**
+    * @param $newData
+   **/
    function addToDatas($newData) {
       $this->injectionDatas[] = $newData;
    }
@@ -52,6 +57,9 @@ class PluginDatainjectionData {
    }
 
 
+   /**
+    * @param $line_id
+   **/
    function getDataAtLine($line_id) {
 
       if (count($this->injectionDatas) >= $line_id) {
@@ -61,5 +69,4 @@ class PluginDatainjectionData {
    }
 
 }
-
 ?>
