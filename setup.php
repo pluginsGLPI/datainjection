@@ -101,10 +101,10 @@ function plugin_version_datainjection() {
 
    return array('name'           => __('File injection', 'datainjection'),
                 'minGlpiVersion' => '0.84',
-                'author'         => 'Walid Nouh, Remi Collet, Xavier Caillaud',
+                'author'         => 'Walid Nouh, Remi Collet, Nelly Mahu-Lasson, Xavier Caillaud',
                 'homepage'       => 'https://forge.indepnet.net/projects/datainjection',
                 'license'        => 'GPLv2+',
-                'version'        => '2.3'
+                'version'        => '2.3.0'
    );
 }
 
