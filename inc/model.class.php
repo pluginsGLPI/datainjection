@@ -718,7 +718,7 @@ class PluginDatainjectionModel extends CommonDBTM {
       echo "</td>";
       echo "<td>".__('Dates format', 'datainjection')."</td>";
       echo "<td>";
-      Dropdown::showFromArray('date_format', self::dateFormats(),
+      Dropdown::showFromArray('date_format', PluginDatainjectionDropdown::dateFormats(),
                               array('value' => $this->fields['date_format']));
       echo "</td></tr>";
 
@@ -729,7 +729,7 @@ class PluginDatainjectionModel extends CommonDBTM {
       echo "</td>";
       echo "<td>".__('Float format', 'datainjection')."</td>";
       echo "<td>";
-      Dropdown::showFromArray('float_format', self::floatFormats(),
+      Dropdown::showFromArray('float_format', PluginDatainjectionDropdown::floatFormats(),
                               array('value' => $this->fields['float_format']));
       echo "</td></tr>";
 
@@ -740,7 +740,8 @@ class PluginDatainjectionModel extends CommonDBTM {
       echo "</td>";
       echo "<td>".__('Port unicity criteria', 'datainjection')."</td>";
       echo "<td>";
-      PluginDatainjectionDropdown::dropdownPortUnicity($this->fields['port_unicity']);
+      Dropdown::showFromArray('port_unicity', PluginDatainjectionDropdown::portUnicityValues(),
+                              array('value' => $this->fields['port_unicity']));
       echo "</td></tr>";
 
       if ($ID > 0) {

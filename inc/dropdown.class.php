@@ -142,16 +142,6 @@ class PluginDatainjectionDropdown {
    /**
     * @param $value
    **/
-   static function dropdownPortUnicity($value) {
-
-      $values = self::portUnicityValues();
-      Dropdown::showFromArray('port_unicity', $values, array('value' => $value));
-   }
-
-
-   /**
-    * @param $value
-   **/
    static function getPortUnicityValues($value) {
 
       $values = self::portUnicityValues();
