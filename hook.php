@@ -49,6 +49,9 @@ function plugin_datainjection_install() {
 
    switch (plugin_datainjection_needUpdateOrInstall()) {
       case -1 :
+         
+         plugin_datainjection_update220_230();
+         
          return true;
 
       case 0 :
@@ -59,7 +62,7 @@ function plugin_datainjection_install() {
                      `date_mod` datetime NOT NULL default '0000-00-00 00:00:00',
                      `filetype` varchar(255) NOT NULL default 'csv',
                      `itemtype` varchar(255) NOT NULL default '',
-                     `entities_id` int(11) NOT NULL default '-1',
+                     `entities_id` int(11) NOT NULL default '0',
                      `behavior_add` tinyint(1) NOT NULL default '1',
                      `behavior_update` tinyint(1) NOT NULL default '0',
                      `can_add_dropdown` tinyint(1) NOT NULL default '0',
@@ -158,6 +161,8 @@ function plugin_datainjection_install() {
          }
          
          plugin_datainjection_update210_220();
+         
+         plugin_datainjection_update220_230();
        
          break;
    }
@@ -968,6 +973,17 @@ function plugin_datainjection_update210_220() {
    }
 }
 
+function plugin_datainjection_update220_230() {
+   global $DB;
+   
+   if (countElementsInTable("glpi_plugin_datainjection_models",
+                                     "`entities_id`='-1'")) {
+      $query = "UPDATE `glpi_plugin_datainjection_models`
+                          SET `is_private` = '1', `entities_id` = '0', `is_recursive` = '1'
+                          WHERE `entities_id` = '-1'";
+   }
+}
+
 
 function plugin_datainjection_loadHook($hook_name, $params = array ()) {
    global $PLUGIN_HOOKS;
@@ -991,8 +1007,7 @@ function plugin_datainjection_loadHook($hook_name, $params = array ()) {
 function plugin_datainjection_needUpdateOrInstall() {
 
    //Install plugin
-   if (!TableExists('glpi_plugin_datainjection_profiles')
-       && !TableExists('glpi_plugin_datainjection_profiles')) {
+   if (!TableExists('glpi_plugin_datainjection_profiles')) {
       return 0;
    }
 
@@ -1003,8 +1018,7 @@ function plugin_datainjection_needUpdateOrInstall() {
    return 1;
 }
 
-//Tsmr / Yllen TODO Decision : use Search::show('PluginDatainjectionModel') ? 
-/*
+//Used for filter list of models
 function plugin_datainjection_addDefaultWhere($itemtype) {
 
    switch ($itemtype) {
@@ -1028,23 +1042,5 @@ function plugin_datainjection_addDefaultWhere($itemtype) {
          break;
    }
 }
-
-//NOT USED
-function plugin_datainjection_giveItem($type, $ID, $data, $num) {
-   global $DB, $CFG_GLPI;
-
-   $searchopt = &Search::getOptions($type);
-   $table     = $searchopt[$ID]["table"];
-   $field     = $searchopt[$ID]["field"];
-
-   switch ($table.'.'.$field) {
-      case "glpi_plugin_datainjection_models.port_unicity" :
-         return PluginDatainjectionDropdown::getPortUnitictyValues($data['ITEM_'.$num]);
-
-      case "glpi_plugin_datainjection_models.float_format" :
-         return PluginDatainjectionDropdown::getFloatFormat($data['ITEM_'.$num]);
-   }
-   return "";
-}*/
 
 ?>

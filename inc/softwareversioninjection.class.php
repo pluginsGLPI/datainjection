@@ -55,7 +55,7 @@ class PluginDatainjectionSoftwareVersionInjection extends SoftwareVersion
    }
 
 
-   function getOptions($primary_type = '') {
+   function getOptions($primary_type='') {
 
 
       $tab = Search::getOptions(get_parent_class($this));
@@ -92,15 +92,15 @@ class PluginDatainjectionSoftwareVersionInjection extends SoftwareVersion
       $name = "info[".$option['linkfield']."]";
       switch ($option['displaytype']) {
          case 'computer' :
-            Dropdown::show('Computer', array('name'    => $name,
-                                             'comment' => true,
-                                             'entity'  => $_SESSION['glpiactive_entity']));
+            Computer::dropdown(array('name'    => $name,
+                                    'entity'      => $_SESSION['glpiactive_entity'],
+                                    'entity_sons' => false));
             break;
          
          case 'software' :
-            Dropdown::show('Software', array('name'    => $name,
-                                             'comment' => true,
-                                             'entity'  => $_SESSION['glpiactive_entity']));
+            Software::dropdown(array('name'    => $name,
+                                    'entity'      => $_SESSION['glpiactive_entity'],
+                                    'entity_sons' => false));
             break;
          default :
             break;
@@ -111,8 +111,8 @@ class PluginDatainjectionSoftwareVersionInjection extends SoftwareVersion
    /**
     * Standard method to add an object into glpi
     *
-    * @param values fields to add into glpi
-    * @param options options used during creation
+    * @param $values fields to add into glpi
+    * @param $options options used during creation
     *
     * @return an array of IDs of newly created objects : for example array(Computer=>1, Networkport=>10)
    **/

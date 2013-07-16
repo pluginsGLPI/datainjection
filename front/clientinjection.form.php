@@ -79,7 +79,8 @@ if (isset($_SESSION['datainjection']['go'])) {
    }
 
    Html::back();
-} else if (isset($_POST['finish'])) {
+} else if (isset($_POST['finish'])
+               || isset($_POST['cancel'])) {
 
    PluginDatainjectionSession::removeParams();
    Html::redirect(Toolbox::getItemTypeFormURL('PluginDatainjectionClientInjection'));

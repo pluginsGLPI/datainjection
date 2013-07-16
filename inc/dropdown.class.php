@@ -29,8 +29,8 @@
  ---------------------------------------------------------------------- */
 
 class PluginDatainjectionDropdown {
-
-   static function dropdownDateFormat($format) {
+   
+   static function dateFormats() {
 
       $date_format[PluginDatainjectionCommonInjectionLib::DATE_TYPE_DDMMYYYY]
                                                             = __('dd-mm-yyyy', 'datainjection');
@@ -39,9 +39,26 @@ class PluginDatainjectionDropdown {
       $date_format[PluginDatainjectionCommonInjectionLib::DATE_TYPE_YYYYMMDD]
                                                             = __('yyyy-mm-dd', 'datainjection');
 
-      Dropdown::showFromArray('date_format', $date_format, array('value' => $format));
+      return $date_format;
    }
+   
+   
+   static function getDateFormat($date) {
 
+      $dates = self::dateFormats();
+      if (isset($dates[$date])) {
+         return $dates[$date];
+      }
+      return "";
+   }
+   
+   
+   static function dropdownDateFormat($format) {
+
+      Dropdown::showFromArray('date_format', self::dateFormats(),
+                              array('value' => $format));
+   }
+   
 
    static function floatFormats() {
 
@@ -70,6 +87,46 @@ class PluginDatainjectionDropdown {
 
       Dropdown::showFromArray('float_format', self::floatFormats(),
                               array('value' => $format));
+   }
+   
+   
+      
+   static function statusLabels() {
+      
+      $states[0] = Dropdown::EMPTY_VALUE;
+      //$states[PluginDatainjectionModel::INITIAL_STEP] = __('Creation of the model on going', 'datainjection');
+      $states[PluginDatainjectionModel::FILE_STEP] = __('File to inject', 'datainjection');
+      $states[PluginDatainjectionModel::MAPPING_STEP] = __('Mappings', 'datainjection');
+      $states[PluginDatainjectionModel::OTHERS_STEP] = __('Additional Information', 'datainjection');
+      $states[PluginDatainjectionModel::READY_TO_USE_STEP] = __('Model available for use', 'datainjection');
+      return $states;
+   }
+   
+   /**
+    * Return current status of the model
+    *
+    * @return nothing
+   **/
+   static function getStatusLabel($step) {
+
+      $states = self::statusLabels();
+      if (isset($states[$step])) {
+         return $states[$step];
+      }
+      return "";
+   }
+
+   
+   /**
+    * Return current status of the model
+    *
+    * @return nothing
+   **/
+   static function dropdownStatusLabel($states) {
+      
+      Dropdown::showFromArray('step', self::statusLabels(),
+                              array('value' => $states));
+
    }
 
    //TODO Not Used

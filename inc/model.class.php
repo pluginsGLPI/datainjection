@@ -474,73 +474,76 @@ class PluginDatainjectionModel extends CommonDBTM {
 
       $tab[1]['table']           = $this->getTable();
       $tab[1]['field']           = 'name';
-      $tab[1]['linkfield']       = 'name';
       $tab[1]['name']            = __('Name');
       $tab[1]['datatype']        = 'itemlink';
       $tab[1]['itemlink_type']   = $this->getType();
 
       $tab[2]['table']           = $this->getTable();
       $tab[2]['field']           = 'id';
-      $tab[2]['linkfield']       = '';
       $tab[2]['name']            = __('ID');
 
       $tab[3]['table']           = $this->getTable();
       $tab[3]['field']           = 'behavior_add';
-      $tab[3]['linkfield']       = '';
       $tab[3]['name']            = __('Allow lines creation', 'datainjection');
       $tab[3]['datatype']        = 'bool';
-
+      $tab[3]['massiveaction']   = false;
+      
       $tab[4]['table']           = $this->getTable();
       $tab[4]['field']           = 'behavior_update';
-      $tab[4]['linkfield']       = '';
       $tab[4]['name']            = __('Allow lines update', 'datainjection');
       $tab[4]['datatype']        = 'bool';
-
+      $tab[4]['massiveaction']   = false;
+      
       $tab[5]['table']           = $this->getTable();
       $tab[5]['field']           = 'itemtype';
-      $tab[5]['linkfield']       = '';
       $tab[5]['name']            = __('Type of datas to import', 'datainjection');
       $tab[5]['datatype']        = 'itemtypename';
-
+      $tab[5]['nosearch']        = true;
+      $tab[5]['massiveaction']   = false;
+      
       $tab[6]['table']           = $this->getTable();
       $tab[6]['field']           = 'can_add_dropdown';
-      $tab[6]['linkfield']       = '';
       $tab[6]['name']            = __('Allow creation of dropdowns', 'datainjection');
       $tab[6]['datatype']        = 'bool';
 
       $tab[7]['table']           = $this->getTable();
       $tab[7]['field']           = 'date_format';
-      $tab[7]['linkfield']       = 'date_format';
       $tab[7]['name']            = __('Dates format', 'datainjection');
-      $tab[7]['datatype']        = 'text';
-
+      $tab[7]['datatype']        = 'specific';
+      $tab[7]['searchtype']      = 'equals';
+      
       $tab[8]['table']           = $this->getTable();
       $tab[8]['field']           = 'float_format';
-      $tab[8]['linkfield']       = 'float_format';
       $tab[8]['name']            = __('Float format', 'datainjection');
-      $tab[8]['datatype']        = 'text';
+      $tab[8]['datatype']        = 'specific';
+      $tab[8]['searchtype']      = 'equals';
 
       $tab[9]['table']           = $this->getTable();
       $tab[9]['field']           = 'perform_network_connection';
-      $tab[9]['linkfield']       = 'perform_network_connection';
       $tab[9]['name']            = __('Try to establish network connection is possible', 'datainjection');
       $tab[9]['datatype']        = 'bool';
 
       $tab[10]['table']          = $this->getTable();
       $tab[10]['field']          = 'port_unicity';
-      $tab[10]['linkfield']      = 'port_unicity';
       $tab[10]['name']           = __('Port unicity criteria', 'datainjection');
-      $tab[10]['datatype']       = 'text';
+      $tab[10]['datatype']       = 'specific';
+      $tab[10]['searchtype']     = 'equals';
 
       $tab[11]['table']          = $this->getTable();
       $tab[11]['field']          = 'is_private';
-      $tab[11]['linkfield']      = 'is_private';
       $tab[11]['name']           = __('Private');
       $tab[11]['datatype']       = 'bool';
-
+      $tab[11]['massiveaction']  = false;
+      
+      $tab[12]['table']          = $this->getTable();
+      $tab[12]['field']          = 'step';
+      $tab[12]['name']           = __('Status');
+      $tab[12]['massiveaction']  = false;
+      $tab[12]['datatype']       = 'specific';
+      $tab[12]['searchtype']     = 'equals';
+      
       $tab[16]['table']          = $this->getTable();
       $tab[16]['field']          = 'comment';
-      $tab[16]['linkfield']      = 'comment';
       $tab[16]['name']           = __('Comments');
       $tab[16]['datatype']       = 'text';
 
@@ -556,7 +559,75 @@ class PluginDatainjectionModel extends CommonDBTM {
       
       return $tab;
    }
+   
+   /**
+    * @since version 0.84
+    *
+    * @param $field
+    * @param $values
+    * @param $options   array
+   **/
+   static function getSpecificValueToDisplay($field, $values, array $options=array()) {
 
+      if (!is_array($values)) {
+         $values = array($field => $values);
+      }
+      switch ($field) {
+
+         case "port_unicity" :
+            return PluginDatainjectionDropdown::getPortUnitictyValues($values['port_unicity']);
+
+         case "float_format" :
+            return PluginDatainjectionDropdown::getFloatFormat($values['float_format']);
+         
+         case "date_format" :
+            return PluginDatainjectionDropdown::getDateFormat($values['date_format']);
+         
+         case "step" :
+            return PluginDatainjectionDropdown::getStatusLabel($values['step']);
+      }
+      return parent::getSpecificValueToDisplay($field, $values, $options);
+   }
+   
+   /**
+    * @since version 0.84
+    *
+    * @param $field
+    * @param $name               (default '')
+    * @param $values             (defaut '')
+    * @param $options   array
+   **/
+   static function getSpecificValueToSelect($field, $name='', $values='', array $options=array()) {
+
+      if (!is_array($values)) {
+         $values = array($field => $values);
+      }
+      $options['display'] = false;
+      switch ($field) {
+         case 'step':
+            $options['value'] = $values[$field];
+            return Dropdown::showFromArray($name, PluginDatainjectionDropdown::statusLabels(),
+                                             $options);
+
+         case 'port_unicity' :
+            $options['value'] = $values[$field];
+            return Dropdown::showFromArray($name, PluginDatainjectionDropdown::portUnicityValues(),
+                                             $options);
+
+         case 'float_format' :
+            $options['value'] = $values[$field];
+            return Dropdown::showFromArray($name, PluginDatainjectionDropdown::floatFormats(),
+                                             $options);
+
+         case 'date_format' :
+            $options['value'] = $values[$field];
+            return Dropdown::showFromArray($name, PluginDatainjectionDropdown::dateFormats(),
+                                             $options);
+
+      }
+      return parent::getSpecificValueToSelect($field, $name, $values, $options);
+   }
+   
 
    function showForm($ID, $options = array()) {
 
@@ -595,7 +666,7 @@ class PluginDatainjectionModel extends CommonDBTM {
       echo "<table class='tab_cadre_fixe'>";
 
       echo "<tr><th colspan='2'>".self::getTypeName()."</th>";
-      echo "<th colspan='2'>".$this->getStatusLabel()."</th></tr>";
+      echo "<th colspan='2'>".PluginDatainjectionDropdown::getStatusLabel($this->fields['step'])."</th></tr>";
 
       echo "<tr class='tab_bg_1'>";
       echo "<td><input type='hidden' name='users_id' value='".Session::getLoginUserID()."'>".
@@ -824,9 +895,28 @@ class PluginDatainjectionModel extends CommonDBTM {
          Session::addMessageAfterRedirect(__('Your model should allow import and/or update of data', 'datainjection'), true, ERROR, true);
          return false;
       }
+      
+      if (isset($input['is_private'])
+            && $input['is_private'] == 1) {
+         $input['entities_id'] = $_SESSION['glpiactive_entity'];
+         $input['is_recursive'] = 1;
+      }
+      $input['step'] = self::FILE_STEP;
+      
       return $input;
    }
+   
+   
 
+   function prepareInputForUpdate($input) {
+   
+      if (isset($input['is_private'])
+            && $input['is_private'] == 1) {
+         $input['entities_id'] = $_SESSION['glpiactive_entity'];
+         $input['is_recursive'] = 1;
+      }
+      return $input;
+   }
 
    /**
     * Get the backend implementation by type
@@ -1121,20 +1211,6 @@ class PluginDatainjectionModel extends CommonDBTM {
    }
 
 
-   /**
-    * Return current status of the model
-    *
-    * @return nothing
-   **/
-   function getStatusLabel() {
-
-      if ($this->fields['step'] == self::READY_TO_USE_STEP) {
-         return __('Model available for use', 'datainjection');
-      }
-      return  __('Creation of the model on going', 'datainjection');
-   }
-
-
    function populateSeveraltimesMappedFields() {
 
       $this->severaltimes_mapped
@@ -1423,82 +1499,6 @@ class PluginDatainjectionModel extends CommonDBTM {
          }
          $pdf->render();
       }
-   }
-
-
-   static function showModelsList() {
-
-      $modelo = new self();
-      $models = self::getModels(Session::getLoginUserID(), 'name', $_SESSION['glpiactive_entity'], true);
-
-      echo "<form method='post' id='modelslist' action=\"".Toolbox::getItemTypeSearchURL(__CLASS__)."\">";
-      echo "<table class='tab_cadrehov'>";
-      echo "<tr class='tab_bg_1'><th colspan='7'>".__('List of the models', 'datainjection')."</th></tr>";
-
-      if (!empty($models)) {
-         Session::initNavigateListItems($modelo->getType());
-
-         echo "<tr class='tab_bg_1'>";
-         echo "<th></th>";
-         echo "<th>".__('Name')."</th>";
-         echo "<th>".__('Private')."</th>";
-         echo "<th>".__('Entity')."</th>";
-         echo "<th>".__('Child entities')."</th>";
-         echo "<th>".__('Type')."</th>";
-         echo "<th>".__('Status')."</th></th>";
-
-         foreach ($models as $model) {
-            Session::addToNavigateListItems($modelo->getType(), $model["id"]);
-
-            echo "<tr class='tab_bg_1'>";
-            echo "<td width='10px'>";
-            if ($modelo->can($model["id"], 'd')) {
-               $sel = "";
-               if (isset($_GET["select"]) && $_GET["select"]=="all") {
-                  $sel = "checked";
-               }
-               echo "<input type='checkbox' name='models[".$model["id"]."]'". $sel.">";
-            } else {
-               echo "&nbsp;";
-            }
-            echo "</td>";
-            echo "<td><a href='".Toolbox::getItemTypeFormURL($modelo->getType())."?id=".
-                       $model['id']."'>".$model['name']."</a></td>";
-            echo "<td>";
-            echo Dropdown::getYesNo($model['is_private']);
-            echo "</td>";
-            echo "<td>";
-            if (!$model['is_private']) {
-               echo Dropdown::getDropdownName('glpi_entities', $model['entities_id']);
-            }
-            echo "</td>";
-            echo "<td>";
-            if (!$model['is_private']) {
-               echo Dropdown::getYesNo($model['is_recursive']);
-            }
-            echo "</td>";
-            echo "<td>";
-            echo call_user_func(array($model['itemtype'], 'getTypeName'));
-            echo "</td>";
-
-            echo "<td>";
-            if ($model['step'] != self::READY_TO_USE_STEP) {
-               _e('Creation of the model on going', 'datainjection');
-            } else {
-               _e('Model available for use', 'datainjection');
-            }
-            echo "</td>";
-            echo "</tr>";
-         }
-
-         Html::closeForm();
-         Html::openArrowMassives("modelslist");
-         Html::closeArrowMassives(array('delete' => __s('Delete permanently')));
-
-      } else {
-         echo "<tr class='tab_bg_1'><td>".__('No item found')."</table></td>";
-      }
-      Html::closeForm();
    }
 
 

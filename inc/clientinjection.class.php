@@ -161,6 +161,7 @@
       }
       echo "<input type='submit' class='submit' name='upload' value='".
              htmlentities($options['submit'], ENT_QUOTES, 'UTF-8'). "' $alert>";
+      echo "&nbsp;&nbsp;<input type='submit' class='submit' name='cancel' value=\""._sx('button','Cancel')."\">";
       echo "</td></tr>\n";
       echo "</table><br>";
       if ($add_form) {

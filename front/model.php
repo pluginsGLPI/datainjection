@@ -46,7 +46,8 @@ if (isset($_POST['delete'])
    Html::back();
 }
 
-PluginDatainjectionModel::showModelsList();
+Search::show('PluginDatainjectionModel');
 
 Html::footer();
+
 ?>
