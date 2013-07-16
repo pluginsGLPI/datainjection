@@ -148,5 +148,18 @@ class PluginDatainjectionDropdown {
       Dropdown::showFromArray('port_unicity', $values, array('value' => $value));
    }
 
+
+   /**
+    * @param $value
+   **/
+   static function getPortUnicityValues($value) {
+
+      $values = self::portUnicityValues();
+      if (isset($values[$value])) {
+         return $values[$value];
+      }
+      return "";
+   }
+
 }
 ?>

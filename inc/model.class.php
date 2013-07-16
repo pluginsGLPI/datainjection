@@ -575,7 +575,7 @@ class PluginDatainjectionModel extends CommonDBTM {
       switch ($field) {
 
          case "port_unicity" :
-            return PluginDatainjectionDropdown::getPortUnitictyValues($values['port_unicity']);
+            return PluginDatainjectionDropdown::getPortUnicityValues($values['port_unicity']);
 
          case "float_format" :
             return PluginDatainjectionDropdown::getFloatFormat($values['float_format']);
