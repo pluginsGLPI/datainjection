@@ -71,7 +71,7 @@ interface PluginDatainjectionInjectionInterface {
     *
     * This method is optionnal ! Implement it if the itemtype to display special information
    **/
-   function showAdditionalInformation($info=array());
+   //function showAdditionalInformation($info=array());
 
 
    /**
@@ -83,19 +83,8 @@ interface PluginDatainjectionInjectionInterface {
     * @return an array of IDs of newly created objects:
     * for example array(Computer=>1, Networkport=>10)
    **/
-   //function addOrUpdateObject($values=array(), $options=array());
+   function addOrUpdateObject($values=array(), $options=array());
 
-
-   /**
-    * Standard method to delete an object into glpi
-
-
-   //TODO not useful
-    *
-    * @param $fields fields to add into glpi
-    * @param $options options used during creation
-   **/
-   //function deleteObject($values=array(), $options=array());
 
 
    /**

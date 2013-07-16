@@ -60,15 +60,14 @@ class PluginDatainjectionInfoCollection {
       }
    }
 
-   //TODO function never called
    /**
     * Return all the mappings for this model
     *
     * @return the list of all the mappings for this model
    **/
-/*   function getAllInfos() {
+   function getAllInfos() {
       return $this->infosCollection;
-   }*/
+   }
 
 }
 ?>

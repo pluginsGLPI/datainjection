@@ -58,12 +58,6 @@ class PluginDatainjectionInfo extends CommonDBTM {
    }
 
 
-   //TODO function never called
-/*   function getModelID() {
-      return $this->fields["models_id"];
-   }*/
-
-
    function getInfosType() {
       return $this->fields["itemtype"];
    }
@@ -126,13 +120,12 @@ class PluginDatainjectionInfo extends CommonDBTM {
    }
 
 
-   //TODO function never called
    /**
     *
-    * Enter description here ...
+    * Display additional information form from Model form
     * @param PluginDatainjectionModel $model
     */
-/*   static function showFormInfos(PluginDatainjectionModel $model) {
+   static function showFormInfos(PluginDatainjectionModel $model) {
 
       $canedit = $model->can($model->fields['id'], 'w');
       self::showAddInfo($model, $canedit);
@@ -188,7 +181,7 @@ class PluginDatainjectionInfo extends CommonDBTM {
          echo "</table>";
          Html::closeForm();
       }
-   }*/
+   }
 
 
    /**
