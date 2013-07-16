@@ -37,14 +37,14 @@ function plugin_init_datainjection() {
    global $PLUGIN_HOOKS, $CFG_GLPI, $INJECTABLE_TYPES;
 
    $PLUGIN_HOOKS['csrf_compliant']['datainjection'] = true;
-   
+
    Plugin::registerClass('PluginDatainjectionProfile',
                          array('addtabon' => array('Profile')));
 
    $PLUGIN_HOOKS['change_profile']['datainjection'] = array('PluginDatainjectionProfile', 'changeProfile');
 
    $PLUGIN_HOOKS['migratetypes']['datainjection'] = 'plugin_datainjection_migratetypes_datainjection';
-   
+
    $plugin = new Plugin();
    if ($plugin->isActivated("datainjection")) {
       if (!plugin_datainjection_checkDirectories()) {
@@ -56,11 +56,11 @@ function plugin_init_datainjection() {
       $image_import  = "<img src='".$CFG_GLPI["root_doc"]."/pics/actualiser.png' title='";
       $image_import .= __('Injection of the file', 'datainjection');
       $image_import .= "' alt='".__('Injection of the file', 'datainjection')."'>";
-      
+
       $PLUGIN_HOOKS['menu_entry']['datainjection'] = 'front/clientinjection.form.php';
-      
+
       if (plugin_datainjection_haveRight("model", "r")) {
-         
+
          $PLUGIN_HOOKS['submenu_entry']['datainjection']['options']['model']['title']
                                                    = PluginDatainjectionModel::getTypeName();
          $PLUGIN_HOOKS['submenu_entry']['datainjection']['options']['model']['page']
@@ -79,7 +79,7 @@ function plugin_init_datainjection() {
       }
 
       $PLUGIN_HOOKS['submenu_entry']['datainjection']['add'] = 'front/clientinjection.form.php';
-      
+
       $PLUGIN_HOOKS['pre_item_purge']['datainjection']
          = array('Profile'=>array('PluginDatainjectionProfile', 'purgeProfiles'));
 
@@ -99,13 +99,12 @@ function plugin_init_datainjection() {
 
 function plugin_version_datainjection() {
 
-   return array (
-      'name'           => __('File injection', 'datainjection'),
-      'minGlpiVersion' => '0.83.3',
-      'author'         => 'Walid Nouh & Remi Collet',
-      'homepage'       => 'https://forge.indepnet.net/projects/datainjection',
-      'license'        => 'GPLv2+',
-      'version'        => '2.3'
+   return array('name'           => __('File injection', 'datainjection'),
+                'minGlpiVersion' => '0.84',
+                'author'         => 'Walid Nouh, Remi Collet, Xavier Caillaud',
+                'homepage'       => 'https://forge.indepnet.net/projects/datainjection',
+                'license'        => 'GPLv2+',
+                'version'        => '2.3'
    );
 }
 
@@ -132,7 +131,7 @@ function plugin_datainjection_check_prerequisites() {
       echo PLUGIN_DATAINJECTION_UPLOAD_DIR. " ".__('must exists and be writable for web server user', 'datainjection');
       return false;
    }
-   if (version_compare(GLPI_VERSION,'0.84','lt') 
+   if (version_compare(GLPI_VERSION,'0.84','lt')
          || version_compare(GLPI_VERSION,'0.85','ge')) {
       _e('This plugin requires GLPI >= 0.84', 'datainjection');
       return false;
