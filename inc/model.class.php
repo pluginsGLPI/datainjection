@@ -909,11 +909,16 @@ class PluginDatainjectionModel extends CommonDBTM {
    
 
    function prepareInputForUpdate($input) {
-   
+      
       if (isset($input['is_private'])
             && $input['is_private'] == 1) {
          $input['entities_id'] = $_SESSION['glpiactive_entity'];
          $input['is_recursive'] = 1;
+         if (isset($input['users_id'])
+            && $input['users_id'] != $this->fields['users_id']) {
+            Session::addMessageAfterRedirect(__('You are not the initial creator of this model', 'datainjection'), true, ERROR, true);
+            return false;
+         }
       }
       return $input;
    }
