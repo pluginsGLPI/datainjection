@@ -27,7 +27,7 @@
  @link      http://www.glpi-project.org/
  @since     2009
  ---------------------------------------------------------------------- */
- 
+
 if (!extension_loaded("xmlrpc")) {
    die("Extension xmlrpc not loaded\n");
 }
@@ -37,7 +37,7 @@ chdir("../../..");
 $url = "/".basename(getcwd())."/plugins/webservices/xmlrpc.php";
 
 $args = array();
-if ($_SERVER['argc']>1) {
+if ($_SERVER['argc'] > 1) {
    for ($i=1 ; $i<count($_SERVER['argv']) ; $i++) {
       $it           = explode("=",$argv[$i],2);
       $it[0]        = preg_replace('/^--/','',$it[0]);
@@ -89,7 +89,9 @@ print_r($response);
 
 print_r(call('glpi.doLogout',$attrs));
 
+
 function call($method,$params) {
+
    $header  = "Content-Type: text/xml";
    echo "+ Calling '$method' on http://".$params['host']."/".$params['url']."\n";
 

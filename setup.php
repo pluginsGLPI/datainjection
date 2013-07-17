@@ -1,5 +1,4 @@
 <?php
-
 /*
  * @version $Id: HEADER 14684 2011-06-11 06:32:40Z remi $
  LICENSE
@@ -41,26 +40,27 @@ function plugin_init_datainjection() {
    Plugin::registerClass('PluginDatainjectionProfile',
                          array('addtabon' => array('Profile')));
 
-   $PLUGIN_HOOKS['change_profile']['datainjection'] = array('PluginDatainjectionProfile', 'changeProfile');
+   $PLUGIN_HOOKS['change_profile']['datainjection'] = array('PluginDatainjectionProfile',
+                                                            'changeProfile');
 
    $PLUGIN_HOOKS['migratetypes']['datainjection'] = 'plugin_datainjection_migratetypes_datainjection';
 
    $plugin = new Plugin();
    if ($plugin->isActivated("datainjection")) {
       if (!plugin_datainjection_checkDirectories()) {
-         Toolbox::logDebug("[Datainjection plugin] ".PLUGIN_DATAINJECTION_UPLOAD_DIR.
-                     " ".__('must exists and be writable for web server user', 'datainjection'));
+         Toolbox::logDebug("[Datainjection plugin] ".
+                           sprintf(__('%s must exists and be writable for web server user',
+                                      'datainjection'), PLUGIN_DATAINJECTION_UPLOAD_DIR));
          return false;
       }
 
       $image_import  = "<img src='".$CFG_GLPI["root_doc"]."/pics/actualiser.png' title='";
-      $image_import .= __('Injection of the file', 'datainjection');
-      $image_import .= "' alt='".__('Injection of the file', 'datainjection')."'>";
+      $image_import .= _s('Injection of the file', 'datainjection');
+      $image_import .= "' alt='"._s('Injection of the file', 'datainjection')."'>";
 
       $PLUGIN_HOOKS['menu_entry']['datainjection'] = 'front/clientinjection.form.php';
 
       if (plugin_datainjection_haveRight("model", "r")) {
-
          $PLUGIN_HOOKS['submenu_entry']['datainjection']['options']['model']['title']
                                                    = PluginDatainjectionModel::getTypeName();
          $PLUGIN_HOOKS['submenu_entry']['datainjection']['options']['model']['page']
@@ -73,15 +73,16 @@ function plugin_init_datainjection() {
          $image_model  = "<img src='".$CFG_GLPI["root_doc"]."/pics/rdv.png' title='";
          $image_model .= PluginDatainjectionModel::getTypeName();
          $image_model .= "' alt='".PluginDatainjectionModel::getTypeName()."'>";
+
          $PLUGIN_HOOKS['submenu_entry']['datainjection'][$image_model] = 'front/model.php';
          $PLUGIN_HOOKS['submenu_entry']['datainjection']['options']['model']['links'][$image_import]
-                                                   = '/plugins/datainjection/front/clientinjection.form.php';
+                                       = '/plugins/datainjection/front/clientinjection.form.php';
       }
 
       $PLUGIN_HOOKS['submenu_entry']['datainjection']['add'] = 'front/clientinjection.form.php';
 
       $PLUGIN_HOOKS['pre_item_purge']['datainjection']
-         = array('Profile'=>array('PluginDatainjectionProfile', 'purgeProfiles'));
+            = array('Profile' => array('PluginDatainjectionProfile', 'purgeProfiles'));
 
       // Css file
       $PLUGIN_HOOKS['add_css']['datainjection'] = 'css/datainjection.css';
@@ -128,11 +129,11 @@ function plugin_datainjection_haveRight($module, $right) {
 function plugin_datainjection_check_prerequisites() {
 
   if (!plugin_datainjection_checkDirectories()) {
-      echo PLUGIN_DATAINJECTION_UPLOAD_DIR. " ".__('must exists and be writable for web server user', 'datainjection');
+      printf(__('%s must exists and be writable for web server user', 'datainjection'),
+             PLUGIN_DATAINJECTION_UPLOAD_DIR);
       return false;
    }
-   if (version_compare(GLPI_VERSION,'0.84','lt')
-         || version_compare(GLPI_VERSION,'0.85','ge')) {
+   if (version_compare(GLPI_VERSION,'0.84','lt') || version_compare(GLPI_VERSION,'0.85','ge')) {
       _e('This plugin requires GLPI >= 0.84', 'datainjection');
       return false;
    }
@@ -143,6 +144,7 @@ function plugin_datainjection_check_prerequisites() {
 function plugin_datainjection_check_config($verbose=false) {
    return true;
 }
+
 
 /**
  * Return all types that can be injected using datainjection
@@ -157,7 +159,7 @@ function getTypesToInject() {
       return;
    }
 
-   $INJECTABLE_TYPES = array('PluginDatainjectionCartridgeItemInjection'              => 'datainjection',
+   $INJECTABLE_TYPES = array('PluginDatainjectionCartridgeItemInjection'               => 'datainjection',
                              'PluginDatainjectionBudgetInjection'                      => 'datainjection',
                              'PluginDatainjectionComputerInjection'                    => 'datainjection',
                              'PluginDatainjectionComputer_ItemInjection'               => 'datainjection',
@@ -249,21 +251,21 @@ function getTypesToInject() {
 
 
 function plugin_datainjection_migratetypes_datainjection($types) {
+
    $types[996] = 'NetworkPort';
    $types[999] = 'NetworkPort';
    return $types;
 }
 
+
 function plugin_datainjection_checkDirectories() {
    $plugin = new Plugin();
 
    if ($plugin->isInstalled('datainjection')
-     && (!file_exists(PLUGIN_DATAINJECTION_UPLOAD_DIR)
-        || !is_writable(PLUGIN_DATAINJECTION_UPLOAD_DIR))) {
-         return false;
-   } else {
-      return true;
+       && (!file_exists(PLUGIN_DATAINJECTION_UPLOAD_DIR)
+           || !is_writable(PLUGIN_DATAINJECTION_UPLOAD_DIR))) {
+      return false;
    }
+   return true;
 }
-
 ?>

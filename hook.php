@@ -1,5 +1,4 @@
 <?php
-
 /*
  * @version $Id: HEADER 14684 2011-06-11 06:32:40Z remi $
  LICENSE
@@ -49,9 +48,7 @@ function plugin_datainjection_install() {
 
    switch (plugin_datainjection_needUpdateOrInstall()) {
       case -1 :
-         
          plugin_datainjection_update220_230();
-         
          return true;
 
       case 0 :
@@ -77,7 +74,7 @@ function plugin_datainjection_install() {
                      `step` int( 11 ) NOT NULL DEFAULT '0',
                      PRIMARY KEY  (`id`)
                    ) ENGINE=MyISAM CHARSET=utf8 COLLATE=utf8_unicode_ci";
-         $DB->query($query) or die($DB->error());
+         $DB->queryOrDie($query, $DB->error());
 
          $query = "CREATE TABLE IF NOT EXISTS `glpi_plugin_datainjection_modelcsvs` (
                      `id` int(11) NOT NULL auto_increment,
@@ -87,7 +84,7 @@ function plugin_datainjection_install() {
                      `is_header_present` tinyint(1) NOT NULL default '1',
                      PRIMARY KEY  (`ID`)
                    ) ENGINE=MyISAM CHARSET=utf8 COLLATE=utf8_unicode_ci;";
-         $DB->query($query) or die($DB->error());
+         $DB->queryOrDie($query, $DB->error());
 
          $query = "CREATE TABLE IF NOT EXISTS `glpi_plugin_datainjection_mappings` (
                      `id` INT( 11 ) NOT NULL AUTO_INCREMENT PRIMARY KEY ,
@@ -98,7 +95,7 @@ function plugin_datainjection_install() {
                      `value` VARCHAR( 255 ) NOT NULL ,
                      `is_mandatory` TINYINT( 1 ) NOT NULL DEFAULT '0'
                    ) ENGINE = MYISAM CHARSET=utf8 COLLATE=utf8_unicode_ci ;";
-         $DB->query($query) or die($DB->error());
+         $DB->queryOrDie($query, $DB->error());
 
          $query = "CREATE TABLE IF NOT EXISTS `glpi_plugin_datainjection_infos` (
                      `id` INT( 11 ) NOT NULL AUTO_INCREMENT PRIMARY KEY ,
@@ -107,7 +104,7 @@ function plugin_datainjection_install() {
                      `value` VARCHAR( 255 ) NOT NULL ,
                      `is_mandatory` TINYINT( 1 ) NOT NULL DEFAULT '0'
                    ) ENGINE = MYISAM CHARSET=utf8 COLLATE=utf8_unicode_ci ;";
-         $DB->query($query) or die($DB->error());
+         $DB->queryOrDie($query, $DB->error());
 
          $query = "CREATE TABLE IF NOT EXISTS `glpi_plugin_datainjection_profiles` (
                      `id` int(11) NOT NULL auto_increment,
@@ -116,11 +113,12 @@ function plugin_datainjection_install() {
                      `model` char(1) default NULL,
                      PRIMARY KEY  (`ID`)
                    ) ENGINE=MyISAM CHARSET=utf8 COLLATE=utf8_unicode_ci;";
-         $DB->query($query) or die($DB->error());
+         $DB->queryOrDie($query, $DB->error());
 
          if (!is_dir(PLUGIN_DATAINJECTION_UPLOAD_DIR)) {
             @ mkdir(PLUGIN_DATAINJECTION_UPLOAD_DIR)
-               or die("Can't create folder " . PLUGIN_DATAINJECTION_UPLOAD_DIR);
+               or die(sprintf(__('%1$s %2$s'), __("Can't create folder", 'datainjection'),
+                              PLUGIN_DATAINJECTION_UPLOAD_DIR));
 
             PluginDatainjectionProfile::createFirstAccess($_SESSION["glpiactiveprofile"]["id"]);
          }
@@ -133,7 +131,8 @@ function plugin_datainjection_install() {
          //When updating, check if the upload folder is already present
          if (!is_dir(PLUGIN_DATAINJECTION_UPLOAD_DIR)) {
             @ mkdir(PLUGIN_DATAINJECTION_UPLOAD_DIR)
-               or die(__("Can't create folder", 'datainjection'). " " . PLUGIN_DATAINJECTION_UPLOAD_DIR);
+               or die(sprintf(__('%1$s %2$s'), __("Can't create folder", 'datainjection'),
+                              PLUGIN_DATAINJECTION_UPLOAD_DIR));
          }
 
          //Old temporary directory, needs to be removed !
@@ -149,7 +148,10 @@ function plugin_datainjection_install() {
 
          if (TableExists("glpi_plugin_data_injection_models")
              && !FieldExists("glpi_plugin_data_injection_models","port_unicity")) {
-            plugin_datainjection_update14_15();
+
+            $migration = new Migration('1.5');
+            $migration->addField('glpi_plugin_data_injection_models', 'port_unicity', 'bool');
+            $migration->executeMigration();
          }
 
          if (!TableExists("glpi_plugin_datainjection_models")) {
@@ -159,11 +161,11 @@ function plugin_datainjection_install() {
          if (!TableExists("glpi_plugin_datainjection_modelcsvs")) {
             plugin_datainjection_update170_20();
          }
-         
+
          plugin_datainjection_update210_220();
-         
+
          plugin_datainjection_update220_230();
-       
+
          break;
    }
 
@@ -183,7 +185,7 @@ function plugin_datainjection_uninstall() {
 
    foreach ($tables as $table) {
       if (TableExists($table)) {
-         $DB->query("DROP TABLE IF EXISTS `$table`") or die($DB->error());
+         $DB->queryOrDie("DROP TABLE IF EXISTS `".$table."`", $DB->error());
       }
    }
 
@@ -199,21 +201,19 @@ function plugin_datainjection_uninstall() {
 function plugin_datainjection_update131_14() {
    global $DB;
 
-   $sql = "ALTER TABLE `glpi_plugin_data_injection_models`
-           ADD `float_format` INT( 1 ) NOT NULL DEFAULT '0'";
-   $DB->query($sql);
+   $migration = new Migration('1.4');
+
+   $migration->addField('lpi_plugin_data_injection_models', 'float_format', 'bool');
 
    //Template recursivity : need standardize names in order to use privatePublicSwitch
-   $sql = "ALTER TABLE `glpi_plugin_data_injection_models`
-           CHANGE `user_id` `FK_users` INT( 11 ) NOT NULL";
-   $DB->query($sql);
+   $migration->changeField('glpi_plugin_data_injection_models', 'user_id', 'FK_users', 'integer');
+   $migration->changeField('glpi_plugin_data_injection_models', 'public', 'private', 'bool');
 
-   $sql = "ALTER TABLE `glpi_plugin_data_injection_models`
-           CHANGE `public` `private` INT( 1 ) NOT NULL  DEFAULT '0'";
-   $DB->query($sql);
+   $migration->migrationOneTable('glpi_plugin_data_injection_models');
 
    $sql = "UPDATE `glpi_plugin_data_injection_models`
-           SET `FK_entities` = '-1', `private` = '1'
+           SET `FK_entities` = '-1',
+               `private` = '1'
            WHERE `private` = '0'";
    $DB->query($sql);
 
@@ -223,32 +223,17 @@ function plugin_datainjection_update131_14() {
                 AND `FK_entities` > '0'";
    $DB->query($sql);
 
-   $sql = "ALTER TABLE `glpi_plugin_data_injection_models`
-           ADD `recursive` INT( 1 ) NOT NULL DEFAULT '0'";
-   $DB->query($sql);
+   $migration->addField('glpi_plugin_data_injection_models', 'recursive','bool');
 
    $sql = "UPDATE `glpi_plugin_data_injection_profiles`
            SET `create_model` = `use_model`
            WHERE `create_model` IS NULL";
    $DB->query($sql);
 
-   $sql = "ALTER TABLE `glpi_plugin_data_injection_profiles`
-           DROP `use_model`";
-   $DB->query($sql);
+   $migration->dropField('glpi_plugin_data_injection_profiles', 'use_model');
+   $migration->changeField('glpi_plugin_data_injection_profiles', 'create_model', 'model', 'char');
 
-   $sql = " ALTER TABLE `glpi_plugin_data_injection_profiles`
-            CHANGE `create_model` `model` CHAR( 1 )
-               CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL";
-   $DB->query($sql);
-}
-
-
-function plugin_datainjection_update14_15() {
-   global $DB;
-
-   $query = "ALTER TABLE `glpi_plugin_data_injection_models`
-             ADD `port_unicity` INT( 1 ) NOT NULL DEFAULT '0'";
-   $DB->query($query);
+   $migration->executeMigration();
 }
 
 
@@ -264,7 +249,7 @@ function plugin_datainjection_update15_170() {
                    "glpi_plugin_data_injection_profiles"   => "glpi_plugin_datainjection_profiles");
 
    foreach ($tables as $oldname => $newname) {
-      $query = "RENAME TABLE IF EXISTS `$oldname` TO `$newname`";
+      $query = "RENAME TABLE IF EXISTS `".$oldname."` TO `".$newname."`";
       $DB->query($query);
    }
 }
@@ -273,58 +258,55 @@ function plugin_datainjection_update15_170() {
 function plugin_datainjection_update170_20() {
    global $DB;
 
-   $queries[] = "ALTER TABLE `glpi_plugin_datainjection_models`
-                 CHANGE `type` `filetype` VARCHAR( 255 ) NOT NULL DEFAULT 'csv'";
+   $migration = new Migration('2.0');
 
-   $queries[] = "DROP TABLE `glpi_plugin_datainjection_filetype`";
+   $migration->changeField('glpi_plugin_datainjection_models', 'type', 'filetype', 'string',
+                           array('value' => 'csv'));
+   $migration->addField('glpi_plugin_datainjection_models', 'step', 'bool');
+   $migration->changeField('glpi_plugin_datainjection_models', 'comments', 'comment', 'text');
+   $migration->changeField('glpi_plugin_datainjection_models', 'device_type', 'itemtype', 'string',
+                           array('value' => ''));
+   $migration->changeField('glpi_plugin_datainjection_models', 'FK_entities', 'entities_id',
+                           'integer');
+   $migration->changeField('glpi_plugin_datainjection_models', 'private', 'is_private', 'bool');
+   $migration->changeField('glpi_plugin_datainjection_models', 'FK_users', 'users_id', 'integer');
+   $migration->changeField('glpi_plugin_datainjection_models', 'recursive', 'is_recursive', 'bool');
 
-   $queries[] = "RENAME TABLE `glpi_plugin_datainjection_models_csv`
-                 TO `glpi_plugin_datainjection_modelcsvs`";
+   $query = "UPDATE `glpi_plugin_datainjection_models`
+             SET `step` = '5'";
 
-   $queries[] = "ALTER TABLE `glpi_plugin_datainjection_models`
-                 ADD `step` TINYINT( 1 ) NOT NULL DEFAULT '0'";
 
-   $queries[] = "ALTER TABLE `glpi_plugin_datainjection_mappings`
-                 CHANGE `mandatory` `is_mandatory` TINYINT( 1 ) NOT NULL DEFAULT '0'";
+   $query = "UPDATE `glpi_plugin_datainjection_models`
+             SET `filetype` = 'csv'";
+   $DB->queryOrDie("update filetype of glpi_plugin_datainjection_models");
 
-   $queries[] = "ALTER TABLE `glpi_plugin_datainjection_infos`
-                 CHANGE `mandatory` `is_mandatory` TINYINT( 1 ) NOT NULL DEFAULT '0'";
 
-   $queries[] = "ALTER TABLE `glpi_plugin_datainjection_mappings`
-                 CHANGE  `type`  `itemtype` VARCHAR( 255 ) NOT NULL DEFAULT ''";
+   $migration->dropTable('glpi_plugin_datainjection_filetype');
 
-   $queries[] = "ALTER TABLE `glpi_plugin_datainjection_infos`
-                 CHANGE `type` `itemtype` VARCHAR( 255 ) NOT NULL DEFAULT ''";
 
-   $queries[] = "ALTER TABLE  `glpi_plugin_datainjection_mappings`
-                 CHANGE `model_id` `models_id` INT( 11 ) NOT NULL";
+   $migration->renameTable('glpi_plugin_datainjection_models_csv',
+                           'glpi_plugin_datainjection_modelcsvs');
 
-   $queries[] = "ALTER TABLE `glpi_plugin_datainjection_infos`
-                 CHANGE `model_id` `models_id` INT( 11 ) NOT NULL";
+   $migration->changeField('glpi_plugin_datainjection_modelcsvs', 'model_id', 'models_id',
+                           'integer');
+   $migration->changeField('glpi_plugin_datainjection_modelcsvs', 'device_type', 'itemtype',
+                           'string', array('value' => ''));
+   $migration->changeField('glpi_plugin_datainjection_modelcsvs', 'header_present',
+                           'is_header_present', 'bool', array('value' => 1));
 
-   $queries[] = "ALTER TABLE  `glpi_plugin_datainjection_models`
-                 CHANGE `comments` `comment` TEXT
-                     CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL ,
-                 CHANGE `device_type` `itemtype` VARCHAR( 255 ) NOT NULL DEFAULT '',
-                 CHANGE `FK_entities` `entities_id` INT( 11 ) NOT NULL,
-                 CHANGE `private` `is_private` TINYINT( 1 ) NOT NULL DEFAULT '0',
-                 CHANGE `FK_users` `users_id` INT( 11 ) NOT NULL,
-                 CHANGE `recursive` `is_recursive` TINYINT( 1 ) NOT NULL DEFAULT '0'";
 
-   $queries[] = "UPDATE `glpi_plugin_datainjection_models`
-                 SET `step` = '5'";
+   $migration->changeField('glpi_plugin_datainjection_mappings', 'mandatory', 'is_mandatory',
+                           'bool');
+   $migration->changeField('glpi_plugin_datainjection_mappings', 'type', 'itemtype', 'string',
+                           array('value' => ''));
+   $migration->changeField('glpi_plugin_datainjection_mappings', 'model_id', 'models_id',
+                           'integer');
 
-   $queries[] = "ALTER TABLE  `glpi_plugin_datainjection_modelcsvs`
-                 CHANGE `model_id` `models_id` INT( 11 ) NOT NULL ,
-                 CHANGE `device_type` `itemtype` VARCHAR( 255 ) NOT NULL DEFAULT '',
-                 CHANGE `header_present` `is_header_present` TINYINT( 1 ) NOT NULL DEFAULT '1'";
+   $migration->changeField('glpi_plugin_datainjection_infos', 'mandatory', 'is_mandatory', 'bool');
+   $migration->changeField('glpi_plugin_datainjection_infos', 'type', 'itemtype', 'string',
+                           array('value' => ''));
+   $migration->changeField('glpi_plugin_datainjection_infos', 'model_id', 'models_id', 'integer');
 
-   $queries[] = "UPDATE `glpi_plugin_datainjection_models`
-                 SET `filetype` = 'csv'";
-
-   foreach ($queries as $query) {
-      $DB->query($query);
-   }
 
    $glpitables = array('glpi_plugin_datainjection_models',
                        'glpi_plugin_datainjection_mappings',
@@ -333,9 +315,7 @@ function plugin_datainjection_update170_20() {
                        'glpi_plugin_datainjection_profiles');
 
    foreach ($glpitables as $table) {
-      $query = "ALTER TABLE `$table`
-                CHANGE `ID` `id` INT( 11 ) NOT NULL AUTO_INCREMENT";
-      $DB->query($query) or die ("Datainjection : Rename ID to id");
+      $migration->changeField($table, 'ID', 'id', 'autoincrement');
    }
 
    $glpitables = array('glpi_plugin_datainjection_models',
@@ -344,15 +324,18 @@ function plugin_datainjection_update170_20() {
                        'glpi_plugin_datainjection_modelcsvs');
    Plugin::migrateItemType (array(), array(), $glpitables);
 
+   $migration->migrationOneTable('glpi_plugin_datainjection_mappings');
    $query = "UPDATE `glpi_plugin_datainjection_mappings`
-             SET `itemtype` = 'none' , `value`='none'
+             SET `itemtype` = 'none' ,
+                 `value`='none'
              WHERE `itemtype` = '-1'";
-   $DB->query($query) or die ("Datainjection mappings tables : error updating not mapped fields");
+   $DB->queryOrDie($query, "Datainjection mappings tables : error updating not mapped fields");
 
+   $migration->migrationOneTable('glpi_plugin_datainjection_infos');
    $query = "UPDATE `glpi_plugin_datainjection_infos`
              SET `itemtype` = 'none', `value` = 'none'
              WHERE `itemtype` = '-1'";
-   $DB->query($query) or die ("Datainjection infos table : error updating not mapped fields");
+   $DB->queryOrDie($query, "Datainjection infos table : error updating not mapped fields");
 
    $foreignkeys = array('assign'
                            => array(array('to'     => 'users_id_assign',
@@ -373,7 +356,8 @@ function plugin_datainjection_update170_20() {
 
                         'author'
                            => array(array('to'     => 'users_id',
-                                          'tables' => array('glpi_ticketfollowups', 'glpi_knowbaseitems',
+                                          'tables' => array('glpi_ticketfollowups',
+                                                            'glpi_knowbaseitems',
                                                             'glpi_tickets'))),
 
                         'auto_update'
@@ -417,25 +401,30 @@ function plugin_datainjection_update170_20() {
                         'default_rubdoc_tracking'
                            => array(array('to'       => 'documentcategories_id_forticket',
                                           'tables'   => array('glpi_configs'),
-                                          'comments' => array('glpi_configs' => 'default category for documents added with a ticket'))),
+                                          'comments' => array('glpi_configs'
+                                                               => 'default category for documents added with a ticket'))),
 
                         'device_type'
                            => array(array('to'     => 'itemtype',
                                           'tables' => array('glpi_alerts', 'glpi_contracts_items',
                                                             'glpi_documents_items', 'glpi_infocoms',
                                                             'glpi_bookmarks', 'glpi_bookmarks_users',
-                                                            'glpi_links_itemtypes', 'glpi_networkports',
-                                                            'glpi_reservationitems', 'glpi_tickets'))),
+                                                            'glpi_links_itemtypes',
+                                                            'glpi_networkports',
+                                                            'glpi_reservationitems',
+                                                            'glpi_tickets'))),
 
                         'domain'
                            => array(array('to'     => 'domains_id',
-                                          'tables' => array('glpi_computers', 'glpi_networkequipments',
+                                          'tables' => array('glpi_computers',
+                                                            'glpi_networkequipments',
                                                             'glpi_printers'))),
 
                         'end1'
                            => array(array('to'       => 'items_id',
                                           'tables'   => array('glpi_computers_items'),
-                                          'comments' => array('glpi_computers_items' => 'RELATION to various table, according to itemtype (ID)')),
+                                          'comments' => array('glpi_computers_items'
+                                                               => 'RELATION to various table, according to itemtype (ID)')),
                                     array('to'     => 'networkports_id_1',
                                           'tables' => array('glpi_networkports_networkports'))),
 
@@ -479,19 +468,25 @@ function plugin_datainjection_update170_20() {
                         'manufacturer'
                            => array(array('to'     => 'suppliers_id',
                                           'tables' => array('glpi_contacts_suppliers',
-                                                            'glpi_contracts_suppliers', 'glpi_infocoms')),
+                                                            'glpi_contracts_suppliers',
+                                                            'glpi_infocoms')),
                                     array('to'     => 'manufacturers_id',
                                           'tables' => array('glpi_cartridgeitems', 'glpi_computers',
-                                                            'glpi_consumableitems', 'glpi_devicecases',
-                                                            'glpi_devicecontrols', 'glpi_devicedrives',
-                                                            'glpi_devicegraphiccards', 'glpi_deviceharddrives',
-                                                            'glpi_devicenetworkcards', 'glpi_devicemotherboards',
-                                                            'glpi_devicepcis', 'glpi_devicepowersupplies',
-                                                            'glpi_deviceprocessors', 'glpi_devicememories',
+                                                            'glpi_consumableitems',
+                                                            'glpi_devicecases', 'glpi_devicecontrols',
+                                                            'glpi_devicedrives',
+                                                            'glpi_devicegraphiccards',
+                                                            'glpi_deviceharddrives',
+                                                            'glpi_devicenetworkcards',
+                                                            'glpi_devicemotherboards',
+                                                            'glpi_devicepcis',
+                                                            'glpi_devicepowersupplies',
+                                                            'glpi_deviceprocessors',
+                                                            'glpi_devicememories',
                                                             'glpi_devicesoundcards', 'glpi_monitors',
-                                                            'glpi_networkequipments', 'glpi_peripherals',
-                                                            'glpi_phones', 'glpi_printers',
-                                                            'glpi_softwares'))),
+                                                            'glpi_networkequipments',
+                                                            'glpi_peripherals', 'glpi_phones',
+                                                            'glpi_printers', 'glpi_softwares'))),
 
                         'FK_entities'
                            => array(array('to'      => 'entities_id',
@@ -503,10 +498,12 @@ function plugin_datainjection_update170_20() {
                                                              'glpi_entitydatas', 'glpi_groups',
                                                              'glpi_knowbaseitems', 'glpi_links',
                                                              'glpi_mailcollectors', 'glpi_monitors',
-                                                             'glpi_networkequipments', 'glpi_peripherals',
-                                                             'glpi_phones', 'glpi_printers',
-                                                             'glpi_reminders', 'glpi_rules',
-                                                             'glpi_softwares', 'glpi_softwarelicenses','glpi_softwareversions',
+                                                             'glpi_networkequipments',
+                                                             'glpi_peripherals', 'glpi_phones',
+                                                             'glpi_printers', 'glpi_reminders',
+                                                             'glpi_rules', 'glpi_softwares',
+                                                             'glpi_softwarelicenses',
+                                                             'glpi_softwareversions',
                                                              'glpi_tickets', 'glpi_users',
                                                              'glpi_profiles_users'),
                                           'default' => array('glpi_bookmarks' => "-1"))),
@@ -539,9 +536,10 @@ function plugin_datainjection_update170_20() {
                         'FK_groups'
                            => array(array('to'     => 'groups_id',
                                           'tables' => array('glpi_computers', 'glpi_monitors',
-                                                            'glpi_networkequipments','glpi_peripherals',
-                                                            'glpi_phones', 'glpi_printers',
-                                                            'glpi_softwares', 'glpi_groups_users'))),
+                                                            'glpi_networkequipments',
+                                                            'glpi_peripherals', 'glpi_phones',
+                                                            'glpi_printers', 'glpi_softwares',
+                                                            'glpi_groups_users'))),
 
                         'FK_interface'
                            => array(array('to'     => 'interfacetypes_id',
@@ -565,14 +563,15 @@ function plugin_datainjection_update170_20() {
 
                         'FK_users'
                            => array(array('to'     => 'users_id',
-                                          'tables' => array('glpi_bookmarks', 'glpi_displaypreferences',
+                                          'tables' => array('glpi_bookmarks',
+                                                            'glpi_displaypreferences',
                                                             'glpi_documents', 'glpi_groups',
                                                             'glpi_reminders', 'glpi_bookmarks_users',
-                                                            'glpi_groups_users', 'glpi_profiles_users',
-                                                            'glpi_computers', 'glpi_monitors',
-                                                            'glpi_networkequipments', 'glpi_peripherals',
-                                                            'glpi_phones', 'glpi_printers',
-                                                            'glpi_softwares'))),
+                                                            'glpi_groups_users',
+                                                            'glpi_profiles_users', 'glpi_computers',
+                                                            'glpi_monitors', 'glpi_networkequipments',
+                                                            'glpi_peripherals', 'glpi_phones',
+                                                            'glpi_printers', 'glpi_softwares'))),
 
                         'FK_vlan'
                            => array(array('to'     => 'vlans_id',
@@ -609,7 +608,8 @@ function plugin_datainjection_update170_20() {
 
                         'interface'
                            => array(array('to'     => 'interfacetypes_id',
-                                          'tables' => array('glpi_devicecontrols', 'glpi_deviceharddrives',
+                                          'tables' => array('glpi_devicecontrols',
+                                                            'glpi_deviceharddrives',
                                                             'glpi_devicedrives'))),
 
                         'location'
@@ -617,8 +617,9 @@ function plugin_datainjection_update170_20() {
                                           'tables' => array('glpi_cartridgeitems', 'glpi_computers',
                                                             'glpi_consumableitems', 'glpi_netpoints',
                                                             'glpi_monitors', 'glpi_networkequipments',
-                                                            'glpi_peripherals', 'glpi_phones', 'glpi_printers',
-                                                            'glpi_users', 'glpi_softwares'))),
+                                                            'glpi_peripherals', 'glpi_phones',
+                                                            'glpi_printers', 'glpi_users',
+                                                            'glpi_softwares'))),
 
                         'model'
                            => array(array('to'     => 'computermodels_id',
@@ -640,7 +641,8 @@ function plugin_datainjection_update170_20() {
 
                         'network'
                            => array(array('to'     => 'networks_id',
-                                          'tables' => array('glpi_computers', 'glpi_networkequipments',
+                                          'tables' => array('glpi_computers',
+                                                            'glpi_networkequipments',
                                                             'glpi_printers'))),
 
                         'on_device'
@@ -660,7 +662,7 @@ function plugin_datainjection_update170_20() {
                                           'tables' => array('glpi_computers'))),
 
                         'parentID'
-                           => array(array('to' => 'knowbaseitemcategories_id',
+                           => array(array('to'     => 'knowbaseitemcategories_id',
                                           'tables' => array('glpi_knowbaseitemcategories')),
                                     array('to'     => 'locations_id',
                                           'tables' => array('glpi_locations')),
@@ -693,17 +695,18 @@ function plugin_datainjection_update170_20() {
                         'state'
                            => array(array('to'     => 'states_id',
                                           'tables' => array('glpi_computers', 'glpi_monitors',
-                                                            'glpi_networkequipments', 'glpi_peripherals',
-                                                            'glpi_phones', 'glpi_printers',
+                                                            'glpi_networkequipments',
+                                                            'glpi_peripherals', 'glpi_phones',
+                                                            'glpi_printers',
                                                             'glpi_softwareversions'))),
 
                         'tech_num'
                            => array(array('to'     => 'users_id_tech',
                                           'tables' => array('glpi_cartridgeitems', 'glpi_computers',
                                                             'glpi_consumableitems', 'glpi_monitors',
-                                                            'glpi_networkequipments', 'glpi_peripherals',
-                                                            'glpi_phones', 'glpi_printers',
-                                                            'glpi_softwares'))),
+                                                            'glpi_networkequipments',
+                                                            'glpi_peripherals', 'glpi_phones',
+                                                            'glpi_printers', 'glpi_softwares'))),
 
                         'title'
                            => array(array('to'     => 'usertitles_id',
@@ -895,26 +898,32 @@ function plugin_datainjection_update170_20() {
                                                                                       'glpi_autoupdatesystems', 'glpi_budgets',
                                                                                       'glpi_cartridgeitemtypes', 'glpi_devicecasetypes',
                                                                                       'glpi_consumableitemtypes', 'glpi_contacttypes',
-                                                                                      'glpi_contracttypes', 'glpi_domains', 'glpi_suppliertypes',
-                                                                                      'glpi_filesystems', 'glpi_networkequipmentfirmwares',
+                                                                                      'glpi_contracttypes', 'glpi_domains',
+                                                                                      'glpi_suppliertypes', 'glpi_filesystems',
+                                                                                      'glpi_networkequipmentfirmwares',
                                                                                       'glpi_networkinterfaces', 'glpi_interfacetypes',
-                                                                                      'glpi_knowbaseitemcategories', 'glpi_softwarelicensetypes',
-                                                                                      'glpi_locations', 'glpi_manufacturers','glpi_computermodels',
+                                                                                      'glpi_knowbaseitemcategories',
+                                                                                      'glpi_softwarelicensetypes', 'glpi_locations',
+                                                                                      'glpi_manufacturers', 'glpi_computermodels',
                                                                                       'glpi_monitormodels', 'glpi_networkequipmentmodels',
                                                                                       'glpi_peripheralmodels', 'glpi_phonemodels',
-                                                                                      'glpi_printermodels', 'glpi_netpoints', 'glpi_networks',
-                                                                                      'glpi_operatingsystems', 'glpi_operatingsystemservicepacks',
-                                                                                      'glpi_operatingsystemversions', 'glpi_phonepowersupplies',
-                                                                                      'glpi_devicememorytypes', 'glpi_documentcategories',
-                                                                                      'glpi_softwarecategories', 'glpi_states', 'glpi_ticketcategories',
-                                                                                      'glpi_usertitles', 'glpi_usercategories', 'glpi_vlans',
-                                                                                      'glpi_suppliers', 'glpi_entities', 'glpi_groups', 'glpi_infocoms',
-                                                                                      'glpi_monitors', 'glpi_phones', 'glpi_printers', 'glpi_peripherals',
-                                                                                      'glpi_networkequipments', 'glpi_reservationitems', 'glpi_rules',
-                                                                                      'glpi_softwares', 'glpi_softwarelicenses', 'glpi_softwareversions',
-                                                                                      'glpi_computertypes', 'glpi_monitortypes', 'glpi_networkequipmenttypes',
-                                                                                      'glpi_peripheraltypes', 'glpi_phonetypes','glpi_printertypes',
-                                                                                      'glpi_users')),),
+                                                                                      'glpi_printermodels', 'glpi_netpoints',
+                                                                                      'glpi_networks', 'glpi_operatingsystems',
+                                                                                      'glpi_operatingsystemservicepacks',
+                                                                                      'glpi_operatingsystemversions',
+                                                                                      'glpi_phonepowersupplies', 'glpi_devicememorytypes',
+                                                                                      'glpi_documentcategories', 'glpi_softwarecategories',
+                                                                                      'glpi_states', 'glpi_ticketcategories',
+                                                                                      'glpi_usertitles', 'glpi_usercategories',
+                                                                                      'glpi_vlans', 'glpi_suppliers', 'glpi_entities',
+                                                                                      'glpi_groups', 'glpi_infocoms', 'glpi_monitors',
+                                                                                      'glpi_phones', 'glpi_printers', 'glpi_peripherals',
+                                                                                      'glpi_networkequipments', 'glpi_reservationitems',
+                                                                                      'glpi_rules', 'glpi_softwares', 'glpi_softwarelicenses',
+                                                                                      'glpi_softwareversions', 'glpi_computertypes',
+                                                                                      'glpi_monitortypes', 'glpi_networkequipmenttypes',
+                                                                                      'glpi_peripheraltypes', 'glpi_phonetypes',
+                                                                                      'glpi_printertypes', 'glpi_users'))),
 
                            'notes' =>  array(array('to'     => 'notepad',
                                                    'tables' => array('glpi_cartridgeitems', 'glpi_computers',
@@ -927,6 +936,7 @@ function plugin_datainjection_update170_20() {
                                                                      'glpi_softwares'))));
 
     $foreignkeys = Plugin::doHookFunction("plugin_datainjection_migratefields",$foreignkeys);
+
     $query = "SELECT `itemtype`, `value`
               FROM `glpi_plugin_datainjection_mappings`
               WHERE `itemtype` NOT IN ('none')
@@ -942,53 +952,66 @@ function plugin_datainjection_update170_20() {
                           SET `value` = '".$field_info['to']."'
                           WHERE `itemtype` = '".$data['itemtype']."'
                                 AND `value` = '".$data['value']."'";
-                $DB->query($query) or die ("Datainjection : error converting mapping fields");
+                $DB->queryOrDie($query, "Datainjection : error converting mapping fields");
 
                 $query = "UPDATE `glpi_plugin_datainjection_infos`
                           SET `value` = '".$field_info['to']."'
                           WHERE `itemtype` = '".$data['itemtype']."'
                                 AND `value` = '".$data['value']."'";
-                $DB->query($query) or die ("Datainjection : error converting infos fields");
+                $DB->queryOrDie($query, "Datainjection : error converting infos fields");
             }
          }
       }
    }
 }
 
+
 function plugin_datainjection_update210_220() {
    global $DB;
 
-   foreach (array('glpi_plugin_datainjection_mappings', 'glpi_plugin_datainjection_infos')
-      as $table) {
-      $move = array('TicketCategory' => 'ITILCategory', 'TicketSolutionType' => 'SolutionType');
+   foreach(array('glpi_plugin_datainjection_mappings',
+                'glpi_plugin_datainjection_infos') as $table) {
+
+      $move = array('TicketCategory'     => 'ITILCategory',
+                    'TicketSolutionType' => 'SolutionType');
       foreach ($move as $old => $new) {
-         $query = "UPDATE `$table` SET `itemtype`='$new' WHERE `itemtype`='$old'";
+         $query = "UPDATE `".$table."`
+                   SET `itemtype` = '".$new."'
+                   WHERE `itemtype` = '".$old."'";
          $DB->query($query);
       }
-      
+
       //emails are now dropdowns
-      $query = "UPDATE `$table` SET `value`='useremails_id' " .
-               "WHERE `itemtype`='User' AND `value`='email'";
+      $query = "UPDATE `".$table."`
+                SET `value` = 'useremails_id'
+                WHERE `itemtype` = 'User'
+                      AND `value` = 'email'";
       $DB->query($query);
    }
 }
+
 
 function plugin_datainjection_update220_230() {
-   
-   if (countElementsInTable("glpi_plugin_datainjection_models",
-                                     "`entities_id`='-1'")) {
+
+   if (countElementsInTable("glpi_plugin_datainjection_models", "`entities_id`='-1'")) {
       $query = "UPDATE `glpi_plugin_datainjection_models`
-                          SET `is_private` = '1', `entities_id` = '0', `is_recursive` = '1'
-                          WHERE `entities_id` = '-1'";
+                SET `is_private` = '1',
+                    `entities_id` = '0',
+                    `is_recursive` = '1'
+               WHERE `entities_id` = '-1'";
       $DB->query($query);
    }
 }
 
 
-function plugin_datainjection_loadHook($hook_name, $params = array ()) {
+/**
+ * @param $hook_name
+ * @param $params       array
+**/
+function plugin_datainjection_loadHook($hook_name, $params=array ()) {
    global $PLUGIN_HOOKS;
 
-   if (!empty ($params)) {
+   if (!empty($params)) {
       $type = $params["type"];
       //If a plugin type is defined
       Plugin::doOneHook($PLUGIN_HOOKS['plugin_types'][$type], 'datainjection_' . $hook_name);
@@ -1018,29 +1041,30 @@ function plugin_datainjection_needUpdateOrInstall() {
    return 1;
 }
 
-//Used for filter list of models
+
+/**
+ * Used for filter list of models
+ *
+ * @param $itemtype
+**/
 function plugin_datainjection_addDefaultWhere($itemtype) {
 
    switch ($itemtype) {
       case 'PluginDatainjectionModel' :
-         
-         $models = PluginDatainjectionModel::getModels(Session::getLoginUserID(), 'name', $_SESSION['glpiactive_entity'], true);
-         
+         $models = PluginDatainjectionModel::getModels(Session::getLoginUserID(), 'name',
+                                                       $_SESSION['glpiactive_entity'], true);
          if (count($models) > 0) {
             $tab = array();
             foreach ($models as $model) {
-               $tab[]= $model['id'];
+               $tab[] = $model['id'];
             }
             if (count($tab) > 0) {
                $where = "`glpi_plugin_datainjection_models`.`id` IN ('".implode("','", $tab)."')";
             }
-            
             return $where;
          }
-         
          return false;
-         break;
    }
-}
 
+}
 ?>
