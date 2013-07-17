@@ -27,14 +27,14 @@
  @link      http://www.glpi-project.org/
  @since     2009
  ---------------------------------------------------------------------- */
- 
+
 class PluginDatainjectionModelcsv extends CommonDBChild {
    var $specific_fields;
 
    // From CommonDBChild
    static public $itemtype  = 'PluginDatainjectionModel';
    static public $items_id  = 'models_id';
-   public $dohistory = true;
+   public $dohistory        = true;
 
 
    function getEmpty() {
@@ -72,19 +72,24 @@ class PluginDatainjectionModelcsv extends CommonDBChild {
 
    /**
     * If a Sample could be generated
-    */
+   **/
    function haveSample() {
       return $this->fields["is_header_present"];
    }
 
+
    /**
     * Display Sample
-    */
-   function showSample (PluginDatainjectionModel $model) {
+    *
+    * @param $model     PluginDatainjectionModel object
+   **/
+   function showSample(PluginDatainjectionModel $model) {
+
       $headers = PluginDatainjectionMapping::getMappingsSortedByRank($model->fields['id']);
       $sample = '"'.implode('"'.$this->getDelimiter().'"', $headers)."\"\n";
 
-      header('Content-disposition: attachment; filename="'.str_replace(' ', '_', $model->getName()).'.csv"');
+      header('Content-disposition: attachment; filename="'.str_replace(' ', '_',
+                                                                       $model->getName()).'.csv"');
       header('Content-Type: text/comma-separated-values');
       header('Content-Transfer-Encoding: UTF-8');
       header('Content-Length: '.mb_strlen($sample, 'UTF-8'));
@@ -94,21 +99,23 @@ class PluginDatainjectionModelcsv extends CommonDBChild {
       echo $sample;
    }
 
+
    //---- Save -----//
-   function setDelimiter($delimiter) {
+   //TODO function never called
+/*   function setDelimiter($delimiter) {
       $this->fields["delimiter"] = $delimiter;
-   }
+   }*/
 
-
-   function setHeaderPresent($present) {
+//TODO function never called
+/*   function setHeaderPresent($present) {
       $this->fields["is_header_present"] = $present;
-   }
+   }*/
 
 
    /**
     * Check if filename ends with .csv
     *
-    * @param the filename
+    * @param $filename  the filename
     *
     * @return boolean true if name is correct, false is not
    **/
@@ -121,7 +128,7 @@ class PluginDatainjectionModelcsv extends CommonDBChild {
     * Get CSV's specific ID for a model
     * If row doesn't exists, it creates it
     *
-    * @param models_id the model ID
+    * @param $models_id the model ID
     *
     * @return the ID of the row in glpi_plugin_datainjection_modelcsv
    **/
@@ -130,7 +137,7 @@ class PluginDatainjectionModelcsv extends CommonDBChild {
 
       $query = "SELECT `id`
                 FROM `".$this->getTable()."`
-                WHERE `models_id` = '$models_id'";
+                WHERE `models_id` = '".$models_id."'";
 
       $results = $DB->query($query);
       $id = 0;
@@ -151,6 +158,10 @@ class PluginDatainjectionModelcsv extends CommonDBChild {
    }
 
 
+   /**
+    * @param $model              PluginDatainjectionModel object
+    * @param $options   array
+   **/
    function showAdditionnalForm(PluginDatainjectionModel $model, $options=array()) {
 
       $id      = $this->getFromDBByModelID($model->fields['id']);
@@ -159,18 +170,20 @@ class PluginDatainjectionModelcsv extends CommonDBChild {
       echo "<tr><th colspan='4'>".__('Specific file format options', 'datainjection')."</th></tr>";
 
       echo "<tr class='tab_bg_1'>";
-      echo "<td>".__("Header's presence", 'datainjection')."&nbsp;: </td>";
+      echo "<td>".__("Header's presence", 'datainjection')."</td>";
       echo "<td>";
       Dropdown::showYesNo('is_header_present', $this->isHeaderPresent());
       echo "</td>";
-      echo "<td>".__('File delimitor', 'datainjection')."&nbsp;: </td>";
+      echo "<td>".__('File delimitor', 'datainjection')."</td>";
       echo "<td>";
       echo "<input type='text' size='1' name='delimiter' value='".$this->getDelimiter()."'";
-      echo "</td>";
-      echo "</tr>";
+      echo "</td></tr>";
    }
 
 
+   /**
+    * @param $fields
+   **/
    function saveFields($fields) {
 
       $csv                      = clone $this;
@@ -183,5 +196,4 @@ class PluginDatainjectionModelcsv extends CommonDBChild {
    }
 
 }
-
 ?>

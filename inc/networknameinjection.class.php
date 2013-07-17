@@ -27,7 +27,7 @@
  @link      http://www.glpi-project.org/
  @since     2009
  ---------------------------------------------------------------------- */
- 
+
 if (!defined('GLPI_ROOT')) {
    die("Sorry. You can't access directly to this file");
 }
@@ -37,10 +37,9 @@ class PluginDatainjectionNetworkNameInjection extends NetworkName
 
 
    static function getTable() {
-   
+
       $parenttype = get_parent_class();
       return $parenttype::getTable();
-      
    }
 
 
@@ -55,15 +54,18 @@ class PluginDatainjectionNetworkNameInjection extends NetworkName
    }
 
 
-   function getOptions($primary_type = '') {
-      
-      $tab                      = Search::getOptions(get_parent_class($this));
-      
+   /**
+    * @see plugins/datainjection/inc/PluginDatainjectionInjectionInterface::getOptions()
+   **/
+   function getOptions($primary_type='') {
+
+      $tab           = Search::getOptions(get_parent_class($this));
+
       //Remove some options because some fields cannot be imported
-      $blacklist = PluginDatainjectionCommonInjectionLib::getBlacklistedOptions(get_parent_class($this));
+      $blacklist     = PluginDatainjectionCommonInjectionLib::getBlacklistedOptions(get_parent_class($this));
       $notimportable = array(20, 21);
+
       $options['ignore_fields'] = array_merge($blacklist, $notimportable);
-      
       $options['displaytype']   = array("dropdown" => array(12));
 
       return PluginDatainjectionCommonInjectionLib::addToSearchOptions($tab, $options, $this);
@@ -71,13 +73,7 @@ class PluginDatainjectionNetworkNameInjection extends NetworkName
 
 
    /**
-    * Standard method to add an object into glpi
- 
-    *
-    * @param values fields to add into glpi
-    * @param options options used during creation
-    *
-    * @return an array of IDs of newly created objects : for example array(Computer=>1, Networkport=>10)
+    * @see plugins/datainjection/inc/PluginDatainjectionInjectionInterface::addOrUpdateObject()
    **/
    function addOrUpdateObject($values=array(), $options=array()) {
 
@@ -85,25 +81,37 @@ class PluginDatainjectionNetworkNameInjection extends NetworkName
       $lib->processAddOrUpdate();
       return $lib->getInjectionResults();
    }
-   
+
+
+   /**
+    * @param $primary_type
+    * @param $values
+   **/
    function addSpecificNeededFields($primary_type,$values) {
-      
+
       $fields['items_id']  = $values['NetworkPort']['id'];
       $fields['itemtype']      = "NetworkPort";
 
       return $fields;
    }
-   
-   function processAfterInsertOrUpdate($values, $add = true, $rights = array()) {
+
+
+   /**
+    * @param $values
+    * @param $add                   (true by default)
+    * @param $rights    array
+    */
+   function processAfterInsertOrUpdate($values, $add=true, $rights=array()) {
       global $DB;
-      
+
       //Manage ip adresses
       if (isset($values['NetworkName']['ipaddresses_id'])) {
-           if (!countElementsInTable("glpi_ipaddresses",
-                                     "`items_id`='".$values['NetworkName']['id']."'
-                                          AND `itemtype`='NetworkName'
-                                             AND `name`='".$values['NetworkName']['ipaddresses_id']."'")) {
-            $ip = new IPAddress();
+          if (!countElementsInTable("glpi_ipaddresses",
+                                    "`items_id`='".$values['NetworkName']['id']."'
+                                       AND `itemtype`='NetworkName'
+                                       AND `name`='".$values['NetworkName']['ipaddresses_id']."'")) {
+
+            $ip                  = new IPAddress();
             $tmp['items_id']     = $values['NetworkName']['id'];
             $tmp['itemtype']     = "NetworkName";
             $tmp['name']         = $values['NetworkName']['ipaddresses_id'];
@@ -112,6 +120,6 @@ class PluginDatainjectionNetworkNameInjection extends NetworkName
          }
       }
    }
-}
 
+}
 ?>

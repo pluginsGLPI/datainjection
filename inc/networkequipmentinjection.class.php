@@ -27,7 +27,7 @@
  @link      http://www.glpi-project.org/
  @since     2009
  ---------------------------------------------------------------------- */
- 
+
 if (!defined('GLPI_ROOT')) {
    die("Sorry. You can't access directly to this file");
 }
@@ -37,10 +37,9 @@ class PluginDatainjectionNetworkEquipmentInjection extends NetworkEquipment
 
 
    static function getTable() {
-   
+
       $parenttype = get_parent_class();
       return $parenttype::getTable();
-      
    }
 
 
@@ -54,7 +53,10 @@ class PluginDatainjectionNetworkEquipmentInjection extends NetworkEquipment
    }
 
 
-   function getOptions($primary_type = '') {
+   /**
+    * @see plugins/datainjection/inc/PluginDatainjectionInjectionInterface::getOptions()
+   **/
+   function getOptions($primary_type='') {
 
       $tab                       = Search::getOptions(get_parent_class($this));
 
@@ -71,28 +73,23 @@ class PluginDatainjectionNetworkEquipmentInjection extends NetworkEquipment
       $tab[200]['injectable']    = PluginDatainjectionCommonInjectionLib::FIELD_VIRTUAL;
 
       //Remove some options because some fields cannot be imported
-      $blacklist = PluginDatainjectionCommonInjectionLib::getBlacklistedOptions(get_parent_class($this));
+      $blacklist     = PluginDatainjectionCommonInjectionLib::getBlacklistedOptions(get_parent_class($this));
       $notimportable = array(91, 92, 93);
+
       $options['ignore_fields'] = array_merge($blacklist, $notimportable);
-      
-      
-      $options['displaytype'] = array("dropdown"       => array(3, 4, 11, 23, 31, 32, 33, 40, 49, 71),
-                                      "bool"           => array(86),
-                                      "user"           => array(24, 70),
-                                      "multiline_text" => array(16, 90));
-                                      
+
+      $options['displaytype']   = array("dropdown"       => array(3, 4, 11, 23, 31, 32, 33,
+                                                                  40, 49, 71),
+                                        "bool"           => array(86),
+                                        "user"           => array(24, 70),
+                                        "multiline_text" => array(16, 90));
+
       return PluginDatainjectionCommonInjectionLib::addToSearchOptions($tab, $options, $this);
    }
 
 
    /**
-    * Standard method to add an object into glpi
- 
-    *
-    * @param values fields to add into glpi
-    * @param options options used during creation
-    *
-    * @return an array of IDs of newly created objects : for example array(Computer=>1, Networkport=>10)
+    * @see plugins/datainjection/inc/PluginDatainjectionInjectionInterface::addOrUpdateObject()
    **/
    function addOrUpdateObject($values=array(), $options=array()) {
 
@@ -102,12 +99,17 @@ class PluginDatainjectionNetworkEquipmentInjection extends NetworkEquipment
    }
 
 
-   function processAfterInsertOrUpdate($values, $add = true, $rights = array()) {
+   /**
+    * @param $values
+    * @param $add                (true by default)
+    * @param $rights    array
+    */
+   function processAfterInsertOrUpdate($values, $add=true, $rights=array()) {
 
       if (isset($values['NetworkEquipment']['nb_ports'])) {
          for ($i=1 ; $i<=$values['NetworkEquipment']['nb_ports'] ; $i++) {
-            $input   = array ();
-            $netport = new NetworkPort;
+            $input   = array();
+            $netport = new NetworkPort();
             $add     = "";
 
             if ($i < 10) {
@@ -125,5 +127,4 @@ class PluginDatainjectionNetworkEquipmentInjection extends NetworkEquipment
    }
 
 }
-
 ?>
