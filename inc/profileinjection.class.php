@@ -27,7 +27,7 @@
  @link      http://www.glpi-project.org/
  @since     2009
  ---------------------------------------------------------------------- */
- 
+
 if (!defined('GLPI_ROOT')) {
    die("Sorry. You can't access directly to this file");
 }
@@ -37,10 +37,9 @@ class PluginDatainjectionProfileInjection extends Profile
 
 
    static function getTable() {
-   
+
       $parenttype = get_parent_class();
       return $parenttype::getTable();
-      
    }
 
 
@@ -54,11 +53,19 @@ class PluginDatainjectionProfileInjection extends Profile
    }
 
 
-   function getOptions($primary_type = '') {
+   /**
+    * @see plugins/datainjection/inc/PluginDatainjectionInjectionInterface::getOptions()
+   **/
+   function getOptions($primary_type='') {
       return Search::getOptions(get_parent_class($this));
    }
 
 
+   /**
+    * @param $field_name
+    * @param $data
+    * @param $mandatory
+   **/
    function checkType($field_name, $data, $mandatory) {
 
       switch($field_name) {
@@ -87,13 +94,7 @@ class PluginDatainjectionProfileInjection extends Profile
 
 
    /**
-    * Standard method to add an object into glpi
- 
-    *
-    * @param values fields to add into glpi
-    * @param options options used during creation
-    *
-    * @return an array of IDs of newly created objects : for example array(Computer=>1, Networkport=>10)
+    * @see plugins/datainjection/inc/PluginDatainjectionInjectionInterface::addOrUpdateObject()
    **/
    function addOrUpdateObject($values=array(), $options=array()) {
 
@@ -103,5 +104,4 @@ class PluginDatainjectionProfileInjection extends Profile
    }
 
 }
-
 ?>

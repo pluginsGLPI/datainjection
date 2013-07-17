@@ -27,24 +27,32 @@
  @link      http://www.glpi-project.org/
  @since     2009
  ---------------------------------------------------------------------- */
- 
+
 class PluginDatainjectionProfile extends CommonDBTM {
-   
+
+
    static function canCreate() {
       return Session::haveRight('profile', 'w');
    }
 
+
    static function canView() {
       return Session::haveRight('profile', 'r');
    }
-   
-   //if profile deleted
+
+
+   /**
+    * Clean profiles_id from plugin's profile table
+    *
+    * @param $ID
+   **/
    function cleanProfiles($ID) {
+
       $profile = new self();
       $profile->deleteByCriteria(array('id' => $ID));
    }
 
-   
+
    static function changeProfile() {
 
       $prof = new self();
@@ -54,7 +62,8 @@ class PluginDatainjectionProfile extends CommonDBTM {
          unset ($_SESSION["glpi_plugin_datainjection_profile"]);
       }
    }
-   
+
+
    function getTabNameForItem(CommonGLPI $item, $withtemplate=0) {
 
       if ($item->getType() == 'Profile') {
@@ -71,7 +80,7 @@ class PluginDatainjectionProfile extends CommonDBTM {
 
       if ($item->getType() == 'Profile') {
          $prof = new self();
-         $ID = $item->getField('id');
+         $ID   = $item->getField('id');
          if (!$prof->GetfromDB($ID)) {
             $prof->createUserAccess($item);
          }
@@ -79,21 +88,29 @@ class PluginDatainjectionProfile extends CommonDBTM {
       }
       return true;
    }
-   
+
+
+   /**
+    * @param $profile
+   **/
    function createUserAccess($profile) {
 
       return $this->add(array('id'      => $profile->getField('id'),
                               'name' => addslashes($profile->getField('name'))));
    }
-   
+
+
+   /**
+    * @param $ID  integer
+    */
    static function createFirstAccess($ID) {
-      
+
       include_once(GLPI_ROOT."/plugins/datainjection/inc/profile.class.php");
       $firstProf = new self();
       if (!$firstProf->GetfromDB($ID)) {
          $profile = new Profile();
          $profile->getFromDB($ID);
-         $name = addslashes($profile->fields["name"]);
+         $name    = addslashes($profile->fields["name"]);
 
          $firstProf->add(array('id'          => $ID,
                                'profile'     => $name,
@@ -101,16 +118,16 @@ class PluginDatainjectionProfile extends CommonDBTM {
                                'model'       => 'w'));
       }
    }
-   
 
-   function showForm($ID,$options=array()){
+
+   function showForm($ID, $options=array()){
 
       if (!Session::haveRight("profile","r"))  {
          return false;
       }
-      
+
       $profile = new Profile();
-      
+
       if ($ID){
          $this->getFromDB($ID);
          $profile->getFromDB($ID);
@@ -121,20 +138,20 @@ class PluginDatainjectionProfile extends CommonDBTM {
       $options['colspan'] = 1;
       $this->showFormHeader($options);
 
-      echo "<tr><th colspan='2'>".__('File injection', 'datainjection')." ".$profile->fields["name"];
+      echo "<tr><th colspan='2'>".sprintf(__('%1$s %2$s'), __('File injection', 'datainjection'),
+                                          $profile->fields["name"]);
       echo "</th></tr>";
 
       echo "<tr class='tab_bg_2'>";
       echo "<td>".PluginDatainjectionModel::getTypeName()."</td><td>";
       Profile::dropdownNoneReadWrite("model", $this->fields["model"], 1, 1, 1);
       echo "</td></tr>";
-      
+
       echo "<input type='hidden' name='id' value=".$this->fields["id"].">";
-      
+
       $options['candel'] = false;
       $this->showFormButtons($options);
    }
 
 }
-
 ?>

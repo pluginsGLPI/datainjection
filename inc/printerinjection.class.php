@@ -27,7 +27,7 @@
  @link      http://www.glpi-project.org/
  @since     2009
  ---------------------------------------------------------------------- */
- 
+
 if (!defined('GLPI_ROOT')) {
    die("Sorry. You can't access directly to this file");
 }
@@ -37,10 +37,9 @@ class PluginDatainjectionPrinterInjection extends Printer
 
 
    static function getTable() {
-   
+
       $parenttype = get_parent_class();
       return $parenttype::getTable();
-      
    }
 
 
@@ -54,7 +53,10 @@ class PluginDatainjectionPrinterInjection extends Printer
    }
 
 
-   function getOptions($primary_type = '') {
+   /**
+    * @see plugins/datainjection/inc/PluginDatainjectionInjectionInterface::getOptions()
+   **/
+   function getOptions($primary_type='') {
 
       $tab                 = Search::getOptions(get_parent_class($this));
 
@@ -62,29 +64,24 @@ class PluginDatainjectionPrinterInjection extends Printer
       $tab[3]['linkfield'] = 'locations_id';
 
       //Remove some options because some fields cannot be imported
-      $blacklist = PluginDatainjectionCommonInjectionLib::getBlacklistedOptions(get_parent_class($this));
+      $blacklist     = PluginDatainjectionCommonInjectionLib::getBlacklistedOptions(get_parent_class($this));
       $notimportable = array(91, 92, 93);
+
       $options['ignore_fields'] = array_merge($blacklist, $notimportable);
 
-      $options['displaytype'] = array("dropdown"       => array(3, 4, 23, 31, 32, 33, 40, 49, 71),
-                                      "bool"           => array(42, 43, 44, 45, 46, 86),
-                                      "user"           => array(24, 70),
-                                      "multiline_text" => array(16, 90));
-                                      
-      $options['checktype'] = array("bool" => array(42, 43, 44, 45, 46, 86));
-      
+      $options['displaytype']   = array("dropdown"       => array(3, 4, 23, 31, 32, 33, 40, 49, 71),
+                                        "bool"           => array(42, 43, 44, 45, 46, 86),
+                                        "user"           => array(24, 70),
+                                        "multiline_text" => array(16, 90));
+
+      $options['checktype']     = array("bool" => array(42, 43, 44, 45, 46, 86));
+
       return PluginDatainjectionCommonInjectionLib::addToSearchOptions($tab, $options, $this);
    }
 
 
    /**
-    * Standard method to add an object into glpi
- 
-    *
-    * @param values fields to add into glpi
-    * @param options options used during creation
-    *
-    * @return an array of IDs of newly created objects : for example array(Computer=>1, Networkport=>10)
+    * @see plugins/datainjection/inc/PluginDatainjectionInjectionInterface::addOrUpdateObject()
    **/
    function addOrUpdateObject($values=array(), $options=array()) {
 
@@ -92,7 +89,12 @@ class PluginDatainjectionPrinterInjection extends Printer
       $lib->processAddOrUpdate();
       return $lib->getInjectionResults();
    }
-   
+
+
+   /**
+    * @param $primary_type
+    * @param $values
+   **/
    function addSpecificNeededFields($primary_type,$values) {
 
       if (isset($values[$primary_type]['is_global'])) {
@@ -105,13 +107,17 @@ class PluginDatainjectionPrinterInjection extends Printer
       return $fields;
    }
 
+
    /**
     * Play printers dictionnary
+    *
+    * @param $values
    **/
    function processDictionnariesIfNeeded(&$values) {
 
-      $matchings = array('name' => 'name', 'manufacturer' => 'manufacturers_id',
-                         'comment' => 'comment');
+      $matchings = array('name'         => 'name',
+                         'manufacturer' => 'manufacturers_id',
+                         'comment'      => 'comment');
       foreach ($matchings as $name => $value) {
          if (isset($values['Printer'][$value])) {
             $params[$name] = $values['Printer'][$value];
@@ -119,7 +125,7 @@ class PluginDatainjectionPrinterInjection extends Printer
             $params[$name] = '';
          }
       }
-         
+
       $rulecollection = new RuleDictionnaryPrinterCollection();
       $res_rule       = $rulecollection->processAllRules($params, array(), array());
 
@@ -131,21 +137,20 @@ class PluginDatainjectionPrinterInjection extends Printer
          if (isset($res_rule['is_global'])) {
             $values['Printer']['is_global'] = $res_rule['is_global'];
          }
-            
+
          if (isset($res_rule['name'])) {
             $values['Printer']['name'] = $res_rule['name'];
          }
-   
+
          if (isset($res_rule['supplier'])) {
             if (isset($values['supplier'])) {
-               $values['Printer']['manufacturers_id'] = Dropdown::getDropdownName('glpi_suppliers',
-                                                                                  $res_rule['supplier']);
+               $values['Printer']['manufacturers_id']
+                  = Dropdown::getDropdownName('glpi_suppliers', $res_rule['supplier']);
             }
          }
       }
       return true;
    }
-   
-}
 
+}
 ?>
