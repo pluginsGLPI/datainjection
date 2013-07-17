@@ -55,8 +55,8 @@ function plugin_init_datainjection() {
       }
 
       $image_import  = "<img src='".$CFG_GLPI["root_doc"]."/pics/actualiser.png' title='";
-      $image_import .= _s('Injection of the file', 'datainjection');
-      $image_import .= "' alt='"._s('Injection of the file', 'datainjection')."'>";
+      $image_import .= __s('Injection of the file', 'datainjection');
+      $image_import .= "' alt='".__s('Injection of the file', 'datainjection')."'>";
 
       $PLUGIN_HOOKS['menu_entry']['datainjection'] = 'front/clientinjection.form.php';
 

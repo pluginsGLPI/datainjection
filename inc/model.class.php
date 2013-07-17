@@ -120,12 +120,6 @@ class PluginDatainjectionModel extends CommonDBTM {
    }
 
 
-   //TODO function never called
-   function saveMappings() {
-      $this->mappings->saveAllMappings($this->fields['id']);
-   }
-
-
    //Loading methods
    function loadMappings() {
       $this->mappings->load($this->fields['id']);
@@ -170,33 +164,9 @@ class PluginDatainjectionModel extends CommonDBTM {
    }
 
 
-   //TODO function never called
-/*   function getMappingByValue($value) {
-      return $this->mappings->getMappingsByField("value", $value);
-   }*/
-
-
-   //TODO function never called
-/*   function getModelInfos() {
-      return $this->fields;
-   }*/
-
-
-   //TODO function never called
-/*   function getModelName() {
-      return $this->fields["name"];
-   }*/
-
-
    function getFiletype() {
       return $this->fields["filetype"];
    }
-
-
-   //TODO function never called
-/*   function getModelComments() {
-      return $this->fields["comment"];
-   }*/
 
 
    function getBehaviorAdd() {
@@ -229,18 +199,6 @@ class PluginDatainjectionModel extends CommonDBTM {
    }
 
 
-   //TODO function never called
-/*   function getUserID() {
-      return $this->fields["users_id"];
-   }*/
-
-
-   //TODO function never called
-/*   function getPerformNetworkConnection() {
-      return $this->fields["perform_network_connection"];
-   }*/
-
-
    function getDateFormat() {
       return $this->fields["date_format"];
    }
@@ -249,18 +207,6 @@ class PluginDatainjectionModel extends CommonDBTM {
    function getFloatFormat() {
       return $this->fields["float_format"];
    }
-
-
-   //TODO function never called
-/*   function getRecursive() {
-      return $this->fields["is_recursive"];
-   }*/
-
-
-   //TODO function never called
-/*   function getPrivate() {
-      return $this->fields["is_private"];
-   }*/
 
 
    function getPortUnicity() {
@@ -275,117 +221,6 @@ class PluginDatainjectionModel extends CommonDBTM {
       }
       return false;
    }
-
-
-   //---- Save -----//
-   //TODO function never called
-/*   function setModelType($type) {
-      $this->fields["filetype"] = $type;
-   }*/
-
-//TODO function never called
-/*   function setName($name) {
-      $this->fields["name"] = $name;
-   }*/
-
-
-   //TODO function never called
-/*   function setComments($comments) {
-      $this->fields["comment"] = $comments;
-   }*/
-
-
-   //TODO function never called
-/*   function setBehaviorAdd($add) {
-      $this->fields["behavior_add"] = $add;
-   }*/
-
-   //TODO function never called
-/*   function setBehaviorUpdate($update) {
-      $this->fields["behavior_update"] = $update;
-   }*/
-
-
-   //TODO function never called
-/*   function setModelID($ID) {
-      $this->fields["id"] = $ID;
-   }*/
-
-
-   //TODO function never called
-/*   function setMappings($mappings) {
-      $this->mappings = $mappings;
-   }*/
-
-
-   //TODO function never called
-/*   function setInfos($infos) {
-      $this->infos = $infos;
-   }*/
-
-   //TODO function never called
-/*  function setDeviceType($device_type) {
-      $this->fields["itemtype"] = $device_type;
-   }*/
-
-
-   //TODO function never called
-/*   function setEntity($entity) {
-      $this->fields["entities_id"] = $entity;
-   }*/
-
-//TODO function never called
-/*   function setCanAddDropdown($canadd) {
-      $this->fields["can_add_dropdown"] = $canadd;Name
-   }*/
-
-
-   //TODO function never called
-/*   function setCanOverwriteIfNotEmpty($canoverwrite) {
-      $this->fields["can_overwrite_if_not_empty"] = $canoverwrite;
-   }*/
-
-
-   //TODO function never called
-/*   function setPrivate($private) {
-      $this->fields["is_private"] = $private;
-   }*/
-
-
-   //TODO function never called
-/*   function setUserID($user) {
-      $this->fields["users_id"] = $user;
-   }*/
-
-//TODO function never called
-/*   function setDateFormat($df) {
-      $this->fields["date_format"] = $df;
-   }*/
-
-//TODO function never called
-/*   function setFloatFormat($ff) {
-      $this->fields["float_format"] = $ff;
-   }*/
-
-//TODO function never called
-/*   function setPerformNetworkConnection($perform) {
-      $this->fields["perform_network_connection"] = $perform;
-   }*/
-
-//TODO function never called
-/*   function setRecursive($recursive) {
-      $this->fields["is_recursive"] = $recursive;
-   }*/
-
-//TODO function never called
-/*   function setSpecificModel($specific_model) {
-      $this->specific_model = $specific_model;
-   }*/
-
-//TODO function never called
-/*   function setPortUnicity($unicity) {
-      $this->fields["port_unicity"]=$unicity;
-   }*/
 
 
    function getSpecificModel() {

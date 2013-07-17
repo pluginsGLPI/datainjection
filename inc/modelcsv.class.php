@@ -100,18 +100,6 @@ class PluginDatainjectionModelcsv extends CommonDBChild {
    }
 
 
-   //---- Save -----//
-   //TODO function never called
-/*   function setDelimiter($delimiter) {
-      $this->fields["delimiter"] = $delimiter;
-   }*/
-
-//TODO function never called
-/*   function setHeaderPresent($present) {
-      $this->fields["is_header_present"] = $present;
-   }*/
-
-
    /**
     * Check if filename ends with .csv
     *

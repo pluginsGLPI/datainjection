@@ -38,12 +38,6 @@ class PluginDatainjectionData {
    }
 
 
-   // TODO function never called
-/*   function setDatas($newDatas) {
-      $this->injectionDatas = $newDatas;
-   }*/
-
-
    /**
     * @param $newData
    **/

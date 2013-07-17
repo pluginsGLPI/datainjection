@@ -63,8 +63,6 @@ class PluginDatainjectionCommonInjectionLib {
    private $entity = 0;
 
    const ACTION_CHECK  = 0;
-   // TODO constante never used
-   const ACTION_INJECT = 1;
 
    //Type of action to perform
    const IMPORT_ADD    = 0;
@@ -78,31 +76,16 @@ class PluginDatainjectionCommonInjectionLib {
    const WARNING                        = 12; //Injection ok but partial
 
    //Field check return constants
-   // TODO constante never used
-   const ALREADY_EXISTS                 = 21;
-
    const TYPE_MISMATCH                  = 22;
    const MANDATORY                      = 23;
    const ITEM_NOT_FOUND                 = 24;
-
+   
    //Injection Message
-   const ERROR_IMPORT_ALREADY_IMPORTED    = 30;
    const ERROR_CANNOT_IMPORT              = 31;
    const ERROR_CANNOT_UPDATE              = 32;
    const WARNING_NOTFOUND                 = 33;
-   const WARNING_USED                     = 34;
-   const WARNING_SEVERAL_VALUES_FOUND     = 35;
-   const WARNING_ALREADY_LINKED           = 36;
    const ERROR_FIELDSIZE_EXCEEDED         = 37;
-   //TODO constante never used
-   const WARNING_PARTIALLY_IMPORTED       = 38;
-
    const ERROR_IMPORT_REFUSED             = 39; //Dictionnary explicitly refuse import
-   const WARNING_NOTEMPTY                 = 40; //0.84 added
-   const ERROR_IMPORT_WRONG_TYPE          = 41; //0.84 added
-   const ERROR_IMPORT_FIELD_MANDATORY     = 42; //0.84 added
-   const ERROR_IMPORT_LINK_FIELD_MISSING  = 43; //0.84 added
-   const WARNING_ALLEMPTY                 = 44; //0.84 added
 
    //Empty values
    const EMPTY_VALUE          = '';
@@ -127,9 +110,6 @@ class PluginDatainjectionCommonInjectionLib {
    const UNICITY_NETPORT_LOGICAL_NUMBER_NAME_MAC   = 5;
 
    //Field status must evolve when ticket #2216 will be resolved
-   //TODO constante never used
-   const FIELD_NOT_INJECTABLE = 0;
-
    const FIELD_INJECTABLE     = 1;
    const FIELD_VIRTUAL        = 2;
 
@@ -463,20 +443,6 @@ class PluginDatainjectionCommonInjectionLib {
       return $this->formats['float_format'];
    }
 
-
-   // TODO function never used
-   /**
-    * Is allowed to add values to dropdowns ?
-    *
-    * @return boolean
-   **/
-/*   private function canAddDropdownValue() {
-
-      if (isset($this->rights['add_dropdown'])) {
-         return $this->rights['add_dropdown'];
-      }
-      return true;
-   }*/
 
 
    /**
@@ -1018,19 +984,6 @@ class PluginDatainjectionCommonInjectionLib {
    }
 
 
-   /**
-    * Replace < and > by their html code
-    *
-    * @param value to inject
-    * $value modified
-   **/
-   //TODO Not used
-   /*static function reformatSpecialChars($value) {
-      return str_replace(array('<', '>'),
-                         array("&lt;", "&gt;"),
-                         $value);
-   }*/
-
 
    /**
     * Reformat float value. Input could be :
@@ -1555,31 +1508,6 @@ class PluginDatainjectionCommonInjectionLib {
 
 
    /**
-    * Delete data into GLPI
-    *
-    * @return nothing
-   **/
-   //TODO Not USed
-   /*
-   function deleteObject() {
-
-      $itemtype = $this->getItemtype();
-      $item     = new $itemtype();
-
-      if ($this->getValueByItemtypeAndName($itemtype,'id')) {
-         $this->results['type'] = self::IMPORT_DELETE;
-
-         if ($item->delete($this->values[$itemtype])) {
-            $this->results['status'] = self::SUCCESS;
-         } else {
-            $this->results['status'] = self::FAILED;
-         }
-         $this->results[$itemtype] = $this->getValueByItemtypeAndName($itemtype,'id');
-      }
-   }*/
-
-
-   /**
     * Add optional informations filled by the user
     *
     * @return nothing
@@ -1913,7 +1841,7 @@ class PluginDatainjectionCommonInjectionLib {
       return "";
    }
 
-   //TODO Check Which is really Used into logs
+
    /**
     * Get label associated with an injection result
     *
@@ -1933,25 +1861,13 @@ class PluginDatainjectionCommonInjectionLib {
          case self::ERROR_CANNOT_UPDATE :
             $message = __('No right to update data', 'datainjection');
             break;
-
-         case self::ERROR_IMPORT_ALREADY_IMPORTED :
-            $message = __('Datas are still in the database', 'datainjection');
+         
+         case self::ERROR_FIELDSIZE_EXCEEDED :
+            $message = __('Size of the inserted value is to expansive', 'datainjection');
             break;
-
-         case self::ERROR_IMPORT_FIELD_MANDATORY :
-            $message = __('At least one mandatory field is not present', 'datainjection');
-            break;
-
-         case self::ERROR_IMPORT_LINK_FIELD_MISSING :
-            $message = __('At least one mandatory field is not present', 'datainjection');
-            break;
-
+            
          case self::ERROR_IMPORT_REFUSED :
             $message = __('Import not allowed', 'datainjection');
-            break;
-
-         case self::ERROR_IMPORT_WRONG_TYPE :
-            $message = __('One data is not the good type', 'datainjection');
             break;
 
          case self::FAILED :
@@ -1976,26 +1892,6 @@ class PluginDatainjectionCommonInjectionLib {
 
          case self::WARNING_NOTFOUND :
             $message = __('Data not found', 'datainjection');
-            break;
-
-         case self::WARNING_USED :
-            $message = __('Data already used', 'datainjection');
-            break;
-
-         case self::WARNING_SEVERAL_VALUES_FOUND :
-            $message = __('More than one value found', 'datainjection');
-            break;
-
-         case self::WARNING_ALREADY_LINKED:
-            $message = __('Object is already linked', 'datainjection');
-            break;
-
-         case self::WARNING_ALLEMPTY :
-            $message = __('No data to insert', 'datainjection');
-            break;
-
-         case self::WARNING_NOTEMPTY :
-            $message = __('Undetermined', 'datainjection');
             break;
 
          default :
