@@ -27,21 +27,19 @@
  @link      http://www.glpi-project.org/
  @since     2009
  ---------------------------------------------------------------------- */
- 
+
 if (!defined('GLPI_ROOT')) {
    die("Sorry. You can't access directly to this file");
 }
 
-/// SoftwareVersion class
 class PluginDatainjectionSoftwareVersionInjection extends SoftwareVersion
                                                   implements PluginDatainjectionInjectionInterface {
 
 
    static function getTable() {
-   
+
       $parenttype = get_parent_class();
       return $parenttype::getTable();
-      
    }
 
 
@@ -55,13 +53,15 @@ class PluginDatainjectionSoftwareVersionInjection extends SoftwareVersion
    }
 
 
+   /**
+    * @see plugins/datainjection/inc/PluginDatainjectionInjectionInterface::getOptions()
+   **/
    function getOptions($primary_type='') {
 
-
       $tab = Search::getOptions(get_parent_class($this));
-      
+
       if ($primary_type == 'SoftwareVersion') {
-         $tab[100]['name']        = __('Software');
+         $tab[100]['name']        = _n('Software', 'Software', 1);
          $tab[100]['field']       = 'name';
          $tab[100]['table']       = getTableForItemType('Software');
          $tab[100]['linkfield']   = 'softwares_id';
@@ -69,16 +69,17 @@ class PluginDatainjectionSoftwareVersionInjection extends SoftwareVersion
          $tab[100]['checktype']     = 'text';
          $tab[100]['injectable']  = true;
       }
-      
+
       //Remove some options because some fields cannot be imported
-      $blacklist = PluginDatainjectionCommonInjectionLib::getBlacklistedOptions(get_parent_class($this));
+      $blacklist     = PluginDatainjectionCommonInjectionLib::getBlacklistedOptions(get_parent_class($this));
       $notimportable = array();
+
       $options['ignore_fields'] = array_merge($blacklist, $notimportable);
-      
+
       $key = array_search(2, $options['ignore_fields']);
       unset($options['ignore_fields'][$key]);
-      
-      
+
+
       $options['displaytype']   = array("dropdown"       => array(4,31),
                                         "multiline_text" => array(16),
                                         "software" => array(100));
@@ -87,21 +88,26 @@ class PluginDatainjectionSoftwareVersionInjection extends SoftwareVersion
    }
 
 
+   /**
+    * @param $info      array
+    * @param $option    array
+   **/
    function showAdditionalInformation($info=array(), $option=array()) {
 
       $name = "info[".$option['linkfield']."]";
       switch ($option['displaytype']) {
          case 'computer' :
-            Computer::dropdown(array('name'    => $name,
-                                    'entity'      => $_SESSION['glpiactive_entity'],
-                                    'entity_sons' => false));
+            Computer::dropdown(array('name'        => $name,
+                                     'entity'      => $_SESSION['glpiactive_entity'],
+                                     'entity_sons' => false));
             break;
-         
+
          case 'software' :
-            Software::dropdown(array('name'    => $name,
-                                    'entity'      => $_SESSION['glpiactive_entity'],
-                                    'entity_sons' => false));
+            Software::dropdown(array('name'        => $name,
+                                     'entity'      => $_SESSION['glpiactive_entity'],
+                                     'entity_sons' => false));
             break;
+
          default :
             break;
       }
@@ -109,12 +115,7 @@ class PluginDatainjectionSoftwareVersionInjection extends SoftwareVersion
 
 
    /**
-    * Standard method to add an object into glpi
-    *
-    * @param $values fields to add into glpi
-    * @param $options options used during creation
-    *
-    * @return an array of IDs of newly created objects : for example array(Computer=>1, Networkport=>10)
+    * @see plugins/datainjection/inc/PluginDatainjectionInjectionInterface::addOrUpdateObject()
    **/
    function addOrUpdateObject($values=array(), $options=array()) {
 
@@ -124,18 +125,22 @@ class PluginDatainjectionSoftwareVersionInjection extends SoftwareVersion
    }
 
 
+   /**
+    * @param $fields_toinject    array
+   **/
    function getValueForAdditionalMandatoryFields($fields_toinject=array()) {
       global $DB;
- 
+
       if (!isset($fields_toinject['SoftwareVersion']['softwares_id'])) {
          return $fields_toinject;
       }
 
       $query = "SELECT `id`
                 FROM `glpi_softwares`
-                WHERE `name` = '".$fields_toinject['SoftwareVersion']['softwares_id']."'";
-      $query .= getEntitiesRestrictRequest(" AND", "glpi_softwares", "entities_id", 
-                                           $fields_toinject['SoftwareVersion']['entities_id'], true);
+                WHERE `name` = '".$fields_toinject['SoftwareVersion']['softwares_id']."'".
+                      getEntitiesRestrictRequest(" AND", "glpi_softwares", "entities_id",
+                                                 $fields_toinject['SoftwareVersion']['entities_id'],
+                                                 true);
       $result = $DB->query($query);
 
       if ($DB->numrows($result) > 0) {
@@ -150,25 +155,34 @@ class PluginDatainjectionSoftwareVersionInjection extends SoftwareVersion
 
       return $fields_toinject;
    }
-   
+
+
+   /**
+    * @param $primary_type
+    * @param $values
+   **/
    function addSpecificNeededFields($primary_type, $values) {
+
       $fields = array();
       if ($primary_type == 'Software') {
          $fields['softwares_id'] = $values[$primary_type]['id'];
       }
       return $fields;
    }
-   
-   function checkPresent($fields_toinject=array(), $options=array()) {
-      
-      if ($options['itemtype'] != 'SoftwareVersion') {
-         $where = " AND `softwares_id`='".$fields_toinject['Software']['id']."' " .
-                  "AND `name`='".$fields_toinject['SoftwareVersion']['name']."'";
-         return $where;
-      } else {
-         return "";
-      }
-   }
-}
 
+
+   /**
+    * @param $fields_toinject    array
+    * @param $options            array
+   **/
+   function checkPresent($fields_toinject=array(), $options=array()) {
+
+      if ($options['itemtype'] != 'SoftwareVersion') {
+         return (" AND `softwares_id` = '".$fields_toinject['Software']['id']."'
+                   AND `name` = '".$fields_toinject['SoftwareVersion']['name']."'");
+      }
+      return "";
+   }
+
+}
 ?>

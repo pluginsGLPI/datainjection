@@ -27,7 +27,7 @@
  @link      http://www.glpi-project.org/
  @since     2009
  ---------------------------------------------------------------------- */
- 
+
 if (!defined('GLPI_ROOT')) {
    die("Sorry. You can't access directly to this file");
 }
@@ -37,10 +37,9 @@ class PluginDatainjectionSolutionTemplateInjection extends SolutionTemplate
 
 
    static function getTable() {
-   
+
       $parenttype = get_parent_class();
       return $parenttype::getTable();
-      
    }
 
 
@@ -54,30 +53,28 @@ class PluginDatainjectionSolutionTemplateInjection extends SolutionTemplate
    }
 
 
-   function getOptions($primary_type = '') {
-      
-      $tab = Search::getOptions(get_parent_class($this));
+   /**
+    * @see plugins/datainjection/inc/PluginDatainjectionInjectionInterface::getOptions()
+   **/
+   function getOptions($primary_type='') {
+
+      $tab           = Search::getOptions(get_parent_class($this));
 
       //Remove some options because some fields cannot be imported
-      $blacklist = PluginDatainjectionCommonInjectionLib::getBlacklistedOptions(get_parent_class($this));
+      $blacklist     = PluginDatainjectionCommonInjectionLib::getBlacklistedOptions(get_parent_class($this));
       $notimportable = array();
+
       $options['ignore_fields'] = array_merge($blacklist, $notimportable);
-      
       $options['displaytype']   = array("multiline_text" => array(4, 16),
                                         "dropdown"       => array(3),
                                         "bool"           => array(86));
-                                        
-      return PluginDatainjectionCommonInjectionLib::addToSearchOptions($tab, $options, $this);
 
+      return PluginDatainjectionCommonInjectionLib::addToSearchOptions($tab, $options, $this);
    }
 
+
    /**
-    * Standard method to add an object into glpi
-    *
-    * @param values fields to add into glpi
-    * @param options options used during creation
-    *
-    * @return an array of IDs of newly created objects : for example array(Computer=>1, Networkport=>10)
+    * @see plugins/datainjection/inc/PluginDatainjectionInjectionInterface::addOrUpdateObject()
    **/
    function addOrUpdateObject($values=array(), $options=array()) {
 
@@ -87,5 +84,4 @@ class PluginDatainjectionSolutionTemplateInjection extends SolutionTemplate
    }
 
 }
-
 ?>

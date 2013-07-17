@@ -27,18 +27,18 @@
  @link      http://www.glpi-project.org/
  @since     2009
  ---------------------------------------------------------------------- */
- 
+
  class PluginDatainjectionSession {
 
    /**
     * Get a parameter from the HTTP session
-    * 
-    * @param the parameter to get
-    * 
+    *
+    * @param $param  the parameter to get
+    *
     * @return the param's value
-    */
-    static function getParam($param) {
-   
+   **/
+   static function getParam($param) {
+
       if (!isset($_SESSION['datainjection'][$param])) {
          return false;
       }
@@ -49,16 +49,17 @@
       return $_SESSION['datainjection'][$param];
    }
 
+
    /**
     * Set a parameter in the HTTP session
-    * 
-    * @param the parameter
-    * @param results the value to store
-    * 
+    *
+    * @param $param     the parameter
+    * @param $results   the value to store
+    *
     * @return nothing
-    */
+   **/
    static function setParam($param,$results) {
-   
+
       if (in_array($param, array('results', 'error_lines'))) {
          $fic = Session::getLoginUserID().'_'.$param.'_'.microtime(true);
          file_put_contents(GLPI_DOC_DIR.'/_tmp/'.$fic, $results);
@@ -67,14 +68,15 @@
          $_SESSION['datainjection'][$param] = $results;
       }
    }
-   
+
+
    /**
     * Remove all parameters from the HTTP session
-    * 
+    *
     * @return nothing
     */
    static function removeParams() {
-   
+
       if (isset($_SESSION['datainjection']['results'])) {
          unlink(GLPI_DOC_DIR.'/_tmp/'.$_SESSION['datainjection']['results']);
       }

@@ -27,7 +27,7 @@
  @link      http://www.glpi-project.org/
  @since     2009
  ---------------------------------------------------------------------- */
- 
+
 class PluginDatainjectionWebservice {
 
 
@@ -64,22 +64,21 @@ class PluginDatainjectionWebservice {
          return PluginWebservicesMethodCommon::Error($protocol,
                                                      WEBSERVICES_ERROR_MISSINGPARAMETER,
                                                      'models_id');
-      } else {
-         if (!$model->getFromDB($params['models_id'])) {
-               return PluginWebservicesMethodCommon::Error($protocol,
-                                                           WEBSERVICES_ERROR_NOTFOUND,
-                                                           'Model unknown');
-               
-            } elseif (!$model->can($params['models_id'], 'r')) {
-               return PluginWebservicesMethodCommon::Error($protocol,
-                                                           WEBSERVICES_ERROR_NOTALLOWED,
-                                                           'You cannot access this model');
-            } elseif ($model->fields['step'] < PluginDatainjectionModel::READY_TO_USE_STEP) {
-               return PluginWebservicesMethodCommon::Error($protocol,
-                                                           WEBSERVICES_ERROR_NOTALLOWED,
-                                                           'You cannot access this model');
-            }
+      }
+      if (!$model->getFromDB($params['models_id'])) {
+         return PluginWebservicesMethodCommon::Error($protocol, WEBSERVICES_ERROR_NOTFOUND,
+                                                     __('Model unknown', 'datainjection'));
 
+      }
+      if (!$model->can($params['models_id'], 'r')) {
+         return PluginWebservicesMethodCommon::Error($protocol, WEBSERVICES_ERROR_NOTALLOWED,
+                                                     __('You cannot access this model',
+                                                        'datainjection'));
+      }
+      if ($model->fields['step'] < PluginDatainjectionModel::READY_TO_USE_STEP) {
+         return PluginWebservicesMethodCommon::Error($protocol, WEBSERVICES_ERROR_NOTALLOWED,
+                                                     __('You cannot access this model',
+                                                        'datainjection'));
       }
 
       //Check entity
@@ -87,20 +86,19 @@ class PluginDatainjectionWebservice {
          return PluginWebservicesMethodCommon::Error($protocol,
                                                      WEBSERVICES_ERROR_MISSINGPARAMETER,
                                                      'entities_id');
-      } else {
-         $entities_id = $params['entities_id'];
-         if ($entities_id > 0 ) {
-            $entity = new Entity();
-            if (!$entity->getFromDB($entities_id)) {
-               return PluginWebservicesMethodCommon::Error($protocol,
-                                                           WEBSERVICES_ERROR_NOTFOUND,
-                                                           'Entity unknown');
-               
-            } elseif (!Session::haveAccessToEntity($entities_id)) {
-               return PluginWebservicesMethodCommon::Error($protocol,
-                                                           WEBSERVICES_ERROR_NOTALLOWED,
-                                                           'You cannot access this entity');
-            }
+      }
+      $entities_id = $params['entities_id'];
+      if ($entities_id > 0 ) {
+         $entity = new Entity();
+         if (!$entity->getFromDB($entities_id)) {
+            return PluginWebservicesMethodCommon::Error($protocol, WEBSERVICES_ERROR_NOTFOUND,
+                                                        __('Entity unknown', 'datainjection'));
+
+         }
+         if (!Session::haveAccessToEntity($entities_id)) {
+            return PluginWebservicesMethodCommon::Error($protocol, WEBSERVICES_ERROR_NOTALLOWED,
+                                                        __('You cannot access this entity',
+                                                           'datainjection'));
          }
       }
 
@@ -109,7 +107,7 @@ class PluginDatainjectionWebservice {
       if (isset($params['additional']) && is_array($params['additional'])) {
          $additional_infos = $params['additional'];
       }
-      
+
       //Upload CSV file
       $document_name = basename($params['uri']);
       $filename      = tempnam(PLUGIN_DATAINJECTION_UPLOAD_DIR, 'PWS');
@@ -136,7 +134,8 @@ class PluginDatainjectionWebservice {
          //Remove first line if header is present
          $first = true;
          foreach ($model->injectionData->getDatas() as $id => $data) {
-            if ($first && $model->getSpecificModel()->isHeaderPresent()) {
+            if ($first
+                && $model->getSpecificModel()->isHeaderPresent()) {
                $first = false;
             } else {
                $results[] = $engine->injectLine($data[0], $id);
@@ -144,19 +143,20 @@ class PluginDatainjectionWebservice {
          }
          $model->cleanData();
          return $results;
-      } else {
-          return $response;
       }
+      return $response;
    }
 
 
    static function methodGetModel($params,$protocol) {
+
       $params['itemtype'] = 'PluginDatainjectionModel';
       return PluginWebservicesMethodInventaire::methodGetObject($params, $protocol);
    }
 
 
   static function methodListModels($params, $protocol) {
+
       $params['itemtype'] = 'PluginDatainjectionModel';
       return PluginWebservicesMethodInventaire::methodListObjects($params, $protocol);
    }

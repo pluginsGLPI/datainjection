@@ -27,7 +27,7 @@
  @link      http://www.glpi-project.org/
  @since     2009
  ---------------------------------------------------------------------- */
- 
+
 if (!defined('GLPI_ROOT')) {
    die("Sorry. You can't access directly to this file");
 }
@@ -37,10 +37,9 @@ class PluginDatainjectionSoftwareInjection extends Software
 
 
    static function getTable() {
-   
+
       $parenttype = get_parent_class();
       return $parenttype::getTable();
-      
    }
 
 
@@ -54,7 +53,10 @@ class PluginDatainjectionSoftwareInjection extends Software
    }
 
 
-   function getOptions($primary_type = '') {
+   /**
+    * @see plugins/datainjection/inc/PluginDatainjectionInjectionInterface::getOptions()
+   **/
+   function getOptions($primary_type='') {
 
       $tab                    = Search::getOptions(get_parent_class($this));
 
@@ -62,8 +64,9 @@ class PluginDatainjectionSoftwareInjection extends Software
       $tab[3]['linkfield']    = 'locations_id';
 
       //Remove some options because some fields cannot be imported
-      $blacklist = PluginDatainjectionCommonInjectionLib::getBlacklistedOptions(get_parent_class($this));
+      $blacklist     = PluginDatainjectionCommonInjectionLib::getBlacklistedOptions(get_parent_class($this));
       $notimportable = array(4, 5, 31, 72, 91, 92, 93, 160, 161, 162, 163, 164, 165, 166, 170);
+
       $options['ignore_fields'] = array_merge($blacklist, $notimportable);
 
       $options['displaytype']   = array("dropdown"       => array(3, 23, 49, 62, 71),
@@ -77,8 +80,11 @@ class PluginDatainjectionSoftwareInjection extends Software
 
    /**
     * Play software dictionnary
+    *
+    * @param $values
    **/
    function processDictionnariesIfNeeded(&$values) {
+
          $params['entities_id'] = $_SESSION['glpiactive_entity'];
          $params['name']        = $values['Software']['name'];
          if (isset($values['Software']['manufacturers_id'])) {
@@ -97,19 +103,19 @@ class PluginDatainjectionSoftwareInjection extends Software
             if (isset($res_rule['is_helpdesk_visible'])) {
                $values['Software']['is_helpdesk_visible'] = $res_rule['is_helpdesk_visible'];
             }
-   
+
             if (isset($res_rule['version'])) {
                $values['SoftwareVersion']['name'] = $res_rule['version'];
             }
-            
+
             if (isset($res_rule['name'])) {
                $values['Software']['name'] = $res_rule['name'];
             }
-   
+
             if (isset($res_rule['supplier'])) {
                if (isset($values['supplier'])) {
-                  $values['Software']['manufacturers_id'] = Dropdown::getDropdownName('glpi_suppliers',
-                                                                                      $res_rule['supplier']);
+                  $values['Software']['manufacturers_id']
+                     = Dropdown::getDropdownName('glpi_suppliers', $res_rule['supplier']);
                }
             }
          }
@@ -118,13 +124,7 @@ class PluginDatainjectionSoftwareInjection extends Software
 
 
    /**
-    * Standard method to add an object into glpi
- 
-    *
-    * @param values fields to add into glpi
-    * @param options options used during creation
-    *
-    * @return an array of IDs of newly created objects : for example array(Computer=>1, Networkport=>10)
+    * @see plugins/datainjection/inc/PluginDatainjectionInjectionInterface::addOrUpdateObject()
    **/
    function addOrUpdateObject($values=array(), $options=array()) {
 
@@ -134,5 +134,4 @@ class PluginDatainjectionSoftwareInjection extends Software
    }
 
 }
-
 ?>

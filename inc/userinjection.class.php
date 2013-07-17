@@ -27,7 +27,7 @@
  @link      http://www.glpi-project.org/
  @since     2009
  ---------------------------------------------------------------------- */
- 
+
 if (!defined('GLPI_ROOT')) {
    die("Sorry. You can't access directly to this file");
 }
@@ -37,10 +37,9 @@ class PluginDatainjectionUserInjection extends User
 
 
    static function getTable() {
-   
+
       $parenttype = get_parent_class();
       return $parenttype::getTable();
-      
    }
 
 
@@ -54,7 +53,10 @@ class PluginDatainjectionUserInjection extends User
    }
 
 
-   function getOptions($primary_type = '') {
+   /**
+    * @see plugins/datainjection/inc/PluginDatainjectionInjectionInterface::getOptions()
+   **/
+   function getOptions($primary_type='') {
 
       $tab                       = Search::getOptions(get_parent_class($this));
 
@@ -70,7 +72,7 @@ class PluginDatainjectionUserInjection extends User
       $tab[4]['displaytype']     = 'password';
 
       $tab[5]['displaytype']     = 'text';
-      
+
       //To manage groups : relies on a CommonDBRelation object !
       $tab[100]['name']          = __('Group');
       $tab[100]['field']         = 'name';
@@ -89,30 +91,25 @@ class PluginDatainjectionUserInjection extends User
       $tab[101]['relationclass'] = 'Profile_User';
       $tab[101]['relationfield'] = $tab[101]['linkfield'];
 
-      
+
       //Remove some options because some fields cannot be imported
-      $blacklist = PluginDatainjectionCommonInjectionLib::getBlacklistedOptions(get_parent_class($this));
+      $blacklist     = PluginDatainjectionCommonInjectionLib::getBlacklistedOptions(get_parent_class($this));
       $notimportable = array(13, 14, 15, 17, 20, 23, 30, 31, 60, 61, 77, 91, 92, 93);
+
       $options['ignore_fields']  = array_merge($blacklist, $notimportable);
-      
+
       //Add displaytype value
       $options['displaytype']    = array("dropdown"       => array(3, 79, 81, 82),
                                         "multiline_text" => array(16),
                                         "bool"           => array(8),
                                         "password"       => array(4));
-      
-      return PluginDatainjectionCommonInjectionLib::addToSearchOptions($tab, $options, $this);
 
+      return PluginDatainjectionCommonInjectionLib::addToSearchOptions($tab, $options, $this);
    }
 
+
    /**
-    * Standard method to add an object into glpi
- 
-    *
-    * @param values fields to add into glpi
-    * @param options options used during creation
-    *
-    * @return an array of IDs of newly created objects : for example array(Computer=>1, Networkport=>10)
+    * @see plugins/datainjection/inc/PluginDatainjectionInjectionInterface::addOrUpdateObject()
    **/
    function addOrUpdateObject($values=array(), $options=array()) {
 
@@ -120,8 +117,13 @@ class PluginDatainjectionUserInjection extends User
       $lib->processAddOrUpdate();
       return $lib->getInjectionResults();
    }
-   
-   function addSpecificNeededFields($primary_type,$values) {
+
+
+   /**
+    * @param $primary_type
+    * @param $values
+   **/
+   function addSpecificNeededFields($primary_type, $values) {
 
       if (isset($values[$primary_type]['name'])) {
          $fields['name'] = $values[$primary_type]['name'];
@@ -131,34 +133,50 @@ class PluginDatainjectionUserInjection extends User
       return $fields;
    }
 
-   function processAfterInsertOrUpdate($values, $add = true, $rights = array()) {
+
+   /**
+    * @param $values
+    * @param $add                (true by default)
+    * @param $rights    array
+    */
+   function processAfterInsertOrUpdate($values, $add=true, $rights=array()) {
       global $DB;
-      
+
       //Manage user emails
       if (isset($values['User']['useremails_id'])
-         && $rights['add_dropdown'] && Session::haveRight('user', 'w')) {
+          && $rights['add_dropdown']
+          && Session::haveRight('user', 'w')) {
+
            if (!countElementsInTable("glpi_useremails",
                                      "`users_id`='".$values['User']['id']."'
                                        AND `email`='".$values['User']['useremails_id']."'")) {
-            $useremail = new UserEmail();
+            $useremail       = new UserEmail();
             $tmp['users_id'] = $values['User']['id'];
             $tmp['email']    = $values['User']['useremails_id'];
             $useremail->add($tmp);
          }
       }
-      
-      if (isset($values['User']['password']) && $values['User']['password'] != '') {
+
+      if (isset($values['User']['password']) && ($values['User']['password'] != '')) {
          //We use an SQL request because updating the password is unesasy
          //(self reset password process in $user->prepareInputForUpdate())
-         $password
-                 = sha1(Toolbox::unclean_cross_side_scripting_deep(stripslashes($values['User']["password"])));
-         $query = "UPDATE `glpi_users` SET `password`='$password' " .
-                  "WHERE `id`='".$values['User']['id']."'";
+         $password = sha1(Toolbox::unclean_cross_side_scripting_deep(stripslashes($values['User']["password"])));
+
+         $query = "UPDATE `glpi_users`
+                   SET `password` = '".$password."'
+                   WHERE `id` = '".$values['User']['id']."'";
          $DB->query($query);
       }
    }
 
+
+   /**
+    * @param unknown_type $itemtype
+    * @param unknown_type $field
+    * @param unknown_type $value
+   **/
    protected function addSpecificOptionalInfos($itemtype, $field, $value) {
+
       //If info is a password, then fill also password2, needed for prepareInputForAdd
       if ($field == 'password') {
          $this->setValueForItemtype($itemtype, "password2", $value);
@@ -166,5 +184,4 @@ class PluginDatainjectionUserInjection extends User
    }
 
 }
-
 ?>
