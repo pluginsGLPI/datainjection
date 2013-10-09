@@ -45,7 +45,9 @@ function plugin_datainjection_registerMethods() {
 
 function plugin_datainjection_install() {
    global $DB;
-
+   
+   include_once (GLPI_ROOT."/plugins/datainjection/inc/profile.class.php");
+   
    switch (plugin_datainjection_needUpdateOrInstall()) {
       case -1 :
          plugin_datainjection_update220_230();
