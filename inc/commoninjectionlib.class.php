@@ -231,21 +231,23 @@ class PluginDatainjectionCommonInjectionLib {
       }
 
       $status_check = true;
-      foreach ($this->mandatory_fields[$itemtype] as $field => $value) {
-         //Get value associated with the mandatory field
-         $value = $this->getValueByItemtypeAndName($itemtype,$field);
+      if (count($this->mandatory_fields[$itemtype]) > 0) {
+         foreach ($this->mandatory_fields[$itemtype] as $field => $value) {
+            //Get value associated with the mandatory field
+            $value = $this->getValueByItemtypeAndName($itemtype,$field);
 
-         //Get search option associated with the mandatory field
-         $option = self::findSearchOption($injectionClass->getOptions($itemtype),$field);
+            //Get search option associated with the mandatory field
+            $option = self::findSearchOption($injectionClass->getOptions($itemtype),$field);
 
-         //If field not defined, or if value is the dropdown's default value
-         //If no value found or value is 0 and field is a dropdown,
-         //then mandatory field management failed
-         if (($value == false)
-             || (($value == self::DROPDOWN_EMPTY_VALUE)
-                 && self::isFieldADropdown($option['displaytype']))) {
-            $status_check = false;
-            $this->results[self::ACTION_CHECK][] = array(self::MANDATORY,$option['name']);
+            //If field not defined, or if value is the dropdown's default value
+            //If no value found or value is 0 and field is a dropdown,
+            //then mandatory field management failed
+            if (($value == false)
+                || (($value == self::DROPDOWN_EMPTY_VALUE)
+                    && self::isFieldADropdown($option['displaytype']))) {
+               $status_check = false;
+               $this->results[self::ACTION_CHECK][] = array(self::MANDATORY,$option['name']);
+            }
          }
       }
       return $status_check;
@@ -303,7 +305,7 @@ class PluginDatainjectionCommonInjectionLib {
     * @return an instance of the itemtype associated to the injection class
     */
    static function getItemtypeByInjectionClass($injectionClass) {
-      return getItemTypeForTable($injectionClass->getTable());
+      return Toolbox::ucfirst(getItemTypeForTable($injectionClass->getTable()));
    }
 
 

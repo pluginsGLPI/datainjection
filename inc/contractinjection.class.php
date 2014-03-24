@@ -87,7 +87,7 @@ class PluginDatainjectionContractInjection extends Contract
 
       //Remove some options because some fields cannot be imported
       $blacklist     = PluginDatainjectionCommonInjectionLib::getBlacklistedOptions(get_parent_class($this));
-      $notimportable = array(12, 13, 20, 29, 41, 42, 43, 44, 45, 72);
+      $notimportable = array(12, 13, 20, 41, 42, 43, 44, 45, 72);
 
       $options['ignore_fields'] = array_merge($blacklist, $notimportable);
 
