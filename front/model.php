@@ -30,13 +30,11 @@
 
 include ('../../../inc/includes.php');
 
-Html::header(PluginDatainjectionModel::getTypeName(), '', "plugins", "datainjection", "model");
+Html::header(PluginDatainjectionModel::getTypeName(), '', "tools", "plugindatainjectionmenu", "model");
 
 $model = new PluginDatainjectionModel();
-$model->checkGlobal('r');
+$model->checkGlobal(READ);
 
 Search::show('PluginDatainjectionModel');
 
 Html::footer();
-
-?>

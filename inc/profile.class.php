@@ -28,41 +28,30 @@
  @since     2009
  ---------------------------------------------------------------------- */
 
-class PluginDatainjectionProfile extends CommonDBTM {
+class PluginDatainjectionProfile extends Profile {
 
+   static $rightname = "profile";
 
-   static function canCreate() {
-      return Session::haveRight('profile', 'w');
+   static function getAllRights() {
+      $rights = array(
+          array('itemtype'  => 'PluginDatainjectionModel',
+                'label'     => __('Model management', 'datainjection'),
+                'field'     => 'plugin_datainjection_model'));
+      return $rights;
    }
-
-
-   static function canView() {
-      return Session::haveRight('profile', 'r');
-   }
-
-
+   
    /**
     * Clean profiles_id from plugin's profile table
     *
     * @param $ID
    **/
    function cleanProfiles($ID) {
-
-      $profile = new self();
-      $profile->deleteByCriteria(array('id' => $ID));
+      global $DB;
+      $query = "DELETE FROM `glpi_profiles` 
+                WHERE `profiles_id`='$ID' 
+                   AND `name` LIKE '%plugin_datainjection%'";
+      $DB->query($query);
    }
-
-
-   static function changeProfile() {
-
-      $prof = new self();
-      if ($prof->getFromDB($_SESSION['glpiactiveprofile']['id'])) {
-         $_SESSION["glpi_plugin_datainjection_profile"] = $prof->fields;
-      } else {
-         unset ($_SESSION["glpi_plugin_datainjection_profile"]);
-      }
-   }
-
 
    function getTabNameForItem(CommonGLPI $item, $withtemplate=0) {
 
@@ -79,12 +68,12 @@ class PluginDatainjectionProfile extends CommonDBTM {
    static function displayTabContentForItem(CommonGLPI $item, $tabnum=1, $withtemplate=0) {
 
       if ($item->getType() == 'Profile') {
-         $prof = new self();
+         $profile = new self();
          $ID   = $item->getField('id');
-         if (!$prof->GetfromDB($ID)) {
-            $prof->createUserAccess($item);
-         }
-         $prof->showForm($ID);
+         //In case there's no right datainjection for this profile, create it
+         self::addDefaultProfileInfos($item->getID(), 
+                                      array('plugin_datainjection_model' => 0));
+         $profile->showForm($ID);
       }
       return true;
    }
@@ -93,65 +82,92 @@ class PluginDatainjectionProfile extends CommonDBTM {
    /**
     * @param $profile
    **/
-   function createUserAccess($profile) {
+   static function addDefaultProfileInfos($profiles_id, $rights) {
+      $profileRight = new ProfileRight();
+      foreach ($rights as $right => $value) {
+         if (!countElementsInTable('glpi_profilerights',
+                                   "`profiles_id`='$profiles_id' AND `name`='$right'")) {
+            $myright['profiles_id'] = $profiles_id;
+            $myright['name']        = $right;
+            $myright['rights']      = $value;
+            $profileRight->add($myright);
 
-      return $this->add(array('id'      => $profile->getField('id'),
-                              'name' => addslashes($profile->getField('name'))));
+            //Add right to the current session
+            $_SESSION['glpiactiveprofile'][$right] = $value;
+         }
+      }
    }
-
 
    /**
     * @param $ID  integer
     */
-   static function createFirstAccess($ID) {
-
+   static function createFirstAccess($profiles_id) {
       include_once(GLPI_ROOT."/plugins/datainjection/inc/profile.class.php");
-      $firstProf = new self();
-      if (!$firstProf->GetfromDB($ID)) {
-         $profile = new Profile();
-         $profile->getFromDB($ID);
-         $name    = addslashes($profile->fields["name"]);
-
-         $firstProf->add(array('id'          => $ID,
-                               'profile'     => $name,
-                               'is_default'  => 0,
-                               'model'       => 'w'));
+      foreach (self::getAllRights() as $right) {
+         self::addDefaultProfileInfos($profiles_id, 
+                                    array('plugin_datainjection_model' => ALLSTANDARDRIGHT));
       }
    }
 
 
-   function showForm($ID, $options=array()){
+   static function migrateProfiles() {
+      global $DB;
+      $profiles = getAllDatasFromTable('glpi_plugin_datainjection_profiles');
+      foreach ($profiles as $id => $profile) {
+         $query = "SELECT `id` FROM `glpi_profiles` WHERE `name`='".$profile['name']."'";
+         $result = $DB->query($query);
+         if ($DB->numrows($result) == 1) {
+            $id = $DB->result($result, 0, 'id');
+            switch ($profile['model']) {
+               case 'r' :
+                  $value = READ;
+                  break;
+               case 'w':
+                  $value = ALLSTANDARDRIGHT;
+                  break;
+               case 0:
+               default:
+                  $value = 0;
+                  break;
+            }
+            self::addDefaultProfileInfos($id, array('plugin_datainjection_model' => $value));
+         }
+      }
+   }
+   
+    /**
+    * Show profile form
+    *
+    * @param $items_id integer id of the profile
+    * @param $target value url of target
+    *
+    * @return nothing
+    **/
+   function showForm($profiles_id=0, $openform=TRUE, $closeform=TRUE) {
 
-      if (!Session::haveRight("profile","r"))  {
-         return false;
+      echo "<div class='firstbloc'>";
+      if (($canedit = Session::haveRightsOr(self::$rightname, array(CREATE, UPDATE, PURGE)))
+          && $openform) {
+         $profile = new Profile();
+         echo "<form method='post' action='".$profile->getFormURL()."'>";
       }
 
       $profile = new Profile();
+      $profile->getFromDB($profiles_id);
 
-      if ($ID){
-         $this->getFromDB($ID);
-         $profile->getFromDB($ID);
-      } else {
-         $this->getEmpty();
+      $rights = self::getAllRights();
+      $profile->displayRightsChoiceMatrix(self::getAllRights(), 
+                                          array('canedit'       => $canedit,
+                                                'default_class' => 'tab_bg_2',
+                                                'title'         => __('General')));
+      if ($canedit
+          && $closeform) {
+         echo "<div class='center'>";
+         echo Html::hidden('id', array('value' => $profiles_id));
+         echo Html::submit(_sx('button', 'Save'), array('name' => 'update'));
+         echo "</div>\n";
+         Html::closeForm();
       }
-
-      $options['colspan'] = 1;
-      $this->showFormHeader($options);
-
-      echo "<tr><th colspan='2'>".sprintf(__('%1$s %2$s'), __('File injection', 'datainjection'),
-                                          $profile->fields["name"]);
-      echo "</th></tr>";
-
-      echo "<tr class='tab_bg_2'>";
-      echo "<td>".PluginDatainjectionModel::getTypeName()."</td><td>";
-      Profile::dropdownNoneReadWrite("model", $this->fields["model"], 1, 1, 1);
-      echo "</td></tr>";
-
-      echo "<input type='hidden' name='id' value=".$this->fields["id"].">";
-
-      $options['candel'] = false;
-      $this->showFormButtons($options);
+      echo "</div>";
    }
-
 }
-?>

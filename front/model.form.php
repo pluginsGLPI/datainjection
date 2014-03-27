@@ -39,11 +39,11 @@ if (!isset ($_GET["withtemplate"])) {
 }
 
 $model = new PluginDatainjectionModel();
-$model->checkGlobal('r');
+$model->checkGlobal(READ);
 
 /* add */
 if (isset ($_POST["add"])) {
-   $model->check(-1,'w',$_POST);
+   $model->check(-1, UPDATE ,$_POST);
    $newID = $model->add($_POST);
 
    //Set display to the advanced options tab
@@ -52,14 +52,14 @@ if (isset ($_POST["add"])) {
 
 /* delete */
 } else if (isset ($_POST["delete"])) {
-   $model->check($_POST['id'],'w');
+   $model->check($_POST['id'], DELETE);
    $model->delete($_POST);
    $model->redirectToList();
 
 /* update */
 } else if (isset ($_POST["update"])) {
    //Update model
-   $model->check($_POST['id'], 'w');
+   $model->check($_POST['id'], UPDATE);
    $model->update($_POST);
 
    $specific_model = PluginDatainjectionModel::getInstance('csv');
@@ -68,13 +68,13 @@ if (isset ($_POST["add"])) {
 
 /* update order */
 } elseif (isset ($_POST["validate"])) {
-   $model->check($_POST['id'],'w');
+   $model->check($_POST['id'], UPDATE);
    $model->switchReadyToUse();
    Html::back();
 
 } elseif (isset($_POST['upload'])) {
    if (!empty($_FILES)) {
-      $model->check($_POST['id'],'w');
+      $model->check($_POST['id'], UPDATE);
 
       if ($model->processUploadedFile(array('file_encoding' => 'csv',
                                             'mode'          => PluginDatainjectionModel::CREATION))) {
@@ -87,16 +87,17 @@ if (isset ($_POST["add"])) {
    Html::back();
 
 } elseif (isset($_GET['sample'])) {
-   $model->check($_GET['sample'], 'r');
+   $model->check($_GET['sample'], READ);
    $modeltype = PluginDatainjectionModel::getInstance($model->getField('filetype'));
    $modeltype->getFromDBByModelID($model->getField('id'));
    $modeltype->showSample($model);
    exit (0);
 }
 
-Html::header(PluginDatainjectionModel::getTypeName(), '', "plugins", "datainjection", "model");
+Html::header(PluginDatainjectionModel::getTypeName(), '', 
+             "tools", "plugindatainjectionmenu", "model");
 
-$model->showForm($_GET["id"]);
+$model->display(array('id' =>$_GET["id"]));
 
 Html::footer();
 ?>

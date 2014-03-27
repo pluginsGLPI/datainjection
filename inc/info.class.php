@@ -30,6 +30,8 @@
 
 class PluginDatainjectionInfo extends CommonDBTM {
 
+   static $rightname = "plugin_datainjection_model";
+
    function getEmpty() {
 
       $this->fields['itemtype']     = PluginDatainjectionInjectionType::NO_VALUE;
@@ -61,17 +63,6 @@ class PluginDatainjectionInfo extends CommonDBTM {
    function getInfosType() {
       return $this->fields["itemtype"];
    }
-
-
-   static function canView() {
-      return plugin_datainjection_haveRight('model', 'r');
-   }
-
-
-   static function canCreate() {
-      return plugin_datainjection_haveRight('model', 'w');
-   }
-
 
    /**
     * @param $model     PluginDatainjectionModel object
@@ -127,7 +118,7 @@ class PluginDatainjectionInfo extends CommonDBTM {
     */
    static function showFormInfos(PluginDatainjectionModel $model) {
 
-      $canedit = $model->can($model->fields['id'], 'w');
+      $canedit = $model->can($model->fields['id'], UPDATE);
       self::showAddInfo($model, $canedit);
 
       $model->loadInfos();

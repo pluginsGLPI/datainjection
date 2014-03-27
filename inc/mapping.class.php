@@ -30,16 +30,7 @@
 
 class PluginDatainjectionMapping extends CommonDBTM {
 
-
-   static function canCreate() {
-      return plugin_datainjection_haveRight('model','w');
-   }
-
-
-   static function canView() {
-      return plugin_datainjection_haveRight('model','r');
-   }
-
+   static $rightname = "plugin_datainjection_model";
 
    /**
     * @param $field
@@ -95,7 +86,7 @@ class PluginDatainjectionMapping extends CommonDBTM {
    static function showFormMappings(PluginDatainjectionModel $model) {
       global $CFG_GLPI;
 
-      $canedit = $model->can($model->fields['id'],'w');
+      $canedit = $model->can($model->fields['id'], UPDATE);
 
       if (isset($_SESSION['datainjection']['lines'])) {
          $lines = unserialize($_SESSION['datainjection']['lines']);

@@ -30,8 +30,8 @@
 
 include ('../../../inc/includes.php');
 
-Html::header(__('File injection', 'datainjection'), $_SERVER["PHP_SELF"], "plugins",
-             "datainjection");
+Html::header(__('File injection', 'datainjection'), $_SERVER["PHP_SELF"], 
+             "tools", "plugindatainjectionmenu", "client");
 
 if (isset($_SESSION['datainjection']['go'])) {
    $model = unserialize($_SESSION['datainjection']['currentmodel']);
@@ -39,7 +39,7 @@ if (isset($_SESSION['datainjection']['go'])) {
 
 } else if (isset($_POST['upload'])) {
    $model = new PluginDatainjectionModel();
-   $model->can($_POST['id'], 'r');
+   $model->can($_POST['id'], READ);
    $_SESSION['datainjection']['infos'] = (isset($_POST['info'])?$_POST['info']:array());
 
    //If additional informations provided : check if mandatory infos are present

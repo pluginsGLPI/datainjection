@@ -30,6 +30,9 @@
 
  class PluginDatainjectionClientInjection {
 
+   //TODO change right
+   static $rightname = "plugin_datainjection_model";
+   
    const STEP_UPLOAD  = 0;
    const STEP_PROCESS = 1;
    const STEP_RESULT  = 2;
@@ -54,7 +57,8 @@
 
       $buttons = array ();
       $title   = "";
-      if (plugin_datainjection_haveRight("model", "w") ) {
+
+      if (Session::haveRight(static::$rightname, UPDATE)) {
          $url           = Toolbox::getItemTypeSearchURL('PluginDatainjectionModel');
          $buttons[$url] = PluginDatainjectionModel::getTypeName();
          $title         = "";
@@ -84,7 +88,9 @@
 
       } else {
          $text = __('No model currently available', 'datainjection');
-         if (plugin_datainjection_haveRight('model','w')) {
+
+         if (Session::haveRight(static::$rightname, UPDATE) ) {
+
             $text = sprintf(__('%1$s %2$s'), $text.". ",
                             sprintf(__('%1$s: %2$s'),
                                     __('You can start the model creation by hitting the button',
@@ -385,7 +391,7 @@
          $file  = PLUGIN_DATAINJECTION_UPLOAD_DIR.PluginDatainjectionSession::getParam('file_name');
 
          $mappings = $model->getMappings();
-         $tmpfile  = fopen($file, "w");
+         $tmpfile  = fopen($file, 'w');
 
          //If headers present
          if ($model->getBackend()->isHeaderPresent()) {
@@ -414,4 +420,3 @@
    }
 
 }
-?>

@@ -47,10 +47,12 @@ function plugin_datainjection_install() {
    global $DB;
    
    include_once (GLPI_ROOT."/plugins/datainjection/inc/profile.class.php");
+   $migration = new Migration('2.3.0');
    
    switch (plugin_datainjection_needUpdateOrInstall()) {
       case -1 :
          plugin_datainjection_update220_230();
+         plugin_datainjection_upgrade23_240($migration);
          return true;
 
       case 0 :
@@ -108,15 +110,6 @@ function plugin_datainjection_install() {
                    ) ENGINE = MYISAM CHARSET=utf8 COLLATE=utf8_unicode_ci ;";
          $DB->queryOrDie($query, $DB->error());
 
-         $query = "CREATE TABLE IF NOT EXISTS `glpi_plugin_datainjection_profiles` (
-                     `id` int(11) NOT NULL auto_increment,
-                     `name` varchar(255) default NULL,
-                     `is_default` TINYINT(1) NOT NULL default '0',
-                     `model` char(1) default NULL,
-                     PRIMARY KEY  (`ID`)
-                   ) ENGINE=MyISAM CHARSET=utf8 COLLATE=utf8_unicode_ci;";
-         $DB->queryOrDie($query, $DB->error());
-
          if (!is_dir(PLUGIN_DATAINJECTION_UPLOAD_DIR)) {
             @ mkdir(PLUGIN_DATAINJECTION_UPLOAD_DIR)
                or die(sprintf(__('%1$s %2$s'), __("Can't create folder", 'datainjection'),
@@ -151,7 +144,6 @@ function plugin_datainjection_install() {
          if (TableExists("glpi_plugin_data_injection_models")
              && !FieldExists("glpi_plugin_data_injection_models","port_unicity")) {
 
-            $migration = new Migration('1.5');
             $migration->addField('glpi_plugin_data_injection_models', 'port_unicity', 'bool');
             $migration->executeMigration();
          }
@@ -168,6 +160,8 @@ function plugin_datainjection_install() {
 
          plugin_datainjection_update220_230();
 
+         plugin_datainjection_upgrade23_240($migration);
+         
          break;
    }
 
@@ -200,12 +194,19 @@ function plugin_datainjection_uninstall() {
 }
 
 
+function plugin_datainjection_upgrade23_240($migration) {
+   PluginDatainjectionProfile::migrateProfiles();
+   
+   //Drop profile table : no use anymore !
+   $migration->dropTable('glpi_plugin_datainjection_profiles');
+}
+
 function plugin_datainjection_update131_14() {
    global $DB;
 
    $migration = new Migration('1.4');
 
-   $migration->addField('lpi_plugin_data_injection_models', 'float_format', 'bool');
+   $migration->addField('glpi_plugin_data_injection_models', 'float_format', 'bool');
 
    //Template recursivity : need standardize names in order to use privatePublicSwitch
    $migration->changeField('glpi_plugin_data_injection_models', 'user_id', 'FK_users', 'integer');
@@ -1033,7 +1034,7 @@ function plugin_datainjection_loadHook($hook_name, $params=array ()) {
 function plugin_datainjection_needUpdateOrInstall() {
 
    //Install plugin
-   if (!TableExists('glpi_plugin_datainjection_profiles')) {
+   if (!TableExists('glpi_plugin_datainjection_models')) {
       return 0;
    }
 

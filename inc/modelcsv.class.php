@@ -29,6 +29,8 @@
  ---------------------------------------------------------------------- */
 
 class PluginDatainjectionModelcsv extends CommonDBChild {
+   
+   static $rightname = "plugin_datainjection_model";
    var $specific_fields;
 
    // From CommonDBChild
@@ -42,17 +44,6 @@ class PluginDatainjectionModelcsv extends CommonDBChild {
       $this->fields['delimiter']         = ';';
       $this->fields['is_header_present'] = 1;
    }
-
-
-   static function canCreate() {
-      return plugin_datainjection_haveRight('model', 'w');
-   }
-
-
-   static function canView() {
-      return plugin_datainjection_haveRight('model', 'r');
-   }
-
 
    function init() {
    }

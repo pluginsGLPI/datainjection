@@ -30,6 +30,8 @@
 
 class PluginDatainjectionModel extends CommonDBTM {
 
+   static $rightname = "plugin_datainjection_model";
+   
    //Store mappings informations
    private $mappings;
 
@@ -77,17 +79,6 @@ class PluginDatainjectionModel extends CommonDBTM {
       $this->mappings = new PluginDatainjectionMappingCollection();
       $this->infos    = new PluginDatainjectionInfoCollection();
    }
-
-
-   static function canView() {
-      return plugin_datainjection_haveRight('model', 'r');
-   }
-
-
-   static function canCreate() {
-      return plugin_datainjection_haveRight('model', 'w');
-   }
-
 
    function canViewItem() {
 
@@ -495,16 +486,15 @@ class PluginDatainjectionModel extends CommonDBTM {
    function showForm($ID, $options = array()) {
 
       if ($ID > 0) {
-         $this->check($ID, 'r');
+         $this->check($ID, READ);
       } else {
          // Create item
-         $this->check(-1, 'w');
+         $this->check(-1, UPDATE);
          $this->getEmpty();
       }
 
-      $this->showTabs($options);
-      $this->addDivForTabs();
-
+      $this->initForm($ID, $options);
+      
       if ($this->isNewID($ID)) {
          $this->showAdvancedForm($ID);
       }
@@ -516,12 +506,12 @@ class PluginDatainjectionModel extends CommonDBTM {
    function showAdvancedForm($ID, $options = array()) {
 
       if ($ID > 0) {
-         $this->check($ID,'r');
+         $this->check($ID, READ);
       } else {
          // Create item
-         $this->check(-1,'w');
+         $this->check(-1, UPDATE);
          $this->getEmpty();
-         echo "<input type='hidden' name='step' value='1'>";
+         echo Html::hidden('step', array('value' => 1));
       }
 
       echo "<form name='form' method='post' action='".Toolbox::getItemTypeFormURL(__CLASS__)."'>";
@@ -650,19 +640,23 @@ class PluginDatainjectionModel extends CommonDBTM {
 
    //Tabs management
    function getTabNameForItem(CommonGLPI $item, $withtemplate=0) {
-
+   
+      $canedit = Session::haveRight('plugin_datainjection_model', UPDATE);
+      
       if (!$withtemplate) {
          switch ($item->getType()) {
             case __CLASS__ :
                $tabs[1] = __('Model');
                if (!$this->isNewID($item->fields['id'])) {
-                  $tabs[3] = __('File to inject', 'datainjection');
+                  if ($canedit) {
+                     $tabs[3] = __('File to inject', 'datainjection');
+                  }
                   $tabs[4] = __('Mappings', 'datainjection');
 
                   if ($item->fields['step'] > self::MAPPING_STEP) {
                      $tabs[5] = __('Additional Information', 'datainjection');
 
-                     if ($item->fields['step'] != self::READY_TO_USE_STEP) {
+                     if ($canedit && $item->fields['step'] != self::READY_TO_USE_STEP) {
                         $tabs[6] = __('Validation');
                      }
                   }
@@ -681,7 +675,7 @@ class PluginDatainjectionModel extends CommonDBTM {
       if ($item->getType() == __CLASS__) {
          switch ($tabnum) {
             case 1 :
-               $item->showAdvancedForm($_POST["id"]);
+               $item->showAdvancedForm($item->getID());
                break;
 
             case 3:

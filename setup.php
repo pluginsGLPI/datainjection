@@ -36,51 +36,24 @@ function plugin_init_datainjection() {
    global $PLUGIN_HOOKS, $CFG_GLPI, $INJECTABLE_TYPES;
 
    $PLUGIN_HOOKS['csrf_compliant']['datainjection'] = true;
-
-   Plugin::registerClass('PluginDatainjectionProfile',
-                         array('addtabon' => array('Profile')));
-
-   $PLUGIN_HOOKS['change_profile']['datainjection'] = array('PluginDatainjectionProfile',
-                                                            'changeProfile');
-
    $PLUGIN_HOOKS['migratetypes']['datainjection'] = 'plugin_datainjection_migratetypes_datainjection';
 
    $plugin = new Plugin();
    if ($plugin->isActivated("datainjection")) {
+
+      Plugin::registerClass('PluginDatainjectionProfile',
+                           array('addtabon' => array('Profile')));
+   
+      //If directory doesn't exists, create it
       if (!plugin_datainjection_checkDirectories()) {
-         Toolbox::logDebug("[Datainjection plugin] ".
-                           sprintf(__('%s must exists and be writable for web server user',
-                                      'datainjection'), PLUGIN_DATAINJECTION_UPLOAD_DIR));
-         return false;
+            @ mkdir(PLUGIN_DATAINJECTION_UPLOAD_DIR)
+               or die(sprintf(__('%1$s %2$s'), __("Can't create folder", 'datainjection'),
+                              PLUGIN_DATAINJECTION_UPLOAD_DIR));
       }
-
-      $image_import  = "<img src='".$CFG_GLPI["root_doc"]."/pics/actualiser.png' title='";
-      $image_import .= __s('Injection of the file', 'datainjection');
-      $image_import .= "' alt='".__s('Injection of the file', 'datainjection')."'>";
-
-      $PLUGIN_HOOKS['menu_entry']['datainjection'] = 'front/clientinjection.form.php';
-
-      if (plugin_datainjection_haveRight("model", "r")) {
-         $PLUGIN_HOOKS['submenu_entry']['datainjection']['options']['model']['title']
-                                                   = PluginDatainjectionModel::getTypeName();
-         $PLUGIN_HOOKS['submenu_entry']['datainjection']['options']['model']['page']
-                                                   = '/plugins/datainjection/front/model.php';
-         $PLUGIN_HOOKS['submenu_entry']['datainjection']['options']['model']['links']['search']
-                                                   = '/plugins/datainjection/front/model.php';
-         $PLUGIN_HOOKS['submenu_entry']['datainjection']['options']['model']['links']['add']
-                                                   = '/plugins/datainjection/front/model.form.php';
-
-         $image_model  = "<img src='".$CFG_GLPI["root_doc"]."/pics/rdv.png' title='";
-         $image_model .= PluginDatainjectionModel::getTypeName();
-         $image_model .= "' alt='".PluginDatainjectionModel::getTypeName()."'>";
-
-         $PLUGIN_HOOKS['submenu_entry']['datainjection'][$image_model] = 'front/model.php';
-         $PLUGIN_HOOKS['submenu_entry']['datainjection']['options']['model']['links'][$image_import]
-                                       = '/plugins/datainjection/front/clientinjection.form.php';
+      if (Session::haveRight('plugin_datainjection_model', READ)) {
+         $PLUGIN_HOOKS["menu_toadd"]['datainjection'] = array('tools'  => 'PluginDatainjectionMenu');
       }
-
-      $PLUGIN_HOOKS['submenu_entry']['datainjection']['add'] = 'front/clientinjection.form.php';
-
+   
       $PLUGIN_HOOKS['pre_item_purge']['datainjection']
             = array('Profile' => array('PluginDatainjectionProfile', 'purgeProfiles'));
 
@@ -101,40 +74,18 @@ function plugin_init_datainjection() {
 function plugin_version_datainjection() {
 
    return array('name'           => __('File injection', 'datainjection'),
-                'minGlpiVersion' => '0.84',
+                'minGlpiVersion' => '0.85',
                 'author'         => 'Walid Nouh, Remi Collet, Nelly Mahu-Lasson, Xavier Caillaud',
                 'homepage'       => 'https://forge.indepnet.net/projects/datainjection',
                 'license'        => 'GPLv2+',
-                'version'        => '2.3.0'
+                'version'        => '2.4.0'
    );
 }
 
-
-function plugin_datainjection_haveRight($module, $right) {
-
-   $matches = array(""  => array ("", "r", "w"), // ne doit pas arriver normalement
-                    "r" => array ("r", "w"),
-                    "w" => array ("w"),
-                    "1" => array ("1"),
-                    "0" => array ("0", "1")); // ne doit pas arriver non plus
-
-   if (isset ($_SESSION["glpi_plugin_datainjection_profile"][$module])
-       && in_array($_SESSION["glpi_plugin_datainjection_profile"][$module], $matches[$right])) {
-      return true;
-   }
-   return false;
-}
-
-
 function plugin_datainjection_check_prerequisites() {
 
-  if (!plugin_datainjection_checkDirectories()) {
-      printf(__('%s must exists and be writable for web server user', 'datainjection'),
-             PLUGIN_DATAINJECTION_UPLOAD_DIR);
-      return false;
-   }
-   if (version_compare(GLPI_VERSION,'0.84','lt') || version_compare(GLPI_VERSION,'0.85','ge')) {
-      _e('This plugin requires GLPI >= 0.84', 'datainjection');
+   if (version_compare(GLPI_VERSION,'0.85','lt') || version_compare(GLPI_VERSION,'0.86','ge')) {
+      _e('This plugin requires GLPI >= 0.85', 'datainjection');
       return false;
    }
    return true;
