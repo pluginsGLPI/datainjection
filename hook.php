@@ -309,6 +309,8 @@ function plugin_datainjection_update170_20() {
    $migration->changeField('glpi_plugin_datainjection_infos', 'type', 'itemtype', 'string',
                            array('value' => ''));
    $migration->changeField('glpi_plugin_datainjection_infos', 'model_id', 'models_id', 'integer');
+   $migration->changeField('glpi_plugin_datainjection_infos', 'mandatory', 'is_mandatory',
+                           'bool');
 
 
    $glpitables = array('glpi_plugin_datainjection_models',
