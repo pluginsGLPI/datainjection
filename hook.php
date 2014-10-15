@@ -263,9 +263,10 @@ function plugin_datainjection_update170_20() {
 
    $migration = new Migration('2.0');
 
+   $migration->changeField('glpi_plugin_datainjection_models', 'ID', 'id', 'autoincrement');
    $migration->changeField('glpi_plugin_datainjection_models', 'type', 'filetype', 'string',
                            array('value' => 'csv'));
-   $migration->addField('glpi_plugin_datainjection_models', 'step', 'bool');
+   $migration->addField('glpi_plugin_datainjection_models', 'step', 'integer');
    $migration->changeField('glpi_plugin_datainjection_models', 'comments', 'comment', 'text');
    $migration->changeField('glpi_plugin_datainjection_models', 'device_type', 'itemtype', 'string',
                            array('value' => ''));
@@ -275,13 +276,14 @@ function plugin_datainjection_update170_20() {
    $migration->changeField('glpi_plugin_datainjection_models', 'FK_users', 'users_id', 'integer');
    $migration->changeField('glpi_plugin_datainjection_models', 'recursive', 'is_recursive', 'bool');
 
+   $migration->migrationOneTable('glpi_plugin_datainjection_models');
    $query = "UPDATE `glpi_plugin_datainjection_models`
              SET `step` = '5'";
-
+   $DB->query($query);
 
    $query = "UPDATE `glpi_plugin_datainjection_models`
              SET `filetype` = 'csv'";
-   $DB->queryOrDie("update filetype of glpi_plugin_datainjection_models");
+   $DB->queryOrDie($query, "update filetype of glpi_plugin_datainjection_models");
 
 
    $migration->dropTable('glpi_plugin_datainjection_filetype');
@@ -302,10 +304,8 @@ function plugin_datainjection_update170_20() {
                            'bool');
    $migration->changeField('glpi_plugin_datainjection_mappings', 'type', 'itemtype', 'string',
                            array('value' => ''));
-   $migration->changeField('glpi_plugin_datainjection_mappings', 'model_id', 'models_id',
-                           'integer');
+   $migration->changeField('glpi_plugin_datainjection_mappings', 'model_id', 'models_id', 'integer');
 
-   $migration->changeField('glpi_plugin_datainjection_infos', 'mandatory', 'is_mandatory', 'bool');
    $migration->changeField('glpi_plugin_datainjection_infos', 'type', 'itemtype', 'string',
                            array('value' => ''));
    $migration->changeField('glpi_plugin_datainjection_infos', 'model_id', 'models_id', 'integer');
@@ -321,13 +321,16 @@ function plugin_datainjection_update170_20() {
       $migration->changeField($table, 'ID', 'id', 'autoincrement');
    }
 
+   $migration->migrationOneTable('glpi_plugin_datainjection_mappings');
+   $migration->migrationOneTable('glpi_plugin_datainjection_infos');
+   $migration->migrationOneTable('glpi_plugin_datainjection_modelcsvs');
+
    $glpitables = array('glpi_plugin_datainjection_models',
                        'glpi_plugin_datainjection_mappings',
                        'glpi_plugin_datainjection_infos',
                        'glpi_plugin_datainjection_modelcsvs');
    Plugin::migrateItemType (array(), array(), $glpitables);
 
-   $migration->migrationOneTable('glpi_plugin_datainjection_mappings');
    $query = "UPDATE `glpi_plugin_datainjection_mappings`
              SET `itemtype` = 'none' ,
                  `value`='none'
