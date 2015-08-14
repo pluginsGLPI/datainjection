@@ -36,7 +36,11 @@ class PluginDatainjectionProfile extends Profile {
       $rights = array(
           array('itemtype'  => 'PluginDatainjectionModel',
                 'label'     => __('Model management', 'datainjection'),
-                'field'     => 'plugin_datainjection_model'));
+                'field'     => 'plugin_datainjection_model'),
+          array('itemtype'  => 'PluginDatainjectionModel',
+                'label'     => __('Injection of the file', 'datainjection'),
+                'field'     => 'plugin_datainjection_use', 
+                'rights'    => array(READ => __('Read'))));
       return $rights;
    }
    
@@ -105,13 +109,18 @@ class PluginDatainjectionProfile extends Profile {
       include_once(GLPI_ROOT."/plugins/datainjection/inc/profile.class.php");
       foreach (self::getAllRights() as $right) {
          self::addDefaultProfileInfos($profiles_id, 
-                                    array('plugin_datainjection_model' => ALLSTANDARDRIGHT));
+                                    array('plugin_datainjection_model' => ALLSTANDARDRIGHT, 
+                                          'plugin_datainjection_use' => READ));
       }
    }
 
 
    static function migrateProfiles() {
       global $DB;
+      if (!TableExists('glpi_plugin_datainjection_profiles')) {
+         return true;
+      } 
+
       $profiles = getAllDatasFromTable('glpi_plugin_datainjection_profiles');
       foreach ($profiles as $id => $profile) {
          $query = "SELECT `id` FROM `glpi_profiles` WHERE `name`='".$profile['name']."'";
@@ -131,6 +140,11 @@ class PluginDatainjectionProfile extends Profile {
                   break;
             }
             self::addDefaultProfileInfos($id, array('plugin_datainjection_model' => $value));
+            if ($value > 0) {
+               self::addDefaultProfileInfos($id, array('plugin_datainjection_use' => READ));
+            } else {
+               self::addDefaultProfileInfos($id, array('plugin_datainjection_model' => 0));
+            }
          }
       }
    }

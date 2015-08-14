@@ -30,8 +30,7 @@
 
  class PluginDatainjectionClientInjection {
 
-   //TODO change right
-   static $rightname = "plugin_datainjection_model";
+   static $rightname = "plugin_datainjection_use";
    
    const STEP_UPLOAD  = 0;
    const STEP_PROCESS = 1;

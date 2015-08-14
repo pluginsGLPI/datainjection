@@ -50,7 +50,7 @@ function plugin_init_datainjection() {
                or die(sprintf(__('%1$s %2$s'), __("Can't create folder", 'datainjection'),
                               PLUGIN_DATAINJECTION_UPLOAD_DIR));
       }
-      if (Session::haveRight('plugin_datainjection_model', READ)) {
+      if (Session::haveRight('plugin_datainjection_use', READ)) {
          $PLUGIN_HOOKS["menu_toadd"]['datainjection'] = array('tools'  => 'PluginDatainjectionMenu');
       }
    
@@ -78,7 +78,7 @@ function plugin_version_datainjection() {
                 'author'         => 'Walid Nouh, Remi Collet, Nelly Mahu-Lasson, Xavier Caillaud',
                 'homepage'       => 'https://forge.indepnet.net/projects/datainjection',
                 'license'        => 'GPLv2+',
-                'version'        => '2.4.0'
+                'version'        => '2.4.1'
    );
 }
 
