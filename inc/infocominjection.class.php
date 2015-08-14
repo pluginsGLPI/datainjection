@@ -147,8 +147,8 @@ class PluginDatainjectionInfocomInjection extends Infocom
       foreach (array('order_date', 'use_date', 'buy_date', 'warranty_date', 'delivery_date',
                      'inventory_date') as $date) {
 
-         if (!isset($values['Infocom'][$date])
-             || ($values['Infocom'][$date] == PluginDatainjectionCommonInjectionLib::EMPTY_VALUE)) {
+         if (isset($values['Infocom'][$date])
+             && ($values['Infocom'][$date] == PluginDatainjectionCommonInjectionLib::EMPTY_VALUE)) {
             $values['Infocom'][$date] = "NULL";
          }
       }
