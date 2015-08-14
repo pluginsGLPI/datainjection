@@ -92,6 +92,7 @@ class PluginDatainjectionPhoneInjection extends Phone
    **/
    function addSpecificNeededFields($primary_type, $values) {
 
+      $fields = array();
       if (isset($values[$primary_type]['is_global'])) {
          if (empty($values[$primary_type]['is_global'])) {
             $fields['is_global'] = 0;

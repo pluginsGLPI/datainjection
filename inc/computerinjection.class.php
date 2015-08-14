@@ -70,7 +70,7 @@ class PluginDatainjectionComputerInjection extends Computer
       $notimportable = array(10, 11, 12, 13, 14, 15, 19, 34, 35, 36, 39, 91, 92, 93,
                              150, 151, 152, 153, 154, 155, 156, 160, 161, 162, 163, 164 ,165, 166);
 
-                             $options['ignore_fields'] = array_merge($blacklist, $notimportable);
+      $options['ignore_fields'] = array_merge($blacklist, $notimportable);
 
       $options['displaytype']   = array("dropdown"       => array(3, 4, 23, 31, 32, 33, 40,
                                                                   41, 42, 45, 46, 49, 71),
