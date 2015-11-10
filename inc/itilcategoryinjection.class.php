@@ -62,7 +62,7 @@ class PluginDatainjectionITILCategoryInjection extends ITILCategory
 
       //Remove some options because some fields cannot be imported
       $blacklist     = PluginDatainjectionCommonInjectionLib::getBlacklistedOptions(get_parent_class($this));
-      $notimportable = array(14, 77, 78);
+      $notimportable = array(14, 80, 77, 78);
 
       $options['ignore_fields'] = array_merge($blacklist, $notimportable);
 
