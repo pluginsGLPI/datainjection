@@ -123,9 +123,9 @@ class PluginDatainjectionInfo extends CommonDBTM {
 
       $model->loadInfos();
       $nb = count($model->getInfos());
-
+      $rand=mt_rand();
       if ($nb > 0) {
-         echo "<form method='post' name='info_form' id='info_form' action='".Toolbox::getItemTypeFormURL(__CLASS__)."'>";
+         echo "<form method='post' name='info_form$rand' id='info_form$rand' action='".Toolbox::getItemTypeFormURL(__CLASS__)."'>";
          echo "<table class='tab_cadre_fixe'>";
          echo "<tr>";
          if ($canedit) {
@@ -166,7 +166,7 @@ class PluginDatainjectionInfo extends CommonDBTM {
             echo "<input type='submit' name='update' value='"._sx('button', 'Save')."' class='submit'>";
             echo "</td></tr>";
 
-            Html::openArrowMassives("info_form", true);
+            Html::openArrowMassives("info_form$rand", true);
             Html::closeArrowMassives(array('delete' => __('Delete permanently')));
          }
          echo "</table>";

@@ -41,7 +41,7 @@ if (isset ($_POST["update"])) {
    foreach ($_POST["item"] as $key => $val) {
       $input = array('id' => $key);
       if ($val == 1) {
-         $info->check($key, 'w');
+         $info->check($key, UPDATE);
          $info->delete($input);
       }
    }
