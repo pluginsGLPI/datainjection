@@ -249,8 +249,8 @@ class PluginDatainjectionModel extends CommonDBTM {
             if ($model['entities_id'] == -1) {
                echo "\n<optgroup label='" . __('Private') . "'>";
             } else {
-               echo "\n<optgroup label='" . Dropdown::getDropdownName("glpi_entities",
-                                                                      $model['entities_id']) . "'>";
+               echo "\n<optgroup label=\"" . Dropdown::getDropdownName("glpi_entities",
+                                                                      $model['entities_id']) . "\">";
             }
             $prev = $model['entities_id'];
          }
