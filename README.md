@@ -9,9 +9,9 @@ It allows to create models of injection for a future re-use. It's been created i
 
 Data to be imported using the plugins are:
 
-- inventory data,
-- management data,
-- configuration data.
+- inventory data (except softwares and licenses),
+- management data (contract, contact, supplier),
+- configuration data (user, group, entity).
 
 ## Français
 
@@ -24,6 +24,6 @@ Elle permet de créer des modèles d'injection pour une réutilisation future, e
 
 Les données pouvant-être injectées sont :
 
-- données d'inventaires,
-- données de gestion,
-- données de configuration.
+- données d'inventaires (sauf logiciels et licences),
+- données de gestion (contrat, contact, fournisseur),
+- données de configuration (utilisateur, groupe, entité).

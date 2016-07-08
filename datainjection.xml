@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<root>
+   <name>Data Injection</name>
+   <key>datainjection</key>
+   <state>stable</state>
+   <logo>https://raw.githubusercontent.com/pluginsGLPI/datainjection/master/datainjection.png</logo>
+   <description>
+      <short>
+         <fr><![CDATA[Cette extension permet l'import de données dans GLPI à l'aide de fichiers CSV.]]></fr>
+         <en><![CDATA[This plugin allows data import into GLPI using CSV files.]]></en>
+      </short>
+      <long>
+         <fr><![CDATA[Elle permet de créer des modèles d’injection pour une réutilisation future et a été créée afin de répondre aux besoins suivants :<br /> - reprise des données d'autres outils d'inventaires<br /> - injection de bons de livraisons électroniques<br />Les données pouvant-être injectées sont :<br /> - données d'inventaires (sauf logiciels et licences)<br /> - données de gestion (contrat, contact, fournisseur)<br /> - données de configuration (utilisateur, groupe, entité)]]></fr>
+         <en><![CDATA[It allows to create models of injection for a future re-use. It's been created in order to:<br /> - import data coming from others asset management softwares<br /> - inject electronic delivery forms<br />Data to be imported using the plugains are:<br /> - inventory data (except softwares and licenses)<br /> - management data (contract, contact, supplier)<br /> - configuration data (user, group, entity)]]></en>
+      </long>
+   </description>
+   <homepage>http://plugins.glpi-project.org/#/plugin/datainjection</homepage>
+   <download>https://github.com/pluginsGLPI/datainjection/releases</download>
+   <issues>https://github.com/pluginsGLPI/datainjection/issues</issues>
+   <authors>
+      <author>Walid Nouh</author>
+      <author>Dévi Balpe</author>
+      <author>Remi Collet</author>
+      <author>Nelly Mahu-Lasson</author>
+      <author>Xavier Caillaud</author>
+   </authors>
+   <versions>
+      <version>
+          <num>2.4.1</num>
+          <compatibility> 0.85</compatibility>
+          <compatibility> 0.90</compatibility>
+      </version>
+      <version>
+          <num>2.3.1</num>
+          <compatibility> 0.84</compatibility>
+      </version>s
+      <version>
+          <num>2.3.0</num>
+          <compatibility> 0.84</compatibility>
+      </version>
+     <version>
+          <num>2.2.4</num>
+          <compatibility> 0.83.3+</compatibility>
+      </version>
+     <version>
+          <num>2.2.3</num>
+          <compatibility> 0.83.3+</compatibility>
+      </version>
+     <version>
+          <num>2.2.2</num>
+          <compatibility> 0.83.3+</compatibility>
+      </version>
+     <version>
+          <num>2.2.1</num>
+          <compatibility>0.83</compatibility>
+      </version>
+     <version>
+          <num>2.2.0</num>
+          <compatibility>0.83</compatibility>
+      </version>
+     <version>
+          <num>2.1.7</num>
+          <compatibility>0.80</compatibility>
+      </version>
+     <version>
+          <num>2.1.6</num>
+          <compatibility>0.80</compatibility>
+      </version>
+     <version>
+          <num>2.1.5</num>
+          <compatibility>0.80</compatibility>
+      </version>
+     <version>
+          <num>2.1.4</num>
+          <compatibility>0.80</compatibility>
+      </version>
+     <version>
+          <num>2.1.3</num>
+          <compatibility>0.80</compatibility>
+      </version>
+     <version>
+          <num>2.1.2</num>
+          <compatibility>0.80</compatibility>
+      </version>
+     <version>
+          <num>2.1.1</num>
+          <compatibility>0.80</compatibility>
+      </version>
+     <version>
+          <num>2.1.0</num>
+          <compatibility>0.80</compatibility>
+      </version>
+     <version>
+          <num>2.0.2</num>
+          <compatibility>0.78</compatibility>
+      </version>
+     <version>
+          <num>1.7.1</num>
+          <compatibility>0.72</compatibility>
+      </version>
+     <version>
+          <num>1.7.0</num>
+          <compatibility>0.72</compatibility>
+      </version>
+     <version>
+          <num>1.6.0</num>
+          <compatibility>0.72</compatibility>
+      </version>
+     <version>
+          <num>1.5.1</num>
+          <compatibility>0.71</compatibility>
+      </version>
+     <version>
+          <num>1.5.0</num>
+          <compatibility>0.71</compatibility>
+      </version>
+      <version>
+          <num>1.4.0</num>
+          <compatibility>0.71</compatibility>
+      </version>
+      <version>
+          <num>1.3.1</num>
+          <compatibility>0.71</compatibility>
+      </version>
+      <version>
+          <num>1.2</num>
+          <compatibility>0.71</compatibility>
+      </version>
+      <version>
+          <num>1.1</num>
+          <compatibility>0.70</compatibility>
+      </version>
+      <version>
+          <num>1.0</num>
+          <compatibility>0.70</compatibility>
+      </version>
+   </versions>
+   <langs>
+      <lang>fr_FR</lang>
+      <lang>en_GB</lang>
+      <lang>es_ES</lang>
+      <lang>ru_RU</lang>
+   </langs>
+   <category>injection/import</category>
+   <tags>
+         <fr>
+            <tag>Import</tag>
+            <tag>données</tag>
+            <tag>csv</tag>
+            <tag>entités</tag>
+         </fr>
+         <en>
+            <tag>Injection</tag>
+            <tag>data</tag>
+            <tag>csv</tag>
+            <tag>entities</tag>
+         </en>
+   </tags>
+   <license>GPL v2+</license>
+</root>
