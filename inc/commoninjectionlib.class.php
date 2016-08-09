@@ -79,7 +79,7 @@ class PluginDatainjectionCommonInjectionLib {
    const TYPE_MISMATCH                  = 22;
    const MANDATORY                      = 23;
    const ITEM_NOT_FOUND                 = 24;
-   
+
    //Injection Message
    const ERROR_CANNOT_IMPORT              = 31;
    const ERROR_CANNOT_UPDATE              = 32;
@@ -340,7 +340,7 @@ class PluginDatainjectionCommonInjectionLib {
       //2 : id
       // 19 : date_mod
       // 80 : entity
-      $blacklist = array(2, 19, 80);
+      $blacklist = array(2, 19, 80, 201, 202, 203, 204);
 
       //add document fields
       if (in_array($itemtype, $CFG_GLPI["document_types"])) {
@@ -1863,11 +1863,11 @@ class PluginDatainjectionCommonInjectionLib {
          case self::ERROR_CANNOT_UPDATE :
             $message = __('No right to update data', 'datainjection');
             break;
-         
+
          case self::ERROR_FIELDSIZE_EXCEEDED :
             $message = __('Size of the inserted value is to expansive', 'datainjection');
             break;
-            
+
          case self::ERROR_IMPORT_REFUSED :
             $message = __('Import not allowed', 'datainjection');
             break;
