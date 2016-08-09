@@ -43,7 +43,7 @@ function plugin_init_datainjection() {
 
       Plugin::registerClass('PluginDatainjectionProfile',
                            array('addtabon' => array('Profile')));
-   
+
       //If directory doesn't exists, create it
       if (!plugin_datainjection_checkDirectories()) {
             @ mkdir(PLUGIN_DATAINJECTION_UPLOAD_DIR)
@@ -53,7 +53,7 @@ function plugin_init_datainjection() {
       if (Session::haveRight('plugin_datainjection_use', READ)) {
          $PLUGIN_HOOKS["menu_toadd"]['datainjection'] = array('tools'  => 'PluginDatainjectionMenu');
       }
-   
+
       $PLUGIN_HOOKS['pre_item_purge']['datainjection']
             = array('Profile' => array('PluginDatainjectionProfile', 'purgeProfiles'));
 
@@ -78,9 +78,10 @@ function plugin_version_datainjection() {
                 'author'         => 'Walid Nouh, Remi Collet, Nelly Mahu-Lasson, Xavier Caillaud',
                 'homepage'       => 'https://forge.glpi-project.org/projects/datainjection',
                 'license'        => 'GPLv2+',
-                'version'        => '2.4.1'
+                'version'        => '2.4.2'
    );
 }
+
 
 function plugin_datainjection_check_prerequisites() {
 

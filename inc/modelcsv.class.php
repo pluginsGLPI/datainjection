@@ -29,7 +29,7 @@
  ---------------------------------------------------------------------- */
 
 class PluginDatainjectionModelcsv extends CommonDBChild {
-   
+
    static $rightname = "plugin_datainjection_model";
    var $specific_fields;
 
@@ -144,7 +144,7 @@ class PluginDatainjectionModelcsv extends CommonDBChild {
    function showAdditionnalForm(PluginDatainjectionModel $model, $options=array()) {
 
       $id      = $this->getFromDBByModelID($model->fields['id']);
-      $canedit = $this->can($id, 'w');
+      $canedit = $this->can($id, UPDATE);
 
       echo "<tr><th colspan='4'>".__('Specific file format options', 'datainjection')."</th></tr>";
 

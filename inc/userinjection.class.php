@@ -145,7 +145,7 @@ class PluginDatainjectionUserInjection extends User
       //Manage user emails
       if (isset($values['User']['useremails_id'])
           && $rights['add_dropdown']
-          && Session::haveRight('user', 'w')) {
+          && Session::haveRight('user', UPDATE)) {
 
            if (!countElementsInTable("glpi_useremails",
                                      "`users_id`='".$values['User']['id']."'

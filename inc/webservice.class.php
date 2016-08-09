@@ -70,7 +70,7 @@ class PluginDatainjectionWebservice {
                                                      __('Model unknown', 'datainjection'));
 
       }
-      if (!$model->can($params['models_id'], 'r')) {
+      if (!$model->can($params['models_id'], READ)) {
          return PluginWebservicesMethodCommon::Error($protocol, WEBSERVICES_ERROR_NOTALLOWED,
                                                      __('You cannot access this model',
                                                         'datainjection'));
