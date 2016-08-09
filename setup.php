@@ -85,7 +85,7 @@ function plugin_version_datainjection() {
 
 function plugin_datainjection_check_prerequisites() {
 
-   if (version_compare(GLPI_VERSION,'0.85','lt') || version_compare(GLPI_VERSION,'0.91','ge')) {
+   if (version_compare(GLPI_VERSION,'0.85','lt') || version_compare(GLPI_VERSION,'9.2','ge')) {
       _e('This plugin requires GLPI 0.85 or higher', 'datainjection');
       return false;
    }
