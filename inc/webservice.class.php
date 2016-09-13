@@ -133,7 +133,7 @@ class PluginDatainjectionWebservice {
          $engine  = new PluginDatainjectionEngine($model, $additional_infos, $params['entities_id']);
          //Remove first line if header is present
          $first = true;
-         foreach ($model->injectionData->getDatas() as $id => $data) {
+         foreach ($model->injectionData->getData() as $id => $data) {
             if ($first
                 && $model->getSpecificModel()->isHeaderPresent()) {
                $first = false;

@@ -156,7 +156,7 @@
          if ($confirm == 'creation') {
             $message = __('Warning : existing data will be overridden', 'datainjection');
          } else {
-            $message = __("Watch out, you're about to inject datas into GLPI. Are you sure you want to do it ?",
+            $message = __("Watch out, you're about to inject data into GLPI. Are you sure you want to do it ?",
                           'datainjection');
          }
          $alert = "OnClick='return window.confirm(\"$message\");'";

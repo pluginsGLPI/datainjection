@@ -30,24 +30,24 @@
 
 class PluginDatainjectionData {
 
-   private $injectionDatas;
+   private $injectionData;
 
 
    function __construct() {
-      $injectionDatas = array();
+      $injectionData = array();
    }
 
 
    /**
     * @param $newData
    **/
-   function addToDatas($newData) {
-      $this->injectionDatas[] = $newData;
+   function addToData($newData) {
+      $this->injectionData[] = $newData;
    }
 
 
-   function getDatas() {
-      return $this->injectionDatas;
+   function getData() {
+      return $this->injectionData;
    }
 
 
@@ -56,8 +56,8 @@ class PluginDatainjectionData {
    **/
    function getDataAtLine($line_id) {
 
-      if (count($this->injectionDatas) >= $line_id) {
-         return $this->injectionDatas[$line_id][0];
+      if (count($this->injectionData) >= $line_id) {
+         return $this->injectionData[$line_id][0];
       }
       return array();
    }

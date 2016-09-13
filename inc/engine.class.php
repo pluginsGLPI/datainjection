@@ -62,7 +62,7 @@ class PluginDatainjectionEngine {
 
 
    /**
-    * Inject one line of datas
+    * Inject one line of data
     *
     * @param $line   one line of data to import
     * @param $index  the line number is the file

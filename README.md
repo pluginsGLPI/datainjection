@@ -4,7 +4,7 @@ This plugin allows data import into [GLPI](http://glpi-project.org) using CSV fi
 
 It allows to create models of injection for a future re-use. It's been created in order to:
 
-- import datas coming from others asset management softwares
+- import data coming from others asset management softwares
 - inject electronic delivery forms
 
 Data to be imported using the plugins are:
