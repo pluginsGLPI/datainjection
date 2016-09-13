@@ -930,7 +930,7 @@ class PluginDatainjectionCommonInjectionLib {
 
 
    /**
-    * Third pass of reformat : datas, mac address & floats
+    * Third pass of reformat : data, mac address & floats
    */
    private function reformatThirdPass() {
       global $CFG_GLPI;
@@ -1594,7 +1594,7 @@ class PluginDatainjectionCommonInjectionLib {
 
 
    /**
-    * Function to check if the datas to inject already exists in DB
+    * Function to check if the data to inject already exists in DB
     *
     * @param class which represents type to inject
     * @param itemtype the itemtype to inject
@@ -1881,7 +1881,7 @@ class PluginDatainjectionCommonInjectionLib {
             break;
 
          case self::SUCCESS :
-            $message = __('Datas to insert are correct', 'datainjection');
+            $message = __('Data to insert are correct', 'datainjection');
             break;
 
          case self::TYPE_MISMATCH :

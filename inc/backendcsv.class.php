@@ -88,7 +88,7 @@
                  && ($data[$num -1] != PluginDatainjectionCommonInjectionLib::EMPTY_VALUE))) {
             $tmp = trim($DB->escape($data[$c]));
             switch ($encoding) {
-               //If file is ISO8859-1 : encode the datas in utf8
+               //If file is ISO8859-1 : encode the data in utf8
                case PluginDatainjectionBackend::ENCODING_ISO8859_1 :
                   if (!Toolbox::seems_utf8($tmp)) {
                      $csv[0][] = utf8_encode($tmp);
@@ -136,7 +136,7 @@
       for ($index = 0 ; (($numberOfLines == -1) || ($index < $numberOfLines)) && $continue ; $index++) {
          $data = $this->getNextLine();
          if ($data) {
-            $injectionData->addToDatas($data);
+            $injectionData->addToData($data);
          } else {
             $continue = false;
          }

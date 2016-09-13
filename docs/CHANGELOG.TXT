@@ -100,7 +100,7 @@ Version 1.6.0 - GLPI 0.72
    https://dev.indepnet.net/plugins/query?milestone=Data_injection+1.6.0
    
 Version 1.5.1
-   #200 Remove any message in MESSAGE_AFTER_REDIRECT when importing datas
+   #200 Remove any message in MESSAGE_AFTER_REDIRECT when importing data
    #199 Add more info mappings
    #198 Add more warning messages
    

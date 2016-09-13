@@ -348,7 +348,7 @@ class PluginDatainjectionModel extends CommonDBTM {
 
       $tab[5]['table']           = $this->getTable();
       $tab[5]['field']           = 'itemtype';
-      $tab[5]['name']            = __('Type of datas to import', 'datainjection');
+      $tab[5]['name']            = __('Type of data to import', 'datainjection');
       $tab[5]['datatype']        = 'itemtypename';
       $tab[5]['nosearch']        = true;
       $tab[5]['massiveaction']   = false;
@@ -543,7 +543,7 @@ class PluginDatainjectionModel extends CommonDBTM {
       echo "</td></tr>";
 
       echo "<tr class='tab_bg_1'>";
-      echo "<td>".__('Type of datas to import', 'datainjection')."</td>";
+      echo "<td>".__('Type of data to import', 'datainjection')."</td>";
       echo "<td>";
 
       if (($this->fields['step'] == '') || ($this->fields['step'] == self::INITIAL_STEP)) {
@@ -1162,7 +1162,7 @@ class PluginDatainjectionModel extends CommonDBTM {
       echo "<table class='tab_cadre_fixe'>";
       if (isset($_SESSION['datainjection']['lines'])) {
          $injectionData = unserialize($_SESSION['datainjection']['lines']);
-         $lines         = $injectionData->getDatas();
+         $lines         = $injectionData->getData();
          $nblines       = $_SESSION['datainjection']['nblines'];
          $model         = self::getInstanceByModelID($models_id);
 

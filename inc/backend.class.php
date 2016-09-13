@@ -49,7 +49,7 @@ abstract class PluginDatainjectionBackend {
     * @param $injectionData
     * @param $header_present
     *
-    * @return array with the datas from the header
+    * @return array with the data from the header
    **/
    static function getHeader(PluginDatainjectionData $injectionData, $header_present) {
 
