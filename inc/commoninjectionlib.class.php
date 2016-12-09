@@ -1364,7 +1364,8 @@ class PluginDatainjectionCommonInjectionLib
       $add      = true;
       $accepted = false;
 
-      // logDebug("processAddOrUpdate(), start with", $this->values);
+      $this->values = Toolbox::stripslashes_deep($this->values);
+      //Toolbox::logDebug("processAddOrUpdate(), start with", $this->values);
 
       // Initial value, will be change when problem
       $this->results['status']                     = self::SUCCESS;
@@ -1516,6 +1517,8 @@ class PluginDatainjectionCommonInjectionLib
             }
          }
       }
+
+      $toinject = Toolbox::addslashes_deep($toinject);
 
       if (method_exists($injectionClass, 'customimport')) {
          $newID = call_user_func(
@@ -1832,7 +1835,7 @@ class PluginDatainjectionCommonInjectionLib
                    || $this->values[$itemtype][$key] == self::EMPTY_VALUE
                    || $this->values[$itemtype][$key] == self::DROPDOWN_EMPTY_VALUE)
                ) {
-                  $value = Toolbox::addslashes_deep($value);
+                  //$value = Toolbox::addslashes_deep($value);
                   $this->setValueForItemtype($itemtype, $key, $value);
                }
             }
