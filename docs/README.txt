@@ -1,8 +1,8 @@
-﻿/*
+/*
  * @version $Id: HEADER 14684 2011-06-11 06:32:40Z remi $
  LICENSE
 
- This file is part of the order plugin.
+ This file is part of the datainjection plugin.
 
  Datainjection plugin is free software; you can redistribute it and/or modify
  it under the terms of the GNU General Public License as published by
@@ -15,14 +15,14 @@
  GNU General Public License for more details.
 
  You should have received a copy of the GNU General Public License
- along with datainjection; along with Behaviors. If not, see <http://www.gnu.org/licenses/>.
+ along with datainjection. If not, see <http://www.gnu.org/licenses/>.
  --------------------------------------------------------------------------
  @package   datainjection
  @author    the datainjection plugin team
- @copyright Copyright (c) 2010-2011 Order plugin team
+ @copyright Copyright (c) 2010-2017 Datainjection plugin team
  @license   GPLv2+
             http://www.gnu.org/licenses/gpl.txt
- @link      https://forge.indepnet.net/projects/datainjection
+ @link      https://github.com/pluginsGLPI/datainjection
  @link      http://www.glpi-project.org/
  @since     2009
  ---------------------------------------------------------------------- */

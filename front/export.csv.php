@@ -1,6 +1,6 @@
 <?php
 /*
- * @version $Id: clientinjection.form.php 581 2011-06-11 09:08:30Z remi $
+ * @version $Id: HEADER 14684 2011-06-11 06:32:40Z remi $
  LICENSE
 
  This file is part of the datainjection plugin.
@@ -20,10 +20,10 @@
  --------------------------------------------------------------------------
  @package   datainjection
  @author    the datainjection plugin team
- @copyright Copyright (c) 2010-2013 Datainjection plugin team
+ @copyright Copyright (c) 2010-2017 Datainjection plugin team
  @license   GPLv2+
             http://www.gnu.org/licenses/gpl.txt
- @link      https://forge.indepnet.net/projects/datainjection
+ @link      https://github.com/pluginsGLPI/datainjection
  @link      http://www.glpi-project.org/
  @since     2009
  ---------------------------------------------------------------------- */
