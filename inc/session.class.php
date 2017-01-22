@@ -28,9 +28,10 @@
  @since     2009
  ---------------------------------------------------------------------- */
 
- class PluginDatainjectionSession {
+class PluginDatainjectionSession
+{
 
-   /**
+    /**
     * Get a parameter from the HTTP session
     *
     * @param $param  the parameter to get
@@ -50,7 +51,7 @@
    }
 
 
-   /**
+    /**
     * Set a parameter in the HTTP session
     *
     * @param $param     the parameter
@@ -70,7 +71,7 @@
    }
 
 
-   /**
+    /**
     * Remove all parameters from the HTTP session
     *
     * @return nothing
@@ -87,4 +88,3 @@
    }
 
 }
-?>

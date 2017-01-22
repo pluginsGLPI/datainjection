@@ -29,11 +29,12 @@
  ---------------------------------------------------------------------- */
 
 if (!defined('GLPI_ROOT')) {
-   die("Sorry. You can't access directly to this file");
+    die("Sorry. You can't access directly to this file");
 }
 
 class PluginDatainjectionPhoneModelInjection extends PhoneModel
-                                               implements PluginDatainjectionInjectionInterface {
+                                               implements PluginDatainjectionInjectionInterface
+{
 
 
    static function getTable() {
@@ -44,16 +45,18 @@ class PluginDatainjectionPhoneModelInjection extends PhoneModel
 
 
    function isPrimaryType() {
+
       return true;
    }
 
 
    function connectedTo() {
+
       return array();
    }
 
 
-   /**
+    /**
     * @see plugins/datainjection/inc/PluginDatainjectionInjectionInterface::getOptions()
    **/
    function getOptions($primary_type='') {
@@ -71,7 +74,7 @@ class PluginDatainjectionPhoneModelInjection extends PhoneModel
    }
 
 
-   /**
+    /**
     * @see plugins/datainjection/inc/PluginDatainjectionInjectionInterface::addOrUpdateObject()
    **/
    function addOrUpdateObject($values=array(), $options=array()) {
@@ -82,4 +85,3 @@ class PluginDatainjectionPhoneModelInjection extends PhoneModel
    }
 
 }
-?>

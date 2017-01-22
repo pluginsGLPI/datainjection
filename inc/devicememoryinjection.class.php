@@ -29,11 +29,12 @@
  ---------------------------------------------------------------------- */
 
 if (!defined('GLPI_ROOT')) {
-   die("Sorry. You can't access directly to this file");
+    die("Sorry. You can't access directly to this file");
 }
 
 class PluginDatainjectionDeviceMemoryInjection extends DeviceMemory
-                                               implements PluginDatainjectionInjectionInterface {
+                                               implements PluginDatainjectionInjectionInterface
+{
 
 
    static function getTable() {
@@ -44,16 +45,18 @@ class PluginDatainjectionDeviceMemoryInjection extends DeviceMemory
 
 
    function isPrimaryType() {
+
       return true;
    }
 
 
    function connectedTo() {
+
       return array("Computer");
    }
 
 
-   /**
+    /**
     * @see plugins/datainjection/inc/PluginDatainjectionInjectionInterface::getOptions()
    **/
    function getOptions($primary_type='') {
@@ -66,13 +69,13 @@ class PluginDatainjectionDeviceMemoryInjection extends DeviceMemory
 
       $options['ignore_fields'] = array_merge($blacklist, $notimportable);
       $options['displaytype']   = array("multiline_text" => array(16),
-                                        "dropdown"       => array(13, 23));
+                                      "dropdown"       => array(13, 23));
 
       return PluginDatainjectionCommonInjectionLib::addToSearchOptions($tab, $options, $this);
    }
 
 
-   /**
+    /**
     * @param $values
     * @param $add                (true by default)
     * @param $rights    array
@@ -91,7 +94,8 @@ class PluginDatainjectionDeviceMemoryInjection extends DeviceMemory
          if (!countElementsInTable($item->getTable(), $where)) {
 
             if (isset($values[get_parent_class($this)]['size'])
-                && ($values[get_parent_class($this)]['size'] > 0)) {
+                && ($values[get_parent_class($this)]['size'] > 0)
+            ) {
                $tmp['size'] = $values[get_parent_class($this)]['size'];
             } else {
                $tmp['size'] = 0;
@@ -106,7 +110,7 @@ class PluginDatainjectionDeviceMemoryInjection extends DeviceMemory
    }
 
 
-   /**
+    /**
     * @see plugins/datainjection/inc/PluginDatainjectionInjectionInterface::addOrUpdateObject()
    **/
    function addOrUpdateObject($values=array(), $options=array()) {
@@ -117,7 +121,7 @@ class PluginDatainjectionDeviceMemoryInjection extends DeviceMemory
    }
 
 
-   /**
+    /**
     * @param $primary_type
     * @param $values
    **/
@@ -135,4 +139,3 @@ class PluginDatainjectionDeviceMemoryInjection extends DeviceMemory
    }
 
 }
-?>

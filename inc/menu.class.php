@@ -27,21 +27,24 @@
  @link      http://www.glpi-project.org/
  @since     2009
  ---------------------------------------------------------------------- */
- 
-class PluginDatainjectionMenu extends CommonGLPI {
+
+class PluginDatainjectionMenu extends CommonGLPI
+{
 
    static $rightname = 'plugin_datainjection_use';
 
    static function getMenuName() {
+
       return __('File injection', 'datainjection');
    }
 
    static function getMenuContent() {
+
       global $CFG_GLPI;
       $menu          = array();
       $menu['title'] = self::getMenuName();
       $menu['page']  = '/plugins/datainjection/front/clientinjection.form.php';
-      
+
       if (Session::haveRight(static::$rightname, READ)) {
 
          $image_model  = "<img src='".$CFG_GLPI["root_doc"]."/pics/rdv.png' title='";
@@ -51,7 +54,6 @@ class PluginDatainjectionMenu extends CommonGLPI {
          $image_import  = "<img src='".$CFG_GLPI["root_doc"]."/pics/actualiser.png' title='";
          $image_import .= __s('Injection of the file', 'datainjection');
          $image_import .= "' alt='".__s('Injection of the file', 'datainjection')."'>";
-
 
          $menu['options']['client']['title'] = self::getMenuName();
          $menu['options']['client']['page'] = Toolbox::getItemTypeSearchUrl('PluginDatainjectionModel', false);

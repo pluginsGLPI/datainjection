@@ -28,21 +28,22 @@
  @since     2009
  ---------------------------------------------------------------------- */
 
-class PluginDatainjectionEngine {
-   //Model informations
+class PluginDatainjectionEngine
+{
+    //Model informations
    private $model;
 
-   //Current entity
+    //Current entity
    private $entity;
 
-   //Additional infos to be added
+    //Additional infos to be added
    private $infos = array();
 
-   //Lines in error
+    //Lines in error
    private $error_lines = array();
 
 
-   /**
+    /**
     * @param $model
     * @param $infos     array
     * @param $entity             (default 0)
@@ -61,7 +62,7 @@ class PluginDatainjectionEngine {
    }
 
 
-   /**
+    /**
     * Inject one line of data
     *
     * @param $line   one line of data to import
@@ -84,11 +85,12 @@ class PluginDatainjectionEngine {
       //Note : ignore values which are not mapped with a glpi's field
       $searchOptions = $injectionClass->getOptions($itemtype);
 
-      for ($i=0 ; $i<count($line) ; $i++) {
+      for ($i=0; $i<count($line); $i++) {
          $mapping = $this->getModel()->getMappingByRank($i);
          //If field is mapped with a value in glpi
          if (($mapping != null)
-             && ($mapping->getItemtype() != PluginDatainjectionInjectionType::NO_VALUE)) {
+             && ($mapping->getItemtype() != PluginDatainjectionInjectionType::NO_VALUE)
+         ) {
             $this->addValueToInject($fields_toinject, $searchOptions, $mapping, $line[$i], $several);
          }
       }
@@ -109,37 +111,37 @@ class PluginDatainjectionEngine {
       //--------------- Set all needed options ------------------//
       //Check options
       $checks = array('ip'           => true,
-                      'mac'          => true,
-                      'integer'      => true,
-                      'yes'          => true,
-                      'bool'         => true,
-                      'date'         => $this->getModel()->getDateFormat(),
-                      'float'        => $this->getModel()->getFloatFormat(),
-                      'string'       => true,
-                      'right_r'      => true,
-                      'right_rw'     => true,
-                      'interface'    => true,
-                      'auth_method'  => true,
-                      'port_unicity' => $this->getModel()->getPortUnicity());
+                    'mac'          => true,
+                    'integer'      => true,
+                    'yes'          => true,
+                    'bool'         => true,
+                    'date'         => $this->getModel()->getDateFormat(),
+                    'float'        => $this->getModel()->getFloatFormat(),
+                    'string'       => true,
+                    'right_r'      => true,
+                    'right_rw'     => true,
+                    'interface'    => true,
+                    'auth_method'  => true,
+                    'port_unicity' => $this->getModel()->getPortUnicity());
 
       //Rights options
       $rights = array('add_dropdown'              => $this->getModel()->getCanAddDropdown(),
-                      'overwrite_notempty_fields' => $this->getModel()->getCanOverwriteIfNotEmpty(),
-                      'can_add'                   => $this->model->getBehaviorAdd(),
-                      'can_update'                => $this->model->getBehaviorUpdate(),
-                      'can_delete'                => false);
+                    'overwrite_notempty_fields' => $this->getModel()->getCanOverwriteIfNotEmpty(),
+                    'can_add'                   => $this->model->getBehaviorAdd(),
+                    'can_update'                => $this->model->getBehaviorUpdate(),
+                    'can_delete'                => false);
 
       //Field format options
       $formats = array('date_format'  => $this->getModel()->getDateFormat(),
-                       'float_format' => $this->getModel()->getFloatFormat());
+                     'float_format' => $this->getModel()->getFloatFormat());
 
       //Check options : by default check all types
       $options = array('checks'           => $checks,
-                       'entities_id'      => $this->getEntity(),
-                       'rights'           => $rights,
-                       'formats'          => $formats,
-                       'mandatory_fields' => $mandatory_fields,
-                       'optional_data'    => $optional_data);
+                     'entities_id'      => $this->getEntity(),
+                     'rights'           => $rights,
+                     'formats'          => $formats,
+                     'mandatory_fields' => $mandatory_fields,
+                     'optional_data'    => $optional_data);
 
       //Will manage add or update
       $results = $injectionClass->addOrUpdateObject($fields_toinject, $options);
@@ -147,13 +149,13 @@ class PluginDatainjectionEngine {
       //Add injected line number to the result array
       $results['line'] = $index;
       if ($results['status'] != PluginDatainjectionCommonInjectionLib::SUCCESS) {
-         $this->error_lines[] = $line;
+          $this->error_lines[] = $line;
       }
-      return $results;
+       return $results;
    }
 
 
-   /**
+    /**
     * Add fields needed for injection
     *
     * @param $itemtype                    the itemtype to inject
@@ -168,40 +170,44 @@ class PluginDatainjectionEngine {
    }
 
 
-   /**
+    /**
     * Add a value to the fields to inject
     *
-    * @param $fields_toinject                the fields
-    * @param $searchOptions                  options related to the itemtype to inject
-    * @param $mapping                        the mapping which matches the field
-    * @param $value                          the value for this field, as readed from the CSV file
-    * @param $several            array       of all fields which can be mapping more than one time
+    * @param  $fields_toinject                the fields
+    * @param  $searchOptions                  options related to the itemtype to inject
+    * @param  $mapping                        the mapping which matches the field
+    * @param  $value                          the value for this field, as readed from the CSV file
+    * @param  $several            array       of all fields which can be mapping more than one time
     *                                        in the model
     * @return nothing
    **/
    function addValueToInject(&$fields_toinject, $searchOptions, $mapping, $value,
-                             $several = array()) {
+        $several = array()
+    ) {
 
       // Option will be found only for "main" type.
-      $option       = PluginDatainjectionCommonInjectionLib::findSearchOption($searchOptions,
-                                                                              $mapping->getValue());
+      $option       = PluginDatainjectionCommonInjectionLib::findSearchOption(
+          $searchOptions,
+          $mapping->getValue()
+      );
       $return_value = $value;
 
       if (($option['displaytype'] == 'multiline_text')
           && in_array($mapping->getValue(), $several)
-          && ($value != PluginDatainjectionCommonInjectionLib::EMPTY_VALUE)) {
-         $return_value = '';
+          && ($value != PluginDatainjectionCommonInjectionLib::EMPTY_VALUE)
+      ) {
+          $return_value = '';
 
          if (isset($fields_toinject[$mapping->getItemtype()][$mapping->getValue()])) {
             $return_value .= $fields_toinject[$mapping->getItemtype()][$mapping->getValue()];
          }
-         $return_value .= $mapping->getMappingName()."=".$value."\n";
+            $return_value .= $mapping->getMappingName()."=".$value."\n";
       }
-      $fields_toinject[$mapping->getItemtype()][$mapping->getValue()] = $return_value;
+       $fields_toinject[$mapping->getItemtype()][$mapping->getValue()] = $return_value;
    }
 
 
-   /**
+    /**
     * Add additonal informations, as selected by the user which performs the CSV file import
     *
     * @return additional informations to inject
@@ -211,30 +217,33 @@ class PluginDatainjectionEngine {
       $additional_infos = array();
       foreach ($this->model->getInfos() as $info) {
          if (isset($this->infos[$info->getValue()])
-             && PluginDatainjectionInfo::keepInfo($info, $this->infos[$info->getValue()])) {
+             && PluginDatainjectionInfo::keepInfo($info, $this->infos[$info->getValue()])
+         ) {
 
             $additional_infos[$info->getInfosType()][$info->getValue()]
-                              = $this->infos[$info->getValue()];
+                          = $this->infos[$info->getValue()];
          }
       }
       return $additional_infos;
    }
 
 
-   //--------- Getters -------------------------//
+    //--------- Getters -------------------------//
    function getModel() {
+
       return $this->model;
    }
 
 
    function getEntity() {
+
       return $this->entity;
    }
 
 
    function getLinesInError() {
+
       return $this->error_lines;
    }
 
 }
-?>

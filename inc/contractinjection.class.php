@@ -29,11 +29,12 @@
  ---------------------------------------------------------------------- */
 
 if (!defined('GLPI_ROOT')) {
-   die("Sorry. You can't access directly to this file");
+    die("Sorry. You can't access directly to this file");
 }
 
 class PluginDatainjectionContractInjection extends Contract
-                                           implements PluginDatainjectionInjectionInterface {
+                                           implements PluginDatainjectionInjectionInterface
+{
 
 
    static function getTable() {
@@ -44,16 +45,18 @@ class PluginDatainjectionContractInjection extends Contract
 
 
    function isPrimaryType() {
+
       return true;
    }
 
 
    function connectedTo() {
+
       return array();
    }
 
 
-   /**
+    /**
     * @see plugins/datainjection/inc/PluginDatainjectionInjectionInterface::getOptions()
    **/
    function getOptions($primary_type='') {
@@ -92,19 +95,19 @@ class PluginDatainjectionContractInjection extends Contract
       $options['ignore_fields'] = array_merge($blacklist, $notimportable);
 
       $options['displaytype']   = array("dropdown"         => array(4),
-                                        "date"             => array(5),
-                                        "dropdown_integer" => array(6, 7, 21),
-                                        "bool"             => array(86),
-                                        "alert"            => array(59),
-                                        "billing"          => array(22),
-                                        "renewal"          => array(23),
-                                        "multiline_text"   => array(16 ,90));
+                                      "date"             => array(5),
+                                      "dropdown_integer" => array(6, 7, 21),
+                                      "bool"             => array(86),
+                                      "alert"            => array(59),
+                                      "billing"          => array(22),
+                                      "renewal"          => array(23),
+                                      "multiline_text"   => array(16 ,90));
 
       return PluginDatainjectionCommonInjectionLib::addToSearchOptions($tab, $options, $this);
    }
 
 
-   /**
+    /**
     * @see plugins/datainjection/inc/PluginDatainjectionInjectionInterface::addOrUpdateObject()
    **/
    function addOrUpdateObject($values=array(), $options=array()) {
@@ -115,7 +118,7 @@ class PluginDatainjectionContractInjection extends Contract
    }
 
 
-   /**
+    /**
     * @param $info      array
     * @param $option    array
    **/
@@ -133,20 +136,38 @@ class PluginDatainjectionContractInjection extends Contract
             break;
 
          case 'billing' :
-            Dropdown::showNumber($name, array('value' => 0,
-                                              'min'   => 12,
-                                              'max'   => 60,
-                                              'step'  => 12,
-                                              'toadd' => array(0 => Dropdown::EMPTY_VALUE,
-                                                               1 => sprintf(_n('%d month',
-                                                                            '%d months', 1), 1),
-                                                               2 => sprintf(_n('%d month',
-                                                                            '%d months', 2), 2),
-                                                               3 => sprintf(_n('%d month',
-                                                                            '%d months', 3), 3),
-                                                               6 => sprintf(_n('%d month',
-                                                                            '%d months', 6), 6))),
-                                 array('unit' => 'month'));
+            Dropdown::showNumber(
+                $name, array('value' => 0,
+                                            'min'   => 12,
+                                            'max'   => 60,
+                                            'step'  => 12,
+                                            'toadd' => array(0 => Dropdown::EMPTY_VALUE,
+                                                             1 => sprintf(
+                                                                 _n(
+                                                                     '%d month',
+                                                                     '%d months', 1
+                                                                 ), 1
+                                                             ),
+                                                             2 => sprintf(
+                                                                 _n(
+                                                                     '%d month',
+                                                                     '%d months', 2
+                                                                 ), 2
+                                                             ),
+                                                             3 => sprintf(
+                                                                 _n(
+                                                                     '%d month',
+                                                                     '%d months', 3
+                                                                 ), 3
+                                                             ),
+                                                             6 => sprintf(
+                                                                 _n(
+                                                                     '%d month',
+                                                                     '%d months', 6
+                                                                 ), 6
+                                                             ))),
+                array('unit' => 'month')
+            );
             break;
 
          default:
@@ -155,4 +176,3 @@ class PluginDatainjectionContractInjection extends Contract
    }
 
 }
-?>

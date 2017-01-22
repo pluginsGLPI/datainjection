@@ -29,19 +29,22 @@
  ---------------------------------------------------------------------- */
 
 if (!defined('GLPI_ROOT')) {
-   die("Sorry. You can't access directly to this file");
+    die("Sorry. You can't access directly to this file");
 }
 
 class PluginDatainjectionComputerTypeInjection extends ComputerType
-                                               implements PluginDatainjectionInjectionInterface {
+                                               implements PluginDatainjectionInjectionInterface
+{
 
 
    function isPrimaryType() {
+
       return true;
    }
 
 
    function connectedTo() {
+
       return array();
    }
 
@@ -54,7 +57,7 @@ class PluginDatainjectionComputerTypeInjection extends ComputerType
    }
 
 
-   /**
+    /**
     * @see plugins/datainjection/inc/PluginDatainjectionInjectionInterface::getOptions()
    **/
    function getOptions($primary_type='') {
@@ -73,7 +76,7 @@ class PluginDatainjectionComputerTypeInjection extends ComputerType
    }
 
 
-   /**
+    /**
     * @see plugins/datainjection/inc/PluginDatainjectionInjectionInterface::addOrUpdateObject()
    **/
    function addOrUpdateObject($values=array(), $options=array()) {
@@ -84,4 +87,3 @@ class PluginDatainjectionComputerTypeInjection extends ComputerType
    }
 
 }
-?>

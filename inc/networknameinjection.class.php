@@ -29,11 +29,12 @@
  ---------------------------------------------------------------------- */
 
 if (!defined('GLPI_ROOT')) {
-   die("Sorry. You can't access directly to this file");
+    die("Sorry. You can't access directly to this file");
 }
 
 class PluginDatainjectionNetworkNameInjection extends NetworkName
-                                                   implements PluginDatainjectionInjectionInterface {
+                                                   implements PluginDatainjectionInjectionInterface
+{
 
 
    static function getTable() {
@@ -44,17 +45,19 @@ class PluginDatainjectionNetworkNameInjection extends NetworkName
 
 
    function isPrimaryType() {
+
       return false;
    }
 
 
    function connectedTo() {
+
       global $CFG_GLPI;
       return $CFG_GLPI["networkport_types"];
    }
 
 
-   /**
+    /**
     * @see plugins/datainjection/inc/PluginDatainjectionInjectionInterface::getOptions()
    **/
    function getOptions($primary_type='') {
@@ -72,7 +75,7 @@ class PluginDatainjectionNetworkNameInjection extends NetworkName
    }
 
 
-   /**
+    /**
     * @see plugins/datainjection/inc/PluginDatainjectionInjectionInterface::addOrUpdateObject()
    **/
    function addOrUpdateObject($values=array(), $options=array()) {
@@ -83,7 +86,7 @@ class PluginDatainjectionNetworkNameInjection extends NetworkName
    }
 
 
-   /**
+    /**
     * @param $primary_type
     * @param $values
    **/
@@ -96,20 +99,23 @@ class PluginDatainjectionNetworkNameInjection extends NetworkName
    }
 
 
-   /**
+    /**
     * @param $values
     * @param $add                   (true by default)
     * @param $rights    array
     */
    function processAfterInsertOrUpdate($values, $add=true, $rights=array()) {
+
       global $DB;
 
       //Manage ip adresses
       if (isset($values['NetworkName']['ipaddresses_id'])) {
-          if (!countElementsInTable("glpi_ipaddresses",
-                                    "`items_id`='".$values['NetworkName']['id']."'
+         if (!countElementsInTable(
+             "glpi_ipaddresses",
+             "`items_id`='".$values['NetworkName']['id']."'
                                        AND `itemtype`='NetworkName'
-                                       AND `name`='".$values['NetworkName']['ipaddresses_id']."'")) {
+                                       AND `name`='".$values['NetworkName']['ipaddresses_id']."'"
+         )) {
 
             $ip                  = new IPAddress();
             $tmp['items_id']     = $values['NetworkName']['id'];
@@ -122,4 +128,3 @@ class PluginDatainjectionNetworkNameInjection extends NetworkName
    }
 
 }
-?>

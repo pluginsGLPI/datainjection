@@ -29,11 +29,12 @@
  ---------------------------------------------------------------------- */
 
 if (!defined('GLPI_ROOT')) {
-   die("Sorry. You can't access directly to this file");
+    die("Sorry. You can't access directly to this file");
 }
 
 class PluginDatainjectionInterfaceTypeInjection extends InterfaceType
-                                               implements PluginDatainjectionInjectionInterface {
+                                               implements PluginDatainjectionInjectionInterface
+{
 
 
    static function getTable() {
@@ -44,16 +45,18 @@ class PluginDatainjectionInterfaceTypeInjection extends InterfaceType
 
 
    function isPrimaryType() {
+
       return true;
    }
 
 
    function connectedTo() {
+
       return array();
    }
 
 
-   /**
+    /**
     * @see plugins/datainjection/inc/PluginDatainjectionInjectionInterface::getOptions()
    **/
    function getOptions($primary_type='') {
@@ -71,7 +74,7 @@ class PluginDatainjectionInterfaceTypeInjection extends InterfaceType
    }
 
 
-   /**
+    /**
     * Standard method to add an object into glpi
     *
     * @param $values    array fields to add into glpi
@@ -88,4 +91,3 @@ class PluginDatainjectionInterfaceTypeInjection extends InterfaceType
    }
 
 }
-?>

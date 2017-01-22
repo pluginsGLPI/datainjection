@@ -28,12 +28,13 @@
  @since     2009
  ---------------------------------------------------------------------- */
 
-class PluginDatainjectionModelcsv extends CommonDBChild {
+class PluginDatainjectionModelcsv extends CommonDBChild
+{
 
    static $rightname = "plugin_datainjection_model";
-   var $specific_fields;
+    var $specific_fields;
 
-   // From CommonDBChild
+    // From CommonDBChild
    static public $itemtype  = 'PluginDatainjectionModel';
    static public $items_id  = 'models_id';
    public $dohistory        = true;
@@ -46,30 +47,34 @@ class PluginDatainjectionModelcsv extends CommonDBChild {
    }
 
    function init() {
+
    }
 
 
-   //---- Getters -----//
+    //---- Getters -----//
 
    function getDelimiter() {
+
       return $this->fields["delimiter"];
    }
 
 
    function isHeaderPresent() {
+
       return $this->fields["is_header_present"];
    }
 
 
-   /**
+    /**
     * If a Sample could be generated
    **/
    function haveSample() {
+
       return $this->fields["is_header_present"];
    }
 
 
-   /**
+    /**
     * Display Sample
     *
     * @param $model     PluginDatainjectionModel object
@@ -79,8 +84,12 @@ class PluginDatainjectionModelcsv extends CommonDBChild {
       $headers = PluginDatainjectionMapping::getMappingsSortedByRank($model->fields['id']);
       $sample = '"'.implode('"'.$this->getDelimiter().'"', $headers)."\"\n";
 
-      header('Content-disposition: attachment; filename="'.str_replace(' ', '_',
-                                                                       $model->getName()).'.csv"');
+      header(
+          'Content-disposition: attachment; filename="'.str_replace(
+              ' ', '_',
+              $model->getName()
+          ).'.csv"'
+      );
       header('Content-Type: text/comma-separated-values');
       header('Content-Transfer-Encoding: UTF-8');
       header('Content-Length: '.mb_strlen($sample, 'UTF-8'));
@@ -91,7 +100,7 @@ class PluginDatainjectionModelcsv extends CommonDBChild {
    }
 
 
-   /**
+    /**
     * Check if filename ends with .csv
     *
     * @param $filename  the filename
@@ -99,11 +108,12 @@ class PluginDatainjectionModelcsv extends CommonDBChild {
     * @return boolean true if name is correct, false is not
    **/
    function checkFileName($filename) {
+
       return ( !strstr(strtolower(substr($filename, strlen($filename)-4)), '.csv'));
    }
 
 
-   /**
+    /**
     * Get CSV's specific ID for a model
     * If row doesn't exists, it creates it
     *
@@ -112,6 +122,7 @@ class PluginDatainjectionModelcsv extends CommonDBChild {
     * @return the ID of the row in glpi_plugin_datainjection_modelcsv
    **/
    function getFromDBByModelID($models_id) {
+
       global $DB;
 
       $query = "SELECT `id`
@@ -137,7 +148,7 @@ class PluginDatainjectionModelcsv extends CommonDBChild {
    }
 
 
-   /**
+    /**
     * @param $model              PluginDatainjectionModel object
     * @param $options   array
    **/
@@ -160,7 +171,7 @@ class PluginDatainjectionModelcsv extends CommonDBChild {
    }
 
 
-   /**
+    /**
     * @param $fields
    **/
    function saveFields($fields) {
@@ -175,4 +186,3 @@ class PluginDatainjectionModelcsv extends CommonDBChild {
    }
 
 }
-?>

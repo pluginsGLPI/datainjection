@@ -29,11 +29,12 @@
  ---------------------------------------------------------------------- */
 
 if (!defined('GLPI_ROOT')) {
-   die("Sorry. You can't access directly to this file");
+    die("Sorry. You can't access directly to this file");
 }
 
 class PluginDatainjectionNetworkport_VlanInjection extends NetworkPort_Vlan
-                                                   implements PluginDatainjectionInjectionInterface {
+                                                   implements PluginDatainjectionInjectionInterface
+{
 
 
    static function getTable() {
@@ -44,16 +45,18 @@ class PluginDatainjectionNetworkport_VlanInjection extends NetworkPort_Vlan
 
 
    function isPrimaryType() {
+
       return false;
    }
 
 
    function connectedTo() {
+
       return array();
    }
 
 
-   /**
+    /**
     * @see plugins/datainjection/inc/PluginDatainjectionInjectionInterface::getOptions()
    **/
    function getOptions($primary_type='') {
@@ -71,7 +74,7 @@ class PluginDatainjectionNetworkport_VlanInjection extends NetworkPort_Vlan
    }
 
 
-   /**
+    /**
     * @see plugins/datainjection/inc/PluginDatainjectionInjectionInterface::addOrUpdateObject()
    **/
    function addOrUpdateObject($values=array(), $options=array()) {
@@ -82,7 +85,7 @@ class PluginDatainjectionNetworkport_VlanInjection extends NetworkPort_Vlan
    }
 
 
-   /**
+    /**
     * @param $primary_type
     * @param $values
    **/
@@ -93,4 +96,3 @@ class PluginDatainjectionNetworkport_VlanInjection extends NetworkPort_Vlan
    }
 
 }
-?>

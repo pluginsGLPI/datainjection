@@ -29,11 +29,12 @@
  ---------------------------------------------------------------------- */
 
 if (!defined('GLPI_ROOT')) {
-   die("Sorry. You can't access directly to this file");
+    die("Sorry. You can't access directly to this file");
 }
 
 class PluginDatainjectionSoftwareVersionInjection extends SoftwareVersion
-                                                  implements PluginDatainjectionInjectionInterface {
+                                                  implements PluginDatainjectionInjectionInterface
+{
 
 
    static function getTable() {
@@ -44,16 +45,18 @@ class PluginDatainjectionSoftwareVersionInjection extends SoftwareVersion
 
 
    function isPrimaryType() {
+
       return true;
    }
 
 
    function connectedTo() {
+
       return array('Software');
    }
 
 
-   /**
+    /**
     * @see plugins/datainjection/inc/PluginDatainjectionInjectionInterface::getOptions()
    **/
    function getOptions($primary_type='') {
@@ -79,16 +82,15 @@ class PluginDatainjectionSoftwareVersionInjection extends SoftwareVersion
       $key = array_search(2, $options['ignore_fields']);
       unset($options['ignore_fields'][$key]);
 
-
       $options['displaytype']   = array("dropdown"       => array(4,31),
-                                        "multiline_text" => array(16),
-                                        "software" => array(100));
+                                      "multiline_text" => array(16),
+                                      "software" => array(100));
 
       return PluginDatainjectionCommonInjectionLib::addToSearchOptions($tab, $options, $this);
    }
 
 
-   /**
+    /**
     * @param $info      array
     * @param $option    array
    **/
@@ -97,15 +99,19 @@ class PluginDatainjectionSoftwareVersionInjection extends SoftwareVersion
       $name = "info[".$option['linkfield']."]";
       switch ($option['displaytype']) {
          case 'computer' :
-            Computer::dropdown(array('name'        => $name,
-                                     'entity'      => $_SESSION['glpiactive_entity'],
-                                     'entity_sons' => false));
+            Computer::dropdown(
+                array('name'        => $name,
+                                   'entity'      => $_SESSION['glpiactive_entity'],
+                                   'entity_sons' => false)
+            );
             break;
 
          case 'software' :
-            Software::dropdown(array('name'        => $name,
-                                     'entity'      => $_SESSION['glpiactive_entity'],
-                                     'entity_sons' => false));
+            Software::dropdown(
+                array('name'        => $name,
+                                   'entity'      => $_SESSION['glpiactive_entity'],
+                                   'entity_sons' => false)
+            );
             break;
 
          default :
@@ -114,7 +120,7 @@ class PluginDatainjectionSoftwareVersionInjection extends SoftwareVersion
    }
 
 
-   /**
+    /**
     * @see plugins/datainjection/inc/PluginDatainjectionInjectionInterface::addOrUpdateObject()
    **/
    function addOrUpdateObject($values=array(), $options=array()) {
@@ -125,10 +131,11 @@ class PluginDatainjectionSoftwareVersionInjection extends SoftwareVersion
    }
 
 
-   /**
+    /**
     * @param $fields_toinject    array
    **/
    function getValueForAdditionalMandatoryFields($fields_toinject=array()) {
+
       global $DB;
 
       if (!isset($fields_toinject['SoftwareVersion']['softwares_id'])) {
@@ -138,26 +145,28 @@ class PluginDatainjectionSoftwareVersionInjection extends SoftwareVersion
       $query = "SELECT `id`
                 FROM `glpi_softwares`
                 WHERE `name` = '".$fields_toinject['SoftwareVersion']['softwares_id']."'".
-                      getEntitiesRestrictRequest(" AND", "glpi_softwares", "entities_id",
-                                                 $fields_toinject['SoftwareVersion']['entities_id'],
-                                                 true);
+                    getEntitiesRestrictRequest(
+                        " AND", "glpi_softwares", "entities_id",
+                        $fields_toinject['SoftwareVersion']['entities_id'],
+                        true
+                    );
       $result = $DB->query($query);
 
       if ($DB->numrows($result) > 0) {
-         $id = $DB->result($result,0,'id');
-         //Add softwares_id to the array
-         $fields_toinject['SoftwareVersion']['softwares_id'] = $id;
+          $id = $DB->result($result, 0, 'id');
+          //Add softwares_id to the array
+          $fields_toinject['SoftwareVersion']['softwares_id'] = $id;
 
       } else {
-         //Remove software name
-         unset($fields_toinject['SoftwareVersion']['softwares_id']);
+          //Remove software name
+          unset($fields_toinject['SoftwareVersion']['softwares_id']);
       }
 
-      return $fields_toinject;
+       return $fields_toinject;
    }
 
 
-   /**
+    /**
     * @param $primary_type
     * @param $values
    **/
@@ -171,7 +180,7 @@ class PluginDatainjectionSoftwareVersionInjection extends SoftwareVersion
    }
 
 
-   /**
+    /**
     * @param $fields_toinject    array
     * @param $options            array
    **/
@@ -185,4 +194,3 @@ class PluginDatainjectionSoftwareVersionInjection extends SoftwareVersion
    }
 
 }
-?>

@@ -31,39 +31,39 @@
 /**
  * Interface to be implemented for each injection backend
 **/
-interface PluginDatainjectionBackendInterface {
+interface PluginDatainjectionBackendInterface
+{
 
 
-   /**
+    /**
     * Read from file
     *
     * @param $numberOfLines (default 1)
    **/
-   function read($numberOfLines=1);
+    function read($numberOfLines=1);
 
 
-   /**
+    /**
     * Delete file
    **/
-   function deleteFile();
+    function deleteFile();
 
 
-   /**
+    /**
     * Export results to a file
    **/
-   //function export($file, PluginDatainjectionModel $model, $tab_result);
+    //function export($file, PluginDatainjectionModel $model, $tab_result);
 
 
-   /**
+    /**
     * Store the number of lines red from the file
    **/
-   function storeNumberOfLines();
+    function storeNumberOfLines();
 
 
-   /**
+    /**
     * Get the number of lines in the file
    **/
-   function getNumberOfLines();
+    function getNumberOfLines();
 
 }
-?>

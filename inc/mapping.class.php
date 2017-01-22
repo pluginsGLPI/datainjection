@@ -28,11 +28,12 @@
  @since     2009
  ---------------------------------------------------------------------- */
 
-class PluginDatainjectionMapping extends CommonDBTM {
+class PluginDatainjectionMapping extends CommonDBTM
+{
 
    static $rightname = "plugin_datainjection_model";
 
-   /**
+    /**
     * @param $field
     * @param $value
    **/
@@ -48,42 +49,49 @@ class PluginDatainjectionMapping extends CommonDBTM {
 
       return false;
    }
-   
-   
+
+
    function getMappingName() {
+
       return $this->fields["name"];
    }
 
 
    function getRank() {
+
       return $this->fields["rank"];
    }
 
 
    function isMandatory() {
+
       return $this->fields["is_mandatory"];
    }
 
 
    function getValue() {
+
       return $this->fields["value"];
    }
 
 
    function getID() {
+
       return $this->fields["id"];
    }
 
 
    function getItemtype() {
+
       return $this->fields["itemtype"];
    }
-   
 
-   /**
+
+    /**
     * @param $model  PluginDatainjectionModel object
    **/
    static function showFormMappings(PluginDatainjectionModel $model) {
+
       global $CFG_GLPI;
 
       $canedit = $model->can($model->fields['id'], UPDATE);
@@ -102,10 +110,10 @@ class PluginDatainjectionMapping extends CommonDBTM {
          echo "<table class='tab_cadre_fixe'>";
          echo "<tr class='tab_bg_1'><td class='center'>";
          $url = $CFG_GLPI["root_doc"].
-                "/plugins/datainjection/front/popup.php?popup=preview&amp;models_id=".
-                $model->getID();
+             "/plugins/datainjection/front/popup.php?popup=preview&amp;models_id=".
+             $model->getID();
          echo "<a href=#  onClick=\"var w = window.open('$url' , 'glpipopup', ".
-                "'height=400, width=600, top=100, left=100, scrollbars=yes' );w.focus();\"/>";
+             "'height=400, width=600, top=100, left=100, scrollbars=yes' );w.focus();\"/>";
          echo __('See the file', 'datainjection')."</a>";
          echo "</td></tr>";
       }
@@ -145,7 +153,7 @@ class PluginDatainjectionMapping extends CommonDBTM {
    }
 
 
-   /**
+    /**
     * For multitext only ! Check it there's more than one value to inject in a field
     *
     * @param $models_id the model ID
@@ -153,6 +161,7 @@ class PluginDatainjectionMapping extends CommonDBTM {
     * @return true if more than one value to inject, false if not
    **/
    static function getSeveralMappedField($models_id) {
+
       global $DB;
 
       $several = array();
@@ -171,22 +180,22 @@ class PluginDatainjectionMapping extends CommonDBTM {
    }
 
 
-   /**
+    /**
     * @param $models_id
    **/
    static function getMappingsSortedByRank($models_id) {
-     global $DB;
 
-     $mappings = array();
-     $query    = "SELECT `name`
-                  FROM `glpi_plugin_datainjection_mappings`
-                  WHERE `models_id` = '".$models_id."'
-                  ORDER BY `rank` ASC";
-     foreach($DB->request($query) as $data) {
-        $mappings[] = $data['name'];
-     }
-     return $mappings;
+      global $DB;
+
+      $mappings = array();
+      $query    = "SELECT `name`
+                   FROM `glpi_plugin_datainjection_mappings`
+                   WHERE `models_id` = '".$models_id."'
+                   ORDER BY `rank` ASC";
+      foreach ($DB->request($query) as $data) {
+         $mappings[] = $data['name'];
+      }
+      return $mappings;
    }
 
 }
-?>

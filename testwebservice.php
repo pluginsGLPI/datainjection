@@ -38,9 +38,9 @@ $url = "/".basename(getcwd())."/plugins/webservices/xmlrpc.php";
 
 $args = array();
 if ($_SERVER['argc'] > 1) {
-   for ($i=1 ; $i<count($_SERVER['argv']) ; $i++) {
-      $it           = explode("=",$argv[$i],2);
-      $it[0]        = preg_replace('/^--/','',$it[0]);
+   for ($i=1; $i<count($_SERVER['argv']); $i++) {
+      $it           = explode("=", $argv[$i], 2);
+      $it[0]        = preg_replace('/^--/', '', $it[0]);
       $args[$it[0]] = (isset($it[1]) ? $it[1] : true);
    }
 }
@@ -69,7 +69,7 @@ $attrs['url']              = (isset($args['url'])?$args['url']
                                                  :'glpi080/plugins/webservices/xmlrpc.php');
 $attrs['additional']       = (isset($args['additional'])?$args['additional']:array());
 
-$response = call('glpi.doLogin',$attrs);
+$response = call('glpi.doLogin', $attrs);
 
 if ($response) {
    $attrs['session'] = $response['session'];
@@ -84,10 +84,10 @@ $attrs['entities_id'] = $args['entities_id'];
 $attrs['uri']         = $args['uri'];
 
 //Inject file
-$response = call('datainjection.inject',$attrs);
+$response = call('datainjection.inject', $attrs);
 print_r($response);
 
-print_r(call('glpi.doLogout',$attrs));
+print_r(call('glpi.doLogout', $attrs));
 
 
 function call($method,$params) {
@@ -117,4 +117,3 @@ function call($method,$params) {
    }
    return $response;
 }
-?>

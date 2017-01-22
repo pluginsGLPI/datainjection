@@ -29,11 +29,12 @@
  ---------------------------------------------------------------------- */
 
 if (!defined('GLPI_ROOT')) {
-   die("Sorry. You can't access directly to this file");
+    die("Sorry. You can't access directly to this file");
 }
 
 class PluginDatainjectionProfile_UserInjection extends Profile_User
-                                               implements PluginDatainjectionInjectionInterface {
+                                               implements PluginDatainjectionInjectionInterface
+{
 
 
    static function getTable() {
@@ -44,16 +45,18 @@ class PluginDatainjectionProfile_UserInjection extends Profile_User
 
 
    function isPrimaryType() {
+
       return false;
    }
 
 
    function connectedTo() {
+
       return array();
    }
 
 
-   /**
+    /**
     * @see plugins/datainjection/inc/PluginDatainjectionInjectionInterface::getOptions()
    **/
    function getOptions($primary_type='') {
@@ -80,7 +83,7 @@ class PluginDatainjectionProfile_UserInjection extends Profile_User
    }
 
 
-   /**
+    /**
     * @see plugins/datainjection/inc/PluginDatainjectionInjectionInterface::addOrUpdateObject()
    **/
    function addOrUpdateObject($values=array(), $options=array()) {
@@ -91,7 +94,7 @@ class PluginDatainjectionProfile_UserInjection extends Profile_User
    }
 
 
-   /**
+    /**
     * @param $primary_type
     * @param $values
    **/
@@ -102,4 +105,3 @@ class PluginDatainjectionProfile_UserInjection extends Profile_User
    }
 
 }
-?>

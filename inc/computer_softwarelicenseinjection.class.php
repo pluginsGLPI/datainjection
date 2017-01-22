@@ -29,14 +29,16 @@
  ---------------------------------------------------------------------- */
 
 if (!defined('GLPI_ROOT')) {
-   die("Sorry. You can't access directly to this file");
+    die("Sorry. You can't access directly to this file");
 }
 
 class PluginDatainjectionComputer_SoftwareLicenseInjection extends Computer_SoftwareLicense
-                                                implements PluginDatainjectionInjectionInterface {
+                                                implements PluginDatainjectionInjectionInterface
+{
 
 
    static function getTypeName($nb=0) {
+
       return __('Computer');
    }
 
@@ -50,16 +52,18 @@ class PluginDatainjectionComputer_SoftwareLicenseInjection extends Computer_Soft
 
 
    function isPrimaryType() {
+
       return false;
    }
 
 
    function connectedTo() {
+
       return array('SoftwareLicense');
    }
 
 
-   /**
+    /**
     * @see plugins/datainjection/inc/PluginDatainjectionInjectionInterface::getOptions()
    **/
    function getOptions($primary_type='') {
@@ -76,8 +80,10 @@ class PluginDatainjectionComputer_SoftwareLicenseInjection extends Computer_Soft
       $tab[111]['table']        = 'glpi_computers';
       $tab[111]['field']        = 'serial';
       $tab[111]['linkfield']    = 'serial';
-      $tab[111]['name']         = sprintf(__('%1$s - %2$s'), self::getTypeName(),
-                                          __('Serial number'));
+      $tab[111]['name']         = sprintf(
+          __('%1$s - %2$s'), self::getTypeName(),
+          __('Serial number')
+      );
       $tab[111]['injectable']   = true;
       $tab[111]['displaytype']  = 'dropdown';
       $tab[111]['checktype']    = 'text';
@@ -86,8 +92,10 @@ class PluginDatainjectionComputer_SoftwareLicenseInjection extends Computer_Soft
       $tab[112]['table']        = 'glpi_computers';
       $tab[112]['field']        = 'otherserial';
       $tab[112]['linkfield']    = 'otherserial';
-      $tab[112]['name']         = sprintf(__('%1$s - %2$s'), self::getTypeName(),
-                                          __('Inventory number'));
+      $tab[112]['name']         = sprintf(
+          __('%1$s - %2$s'), self::getTypeName(),
+          __('Inventory number')
+      );
       $tab[112]['injectable']   = true;
       $tab[112]['displaytype']  = 'dropdown';
       $tab[112]['checktype']    = 'text';
@@ -97,7 +105,7 @@ class PluginDatainjectionComputer_SoftwareLicenseInjection extends Computer_Soft
    }
 
 
-   /**
+    /**
     * @see plugins/datainjection/inc/PluginDatainjectionInjectionInterface::addOrUpdateObject()
    **/
    function addOrUpdateObject($values=array(), $options=array()) {
@@ -111,11 +119,11 @@ class PluginDatainjectionComputer_SoftwareLicenseInjection extends Computer_Soft
    function addSpecificMandatoryFields() {
 
       return array('computers_id'        => 1,
-                   'softwarelicenses_id' => 1);
+                 'softwarelicenses_id' => 1);
    }
 
 
-   /**
+    /**
     * @param $primary_type
     * @param $values
    **/
@@ -128,4 +136,3 @@ class PluginDatainjectionComputer_SoftwareLicenseInjection extends Computer_Soft
    }
 
 }
-?>

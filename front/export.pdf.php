@@ -28,9 +28,7 @@
  @since     2009
  ---------------------------------------------------------------------- */
 
-include ('../../../inc/includes.php');
-include ("../../../lib/ezpdf/class.ezpdf.php");
+require '../../../inc/includes.php';
+require "../../../lib/ezpdf/class.ezpdf.php";
 
 PluginDatainjectionModel::exportAsPDF($_GET['models_id']);
-
-?>

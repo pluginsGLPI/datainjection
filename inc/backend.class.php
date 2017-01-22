@@ -30,7 +30,8 @@
 /*
  * Common backend to read files to import
  */
-abstract class PluginDatainjectionBackend {
+abstract class PluginDatainjectionBackend
+{
 
    private $file = "";
    private $delimiter;
@@ -38,12 +39,12 @@ abstract class PluginDatainjectionBackend {
    private $errmsg;
    private $numberOfLines = 0;
 
-   const ENCODING_ISO8859_1 = 0;
-   const ENCODING_UFT8      = 1;
-   const ENCODING_AUTO      = 2;
+    const ENCODING_ISO8859_1 = 0;
+    const ENCODING_UFT8      = 1;
+    const ENCODING_AUTO      = 2;
 
 
-   /**
+    /**
     * Get header of the file
     *
     * @param $injectionData
@@ -58,14 +59,14 @@ abstract class PluginDatainjectionBackend {
       }
 
       $nb = count($injectionData->getDataAtLine(0));
-      for ($i=0 ; $i<$nb ; $i++) {
+      for ($i=0; $i<$nb; $i++) {
          $header[] = $i;
       }
       return $header;
    }
 
 
-   /**
+    /**
     * Get the backend implementation by type
     *
     * @param $type
@@ -79,8 +80,9 @@ abstract class PluginDatainjectionBackend {
 
    static function is_utf8($string) {
 
-       // From http://w3.org/International/questions/qa-forms-utf-8.html
-       return preg_match('%^(?:
+      // From http://w3.org/International/questions/qa-forms-utf-8.html
+      return preg_match(
+          '%^(?:
              [\x09\x0A\x0D\x20-\x7E]            # ASCII
            | [\xC2-\xDF][\x80-\xBF]             # non-overlong 2-byte
            |  \xE0[\xA0-\xBF][\x80-\xBF]        # excluding overlongs
@@ -89,7 +91,8 @@ abstract class PluginDatainjectionBackend {
            |  \xF0[\x90-\xBF][\x80-\xBF]{2}     # planes 1-3
            | [\xF1-\xF3][\x80-\xBF]{3}          # planes 4-15
            |  \xF4[\x80-\x8F][\x80-\xBF]{2}     # plane 16
-       )*$%xs', $string);
+       )*$%xs', $string
+      );
    }
 
 
@@ -102,4 +105,3 @@ abstract class PluginDatainjectionBackend {
    }
 
 }
-?>

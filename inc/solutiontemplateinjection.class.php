@@ -29,11 +29,12 @@
  ---------------------------------------------------------------------- */
 
 if (!defined('GLPI_ROOT')) {
-   die("Sorry. You can't access directly to this file");
+    die("Sorry. You can't access directly to this file");
 }
 
 class PluginDatainjectionSolutionTemplateInjection extends SolutionTemplate
-                                        implements PluginDatainjectionInjectionInterface {
+                                        implements PluginDatainjectionInjectionInterface
+{
 
 
    static function getTable() {
@@ -44,16 +45,18 @@ class PluginDatainjectionSolutionTemplateInjection extends SolutionTemplate
 
 
    function isPrimaryType() {
+
       return true;
    }
 
 
    function connectedTo() {
+
       return array();
    }
 
 
-   /**
+    /**
     * @see plugins/datainjection/inc/PluginDatainjectionInjectionInterface::getOptions()
    **/
    function getOptions($primary_type='') {
@@ -66,14 +69,14 @@ class PluginDatainjectionSolutionTemplateInjection extends SolutionTemplate
 
       $options['ignore_fields'] = array_merge($blacklist, $notimportable);
       $options['displaytype']   = array("multiline_text" => array(4, 16),
-                                        "dropdown"       => array(3),
-                                        "bool"           => array(86));
+                                      "dropdown"       => array(3),
+                                      "bool"           => array(86));
 
       return PluginDatainjectionCommonInjectionLib::addToSearchOptions($tab, $options, $this);
    }
 
 
-   /**
+    /**
     * @see plugins/datainjection/inc/PluginDatainjectionInjectionInterface::addOrUpdateObject()
    **/
    function addOrUpdateObject($values=array(), $options=array()) {
@@ -84,4 +87,3 @@ class PluginDatainjectionSolutionTemplateInjection extends SolutionTemplate
    }
 
 }
-?>

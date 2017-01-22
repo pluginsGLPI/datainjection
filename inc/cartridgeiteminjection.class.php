@@ -29,11 +29,12 @@
  ---------------------------------------------------------------------- */
 
 if (!defined('GLPI_ROOT')) {
-   die("Sorry. You can't access directly to this file");
+    die("Sorry. You can't access directly to this file");
 }
 
 class PluginDatainjectionCartridgeItemInjection extends CartridgeItem
-                                                implements PluginDatainjectionInjectionInterface {
+                                                implements PluginDatainjectionInjectionInterface
+{
 
 
    static function getTable() {
@@ -45,16 +46,18 @@ class PluginDatainjectionCartridgeItemInjection extends CartridgeItem
 
 
    function isPrimaryType() {
+
       return true;
    }
 
 
    function connectedTo() {
+
       return array();
    }
 
 
-   /**
+    /**
     * @see plugins/datainjection/inc/PluginDatainjectionInjectionInterface::getOptions()
    **/
    function getOptions($primary_type='') {
@@ -75,9 +78,9 @@ class PluginDatainjectionCartridgeItemInjection extends CartridgeItem
       $options['ignore_fields'] = array_merge($blacklist, $notimportable);
 
       $options['displaytype']   = array("dropdown"         => array(3, 4, 23, 49),
-                                        "user"             => array(24),
-                                        "multiline_text"   => array(16, 90),
-                                        "dropdown_integer" => array(8));
+                                      "user"             => array(24),
+                                      "multiline_text"   => array(16, 90),
+                                      "dropdown_integer" => array(8));
 
       $options['checktype']     = array("integer" => array(8));
 
@@ -85,7 +88,7 @@ class PluginDatainjectionCartridgeItemInjection extends CartridgeItem
    }
 
 
-   /**
+    /**
     * @see plugins/datainjection/inc/PluginDatainjectionInjectionInterface::addOrUpdateObject()
    **/
    function addOrUpdateObject($values=array(), $options=array()) {
@@ -96,4 +99,3 @@ class PluginDatainjectionCartridgeItemInjection extends CartridgeItem
    }
 
 }
-?>

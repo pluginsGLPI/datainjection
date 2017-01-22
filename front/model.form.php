@@ -28,76 +28,81 @@
  @since     2009
  ---------------------------------------------------------------------- */
 
-include ('../../../inc/includes.php');
+require '../../../inc/includes.php';
 
-if (!isset ($_GET["id"])) {
-   $_GET["id"] = "";
+if (!isset($_GET["id"])) {
+    $_GET["id"] = "";
 }
 
-if (!isset ($_GET["withtemplate"])) {
-   $_GET["withtemplate"] = "";
+if (!isset($_GET["withtemplate"])) {
+    $_GET["withtemplate"] = "";
 }
 
 $model = new PluginDatainjectionModel();
 $model->checkGlobal(READ);
 
-/* add */
-if (isset ($_POST["add"])) {
-   $model->check(-1, UPDATE ,$_POST);
-   $newID = $model->add($_POST);
+if (isset($_POST["add"])) {
+    /* add */
+    $model->check(-1, UPDATE, $_POST);
+    $newID = $model->add($_POST);
 
-   //Set display to the advanced options tab
-   Session::setActiveTab('PluginDatainjectionModel', 'PluginDatainjectionModel$3');
-   Html::redirect(Toolbox::getItemTypeFormURL('PluginDatainjectionModel')."?id=$newID");
+    //Set display to the advanced options tab
+    Session::setActiveTab('PluginDatainjectionModel', 'PluginDatainjectionModel$3');
+    Html::redirect(Toolbox::getItemTypeFormURL('PluginDatainjectionModel')."?id=$newID");
 
-/* delete */
-} else if (isset ($_POST["delete"])) {
-   $model->check($_POST['id'], DELETE);
-   $model->delete($_POST);
-   $model->redirectToList();
+} else if (isset($_POST["delete"])) {
+    /* delete */
+    $model->check($_POST['id'], DELETE);
+    $model->delete($_POST);
+    $model->redirectToList();
 
-/* update */
-} else if (isset ($_POST["update"])) {
-   //Update model
-   $model->check($_POST['id'], UPDATE);
-   $model->update($_POST);
+} else if (isset($_POST["update"])) {
+    /* update */
+    //Update model
+    $model->check($_POST['id'], UPDATE);
+    $model->update($_POST);
 
-   $specific_model = PluginDatainjectionModel::getInstance('csv');
-   $specific_model->saveFields($_POST);
-   Html::back();
+    $specific_model = PluginDatainjectionModel::getInstance('csv');
+    $specific_model->saveFields($_POST);
+    Html::back();
 
-/* update order */
-} elseif (isset ($_POST["validate"])) {
-   $model->check($_POST['id'], UPDATE);
-   $model->switchReadyToUse();
-   Html::back();
+} else if (isset($_POST["validate"])) {
+    /* update order */
+    $model->check($_POST['id'], UPDATE);
+    $model->switchReadyToUse();
+    Html::back();
 
-} elseif (isset($_POST['upload'])) {
+} else if (isset($_POST['upload'])) {
    if (!empty($_FILES)) {
       $model->check($_POST['id'], UPDATE);
 
-      if ($model->processUploadedFile(array('file_encoding' => 'csv',
-                                            'mode'          => PluginDatainjectionModel::CREATION))) {
+      if ($model->processUploadedFile(
+          array('file_encoding' => 'csv',
+          'mode'          => PluginDatainjectionModel::CREATION)
+      )) {
          Session::setActiveTab('PluginDatainjectionModel', 'PluginDatainjectionModel$4');
       } else {
-         Session::addMessageAfterRedirect(__('The file could not be found', 'datainjection'),
-                                          true, ERROR, true);
+         Session::addMessageAfterRedirect(
+            __('The file could not be found', 'datainjection'),
+            true, ERROR, true
+         );
       }
    }
-   Html::back();
+    Html::back();
 
-} elseif (isset($_GET['sample'])) {
-   $model->check($_GET['sample'], READ);
-   $modeltype = PluginDatainjectionModel::getInstance($model->getField('filetype'));
-   $modeltype->getFromDBByModelID($model->getField('id'));
-   $modeltype->showSample($model);
-   exit (0);
+} else if (isset($_GET['sample'])) {
+    $model->check($_GET['sample'], READ);
+    $modeltype = PluginDatainjectionModel::getInstance($model->getField('filetype'));
+    $modeltype->getFromDBByModelID($model->getField('id'));
+    $modeltype->showSample($model);
+    exit(0);
 }
 
-Html::header(PluginDatainjectionModel::getTypeName(), '', 
-             "tools", "plugindatainjectionmenu", "model");
+Html::header(
+    PluginDatainjectionModel::getTypeName(), '',
+    "tools", "plugindatainjectionmenu", "model"
+);
 
 $model->display(array('id' =>$_GET["id"]));
 
 Html::footer();
-?>

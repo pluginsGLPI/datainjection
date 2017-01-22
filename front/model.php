@@ -28,9 +28,12 @@
  @since     2009
  ---------------------------------------------------------------------- */
 
-include ('../../../inc/includes.php');
+require '../../../inc/includes.php';
 
-Html::header(PluginDatainjectionModel::getTypeName(), '', "tools", "plugindatainjectionmenu", "model");
+Html::header(
+    PluginDatainjectionModel::getTypeName(), '', "tools",
+    "plugindatainjectionmenu", "model"
+);
 
 $model = new PluginDatainjectionModel();
 $model->checkGlobal(READ);

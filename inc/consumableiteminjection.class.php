@@ -29,11 +29,12 @@
  ---------------------------------------------------------------------- */
 
 if (!defined('GLPI_ROOT')) {
-   die("Sorry. You can't access directly to this file");
+    die("Sorry. You can't access directly to this file");
 }
 
 class PluginDatainjectionConsumableItemInjection extends ConsumableItem
-                                                 implements PluginDatainjectionInjectionInterface {
+                                                 implements PluginDatainjectionInjectionInterface
+{
 
 
    static function getTable() {
@@ -45,16 +46,18 @@ class PluginDatainjectionConsumableItemInjection extends ConsumableItem
 
 
    function isPrimaryType() {
+
       return true;
    }
 
 
    function connectedTo() {
+
       return array();
    }
 
 
-   /**
+    /**
     * @see plugins/datainjection/inc/PluginDatainjectionInjectionInterface::getOptions()
    **/
    function getOptions($primary_type='') {
@@ -76,24 +79,23 @@ class PluginDatainjectionConsumableItemInjection extends ConsumableItem
       $options['ignore_fields'] = array_merge($blacklist, $notimportable);
 
       $options['displaytype']   = array("dropdown"         => array(3, 4, 23, 49),
-                                        "user"             => array(24),
-                                        "multiline_text"   => array(16, 90),
-                                        "dropdown_integer" => array(8));
+                                      "user"             => array(24),
+                                      "multiline_text"   => array(16, 90),
+                                      "dropdown_integer" => array(8));
       $options['checktype']     = array("integer" => array(8));
 
       return PluginDatainjectionCommonInjectionLib::addToSearchOptions($tab, $options, $this);
    }
 
 
-   /**
+    /**
     * @see plugins/datainjection/inc/PluginDatainjectionInjectionInterface::addOrUpdateObject()
    **/
    function addOrUpdateObject($values=array(), $options=array()) {
 
-      $lib = new PluginDatainjectionCommonInjectionLib($this,$values,$options);
+      $lib = new PluginDatainjectionCommonInjectionLib($this, $values, $options);
       $lib->processAddOrUpdate();
       return $lib->getInjectionResults();
    }
 
 }
-?>

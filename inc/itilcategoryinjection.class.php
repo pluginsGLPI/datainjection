@@ -29,11 +29,12 @@
  ---------------------------------------------------------------------- */
 
 if (!defined('GLPI_ROOT')) {
-   die("Sorry. You can't access directly to this file");
+    die("Sorry. You can't access directly to this file");
 }
 
 class PluginDatainjectionITILCategoryInjection extends ITILCategory
-                                        implements PluginDatainjectionInjectionInterface {
+                                        implements PluginDatainjectionInjectionInterface
+{
 
 
    static function getTable() {
@@ -44,16 +45,18 @@ class PluginDatainjectionITILCategoryInjection extends ITILCategory
 
 
    function isPrimaryType() {
+
       return true;
    }
 
 
    function connectedTo() {
+
       return array();
    }
 
 
-   /**
+    /**
     * @see plugins/datainjection/inc/PluginDatainjectionInjectionInterface::getOptions()
    **/
    function getOptions($primary_type='') {
@@ -67,15 +70,15 @@ class PluginDatainjectionITILCategoryInjection extends ITILCategory
       $options['ignore_fields'] = array_merge($blacklist, $notimportable);
 
       $options['displaytype'] = array("dropdown"       => array(71, 72, 73),
-                                      "bool"           => array(3, 74, 75, 76, 86),
-                                      "user"           => array(70),
-                                      "multiline_text" => array(16));
+                                    "bool"           => array(3, 74, 75, 76, 86),
+                                    "user"           => array(70),
+                                    "multiline_text" => array(16));
 
       return PluginDatainjectionCommonInjectionLib::addToSearchOptions($tab, $options, $this);
    }
 
 
-   /**
+    /**
     * @see plugins/datainjection/inc/PluginDatainjectionInjectionInterface::addOrUpdateObject()
    **/
    function addOrUpdateObject($values=array(), $options=array()) {
@@ -86,4 +89,3 @@ class PluginDatainjectionITILCategoryInjection extends ITILCategory
    }
 
 }
-?>

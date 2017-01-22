@@ -29,11 +29,12 @@
  ---------------------------------------------------------------------- */
 
 if (!defined('GLPI_ROOT')) {
-   die("Sorry. You can't access directly to this file");
+    die("Sorry. You can't access directly to this file");
 }
 
 class PluginDatainjectionPhoneInjection extends Phone
-                                        implements PluginDatainjectionInjectionInterface {
+                                        implements PluginDatainjectionInjectionInterface
+{
 
 
    static function getTable() {
@@ -44,16 +45,18 @@ class PluginDatainjectionPhoneInjection extends Phone
 
 
    function isPrimaryType() {
+
       return true;
    }
 
 
    function connectedTo() {
+
       return array('Computer', 'Document');
    }
 
 
-   /**
+    /**
     * @see plugins/datainjection/inc/PluginDatainjectionInjectionInterface::getOptions()
    **/
    function getOptions($primary_type='') {
@@ -67,15 +70,15 @@ class PluginDatainjectionPhoneInjection extends Phone
       $options['ignore_fields'] = array_merge($blacklist, $notimportable);
 
       $options['displaytype']   = array("dropdown"       => array(3, 4, 23, 31, 40, 42, 49, 71),
-                                        "user"           => array(24, 70),
-                                        "bool"           => array(43, 44, 82),
-                                        "multiline_text" => array(16, 90));
+                                      "user"           => array(24, 70),
+                                      "bool"           => array(43, 44, 82),
+                                      "multiline_text" => array(16, 90));
 
       return PluginDatainjectionCommonInjectionLib::addToSearchOptions($tab, $options, $this);
    }
 
 
-   /**
+    /**
     * @see plugins/datainjection/inc/PluginDatainjectionInjectionInterface::addOrUpdateObject()
    **/
    function addOrUpdateObject($values=array(), $options=array()) {
@@ -86,7 +89,7 @@ class PluginDatainjectionPhoneInjection extends Phone
    }
 
 
-   /**
+    /**
     * @param $primary_type
     * @param $values
    **/
@@ -104,4 +107,3 @@ class PluginDatainjectionPhoneInjection extends Phone
    }
 
 }
-?>

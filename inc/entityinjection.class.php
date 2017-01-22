@@ -29,11 +29,12 @@
  ---------------------------------------------------------------------- */
 
 if (!defined('GLPI_ROOT')) {
-   die("Sorry. You can't access directly to this file");
+    die("Sorry. You can't access directly to this file");
 }
 
 class PluginDatainjectionEntityInjection extends Entity
-                                         implements PluginDatainjectionInjectionInterface{
+                                         implements PluginDatainjectionInjectionInterface
+{
 
 
    static function getTable() {
@@ -44,16 +45,18 @@ class PluginDatainjectionEntityInjection extends Entity
 
 
    function isPrimaryType() {
+
       return true;
    }
 
 
    function connectedTo() {
+
       return array('Document');
    }
 
 
-   /**
+    /**
     * @see plugins/datainjection/inc/PluginDatainjectionInjectionInterface::getOptions()
    **/
    function getOptions($primary_type='') {
@@ -63,17 +66,17 @@ class PluginDatainjectionEntityInjection extends Entity
       //Remove some options because some fields cannot be imported
       $blacklist     = PluginDatainjectionCommonInjectionLib::getBlacklistedOptions(get_parent_class($this));
       $notimportable = array(14, 26, 27, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41,
-                             42, 43, 44, 45, 47, 48, 49,50, 51, 52, 53, 54, 55, 91, 92, 93);
+                           42, 43, 44, 45, 47, 48, 49,50, 51, 52, 53, 54, 55, 91, 92, 93);
 
       $options['ignore_fields'] = array_merge($blacklist, $notimportable);
       $options['displaytype']   = array("multiline_text" => array(3, 16, 17, 24),
-                                        "dropdown"       => array(9));
+                                      "dropdown"       => array(9));
 
       return PluginDatainjectionCommonInjectionLib::addToSearchOptions($tab, $options, $this);
    }
 
 
-   /**
+    /**
     * @see plugins/datainjection/inc/PluginDatainjectionInjectionInterface::addOrUpdateObject()
    **/
    function addOrUpdateObject($values=array(), $options=array()) {
@@ -84,7 +87,7 @@ class PluginDatainjectionEntityInjection extends Entity
    }
 
 
-   /**
+    /**
     * @param $input     array
     * @param $add                (true by default)
     * @param $rights    array
@@ -96,7 +99,7 @@ class PluginDatainjectionEntityInjection extends Entity
       }
 
       // Import a full tree from completename
-      $names  = explode('>',$input['completename']);
+      $names  = explode('>', $input['completename']);
       $fk     = $this->getForeignKeyField();
       $i      = count($names);
       $parent = 0;
@@ -125,22 +128,24 @@ class PluginDatainjectionEntityInjection extends Entity
          $tmp['entities_id'] = $parent;
 
          //Does the entity alread exists ?
-         $results = getAllDatasFromTable('glpi_entities',
-                                         "`name`='$name' AND `entities_id`='$parent'");
+         $results = getAllDatasFromTable(
+             'glpi_entities',
+             "`name`='$name' AND `entities_id`='$parent'"
+         );
          //Entity doesn't exists => create it
          if (empty($results)) {
-            $parent = CommonDropdown::import($tmp);
+             $parent = CommonDropdown::import($tmp);
          } else {
-            //Entity already exists, use the ID as parent
-            $ent    = array_pop($results);
-            $parent = $ent['id'];
+             //Entity already exists, use the ID as parent
+             $ent    = array_pop($results);
+             $parent = $ent['id'];
          }
       }
       return $parent;
    }
 
 
-   /**
+    /**
     * @param $injectionClass
     * @param $values
     * @param $options
@@ -150,16 +155,17 @@ class PluginDatainjectionEntityInjection extends Entity
       if (!isset($values['completename'])) {
          return false;
       }
-      $results = getAllDatasFromTable('glpi_entities',
-                                      "`completename`='".$values['completename']."'");
+      $results = getAllDatasFromTable(
+          'glpi_entities',
+          "`completename`='".$values['completename']."'"
+      );
 
       if (empty($results)) {
-         return false;
+          return false;
       }
 
-      $ent    = array_pop($results);
-      return $ent['id'];
+       $ent    = array_pop($results);
+       return $ent['id'];
    }
 
 }
-?>

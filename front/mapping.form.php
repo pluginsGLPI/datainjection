@@ -28,12 +28,12 @@
  @since     2009
  ---------------------------------------------------------------------- */
 
-include ('../../../inc/includes.php');
+require '../../../inc/includes.php';
 
 /* Update mappings */
-if (isset ($_POST["update"])) {
-   $at_least_one_mandatory = false;
-   $mapping                = new PluginDatainjectionMapping();
+if (isset($_POST["update"])) {
+    $at_least_one_mandatory = false;
+    $mapping                = new PluginDatainjectionMapping();
 
    foreach ($_POST['data'] as $id => $mapping_infos) {
       $mapping_infos['id'] = $id;
@@ -55,22 +55,31 @@ if (isset ($_POST["update"])) {
    }
 
    if (!$at_least_one_mandatory) {
-      Session::addMessageAfterRedirect(__('One link field must be selected: it will be used to check if data already exists',
-                                          'datainjection'), true, ERROR, true);
+      Session::addMessageAfterRedirect(
+          __(
+              'One link field must be selected: it will be used to check if data already exists',
+              'datainjection'
+          ), true, ERROR, true
+      );
    } else {
       $model = new PluginDatainjectionModel();
       $model->getFromDB($_POST['models_id']);
 
       if ($model->fields['step'] != PluginDatainjectionModel::READY_TO_USE_STEP) {
-         PluginDatainjectionModel::changeStep($_POST['models_id'],
-                                              PluginDatainjectionModel::OTHERS_STEP);
+         PluginDatainjectionModel::changeStep(
+             $_POST['models_id'],
+             PluginDatainjectionModel::OTHERS_STEP
+         );
          Session::setActiveTab('PluginDatainjectionModel', 'PluginDatainjectionModel$5');
-         Session::addMessageAfterRedirect(__("This step allows you to add informations not present in the file. You'll be asked for theses informations while using the model.",
-                                             'datainjection'));
+         Session::addMessageAfterRedirect(
+             __(
+                 "This step allows you to add informations not present in the file. You'll be asked for theses informations while using the model.",
+                 'datainjection'
+             )
+         );
       }
       unset($_SESSION['datainjection']['lines']);
    }
 }
 
 Html::back();
-?>

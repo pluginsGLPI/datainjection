@@ -29,14 +29,16 @@
  ---------------------------------------------------------------------- */
 
 if (!defined('GLPI_ROOT')) {
-   die("Sorry. You can't access directly to this file");
+    die("Sorry. You can't access directly to this file");
 }
 
 class PluginDatainjectionGroup_UserInjection extends Group_User
-                                             implements PluginDatainjectionInjectionInterface {
+                                             implements PluginDatainjectionInjectionInterface
+{
 
 
    static function getTypeName($nb=0) {
+
       return sprintf(__('%1$s - %2$s'), __('Group'), __('User'));
    }
 
@@ -49,17 +51,19 @@ class PluginDatainjectionGroup_UserInjection extends Group_User
    }
 
    function isPrimaryType() {
+
       return false;
    }
 
 
    function connectedTo() {
+
       //return array();
       return array('Group');
    }
 
 
-   /**
+    /**
     * @see plugins/datainjection/inc/PluginDatainjectionInjectionInterface::getOptions()
    **/
    function getOptions($primary_type='') {
@@ -78,13 +82,13 @@ class PluginDatainjectionGroup_UserInjection extends Group_User
 
       $options['ignore_fields'] = array_merge($blacklist, $notimportable);
       $options['displaytype']   = array("bool"    => array(3, 6, 7),
-                                        "dropdown" => array(4));
+                                      "dropdown" => array(4));
 
       return PluginDatainjectionCommonInjectionLib::addToSearchOptions($tab, $options, $this);
    }
 
 
-   /**
+    /**
     * @see plugins/datainjection/inc/PluginDatainjectionInjectionInterface::addOrUpdateObject()
    **/
    function addOrUpdateObject($values=array(), $options=array()) {
@@ -95,7 +99,7 @@ class PluginDatainjectionGroup_UserInjection extends Group_User
    }
 
 
-   /**
+    /**
     * @param $primary_type
     * @param $values
    **/
@@ -112,4 +116,3 @@ class PluginDatainjectionGroup_UserInjection extends Group_User
    }
 
 }
-?>

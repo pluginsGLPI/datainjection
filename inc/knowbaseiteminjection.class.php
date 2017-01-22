@@ -29,11 +29,12 @@
  ---------------------------------------------------------------------- */
 
 if (!defined('GLPI_ROOT')) {
-   die("Sorry. You can't access directly to this file");
+    die("Sorry. You can't access directly to this file");
 }
 
 class PluginDatainjectionKnowbaseItemInjection extends KnowbaseItem
-                                               implements PluginDatainjectionInjectionInterface {
+                                               implements PluginDatainjectionInjectionInterface
+{
 
 
    static function getTable() {
@@ -45,16 +46,18 @@ class PluginDatainjectionKnowbaseItemInjection extends KnowbaseItem
 
 
    function isPrimaryType() {
+
       return true;
    }
 
 
    function connectedTo() {
+
       return array();
    }
 
 
-   /**
+    /**
     * @see plugins/datainjection/inc/PluginDatainjectionInjectionInterface::getOptions()
    **/
    function getOptions($primary_type='') {
@@ -70,16 +73,16 @@ class PluginDatainjectionKnowbaseItemInjection extends KnowbaseItem
       $options['ignore_fields'] = array_merge($blacklist, $notimportable);
 
       $options['displaytype']   = array("dropdown"       => array(4),
-                                        "date"           => array(5),
-                                        "multiline_text" => array(6,7),
-                                        "bool"           => array(8, 9, 86),
-                                        "user"           => array(70));
+                                      "date"           => array(5),
+                                      "multiline_text" => array(6,7),
+                                      "bool"           => array(8, 9, 86),
+                                      "user"           => array(70));
 
       return PluginDatainjectionCommonInjectionLib::addToSearchOptions($tab, $options, $this);
    }
 
 
-   /**
+    /**
     * @see plugins/datainjection/inc/PluginDatainjectionInjectionInterface::addOrUpdateObject()
    **/
    function addOrUpdateObject($values=array(), $options=array()) {
@@ -90,4 +93,3 @@ class PluginDatainjectionKnowbaseItemInjection extends KnowbaseItem
    }
 
 }
-?>

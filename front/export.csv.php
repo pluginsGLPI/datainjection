@@ -28,8 +28,6 @@
  @since     2009
  ---------------------------------------------------------------------- */
 
-include ('../../../inc/includes.php');
+require '../../../inc/includes.php';
 
 PluginDatainjectionClientInjection::exportErrorsInCSV();
-
-?>

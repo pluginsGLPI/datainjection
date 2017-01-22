@@ -29,11 +29,12 @@
  ---------------------------------------------------------------------- */
 
 if (!defined('GLPI_ROOT')) {
-   die("Sorry. You can't access directly to this file");
+    die("Sorry. You can't access directly to this file");
 }
 
 class PluginDatainjectionProfileInjection extends Profile
-                                          implements PluginDatainjectionInjectionInterface {
+                                          implements PluginDatainjectionInjectionInterface
+{
 
 
    static function getTable() {
@@ -44,56 +45,59 @@ class PluginDatainjectionProfileInjection extends Profile
 
 
    function isPrimaryType() {
+
       return true;
    }
 
 
    function connectedTo() {
+
       return array();
    }
 
 
-   /**
+    /**
     * @see plugins/datainjection/inc/PluginDatainjectionInjectionInterface::getOptions()
    **/
    function getOptions($primary_type='') {
+
       return Search::getOptions(get_parent_class($this));
    }
 
 
-   /**
+    /**
     * @param $field_name
     * @param $data
     * @param $mandatory
    **/
    function checkType($field_name, $data, $mandatory) {
 
-      switch($field_name) {
+      switch ($field_name) {
          case 'right_rw' :
             return (in_array($data, array('r', 'w'))
-                    ?PluginDatainjectionCommonInjectionLib::SUCCESS
-                    :PluginDatainjectionCommonInjectionLib::TYPE_MISMATCH);
+                 ?PluginDatainjectionCommonInjectionLib::SUCCESS
+                 :PluginDatainjectionCommonInjectionLib::TYPE_MISMATCH);
 
          case 'right_r' :
             return (($data=='r')?PluginDatainjectionCommonInjectionLib::SUCCESS
-                                :PluginDatainjectionCommonInjectionLib::TYPE_MISMATCH);
+                             :PluginDatainjectionCommonInjectionLib::TYPE_MISMATCH);
 
          case 'right_w' :
             return (($data=='w')?PluginDatainjectionCommonInjectionLib::SUCCESS
-                                :PluginDatainjectionCommonInjectionLib::TYPE_MISMATCH);
+                             :PluginDatainjectionCommonInjectionLib::TYPE_MISMATCH);
 
          case 'interface':
             return (in_array($data, array('helpdesk', 'central'))
-                    ?PluginDatainjectionCommonInjectionLib::SUCCESS
-                    :PluginDatainjectionCommonInjectionLib::TYPE_MISMATCH);
+                 ?PluginDatainjectionCommonInjectionLib::SUCCESS
+                 :PluginDatainjectionCommonInjectionLib::TYPE_MISMATCH);
 
-          default :
+         default:
             return PluginDatainjectionCommonInjectionLib::SUCCESS;
       }
    }
 
 
-   /**
+    /**
     * @see plugins/datainjection/inc/PluginDatainjectionInjectionInterface::addOrUpdateObject()
    **/
    function addOrUpdateObject($values=array(), $options=array()) {
@@ -104,4 +108,3 @@ class PluginDatainjectionProfileInjection extends Profile
    }
 
 }
-?>

@@ -29,11 +29,12 @@
  ---------------------------------------------------------------------- */
 
 if (!defined('GLPI_ROOT')) {
-   die("Sorry. You can't access directly to this file");
+    die("Sorry. You can't access directly to this file");
 }
 
 class PluginDatainjectionContract_SupplierInjection extends Contract_Supplier
-                                               implements PluginDatainjectionInjectionInterface {
+                                               implements PluginDatainjectionInjectionInterface
+{
 
 
    static function getTable() {
@@ -45,16 +46,18 @@ class PluginDatainjectionContract_SupplierInjection extends Contract_Supplier
 
 
    function isPrimaryType() {
+
       return false;
    }
 
 
    function connectedTo() {
+
       return array();
    }
 
 
-   /**
+    /**
     * @see plugins/datainjection/inc/PluginDatainjectionInjectionInterface::getOptions()
    **/
    function getOptions($primary_type='') {
@@ -75,7 +78,7 @@ class PluginDatainjectionContract_SupplierInjection extends Contract_Supplier
    }
 
 
-   /**
+    /**
     * @see plugins/datainjection/inc/PluginDatainjectionInjectionInterface::addOrUpdateObject()
    **/
    function addOrUpdateObject($values=array(), $options=array()) {
@@ -86,14 +89,13 @@ class PluginDatainjectionContract_SupplierInjection extends Contract_Supplier
    }
 
 
-   /**
+    /**
     * @param $primary_type
     * @param $values
    **/
    function addSpecificNeededFields($primary_type, $values) {
 
       return array(getForeignKeyFieldForTable(getTableForItemType($primary_type))
-               => $values[$primary_type]['id']);
+             => $values[$primary_type]['id']);
    }
 }
-?>

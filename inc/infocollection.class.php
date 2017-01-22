@@ -28,24 +28,27 @@
  @since     2009
  ---------------------------------------------------------------------- */
 
-class PluginDatainjectionInfoCollection {
+class PluginDatainjectionInfoCollection
+{
 
-   var $infosCollection;
+    var $infosCollection;
 
 
    function __construct() {
+
       $this->infosCollection = array();
    }
 
 
-   //---- Getter ----//
+    //---- Getter ----//
 
-   /**
+    /**
     * Load all the mappings for a specified model
     *
     * @param model_id the model ID
    **/
    function load($models_id) {
+
       global $DB;
 
       $query = "SELECT *
@@ -60,14 +63,14 @@ class PluginDatainjectionInfoCollection {
       }
    }
 
-   /**
+    /**
     * Return all the mappings for this model
     *
     * @return the list of all the mappings for this model
    **/
    function getAllInfos() {
+
       return $this->infosCollection;
    }
 
 }
-?>

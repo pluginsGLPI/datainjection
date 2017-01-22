@@ -29,11 +29,12 @@
  ---------------------------------------------------------------------- */
 
 if (!defined('GLPI_ROOT')) {
-   die("Sorry. You can't access directly to this file");
+    die("Sorry. You can't access directly to this file");
 }
 
 class PluginDatainjectionComputer_ItemInjection extends Computer_Item
-                                                implements PluginDatainjectionInjectionInterface {
+                                                implements PluginDatainjectionInjectionInterface
+{
 
 
    static function getTable() {
@@ -45,23 +46,26 @@ class PluginDatainjectionComputer_ItemInjection extends Computer_Item
 
 
    static function getTypeName($nb=0) {
+
       return __('Direct connections');
    }
 
 
    function isPrimaryType() {
+
       return false;
    }
 
 
    function connectedTo() {
+
       global $CFG_GLPI;
 
       return $CFG_GLPI["directconnect_types"];
    }
 
 
-   /**
+    /**
     * @see plugins/datainjection/inc/PluginDatainjectionInjectionInterface::getOptions()
    **/
    function getOptions($primary_type='') {
@@ -97,7 +101,7 @@ class PluginDatainjectionComputer_ItemInjection extends Computer_Item
    }
 
 
-   /**
+    /**
     * @see plugins/datainjection/inc/PluginDatainjectionInjectionInterface::addOrUpdateObject()
    **/
    function addOrUpdateObject($values=array(), $options=array()) {
@@ -108,7 +112,7 @@ class PluginDatainjectionComputer_ItemInjection extends Computer_Item
    }
 
 
-   /**
+    /**
     * @param $primary_type
     * @param $values
    **/
@@ -120,4 +124,3 @@ class PluginDatainjectionComputer_ItemInjection extends Computer_Item
    }
 
 }
-?>

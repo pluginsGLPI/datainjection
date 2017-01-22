@@ -29,7 +29,8 @@
  ---------------------------------------------------------------------- */
 
 class PluginDatainjectionContract_ItemInjection extends Contract_Item
-                                                implements PluginDatainjectionInjectionInterface {
+                                                implements PluginDatainjectionInjectionInterface
+{
 
 
    static function getTable() {
@@ -40,23 +41,26 @@ class PluginDatainjectionContract_ItemInjection extends Contract_Item
 
 
    function isPrimaryType() {
+
       return false;
    }
 
 
    function relationSide() {
+
       return false;
    }
 
 
    function connectedTo() {
+
       global $CFG_GLPI;
 
       return $CFG_GLPI["contract_types"];
    }
 
 
-   /**
+    /**
     * @see plugins/datainjection/inc/PluginDatainjectionInjectionInterface::getOptions()
    **/
    function getOptions($primary_type='') {
@@ -85,7 +89,7 @@ class PluginDatainjectionContract_ItemInjection extends Contract_Item
    }
 
 
-   /**
+    /**
     * @see plugins/datainjection/inc/PluginDatainjectionInjectionInterface::addOrUpdateObject()
    **/
    function addOrUpdateObject($values=array(), $options=array()) {
@@ -96,7 +100,7 @@ class PluginDatainjectionContract_ItemInjection extends Contract_Item
    }
 
 
-   /**
+    /**
     * @param $primary_type
     * @param $values
    **/
@@ -108,4 +112,3 @@ class PluginDatainjectionContract_ItemInjection extends Contract_Item
    }
 
 }
-?>

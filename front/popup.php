@@ -28,21 +28,20 @@
  @since     2009
  ---------------------------------------------------------------------- */
 
-include ('../../../inc/includes.php');
+require '../../../inc/includes.php';
 
 Session::checkLoginUser();
 
 switch ($_GET["popup"]) {
    case "preview" :
-      Html::popHeader(__('See the file', 'datainjection'), $_SERVER['PHP_SELF']);
-      PluginDatainjectionModel::showPreviewMappings($_GET['models_id']);
-      Html::popFooter();
-      break;
+       Html::popHeader(__('See the file', 'datainjection'), $_SERVER['PHP_SELF']);
+       PluginDatainjectionModel::showPreviewMappings($_GET['models_id']);
+       Html::popFooter();
+    break;
 
    case "log" :
-      Html::popHeader(__('File injection report', 'datainjection'), $_SERVER['PHP_SELF']);
-      PluginDatainjectionModel::showLogResults($_GET['models_id']);
-      Html::popFooter();
-      break;
+       Html::popHeader(__('File injection report', 'datainjection'), $_SERVER['PHP_SELF']);
+       PluginDatainjectionModel::showLogResults($_GET['models_id']);
+       Html::popFooter();
+    break;
 }
-?>

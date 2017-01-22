@@ -28,30 +28,34 @@
  @since     2009
  ---------------------------------------------------------------------- */
 
-class PluginDatainjectionData {
+class PluginDatainjectionData
+{
 
    private $injectionData;
 
 
    function __construct() {
+
       $injectionData = array();
    }
 
 
-   /**
+    /**
     * @param $newData
    **/
    function addToData($newData) {
+
       $this->injectionData[] = $newData;
    }
 
 
    function getData() {
+
       return $this->injectionData;
    }
 
 
-   /**
+    /**
     * @param $line_id
    **/
    function getDataAtLine($line_id) {
@@ -63,4 +67,3 @@ class PluginDatainjectionData {
    }
 
 }
-?>

@@ -29,13 +29,12 @@
  ---------------------------------------------------------------------- */
 
 // Direct access to file
-if (strpos($_SERVER['PHP_SELF'],"results.php")) {
-   include ('../../../inc/includes.php');
-   header("Content-Type: text/html; charset=UTF-8");
-   Html::header_nocache();
+if (strpos($_SERVER['PHP_SELF'], "results.php")) {
+    include '../../../inc/includes.php';
+    header("Content-Type: text/html; charset=UTF-8");
+    Html::header_nocache();
 }
 
 Session::checkCentralAccess();
 $model = unserialize($_SESSION['datainjection']['currentmodel']);
 PluginDatainjectionClientInjection::showResultsForm($model);
-?>
