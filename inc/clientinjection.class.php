@@ -31,7 +31,7 @@
  class PluginDatainjectionClientInjection {
 
    static $rightname = "plugin_datainjection_use";
-   
+
    const STEP_UPLOAD  = 0;
    const STEP_PROCESS = 1;
    const STEP_RESULT  = 2;
@@ -88,7 +88,7 @@
       } else {
          $text = __('No model currently available', 'datainjection');
 
-         if (Session::haveRight(plugin_datainjection_model, CREATE) ) {
+         if (Session::haveRight('plugin_datainjection_model', CREATE) ) {
 
             $text = sprintf(__('%1$s %2$s'), $text.". ",
                             sprintf(__('%1$s: %2$s'),
