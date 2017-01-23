@@ -58,7 +58,9 @@ function plugin_init_datainjection() {
             = array('Profile' => array('PluginDatainjectionProfile', 'purgeProfiles'));
 
       // Css file
-      $PLUGIN_HOOKS['add_css']['datainjection'] = 'css/datainjection.css';
+      if (strpos($_SERVER['REQUEST_URI'], "plugins/datainjection") !== false) {
+         $PLUGIN_HOOKS['add_css']['datainjection'] = 'css/datainjection.css';
+      }
 
       // Javascript file
       $PLUGIN_HOOKS['add_javascript']['datainjection'] = 'javascript/datainjection.js';
