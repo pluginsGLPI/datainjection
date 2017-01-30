@@ -93,7 +93,8 @@ class PluginDatainjectionInfocomInjection extends Infocom
       $tab[23]['checktype']   = 'date';
       $tab[24]['checktype']   = 'date';
       $tab[25]['checktype']   = 'date';
-      $tab[26]['checktype']   = 'date';
+      $tab[27]['checktype']   = 'date';
+      $tab[28]['checktype']   = 'date';
 
       //Remove some options because some fields cannot be imported
       $blacklist     = PluginDatainjectionCommonInjectionLib::getBlacklistedOptions(get_parent_class($this));
@@ -104,7 +105,7 @@ class PluginDatainjectionInfocomInjection extends Infocom
       $key                      = array_search(19, $options['ignore_fields']);
       unset($options['ignore_fields'][$key]);
 
-      $options['displaytype']   = array("date"             => array(4, 5, 23, 24, 25, 26),
+      $options['displaytype']   = array("date"             => array(4, 5, 23, 24, 25, 27, 28),
                                         "dropdown"         => array(6, 9, 19),
                                         "dropdown_integer" => array(6, 14),
                                         "decimal"          => array(8, 13, 17),
