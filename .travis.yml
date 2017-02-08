@@ -1,52 +1,39 @@
 language: php
+php:
+  - 5.5
+  - 5.6
+  - 7.0
+  - 7.1
+  - nightly
 
-env:
-  - DB=mysql
+#env:
+#  global:
+#    - DB=mysql
+#  matrix:
+#    - GLPIVER=9.1/bugfixes
+#    - GLPIVER=master
 
 before_script:
   - composer self-update
-  - if [[ ${TRAVIS_PHP_VERSION:0:3} == "5.4" ]]; then sed -e "s|.*"consolidation/robo".*$||" -i composer.json && composer update; fi
-  - composer install -o
+#  - git clone --depth=1 https://github.com/glpi-project/glpi -b $GLPIVER ../glpi && cd ../glpi
+#  - composer install --no-dev
 #  - mysql -u root -e 'create database glpitest;'
-#  - php tools/cliinstall.php --lang=en_US --db=glpitest --user=root --tests
+#  - php tools/cliinstall.php --db=glpi-test --user=travis --tests
+#  - mv ../{LNAME} plugins/{LNAME}
+#  - cd plugins/{LNAME}
+  - composer install -o
+
 
 script:
+  - vendor/bin/robo --no-interaction code:cs
 #  - mysql -u root -e 'select version();'
-#  - phpunit --verbose
-  - vendor/bin/phpcs -p --ignore=vendor --ignore=js --standard=vendor/glpi-project/coding-standard/GlpiStandard/ .
+#  - ./vendor/bin/atoum -bf tests/bootstrap.php -d tests/units/
+
 
 matrix:
-  include:
-    - php: 5.4
-      addons:
-        mariadb: 5.5
-    - php: 5.5
-      addons:
-        mariadb: 5.5
-#    - php: 5.6
-#      addons:
-#        mariadb: 5.5
-#    - php: 5.6
-#      addons:
-#        mariadb: 10.0
-    - php: 5.6
-      addons:
-        mariadb: 10.1
-#    - php: 7.0
-#      addons:
-#        mariadb: 10.0
-    - php: 7.0
-      addons:
-        mariadb: 10.1
-#    - php: 7.1
-#      addons:
-#        mariadb: 10.0
-    - php: 7.1
-      addons:
-        mariadb: 10.1
-    - php: nightly
-      addons:
-        mariadb: 10.1
+#  exclude:
+#    - php: 5.4
+#      env: GLPIVER=master
   allow_failures:
     - php: nightly
 
