@@ -63,12 +63,20 @@ class PluginDatainjectionLocationInjection extends Location
 
       $tab           = Search::getOptions(get_parent_class($this));
 
+      //Specific to location
+      $tab[3]['linkfield'] = 'locations_id';
+      $tab[3]['table']          = 'glpi_locations';
+      $tab[3]['field']          = 'completename';
+      $tab[3]['name']           = __('Location');
+      $tab[3]['datatype']       = 'dropdown';
+    
       //Remove some options because some fields cannot be imported
       $blacklist     = PluginDatainjectionCommonInjectionLib::getBlacklistedOptions(get_parent_class($this));
       $notimportable = array(14);
 
       $options['ignore_fields'] = array_merge($blacklist, $notimportable);
-      $options['displaytype']   = array("multiline_text" => array(16));
+      $options['displaytype']   = array("dropdown"       => array(3),
+					                                   "multiline_text" => array(16));
 
       return PluginDatainjectionCommonInjectionLib::addToSearchOptions($tab, $options, $this);
    }
