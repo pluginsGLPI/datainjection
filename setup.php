@@ -195,7 +195,7 @@ function getTypesToInject() {
                         'PluginDatainjectionPrinterModelInjection'                => 'datainjection',
                         'PluginDatainjectionPeripheralModelInjection'             => 'datainjection',
                         'PluginDatainjectionNetworkEquipmentModelInjection'       => 'datainjection',
-                        'PluginDatainjectionNetworkEquipmentFirmwareInjection'    => 'datainjection',
+                        //'PluginDatainjectionNetworkEquipmentFirmwareInjection'    => 'datainjection',
                         'PluginDatainjectionVirtualMachineTypeInjection'          => 'datainjection',
                         'PluginDatainjectionVirtualMachineSystemInjection'        => 'datainjection',
                         'PluginDatainjectionVirtualMachineStateInjection'         => 'datainjection',
