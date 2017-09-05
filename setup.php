@@ -85,29 +85,30 @@ function plugin_init_datainjection() {
 
 function plugin_version_datainjection() {
 
-    return ['name'           => __('File injection', 'datainjection'),
+    return [
+           'name'           => __('File injection', 'datainjection'),
            'minGlpiVersion' => '0.85',
            'author'         => 'Walid Nouh, Remi Collet, Nelly Mahu-Lasson, Xavier Caillaud',
            'homepage'       => 'https://github.com/pluginsGLPI/datainjection',
            'license'        => 'GPLv2+',
-           'version'        => '2.4.2'
+           'version'        => '2.4.2',
+           'requirements'   => [
+              'glpi' => [
+                 'min' => '9.2',
+                  'max' => '9.3',
+                  'dev' => 1
+               ]
+            ]
          ];
 }
 
 
 function plugin_datainjection_check_prerequisites() {
-
-   if (version_compare(GLPI_VERSION, '0.85', 'lt')
-    ) {
-      _e('This plugin requires GLPI 0.85 or higher', 'datainjection');
-      return false;
-   }
     return true;
 }
 
 
 function plugin_datainjection_check_config($verbose=false) {
-
     return true;
 }
 
