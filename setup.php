@@ -195,6 +195,7 @@ function getTypesToInject() {
                              'PluginDatainjectionDeviceHardDriveInjection'             => 'datainjection',
                              'PluginDatainjectionDeviceMotherboardInjection'           => 'datainjection',
                              'PluginDatainjectionDeviceDriveInjection'                 => 'datainjection',
+                             'PluginDatainjectionComputerDiskInjection'                => 'datainjection',
                              'PluginDatainjectionDeviceNetworkCardInjection'           => 'datainjection'
                              );
    //Add plugins
