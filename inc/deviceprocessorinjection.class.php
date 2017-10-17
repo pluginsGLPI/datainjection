@@ -66,6 +66,10 @@ class PluginDatainjectionDeviceProcessorInjection extends DeviceProcessor
 
       $options['ignore_fields'] = array_merge($blacklist, $notimportable);
       $options['displaytype']   = array("multiline_text" => array(16),
+                                        // WP number of default cores
+                                        // START
+                                        "text"           => array(11),
+                                        // END
                                         "dropdown"       => array(23));
 
       return PluginDatainjectionCommonInjectionLib::addToSearchOptions($tab, $options, $this);
@@ -88,20 +92,39 @@ class PluginDatainjectionDeviceProcessorInjection extends DeviceProcessor
                       AND `itemtype`='Computer'
                       AND `items_id`='".$values['Computer']['id']."'";
 
-         if (!countElementsInTable($item->getTable(), $where)) {
-
-            if (isset($values[get_parent_class($this)]['frequency'])
-                && ($values[get_parent_class($this)]['frequency'] > 0)) {
-               $tmp['frequency'] = $values[get_parent_class($this)]['frequency'];
-            } else {
-               $tmp['frequency'] = 0;
-            }
-
-            $tmp[$foreign]   = $values[get_parent_class($this)]['id'];
-            $tmp['items_id'] = $values['Computer']['id'];
-            $tmp['itemtype'] = 'Computer';
-            $item->add($tmp);
+         // WP - number of cores for imported item == default cores
+         // START
+         if (isset($values[get_parent_class($this)]['frequency'])
+             && ($values[get_parent_class($this)]['frequency'] > 0)) {
+            $tmp['frequency'] = $values[get_parent_class($this)]['frequency'];
+         } else {
+            $tmp['frequency'] = 0;
          }
+
+         $tmp[$foreign]   = $values[get_parent_class($this)]['id'];
+         $tmp['items_id'] = $values['Computer']['id'];
+         $tmp['itemtype'] = 'Computer';
+         if (isset($values[get_parent_class($this)]['nbcores'])
+             && ($values[get_parent_class($this)]['nbcores'] > 0)) {
+            $tmp['nbcores'] = $values[get_parent_class($this)]['nbcores'];
+         } else {
+            $tmp['nbcores'] = $values[get_parent_class($this)]['nbcores_default'];
+         }
+         
+         if (!countElementsInTable($item->getTable(), $where)) {
+            $item->add($tmp);
+         } else {
+            $datas = getAllDatasFromTable($item->getTable(), $where);
+            foreach ($datas as $data) {
+               //update only first item
+               if (isset($tmp['id'])) {
+                  continue;
+               }
+               $tmp['id'] = $data['id'];
+               $item->update($tmp);
+            }
+         }
+         // END
       }
    }
 

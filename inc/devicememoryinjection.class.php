@@ -66,6 +66,10 @@ class PluginDatainjectionDeviceMemoryInjection extends DeviceMemory
 
       $options['ignore_fields'] = array_merge($blacklist, $notimportable);
       $options['displaytype']   = array("multiline_text" => array(16),
+                                        // WP default size import
+                                        // START
+                                        "text"           => array(11),
+                                        // END
                                         "dropdown"       => array(13, 23));
 
       return PluginDatainjectionCommonInjectionLib::addToSearchOptions($tab, $options, $this);
@@ -88,20 +92,41 @@ class PluginDatainjectionDeviceMemoryInjection extends DeviceMemory
                      AND `itemtype`='Computer'
                      AND `items_id`='".$values['Computer']['id']."'";
 
-         if (!countElementsInTable($item->getTable(), $where)) {
-
-            if (isset($values[get_parent_class($this)]['size'])
-                && ($values[get_parent_class($this)]['size'] > 0)) {
-               $tmp['size'] = $values[get_parent_class($this)]['size'];
-            } else {
-               $tmp['size'] = 0;
-            }
-
-            $tmp[$foreign]   = $values[get_parent_class($this)]['id'];
-            $tmp['items_id'] = $values['Computer']['id'];
-            $tmp['itemtype'] = 'Computer';
-            $item->add($tmp);
+         // WP - size of memory for imported item == default size
+         // START
+         if (isset($values[get_parent_class($this)]['size'])
+             && ($values[get_parent_class($this)]['size'] > 0)) {
+            $tmp['size'] = $values[get_parent_class($this)]['size'];
+         } else {
+            $tmp['size'] = 0;
          }
+
+         $tmp[$foreign]   = $values[get_parent_class($this)]['id'];
+         $tmp['items_id'] = $values['Computer']['id'];
+         $tmp['itemtype'] = 'Computer';
+
+         //add size
+         if (isset($values[get_parent_class($this)]['size'])
+             && ($values[get_parent_class($this)]['size'] > 0)) {
+            $tmp['size'] = $values[get_parent_class($this)]['size'];
+         } else {
+            $tmp['size'] = $values[get_parent_class($this)]['size_default'];
+         }
+
+         if (!countElementsInTable($item->getTable(), $where)) {
+            $item->add($tmp);
+         } else {
+            $datas = getAllDatasFromTable($item->getTable(), $where);
+            foreach ($datas as $data) {
+               //update only first item
+               if (isset($tmp['id'])) {
+                  continue;
+               }
+               $tmp['id'] = $data['id'];
+               $item->update($tmp);
+            }
+         }
+         // END
       }
    }
 
@@ -124,9 +149,12 @@ class PluginDatainjectionDeviceMemoryInjection extends DeviceMemory
    function addSpecificNeededFields($primary_type, $values) {
 
       $fields = array();
-      if (!isset($values['size_default'])) {
-         if (isset($values[get_parent_class($this)]['size'])) {
-            $fields['size_default'] = $values[get_parent_class($this)]['size'];
+      if (!isset($values['size_default'])) { 
+         // WP default size instead of size
+         // START
+         if (isset($values[get_parent_class($this)]['size_default'])) {
+            $fields['size_default'] = $values[get_parent_class($this)]['size_default'];
+         // END
          } else {
             $fields['size_default'] = 0;
          }
