@@ -56,7 +56,7 @@ class PluginDatainjectionNotepadInjection extends Notepad
       //Do not manage updating notes: only creation
       return false;
    }
-   
+
    /**
     * @see plugins/datainjection/inc/PluginDatainjectionInjectionInterface::getOptions()
    **/
