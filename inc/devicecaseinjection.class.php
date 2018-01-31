@@ -1,6 +1,6 @@
 <?php
 /*
- * @version $Id$
+ * @version $Id: HEADER 14684 2011-06-11 06:32:40Z remi $
  LICENSE
 
  This file is part of the datainjection plugin.
@@ -20,23 +20,24 @@
  --------------------------------------------------------------------------
  @package   datainjection
  @author    the datainjection plugin team
- @copyright Copyright (c) 2010-2013 Datainjection plugin team
+ @copyright Copyright (c) 2010-2017 Datainjection plugin team
  @license   GPLv2+
             http://www.gnu.org/licenses/gpl.txt
- @link      https://forge.indepnet.net/projects/datainjection
+ @link      https://github.com/pluginsGLPI/datainjection
  @link      http://www.glpi-project.org/
  @since     2009
  ---------------------------------------------------------------------- */
 
 if (!defined('GLPI_ROOT')) {
-   die("Sorry. You can't access directly to this file");
+    die("Sorry. You can't access directly to this file");
 }
 
 class PluginDatainjectionDeviceCaseInjection extends DeviceCase
-                                               implements PluginDatainjectionInjectionInterface {
+                                               implements PluginDatainjectionInjectionInterface
+{
 
 
-   static function getTable() {
+   static function getTable($classname = null) {
 
       $parenttype = get_parent_class();
       return $parenttype::getTable();
@@ -44,16 +45,18 @@ class PluginDatainjectionDeviceCaseInjection extends DeviceCase
 
 
    function isPrimaryType() {
+
       return true;
    }
 
 
    function connectedTo() {
+
       return array("Computer");
    }
 
 
-   /**
+    /**
     * @see plugins/datainjection/inc/PluginDatainjectionInjectionInterface::getOptions()
    **/
    function getOptions($primary_type='') {
@@ -66,13 +69,13 @@ class PluginDatainjectionDeviceCaseInjection extends DeviceCase
 
       $options['ignore_fields'] = array_merge($blacklist, $notimportable);
       $options['displaytype']   = array("multiline_text" => array(16),
-                                        "dropdown"       => array(12, 23));
+                                      "dropdown"       => array(12, 23));
 
       return PluginDatainjectionCommonInjectionLib::addToSearchOptions($tab, $options, $this);
    }
 
 
-   /**
+    /**
     * @param $values
     * @param $add             (true by default)
     * @param $rights    array
@@ -84,10 +87,12 @@ class PluginDatainjectionDeviceCaseInjection extends DeviceCase
          $item    = new $class();
          $foreign = getForeignKeyFieldForTable(getTableForItemType(get_parent_class($this)));
 
-         if (!countElementsInTable($item->getTable(),
-                                   "`$foreign`='".$values[get_parent_class($this)]['id']."'
+         if (!countElementsInTable(
+             $item->getTable(),
+             "`$foreign`='".$values[get_parent_class($this)]['id']."'
                                        AND `itemtype`='Computer'
-                                       AND `items_id`='".$values['Computer']['id']."'")) {
+                                       AND `items_id`='".$values['Computer']['id']."'"
+         )) {
             $tmp[$foreign]   = $values[get_parent_class($this)]['id'];
             $tmp['items_id'] = $values['Computer']['id'];
             $tmp['itemtype'] = 'Computer';
@@ -97,7 +102,7 @@ class PluginDatainjectionDeviceCaseInjection extends DeviceCase
    }
 
 
-   /**
+    /**
     * @see plugins/datainjection/inc/PluginDatainjectionInjectionInterface::addOrUpdateObject()
    **/
    function addOrUpdateObject($values=array(), $options=array()) {
@@ -108,4 +113,3 @@ class PluginDatainjectionDeviceCaseInjection extends DeviceCase
    }
 
 }
-?>

@@ -1,6 +1,6 @@
 <?php
 /*
- * @version $Id$
+ * @version $Id: HEADER 14684 2011-06-11 06:32:40Z remi $
  LICENSE
 
  This file is part of the datainjection plugin.
@@ -20,31 +20,34 @@
  --------------------------------------------------------------------------
  @package   datainjection
  @author    the datainjection plugin team
- @copyright Copyright (c) 2010-2013 Datainjection plugin team
+ @copyright Copyright (c) 2010-2017 Datainjection plugin team
  @license   GPLv2+
             http://www.gnu.org/licenses/gpl.txt
- @link      https://forge.indepnet.net/projects/datainjection
+ @link      https://github.com/pluginsGLPI/datainjection
  @link      http://www.glpi-project.org/
  @since     2009
  ---------------------------------------------------------------------- */
- 
-class PluginDatainjectionMappingCollection {
+
+class PluginDatainjectionMappingCollection
+{
 
    private $mappingCollection;
 
    function __construct() {
+
       $this->mappingCollection = array();
    }
 
 
-   //---- Getter ----//
+    //---- Getter ----//
 
-   /**
+    /**
     * Load all the mappings for a specified model
     *
     * @param model_ids the model ID
    **/
    function load($models_id) {
+
       global $DB;
 
       $sql = "SELECT *
@@ -54,7 +57,7 @@ class PluginDatainjectionMappingCollection {
 
       $this->mappingCollection = array();
 
-      foreach  ($data = $DB->request($sql) as $data) {
+      foreach ($data = $DB->request($sql) as $data) {
          // Addslashes to conform to value return by PluginDatainjectionBackendcsv::parseLine
          $data["name"]              = addslashes($data["name"]);
          $mapping                   = new PluginDatainjectionMapping();
@@ -64,17 +67,18 @@ class PluginDatainjectionMappingCollection {
    }
 
 
-   /**
+    /**
     * Return all the mappings for this model
     *
     * @return the list of all the mappings for this model
    **/
    function getAllMappings() {
+
       return $this->mappingCollection;
    }
 
 
-   /**
+    /**
     * Get a PluginDatainjectionMapping by giving the mapping name
     *
     * @param name
@@ -82,11 +86,12 @@ class PluginDatainjectionMappingCollection {
     * @return the PluginDatainjectionMapping object associated or null
    **/
    function getMappingByName($name) {
+
       return $this->getMappingsByField("name", $name);
    }
 
 
-   /**
+    /**
     * Get a PluginDatainjectionMapping by giving the mapping rank
     *
     * @param rank
@@ -94,11 +99,12 @@ class PluginDatainjectionMappingCollection {
     * @return the PluginDatainjectionMapping object associated or null
    **/
    function getMappingByRank($rank) {
+
       return $this->getMappingsByField("rank", $rank);
    }
 
 
-   /**
+    /**
     * Find a mapping by looking for a specific field
     *
     * @param field the field to look for
@@ -117,9 +123,9 @@ class PluginDatainjectionMappingCollection {
    }
 
 
-   //---- Save ----//
+    //---- Save ----//
 
-   /**
+    /**
     * Save in database the model and all his associated mappings
    **/
    function saveAllMappings() {
@@ -134,39 +140,44 @@ class PluginDatainjectionMappingCollection {
    }
 
 
-   //---- Delete ----//
+    //---- Delete ----//
 
    function deleteMappingsFromDB($model_id) {
+
       $mapping = new PluginDatainjectionMapping();
       $mapping->deleteByCriteria(array('models_id' => $model_id));
    }
 
 
-   //---- Add ----//
+    //---- Add ----//
 
-   /**
+    /**
     * Add a new mapping to this model (don't write in to DB)
     *
     * @param mapping the new PluginDatainjectionMapping to add
    **/
    function addNewMapping($mapping) {
+
       $this->mappingCollection[] = $mapping;
    }
 
 
-   /**
+    /**
     * Replace all the mappings for a model
+    *
     * @param mappins the array of PluginDatainjectionMapping objects
    **/
    function replaceMappings($mappings) {
+
       $this->mappingCollection = $mappings;
    }
 
 
-   /**
+    /**
     * Check if at least one mapping is defined, and if one mandatory field
    */
    static function checkMappings($models_id) {
+
    }
 
 
@@ -183,8 +194,8 @@ class PluginDatainjectionMappingCollection {
 
 
    function getNumberOfMappings() {
+
       return count($this->mappingCollection);
    }
 
 }
-?>

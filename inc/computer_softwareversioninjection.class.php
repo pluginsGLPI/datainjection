@@ -1,6 +1,6 @@
 <?php
 /*
- * @version $Id$
+ * @version $Id: HEADER 14684 2011-06-11 06:32:40Z remi $
  LICENSE
 
  This file is part of the datainjection plugin.
@@ -20,28 +20,30 @@
  --------------------------------------------------------------------------
  @package   datainjection
  @author    the datainjection plugin team
- @copyright Copyright (c) 2010-2013 Datainjection plugin team
+ @copyright Copyright (c) 2010-2017 Datainjection plugin team
  @license   GPLv2+
             http://www.gnu.org/licenses/gpl.txt
- @link      https://forge.indepnet.net/projects/datainjection
+ @link      https://github.com/pluginsGLPI/datainjection
  @link      http://www.glpi-project.org/
  @since     2009
  ---------------------------------------------------------------------- */
 
 if (!defined('GLPI_ROOT')) {
-   die("Sorry. You can't access directly to this file");
+    die("Sorry. You can't access directly to this file");
 }
 
 class PluginDatainjectionComputer_SoftwareVersionInjection extends Computer_SoftwareVersion
-                                                implements PluginDatainjectionInjectionInterface {
+                                                implements PluginDatainjectionInjectionInterface
+{
 
 
    static function getTypeName($nb=0) {
+
       return __('Computer');
    }
 
 
-   static function getTable() {
+   static function getTable($classname = null) {
 
       $parenttype = get_parent_class();
       return $parenttype::getTable();
@@ -49,16 +51,18 @@ class PluginDatainjectionComputer_SoftwareVersionInjection extends Computer_Soft
 
 
    function isPrimaryType() {
+
       return false;
    }
 
 
    function connectedTo() {
+
       return array('Software', 'SoftwareVersion');
    }
 
 
-   /**
+    /**
     * @see plugins/datainjection/inc/PluginDatainjectionInjectionInterface::getOptions()
    **/
    function getOptions($primary_type='') {
@@ -75,8 +79,10 @@ class PluginDatainjectionComputer_SoftwareVersionInjection extends Computer_Soft
       $tab[111]['table']        = 'glpi_computers';
       $tab[111]['field']        = 'serial';
       $tab[111]['linkfield']    = 'serial';
-      $tab[111]['name']         = sprintf(__('%1$s - %2$s'), self::getTypeName(),
-                                          __('Serial number'));
+      $tab[111]['name']         = sprintf(
+          __('%1$s - %2$s'), self::getTypeName(),
+          __('Serial number')
+      );
       $tab[111]['injectable']   = true;
       $tab[111]['displaytype']  = 'dropdown';
       $tab[111]['checktype']    = 'text';
@@ -85,8 +91,10 @@ class PluginDatainjectionComputer_SoftwareVersionInjection extends Computer_Soft
       $tab[112]['table']        = 'glpi_computers';
       $tab[112]['field']        = 'otherserial';
       $tab[112]['linkfield']    = 'otherserial';
-      $tab[112]['name']         = sprintf(__('%1$s - %2$s'), self::getTypeName(),
-                                          __('Inventory number'));
+      $tab[112]['name']         = sprintf(
+          __('%1$s - %2$s'), self::getTypeName(),
+          __('Inventory number')
+      );
       $tab[112]['injectable']   = true;
       $tab[112]['displaytype']  = 'dropdown';
       $tab[112]['checktype']    = 'text';
@@ -96,7 +104,7 @@ class PluginDatainjectionComputer_SoftwareVersionInjection extends Computer_Soft
    }
 
 
-   /**
+    /**
     * @see plugins/datainjection/inc/PluginDatainjectionInjectionInterface::addOrUpdateObject()
    **/
    function addOrUpdateObject($values=array(), $options=array()) {
@@ -110,16 +118,17 @@ class PluginDatainjectionComputer_SoftwareVersionInjection extends Computer_Soft
    function addSpecificMandatoryFields() {
 
       return array('computers_id'        => 1,
-                   'softwareversions_id' => 1);
+                 'softwareversions_id' => 1);
    }
 
 
-   /**
+    /**
     * @param $primary_type
     * @param $values
    **/
 
    function addSpecificNeededFields($primary_type, $values) {
+
       if (isset($values['SoftwareVersion'])) {
          $fields['softwareversions_id'] = $values['SoftwareVersion']['id'];
       }
@@ -127,4 +136,3 @@ class PluginDatainjectionComputer_SoftwareVersionInjection extends Computer_Soft
    }
 
 }
-?>

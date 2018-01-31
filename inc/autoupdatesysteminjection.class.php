@@ -1,6 +1,6 @@
 <?php
 /*
- * @version $Id$
+ * @version $Id: HEADER 14684 2011-06-11 06:32:40Z remi $
  LICENSE
 
  This file is part of the datainjection plugin.
@@ -20,22 +20,23 @@
  --------------------------------------------------------------------------
  @package   datainjection
  @author    the datainjection plugin team
- @copyright Copyright (c) 2010-2013 Datainjection plugin team
+ @copyright Copyright (c) 2010-2017 Datainjection plugin team
  @license   GPLv2+
             http://www.gnu.org/licenses/gpl.txt
- @link      https://forge.indepnet.net/projects/datainjection
+ @link      https://github.com/pluginsGLPI/datainjection
  @link      http://www.glpi-project.org/
  @since     2009
  ---------------------------------------------------------------------- */
 
 if (!defined('GLPI_ROOT')) {
-   die("Sorry. You can't access directly to this file");
+    die("Sorry. You can't access directly to this file");
 }
 
 class PluginDatainjectionAutoUpdateSystemInjection extends AutoUpdateSystem
-                                               implements PluginDatainjectionInjectionInterface {
+                                               implements PluginDatainjectionInjectionInterface
+{
 
-   static function getTable() {
+   static function getTable($classname = null) {
 
       $parenttype = get_parent_class();
       return $parenttype::getTable();
@@ -44,11 +45,13 @@ class PluginDatainjectionAutoUpdateSystemInjection extends AutoUpdateSystem
 
 
    function isPrimaryType() {
+
       return true;
    }
 
 
    function connectedTo() {
+
       return array();
    }
 
@@ -68,7 +71,7 @@ class PluginDatainjectionAutoUpdateSystemInjection extends AutoUpdateSystem
    }
 
 
-   /**
+    /**
     * Standard method to add an object into glpi
     *
     * @param $values  array fields to add into glpi
@@ -84,4 +87,3 @@ class PluginDatainjectionAutoUpdateSystemInjection extends AutoUpdateSystem
    }
 
 }
-?>

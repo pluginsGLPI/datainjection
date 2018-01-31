@@ -1,6 +1,6 @@
 <?php
 /*
- * @version $Id$
+ * @version $Id: HEADER 14684 2011-06-11 06:32:40Z remi $
  LICENSE
 
  This file is part of the datainjection plugin.
@@ -20,28 +20,30 @@
  --------------------------------------------------------------------------
  @package   datainjection
  @author    the datainjection plugin team
- @copyright Copyright (c) 2010-2013 Datainjection plugin team
+ @copyright Copyright (c) 2010-2017 Datainjection plugin team
  @license   GPLv2+
             http://www.gnu.org/licenses/gpl.txt
- @link      https://forge.indepnet.net/projects/datainjection
+ @link      https://github.com/pluginsGLPI/datainjection
  @link      http://www.glpi-project.org/
  @since     2009
  ---------------------------------------------------------------------- */
 
 if (!defined('GLPI_ROOT')) {
-   die("Sorry. You can't access directly to this file");
+    die("Sorry. You can't access directly to this file");
 }
 
 class PluginDatainjectionGroup_UserInjection extends Group_User
-                                             implements PluginDatainjectionInjectionInterface {
+                                             implements PluginDatainjectionInjectionInterface
+{
 
 
    static function getTypeName($nb=0) {
+
       return sprintf(__('%1$s - %2$s'), __('Group'), __('User'));
    }
 
 
-   static function getTable() {
+   static function getTable($classname = null) {
 
       $parenttype = get_parent_class();
       return $parenttype::getTable();
@@ -49,17 +51,19 @@ class PluginDatainjectionGroup_UserInjection extends Group_User
    }
 
    function isPrimaryType() {
+
       return false;
    }
 
 
    function connectedTo() {
+
       //return array();
       return array('Group');
    }
 
 
-   /**
+    /**
     * @see plugins/datainjection/inc/PluginDatainjectionInjectionInterface::getOptions()
    **/
    function getOptions($primary_type='') {
@@ -78,13 +82,13 @@ class PluginDatainjectionGroup_UserInjection extends Group_User
 
       $options['ignore_fields'] = array_merge($blacklist, $notimportable);
       $options['displaytype']   = array("bool"    => array(3, 6, 7),
-                                        "dropdown" => array(4));
+                                      "dropdown" => array(4));
 
       return PluginDatainjectionCommonInjectionLib::addToSearchOptions($tab, $options, $this);
    }
 
 
-   /**
+    /**
     * @see plugins/datainjection/inc/PluginDatainjectionInjectionInterface::addOrUpdateObject()
    **/
    function addOrUpdateObject($values=array(), $options=array()) {
@@ -95,7 +99,7 @@ class PluginDatainjectionGroup_UserInjection extends Group_User
    }
 
 
-   /**
+    /**
     * @param $primary_type
     * @param $values
    **/
@@ -112,4 +116,3 @@ class PluginDatainjectionGroup_UserInjection extends Group_User
    }
 
 }
-?>

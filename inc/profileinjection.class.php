@@ -1,6 +1,6 @@
 <?php
 /*
- * @version $Id$
+ * @version $Id: HEADER 14684 2011-06-11 06:32:40Z remi $
  LICENSE
 
  This file is part of the datainjection plugin.
@@ -20,23 +20,24 @@
  --------------------------------------------------------------------------
  @package   datainjection
  @author    the datainjection plugin team
- @copyright Copyright (c) 2010-2013 Datainjection plugin team
+ @copyright Copyright (c) 2010-2017 Datainjection plugin team
  @license   GPLv2+
             http://www.gnu.org/licenses/gpl.txt
- @link      https://forge.indepnet.net/projects/datainjection
+ @link      https://github.com/pluginsGLPI/datainjection
  @link      http://www.glpi-project.org/
  @since     2009
  ---------------------------------------------------------------------- */
 
 if (!defined('GLPI_ROOT')) {
-   die("Sorry. You can't access directly to this file");
+    die("Sorry. You can't access directly to this file");
 }
 
 class PluginDatainjectionProfileInjection extends Profile
-                                          implements PluginDatainjectionInjectionInterface {
+                                          implements PluginDatainjectionInjectionInterface
+{
 
 
-   static function getTable() {
+   static function getTable($classname = null) {
 
       $parenttype = get_parent_class();
       return $parenttype::getTable();
@@ -44,56 +45,59 @@ class PluginDatainjectionProfileInjection extends Profile
 
 
    function isPrimaryType() {
+
       return true;
    }
 
 
    function connectedTo() {
+
       return array();
    }
 
 
-   /**
+    /**
     * @see plugins/datainjection/inc/PluginDatainjectionInjectionInterface::getOptions()
    **/
    function getOptions($primary_type='') {
+
       return Search::getOptions(get_parent_class($this));
    }
 
 
-   /**
+    /**
     * @param $field_name
     * @param $data
     * @param $mandatory
    **/
    function checkType($field_name, $data, $mandatory) {
 
-      switch($field_name) {
+      switch ($field_name) {
          case 'right_rw' :
             return (in_array($data, array('r', 'w'))
-                    ?PluginDatainjectionCommonInjectionLib::SUCCESS
-                    :PluginDatainjectionCommonInjectionLib::TYPE_MISMATCH);
+                 ?PluginDatainjectionCommonInjectionLib::SUCCESS
+                 :PluginDatainjectionCommonInjectionLib::TYPE_MISMATCH);
 
          case 'right_r' :
             return (($data=='r')?PluginDatainjectionCommonInjectionLib::SUCCESS
-                                :PluginDatainjectionCommonInjectionLib::TYPE_MISMATCH);
+                             :PluginDatainjectionCommonInjectionLib::TYPE_MISMATCH);
 
          case 'right_w' :
             return (($data=='w')?PluginDatainjectionCommonInjectionLib::SUCCESS
-                                :PluginDatainjectionCommonInjectionLib::TYPE_MISMATCH);
+                             :PluginDatainjectionCommonInjectionLib::TYPE_MISMATCH);
 
          case 'interface':
             return (in_array($data, array('helpdesk', 'central'))
-                    ?PluginDatainjectionCommonInjectionLib::SUCCESS
-                    :PluginDatainjectionCommonInjectionLib::TYPE_MISMATCH);
+                 ?PluginDatainjectionCommonInjectionLib::SUCCESS
+                 :PluginDatainjectionCommonInjectionLib::TYPE_MISMATCH);
 
-          default :
+         default:
             return PluginDatainjectionCommonInjectionLib::SUCCESS;
       }
    }
 
 
-   /**
+    /**
     * @see plugins/datainjection/inc/PluginDatainjectionInjectionInterface::addOrUpdateObject()
    **/
    function addOrUpdateObject($values=array(), $options=array()) {
@@ -104,4 +108,3 @@ class PluginDatainjectionProfileInjection extends Profile
    }
 
 }
-?>

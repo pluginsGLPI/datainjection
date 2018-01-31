@@ -1,0 +1,8 @@
+[main]
+host = https://www.transifex.com
+
+[glpi-plugins-datainjection.datainjection-243pot]
+file_filter = locales/<lang>.po
+source_file = locales/datainjection.pot
+source_lang = en
+minimum_perc: 100

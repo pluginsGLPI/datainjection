@@ -1,6 +1,6 @@
 <?php
 /*
- * @version $Id$
+ * @version $Id: HEADER 14684 2011-06-11 06:32:40Z remi $
  LICENSE
 
  This file is part of the datainjection plugin.
@@ -20,24 +20,25 @@
  --------------------------------------------------------------------------
  @package   datainjection
  @author    the datainjection plugin team
- @copyright Copyright (c) 2010-2013 Datainjection plugin team
+ @copyright Copyright (c) 2010-2017 Datainjection plugin team
  @license   GPLv2+
             http://www.gnu.org/licenses/gpl.txt
- @link      https://forge.indepnet.net/projects/datainjection
+ @link      https://github.com/pluginsGLPI/datainjection
  @link      http://www.glpi-project.org/
  @since     2009
  ---------------------------------------------------------------------- */
 
 if (!defined('GLPI_ROOT')) {
-   die("Sorry. You can't access directly to this file");
+    die("Sorry. You can't access directly to this file");
 }
 
 /// Computer class
 class PluginDatainjectionComputerInjection extends Computer
-                                           implements PluginDatainjectionInjectionInterface {
+                                           implements PluginDatainjectionInjectionInterface
+{
 
 
-   static function getTable() {
+   static function getTable($classname = null) {
 
       $parenttype = get_parent_class();
       return $parenttype::getTable();
@@ -46,16 +47,18 @@ class PluginDatainjectionComputerInjection extends Computer
 
 
    function isPrimaryType() {
+
       return true;
    }
 
 
    function connectedTo() {
+
       return array();
    }
 
 
-   /**
+    /**
     * @see plugins/datainjection/inc/PluginDatainjectionInjectionInterface::getOptions()
    **/
    function getOptions($primary_type='') {
@@ -67,21 +70,26 @@ class PluginDatainjectionComputerInjection extends Computer
 
       //Remove some options because some fields cannot be imported
       $blacklist     = PluginDatainjectionCommonInjectionLib::getBlacklistedOptions(get_parent_class($this));
-      $notimportable = array(10, 11, 12, 13, 14, 15, 19, 34, 35, 36, 39, 91, 92, 93,
-                             150, 151, 152, 153, 154, 155, 156, 160, 161, 162, 163, 164 ,165, 166);
+      $notimportable = [
+         10, 11, 12, 13, 14, 15, 19, 34, 35, 36, 39,
+         //OS fields
+         41, 43, 44, 45, 46, 48, 61, 63, 64,
+         91, 92, 93, 150, 151, 152, 153, 154, 155, 156, 160, 161, 162, 163,
+         164 ,165, 166
+      ];
 
       $options['ignore_fields'] = array_merge($blacklist, $notimportable);
 
       $options['displaytype']   = array("dropdown"       => array(3, 4, 23, 31, 32, 33, 40,
-                                                                  41, 42, 45, 46, 49, 71),
-                                        "user"           => array(24, 70),
-                                        "multiline_text" => array(16, 90));
+                                                                41, 42, 45, 46, 49, 71),
+                                      "user"           => array(24, 70),
+                                      "multiline_text" => array(16, 90));
 
       return PluginDatainjectionCommonInjectionLib::addToSearchOptions($tab, $options, $this);
    }
 
 
-   /**
+    /**
     * @see plugins/datainjection/inc/PluginDatainjectionInjectionInterface::addOrUpdateObject()
    **/
    function addOrUpdateObject($values=array(), $options=array()) {
@@ -92,4 +100,3 @@ class PluginDatainjectionComputerInjection extends Computer
    }
 
 }
-?>

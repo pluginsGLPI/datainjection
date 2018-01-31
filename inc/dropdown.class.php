@@ -20,24 +20,25 @@
  --------------------------------------------------------------------------
  @package   datainjection
  @author    the datainjection plugin team
- @copyright Copyright (c) 2010-2013 Datainjection plugin team
+ @copyright Copyright (c) 2010-2017 Datainjection plugin team
  @license   GPLv2+
             http://www.gnu.org/licenses/gpl.txt
- @link      https://forge.indepnet.net/projects/datainjection
+ @link      https://github.com/pluginsGLPI/datainjection
  @link      http://www.glpi-project.org/
  @since     2009
  ---------------------------------------------------------------------- */
 
-class PluginDatainjectionDropdown {
+class PluginDatainjectionDropdown
+{
 
    static function dateFormats() {
 
       $date_format[PluginDatainjectionCommonInjectionLib::DATE_TYPE_DDMMYYYY]
-                                                            = __('dd-mm-yyyy', 'datainjection');
+                                                          = __('dd-mm-yyyy', 'datainjection');
       $date_format[PluginDatainjectionCommonInjectionLib::DATE_TYPE_MMDDYYYY]
-                                                            = __('mm-dd-yyyy', 'datainjection');
+                                                          = __('mm-dd-yyyy', 'datainjection');
       $date_format[PluginDatainjectionCommonInjectionLib::DATE_TYPE_YYYYMMDD]
-                                                            = __('yyyy-mm-dd', 'datainjection');
+                                                          = __('yyyy-mm-dd', 'datainjection');
 
       return $date_format;
    }
@@ -56,17 +57,17 @@ class PluginDatainjectionDropdown {
    static function floatFormats() {
 
       $float_format[PluginDatainjectionCommonInjectionLib::FLOAT_TYPE_DOT]
-                                                            = __('1 234.56', 'datainjection');
+                                                          = __('1 234.56', 'datainjection');
       $float_format[PluginDatainjectionCommonInjectionLib::FLOAT_TYPE_COMMA]
-                                                            = __('1 234,56', 'datainjection');
+                                                          = __('1 234,56', 'datainjection');
       $float_format[PluginDatainjectionCommonInjectionLib::FLOAT_TYPE_DOT_AND_COM]
-                                                            = __('1,234.56', 'datainjection');
+                                                          = __('1,234.56', 'datainjection');
 
       return $float_format;
    }
 
 
-   /**
+    /**
     * @param $format
    **/
    static function getFloatFormat($format) {
@@ -85,15 +86,19 @@ class PluginDatainjectionDropdown {
       //$states[PluginDatainjectionModel::INITIAL_STEP] = __('Creation of the model on going', 'datainjection');
       $states[PluginDatainjectionModel::FILE_STEP]          = __('File to inject', 'datainjection');
       $states[PluginDatainjectionModel::MAPPING_STEP]       = __('Mappings', 'datainjection');
-      $states[PluginDatainjectionModel::OTHERS_STEP]        = __('Additional Information',
-                                                                 'datainjection');
-      $states[PluginDatainjectionModel::READY_TO_USE_STEP]  = __('Model available for use',
-                                                                 'datainjection');
+      $states[PluginDatainjectionModel::OTHERS_STEP]        = __(
+          'Additional Information',
+          'datainjection'
+      );
+      $states[PluginDatainjectionModel::READY_TO_USE_STEP]  = __(
+          'Model available for use',
+          'datainjection'
+      );
       return $states;
    }
 
 
-   /**
+    /**
     * Return current status of the model
     *
     * @return nothing
@@ -110,36 +115,40 @@ class PluginDatainjectionDropdown {
 
    static function dropdownFileEncoding() {
 
-      $values[PluginDatainjectionBackend::ENCODING_AUTO]      = __('Automatic detection',
-                                                                   'datainjection');
+      $values[PluginDatainjectionBackend::ENCODING_AUTO]      = __(
+          'Automatic detection',
+          'datainjection'
+      );
       $values[PluginDatainjectionBackend::ENCODING_UFT8]      = __('UTF-8', 'datainjection');
       $values[PluginDatainjectionBackend::ENCODING_ISO8859_1] = __('ISO8859-1', 'datainjection');
 
-      Dropdown::showFromArray('file_encoding', $values,
-                              array('value' => PluginDatainjectionBackend::ENCODING_AUTO));
+      Dropdown::showFromArray(
+          'file_encoding', $values,
+          array('value' => PluginDatainjectionBackend::ENCODING_AUTO)
+      );
    }
 
 
    static function portUnicityValues() {
 
       $values[PluginDatainjectionCommonInjectionLib::UNICITY_NETPORT_LOGICAL_NUMBER]
-                                             = __('Port number');
+                                           = __('Port number');
       $values[PluginDatainjectionCommonInjectionLib::UNICITY_NETPORT_NAME]
-                                             = __('Name');
+                                           = __('Name');
       $values[PluginDatainjectionCommonInjectionLib::UNICITY_NETPORT_MACADDRESS]
-                                             = __('Mac address');
+                                           = __('Mac address');
       $values[PluginDatainjectionCommonInjectionLib::UNICITY_NETPORT_LOGICAL_NUMBER_NAME]
-                                             = __('Port number')."+".__('Name');
+                                           = __('Port number')."+".__('Name');
       $values[PluginDatainjectionCommonInjectionLib::UNICITY_NETPORT_LOGICAL_NUMBER_MAC]
-                                             = __('Port number')."+".__('Mac address');
+                                           = __('Port number')."+".__('Mac address');
       $values[PluginDatainjectionCommonInjectionLib::UNICITY_NETPORT_LOGICAL_NUMBER_NAME_MAC]
-                                             = __('Port number')."+".__('Name')."+".
-                                               __('Mac address');
+                                           = __('Port number')."+".__('Name')."+".
+                                             __('Mac address');
       return $values;
    }
 
 
-   /**
+    /**
     * @param $value
    **/
    static function getPortUnicityValues($value) {
@@ -152,4 +161,3 @@ class PluginDatainjectionDropdown {
    }
 
 }
-?>

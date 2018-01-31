@@ -1,6 +1,6 @@
 <?php
 /*
- * @version $Id$
+ * @version $Id: HEADER 14684 2011-06-11 06:32:40Z remi $
  LICENSE
 
  This file is part of the datainjection plugin.
@@ -20,22 +20,24 @@
  --------------------------------------------------------------------------
  @package   datainjection
  @author    the datainjection plugin team
- @copyright Copyright (c) 2010-2013 Datainjection plugin team
+ @copyright Copyright (c) 2010-2017 Datainjection plugin team
  @license   GPLv2+
             http://www.gnu.org/licenses/gpl.txt
- @link      https://forge.indepnet.net/projects/datainjection
+ @link      https://github.com/pluginsGLPI/datainjection
  @link      http://www.glpi-project.org/
  @since     2009
  ---------------------------------------------------------------------- */
 
-include ('../../../inc/includes.php');
+require '../../../inc/includes.php';
 
-Html::header(__('File injection', 'datainjection'), $_SERVER["PHP_SELF"], 
-             "tools", "plugindatainjectionmenu", "client");
+Html::header(
+    __('File injection', 'datainjection'), $_SERVER["PHP_SELF"],
+    "tools", "plugindatainjectionmenu", "client"
+);
 
 if (isset($_SESSION['datainjection']['go'])) {
-   $model = unserialize($_SESSION['datainjection']['currentmodel']);
-   PluginDatainjectionClientInjection::showInjectionForm($model, $_SESSION['glpiactive_entity']);
+    $model = unserialize($_SESSION['datainjection']['currentmodel']);
+    PluginDatainjectionClientInjection::showInjectionForm($model, $_SESSION['glpiactive_entity']);
 
 } else if (isset($_POST['upload'])) {
    $model = new PluginDatainjectionModel();
@@ -44,21 +46,23 @@ if (isset($_SESSION['datainjection']['go'])) {
 
    //If additional informations provided : check if mandatory infos are present
    if (!$model->checkMandatoryFields($_SESSION['datainjection']['infos'])) {
-      Session::addMessageAfterRedirect(__('One mandatory field is not filled', 'datainjection'),
-                                       true, ERROR, true);
+      Session::addMessageAfterRedirect(
+         __('One mandatory field is not filled', 'datainjection'),
+         true, ERROR, true
+      );
 
    } else if (isset($_FILES['filename']['name'])
-              && $_FILES['filename']['name']
-              && $_FILES['filename']['tmp_name']
-              && !$_FILES['filename']['error']
-              && $_FILES['filename']['size']) {
+      && $_FILES['filename']['name']
+         && $_FILES['filename']['tmp_name']
+            && !$_FILES['filename']['error']
+               && $_FILES['filename']['size']) {
 
-      //Read file using automatic encoding detection, and do not delete file once readed
-      $options = array('file_encoding' => $_POST['file_encoding'],
+        //Read file using automatic encoding detection, and do not delete file once readed
+        $options = array('file_encoding' => $_POST['file_encoding'],
                        'mode'          => PluginDatainjectionModel::PROCESS,
                        'delete_file'   => false);
-      $response = $model->processUploadedFile($options);
-      $model->cleanData();
+        $response = $model->processUploadedFile($options);
+        $model->cleanData();
 
       if ($response) {
          //File uploaded successfully and matches the given model : switch to the import tab
@@ -67,33 +71,31 @@ if (isset($_SESSION['datainjection']['go'])) {
          //Store model in session for injection
          $_SESSION['datainjection']['currentmodel'] = serialize($model);
          $_SESSION['datainjection']['go']           = true;
-
       } else {
          //Got back to the file upload page
          $_SESSION['datainjection']['step'] = PluginDatainjectionClientInjection::STEP_UPLOAD;
       }
 
    } else {
-      Session::addMessageAfterRedirect(__('The file could not be found', 'datainjection'),
-                                       true, ERROR, true);
+      Session::addMessageAfterRedirect(
+          __('The file could not be found', 'datainjection'),
+          true, ERROR, true
+      );
    }
 
-   Html::back();
-} else if (isset($_POST['finish'])
-           || isset($_POST['cancel'])) {
+    Html::back();
+} else if (isset($_POST['finish']) || isset($_POST['cancel'])) {
 
-   PluginDatainjectionSession::removeParams();
-   Html::redirect(Toolbox::getItemTypeFormURL('PluginDatainjectionClientInjection'));
+    PluginDatainjectionSession::removeParams();
+    Html::redirect(Toolbox::getItemTypeFormURL('PluginDatainjectionClientInjection'));
 
 } else {
    if (isset($_GET['id'])) { // Allow link to a model
       PluginDatainjectionSession::setParam('models_id', $_GET['id']);
    }
-   $clientInjection = new PluginDatainjectionClientInjection();
-   $clientInjection->title();
-   $clientInjection->showForm(0);
+    $clientInjection = new PluginDatainjectionClientInjection();
+    $clientInjection->title();
+    $clientInjection->showForm(0);
 }
 
 Html::footer();
-
-?>

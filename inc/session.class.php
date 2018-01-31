@@ -1,6 +1,6 @@
 <?php
 /*
- * @version $Id$
+ * @version $Id: HEADER 14684 2011-06-11 06:32:40Z remi $
  LICENSE
 
  This file is part of the datainjection plugin.
@@ -20,17 +20,18 @@
  --------------------------------------------------------------------------
  @package   datainjection
  @author    the datainjection plugin team
- @copyright Copyright (c) 2010-2013 Datainjection plugin team
+ @copyright Copyright (c) 2010-2017 Datainjection plugin team
  @license   GPLv2+
             http://www.gnu.org/licenses/gpl.txt
- @link      https://forge.indepnet.net/projects/datainjection
+ @link      https://github.com/pluginsGLPI/datainjection
  @link      http://www.glpi-project.org/
  @since     2009
  ---------------------------------------------------------------------- */
 
- class PluginDatainjectionSession {
+class PluginDatainjectionSession
+{
 
-   /**
+    /**
     * Get a parameter from the HTTP session
     *
     * @param $param  the parameter to get
@@ -50,7 +51,7 @@
    }
 
 
-   /**
+    /**
     * Set a parameter in the HTTP session
     *
     * @param $param     the parameter
@@ -70,7 +71,7 @@
    }
 
 
-   /**
+    /**
     * Remove all parameters from the HTTP session
     *
     * @return nothing
@@ -87,4 +88,3 @@
    }
 
 }
-?>

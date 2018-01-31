@@ -1,6 +1,6 @@
 <?php
 /*
- * @version $Id$
+ * @version $Id: HEADER 14684 2011-06-11 06:32:40Z remi $
  LICENSE
 
  This file is part of the datainjection plugin.
@@ -20,34 +20,34 @@
  --------------------------------------------------------------------------
  @package   datainjection
  @author    the datainjection plugin team
- @copyright Copyright (c) 2010-2013 Datainjection plugin team
+ @copyright Copyright (c) 2010-2017 Datainjection plugin team
  @license   GPLv2+
             http://www.gnu.org/licenses/gpl.txt
- @link      https://forge.indepnet.net/projects/datainjection
+ @link      https://github.com/pluginsGLPI/datainjection
  @link      http://www.glpi-project.org/
  @since     2009
  ---------------------------------------------------------------------- */
 
 // Direct access to file
-if (strpos($_SERVER['PHP_SELF'],"dropdownSelectModel.php")) {
-   include ('../../../inc/includes.php');
-   header("Content-Type: text/html; charset=UTF-8");
-   Html::header_nocache();
+if (strpos($_SERVER['PHP_SELF'], "dropdownSelectModel.php")) {
+    include '../../../inc/includes.php';
+    header("Content-Type: text/html; charset=UTF-8");
+    Html::header_nocache();
 }
 
 Session::checkCentralAccess();
 
 if (isset($_SESSION['datainjection']['models_id'])
-      && $_SESSION['datainjection']['models_id']!=$_POST['models_id']) {
-   PluginDatainjectionModel::cleanSessionVariables();
+    && $_SESSION['datainjection']['models_id']!=$_POST['models_id']
+) {
+    PluginDatainjectionModel::cleanSessionVariables();
 }
 
 $_SESSION['datainjection']['step'] = PluginDatainjectionClientInjection::STEP_UPLOAD;
 $model = new PluginDatainjectionModel();
 
 if (($_POST['models_id'] > 0)
-    && $model->can($_POST['models_id'], READ)) {
-   PluginDatainjectionInfo::showAdditionalInformationsForm($model);
+    && $model->can($_POST['models_id'], READ)
+) {
+    PluginDatainjectionInfo::showAdditionalInformationsForm($model);
 }
-
-?>

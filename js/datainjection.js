@@ -3,7 +3,7 @@ function show_comments(cpt) {
    sel = document.getElementById('dropdown');
    id  = sel.selectedIndex;
 
-   for (i=0 ; i<cpt ; i++) {
+   for (i=0; i<cpt; i++) {
       document.getElementById('comments'+i).style.display = 'none';
 
       if (i == id) {
@@ -74,7 +74,7 @@ function show_option() {
 }
 
 
-function go_mapping(id,type) {  
+function go_mapping(id,type) {
    var xhr = getXhr();
 
    xhr.onreadystatechange = function(){
@@ -93,19 +93,19 @@ function go_mapping(id,type) {
    idtable = sel.options[sel.selectedIndex].value;
 
    nom = document.getElementById('name'+id).value;
-   
+
    if (sel.value==type) {
       document.getElementById("check"+id).disabled=false;
    } else {
       document.getElementById("check"+id).disabled=true;
       document.getElementById("check"+id).checked=false;
    }
-      
+
    xhr.send("id="+id+"&idMapping="+idtable+"&name="+nom);
 }
 
 
-function go_info(id) {  
+function go_info(id) {
    var xhr = getXhr();
 
    xhr.onreadystatechange = function(){
@@ -122,13 +122,13 @@ function go_info(id) {
 
    sel = document.getElementById('table'+id);
    idtable = sel.options[sel.selectedIndex].value;
-   
+
    if (idtable != -1) {
       document.getElementById("check"+id).disabled=false;
    } else {
       document.getElementById("check"+id).disabled=true;
       document.getElementById("check"+id).checked=false;
    }
-      
+
    xhr.send("id="+id+"&idMapping="+idtable);
 }

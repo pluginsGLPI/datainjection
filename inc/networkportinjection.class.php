@@ -1,6 +1,6 @@
 <?php
 /*
- * @version $Id$
+ * @version $Id: HEADER 14684 2011-06-11 06:32:40Z remi $
  LICENSE
 
  This file is part of the datainjection plugin.
@@ -20,23 +20,24 @@
  --------------------------------------------------------------------------
  @package   datainjection
  @author    the datainjection plugin team
- @copyright Copyright (c) 2010-2013 Datainjection plugin team
+ @copyright Copyright (c) 2010-2017 Datainjection plugin team
  @license   GPLv2+
             http://www.gnu.org/licenses/gpl.txt
- @link      https://forge.indepnet.net/projects/datainjection
+ @link      https://github.com/pluginsGLPI/datainjection
  @link      http://www.glpi-project.org/
  @since     2009
  ---------------------------------------------------------------------- */
 
 if (!defined('GLPI_ROOT')) {
-   die("Sorry. You can't access directly to this file");
+    die("Sorry. You can't access directly to this file");
 }
 
 class PluginDatainjectionNetworkportInjection extends NetworkPort
-                                              implements PluginDatainjectionInjectionInterface {
+                                              implements PluginDatainjectionInjectionInterface
+{
 
 
-   static function getTable() {
+   static function getTable($classname = null) {
 
       $parenttype = get_parent_class();
       return $parenttype::getTable();
@@ -44,18 +45,20 @@ class PluginDatainjectionNetworkportInjection extends NetworkPort
 
 
    function isPrimaryType() {
+
       return false;
    }
 
 
    function connectedTo() {
+
       global $CFG_GLPI;
 
       return $CFG_GLPI["networkport_types"];
    }
 
 
-   /**
+    /**
     * @see plugins/datainjection/inc/PluginDatainjectionInjectionInterface::getOptions()
    **/
    function getOptions($primary_type='') {
@@ -81,8 +84,10 @@ class PluginDatainjectionNetworkportInjection extends NetworkPort
       $tab[52]['displaytype']   = 'text';
       $tab[52]['checktype']     = 'text';
 
-      $tab[53]['name']          = sprintf(__('%1$s: %2$s'), __('Connected to'),
-                                          __('Port MAC address', 'datainjection'));
+      $tab[53]['name']          = sprintf(
+          __('%1$s: %2$s'), __('Connected to'),
+          __('Port MAC address', 'datainjection')
+      );
       $tab[53]['field']         = 'netmac';
       $tab[53]['table']         = getTableForItemType('NetworkPort');
       $tab[53]['linkfield']     = "netmac";
@@ -105,14 +110,14 @@ class PluginDatainjectionNetworkportInjection extends NetworkPort
       $options['ignore_fields'] = array_merge($blacklist, $notimportable);
 
       $options['displaytype']   = array("dropdown"           => array(9),
-                                        "multiline_text"     => array(16),
-                                        "instantiation_type" => array(87));
+                                      "multiline_text"     => array(16),
+                                      "instantiation_type" => array(87));
 
       return PluginDatainjectionCommonInjectionLib::addToSearchOptions($tab, $options, $this);
    }
 
 
-   /**
+    /**
     * @param $primary_type
     * @param $values
    **/
@@ -127,7 +132,7 @@ class PluginDatainjectionNetworkportInjection extends NetworkPort
    }
 
 
-   /**
+    /**
     * @param $info      array
     * @param $option    array
    **/
@@ -144,8 +149,10 @@ class PluginDatainjectionNetworkportInjection extends NetworkPort
                   $instantiations[$inst_type] = call_user_func(array($inst_type, 'getTypeName'));
                }
             }
-            Dropdown::showFromArray('instantiation_type', $instantiations,
-                                    array('value' => 'NetworkPortEthernet'));
+            Dropdown::showFromArray(
+                'instantiation_type', $instantiations,
+                array('value' => 'NetworkPortEthernet')
+            );
             break;
 
          default:
@@ -154,7 +161,7 @@ class PluginDatainjectionNetworkportInjection extends NetworkPort
    }
 
 
-   /**
+    /**
     * @see plugins/datainjection/inc/PluginDatainjectionInjectionInterface::addOrUpdateObject()
    **/
    function addOrUpdateObject($values=array(), $options=array()) {
@@ -165,16 +172,17 @@ class PluginDatainjectionNetworkportInjection extends NetworkPort
    }
 
 
-   /**
+    /**
     * @param $fields_toinject    array
     * @param $options            array
    **/
    function checkPresent($fields_toinject=array(), $options=array()) {
+
       return $this->getUnicityRequest($fields_toinject['NetworkPort'], $options['checks']);
    }
 
 
-   /**
+    /**
     * @param $fields_toinject
     * @param $options
    **/
@@ -210,7 +218,8 @@ class PluginDatainjectionNetworkportInjection extends NetworkPort
       $check_status = true;
       foreach ($fields_tocheck as $field) {
          if (!isset($fields_toinject[$field])
-             || ($fields_toinject[$field] == PluginDatainjectionCommonInjectionLib::EMPTY_VALUE)) {
+             || ($fields_toinject[$field] == PluginDatainjectionCommonInjectionLib::EMPTY_VALUE)
+         ) {
             $check_status = false;
          }
       }
@@ -219,7 +228,7 @@ class PluginDatainjectionNetworkportInjection extends NetworkPort
    }
 
 
-   /**
+    /**
     * Build where sql request to look for a network port
     *
     * @param $fields_toinject    array    the fields to insert into DB
@@ -233,41 +242,41 @@ class PluginDatainjectionNetworkportInjection extends NetworkPort
 
       switch ($options['port_unicity']) {
          case PluginDatainjectionCommonInjectionLib::UNICITY_NETPORT_LOGICAL_NUMBER :
-            $where .= " AND `logical_number` = '".(isset ($fields_toinject["logical_number"])
-                                                   ? $fields_toinject["logical_number"] : '')."'";
+            $where .= " AND `logical_number` = '".(isset($fields_toinject["logical_number"])
+                                                 ? $fields_toinject["logical_number"] : '')."'";
             break;
 
          case PluginDatainjectionCommonInjectionLib::UNICITY_NETPORT_LOGICAL_NUMBER_MAC :
-            $where .= " AND `logical_number` = '".(isset ($fields_toinject["logical_number"])
-                                                   ? $fields_toinject["logical_number"] : '')."'
-                        AND `mac` = '".(isset ($fields_toinject["mac"])
-                                        ? $fields_toinject["mac"] : '')."'";
+            $where .= " AND `logical_number` = '".(isset($fields_toinject["logical_number"])
+                                                 ? $fields_toinject["logical_number"] : '')."'
+                        AND `mac` = '".(isset($fields_toinject["mac"])
+                                      ? $fields_toinject["mac"] : '')."'";
             break;
 
          case PluginDatainjectionCommonInjectionLib::UNICITY_NETPORT_LOGICAL_NUMBER_NAME :
-            $where .= " AND `logical_number` = '".(isset ($fields_toinject["logical_number"])
-                                                   ? $fields_toinject["logical_number"] : '')."'
-                        AND `name` = '".(isset ($fields_toinject["name"])
-                                         ? $fields_toinject["name"] : '')."'";
+            $where .= " AND `logical_number` = '".(isset($fields_toinject["logical_number"])
+                                                 ? $fields_toinject["logical_number"] : '')."'
+                        AND `name` = '".(isset($fields_toinject["name"])
+                                       ? $fields_toinject["name"] : '')."'";
             break;
 
          case PluginDatainjectionCommonInjectionLib::UNICITY_NETPORT_LOGICAL_NUMBER_NAME_MAC :
-            $where .= " AND `logical_number` = '".(isset ($fields_toinject["logical_number"])
-                                                   ? $fields_toinject["logical_number"] : '')."'
-                        AND `name` = '".(isset ($fields_toinject["name"])
-                                         ? $fields_toinject["name"] : '')."'
-                        AND `mac` = '".(isset ($fields_toinject["mac"])
-                                        ? $fields_toinject["mac"] : '')."'";
+            $where .= " AND `logical_number` = '".(isset($fields_toinject["logical_number"])
+                                                 ? $fields_toinject["logical_number"] : '')."'
+                        AND `name` = '".(isset($fields_toinject["name"])
+                                       ? $fields_toinject["name"] : '')."'
+                        AND `mac` = '".(isset($fields_toinject["mac"])
+                                      ? $fields_toinject["mac"] : '')."'";
             break;
 
          case PluginDatainjectionCommonInjectionLib::UNICITY_NETPORT_MACADDRESS :
-            $where .= " AND `mac` = '".(isset ($fields_toinject["mac"])
-                                        ? $fields_toinject["mac"] : '')."'";
+            $where .= " AND `mac` = '".(isset($fields_toinject["mac"])
+                                      ? $fields_toinject["mac"] : '')."'";
             break;
 
          case PluginDatainjectionCommonInjectionLib::UNICITY_NETPORT_NAME :
-            $where .= " AND `name` = '".(isset ($fields_toinject["name"])
-                                         ? $fields_toinject["name"] : '')."'";
+            $where .= " AND `name` = '".(isset($fields_toinject["name"])
+                                       ? $fields_toinject["name"] : '')."'";
             break;
       }
 
@@ -275,7 +284,7 @@ class PluginDatainjectionNetworkportInjection extends NetworkPort
    }
 
 
-   /**
+    /**
     * Check if at least mac or ip is defined otherwise block import
     *
     * @param $values    array    the values to inject
@@ -287,28 +296,30 @@ class PluginDatainjectionNetworkportInjection extends NetworkPort
       if ((!isset($values['NetworkPort']['name']) || empty($values['NetworkPort']['name']))
           && (!isset($values['NetworkPort']['mac']) || empty($values['NetworkPort']['mac']))
           && (!isset($values['NetworkPort']['instantiation_type'])
-              || empty($values['NetworkPort']['instantiation_type']))) {
+          || empty($values['NetworkPort']['instantiation_type']))
+      ) {
          return false;
       }
       return true;
    }
 
 
-   /**
+    /**
     * @param $values
     * @param $add                (true by default)
     * @param $rights    array
    **/
    function processAfterInsertOrUpdate($values, $add=true, $rights=array()) {
+
       global $DB;
 
       //Should the port be connected to another one ?
-      $use_name            = (isset ($values['NetworkPort']["netname"])
-                              || !empty ($values['NetworkPort']["netname"]));
-      $use_logical_number  = (isset ($values['NetworkPort']["netport"])
-                              || !empty ($values['NetworkPort']["netport"]));
-      $use_mac             = (isset ($values['NetworkPort']["netmac"])
-                              || !empty ($values['NetworkPort']["netmac"]));
+      $use_name            = (isset($values['NetworkPort']["netname"])
+                            || !empty($values['NetworkPort']["netname"]));
+      $use_logical_number  = (isset($values['NetworkPort']["netport"])
+                            || !empty($values['NetworkPort']["netport"]));
+      $use_mac             = (isset($values['NetworkPort']["netmac"])
+                            || !empty($values['NetworkPort']["netmac"]));
 
       if (!$use_name && !$use_logical_number && !$use_mac) {
          return false;
@@ -328,7 +339,7 @@ class PluginDatainjectionNetworkportInjection extends NetworkPort
       if ($use_logical_number) {
          $sql .= " AND `glpi_networkports`.`logical_number` = '".$values['NetworkPort']["netport"]."'";
       }
-      if ($use_mac){
+      if ($use_mac) {
          $sql .= " AND `glpi_networkports`.`mac` = '".$values['NetworkPort']["netmac"]."'";
       }
       $res = $DB->query($sql);
@@ -350,4 +361,3 @@ class PluginDatainjectionNetworkportInjection extends NetworkPort
    }
 
 }
-?>

@@ -1,6 +1,6 @@
 <?php
 /*
- * @version $Id$
+ * @version $Id: HEADER 14684 2011-06-11 06:32:40Z remi $
  LICENSE
 
  This file is part of the datainjection plugin.
@@ -20,23 +20,24 @@
  --------------------------------------------------------------------------
  @package   datainjection
  @author    the datainjection plugin team
- @copyright Copyright (c) 2010-2013 Datainjection plugin team
+ @copyright Copyright (c) 2010-2017 Datainjection plugin team
  @license   GPLv2+
             http://www.gnu.org/licenses/gpl.txt
- @link      https://forge.indepnet.net/projects/datainjection
+ @link      https://github.com/pluginsGLPI/datainjection
  @link      http://www.glpi-project.org/
  @since     2009
  ---------------------------------------------------------------------- */
 
 if (!defined('GLPI_ROOT')) {
-   die("Sorry. You can't access directly to this file");
+    die("Sorry. You can't access directly to this file");
 }
 
 class PluginDatainjectionInfocomInjection extends Infocom
-                                          implements PluginDatainjectionInjectionInterface {
+                                          implements PluginDatainjectionInjectionInterface
+{
 
 
-   static function getTable() {
+   static function getTable($classname = null) {
 
       $parenttype = get_parent_class();
       return $parenttype::getTable();
@@ -44,18 +45,20 @@ class PluginDatainjectionInfocomInjection extends Infocom
 
 
    function isPrimaryType() {
+
       return false;
    }
 
 
    function connectedTo() {
+
       global $CFG_GLPI;
 
       return $CFG_GLPI["infocom_types"];
    }
 
 
-   /**
+    /**
     * @see plugins/datainjection/inc/PluginDatainjectionInjectionInterface::getOptions()
    **/
    function getOptions($primary_type='') {
@@ -95,6 +98,7 @@ class PluginDatainjectionInfocomInjection extends Infocom
       $tab[25]['checktype']   = 'date';
       $tab[27]['checktype']   = 'date';
       $tab[28]['checktype']   = 'date';
+      $tab[159]['checktype']  = 'date';
 
       //Remove some options because some fields cannot be imported
       $blacklist     = PluginDatainjectionCommonInjectionLib::getBlacklistedOptions(get_parent_class($this));
@@ -105,23 +109,23 @@ class PluginDatainjectionInfocomInjection extends Infocom
       $key                      = array_search(19, $options['ignore_fields']);
       unset($options['ignore_fields'][$key]);
 
-      $options['displaytype']   = array("date"             => array(4, 5, 23, 24, 25, 26),
-                                        "dropdown"         => array(6, 9, 19),
-                                        "dropdown_integer" => array(6, 14),
-                                        "decimal"          => array(8, 13, 17),
-                                        "sink_type"        => array(15),
-                                        "alert"            => array(22),
-                                        "multiline_text"   => array(16));
+      $options['displaytype']   = array("date"           => array(4, 5, 23, 24, 25, 27, 28, 159),
+                                      "dropdown"         => array(6, 9, 19, 123),
+                                      "dropdown_integer" => array(6, 14),
+                                      "decimal"          => array(8, 13, 17),
+                                      "sink_type"        => array(15),
+                                      "alert"            => array(22),
+                                      "multiline_text"   => array(16));
 
       return PluginDatainjectionCommonInjectionLib::addToSearchOptions($tab, $options, $this);
    }
 
 
-   /**
+    /**
     * @param $info      array
     * @param $option    array
    **/
-   function showAdditionalInformation($info=array(), $option=array()) {
+   function showAdditionalInformation($info=[], $option=[]) {
 
       $name = "info[".$option['linkfield']."]";
 
@@ -140,26 +144,27 @@ class PluginDatainjectionInfocomInjection extends Infocom
    }
 
 
-   /**
+    /**
     * @param $values    array
    **/
-   function reformat(&$values=array()) {
+   function reformat(&$values=[]) {
 
       foreach (array('order_date', 'use_date', 'buy_date', 'warranty_date', 'delivery_date',
-                     'inventory_date') as $date) {
+                   'inventory_date') as $date) {
 
          if (isset($values['Infocom'][$date])
-             && ($values['Infocom'][$date] == PluginDatainjectionCommonInjectionLib::EMPTY_VALUE)) {
+             && ($values['Infocom'][$date] == PluginDatainjectionCommonInjectionLib::EMPTY_VALUE)
+         ) {
             $values['Infocom'][$date] = "NULL";
          }
       }
    }
 
 
-   /**
+    /**
     * @see plugins/datainjection/inc/PluginDatainjectionInjectionInterface::addOrUpdateObject()
    **/
-   function addOrUpdateObject($values=array(), $options=array()) {
+   function addOrUpdateObject($values=[], $options=[]) {
 
       $lib = new PluginDatainjectionCommonInjectionLib($this, $values, $options);
       $lib->processAddOrUpdate();
@@ -167,4 +172,3 @@ class PluginDatainjectionInfocomInjection extends Infocom
    }
 
 }
-?>

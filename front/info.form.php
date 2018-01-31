@@ -1,6 +1,6 @@
 <?php
 /*
- * @version $Id$
+ * @version $Id: HEADER 14684 2011-06-11 06:32:40Z remi $
  LICENSE
 
  This file is part of the datainjection plugin.
@@ -20,24 +20,24 @@
  --------------------------------------------------------------------------
  @package   datainjection
  @author    the datainjection plugin team
- @copyright Copyright (c) 2010-2013 Datainjection plugin team
+ @copyright Copyright (c) 2010-2017 Datainjection plugin team
  @license   GPLv2+
             http://www.gnu.org/licenses/gpl.txt
- @link      https://forge.indepnet.net/projects/datainjection
+ @link      https://github.com/pluginsGLPI/datainjection
  @link      http://www.glpi-project.org/
  @since     2009
  ---------------------------------------------------------------------- */
 
-include ('../../../inc/includes.php');
+require '../../../inc/includes.php';
 
 /* Update mappings */
-if (isset ($_POST["update"])) {
+if (isset($_POST["update"])) {
 
-   PluginDatainjectionInfo::manageInfos($_POST['models_id'], $_POST);
+    PluginDatainjectionInfo::manageInfos($_POST['models_id'], $_POST);
 
 } else if (isset($_POST["delete"])) {
 
-   $info = new PluginDatainjectionInfo();
+    $info = new PluginDatainjectionInfo();
    foreach ($_POST["item"] as $key => $val) {
       $input = array('id' => $key);
       if ($val == 1) {
@@ -45,11 +45,9 @@ if (isset ($_POST["update"])) {
          $info->delete($input);
       }
    }
-   Html::back();
+    Html::back();
 
 }
 
 Session::setActiveTab('PluginDatainjectionModel', 'PluginDatainjectionModel$5');
 Html::back();
-
-?>

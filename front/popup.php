@@ -1,6 +1,6 @@
 <?php
 /*
- * @version $Id$
+ * @version $Id: HEADER 14684 2011-06-11 06:32:40Z remi $
  LICENSE
 
  This file is part of the datainjection plugin.
@@ -20,29 +20,28 @@
  --------------------------------------------------------------------------
  @package   datainjection
  @author    the datainjection plugin team
- @copyright Copyright (c) 2010-2013 Datainjection plugin team
+ @copyright Copyright (c) 2010-2017 Datainjection plugin team
  @license   GPLv2+
             http://www.gnu.org/licenses/gpl.txt
- @link      https://forge.indepnet.net/projects/datainjection
+ @link      https://github.com/pluginsGLPI/datainjection
  @link      http://www.glpi-project.org/
  @since     2009
  ---------------------------------------------------------------------- */
 
-include ('../../../inc/includes.php');
+require '../../../inc/includes.php';
 
 Session::checkLoginUser();
 
 switch ($_GET["popup"]) {
    case "preview" :
-      Html::popHeader(__('See the file', 'datainjection'), $_SERVER['PHP_SELF']);
-      PluginDatainjectionModel::showPreviewMappings($_GET['models_id']);
-      Html::popFooter();
-      break;
+       Html::popHeader(__('See the file', 'datainjection'), $_SERVER['PHP_SELF']);
+       PluginDatainjectionModel::showPreviewMappings($_GET['models_id']);
+       Html::popFooter();
+    break;
 
    case "log" :
-      Html::popHeader(__('File injection report', 'datainjection'), $_SERVER['PHP_SELF']);
-      PluginDatainjectionModel::showLogResults($_GET['models_id']);
-      Html::popFooter();
-      break;
+       Html::popHeader(__('File injection report', 'datainjection'), $_SERVER['PHP_SELF']);
+       PluginDatainjectionModel::showLogResults($_GET['models_id']);
+       Html::popFooter();
+    break;
 }
-?>
