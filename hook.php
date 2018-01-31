@@ -48,12 +48,13 @@ function plugin_datainjection_install() {
     global $DB;
 
     include_once GLPI_ROOT."/plugins/datainjection/inc/profile.class.php";
-    $migration = new Migration('2.3.0');
+    $migration = new Migration('2.5.0');
 
    switch (plugin_datainjection_needUpdateOrInstall()) {
       case -1 :
           plugin_datainjection_update220_230();
           plugin_datainjection_upgrade23_240($migration);
+          plugin_datainjection_migration_24_250($migration);
         return true;
 
       case 0 :
@@ -208,9 +209,23 @@ function plugin_datainjection_uninstall() {
 
 
 function plugin_datainjection_migration_24_250($migration) {
+   global $DB;
    if ($migration->addField('glpi_plugin_data_injection_models', 'date_creation', 'datetime')) {
       $migration->addKey('glpi_plugin_data_injection_models', 'date_creation');
    }
+
+   //Migrate OSes infos
+   //TODO use DB->update in 9.3
+   $query = "UPDATE `glpi_plugin_datainjection_mappings`
+             SET `itemtype`='Item_OperatingSystem'
+             WHERE `itemtype`='Computer'
+                AND `value` IN (
+                   'license_id', 'license_number', 'operatingsystemservicepacks_id',
+                   'operatingsystems_id', 'operatingsystemversions_id',
+                   'operatingsystemarchitectures_id', 'operatingsystemkernels_id',
+                   'operatingsystemkernelversions_id', 'operatingsystemeditions_id'
+                )";
+   $DB->query($query);
 }
 
 function plugin_datainjection_upgrade23_240($migration) {
