@@ -87,7 +87,7 @@ function plugin_version_datainjection() {
 
     return [
            'name'           => __('File injection', 'datainjection'),
-           'minGlpiVersion' => '0.85',
+           'minGlpiVersion' => '9.2',
            'author'         => 'Walid Nouh, Remi Collet, Nelly Mahu-Lasson, Xavier Caillaud',
            'homepage'       => 'https://github.com/pluginsGLPI/datainjection',
            'license'        => 'GPLv2+',
