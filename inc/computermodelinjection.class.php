@@ -37,7 +37,7 @@ class PluginDatainjectionComputerModelInjection extends ComputerModel
 {
 
 
-   static function getTable() {
+   static function getTable($classname = null) {
 
       $parenttype = get_parent_class();
       return $parenttype::getTable();
@@ -53,7 +53,7 @@ class PluginDatainjectionComputerModelInjection extends ComputerModel
 
    function connectedTo() {
 
-      return array();
+      return [];
    }
 
 
@@ -66,7 +66,7 @@ class PluginDatainjectionComputerModelInjection extends ComputerModel
 
       //Remove some options because some fields cannot be imported
       $blacklist     = PluginDatainjectionCommonInjectionLib::getBlacklistedOptions(get_parent_class($this));
-      $notimportable = array();
+      $notimportable = [];
 
       $options['ignore_fields'] = array_merge($blacklist, $notimportable);
 
@@ -79,7 +79,7 @@ class PluginDatainjectionComputerModelInjection extends ComputerModel
     /**
     * @see plugins/datainjection/inc/PluginDatainjectionInjectionInterface::addOrUpdateObject()
    **/
-   function addOrUpdateObject($values=array(), $options=array()) {
+   function addOrUpdateObject($values=[], $options=[]) {
 
       $lib = new PluginDatainjectionCommonInjectionLib($this, $values, $options);
       $lib->processAddOrUpdate();

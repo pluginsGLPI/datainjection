@@ -47,7 +47,7 @@ class PluginDatainjectionMenu extends CommonGLPI
 
       if (Session::haveRight(static::$rightname, READ)) {
 
-         $image_model  = "<img src='".$CFG_GLPI["root_doc"]."/pics/rdv.png' title='";
+         $image_model  = "<img src='".$CFG_GLPI["root_doc"]."/pics/menu_addtemplate.png' title='";
          $image_model .= PluginDatainjectionModel::getTypeName();
          $image_model .= "' alt='".PluginDatainjectionModel::getTypeName()."'>";
 

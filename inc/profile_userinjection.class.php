@@ -37,7 +37,7 @@ class PluginDatainjectionProfile_UserInjection extends Profile_User
 {
 
 
-   static function getTable() {
+   static function getTable($classname = null) {
 
       $parenttype = get_parent_class();
       return $parenttype::getTable();

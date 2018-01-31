@@ -45,7 +45,6 @@ function plugin_datainjection_registerMethods() {
 
 
 function plugin_datainjection_install() {
-
     global $DB;
 
     include_once GLPI_ROOT."/plugins/datainjection/inc/profile.class.php";
@@ -63,6 +62,7 @@ function plugin_datainjection_install() {
                      `name` varchar(255) NOT NULL,
                      `comment` text NULL,
                      `date_mod` datetime NOT NULL default '0000-00-00 00:00:00',
+                     `date_creation` datetime DEFAULT NULL,
                      `filetype` varchar(255) NOT NULL default 'csv',
                      `itemtype` varchar(255) NOT NULL default '',
                      `entities_id` int(11) NOT NULL default '0',
@@ -145,26 +145,26 @@ function plugin_datainjection_install() {
             Toolbox::deleteDir(GLPI_PLUGIN_DOC_DIR."/data_injection/");
          }
 
-         if (TableExists("glpi_plugin_data_injection_models")
-            && !FieldExists("glpi_plugin_data_injection_models", "recursive")
+         if ($DB->tableExists("glpi_plugin_data_injection_models")
+            && !$DB->fieldExists("glpi_plugin_data_injection_models", "recursive")
           ) {
             // Update
             plugin_datainjection_update131_14();
          }
 
-         if (TableExists("glpi_plugin_data_injection_models")
-            && !FieldExists("glpi_plugin_data_injection_models", "port_unicity")
+         if ($DB->tableExists("glpi_plugin_data_injection_models")
+            && !$DB->fieldExists("glpi_plugin_data_injection_models", "port_unicity")
           ) {
 
             $migration->addField('glpi_plugin_data_injection_models', 'port_unicity', 'bool');
             $migration->executeMigration();
          }
 
-         if (!TableExists("glpi_plugin_datainjection_models")) {
+         if (!$DB->tableExists("glpi_plugin_datainjection_models")) {
             plugin_datainjection_update15_170();
          }
 
-         if (!TableExists("glpi_plugin_datainjection_modelcsvs")) {
+         if (!$DB->tableExists("glpi_plugin_datainjection_modelcsvs")) {
             plugin_datainjection_update170_20();
          }
 
@@ -174,6 +174,7 @@ function plugin_datainjection_install() {
 
           plugin_datainjection_upgrade23_240($migration);
 
+          plugin_datainjection_migration_24_250($migration);
         break;
    }
 
@@ -182,7 +183,6 @@ function plugin_datainjection_install() {
 
 
 function plugin_datainjection_uninstall() {
-
     global $DB;
 
     $tables = ["glpi_plugin_datainjection_models",
@@ -193,7 +193,7 @@ function plugin_datainjection_uninstall() {
               "glpi_plugin_datainjection_profiles"];
 
     foreach ($tables as $table) {
-       if (TableExists($table)) {
+       if ($DB->tableExists($table)) {
           $DB->queryOrDie("DROP TABLE IF EXISTS `".$table."`", $DB->error());
          }
       }
@@ -206,6 +206,12 @@ function plugin_datainjection_uninstall() {
       return true;
 }
 
+
+function plugin_datainjection_migration_24_250($migration) {
+   if ($migration->addField('glpi_plugin_data_injection_models', 'date_creation', 'datetime')) {
+      $migration->addKey('glpi_plugin_data_injection_models', 'date_creation');
+   }
+}
 
 function plugin_datainjection_upgrade23_240($migration) {
 
@@ -1035,13 +1041,14 @@ function plugin_datainjection_loadHook($hook_name, $params=array ()) {
 
 
 function plugin_datainjection_needUpdateOrInstall() {
+   global $DB;
 
     //Install plugin
-   if (!TableExists('glpi_plugin_datainjection_models')) {
+   if (!$DB->tableExists('glpi_plugin_datainjection_models')) {
       return 0;
    }
 
-   if (TableExists("glpi_plugin_datainjection_modelcsvs")) {
+   if ($DB->tableExists("glpi_plugin_datainjection_modelcsvs")) {
       return -1;
    }
 

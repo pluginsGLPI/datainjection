@@ -43,7 +43,7 @@ class PluginDatainjectionComputer_SoftwareLicenseInjection extends Computer_Soft
    }
 
 
-   static function getTable() {
+   static function getTable($classname = null) {
 
       $parenttype = get_parent_class();
       return $parenttype::getTable();

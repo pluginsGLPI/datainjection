@@ -37,7 +37,7 @@ class PluginDatainjectionSolutionTemplateInjection extends SolutionTemplate
 {
 
 
-   static function getTable() {
+   static function getTable($classname = null) {
 
       $parenttype = get_parent_class();
       return $parenttype::getTable();

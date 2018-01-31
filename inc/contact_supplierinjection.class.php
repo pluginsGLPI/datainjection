@@ -37,7 +37,7 @@ class PluginDatainjectionContact_SupplierInjection extends Contact_Supplier
 {
 
 
-   static function getTable() {
+   static function getTable($classname = null) {
 
       $parenttype = get_parent_class();
       return $parenttype::getTable();

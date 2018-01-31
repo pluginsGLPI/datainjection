@@ -37,7 +37,7 @@ class PluginDatainjectionPeripheralInjection extends Peripheral
 {
 
 
-   static function getTable() {
+   static function getTable($classname = null) {
 
       $parenttype = get_parent_class();
       return $parenttype::getTable();

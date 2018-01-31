@@ -371,10 +371,10 @@ class PluginDatainjectionClientInjection
       echo "<tr class='tab_bg_1'><td class='center'>";
       if ($ok) {
          echo "<img src='".$CFG_GLPI['root_doc']."/plugins/datainjection/pics/ok.png'>";
-         _e('Injection successful', 'datainjection');
+         echo __('Injection successful', 'datainjection');
       } else {
          echo "<img src='".$CFG_GLPI['root_doc']."/plugins/datainjection/pics/danger.png'>";
-         _e('Injection encounters errors', 'datainjection');
+         echo __('Injection encounters errors', 'datainjection');
       }
       echo "</td></tr>";
 

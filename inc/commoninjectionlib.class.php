@@ -1976,7 +1976,7 @@ class PluginDatainjectionCommonInjectionLib
                            'notepad' => 'notepad');
 
       foreach ($type_searchOptions as $id => $tmp) {
-         if (!is_array($tmp) || in_array($id, $options['ignore_fields'])) {
+         if (!is_array($tmp) || !isset($tmp['field']) || in_array($id, $options['ignore_fields'])) {
             unset($type_searchOptions[$id]);
 
          } else {

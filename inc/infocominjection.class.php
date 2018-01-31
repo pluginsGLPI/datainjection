@@ -37,7 +37,7 @@ class PluginDatainjectionInfocomInjection extends Infocom
 {
 
 
-   static function getTable() {
+   static function getTable($classname = null) {
 
       $parenttype = get_parent_class();
       return $parenttype::getTable();
@@ -98,6 +98,7 @@ class PluginDatainjectionInfocomInjection extends Infocom
       $tab[25]['checktype']   = 'date';
       $tab[27]['checktype']   = 'date';
       $tab[28]['checktype']   = 'date';
+      $tab[159]['checktype']  = 'date';
 
       //Remove some options because some fields cannot be imported
       $blacklist     = PluginDatainjectionCommonInjectionLib::getBlacklistedOptions(get_parent_class($this));
@@ -108,8 +109,8 @@ class PluginDatainjectionInfocomInjection extends Infocom
       $key                      = array_search(19, $options['ignore_fields']);
       unset($options['ignore_fields'][$key]);
 
-      $options['displaytype']   = array("date"             => array(4, 5, 23, 24, 25, 27, 28),
-                                      "dropdown"         => array(6, 9, 19),
+      $options['displaytype']   = array("date"           => array(4, 5, 23, 24, 25, 27, 28, 159),
+                                      "dropdown"         => array(6, 9, 19, 123),
                                       "dropdown_integer" => array(6, 14),
                                       "decimal"          => array(8, 13, 17),
                                       "sink_type"        => array(15),
@@ -124,7 +125,7 @@ class PluginDatainjectionInfocomInjection extends Infocom
     * @param $info      array
     * @param $option    array
    **/
-   function showAdditionalInformation($info=array(), $option=array()) {
+   function showAdditionalInformation($info=[], $option=[]) {
 
       $name = "info[".$option['linkfield']."]";
 
@@ -146,7 +147,7 @@ class PluginDatainjectionInfocomInjection extends Infocom
     /**
     * @param $values    array
    **/
-   function reformat(&$values=array()) {
+   function reformat(&$values=[]) {
 
       foreach (array('order_date', 'use_date', 'buy_date', 'warranty_date', 'delivery_date',
                    'inventory_date') as $date) {
@@ -163,7 +164,7 @@ class PluginDatainjectionInfocomInjection extends Infocom
     /**
     * @see plugins/datainjection/inc/PluginDatainjectionInjectionInterface::addOrUpdateObject()
    **/
-   function addOrUpdateObject($values=array(), $options=array()) {
+   function addOrUpdateObject($values=[], $options=[]) {
 
       $lib = new PluginDatainjectionCommonInjectionLib($this, $values, $options);
       $lib->processAddOrUpdate();
