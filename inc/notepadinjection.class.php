@@ -1,6 +1,6 @@
 <?php
 /*
- * @version $Id: HEADER 14684 2011-06-11 06:32:40Z remi $
+ * @version $Id: computer_iteminjection.class.php 759 2013-07-16 09:54:20Z yllen $
  LICENSE
 
  This file is part of the datainjection plugin.
@@ -20,52 +20,73 @@
  --------------------------------------------------------------------------
  @package   datainjection
  @author    the datainjection plugin team
- @copyright Copyright (c) 2010-2017 Datainjection plugin team
+ @copyright Copyright (c) 2010-2013 Datainjection plugin team
  @license   GPLv2+
             http://www.gnu.org/licenses/gpl.txt
- @link      https://github.com/pluginsGLPI/datainjection
+ @link      https://forge.indepnet.net/projects/datainjection
  @link      http://www.glpi-project.org/
  @since     2009
  ---------------------------------------------------------------------- */
 
 if (!defined('GLPI_ROOT')) {
-    die("Sorry. You can't access directly to this file");
+   die("Sorry. You can't access directly to this file");
 }
 
-class PluginDatainjectionDocumentInjection extends Document
-                                           implements PluginDatainjectionInjectionInterface
-{
+class PluginDatainjectionNotepadInjection extends Notepad
+                                                implements PluginDatainjectionInjectionInterface {
 
 
-   static function getTable($classname = null) {
+   static function getTable($classname = NULL) {
 
       $parenttype = get_parent_class();
       return $parenttype::getTable();
+
    }
 
-
    function isPrimaryType() {
-
-      return true;
+      return false;
    }
 
 
    function connectedTo() {
-
-      return array();
+      return array('Computer', 'NetworkEquipment', 'Printer');
    }
 
+   function customDataAlreadyInDB($injectionClass, $values, $options) {
+      //Do not manage updating notes: only creation
+      return false;
+   }
 
-    /**
+   /**
     * @see plugins/datainjection/inc/PluginDatainjectionInjectionInterface::getOptions()
    **/
    function getOptions($primary_type='') {
-      return Search::getOptions(get_parent_class($this));
 
+      $tab = Notepad::getSearchOptionsToAddNew();
+      $searchoptions = [];
+      foreach ($tab as $option) {
+         if (is_numeric($option['id'])) {
+            if ($option['table'] != 'glpi_notepads') {
+               $option['linkfield'] = getForeignKeyFieldForTable($option['table']);
+            } else {
+               $option['linkfield'] = $option['field'];
+            }
+            $searchoptions[$option['id']] = $option;
+         }
+      }
+
+      $options['ignore_fields'] = [201, 203, 204];
+      $options['displaytype'] = [
+         "multiline_text" => [200],
+         "dropdown"       => [202]
+
+      ];
+
+      return PluginDatainjectionCommonInjectionLib::addToSearchOptions($searchoptions, $options, $this);
    }
 
 
-    /**
+   /**
     * @see plugins/datainjection/inc/PluginDatainjectionInjectionInterface::addOrUpdateObject()
    **/
    function addOrUpdateObject($values=array(), $options=array()) {
@@ -73,6 +94,18 @@ class PluginDatainjectionDocumentInjection extends Document
       $lib = new PluginDatainjectionCommonInjectionLib($this, $values, $options);
       $lib->processAddOrUpdate();
       return $lib->getInjectionResults();
+   }
+
+
+   /**
+    * @param $primary_type
+    * @param $values
+   **/
+   function addSpecificNeededFields($primary_type, $values) {
+
+      $fields['items_id'] = $values[$primary_type]['id'];
+      $fields['itemtype'] = $primary_type;
+      return $fields;
    }
 
 }

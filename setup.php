@@ -132,9 +132,10 @@ function getTypesToInject() {
       return;
    }
 
-    $INJECTABLE_TYPES = ['PluginDatainjectionCartridgeItemInjection'               => 'datainjection',
+    $INJECTABLE_TYPES = ['PluginDatainjectionCartridgeItemInjection'              => 'datainjection',
                         'PluginDatainjectionBudgetInjection'                      => 'datainjection',
                         'PluginDatainjectionComputerInjection'                    => 'datainjection',
+                        'PluginDatainjectionNotepadInjection'                     => 'datainjection',
                         'PluginDatainjectionComputer_ItemInjection'               => 'datainjection',
                         'PluginDatainjectionConsumableItemInjection'              => 'datainjection',
                         'PluginDatainjectionContactInjection'                     => 'datainjection',
