@@ -125,9 +125,8 @@ class PluginDatainjectionProfile extends Profile
    }
 
    static function migrateProfiles() {
-
       global $DB;
-      if (!TableExists('glpi_plugin_datainjection_profiles')) {
+      if (!$DB->tableExists('glpi_plugin_datainjection_profiles')) {
          return true;
       }
 

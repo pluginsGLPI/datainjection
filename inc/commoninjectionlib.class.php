@@ -1360,7 +1360,6 @@ class PluginDatainjectionCommonInjectionLib
     * @return an array which contains the injection results
    **/
    public function processAddOrUpdate() {
-
       $process  = false;
       $add      = true;
       $accepted = false;

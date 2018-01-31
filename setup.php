@@ -28,7 +28,7 @@
  @since     2009
  ---------------------------------------------------------------------- */
 
-define ('PLUGIN_DATAINJECTION_VERSION', '2.4.3');
+define ('PLUGIN_DATAINJECTION_VERSION', '2.5.0');
 
 if (!defined("PLUGIN_DATAINJECTION_UPLOAD_DIR")) {
     define("PLUGIN_DATAINJECTION_UPLOAD_DIR", GLPI_PLUGIN_DOC_DIR."/datainjection/");
@@ -204,6 +204,10 @@ function getTypesToInject() {
                         'PluginDatainjectionOperatingSystemInjection'             => 'datainjection',
                         'PluginDatainjectionOperatingSystemVersionInjection'      => 'datainjection',
                         'PluginDatainjectionOperatingSystemServicePackInjection'  => 'datainjection',
+                        'PluginDatainjectionOperatingSystemKernelInjection'       => 'datainjection',
+                        'PluginDatainjectionOperatingSystemKernelVersionInjection'=> 'datainjection',
+                        'PluginDatainjectionOperatingSystemEditionInjection'      => 'datainjection',
+                        'PluginDatainjectionItem_OperatingSystemInjection'        => 'datainjection',
                         'PluginDatainjectionNetworkInterfaceInjection'            => 'datainjection',
                         'PluginDatainjectionDomainInjection'                      => 'datainjection',
                         'PluginDatainjectionNetworkInjection'                     => 'datainjection',
