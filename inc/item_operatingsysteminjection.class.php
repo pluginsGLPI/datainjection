@@ -74,7 +74,7 @@ class PluginDatainjectionItem_OperatingsystemInjection extends Item_OperatingSys
          "text" => [43, 44]
       ];
       return PluginDatainjectionCommonInjectionLib::addToSearchOptions($searchoptions, $options, $this);
-  }
+   }
 
    function connectedTo() {
 
