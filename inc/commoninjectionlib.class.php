@@ -351,7 +351,7 @@ class PluginDatainjectionCommonInjectionLib
 
       //add document fields
       if (in_array($itemtype, $CFG_GLPI["document_types"])) {
-         $tabs            = Document::getSearchOptionsToAdd();
+         $tabs            = Document::rawSearchOptionsToAdd();
          $document_fields = array();
          unset($tabs['document']);
          foreach ($tabs as $k => $v) {
@@ -363,7 +363,7 @@ class PluginDatainjectionCommonInjectionLib
 
       //add infocoms fields
       if (in_array($itemtype, $CFG_GLPI["infocom_types"])) {
-         $tabs           = Infocom::getSearchOptionsToAdd($itemtype);
+         $tabs           = Infocom::rawSearchOptionsToAdd($itemtype);
          $infocom_fields = array();
          unset($tabs['financial']);
          foreach ($tabs as $k => $v) {
@@ -374,7 +374,7 @@ class PluginDatainjectionCommonInjectionLib
       }
       //add contract fields
       if (in_array($itemtype, $CFG_GLPI["contract_types"])) {
-         $tabs            = Contract::getSearchOptionsToAdd();
+         $tabs            = Contract::rawSearchOptionsToAdd();
          $contract_fields = array();
          unset($tabs['contract']);
          foreach ($tabs as $k => $v) {
@@ -386,7 +386,7 @@ class PluginDatainjectionCommonInjectionLib
 
       //add networkport fields
       if (in_array($itemtype, $CFG_GLPI["networkport_types"])) {
-         $tabs               = NetworkPort::getSearchOptionsToAdd($itemtype);
+         $tabs               = NetworkPort::rawSearchOptionsToAdd($itemtype);
          $networkport_fields = array();
          unset($tabs['network']);
          foreach ($tabs as $k => $v) {
