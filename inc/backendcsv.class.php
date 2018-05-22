@@ -198,6 +198,14 @@ class PluginDatainjectionBackendcsv extends PluginDatainjectionBackend
    function openFile() {
 
       $this->file_handler = fopen($this->file, 'r');
+
+      // Check if file starts with BOM.
+      // 1. If BOM found, keep the handler moved to 4th char to not include it in data.
+      // 2. If no BOM found, rewind to start of file.
+      $hasBOM = fread($this->file_handler, 3) === pack('CCC', 0xEF, 0xBB, 0xBF);
+      if (!$hasBOM) {
+         fseek($this->file_handler, 0);
+      }
    }
 
 
