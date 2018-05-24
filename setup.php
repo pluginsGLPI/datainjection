@@ -87,14 +87,13 @@ function plugin_version_datainjection() {
 
     return [
            'name'           => __('File injection', 'datainjection'),
-           'minGlpiVersion' => '9.2',
            'author'         => 'Walid Nouh, Remi Collet, Nelly Mahu-Lasson, Xavier Caillaud',
            'homepage'       => 'https://github.com/pluginsGLPI/datainjection',
            'license'        => 'GPLv2+',
            'version'        => PLUGIN_DATAINJECTION_VERSION,
            'requirements'   => [
               'glpi' => [
-                 'min' => '9.2',
+                 'min' => '9.3',
                   'dev' => 1
                ]
             ]
@@ -104,8 +103,8 @@ function plugin_version_datainjection() {
 
 function plugin_datainjection_check_prerequisites() {
    $version = rtrim(GLPI_VERSION, '-dev');
-   if (version_compare($version, '9.2', 'lt')) {
-      echo "This plugin requires GLPI 9.2";
+   if (version_compare($version, '9.3', 'lt')) {
+      echo "This plugin requires GLPI 9.3";
       return false;
    }
 
