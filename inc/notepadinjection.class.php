@@ -62,7 +62,7 @@ class PluginDatainjectionNotepadInjection extends Notepad
    **/
    function getOptions($primary_type='') {
 
-      $tab = Notepad::getSearchOptionsToAddNew();
+      $tab = Notepad::rawSearchOptionsToAdd();
       $searchoptions = [];
       foreach ($tab as $option) {
          if (is_numeric($option['id'])) {

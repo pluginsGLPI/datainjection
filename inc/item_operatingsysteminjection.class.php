@@ -53,7 +53,7 @@ class PluginDatainjectionItem_OperatingsystemInjection extends Item_OperatingSys
   **/
    function getOptions($primary_type='') {
 
-      $tab = Item_OperatingSystem::getSearchOptionsToAddNew(get_parent_class($this));
+      $tab = Item_OperatingSystem::rawSearchOptionsToAdd(get_parent_class($this));
       $searchoptions = [];
       foreach ($tab as $option) {
          if (is_numeric($option['id'])) {

@@ -351,99 +351,147 @@ class PluginDatainjectionModel extends CommonDBTM
 
 
     //Standard functions
-   function getSearchOptions() {
+   function rawSearchOptions() {
 
-      $tab                       = array();
+      $tab = [];
 
-      $tab['common']             = self::getTypeName();
+      $tab[] = [
+         'id'   => 'common',
+         'name' => self::getTypeName(),
+      ];
 
-      $tab[1]['table']           = $this->getTable();
-      $tab[1]['field']           = 'name';
-      $tab[1]['name']            = __('Name');
-      $tab[1]['datatype']        = 'itemlink';
-      $tab[1]['itemlink_type']   = $this->getType();
+      $tab[] = [
+         'id'            => 1,
+         'table'         => $this->getTable(),
+         'field'         => 'name',
+         'name'          => __('Name'),
+         'datatype'      => 'itemlink',
+         'itemlink_type' => $this->getType(),
+      ];
 
-      $tab[2]['table']           = $this->getTable();
-      $tab[2]['field']           = 'id';
-      $tab[2]['name']            = __('ID');
+      $tab[] = [
+         'id'            => 2,
+         'table'         => $this->getTable(),
+         'field'         => 'id',
+         'name'          => __('ID'),
+      ];
 
-      $tab[3]['table']           = $this->getTable();
-      $tab[3]['field']           = 'behavior_add';
-      $tab[3]['name']            = __('Allow lines creation', 'datainjection');
-      $tab[3]['datatype']        = 'bool';
-      $tab[3]['massiveaction']   = false;
+      $tab[] = [
+         'id'            => 3,
+         'table'         => $this->getTable(),
+         'field'         => 'behavior_add',
+         'name'          => __('Allow lines creation', 'datainjection'),
+         'datatype'      => 'bool',
+         'massiveaction' => false,
+      ];
 
-      $tab[4]['table']           = $this->getTable();
-      $tab[4]['field']           = 'behavior_update';
-      $tab[4]['name']            = __('Allow lines update', 'datainjection');
-      $tab[4]['datatype']        = 'bool';
-      $tab[4]['massiveaction']   = false;
+      $tab[] = [
+         'id'            => 4,
+         'table'         => $this->getTable(),
+         'field'         => 'behavior_update',
+         'name'          => __('Allow lines update', 'datainjection'),
+         'datatype'      => 'bool',
+         'massiveaction' => false,
+      ];
 
-      $tab[5]['table']           = $this->getTable();
-      $tab[5]['field']           = 'itemtype';
-      $tab[5]['name']            = __('Type of data to import', 'datainjection');
-      $tab[5]['datatype']        = 'itemtypename';
-      $tab[5]['nosearch']        = true;
-      $tab[5]['massiveaction']   = false;
+      $tab[] = [
+         'id'            => 5,
+         'table'         => $this->getTable(),
+         'field'         => 'itemtype',
+         'name'          => __('Type of data to import', 'datainjection'),
+         'datatype'      => 'itemtypename',
+         'nosearch'      => true,
+         'massiveaction' => false,
+      ];
 
-      $tab[6]['table']           = $this->getTable();
-      $tab[6]['field']           = 'can_add_dropdown';
-      $tab[6]['name']            = __('Allow creation of dropdowns', 'datainjection');
-      $tab[6]['datatype']        = 'bool';
+      $tab[] = [
+         'id'            => 6,
+         'table'         => $this->getTable(),
+         'field'         => 'can_add_dropdown',
+         'name'          => __('Allow creation of dropdowns', 'datainjection'),
+         'datatype'      => 'bool',
+      ];
 
-      $tab[7]['table']           = $this->getTable();
-      $tab[7]['field']           = 'date_format';
-      $tab[7]['name']            = __('Dates format', 'datainjection');
-      $tab[7]['datatype']        = 'specific';
-      $tab[7]['searchtype']      = 'equals';
+      $tab[] = [
+         'id'            => 7,
+         'table'         => $this->getTable(),
+         'field'         => 'date_format',
+         'name'          => __('Dates format', 'datainjection'),
+         'datatype'      => 'specific',
+         'searchtype'    => 'equals',
+      ];
 
-      $tab[8]['table']           = $this->getTable();
-      $tab[8]['field']           = 'float_format';
-      $tab[8]['name']            = __('Float format', 'datainjection');
-      $tab[8]['datatype']        = 'specific';
-      $tab[8]['searchtype']      = 'equals';
+      $tab[] = [
+         'id'            => 8,
+         'table'         => $this->getTable(),
+         'field'         => 'float_format',
+         'name'          => __('Float format', 'datainjection'),
+         'datatype'      => 'specific',
+         'searchtype'    => 'equals',
+      ];
 
-      $tab[9]['table']           = $this->getTable();
-      $tab[9]['field']           = 'perform_network_connection';
-      $tab[9]['name']            = __(
-          'Try to establish network connection is possible',
-          'datainjection'
-      );
-      $tab[9]['datatype']        = 'bool';
+      $tab[] = [
+         'id'            => 9,
+         'table'         => $this->getTable(),
+         'field'         => 'perform_network_connection',
+         'name'          => __(
+            'Try to establish network connection is possible',
+            'datainjection'
+            ),
+         'datatype'      => 'bool',
+      ];
 
-      $tab[10]['table']          = $this->getTable();
-      $tab[10]['field']          = 'port_unicity';
-      $tab[10]['name']           = __('Port unicity criteria', 'datainjection');
-      $tab[10]['datatype']       = 'specific';
-      $tab[10]['searchtype']     = 'equals';
+      $tab[] = [
+         'id'            => 10,
+         'table'         => $this->getTable(),
+         'field'         => 'port_unicity',
+         'name'          => __('Port unicity criteria', 'datainjection'),
+         'datatype'      => 'specific',
+         'searchtype'    => 'equals',
+      ];
 
-      $tab[11]['table']          = $this->getTable();
-      $tab[11]['field']          = 'is_private';
-      $tab[11]['name']           = __('Private');
-      $tab[11]['datatype']       = 'bool';
-      $tab[11]['massiveaction']  = false;
+      $tab[] = [
+         'id'            => 11,
+         'table'         => $this->getTable(),
+         'field'         => 'is_private',
+         'name'          => __('Private'),
+         'datatype'      => 'bool',
+         'massiveaction' => false,
+      ];
 
-      $tab[12]['table']          = $this->getTable();
-      $tab[12]['field']          = 'step';
-      $tab[12]['name']           = __('Status');
-      $tab[12]['massiveaction']  = false;
-      $tab[12]['datatype']       = 'specific';
-      $tab[12]['searchtype']     = 'equals';
+      $tab[] = [
+         'id'            => 12,
+         'table'         => $this->getTable(),
+         'field'         => 'step',
+         'name'          => __('Status'),
+         'datatype'      => 'specific',
+         'searchtype'    => 'equals',
+         'massiveaction' => false,
+      ];
 
-      $tab[16]['table']          = $this->getTable();
-      $tab[16]['field']          = 'comment';
-      $tab[16]['name']           = __('Comments');
-      $tab[16]['datatype']       = 'text';
+      $tab[] = [
+         'id'            => 16,
+         'table'         => $this->getTable(),
+         'field'         => 'comment',
+         'name'          => __('Comments'),
+         'datatype'      => 'text',
+      ];
 
-      $tab[80]['table']          = 'glpi_entities';
-      $tab[80]['field']          = 'completename';
-      $tab[80]['name']           = __('Entity');
-      $tab[80]['datatype']       = 'dropdown';
+      $tab[] = [
+         'id'            => 80,
+         'table'         => 'glpi_entities',
+         'field'         => 'completename',
+         'name'          => __('Entity'),
+         'datatype'      => 'dropdown',
+      ];
 
-      $tab[86]['table']          = $this->getTable();
-      $tab[86]['field']          = 'is_recursive';
-      $tab[86]['name']           = __('Child entities');
-      $tab[86]['datatype']       = 'bool';
+      $tab[] = [
+         'id'            => 86,
+         'table'         => $this->getTable(),
+         'field'         => 'is_recursive',
+         'name'          => __('Child entities'),
+         'datatype'      => 'bool',
+      ];
 
       return $tab;
    }
