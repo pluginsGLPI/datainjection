@@ -106,7 +106,11 @@ class PluginDatainjectionInjectionType {
 
       $p['primary_type']    = '';
       $p['itemtype']        = self::NO_VALUE;
-      $p['mapping_or_info'] = json_encode($mapping_or_info->fields);
+      // Use hex code for all special chars to prevent problems when adding/stripping slashes
+      $p['mapping_or_info'] = json_encode(
+         $mapping_or_info->fields,
+         JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP
+      );
       $p['called_by']       = get_class($mapping_or_info);
       $p['fields_update']   = true;
       foreach ($options as $key => $value) {
@@ -290,14 +294,14 @@ class PluginDatainjectionInjectionType {
    **/
    static function showMandatoryCheckbox($options=array()) {
 
-      //json adds more \ char than needed : when $options['mapping_or_info']['name'] contains a '
-      //json_decode fails to decode it !
-      $options['mapping_or_info'] = str_replace("\\", "", $options['mapping_or_info']);
+      // Received data has been slashed.
+      $options = Toolbox::stripslashes_deep($options);
 
       if ($options['need_decode']) {
+         // JSON data has been slashed twice, stripslashes has to be done a second time.
          $mapping_or_info = json_decode(
-             Toolbox::stripslashes_deep($options['mapping_or_info']),
-             true
+            Toolbox::stripslashes_deep($options['mapping_or_info']),
+            true
          );
       } else {
          $mapping_or_info = $options['mapping_or_info'];
