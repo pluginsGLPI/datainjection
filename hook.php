@@ -48,7 +48,7 @@ function plugin_datainjection_install() {
     global $DB;
 
     include_once GLPI_ROOT."/plugins/datainjection/inc/profile.class.php";
-    $migration = new Migration('2.5.0');
+    $migration = new Migration(PLUGIN_DATAINJECTION_VERSION);
 
    switch (plugin_datainjection_needUpdateOrInstall()) {
       case -1 :
