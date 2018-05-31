@@ -621,13 +621,31 @@ class PluginDatainjectionModel extends CommonDBTM
       echo "</td>";
       echo "<td colspan='2'></td></tr>";
 
+      $rand = mt_rand();
       echo "<tr class='tab_bg_1'>";
-      echo "<td colspan='4' class='center'>";
-      Dropdown::showPrivatePublicSwitch(
-          $this->fields["is_private"], $this->fields["entities_id"],
-          $this->fields["is_recursive"]
+      echo "<td><label for='dropdown_is_private$rand'>".__('Visibility') . "</label></td>";
+      echo "<td colspan='3'>";
+      Dropdown::showFromArray(
+         'is_private', [
+            1  => __('Private'),
+            0  => __('Public')
+         ], [
+            'value'  => $this->fields['is_private'],
+            'rand'   => $rand
+         ]
       );
-      echo "</td></tr>";
+      echo "</td>";
+      echo "</tr>";
+      echo "<tr class='tab_bg_2'>";
+      echo "<td>".__('Entity')."</td>";
+      echo "<td>";
+      Entity::dropdown(['value' => $this->fields["entities_id"]]);
+      echo "</td>";
+      echo "<td>". __('Child entities')."</td>";
+      echo "<td>";
+      Dropdown::showYesNo('is_recursive', $this->fields["is_recursive"]);
+      echo "</td>";
+      echo "</tr>";
 
       echo "<tr class='tab_bg_1'>";
       echo "<td>".__('Comments')."</td>";
@@ -876,10 +894,6 @@ class PluginDatainjectionModel extends CommonDBTM
          return false;
       }
 
-      if (isset($input['is_private']) && ($input['is_private'] == 1)) {
-         $input['entities_id']  = $_SESSION['glpiactive_entity'];
-         $input['is_recursive'] = 1;
-      }
       $input['step'] = self::FILE_STEP;
 
       return $input;
@@ -889,9 +903,6 @@ class PluginDatainjectionModel extends CommonDBTM
    function prepareInputForUpdate($input) {
 
       if (isset($input['is_private']) && ($input['is_private'] == 1)) {
-         $input['entities_id']  = $_SESSION['glpiactive_entity'];
-         $input['is_recursive'] = 1;
-
          if (isset($input['users_id']) && ($input['users_id'] != $this->fields['users_id'])) {
             Session::addMessageAfterRedirect(
                 __(
