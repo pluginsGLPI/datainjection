@@ -229,6 +229,12 @@ function plugin_datainjection_migration_24_250($migration) {
 }
 
 function plugin_datainjection_upgrade23_240($migration) {
+   global $DB;
+
+   if ($DB->fieldExists('glpi_plugin_datainjection_profiles', 'ID')) {
+      $migration->changeField('glpi_plugin_datainjection_profiles', 'ID', 'id', 'autoincrement');
+      $migration->executeMigration();
+   }
 
     PluginDatainjectionProfile::migrateProfiles();
 
