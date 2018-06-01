@@ -231,8 +231,8 @@ function plugin_datainjection_migration_251_252() {
 
 function plugin_datainjection_migration_24_250($migration) {
    global $DB;
-   if ($migration->addField('glpi_plugin_data_injection_models', 'date_creation', 'datetime')) {
-      $migration->addKey('glpi_plugin_data_injection_models', 'date_creation');
+   if ($migration->addField('glpi_plugin_datainjection_models', 'date_creation', 'datetime')) {
+      $migration->addKey('glpi_plugin_datainjection_models', 'date_creation');
    }
 
    //Migrate OSes infos
