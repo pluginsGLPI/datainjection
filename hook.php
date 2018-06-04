@@ -65,7 +65,7 @@ function plugin_datainjection_install() {
                      `id` int(11) NOT NULL auto_increment,
                      `name` varchar(255) NOT NULL,
                      `comment` text NULL,
-                     `date_mod` datetime NOT NULL DEFAULT NOW,
+                     `date_mod` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
                      `date_creation` datetime DEFAULT NULL,
                      `filetype` varchar(255) NOT NULL default 'csv',
                      `itemtype` varchar(255) NOT NULL default '',
@@ -223,7 +223,7 @@ function plugin_datainjection_migration_251_252() {
       'glpi_plugin_datainjection_models',
       'date_mod',
       'date_mod',
-      'datetime NOT NULL DEFAULT NOW'
+      'datetime NOT NULL DEFAULT CURRENT_TIMESTAMP'
    );
 
    $migration->executeMigration();
