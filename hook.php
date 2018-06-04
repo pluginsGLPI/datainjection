@@ -232,8 +232,8 @@ function plugin_datainjection_upgrade23_240($migration) {
    global $DB;
 
    if ($DB->fieldExists('glpi_plugin_datainjection_profiles', 'ID')) {
-      $query = "ALTER TABLE `glpi_plugin_datainjection_profiles` CHANGE `ID` `id` int(11) NOT NULL auto_increment";
-      $DB->query($query);
+      $migration->changeField('glpi_plugin_datainjection_profiles', 'ID', 'id', 'autoincrement');
+      $migration->executeMigration();
    }
 
     PluginDatainjectionProfile::migrateProfiles();
