@@ -219,20 +219,28 @@ function plugin_datainjection_migration_251_252() {
 
    $migration = new Migration('2.5.2');
 
-   $migration->changeField(
-      'glpi_plugin_datainjection_models',
-      'date_mod',
-      'date_mod',
-      'datetime NOT NULL DEFAULT NOW'
-   );
+   if ($DB->tableExists('glpi_plugin_datainjection_models')) {
+      if ($DB->fieldExists("glpi_plugin_datainjection_models", "date_creation")) {
+         $migration->addKey('glpi_plugin_datainjection_models', 'date_creation');
+      }
+
+      if ($DB->fieldExists("glpi_plugin_datainjection_models", "date_mod")) {
+         $migration->changeField(
+            'glpi_plugin_datainjection_models',
+            'date_mod',
+            'date_mod',
+            'datetime NOT NULL DEFAULT NOW'
+         );
+      }
+   }
 
    $migration->executeMigration();
 }
 
 function plugin_datainjection_migration_24_250($migration) {
    global $DB;
-   if ($migration->addField('glpi_plugin_data_injection_models', 'date_creation', 'datetime')) {
-      $migration->addKey('glpi_plugin_data_injection_models', 'date_creation');
+   if ($migration->addField('glpi_plugin_datainjection_models', 'date_creation', 'datetime')) {
+      $migration->addKey('glpi_plugin_datainjection_models', 'date_creation');
    }
 
    //Migrate OSes infos
