@@ -226,6 +226,8 @@ function plugin_datainjection_migration_251_252() {
       'datetime NOT NULL DEFAULT NOW'
    );
 
+   $migration->addKey('glpi_plugin_datainjection_models', 'date_creation');
+
    $migration->executeMigration();
 }
 
