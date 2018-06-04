@@ -52,17 +52,20 @@ function plugin_datainjection_install() {
 
    switch (plugin_datainjection_needUpdateOrInstall()) {
       case -1 :
-          plugin_datainjection_update220_230();
-          plugin_datainjection_upgrade23_240($migration);
-          plugin_datainjection_migration_24_250($migration);
-        return true;
+         // Migrations from version 2.2.0+
+         plugin_datainjection_update220_230();
+         plugin_datainjection_upgrade23_240($migration);
+         plugin_datainjection_migration_24_250($migration);
+         plugin_datainjection_migration_251_252();
+         return true;
 
       case 0 :
+         // Plugin installation
           $query = "CREATE TABLE IF NOT EXISTS `glpi_plugin_datainjection_models` (
                      `id` int(11) NOT NULL auto_increment,
                      `name` varchar(255) NOT NULL,
                      `comment` text NULL,
-                     `date_mod` datetime NOT NULL default '0000-00-00 00:00:00',
+                     `date_mod` datetime NOT NULL DEFAULT NOW,
                      `date_creation` datetime DEFAULT NULL,
                      `filetype` varchar(255) NOT NULL default 'csv',
                      `itemtype` varchar(255) NOT NULL default '',
@@ -130,7 +133,9 @@ function plugin_datainjection_install() {
         break;
 
       case 1 :
-          //When updating, check if the upload folder is already present
+         // Migrations from version prior to 2.2.0
+
+         //When updating, check if the upload folder is already present
          if (!is_dir(PLUGIN_DATAINJECTION_UPLOAD_DIR)) {
             @ mkdir(PLUGIN_DATAINJECTION_UPLOAD_DIR)
              or die(
@@ -176,6 +181,8 @@ function plugin_datainjection_install() {
           plugin_datainjection_upgrade23_240($migration);
 
           plugin_datainjection_migration_24_250($migration);
+
+          plugin_datainjection_migration_251_252();
         break;
    }
 
@@ -207,6 +214,20 @@ function plugin_datainjection_uninstall() {
       return true;
 }
 
+function plugin_datainjection_migration_251_252() {
+   global $DB;
+
+   $migration = new Migration('2.5.2');
+
+   $migration->changeField(
+      'glpi_plugin_datainjection_models',
+      'date_mod',
+      'date_mod',
+      'datetime NOT NULL DEFAULT NOW'
+   );
+
+   $migration->executeMigration();
+}
 
 function plugin_datainjection_migration_24_250($migration) {
    global $DB;
