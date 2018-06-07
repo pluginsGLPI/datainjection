@@ -41,9 +41,12 @@ class PluginDatainjectionMenu extends CommonGLPI
    static function getMenuContent() {
 
       global $CFG_GLPI;
+
+      $injectionFormUrl = '/plugins/datainjection/front/clientinjection.form.php';
+
       $menu          = array();
       $menu['title'] = self::getMenuName();
-      $menu['page']  = '/plugins/datainjection/front/clientinjection.form.php';
+      $menu['page']  = $injectionFormUrl;
 
       if (Session::haveRight(static::$rightname, READ)) {
 
@@ -56,8 +59,7 @@ class PluginDatainjectionMenu extends CommonGLPI
          $image_import .= "' alt='".__s('Injection of the file', 'datainjection')."'>";
 
          $menu['options']['client']['title'] = self::getMenuName();
-         $menu['options']['client']['page'] = Toolbox::getItemTypeSearchUrl('PluginDatainjectionModel', false);
-         $menu['options']['client']['links']['search'] = '/plugins/datainjection/front/clientinjection.form.php';
+         $menu['options']['client']['page'] = $injectionFormUrl;
 
          if (Session::haveRight('plugin_datainjection_model', READ)) {
             $menu['options']['model']['title'] = PluginDatainjectionModel::getTypeName();
@@ -66,8 +68,7 @@ class PluginDatainjectionMenu extends CommonGLPI
             $menu['options']['client']['links'][$image_model]  = Toolbox::getItemTypeSearchUrl('PluginDatainjectionModel', false);
          }
 
-         //$menu['options']['client']['links'][$image_model]  = Toolbox::getItemTypeSearchUrl('PluginDatainjectionModel', false);
-         $menu['options']['model']['links'][$image_import] = '/plugins/datainjection/front/clientinjection.form.php';
+         $menu['options']['model']['links'][$image_import] = $injectionFormUrl;
 
          if (Session::haveRight('plugin_datainjection_model', UPDATE) || Session::haveRight('plugin_datainjection_model', CREATE)) {
             $menu['options']['model']['links']['add'] = Toolbox::getItemTypeFormUrl('PluginDatainjectionModel', false);
