@@ -45,24 +45,28 @@ function plugin_datainjection_registerMethods() {
 
 
 function plugin_datainjection_install() {
-    global $DB;
+   global $DB;
 
-    include_once GLPI_ROOT."/plugins/datainjection/inc/profile.class.php";
-    $migration = new Migration(PLUGIN_DATAINJECTION_VERSION);
+   include_once GLPI_ROOT."/plugins/datainjection/inc/profile.class.php";
+
+   $migration = new Migration(null);
 
    switch (plugin_datainjection_needUpdateOrInstall()) {
       case -1 :
-          plugin_datainjection_update220_230();
-          plugin_datainjection_upgrade23_240($migration);
-          plugin_datainjection_migration_24_250($migration);
-        return true;
+         // Migrations from version 2.2.0+
+         plugin_datainjection_update220_230();
+         plugin_datainjection_upgrade23_240($migration);
+         plugin_datainjection_migration_24_250($migration);
+         plugin_datainjection_migration_251_252($migration);
+         break;
 
       case 0 :
+         // Plugin installation
           $query = "CREATE TABLE IF NOT EXISTS `glpi_plugin_datainjection_models` (
                      `id` int(11) NOT NULL auto_increment,
                      `name` varchar(255) NOT NULL,
                      `comment` text NULL,
-                     `date_mod` datetime NOT NULL default '0000-00-00 00:00:00',
+                     `date_mod` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
                      `date_creation` datetime DEFAULT NULL,
                      `filetype` varchar(255) NOT NULL default 'csv',
                      `itemtype` varchar(255) NOT NULL default '',
@@ -126,11 +130,10 @@ function plugin_datainjection_install() {
          }
         break;
 
-      default :
-        break;
-
       case 1 :
-          //When updating, check if the upload folder is already present
+         // Migrations from version prior to 2.2.0
+
+         //When updating, check if the upload folder is already present
          if (!is_dir(PLUGIN_DATAINJECTION_UPLOAD_DIR)) {
             @ mkdir(PLUGIN_DATAINJECTION_UPLOAD_DIR)
              or die(
@@ -176,10 +179,15 @@ function plugin_datainjection_install() {
           plugin_datainjection_upgrade23_240($migration);
 
           plugin_datainjection_migration_24_250($migration);
+
+          plugin_datainjection_migration_251_252($migration);
+        break;
+
+      default :
         break;
    }
 
-    return true;
+   return true;
 }
 
 
@@ -207,11 +215,35 @@ function plugin_datainjection_uninstall() {
       return true;
 }
 
-
-function plugin_datainjection_migration_24_250($migration) {
+function plugin_datainjection_migration_251_252(Migration $migration) {
    global $DB;
-   if ($migration->addField('glpi_plugin_data_injection_models', 'date_creation', 'datetime')) {
-      $migration->addKey('glpi_plugin_data_injection_models', 'date_creation');
+
+   $migration->setVersion('2.5.2');
+
+   if ($DB->tableExists('glpi_plugin_datainjection_models')
+       && $DB->fieldExists('glpi_plugin_datainjection_models', 'date_mod')) {
+      $migration->changeField(
+         'glpi_plugin_datainjection_models',
+         'date_mod',
+         'date_mod',
+         'datetime NOT NULL DEFAULT CURRENT_TIMESTAMP'
+      );
+      $migration->migrationOneTable('glpi_plugin_datainjection_models');
+   }
+
+   $migration->executeMigration();
+}
+
+function plugin_datainjection_migration_24_250(Migration $migration) {
+   global $DB;
+
+   $migration->setVersion('2.5.0');
+
+   if ($DB->tableExists('glpi_plugin_datainjection_models')
+       && !$DB->fieldExists('glpi_plugin_datainjection_models', 'date_creation')) {
+      $migration->addField('glpi_plugin_datainjection_models', 'date_creation', 'datetime');
+      $migration->addKey('glpi_plugin_datainjection_models', 'date_creation');
+      $migration->migrationOneTable('glpi_plugin_datainjection_models');
    }
 
    //Migrate OSes infos
@@ -226,14 +258,28 @@ function plugin_datainjection_migration_24_250($migration) {
                    'operatingsystemkernelversions_id', 'operatingsystemeditions_id'
                 )";
    $DB->query($query);
+
+   $migration->executeMigration();
 }
 
-function plugin_datainjection_upgrade23_240($migration) {
+function plugin_datainjection_upgrade23_240(Migration $migration) {
+   global $DB;
 
-    PluginDatainjectionProfile::migrateProfiles();
+   $migration->setVersion('2.4.0');
 
-    //Drop profile table : no use anymore !
-    $migration->dropTable('glpi_plugin_datainjection_profiles');
+   if ($DB->tableExists('glpi_plugin_datainjection_profiles')) {
+      if ($DB->fieldExists('glpi_plugin_datainjection_profiles', 'ID')) {
+         $migration->changeField('glpi_plugin_datainjection_profiles', 'ID', 'id', 'autoincrement');
+         $migration->migrationOneTable('glpi_plugin_datainjection_profiles');
+      }
+
+       PluginDatainjectionProfile::migrateProfiles();
+
+      //Drop profile table : no use anymore !
+      $migration->dropTable('glpi_plugin_datainjection_profiles');
+   }
+
+   $migration->executeMigration();
 }
 
 function plugin_datainjection_update131_14() {
