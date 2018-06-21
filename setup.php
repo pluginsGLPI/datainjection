@@ -30,6 +30,11 @@
 
 define ('PLUGIN_DATAINJECTION_VERSION', '2.5.2');
 
+// Minimal GLPI version, inclusive
+define("PLUGIN_DATAINJECTION_MIN_GLPI", "9.3");
+// Maximum GLPI version, exclusive
+define("PLUGIN_DATAINJECTION_MAX_GLPI", "9.4");
+
 if (!defined("PLUGIN_DATAINJECTION_UPLOAD_DIR")) {
     define("PLUGIN_DATAINJECTION_UPLOAD_DIR", GLPI_PLUGIN_DOC_DIR."/datainjection/");
 }
@@ -86,15 +91,15 @@ function plugin_init_datainjection() {
 function plugin_version_datainjection() {
 
    return [
-      'name'           => __('File injection', 'datainjection'),
-      'author'         => 'Walid Nouh, Remi Collet, Nelly Mahu-Lasson, Xavier Caillaud',
-      'homepage'       => 'https://github.com/pluginsGLPI/datainjection',
-      'license'        => 'GPLv2+',
-      'version'        => PLUGIN_DATAINJECTION_VERSION,
-      'requirements'   => [
+      'name'         => __('File injection', 'datainjection'),
+      'author'       => 'Walid Nouh, Remi Collet, Nelly Mahu-Lasson, Xavier Caillaud',
+      'homepage'     => 'https://github.com/pluginsGLPI/datainjection',
+      'license'      => 'GPLv2+',
+      'version'      => PLUGIN_DATAINJECTION_VERSION,
+      'requirements' => [
          'glpi' => [
-            'min' => '9.3',
-            'dev' => 1,
+            'min' => PLUGIN_DATAINJECTION_MIN_GLPI,
+            'max' => PLUGIN_DATAINJECTION_MAX_GLPI,
          ]
       ]
    ];
@@ -102,13 +107,26 @@ function plugin_version_datainjection() {
 
 
 function plugin_datainjection_check_prerequisites() {
-   $version = rtrim(GLPI_VERSION, '-dev');
-   if (version_compare($version, '9.3', 'lt')) {
-      echo "This plugin requires GLPI 9.3";
-      return false;
+
+   //Version check is not done by core in GLPI < 9.2 but has to be delegated to core in GLPI >= 9.2.
+   $version = preg_replace('/^((\d+\.?)+).*$/', '$1', GLPI_VERSION);
+   if (version_compare($version, '9.2', '<')) {
+      $matchMinGlpiReq = version_compare($version, PLUGIN_DATAINJECTION_MIN_GLPI, '>=');
+      $matchMaxGlpiReq = version_compare($version, PLUGIN_DATAINJECTION_MAX_GLPI, '<');
+
+      if (!$matchMinGlpiReq || !$matchMaxGlpiReq) {
+         echo vsprintf(
+            'This plugin requires GLPI >= %1$s and < %2$s.',
+            [
+               PLUGIN_DATAINJECTION_MIN_GLPI,
+               PLUGIN_DATAINJECTION_MAX_GLPI,
+            ]
+         );
+         return false;
+      }
    }
 
-    return true;
+   return true;
 }
 
 
