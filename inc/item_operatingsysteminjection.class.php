@@ -51,7 +51,7 @@ class PluginDatainjectionItem_OperatingsystemInjection extends Item_OperatingSys
    /**
    * @see plugins/datainjection/inc/PluginDatainjectionInjectionInterface::getOptions()
   **/
-   function getOptions($primary_type='') {
+   function getOptions($primary_type = '') {
 
       $tab = Item_OperatingSystem::rawSearchOptionsToAdd(get_parent_class($this));
       $searchoptions = [];
@@ -78,14 +78,14 @@ class PluginDatainjectionItem_OperatingsystemInjection extends Item_OperatingSys
 
    function connectedTo() {
 
-      return array('Computer', 'NetworkEquipment');
+      return ['Computer', 'NetworkEquipment'];
    }
 
 
     /**
     * @see plugins/datainjection/inc/PluginDatainjectionInjectionInterface::addOrUpdateObject()
    **/
-   function addOrUpdateObject($values=array(), $options=array()) {
+   function addOrUpdateObject($values = [], $options = []) {
 
       $lib = new PluginDatainjectionCommonInjectionLib($this, $values, $options);
       $lib->processAddOrUpdate();

@@ -36,12 +36,12 @@ if (!defined("PLUGIN_DATAINJECTION_UPLOAD_DIR")) {
 
 function plugin_init_datainjection() {
 
-    global $PLUGIN_HOOKS, $CFG_GLPI, $INJECTABLE_TYPES;
+   global $PLUGIN_HOOKS, $CFG_GLPI, $INJECTABLE_TYPES;
 
-    $PLUGIN_HOOKS['csrf_compliant']['datainjection'] = true;
-    $PLUGIN_HOOKS['migratetypes']['datainjection'] = 'plugin_datainjection_migratetypes_datainjection';
+   $PLUGIN_HOOKS['csrf_compliant']['datainjection'] = true;
+   $PLUGIN_HOOKS['migratetypes']['datainjection'] = 'plugin_datainjection_migratetypes_datainjection';
 
-    $plugin = new Plugin();
+   $plugin = new Plugin();
    if ($plugin->isActivated("datainjection")) {
 
       Plugin::registerClass(
@@ -64,7 +64,7 @@ function plugin_init_datainjection() {
           $PLUGIN_HOOKS["menu_toadd"]['datainjection'] = ['tools'  => 'PluginDatainjectionMenu'];
       }
 
-         $PLUGIN_HOOKS['pre_item_purge']['datainjection']
+      $PLUGIN_HOOKS['pre_item_purge']['datainjection']
           = ['Profile' => ['PluginDatainjectionProfile', 'purgeProfiles']];
 
          // Css file
@@ -72,12 +72,12 @@ function plugin_init_datainjection() {
          $PLUGIN_HOOKS['add_css']['datainjection'] = 'css/datainjection.css';
       }
 
-         // Javascript file
-         $PLUGIN_HOOKS['add_javascript']['datainjection'] = 'js/datainjection.js';
+      // Javascript file
+      $PLUGIN_HOOKS['add_javascript']['datainjection'] = 'js/datainjection.js';
 
-         // Inbtegration with Webservices plugin
-         $PLUGIN_HOOKS['webservices']['datainjection'] = 'plugin_datainjection_registerMethods';
-         $INJECTABLE_TYPES = [];
+      // Inbtegration with Webservices plugin
+      $PLUGIN_HOOKS['webservices']['datainjection'] = 'plugin_datainjection_registerMethods';
+      $INJECTABLE_TYPES = [];
 
    }
 }
@@ -85,19 +85,19 @@ function plugin_init_datainjection() {
 
 function plugin_version_datainjection() {
 
-    return [
-           'name'           => __('File injection', 'datainjection'),
-           'author'         => 'Walid Nouh, Remi Collet, Nelly Mahu-Lasson, Xavier Caillaud',
-           'homepage'       => 'https://github.com/pluginsGLPI/datainjection',
-           'license'        => 'GPLv2+',
-           'version'        => PLUGIN_DATAINJECTION_VERSION,
-           'requirements'   => [
-              'glpi' => [
-                 'min' => '9.3',
-                  'dev' => 1
-               ]
-            ]
-         ];
+   return [
+      'name'           => __('File injection', 'datainjection'),
+      'author'         => 'Walid Nouh, Remi Collet, Nelly Mahu-Lasson, Xavier Caillaud',
+      'homepage'       => 'https://github.com/pluginsGLPI/datainjection',
+      'license'        => 'GPLv2+',
+      'version'        => PLUGIN_DATAINJECTION_VERSION,
+      'requirements'   => [
+         'glpi' => [
+            'min' => '9.3',
+            'dev' => 1,
+         ]
+      ]
+   ];
 }
 
 
@@ -112,8 +112,8 @@ function plugin_datainjection_check_prerequisites() {
 }
 
 
-function plugin_datainjection_check_config($verbose=false) {
-    return true;
+function plugin_datainjection_check_config($verbose = false) {
+   return true;
 }
 
 
@@ -124,14 +124,14 @@ function plugin_datainjection_check_config($verbose=false) {
  */
 function getTypesToInject() {
 
-    global $INJECTABLE_TYPES,$PLUGIN_HOOKS;
+   global $INJECTABLE_TYPES,$PLUGIN_HOOKS;
 
    if (count($INJECTABLE_TYPES)) {
       // already populated
       return;
    }
 
-    $INJECTABLE_TYPES = ['PluginDatainjectionCartridgeItemInjection'              => 'datainjection',
+   $INJECTABLE_TYPES = ['PluginDatainjectionCartridgeItemInjection'              => 'datainjection',
                         'PluginDatainjectionBudgetInjection'                      => 'datainjection',
                         'PluginDatainjectionComputerInjection'                    => 'datainjection',
                         'PluginDatainjectionNotepadInjection'                     => 'datainjection',
@@ -220,29 +220,29 @@ function getTypesToInject() {
                         'PluginDatainjectionDeviceMotherboardInjection'           => 'datainjection',
                         'PluginDatainjectionDeviceDriveInjection'                 => 'datainjection',
                         'PluginDatainjectionDeviceNetworkCardInjection'           => 'datainjection'
-                     ];
-    //Add plugins
-    Plugin::doHook('plugin_datainjection_populate');
+   ];
+   //Add plugins
+   Plugin::doHook('plugin_datainjection_populate');
 }
 
 
 function plugin_datainjection_migratetypes_datainjection($types) {
 
-    $types[996] = 'NetworkPort';
-    $types[999] = 'NetworkPort';
-    return $types;
+   $types[996] = 'NetworkPort';
+   $types[999] = 'NetworkPort';
+   return $types;
 }
 
 
 function plugin_datainjection_checkDirectories() {
 
-    $plugin = new Plugin();
+   $plugin = new Plugin();
 
    if ($plugin->isInstalled('datainjection')
-        && (!file_exists(PLUGIN_DATAINJECTION_UPLOAD_DIR)
-        || !is_writable(PLUGIN_DATAINJECTION_UPLOAD_DIR))
-    ) {
+       && (!file_exists(PLUGIN_DATAINJECTION_UPLOAD_DIR)
+       || !is_writable(PLUGIN_DATAINJECTION_UPLOAD_DIR))
+   ) {
       return false;
    }
-    return true;
+   return true;
 }

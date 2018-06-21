@@ -52,14 +52,14 @@ class PluginDatainjectionProfileInjection extends Profile
 
    function connectedTo() {
 
-      return array();
+      return [];
    }
 
 
     /**
     * @see plugins/datainjection/inc/PluginDatainjectionInjectionInterface::getOptions()
    **/
-   function getOptions($primary_type='') {
+   function getOptions($primary_type = '') {
 
       return Search::getOptions(get_parent_class($this));
    }
@@ -74,7 +74,7 @@ class PluginDatainjectionProfileInjection extends Profile
 
       switch ($field_name) {
          case 'right_rw' :
-            return (in_array($data, array('r', 'w'))
+            return (in_array($data, ['r', 'w'])
                  ?PluginDatainjectionCommonInjectionLib::SUCCESS
                  :PluginDatainjectionCommonInjectionLib::TYPE_MISMATCH);
 
@@ -87,7 +87,7 @@ class PluginDatainjectionProfileInjection extends Profile
                              :PluginDatainjectionCommonInjectionLib::TYPE_MISMATCH);
 
          case 'interface':
-            return (in_array($data, array('helpdesk', 'central'))
+            return (in_array($data, ['helpdesk', 'central'])
                  ?PluginDatainjectionCommonInjectionLib::SUCCESS
                  :PluginDatainjectionCommonInjectionLib::TYPE_MISMATCH);
 
@@ -100,7 +100,7 @@ class PluginDatainjectionProfileInjection extends Profile
     /**
     * @see plugins/datainjection/inc/PluginDatainjectionInjectionInterface::addOrUpdateObject()
    **/
-   function addOrUpdateObject($values=array(), $options=array()) {
+   function addOrUpdateObject($values = [], $options = []) {
 
       $lib = new PluginDatainjectionCommonInjectionLib($this, $values, $options);
       $lib->processAddOrUpdate();

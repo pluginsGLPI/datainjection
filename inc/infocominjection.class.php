@@ -61,7 +61,7 @@ class PluginDatainjectionInfocomInjection extends Infocom
     /**
     * @see plugins/datainjection/inc/PluginDatainjectionInjectionInterface::getOptions()
    **/
-   function getOptions($primary_type='') {
+   function getOptions($primary_type = '') {
 
       $tab                    = Search::getOptions(get_parent_class($this));
 
@@ -102,20 +102,20 @@ class PluginDatainjectionInfocomInjection extends Infocom
 
       //Remove some options because some fields cannot be imported
       $blacklist     = PluginDatainjectionCommonInjectionLib::getBlacklistedOptions(get_parent_class($this));
-      $notimportable = array(20, 21, 86);
+      $notimportable = [20, 21, 86];
 
       $options['ignore_fields'] = array_merge($blacklist, $notimportable);
 
       $key                      = array_search(19, $options['ignore_fields']);
       unset($options['ignore_fields'][$key]);
 
-      $options['displaytype']   = array("date"           => array(4, 5, 23, 24, 25, 27, 28, 159),
-                                      "dropdown"         => array(6, 9, 19, 123),
-                                      "dropdown_integer" => array(6, 14),
-                                      "decimal"          => array(8, 13, 17),
-                                      "sink_type"        => array(15),
-                                      "alert"            => array(22),
-                                      "multiline_text"   => array(16));
+      $options['displaytype']   = ["date"           => [4, 5, 23, 24, 25, 27, 28, 159],
+                                      "dropdown"         => [6, 9, 19, 123],
+                                      "dropdown_integer" => [6, 14],
+                                      "decimal"          => [8, 13, 17],
+                                      "sink_type"        => [15],
+                                      "alert"            => [22],
+                                      "multiline_text"   => [16]];
 
       return PluginDatainjectionCommonInjectionLib::addToSearchOptions($tab, $options, $this);
    }
@@ -125,7 +125,7 @@ class PluginDatainjectionInfocomInjection extends Infocom
     * @param $info      array
     * @param $option    array
    **/
-   function showAdditionalInformation($info=[], $option=[]) {
+   function showAdditionalInformation($info = [], $option = []) {
 
       $name = "info[".$option['linkfield']."]";
 
@@ -135,7 +135,7 @@ class PluginDatainjectionInfocomInjection extends Infocom
             break;
 
          case 'alert' :
-            Infocom::dropdownAlert(array('name' => $name));
+            Infocom::dropdownAlert(['name' => $name]);
             break;
 
          default:
@@ -147,10 +147,10 @@ class PluginDatainjectionInfocomInjection extends Infocom
     /**
     * @param $values    array
    **/
-   function reformat(&$values=[]) {
+   function reformat(&$values = []) {
 
-      foreach (array('order_date', 'use_date', 'buy_date', 'warranty_date', 'delivery_date',
-                   'inventory_date') as $date) {
+      foreach (['order_date', 'use_date', 'buy_date', 'warranty_date', 'delivery_date',
+                   'inventory_date'] as $date) {
 
          if (isset($values['Infocom'][$date])
              && ($values['Infocom'][$date] == PluginDatainjectionCommonInjectionLib::EMPTY_VALUE)
@@ -164,7 +164,7 @@ class PluginDatainjectionInfocomInjection extends Infocom
     /**
     * @see plugins/datainjection/inc/PluginDatainjectionInjectionInterface::addOrUpdateObject()
    **/
-   function addOrUpdateObject($values=[], $options=[]) {
+   function addOrUpdateObject($values = [], $options = []) {
 
       $lib = new PluginDatainjectionCommonInjectionLib($this, $values, $options);
       $lib->processAddOrUpdate();

@@ -52,14 +52,14 @@ class PluginDatainjectionMonitorInjection extends Monitor
 
    function connectedTo() {
 
-      return array('Computer', 'Document');
+      return ['Computer', 'Document'];
    }
 
 
     /**
     * @see plugins/datainjection/inc/PluginDatainjectionInjectionInterface::getOptions()
    **/
-   function getOptions($primary_type='') {
+   function getOptions($primary_type = '') {
 
       $tab                 = Search::getOptions(get_parent_class($this));
 
@@ -68,15 +68,15 @@ class PluginDatainjectionMonitorInjection extends Monitor
 
       //Remove some options because some fields cannot be imported
       $blacklist     = PluginDatainjectionCommonInjectionLib::getBlacklistedOptions(get_parent_class($this));
-      $notimportable = array(91, 92, 93);
+      $notimportable = [91, 92, 93];
 
       $options['ignore_fields'] = array_merge($blacklist, $notimportable);
 
-      $options['displaytype']   = array("dropdown"       => array(3, 4, 23, 31, 40, 49, 46, 71),
-                                      "user"           => array(24, 70),
-                                      "float"          => array(11),
-                                      "bool"           => array(41, 42, 43, 44, 45, 46, 47, 48),
-                                      "multiline_text" => array(16, 90));
+      $options['displaytype']   = ["dropdown"       => [3, 4, 23, 31, 40, 49, 46, 71],
+                                      "user"           => [24, 70],
+                                      "float"          => [11],
+                                      "bool"           => [41, 42, 43, 44, 45, 46, 47, 48],
+                                      "multiline_text" => [16, 90]];
 
       return PluginDatainjectionCommonInjectionLib::addToSearchOptions($tab, $options, $this);
    }
@@ -85,7 +85,7 @@ class PluginDatainjectionMonitorInjection extends Monitor
     /**
     * @see plugins/datainjection/inc/PluginDatainjectionInjectionInterface::addOrUpdateObject()
    **/
-   function addOrUpdateObject($values=array(), $options=array()) {
+   function addOrUpdateObject($values = [], $options = []) {
 
       $lib = new PluginDatainjectionCommonInjectionLib($this, $values, $options);
       $lib->processAddOrUpdate();
@@ -97,9 +97,9 @@ class PluginDatainjectionMonitorInjection extends Monitor
     * @param $primary_type
     * @param $values
    **/
-   function addSpecificNeededFields($primary_type,$values) {
+   function addSpecificNeededFields($primary_type, $values) {
 
-      $fields = array();
+      $fields = [];
       if (isset($values[$primary_type]['is_global'])) {
          if (empty($values[$primary_type]['is_global'])) {
             $fields['is_global'] = 0;

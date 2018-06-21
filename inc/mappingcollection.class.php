@@ -35,7 +35,7 @@ class PluginDatainjectionMappingCollection
 
    function __construct() {
 
-      $this->mappingCollection = array();
+      $this->mappingCollection = [];
    }
 
 
@@ -55,7 +55,7 @@ class PluginDatainjectionMappingCollection
               WHERE `models_id` = '$models_id'
               ORDER BY `rank` ASC";
 
-      $this->mappingCollection = array();
+      $this->mappingCollection = [];
 
       foreach ($data = $DB->request($sql) as $data) {
          // Addslashes to conform to value return by PluginDatainjectionBackendcsv::parseLine
@@ -145,7 +145,7 @@ class PluginDatainjectionMappingCollection
    function deleteMappingsFromDB($model_id) {
 
       $mapping = new PluginDatainjectionMapping();
-      $mapping->deleteByCriteria(array('models_id' => $model_id));
+      $mapping->deleteByCriteria(['models_id' => $model_id]);
    }
 
 
@@ -183,7 +183,7 @@ class PluginDatainjectionMappingCollection
 
    function getMandatoryMappings() {
 
-      $mandatories = array();
+      $mandatories = [];
       foreach ($this->mappingCollection as $mapping) {
          if ($mapping->isMandatory()) {
             $mandatories[] = $mapping;

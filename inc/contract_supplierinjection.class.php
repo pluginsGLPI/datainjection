@@ -53,14 +53,14 @@ class PluginDatainjectionContract_SupplierInjection extends Contract_Supplier
 
    function connectedTo() {
 
-      return array();
+      return [];
    }
 
 
     /**
     * @see plugins/datainjection/inc/PluginDatainjectionInjectionInterface::getOptions()
    **/
-   function getOptions($primary_type='') {
+   function getOptions($primary_type = '') {
 
       $tab[4]['table']        = 'glpi_contracts';
       $tab[4]['field']        = 'name';
@@ -81,7 +81,7 @@ class PluginDatainjectionContract_SupplierInjection extends Contract_Supplier
     /**
     * @see plugins/datainjection/inc/PluginDatainjectionInjectionInterface::addOrUpdateObject()
    **/
-   function addOrUpdateObject($values=array(), $options=array()) {
+   function addOrUpdateObject($values = [], $options = []) {
 
       $lib = new PluginDatainjectionCommonInjectionLib($this, $values, $options);
       $lib->processAddOrUpdate();
@@ -95,7 +95,7 @@ class PluginDatainjectionContract_SupplierInjection extends Contract_Supplier
    **/
    function addSpecificNeededFields($primary_type, $values) {
 
-      return array(getForeignKeyFieldForTable(getTableForItemType($primary_type))
-             => $values[$primary_type]['id']);
+      return [getForeignKeyFieldForTable(getTableForItemType($primary_type))
+             => $values[$primary_type]['id']];
    }
 }

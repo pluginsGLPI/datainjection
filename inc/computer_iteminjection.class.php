@@ -45,7 +45,7 @@ class PluginDatainjectionComputer_ItemInjection extends Computer_Item
    }
 
 
-   static function getTypeName($nb=0) {
+   static function getTypeName($nb = 0) {
 
       return __('Direct connections');
    }
@@ -68,7 +68,7 @@ class PluginDatainjectionComputer_ItemInjection extends Computer_Item
     /**
     * @see plugins/datainjection/inc/PluginDatainjectionInjectionInterface::getOptions()
    **/
-   function getOptions($primary_type='') {
+   function getOptions($primary_type = '') {
 
       $tab[110]['table']        = 'glpi_computers';
       $tab[110]['field']        = 'name';
@@ -104,7 +104,7 @@ class PluginDatainjectionComputer_ItemInjection extends Computer_Item
     /**
     * @see plugins/datainjection/inc/PluginDatainjectionInjectionInterface::addOrUpdateObject()
    **/
-   function addOrUpdateObject($values=array(), $options=array()) {
+   function addOrUpdateObject($values = [], $options = []) {
 
       $lib = new PluginDatainjectionCommonInjectionLib($this, $values, $options);
       $lib->processAddOrUpdate();

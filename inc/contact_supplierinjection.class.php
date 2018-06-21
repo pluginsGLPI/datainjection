@@ -53,14 +53,14 @@ class PluginDatainjectionContact_SupplierInjection extends Contact_Supplier
 
    function connectedTo() {
 
-      return array('Contact', 'Supplier');
+      return ['Contact', 'Supplier'];
    }
 
 
     /**
     * @see plugins/datainjection/inc/PluginDatainjectionInjectionInterface::getOptions()
    **/
-   function getOptions($primary_type='') {
+   function getOptions($primary_type = '') {
 
       $tab[100]['table']         = 'glpi_suppliers';
       $tab[100]['field']         = 'name';
@@ -77,7 +77,7 @@ class PluginDatainjectionContact_SupplierInjection extends Contact_Supplier
     /**
     * @see plugins/datainjection/inc/PluginDatainjectionInjectionInterface::addOrUpdateObject()
    **/
-   function addOrUpdateObject($values=array(), $options=array()) {
+   function addOrUpdateObject($values = [], $options = []) {
 
       $lib = new PluginDatainjectionCommonInjectionLib($this, $values, $options);
       $lib->processAddOrUpdate();
@@ -89,7 +89,7 @@ class PluginDatainjectionContact_SupplierInjection extends Contact_Supplier
     * @param $primary_type
     * @param $values
    **/
-   function addSpecificNeededFields($primary_type,$values) {
+   function addSpecificNeededFields($primary_type, $values) {
 
       $fields[getForeignKeyFieldForTable(getTableForItemType($primary_type))]
           = $values[$primary_type]['id'];

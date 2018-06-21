@@ -36,7 +36,7 @@ class PluginDatainjectionNotepadInjection extends Notepad
                                                 implements PluginDatainjectionInjectionInterface {
 
 
-   static function getTable($classname = NULL) {
+   static function getTable($classname = null) {
 
       $parenttype = get_parent_class();
       return $parenttype::getTable();
@@ -49,7 +49,7 @@ class PluginDatainjectionNotepadInjection extends Notepad
 
 
    function connectedTo() {
-      return array('Computer', 'NetworkEquipment', 'Printer');
+      return ['Computer', 'NetworkEquipment', 'Printer'];
    }
 
    function customDataAlreadyInDB($injectionClass, $values, $options) {
@@ -60,7 +60,7 @@ class PluginDatainjectionNotepadInjection extends Notepad
    /**
     * @see plugins/datainjection/inc/PluginDatainjectionInjectionInterface::getOptions()
    **/
-   function getOptions($primary_type='') {
+   function getOptions($primary_type = '') {
 
       $tab = Notepad::rawSearchOptionsToAdd();
       $searchoptions = [];
@@ -89,7 +89,7 @@ class PluginDatainjectionNotepadInjection extends Notepad
    /**
     * @see plugins/datainjection/inc/PluginDatainjectionInjectionInterface::addOrUpdateObject()
    **/
-   function addOrUpdateObject($values=array(), $options=array()) {
+   function addOrUpdateObject($values = [], $options = []) {
 
       $lib = new PluginDatainjectionCommonInjectionLib($this, $values, $options);
       $lib->processAddOrUpdate();

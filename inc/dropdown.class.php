@@ -124,7 +124,7 @@ class PluginDatainjectionDropdown
 
       Dropdown::showFromArray(
           'file_encoding', $values,
-          array('value' => PluginDatainjectionBackend::ENCODING_AUTO)
+          ['value' => PluginDatainjectionBackend::ENCODING_AUTO]
       );
    }
 

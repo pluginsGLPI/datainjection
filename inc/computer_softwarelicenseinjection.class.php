@@ -37,7 +37,7 @@ class PluginDatainjectionComputer_SoftwareLicenseInjection extends Computer_Soft
 {
 
 
-   static function getTypeName($nb=0) {
+   static function getTypeName($nb = 0) {
 
       return __('Computer');
    }
@@ -59,14 +59,14 @@ class PluginDatainjectionComputer_SoftwareLicenseInjection extends Computer_Soft
 
    function connectedTo() {
 
-      return array('SoftwareLicense');
+      return ['SoftwareLicense'];
    }
 
 
     /**
     * @see plugins/datainjection/inc/PluginDatainjectionInjectionInterface::getOptions()
    **/
-   function getOptions($primary_type='') {
+   function getOptions($primary_type = '') {
 
       $tab[110]['table']        = 'glpi_computers';
       $tab[110]['field']        = 'name';
@@ -108,7 +108,7 @@ class PluginDatainjectionComputer_SoftwareLicenseInjection extends Computer_Soft
     /**
     * @see plugins/datainjection/inc/PluginDatainjectionInjectionInterface::addOrUpdateObject()
    **/
-   function addOrUpdateObject($values=array(), $options=array()) {
+   function addOrUpdateObject($values = [], $options = []) {
 
       $lib = new PluginDatainjectionCommonInjectionLib($this, $values, $options);
       $lib->processAddOrUpdate();
@@ -118,8 +118,8 @@ class PluginDatainjectionComputer_SoftwareLicenseInjection extends Computer_Soft
 
    function addSpecificMandatoryFields() {
 
-      return array('computers_id'        => 1,
-                 'softwarelicenses_id' => 1);
+      return ['computers_id'        => 1,
+                 'softwarelicenses_id' => 1];
    }
 
 

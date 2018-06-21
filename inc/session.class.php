@@ -43,7 +43,7 @@ class PluginDatainjectionSession
       if (!isset($_SESSION['datainjection'][$param])) {
          return false;
       }
-      if (in_array($param, array('results', 'error_lines'))) {
+      if (in_array($param, ['results', 'error_lines'])) {
          $fic = $_SESSION['datainjection'][$param];
          return file_get_contents(GLPI_DOC_DIR.'/_tmp/'.$fic);
       }
@@ -59,9 +59,9 @@ class PluginDatainjectionSession
     *
     * @return nothing
    **/
-   static function setParam($param,$results) {
+   static function setParam($param, $results) {
 
-      if (in_array($param, array('results', 'error_lines'))) {
+      if (in_array($param, ['results', 'error_lines'])) {
          $fic = Session::getLoginUserID().'_'.$param.'_'.microtime(true);
          file_put_contents(GLPI_DOC_DIR.'/_tmp/'.$fic, $results);
          $_SESSION['datainjection'][$param] = $fic;

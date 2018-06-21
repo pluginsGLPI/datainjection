@@ -67,7 +67,7 @@ class PluginDatainjectionBackendcsv extends PluginDatainjectionBackend
     /**
     * @param $present (true by default)
    **/
-   function setHeaderPresent($present=true) {
+   function setHeaderPresent($present = true) {
 
       $this->isHeaderPresent = $present;
    }
@@ -80,11 +80,11 @@ class PluginDatainjectionBackendcsv extends PluginDatainjectionBackend
     * @param $data
     * @param $encoding  (default 1)
    **/
-   static function parseLine($fic, $data, $encoding=1) {
+   static function parseLine($fic, $data, $encoding = 1) {
 
       global $DB;
 
-      $csv = array();
+      $csv = [];
       $num = count($data);
 
       for ($c=0; $c<$num; $c++) {
@@ -122,7 +122,7 @@ class PluginDatainjectionBackendcsv extends PluginDatainjectionBackend
     * @param $newfile
     * @param $encoding
    **/
-   function init($newfile,$encoding) {
+   function init($newfile, $encoding) {
 
       $this->file     = $newfile;
       $this->encoding = $encoding;
@@ -134,7 +134,7 @@ class PluginDatainjectionBackendcsv extends PluginDatainjectionBackend
     *
     * @param $numberOfLines inumber of lines to be read (-1 means all file) (default 1)
    **/
-   function read($numberOfLines=1) {
+   function read($numberOfLines = 1) {
 
       $injectionData = new PluginDatainjectionData();
       $this->openFile();
@@ -227,7 +227,7 @@ class PluginDatainjectionBackendcsv extends PluginDatainjectionBackend
       if ($data === false) {
          return false;
       }
-      $line = array();
+      $line = [];
       if ((count($data) > 1)
           || ($data[0] != PluginDatainjectionCommonInjectionLib::EMPTY_VALUE)
       ) {

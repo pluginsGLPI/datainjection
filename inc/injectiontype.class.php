@@ -40,14 +40,14 @@ class PluginDatainjectionInjectionType {
     *
     * @return an array which contains array(itemtype => itemtype name)
    **/
-   static function getItemtypes($only_primary=false) {
+   static function getItemtypes($only_primary = false) {
 
       global $INJECTABLE_TYPES;
 
       getTypesToInject();
 
       $plugin = new Plugin();
-      $values = array();
+      $values = [];
       foreach ($INJECTABLE_TYPES as $type => $from) {
          $injectionclass = new $type();
 
@@ -66,7 +66,7 @@ class PluginDatainjectionInjectionType {
                $plugin->getFromDBbyDir($from);
                $name = $plugin->getName().': ';
             }
-            $name.= call_user_func(array($type, 'getTypeName'));
+            $name.= call_user_func([$type, 'getTypeName']);
             $values[$typename] = $name;
          }
       }
@@ -83,11 +83,11 @@ class PluginDatainjectionInjectionType {
     *
     * @return nothing
    **/
-   static function dropdown($value='', $only_primary=false) {
+   static function dropdown($value = '', $only_primary = false) {
 
       return Dropdown::showFromArray(
           'itemtype', self::getItemtypes($only_primary),
-          array('value' => $value)
+          ['value' => $value]
       );
    }
 
@@ -98,7 +98,7 @@ class PluginDatainjectionInjectionType {
     * @param $mapping_or_info
     * @param $options            array
    **/
-   static function dropdownLinkedTypes($mapping_or_info, $options=array()) {
+   static function dropdownLinkedTypes($mapping_or_info, $options = []) {
 
       global $INJECTABLE_TYPES, $CFG_GLPI;
 
@@ -118,7 +118,7 @@ class PluginDatainjectionInjectionType {
       }
 
       $mappings_id = $mapping_or_info->fields['id'];
-      $values      = array();
+      $values      = [];
 
       if (($p['itemtype'] == self::NO_VALUE)
           && ($mapping_or_info->fields['itemtype'] != self::NO_VALUE)
@@ -139,14 +139,14 @@ class PluginDatainjectionInjectionType {
          $connected_to   = $injectionClass->connectedTo();
          if (in_array($p['primary_type'], $connected_to)) {
             $typename          = getItemTypeForTable($injectionClass->getTable());
-            $values[$typename] = call_user_func(array($type, 'getTypeName'));
+            $values[$typename] = call_user_func([$type, 'getTypeName']);
          }
       }
       asort($values);
 
       $rand = Dropdown::showFromArray(
           "data[".$mappings_id."][itemtype]",
-          $values, array('value' => $p['itemtype'])
+          $values, ['value' => $p['itemtype']]
       );
 
       $p['itemtype'] = '__VALUE__';
@@ -163,14 +163,14 @@ class PluginDatainjectionInjectionType {
     /**
     * @param $options   array
    **/
-   static function dropdownFields($options = array()) {
+   static function dropdownFields($options = []) {
 
       global $CFG_GLPI;
 
-      $used                 = array();
+      $used                 = [];
       $p['itemtype']        = self::NO_VALUE;
       $p['primary_type']    = '';
-      $p['mapping_or_info'] = array();
+      $p['mapping_or_info'] = [];
       $p['called_by']       = '';
       $p['need_decode']     = true;
       $p['fields_update']   = true;
@@ -188,7 +188,7 @@ class PluginDatainjectionInjectionType {
          $mapping_or_info = $options['mapping_or_info'];
       }
 
-      $fields = array();
+      $fields = [];
       $fields[self::NO_VALUE] = __('-------Choose a field-------', 'datainjection');
 
       //By default field has no default value
@@ -226,8 +226,8 @@ class PluginDatainjectionInjectionType {
 
       $rand = Dropdown::showFromArray(
           "data[".$mapping_or_info['id']."][value]", $fields,
-          array('value' => $mapping_value,
-          'used'  => $used)
+          ['value' => $mapping_value,
+          'used'  => $used]
       );
 
       $url = $CFG_GLPI["root_doc"]."/plugins/datainjection/ajax/dropdownMandatory.php";
@@ -276,7 +276,7 @@ class PluginDatainjectionInjectionType {
     * @param $name
     * @param $option    array
    **/
-   static function testBasicEqual($name, $option=array()) {
+   static function testBasicEqual($name, $option = []) {
 
           //Basic tests
       if ((strtolower($option['field']) == $name)
@@ -292,7 +292,7 @@ class PluginDatainjectionInjectionType {
     /**
     * @param $options   array
    **/
-   static function showMandatoryCheckbox($options=array()) {
+   static function showMandatoryCheckbox($options = []) {
 
       // Received data has been slashed.
       $options = Toolbox::stripslashes_deep($options);
@@ -324,13 +324,13 @@ class PluginDatainjectionInjectionType {
     /**
     * @param $options   array
    **/
-   static function getUsedMappingsOrInfos($options=array()) {
+   static function getUsedMappingsOrInfos($options = []) {
 
       global $DB;
 
       $p['itemtype']        = self::NO_VALUE;
       $p['primary_type']    = '';
-      $p['mapping_or_info'] = array();
+      $p['mapping_or_info'] = [];
       $p['called_by']       = '';
       $p['need_decode']     = true;
 
@@ -347,7 +347,7 @@ class PluginDatainjectionInjectionType {
          $mapping_or_info = $options['mapping_or_info'];
       }
 
-      $used  = array();
+      $used  = [];
       $table = (($p['called_by'] == 'PluginDatainjectionMapping') ?"glpi_plugin_datainjection_mappings"
                                                               :"glpi_plugin_datainjection_infos");
 
