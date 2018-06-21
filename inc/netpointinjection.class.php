@@ -52,14 +52,14 @@ class PluginDatainjectionNetpointInjection extends Netpoint
 
    function connectedTo() {
 
-      return array('Computer', 'NetworkEquipment', 'Peripheral', 'Phone');
+      return ['Computer', 'NetworkEquipment', 'Peripheral', 'Phone'];
    }
 
 
     /**
     * @see plugins/datainjection/inc/PluginDatainjectionInjectionInterface::getOptions()
    **/
-   function getOptions($primary_type='') {
+   function getOptions($primary_type = '') {
 
       $tab                 = Search::getOptions(get_parent_class($this));
 
@@ -68,12 +68,12 @@ class PluginDatainjectionNetpointInjection extends Netpoint
 
       //Remove some options because some fields cannot be imported
       $blacklist     = PluginDatainjectionCommonInjectionLib::getBlacklistedOptions(get_parent_class($this));
-      $notimportable = array(91, 92, 93);
+      $notimportable = [91, 92, 93];
 
       $options['ignore_fields'] = array_merge($blacklist, $notimportable);
 
-      $options['displaytype']   = array("dropdown"       => array(3),
-                                      "multiline_text" => array(16));
+      $options['displaytype']   = ["dropdown"       => [3],
+                                      "multiline_text" => [16]];
 
       return PluginDatainjectionCommonInjectionLib::addToSearchOptions($tab, $options, $this);
    }
@@ -82,7 +82,7 @@ class PluginDatainjectionNetpointInjection extends Netpoint
     /**
     * @see plugins/datainjection/inc/PluginDatainjectionInjectionInterface::addOrUpdateObject()
    **/
-   function addOrUpdateObject($values=array(), $options=array()) {
+   function addOrUpdateObject($values = [], $options = []) {
 
       $lib = new PluginDatainjectionCommonInjectionLib($this, $values, $options);
       $lib->processAddOrUpdate();

@@ -431,7 +431,7 @@ function plugin_datainjection_update170_20() {
                   'glpi_plugin_datainjection_mappings',
                   'glpi_plugin_datainjection_infos',
                   'glpi_plugin_datainjection_modelcsvs'];
-   Plugin::migrateItemType(array(), array(), $glpitables);
+   Plugin::migrateItemType([], [], $glpitables);
 
    $query = "UPDATE `glpi_plugin_datainjection_mappings`
              SET `itemtype` = 'none' ,
@@ -445,568 +445,1223 @@ function plugin_datainjection_update170_20() {
              WHERE `itemtype` = '-1'";
    $DB->queryOrDie($query, "Datainjection infos table : error updating not mapped fields");
 
-   $foreignkeys = array('assign'
-                        => array(array('to'     => 'users_id_assign',
-                                       'tables' => array('glpi_tickets'))),
-                           'assign_group'
-                           => array(array('to'     => 'groups_id_assign',
-                                          'tables' => array('glpi_tickets'))),
-                           'assign_ent'
-                           => array(array('to'     => 'suppliers_id_assign',
-                                          'tables' => array('glpi_tickets'))),
-                           'auth_method'
-                           => array(array('to'      => 'authtype',
-                                          'noindex' => array('glpi_users'),
-                                          'tables'  => array('glpi_users'))),
-                           'author'
-                           => array(array('to'     => 'users_id',
-                                          'tables' => array('glpi_ticketfollowups',
-                                                            'glpi_knowbaseitems',
-                                                            'glpi_tickets'))),
-                           'auto_update'
-                           => array(array('to'     => 'autoupdatesystems_id',
-                                          'tables' => array('glpi_computers'))),
-                           'budget'
-                           => array(array('to'     => 'budgets_id',
-                                          'tables' => array('glpi_infocoms'))),
-                           'buy_version'
-                           => array(array('to'     => 'softwareversions_id_buy',
-                                          'tables' => array('glpi_softwarelicenses'))),
-                           'category'
-                           => array(array('to'     => 'ticketcategories_id',
-                                          'tables' => array('glpi_tickets')),
-                                    array('to'     => 'softwarecategories_id',
-                                          'tables' => array('glpi_softwares'))),
-                           'categoryID'
-                           => array(array('to'     => 'knowbaseitemcategories_id',
-                                          'tables' => array('glpi_knowbaseitems'))),
-                           'cID'
-                           => array(array('to'     => 'computers_id',
-                                          'tables' => array('glpi_computers_softwareversions'))),
-                           'computer'
-                           => array(array('to'     => 'items_id',
-                                          'tables' => array('glpi_tickets'))),
-                           'computer_id'
-                           => array(array('to'     => 'computers_id',
-                                          'tables' => array('glpi_registrykeys'))),
-                           'contract_type'
-                           => array(array('to'     => 'contracttypes_id',
-                                          'tables' => array('glpi_contracts'))),
-                           'default_rubdoc_tracking'
-                           => array(array('to'       => 'documentcategories_id_forticket',
-                                          'tables'   => array('glpi_configs'),
-                                          'comments' => array('glpi_configs'
-                                                               => 'default category for documents added with a ticket'))),
-                           'device_type'
-                           => array(array('to'     => 'itemtype',
-                                          'tables' => array('glpi_alerts', 'glpi_contracts_items',
-                                                            'glpi_documents_items', 'glpi_infocoms',
-                                                            'glpi_bookmarks', 'glpi_bookmarks_users',
-                                                            'glpi_links_itemtypes',
-                                                            'glpi_networkports',
-                                                            'glpi_reservationitems',
-                                                            'glpi_tickets'))),
-                           'domain'
-                           => array(array('to'     => 'domains_id',
-                                          'tables' => array('glpi_computers',
-                                                            'glpi_networkequipments',
-                                                            'glpi_printers'))),
-                           'end1'
-                           => array(array('to'       => 'items_id',
-                                          'tables'   => array('glpi_computers_items'),
-                                          'comments' => array('glpi_computers_items'
-                                                               => 'RELATION to various table, according to itemtype (ID)')),
-                                    array('to'     => 'networkports_id_1',
-                                          'tables' => array('glpi_networkports_networkports'))),
-                           'end2'
-                           => array(array('to'     => 'computers_id',
-                                          'tables' => array('glpi_computers_items')),
-                                    array('to'     => 'networkports_id_2',
-                                          'tables' => array('glpi_networkports_networkports')) ),
-                           'firmware'
-                           => array(array('to'     => 'networkequipmentfirmwares_id',
-                                          'tables' => array('glpi_networkequipments'))),
-                           'FK_bookmark'
-                           => array(array('to'     => 'bookmarks_id',
-                                          'tables' => array('glpi_bookmarks_users'))),
-                           'FK_computers'
-                           => array(array('to'     => 'computers_id',
-                                          'tables' => array('glpi_computerdisks',
-                                                            'glpi_softwarelicenses'))),
-                           'FK_contact'
-                           => array(array('to'     => 'contacts_id',
-                                          'tables' => array('glpi_contacts_suppliers'))),
-                           'FK_contract'
-                           => array(array('to'     => 'contracts_id',
-                                          'tables' => array('glpi_contracts_suppliers',
-                                                            'glpi_contracts_items'))),
-                           'FK_device'
-                           => array(array('to'    => 'items_id',
-                                         'tables' => array('glpi_alerts', 'glpi_contracts_items',
-                                                           'glpi_documents_items', 'glpi_infocoms'))),
-                           'FK_doc'
-                           => array(array('to'     => 'documents_id',
-                                          'tables' => array('glpi_documents_items'))),
-                           'manufacturer'
-                           => array(array('to'     => 'suppliers_id',
-                                          'tables' => array('glpi_contacts_suppliers',
-                                                            'glpi_contracts_suppliers',
-                                                            'glpi_infocoms')),
-                                    array('to'     => 'manufacturers_id',
-                                          'tables' => array('glpi_cartridgeitems', 'glpi_computers',
-                                                            'glpi_consumableitems',
-                                                            'glpi_devicecases', 'glpi_devicecontrols',
-                                                            'glpi_devicedrives',
-                                                            'glpi_devicegraphiccards',
-                                                            'glpi_deviceharddrives',
-                                                            'glpi_devicenetworkcards',
-                                                            'glpi_devicemotherboards',
-                                                            'glpi_devicepcis',
-                                                            'glpi_devicepowersupplies',
-                                                            'glpi_deviceprocessors',
-                                                            'glpi_devicememories',
-                                                            'glpi_devicesoundcards', 'glpi_monitors',
-                                                            'glpi_networkequipments',
-                                                            'glpi_peripherals', 'glpi_phones',
-                                                            'glpi_printers', 'glpi_softwares'))),
-                           'FK_entities'
-                           => array(array('to'      => 'entities_id',
-                                          'tables'  => array('glpi_bookmarks', 'glpi_cartridgeitems',
-                                                             'glpi_computers', 'glpi_consumableitems',
-                                                             'glpi_contacts', 'glpi_contracts',
-                                                             'glpi_documents', 'glpi_locations',
-                                                             'glpi_netpoints', 'glpi_suppliers',
-                                                             'glpi_entitydatas', 'glpi_groups',
-                                                             'glpi_knowbaseitems', 'glpi_links',
-                                                             'glpi_mailcollectors', 'glpi_monitors',
-                                                             'glpi_networkequipments',
-                                                             'glpi_peripherals', 'glpi_phones',
-                                                             'glpi_printers', 'glpi_reminders',
-                                                             'glpi_rules', 'glpi_softwares',
-                                                             'glpi_softwarelicenses',
-                                                             'glpi_softwareversions',
-                                                             'glpi_tickets', 'glpi_users',
-                                                             'glpi_profiles_users'),
-                                          'default' => array('glpi_bookmarks' => "-1"))),
-                           'FK_filesystems'
-                           => array(array('to'     => 'filesystems_id',
-                                          'tables' => array('glpi_computerdisks'))),
-                           'FK_glpi_cartridges_type'
-                           => array(array('to'     => 'cartridgeitems_id',
-                                          'tables' => array('glpi_cartridges',
-                                                            'glpi_cartridges_printermodels'))),
-                           'FK_glpi_consumables_type'
-                           => array(array('to'     => 'consumableitems_id',
-                                          'tables' => array('glpi_consumables'))),
-                           'FK_glpi_dropdown_model_printers'
-                           => array(array('to'     => 'printermodels_id',
-                                          'tables' => array('glpi_cartridges_printermodels'))),
-                           'FK_glpi_printers'
-                           => array(array('to'     => 'printers_id',
-                                          'tables' => array('glpi_cartridges'))),
-                           'FK_group'
-                           => array(array('to'     => 'groups_id',
-                                          'tables' => array('glpi_tickets'))),
-                           'FK_groups'
-                           => array(array('to'     => 'groups_id',
-                                          'tables' => array('glpi_computers', 'glpi_monitors',
-                                                            'glpi_networkequipments',
-                                                            'glpi_peripherals', 'glpi_phones',
-                                                            'glpi_printers', 'glpi_softwares',
-                                                            'glpi_groups_users'))),
-                           'FK_interface'
-                           => array(array('to'     => 'interfacetypes_id',
-                                          'tables' => array('glpi_devicegraphiccards'))),
-
-                           'FK_item'
-                           => array(array('to'     => 'items_id',
-                                          'tables' => array('glpi_mailingsettings'))),
-
-                           'FK_links'
-                           => array(array('to'     => 'links_id',
-                                          'tables' => array('glpi_links_itemtypes'))),
-
-                           'FK_port'
-                           => array(array('to'     => 'networkports_id',
-                                          'tables' => array('glpi_networkports_vlans'))),
-
-                           'FK_profiles'
-                           => array(array('to'     => 'profiles_id',
-                                          'tables' => array('glpi_profiles_users', 'glpi_users'))),
-
-                           'FK_users'
-                           => array(array('to'     => 'users_id',
-                                          'tables' => array('glpi_bookmarks',
-                                                            'glpi_displaypreferences',
-                                                            'glpi_documents', 'glpi_groups',
-                                                            'glpi_reminders', 'glpi_bookmarks_users',
-                                                            'glpi_groups_users',
-                                                            'glpi_profiles_users', 'glpi_computers',
-                                                            'glpi_monitors', 'glpi_networkequipments',
-                                                            'glpi_peripherals', 'glpi_phones',
-                                                            'glpi_printers', 'glpi_softwares'))),
-
-                           'FK_vlan'
-                           => array(array('to'     => 'vlans_id',
-                                          'tables' => array('glpi_networkports_vlans'))),
-
-                           'glpi_id'
-                           => array(array('to'     => 'computers_id',
-                                          'tables' => array('glpi_ocslinks'))),
-
-                           'id_assign'
-                           => array(array('to'     => 'users_id',
-                                          'tables' => array('glpi_ticketplannings'))),
-
-                           'id_auth'
-                           => array(array('to'     => 'auths_id',
-                                          'tables' => array('glpi_users'))),
-
-                           'id_device'
-                           => array(array('to'     => 'items_id',
-                                          'tables' => array('glpi_reservationitems'))),
-
-                           'id_item'
-                           => array(array('to'     => 'reservationitems_id',
-                                          'tables' => array('glpi_reservations'))),
-
-                           'id_user'
-                           => array(array('to'     => 'users_id',
-                                          'tables' => array('glpi_consumables',
-                                                            'glpi_reservations'))),
-
-                           'iface'
-                           => array(array('to'     => 'networkinterfaces_id',
-                                          'tables' => array('glpi_networkports'))),
-
-                           'interface'
-                           => array(array('to'     => 'interfacetypes_id',
-                                          'tables' => array('glpi_devicecontrols',
-                                                            'glpi_deviceharddrives',
-                                                            'glpi_devicedrives'))),
-
-                           'location'
-                           => array(array('to'     => 'locations_id',
-                                          'tables' => array('glpi_cartridgeitems', 'glpi_computers',
-                                                            'glpi_consumableitems', 'glpi_netpoints',
-                                                            'glpi_monitors', 'glpi_networkequipments',
-                                                            'glpi_peripherals', 'glpi_phones',
-                                                            'glpi_printers', 'glpi_users',
-                                                            'glpi_softwares'))),
-
-                           'model'
-                           => array(array('to'     => 'computermodels_id',
-                                          'tables' => array('glpi_computers')),
-                                    array('to'     => 'monitormodels_id',
-                                          'tables' => array('glpi_monitors')),
-                                    array('to'     => 'networkequipmentmodels_id',
-                                          'tables' => array('glpi_networkequipments')),
-                                    array('to'     => 'peripheralmodels_id',
-                                          'tables' => array('glpi_peripherals')),
-                                    array('to'     => 'phonemodels_id',
-                                          'tables' => array('glpi_phones')),
-                                    array('to'     => 'printermodels_id',
-                                          'tables' => array('glpi_printers'))),
-
-                           'netpoint'
-                           => array(array('to'     => 'netpoints_id',
-                                          'tables' => array('glpi_networkports'))),
-
-                           'network'
-                           => array(array('to'     => 'networks_id',
-                                          'tables' => array('glpi_computers',
-                                                            'glpi_networkequipments',
-                                                            'glpi_printers'))),
-
-                           'on_device'
-                           => array(array('to'     => 'items_id',
-                                          'tables' => array('glpi_networkports'))),
-
-                           'os'
-                           => array(array('to'     => 'operatingsystems_id',
-                                          'tables' => array('glpi_computers'))),
-
-                           'os_license_id'
-                           => array(array('to'     => 'os_licenseid',
-                                          'tables' => array('glpi_computers'))),
-
-                           'os_version'
-                           => array(array('to'     => 'operatingsystemversions_id',
-                                          'tables' => array('glpi_computers'))),
-
-                           'parentID'
-                           => array(array('to'     => 'knowbaseitemcategories_id',
-                                          'tables' => array('glpi_knowbaseitemcategories')),
-                                    array('to'     => 'locations_id',
-                                          'tables' => array('glpi_locations')),
-                                    array('to'     => 'ticketcategories_id',
-                                          'tables' => array('glpi_ticketcategories')),
-                                    array('to'     => 'entities_id',
-                                          'tables' => array('glpi_entities'))    ),
-
-                           'platform'
-                           => array(array('to'     => 'operatingsystems_id',
-                                          'tables' => array('glpi_softwares'))),
-
-                           'power'
-                           => array(array('to'     => 'phonepowersupplies_id',
-                                          'tables' => array('glpi_phones'))),
-
-                           'recipient'
-                           => array(array('to'     => 'users_id_recipient',
-                                          'tables' => array('glpi_tickets'))),
-
-                           'rubrique'
-                           => array(array('to'     => 'documentcategories_id',
-                                          'tables' => array('glpi_documents'))),
-
-                           'sID'
-                           => array(array('to'     => 'softwares_id',
-                                          'tables' => array('glpi_softwarelicenses',
-                                                            'glpi_softwareversions'))),
-
-                           'state'
-                           => array(array('to'     => 'states_id',
-                                          'tables' => array('glpi_computers', 'glpi_monitors',
-                                                            'glpi_networkequipments',
-                                                            'glpi_peripherals', 'glpi_phones',
-                                                            'glpi_printers',
-                                                            'glpi_softwareversions'))),
-
-                           'tech_num'
-                           => array(array('to'     => 'users_id_tech',
-                                          'tables' => array('glpi_cartridgeitems', 'glpi_computers',
-                                                            'glpi_consumableitems', 'glpi_monitors',
-                                                            'glpi_networkequipments',
-                                                            'glpi_peripherals', 'glpi_phones',
-                                                            'glpi_printers', 'glpi_softwares'))),
-
-                           'title'
-                           => array(array('to'     => 'usertitles_id',
-                                          'tables' => array('glpi_users'))),
-
-                           'type'
-                           => array(array('to'     => 'cartridgeitemtypes_id',
-                                          'tables' => array('glpi_cartridgeitems')),
-                                    array('to'     => 'computertypes_id',
-                                          'tables' => array('glpi_computers')),
-                                    array('to'     => 'consumableitemtypes_id',
-                                          'tables' => array('glpi_consumableitems')),
-                                    array('to'     => 'contacttypes_id',
-                                          'tables' => array('glpi_contacts')),
-                                    array('to'     => 'devicecasetypes_id',
-                                          'tables' => array('glpi_devicecases')),
-                                    array('to'     => 'devicememorytypes_id',
-                                          'tables' => array('glpi_devicememories')),
-                                    array('to'     => 'suppliertypes_id',
-                                          'tables' => array('glpi_suppliers')),
-                                    array('to'     => 'monitortypes_id',
-                                          'tables' => array('glpi_monitors')),
-                                    array('to'     => 'networkequipmenttypes_id',
-                                          'tables' => array('glpi_networkequipments')),
-                                    array('to'     => 'peripheraltypes_id',
-                                          'tables' => array('glpi_peripherals')),
-                                    array('to'     => 'phonetypes_id',
-                                          'tables' => array('glpi_phones')),
-                                    array('to'     => 'printertypes_id',
-                                          'tables' => array('glpi_printers')),
-                                    array('to'     => 'softwarelicensetypes_id',
-                                          'tables' => array('glpi_softwarelicenses')),
-                                    array('to'     => 'usercategories_id',
-                                          'tables' => array('glpi_users')),
-                                    array('to'     => 'itemtype',
-                                          'tables' => array('glpi_computers_items',
-                                                            'glpi_displaypreferences'))),
-
-                           'update_software'
-                           => array(array('to'     => 'softwares_id',
-                                          'tables' => array('glpi_softwares'))),
-
-                           'use_version'
-                           => array(array('to'     => 'softwareversions_id_use',
-                                          'tables' => array('glpi_softwarelicenses'))),
-
-                           'vID'
-                           => array(array('to'     => 'softwareversions_id',
-                                          'tables' => array('glpi_computers_softwareversions'))),
-
-                           'conpta_num'
-                           => array(array('to'     => 'accounting_number',
-                                          'tables' => array('glpi_contracts'))),
-
-                           'num_commande'
-                           => array(array('to'     => 'order_number',
-                                          'tables' => array('glpi_infocoms'))),
-
-                           'bon_livraison'
-                           => array(array('to'     => 'delivery_number',
-                                          'tables' => array('glpi_infocoms'))),
-
-                           'num_immo'
-                           => array(array('to'     => 'immo_number',
-                                          'tables' => array('glpi_infocoms'))),
-
-                           'facture'
-                           => array(array('to'     => 'bill',
-                                          'tables' => array('glpi_infocoms'))),
-
-                           'amort_time'
-                           => array(array('to'     => 'sink_time',
-                                          'tables' => array('glpi_infocoms'))),
-
-                           'amort_type'
-                           => array(array('to'     => 'sink_type',
-                                          'tables' => array('glpi_infocoms'))),
-
-                           'ifmac'
-                           => array(array('to'     => 'mac',
-                                          'tables' => array('glpi_networkequipments'))),
-
-                           'ifaddr'
-                           => array(array('to'     => 'ip',
-                                          'tables' => array('glpi_networkequipments',
-                                                            'glpi_networkports'))),
-
-                           'ramSize'
-                           => array(array('to'     => 'memory_size',
-                                          'tables' => array('glpi_printers'))),
-
-                           'ramSize'
-                           => array(array('to'     => 'memory_size',
-                                          'tables' => array('glpi_printers'))),
-
-                           'facturation'
-                           => array(array('to'     => 'billing',
-                                          'tables' => array('glpi_contracts'))),
-
-                           'monday'
-                           => array(array('to'     => 'use_monday',
-                                          'tables' => array('glpi_contracts'))),
-
-                           'saturday'
-                           => array(array('to'     => 'use_saturday',
-                                          'tables' => array('glpi_contracts'))),
-
-                           'recursive'
-                           => array(array('to'     => 'is_recursive',
-                                          'tables' => array('glpi_networkequipments', 'glpi_groups',
-                                                            'glpi_contracts', 'glpi_contacts',
-                                                            'glpi_suppliers', 'glpi_printers',
-                                                            'glpi_softwares', 'glpi_softwareversions',
-                                                            'glpi_softwarelicences'))),
-
-                           'faq'
-                           => array(array('to'     => 'is_faq',
-                                          'tables' => array('glpi_knowbaseitems'))),
-
-                           'flags_micro'
-                           => array(array('to'     => 'have_micro',
-                                          'tables' => array('glpi_monitors'))),
-
-                           'flags_speaker'
-                           => array(array('to'     => 'have_speaker',
-                                          'tables' => array('glpi_monitors'))),
-
-                           'flags_subd'
-                           => array(array('to'     => 'have_subd',
-                                          'tables' => array('glpi_monitors'))),
-
-                           'flags_bnc'
-                           => array(array('to'     => 'have_bnc',
-                                          'tables' => array('glpi_monitors'))),
-
-                           'flags_dvi'
-                           => array(array('to'     => 'have_dvi',
-                                          'tables' => array('glpi_monitors'))),
-
-                           'flags_pivot'
-                           => array(array('to'     => 'have_pivot',
-                                          'tables' => array('glpi_monitors'))),
-
-                           'flags_hp'
-                           => array(array('to'     => 'have_hp',
-                                          'tables' => array('glpi_phones'))),
-
-                           'flags_casque'
-                           => array(array('to'     => 'have_headset',
-                                          'tables' => array('glpi_phones'))),
-
-                           'flags_usb'
-                           => array(array('to'    => 'have_usb',
-                                          'tables' => array('glpi_printers'))),
-
-                           'flags_par'
-                           => array(array('to'    => 'have_parallel',
-                                          'tables' => array('glpi_printers'))),
-
-                           'flags_serial'
-                           => array(array('to'       => 'have_serial',
-                                          'tables' => array('glpi_printers'))),
-
-                           'initial_pages'
-                           => array(array('to'      => 'init_pages_counter',
-                                          'tables' => array('glpi_printers'))),
-
-                           'global'
-                           => array(array('to'       => 'is_global',
-                                          'tables'   => array('glpi_monitors', 'glpi_networkequipments',
-                                                              'glpi_peripherals', 'glpi_phones',
-                                                              'glpi_printers', 'glpi_softwares'))),
-                                          'template' => array(array('to'     =>'template_name',
-                                                                    'tables' => array('glpi_cartridgeitems', 'glpi_computers',
-                                                                                      'glpi_consumableitems', 'glpi_devicecases',
-                                                                                      'glpi_devicecontrols', 'glpi_devicedrives',
-                                                                                      'glpi_devicegraphiccards', 'glpi_deviceharddrives',
-                                                                                      'glpi_devicenetworkcards', 'glpi_devicemotherboards',
-                                                                                      'glpi_devicepcis', 'glpi_devicepowersupplies',
-                                                                                      'glpi_deviceprocessors', 'glpi_devicememories',
-                                                                                      'glpi_devicesoundcards', 'glpi_monitors',
-                                                                                      'glpi_networkequipments', 'glpi_peripherals',
-                                                                                      'glpi_phones', 'glpi_printers',
-                                                                                      'glpi_softwares'))),
-                                          'comments' => array(array('to'      => 'comment',
-                                                                    'tables' => array('glpi_cartridgeitems', 'glpi_computers',
-                                                                                      'glpi_consumableitems', 'glpi_contacts',
-                                                                                      'glpi_contracts', 'glpi_documents',
-                                                                                      'glpi_autoupdatesystems', 'glpi_budgets',
-                                                                                      'glpi_cartridgeitemtypes', 'glpi_devicecasetypes',
-                                                                                      'glpi_consumableitemtypes', 'glpi_contacttypes',
-                                                                                      'glpi_contracttypes', 'glpi_domains',
-                                                                                      'glpi_suppliertypes', 'glpi_filesystems',
-                                                                                      'glpi_networkequipmentfirmwares',
-                                                                                      'glpi_networkinterfaces', 'glpi_interfacetypes',
-                                                                                      'glpi_knowbaseitemcategories',
-                                                                                      'glpi_softwarelicensetypes', 'glpi_locations',
-                                                                                      'glpi_manufacturers', 'glpi_computermodels',
-                                                                                      'glpi_monitormodels', 'glpi_networkequipmentmodels',
-                                                                                      'glpi_peripheralmodels', 'glpi_phonemodels',
-                                                                                      'glpi_printermodels', 'glpi_netpoints',
-                                                                                      'glpi_networks', 'glpi_operatingsystems',
-                                                                                      'glpi_operatingsystemservicepacks',
-                                                                                      'glpi_operatingsystemversions',
-                                                                                      'glpi_phonepowersupplies', 'glpi_devicememorytypes',
-                                                                                      'glpi_documentcategories', 'glpi_softwarecategories',
-                                                                                      'glpi_states', 'glpi_ticketcategories',
-                                                                                      'glpi_usertitles', 'glpi_usercategories',
-                                                                                      'glpi_vlans', 'glpi_suppliers', 'glpi_entities',
-                                                                                      'glpi_groups', 'glpi_infocoms', 'glpi_monitors',
-                                                                                      'glpi_phones', 'glpi_printers', 'glpi_peripherals',
-                                                                                      'glpi_networkequipments', 'glpi_reservationitems',
-                                                                                      'glpi_rules', 'glpi_softwares', 'glpi_softwarelicenses',
-                                                                                      'glpi_softwareversions', 'glpi_computertypes',
-                                                                                      'glpi_monitortypes', 'glpi_networkequipmenttypes',
-                                                                                      'glpi_peripheraltypes', 'glpi_phonetypes',
-                                                                                      'glpi_printertypes', 'glpi_users'))),
-
-                                          'notes' =>  array(array('to'     => 'notepad',
-                                                   'tables' => array('glpi_cartridgeitems', 'glpi_computers',
-                                                                     'glpi_consumableitems', 'glpi_contacts',
-                                                                     'glpi_contracts', 'glpi_documents',
-                                                                     'glpi_suppliers', 'glpi_entitydatas',
-                                                                     'glpi_printers', 'glpi_monitors',
-                                                                     'glpi_phones', 'glpi_peripherals',
-                                                                     'glpi_networkequipments',
-                                                                     'glpi_softwares'))));
+   $foreignkeys = [
+      'assign' => [
+         [
+            'to' => 'users_id_assign',
+            'tables' => [
+               'glpi_tickets'
+            ]
+         ]
+      ],
+      'assign_group' => [
+         [
+            'to' => 'groups_id_assign',
+            'tables' => [
+               'glpi_tickets'
+            ]
+         ]
+      ],
+      'assign_ent' => [
+         [
+            'to' => 'suppliers_id_assign',
+            'tables' => [
+               'glpi_tickets'
+            ]
+         ]
+      ],
+      'auth_method' => [
+         [
+            'to' => 'authtype',
+            'noindex' => [
+               'glpi_users'
+            ],
+            'tables' => [
+               'glpi_users'
+            ]
+         ]
+      ],
+      'author' => [
+         [
+            'to' => 'users_id',
+            'tables' => [
+               'glpi_ticketfollowups',
+               'glpi_knowbaseitems',
+               'glpi_tickets'
+            ]
+         ]
+      ],
+      'auto_update' => [
+         [
+            'to' => 'autoupdatesystems_id',
+            'tables' => [
+               'glpi_computers'
+            ]
+         ]
+      ],
+      'budget' => [
+         [
+            'to' => 'budgets_id',
+            'tables' => [
+               'glpi_infocoms'
+            ]
+         ]
+      ],
+      'buy_version' => [
+         [
+            'to' => 'softwareversions_id_buy',
+            'tables' => [
+               'glpi_softwarelicenses'
+            ]
+         ]
+      ],
+      'category' => [
+         [
+            'to' => 'ticketcategories_id',
+            'tables' => [
+               'glpi_tickets'
+            ]
+         ],
+         [
+            'to' => 'softwarecategories_id',
+            'tables' => [
+               'glpi_softwares'
+            ]
+         ]
+      ],
+      'categoryID' => [
+         [
+            'to' => 'knowbaseitemcategories_id',
+            'tables' => [
+               'glpi_knowbaseitems'
+            ]
+         ]
+      ],
+      'cID' => [
+         [
+            'to' => 'computers_id',
+            'tables' => [
+               'glpi_computers_softwareversions'
+            ]
+         ]
+      ],
+      'computer' => [
+         [
+            'to' => 'items_id',
+            'tables' => [
+               'glpi_tickets'
+            ]
+         ]
+      ],
+      'computer_id' => [
+         [
+            'to' => 'computers_id',
+            'tables' => [
+               'glpi_registrykeys'
+            ]
+         ]
+      ],
+      'contract_type' => [
+         [
+            'to' => 'contracttypes_id',
+            'tables' => [
+               'glpi_contracts'
+            ]
+         ]
+      ],
+      'default_rubdoc_tracking' => [
+         [
+            'to' => 'documentcategories_id_forticket',
+            'tables' => [
+               'glpi_configs'
+            ],
+            'comments' => [
+               'glpi_configs' => 'default category for documents added with a ticket'
+            ]
+         ]
+      ],
+      'device_type' => [
+         [
+            'to' => 'itemtype',
+            'tables' => [
+               'glpi_alerts',
+               'glpi_contracts_items',
+               'glpi_documents_items',
+               'glpi_infocoms',
+               'glpi_bookmarks',
+               'glpi_bookmarks_users',
+               'glpi_links_itemtypes',
+               'glpi_networkports',
+               'glpi_reservationitems',
+               'glpi_tickets'
+            ]
+         ]
+      ],
+      'domain' => [
+         [
+            'to' => 'domains_id',
+            'tables' => [
+               'glpi_computers',
+               'glpi_networkequipments',
+               'glpi_printers'
+            ]
+         ]
+      ],
+      'end1' => [
+         [
+            'to' => 'items_id',
+            'tables' => [
+               'glpi_computers_items'
+            ],
+            'comments' => [
+               'glpi_computers_items' => 'RELATION to various table, according to itemtype (ID]'
+            ]
+         ],
+         [
+            'to' => 'networkports_id_1',
+            'tables' => [
+               'glpi_networkports_networkports'
+            ]
+         ]
+      ],
+      'end2' => [
+         [
+            'to' => 'computers_id',
+            'tables' => [
+               'glpi_computers_items'
+            ]
+         ],
+         [
+            'to' => 'networkports_id_2',
+            'tables' => [
+               'glpi_networkports_networkports'
+            ]
+         ]
+      ],
+      'firmware' => [
+         [
+            'to' => 'networkequipmentfirmwares_id',
+            'tables' => [
+               'glpi_networkequipments'
+            ]
+         ]
+      ],
+      'FK_bookmark' => [
+         [
+            'to' => 'bookmarks_id',
+            'tables' => [
+               'glpi_bookmarks_users'
+            ]
+         ]
+      ],
+      'FK_computers' => [
+         [
+            'to' => 'computers_id',
+            'tables' => [
+               'glpi_computerdisks',
+               'glpi_softwarelicenses'
+            ]
+         ]
+      ],
+      'FK_contact' => [
+         [
+            'to' => 'contacts_id',
+            'tables' => [
+               'glpi_contacts_suppliers'
+            ]
+         ]
+      ],
+      'FK_contract' => [
+         [
+            'to' => 'contracts_id',
+            'tables' => [
+               'glpi_contracts_suppliers',
+               'glpi_contracts_items'
+            ]
+         ]
+      ],
+      'FK_device' => [
+         [
+            'to' => 'items_id',
+            'tables' => [
+               'glpi_alerts',
+               'glpi_contracts_items',
+               'glpi_documents_items',
+               'glpi_infocoms'
+            ]
+         ]
+      ],
+      'FK_doc' => [
+         [
+            'to' => 'documents_id',
+            'tables' => [
+               'glpi_documents_items'
+            ]
+         ]
+      ],
+      'manufacturer' => [
+         [
+            'to' => 'suppliers_id',
+            'tables' => [
+               'glpi_contacts_suppliers',
+               'glpi_contracts_suppliers',
+               'glpi_infocoms'
+            ]
+         ],
+         [
+            'to' => 'manufacturers_id',
+            'tables' => [
+               'glpi_cartridgeitems',
+               'glpi_computers',
+               'glpi_consumableitems',
+               'glpi_devicecases',
+               'glpi_devicecontrols',
+               'glpi_devicedrives',
+               'glpi_devicegraphiccards',
+               'glpi_deviceharddrives',
+               'glpi_devicenetworkcards',
+               'glpi_devicemotherboards',
+               'glpi_devicepcis',
+               'glpi_devicepowersupplies',
+               'glpi_deviceprocessors',
+               'glpi_devicememories',
+               'glpi_devicesoundcards',
+               'glpi_monitors',
+               'glpi_networkequipments',
+               'glpi_peripherals',
+               'glpi_phones',
+               'glpi_printers',
+               'glpi_softwares'
+            ]
+         ]
+      ],
+      'FK_entities' => [
+         [
+            'to' => 'entities_id',
+            'tables' => [
+               'glpi_bookmarks',
+               'glpi_cartridgeitems',
+               'glpi_computers',
+               'glpi_consumableitems',
+               'glpi_contacts',
+               'glpi_contracts',
+               'glpi_documents',
+               'glpi_locations',
+               'glpi_netpoints',
+               'glpi_suppliers',
+               'glpi_entitydatas',
+               'glpi_groups',
+               'glpi_knowbaseitems',
+               'glpi_links',
+               'glpi_mailcollectors',
+               'glpi_monitors',
+               'glpi_networkequipments',
+               'glpi_peripherals',
+               'glpi_phones',
+               'glpi_printers',
+               'glpi_reminders',
+               'glpi_rules',
+               'glpi_softwares',
+               'glpi_softwarelicenses',
+               'glpi_softwareversions',
+               'glpi_tickets',
+               'glpi_users',
+               'glpi_profiles_users'
+            ],
+            'default' => [
+               'glpi_bookmarks' => "-1"
+            ]
+         ]
+      ],
+      'FK_filesystems' => [
+         [
+            'to' => 'filesystems_id',
+            'tables' => [
+               'glpi_computerdisks'
+            ]
+         ]
+      ],
+      'FK_glpi_cartridges_type' => [
+         [
+            'to' => 'cartridgeitems_id',
+            'tables' => [
+               'glpi_cartridges',
+               'glpi_cartridges_printermodels'
+            ]
+         ]
+      ],
+      'FK_glpi_consumables_type' => [
+         [
+            'to' => 'consumableitems_id',
+            'tables' => [
+               'glpi_consumables'
+            ]
+         ]
+      ],
+      'FK_glpi_dropdown_model_printers' => [
+         [
+            'to' => 'printermodels_id',
+            'tables' => [
+               'glpi_cartridges_printermodels'
+            ]
+         ]
+      ],
+      'FK_glpi_printers' => [
+         [
+            'to' => 'printers_id',
+            'tables' => [
+               'glpi_cartridges'
+            ]
+         ]
+      ],
+      'FK_group' => [
+         [
+            'to' => 'groups_id',
+            'tables' => [
+               'glpi_tickets'
+            ]
+         ]
+      ],
+      'FK_groups' => [
+         [
+            'to' => 'groups_id',
+            'tables' => [
+               'glpi_computers',
+               'glpi_monitors',
+               'glpi_networkequipments',
+               'glpi_peripherals',
+               'glpi_phones',
+               'glpi_printers',
+               'glpi_softwares',
+               'glpi_groups_users'
+            ]
+         ]
+      ],
+      'FK_interface' => [
+         [
+            'to' => 'interfacetypes_id',
+            'tables' => [
+               'glpi_devicegraphiccards'
+            ]
+         ]
+      ],
+      'FK_item' => [
+         [
+            'to' => 'items_id',
+            'tables' => [
+               'glpi_mailingsettings'
+            ]
+         ]
+      ],
+      'FK_links' => [
+         [
+            'to' => 'links_id',
+            'tables' => [
+               'glpi_links_itemtypes'
+            ]
+         ]
+      ],
+      'FK_port' => [
+         [
+            'to' => 'networkports_id',
+            'tables' => [
+               'glpi_networkports_vlans'
+            ]
+         ]
+      ],
+      'FK_profiles' => [
+         [
+            'to' => 'profiles_id',
+            'tables' => [
+               'glpi_profiles_users',
+               'glpi_users'
+            ]
+         ]
+      ],
+      'FK_users' => [
+         [
+            'to' => 'users_id',
+            'tables' => [
+               'glpi_bookmarks',
+               'glpi_displaypreferences',
+               'glpi_documents',
+               'glpi_groups',
+               'glpi_reminders',
+               'glpi_bookmarks_users',
+               'glpi_groups_users',
+               'glpi_profiles_users',
+               'glpi_computers',
+               'glpi_monitors',
+               'glpi_networkequipments',
+               'glpi_peripherals',
+               'glpi_phones',
+               'glpi_printers',
+               'glpi_softwares'
+            ]
+         ]
+      ],
+      'FK_vlan' => [
+         [
+            'to' => 'vlans_id',
+            'tables' => [
+               'glpi_networkports_vlans'
+            ]
+         ]
+      ],
+      'glpi_id' => [
+         [
+            'to' => 'computers_id',
+            'tables' => [
+               'glpi_ocslinks'
+            ]
+         ]
+      ],
+      'id_assign' => [
+         [
+            'to' => 'users_id',
+            'tables' => [
+               'glpi_ticketplannings'
+            ]
+         ]
+      ],
+      'id_auth' => [
+         [
+            'to' => 'auths_id',
+            'tables' => [
+               'glpi_users'
+            ]
+         ]
+      ],
+      'id_device' => [
+         [
+            'to' => 'items_id',
+            'tables' => [
+               'glpi_reservationitems'
+            ]
+         ]
+      ],
+      'id_item' => [
+         [
+            'to' => 'reservationitems_id',
+            'tables' => [
+               'glpi_reservations'
+            ]
+         ]
+      ],
+      'id_user' => [
+         [
+            'to' => 'users_id',
+            'tables' => [
+               'glpi_consumables',
+               'glpi_reservations'
+            ]
+         ]
+      ],
+      'iface' => [
+         [
+            'to' => 'networkinterfaces_id',
+            'tables' => [
+               'glpi_networkports'
+            ]
+         ]
+      ],
+      'interface' => [
+         [
+            'to' => 'interfacetypes_id',
+            'tables' => [
+               'glpi_devicecontrols',
+               'glpi_deviceharddrives',
+               'glpi_devicedrives'
+            ]
+         ]
+      ],
+      'location' => [
+         [
+            'to' => 'locations_id',
+            'tables' => [
+               'glpi_cartridgeitems',
+               'glpi_computers',
+               'glpi_consumableitems',
+               'glpi_netpoints',
+               'glpi_monitors',
+               'glpi_networkequipments',
+               'glpi_peripherals',
+               'glpi_phones',
+               'glpi_printers',
+               'glpi_users',
+               'glpi_softwares'
+            ]
+         ]
+      ],
+      'model' => [
+         [
+            'to' => 'computermodels_id',
+            'tables' => [
+               'glpi_computers'
+            ]
+         ],
+         [
+            'to' => 'monitormodels_id',
+            'tables' => [
+               'glpi_monitors'
+            ]
+         ],
+         [
+            'to' => 'networkequipmentmodels_id',
+            'tables' => [
+               'glpi_networkequipments'
+            ]
+         ],
+         [
+            'to' => 'peripheralmodels_id',
+            'tables' => [
+               'glpi_peripherals'
+            ]
+         ],
+         [
+            'to' => 'phonemodels_id',
+            'tables' => [
+               'glpi_phones'
+            ]
+         ],
+         [
+            'to' => 'printermodels_id',
+            'tables' => [
+               'glpi_printers'
+            ]
+         ]
+      ],
+      'netpoint' => [
+         [
+            'to' => 'netpoints_id',
+            'tables' => [
+               'glpi_networkports'
+            ]
+         ]
+      ],
+      'network' => [
+         [
+            'to' => 'networks_id',
+            'tables' => [
+               'glpi_computers',
+               'glpi_networkequipments',
+               'glpi_printers'
+            ]
+         ]
+      ],
+      'on_device' => [
+         [
+            'to' => 'items_id',
+            'tables' => [
+               'glpi_networkports'
+            ]
+         ]
+      ],
+      'os' => [
+         [
+            'to' => 'operatingsystems_id',
+            'tables' => [
+               'glpi_computers'
+            ]
+         ]
+      ],
+      'os_license_id' => [
+         [
+            'to' => 'os_licenseid',
+            'tables' => [
+               'glpi_computers'
+            ]
+         ]
+      ],
+      'os_version' => [
+         [
+            'to' => 'operatingsystemversions_id',
+            'tables' => [
+               'glpi_computers'
+            ]
+         ]
+      ],
+      'parentID' => [
+         [
+            'to' => 'knowbaseitemcategories_id',
+            'tables' => [
+               'glpi_knowbaseitemcategories'
+            ]
+         ],
+         [
+            'to' => 'locations_id',
+            'tables' => [
+               'glpi_locations'
+            ]
+         ],
+         [
+            'to' => 'ticketcategories_id',
+            'tables' => [
+               'glpi_ticketcategories'
+            ]
+         ],
+         [
+            'to' => 'entities_id',
+            'tables' => [
+               'glpi_entities'
+            ]
+         ]
+      ],
+      'platform' => [
+         [
+            'to' => 'operatingsystems_id',
+            'tables' => [
+               'glpi_softwares'
+            ]
+         ]
+      ],
+      'power' => [
+         [
+            'to' => 'phonepowersupplies_id',
+            'tables' => [
+               'glpi_phones'
+            ]
+         ]
+      ],
+      'recipient' => [
+         [
+            'to' => 'users_id_recipient',
+            'tables' => [
+               'glpi_tickets'
+            ]
+         ]
+      ],
+      'rubrique' => [
+         [
+            'to' => 'documentcategories_id',
+            'tables' => [
+               'glpi_documents'
+            ]
+         ]
+      ],
+      'sID' => [
+         [
+            'to' => 'softwares_id',
+            'tables' => [
+               'glpi_softwarelicenses',
+               'glpi_softwareversions'
+            ]
+         ]
+      ],
+      'state' => [
+         [
+            'to' => 'states_id',
+            'tables' => [
+               'glpi_computers',
+               'glpi_monitors',
+               'glpi_networkequipments',
+               'glpi_peripherals',
+               'glpi_phones',
+               'glpi_printers',
+               'glpi_softwareversions'
+            ]
+         ]
+      ],
+      'tech_num' => [
+         [
+            'to' => 'users_id_tech',
+            'tables' => [
+               'glpi_cartridgeitems',
+               'glpi_computers',
+               'glpi_consumableitems',
+               'glpi_monitors',
+               'glpi_networkequipments',
+               'glpi_peripherals',
+               'glpi_phones',
+               'glpi_printers',
+               'glpi_softwares'
+            ]
+         ]
+      ],
+      'title' => [
+         [
+            'to' => 'usertitles_id',
+            'tables' => [
+               'glpi_users'
+            ]
+         ]
+      ],
+      'type' => [
+         [
+            'to' => 'cartridgeitemtypes_id',
+            'tables' => [
+               'glpi_cartridgeitems'
+            ]
+         ],
+         [
+            'to' => 'computertypes_id',
+            'tables' => [
+               'glpi_computers'
+            ]
+         ],
+         [
+            'to' => 'consumableitemtypes_id',
+            'tables' => [
+               'glpi_consumableitems'
+            ]
+         ],
+         [
+            'to' => 'contacttypes_id',
+            'tables' => [
+               'glpi_contacts'
+            ]
+         ],
+         [
+            'to' => 'devicecasetypes_id',
+            'tables' => [
+               'glpi_devicecases'
+            ]
+         ],
+         [
+            'to' => 'devicememorytypes_id',
+            'tables' => [
+               'glpi_devicememories'
+            ]
+         ],
+         [
+            'to' => 'suppliertypes_id',
+            'tables' => [
+               'glpi_suppliers'
+            ]
+         ],
+         [
+            'to' => 'monitortypes_id',
+            'tables' => [
+               'glpi_monitors'
+            ]
+         ],
+         [
+            'to' => 'networkequipmenttypes_id',
+            'tables' => [
+               'glpi_networkequipments'
+            ]
+         ],
+         [
+            'to' => 'peripheraltypes_id',
+            'tables' => [
+               'glpi_peripherals'
+            ]
+         ],
+         [
+            'to' => 'phonetypes_id',
+            'tables' => [
+               'glpi_phones'
+            ]
+         ],
+         [
+            'to' => 'printertypes_id',
+            'tables' => [
+               'glpi_printers'
+            ]
+         ],
+         [
+            'to' => 'softwarelicensetypes_id',
+            'tables' => [
+               'glpi_softwarelicenses'
+            ]
+         ],
+         [
+            'to' => 'usercategories_id',
+            'tables' => [
+               'glpi_users'
+            ]
+         ],
+         [
+            'to' => 'itemtype',
+            'tables' => [
+               'glpi_computers_items',
+               'glpi_displaypreferences'
+            ]
+         ]
+      ],
+      'update_software' => [
+         [
+            'to' => 'softwares_id',
+            'tables' => [
+               'glpi_softwares'
+            ]
+         ]
+      ],
+      'use_version' => [
+         [
+            'to' => 'softwareversions_id_use',
+            'tables' => [
+               'glpi_softwarelicenses'
+            ]
+         ]
+      ],
+      'vID' => [
+         [
+            'to' => 'softwareversions_id',
+            'tables' => [
+               'glpi_computers_softwareversions'
+            ]
+         ]
+      ],
+      'conpta_num' => [
+         [
+            'to' => 'accounting_number',
+            'tables' => [
+               'glpi_contracts'
+            ]
+         ]
+      ],
+      'num_commande' => [
+         [
+            'to' => 'order_number',
+            'tables' => [
+               'glpi_infocoms'
+            ]
+         ]
+      ],
+      'bon_livraison' => [
+         [
+            'to' => 'delivery_number',
+            'tables' => [
+               'glpi_infocoms'
+            ]
+         ]
+      ],
+      'num_immo' => [
+         [
+            'to' => 'immo_number',
+            'tables' => [
+               'glpi_infocoms'
+            ]
+         ]
+      ],
+      'facture' => [
+         [
+            'to' => 'bill',
+            'tables' => [
+               'glpi_infocoms'
+            ]
+         ]
+      ],
+      'amort_time' => [
+         [
+            'to' => 'sink_time',
+            'tables' => [
+               'glpi_infocoms'
+            ]
+         ]
+      ],
+      'amort_type' => [
+         [
+            'to' => 'sink_type',
+            'tables' => [
+               'glpi_infocoms'
+            ]
+         ]
+      ],
+      'ifmac' => [
+         [
+            'to' => 'mac',
+            'tables' => [
+               'glpi_networkequipments'
+            ]
+         ]
+      ],
+      'ifaddr' => [
+         [
+            'to' => 'ip',
+            'tables' => [
+               'glpi_networkequipments',
+               'glpi_networkports'
+            ]
+         ]
+      ],
+      'ramSize' => [
+         [
+            'to' => 'memory_size',
+            'tables' => [
+               'glpi_printers'
+            ]
+         ]
+      ],
+      'facturation' => [
+         [
+            'to' => 'billing',
+            'tables' => [
+               'glpi_contracts'
+            ]
+         ]
+      ],
+      'monday' => [
+         [
+            'to' => 'use_monday',
+            'tables' => [
+               'glpi_contracts'
+            ]
+         ]
+      ],
+      'saturday' => [
+         [
+            'to' => 'use_saturday',
+            'tables' => [
+               'glpi_contracts'
+            ]
+         ]
+      ],
+      'recursive' => [
+         [
+            'to' => 'is_recursive',
+            'tables' => [
+               'glpi_networkequipments',
+               'glpi_groups',
+               'glpi_contracts',
+               'glpi_contacts',
+               'glpi_suppliers',
+               'glpi_printers',
+               'glpi_softwares',
+               'glpi_softwareversions',
+               'glpi_softwarelicences'
+            ]
+         ]
+      ],
+      'faq' => [
+         [
+            'to' => 'is_faq',
+            'tables' => [
+               'glpi_knowbaseitems'
+            ]
+         ]
+      ],
+      'flags_micro' => [
+         [
+            'to' => 'have_micro',
+            'tables' => [
+               'glpi_monitors'
+            ]
+         ]
+      ],
+      'flags_speaker' => [
+         [
+            'to' => 'have_speaker',
+            'tables' => [
+               'glpi_monitors'
+            ]
+         ]
+      ],
+      'flags_subd' => [
+         [
+            'to' => 'have_subd',
+            'tables' => [
+               'glpi_monitors'
+            ]
+         ]
+      ],
+      'flags_bnc' => [
+         [
+            'to' => 'have_bnc',
+            'tables' => [
+               'glpi_monitors'
+            ]
+         ]
+      ],
+      'flags_dvi' => [
+         [
+            'to' => 'have_dvi',
+            'tables' => [
+               'glpi_monitors'
+            ]
+         ]
+      ],
+      'flags_pivot' => [
+         [
+            'to' => 'have_pivot',
+            'tables' => [
+               'glpi_monitors'
+            ]
+         ]
+      ],
+      'flags_hp' => [
+         [
+            'to' => 'have_hp',
+            'tables' => [
+               'glpi_phones'
+            ]
+         ]
+      ],
+      'flags_casque' => [
+         [
+            'to' => 'have_headset',
+            'tables' => [
+               'glpi_phones'
+            ]
+         ]
+      ],
+      'flags_usb' => [
+         [
+            'to' => 'have_usb',
+            'tables' => [
+               'glpi_printers'
+            ]
+         ]
+      ],
+      'flags_par' => [
+         [
+            'to' => 'have_parallel',
+            'tables' => [
+               'glpi_printers'
+            ]
+         ]
+      ],
+      'flags_serial' => [
+         [
+            'to' => 'have_serial',
+            'tables' => [
+               'glpi_printers'
+            ]
+         ]
+      ],
+      'initial_pages' => [
+         [
+            'to' => 'init_pages_counter',
+            'tables' => [
+               'glpi_printers'
+            ]
+         ]
+      ],
+      'global' => [
+         [
+            'to' => 'is_global',
+            'tables' => [
+               'glpi_monitors',
+               'glpi_networkequipments',
+               'glpi_peripherals',
+               'glpi_phones',
+               'glpi_printers',
+               'glpi_softwares'
+            ]
+         ]
+      ],
+      'template' => [
+         [
+            'to' => 'template_name',
+            'tables' => [
+               'glpi_cartridgeitems',
+               'glpi_computers',
+               'glpi_consumableitems',
+               'glpi_devicecases',
+               'glpi_devicecontrols',
+               'glpi_devicedrives',
+               'glpi_devicegraphiccards',
+               'glpi_deviceharddrives',
+               'glpi_devicenetworkcards',
+               'glpi_devicemotherboards',
+               'glpi_devicepcis',
+               'glpi_devicepowersupplies',
+               'glpi_deviceprocessors',
+               'glpi_devicememories',
+               'glpi_devicesoundcards',
+               'glpi_monitors',
+               'glpi_networkequipments',
+               'glpi_peripherals',
+               'glpi_phones',
+               'glpi_printers',
+               'glpi_softwares'
+            ]
+         ]
+      ],
+      'comments' => [
+         [
+            'to' => 'comment',
+            'tables' => [
+               'glpi_cartridgeitems',
+               'glpi_computers',
+               'glpi_consumableitems',
+               'glpi_contacts',
+               'glpi_contracts',
+               'glpi_documents',
+               'glpi_autoupdatesystems',
+               'glpi_budgets',
+               'glpi_cartridgeitemtypes',
+               'glpi_devicecasetypes',
+               'glpi_consumableitemtypes',
+               'glpi_contacttypes',
+               'glpi_contracttypes',
+               'glpi_domains',
+               'glpi_suppliertypes',
+               'glpi_filesystems',
+               'glpi_networkequipmentfirmwares',
+               'glpi_networkinterfaces',
+               'glpi_interfacetypes',
+               'glpi_knowbaseitemcategories',
+               'glpi_softwarelicensetypes',
+               'glpi_locations',
+               'glpi_manufacturers',
+               'glpi_computermodels',
+               'glpi_monitormodels',
+               'glpi_networkequipmentmodels',
+               'glpi_peripheralmodels',
+               'glpi_phonemodels',
+               'glpi_printermodels',
+               'glpi_netpoints',
+               'glpi_networks',
+               'glpi_operatingsystems',
+               'glpi_operatingsystemservicepacks',
+               'glpi_operatingsystemversions',
+               'glpi_phonepowersupplies',
+               'glpi_devicememorytypes',
+               'glpi_documentcategories',
+               'glpi_softwarecategories',
+               'glpi_states',
+               'glpi_ticketcategories',
+               'glpi_usertitles',
+               'glpi_usercategories',
+               'glpi_vlans',
+               'glpi_suppliers',
+               'glpi_entities',
+               'glpi_groups',
+               'glpi_infocoms',
+               'glpi_monitors',
+               'glpi_phones',
+               'glpi_printers',
+               'glpi_peripherals',
+               'glpi_networkequipments',
+               'glpi_reservationitems',
+               'glpi_rules',
+               'glpi_softwares',
+               'glpi_softwarelicenses',
+               'glpi_softwareversions',
+               'glpi_computertypes',
+               'glpi_monitortypes',
+               'glpi_networkequipmenttypes',
+               'glpi_peripheraltypes',
+               'glpi_phonetypes',
+               'glpi_printertypes',
+               'glpi_users'
+            ]
+         ]
+      ],
+      'notes' => [
+         [
+            'to' => 'notepad',
+            'tables' => [
+               'glpi_cartridgeitems',
+               'glpi_computers',
+               'glpi_consumableitems',
+               'glpi_contacts',
+               'glpi_contracts',
+               'glpi_documents',
+               'glpi_suppliers',
+               'glpi_entitydatas',
+               'glpi_printers',
+               'glpi_monitors',
+               'glpi_phones',
+               'glpi_peripherals',
+               'glpi_networkequipments',
+               'glpi_softwares'
+            ]
+         ]
+      ]
+   ];
 
    $foreignkeys = Plugin::doHookFunction("plugin_datainjection_migratefields", $foreignkeys);
    $query = "SELECT `itemtype`, `value`
@@ -1078,7 +1733,7 @@ function plugin_datainjection_update220_230() {
  * @param $hook_name
  * @param $params       array
 **/
-function plugin_datainjection_loadHook($hook_name, $params=array ()) {
+function plugin_datainjection_loadHook($hook_name, $params = []) {
 
    global $PLUGIN_HOOKS;
 
@@ -1131,7 +1786,7 @@ function plugin_datainjection_addDefaultWhere($itemtype) {
             $_SESSION['glpiactive_entity'], true
          );
          if (count($models) > 0) {
-            $tab = array();
+            $tab = [];
             foreach ($models as $model) {
                $tab[] = $model['id'];
             }

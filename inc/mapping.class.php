@@ -37,7 +37,7 @@ class PluginDatainjectionMapping extends CommonDBTM
     * @param $field
     * @param $value
    **/
-   function equal($field,$value) {
+   function equal($field, $value) {
 
       if (!isset($this->fields[$field])) {
          return false;
@@ -99,7 +99,7 @@ class PluginDatainjectionMapping extends CommonDBTM
       if (isset($_SESSION['datainjection']['lines'])) {
          $lines = unserialize($_SESSION['datainjection']['lines']);
       } else {
-         $lines = array();
+         $lines = [];
       }
 
       echo "<form method='post' name=form action='".Toolbox::getItemTypeFormURL(__CLASS__)."'>";
@@ -134,7 +134,7 @@ class PluginDatainjectionMapping extends CommonDBTM
          echo "<tr class='tab_bg_1'>";
          echo "<td class='center'>".$mapping->fields['name']."</td>";
          echo "<td class='center'>";
-         $options = array('primary_type' => $model->fields['itemtype']);
+         $options = ['primary_type' => $model->fields['itemtype']];
          PluginDatainjectionInjectionType::dropdownLinkedTypes($mapping, $options);
          echo "</td>";
          echo "<td class='center'><span id='span_field_$mappings_id'>";
@@ -164,7 +164,7 @@ class PluginDatainjectionMapping extends CommonDBTM
 
       global $DB;
 
-      $several = array();
+      $several = [];
       $query  = "SELECT `value`,
                         COUNT(*) AS counter
                  FROM `glpi_plugin_datainjection_mappings`
@@ -187,7 +187,7 @@ class PluginDatainjectionMapping extends CommonDBTM
 
       global $DB;
 
-      $mappings = array();
+      $mappings = [];
       $query    = "SELECT `name`
                    FROM `glpi_plugin_datainjection_mappings`
                    WHERE `models_id` = '".$models_id."'

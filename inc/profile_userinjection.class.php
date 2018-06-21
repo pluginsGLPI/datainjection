@@ -52,14 +52,14 @@ class PluginDatainjectionProfile_UserInjection extends Profile_User
 
    function connectedTo() {
 
-      return array();
+      return [];
    }
 
 
     /**
     * @see plugins/datainjection/inc/PluginDatainjectionInjectionInterface::getOptions()
    **/
-   function getOptions($primary_type='') {
+   function getOptions($primary_type = '') {
 
       $tab = Search::getOptions(get_parent_class($this));
 
@@ -74,10 +74,10 @@ class PluginDatainjectionProfile_UserInjection extends Profile_User
 
       //Remove some options because some fields cannot be imported
       $blacklist     = PluginDatainjectionCommonInjectionLib::getBlacklistedOptions(get_parent_class($this));
-      $notimportable = array();
+      $notimportable = [];
 
       $options['ignore_fields'] = array_merge($blacklist, $notimportable);
-      $options['displaytype']   = array("bool"           => array(86));
+      $options['displaytype']   = ["bool"           => [86]];
 
       return PluginDatainjectionCommonInjectionLib::addToSearchOptions($tab, $options, $this);
    }
@@ -86,7 +86,7 @@ class PluginDatainjectionProfile_UserInjection extends Profile_User
     /**
     * @see plugins/datainjection/inc/PluginDatainjectionInjectionInterface::addOrUpdateObject()
    **/
-   function addOrUpdateObject($values=array(), $options=array()) {
+   function addOrUpdateObject($values = [], $options = []) {
 
       $lib = new PluginDatainjectionCommonInjectionLib($this, $values, $options);
       $lib->processAddOrUpdate();
@@ -98,7 +98,7 @@ class PluginDatainjectionProfile_UserInjection extends Profile_User
     * @param $primary_type
     * @param $values
    **/
-   function addSpecificNeededFields($primary_type,$values) {
+   function addSpecificNeededFields($primary_type, $values) {
 
       $fields['users_id'] = $values['User']['id'];
       return $fields;

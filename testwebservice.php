@@ -36,7 +36,7 @@ chdir(dirname($_SERVER["SCRIPT_FILENAME"]));
 chdir("../../..");
 $url = "/".basename(getcwd())."/plugins/webservices/xmlrpc.php";
 
-$args = array();
+$args = [];
 if ($_SERVER['argc'] > 1) {
    for ($i=1; $i<count($_SERVER['argv']); $i++) {
       $it           = explode("=", $argv[$i], 2);
@@ -67,7 +67,7 @@ $attrs['login_password']   = (isset($args['password'])?$args['password']:'glpi')
 $attrs['host']             = (isset($args['host'])?$args['host']:'localhost');
 $attrs['url']              = (isset($args['url'])?$args['url']
                                                  :'glpi080/plugins/webservices/xmlrpc.php');
-$attrs['additional']       = (isset($args['additional'])?$args['additional']:array());
+$attrs['additional']       = (isset($args['additional'])?$args['additional']:[]);
 
 $response = call('glpi.doLogin', $attrs);
 
@@ -90,15 +90,21 @@ print_r($response);
 print_r(call('glpi.doLogout', $attrs));
 
 
-function call($method,$params) {
+function call($method, $params) {
 
    $header  = "Content-Type: text/xml";
    echo "+ Calling '$method' on http://".$params['host']."/".$params['url']."\n";
 
    $request = xmlrpc_encode_request($method, $params);
-   $context = stream_context_create(array('http' => array('method'  => "POST",
-                                                          'header'  => $header,
-                                                          'content' => $request)));
+   $context = stream_context_create(
+      [
+         'http' => [
+            'method'  => "POST",
+            'header'  => $header,
+            'content' => $request
+         ]
+      ]
+   );
 
    $file = file_get_contents("http://".$params['host']."/".$params['url'], false, $context);
    if (!$file) {

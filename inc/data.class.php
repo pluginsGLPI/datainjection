@@ -36,7 +36,7 @@ class PluginDatainjectionData
 
    function __construct() {
 
-      $injectionData = array();
+      $injectionData = [];
    }
 
 
@@ -63,7 +63,7 @@ class PluginDatainjectionData
       if (count($this->injectionData) >= $line_id) {
          return $this->injectionData[$line_id][0];
       }
-      return array();
+      return [];
    }
 
 }

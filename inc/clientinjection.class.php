@@ -38,7 +38,7 @@ class PluginDatainjectionClientInjection
     const STEP_RESULT  = 2;
 
     //Injection results
-   private $results = array();
+   private $results = [];
 
     //Model used for injection
    private $model;
@@ -56,7 +56,7 @@ class PluginDatainjectionClientInjection
 
       global $CFG_GLPI;
 
-      $buttons = array ();
+      $buttons =  [];
       $title   = "";
 
       if (Session::haveRight(static::$rightname, UPDATE)) {
@@ -71,7 +71,7 @@ class PluginDatainjectionClientInjection
    }
 
 
-   function showForm($ID, $options=array()) {
+   function showForm($ID, $options = []) {
 
       global $CFG_GLPI;
 
@@ -139,7 +139,7 @@ class PluginDatainjectionClientInjection
     /**
     * @param $options   array
    **/
-   static function showUploadFileForm($options=array()) {
+   static function showUploadFileForm($options = []) {
 
       $add_form = (isset($options['add_form']) && $options['add_form']);
       $confirm  = (isset($options['confirm']) && $options['confirm']);
@@ -197,7 +197,7 @@ class PluginDatainjectionClientInjection
    static function showInjectionForm(PluginDatainjectionModel $model, $entities_id) {
 
       if (!PluginDatainjectionSession::getParam('infos')) {
-         PluginDatainjectionSession::setParam('infos', array());
+         PluginDatainjectionSession::setParam('infos', []);
       }
       echo "<table class='tab_cadre_fixe'>";
       echo "<tr class='tab_bg_1'>";

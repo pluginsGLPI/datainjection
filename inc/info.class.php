@@ -74,7 +74,7 @@ class PluginDatainjectionInfo extends CommonDBTM
     * @param $model     PluginDatainjectionModel object
     * @param $canedit   (false by default)
    **/
-   static function showAddInfo(PluginDatainjectionModel $model, $canedit=false) {
+   static function showAddInfo(PluginDatainjectionModel $model, $canedit = false) {
 
       if ($canedit) {
          echo "<form method='post' name='form' id='form' action='".
@@ -96,8 +96,8 @@ class PluginDatainjectionInfo extends CommonDBTM
 
          $rand = PluginDatainjectionInjectionType::dropdownLinkedTypes(
              $info,
-             array('primary_type'
-                                                                        => $model->fields['itemtype'])
+             ['primary_type'
+                                                                        => $model->fields['itemtype']]
          );
          echo "</td>";
          echo "<td class='center'><span id='span_field_$infos_id'></span></td>";
@@ -159,8 +159,8 @@ class PluginDatainjectionInfo extends CommonDBTM
             echo "<td class='center'>";
             $rand = PluginDatainjectionInjectionType::dropdownLinkedTypes(
                 $info,
-                array('primary_type'
-                                                                          => $model->fields['itemtype'])
+                ['primary_type'
+                                                                          => $model->fields['itemtype']]
             );
             echo "</td>";
             echo "<td class='center'><span id='span_field_$infos_id'></span></td>";
@@ -175,7 +175,7 @@ class PluginDatainjectionInfo extends CommonDBTM
             echo "</td></tr>";
 
             Html::openArrowMassives("info_form$rand", true);
-            Html::closeArrowMassives(array('delete' => __('Delete permanently')));
+            Html::closeArrowMassives(['delete' => __('Delete permanently')]);
          }
          echo "</table>";
          Html::closeForm();
@@ -187,7 +187,7 @@ class PluginDatainjectionInfo extends CommonDBTM
     * @param $models_id
     * @param $infos        array
    **/
-   static function manageInfos($models_id, $infos=array()) {
+   static function manageInfos($models_id, $infos = []) {
 
       global $DB;
 
@@ -216,8 +216,8 @@ class PluginDatainjectionInfo extends CommonDBTM
       }
 
       $info->deleteByCriteria(
-          array('models_id' => $models_id,
-          'value'     => PluginDatainjectionInjectionType::NO_VALUE)
+          ['models_id' => $models_id,
+          'value'     => PluginDatainjectionInjectionType::NO_VALUE]
       );
    }
 
@@ -270,7 +270,7 @@ class PluginDatainjectionInfo extends CommonDBTM
                  $info,
                  (isset($_SESSION['datainjection']['infos'])
                                              ? $_SESSION['datainjection']['infos']
-                 : array())
+                 : [])
              );
              echo "</tr>";
          }
@@ -292,7 +292,7 @@ class PluginDatainjectionInfo extends CommonDBTM
     * @param $info               PluginDatainjectionInfo object
     * @param $values    array
     */
-   static function displayAdditionalInformation(PluginDatainjectionInfo $info, $values=array()) {
+   static function displayAdditionalInformation(PluginDatainjectionInfo $info, $values = []) {
 
       $injectionClass
        = PluginDatainjectionCommonInjectionLib::getInjectionClassInstance($info->fields['itemtype']);
@@ -319,7 +319,7 @@ class PluginDatainjectionInfo extends CommonDBTM
     * @return nothing
    **/
    static function showAdditionalInformation(PluginDatainjectionInfo $info, $option,
-                                             $injectionClass, $values = array()) {
+                                             $injectionClass, $values = []) {
 
       $name = "info[".$option['linkfield']."]";
 
@@ -347,8 +347,8 @@ class PluginDatainjectionInfo extends CommonDBTM
                 $value = 0;
             }
             Dropdown::show(
-                getItemTypeForTable($option['table']), array('name'  => $name,
-                                                                      'value' => $value)
+                getItemTypeForTable($option['table']), ['name'  => $name,
+                                                                      'value' => $value]
             );
             break;
 
@@ -364,13 +364,13 @@ class PluginDatainjectionInfo extends CommonDBTM
                 $value = 0;
             }
             User::dropdown(
-                array('name'  => $name,
-                               'value' => $value)
+                ['name'  => $name,
+                               'value' => $value]
             );
             break;
 
          case 'date' :
-            Html::showDateField($name, array('value' => $value));
+            Html::showDateField($name, ['value' => $value]);
             break;
 
          case 'multiline_text' :
@@ -381,14 +381,14 @@ class PluginDatainjectionInfo extends CommonDBTM
             $minvalue = (isset($option['minvalue'])?$option['minvalue']:0);
             $maxvalue = (isset($option['maxvalue'])?$option['maxvalue']:0);
             $step     = (isset($option['step'])?$option['step']:1);
-            $default  = (isset($option['-1'])?array(-1 => $option['-1']):array());
+            $default  = (isset($option['-1'])?[-1 => $option['-1']]:[]);
 
             Dropdown::showNumber(
-                $name, array('value' => $value,
+                $name, ['value' => $value,
                                             'min'   => $minvalue,
                                             'max'   => $maxvalue,
                                             'step'  => $step,
-                                            'toadd' => $default)
+                                            'toadd' => $default]
             );
             break;
 
@@ -457,7 +457,7 @@ class PluginDatainjectionInfo extends CommonDBTM
 
       global $DB;
 
-      $values    = array(0 => Dropdown::EMPTY_VALUE);
+      $values    = [0 => Dropdown::EMPTY_VALUE];
 
       $sql = "SELECT `id`, `template_name`
               FROM `".$table."`

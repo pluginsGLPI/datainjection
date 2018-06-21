@@ -52,14 +52,14 @@ class PluginDatainjectionContractInjection extends Contract
 
    function connectedTo() {
 
-      return array();
+      return [];
    }
 
 
     /**
     * @see plugins/datainjection/inc/PluginDatainjectionInjectionInterface::getOptions()
    **/
-   function getOptions($primary_type='') {
+   function getOptions($primary_type = '') {
 
       $tab                       = Search::getOptions(get_parent_class($this));
 
@@ -90,18 +90,18 @@ class PluginDatainjectionContractInjection extends Contract
 
       //Remove some options because some fields cannot be imported
       $blacklist     = PluginDatainjectionCommonInjectionLib::getBlacklistedOptions(get_parent_class($this));
-      $notimportable = array(12, 13, 20, 41, 42, 43, 44, 45, 72);
+      $notimportable = [12, 13, 20, 41, 42, 43, 44, 45, 72];
 
       $options['ignore_fields'] = array_merge($blacklist, $notimportable);
 
-      $options['displaytype']   = array("dropdown"         => array(4),
-                                      "date"             => array(5),
-                                      "dropdown_integer" => array(6, 7, 21),
-                                      "bool"             => array(86),
-                                      "alert"            => array(59),
-                                      "billing"          => array(22),
-                                      "renewal"          => array(23),
-                                      "multiline_text"   => array(16 ,90));
+      $options['displaytype']   = ["dropdown"         => [4],
+                                      "date"             => [5],
+                                      "dropdown_integer" => [6, 7, 21],
+                                      "bool"             => [86],
+                                      "alert"            => [59],
+                                      "billing"          => [22],
+                                      "renewal"          => [23],
+                                      "multiline_text"   => [16 ,90]];
 
       return PluginDatainjectionCommonInjectionLib::addToSearchOptions($tab, $options, $this);
    }
@@ -110,7 +110,7 @@ class PluginDatainjectionContractInjection extends Contract
     /**
     * @see plugins/datainjection/inc/PluginDatainjectionInjectionInterface::addOrUpdateObject()
    **/
-   function addOrUpdateObject($values=array(), $options=array()) {
+   function addOrUpdateObject($values = [], $options = []) {
 
       $lib = new PluginDatainjectionCommonInjectionLib($this, $values, $options);
       $lib->processAddOrUpdate();
@@ -122,13 +122,13 @@ class PluginDatainjectionContractInjection extends Contract
     * @param $info      array
     * @param $option    array
    **/
-   function showAdditionalInformation($info=array(),$option=array()) {
+   function showAdditionalInformation($info = [], $option = []) {
 
       $name = "info[".$option['linkfield']."]";
 
       switch ($option['displaytype']) {
          case 'alert' :
-            Contract::dropdownAlert(array('name' => $name));
+            Contract::dropdownAlert(['name' => $name]);
             break;
 
          case 'renewal' :
@@ -137,11 +137,11 @@ class PluginDatainjectionContractInjection extends Contract
 
          case 'billing' :
             Dropdown::showNumber(
-                $name, array('value' => 0,
+                $name, ['value' => 0,
                                             'min'   => 12,
                                             'max'   => 60,
                                             'step'  => 12,
-                                            'toadd' => array(0 => Dropdown::EMPTY_VALUE,
+                                            'toadd' => [0 => Dropdown::EMPTY_VALUE,
                                                              1 => sprintf(
                                                                  _n(
                                                                      '%d month',
@@ -165,8 +165,8 @@ class PluginDatainjectionContractInjection extends Contract
                                                                      '%d month',
                                                                      '%d months', 6
                                                                  ), 6
-                                                             ))),
-                array('unit' => 'month')
+                                                             )]],
+                ['unit' => 'month']
             );
             break;
 

@@ -42,7 +42,7 @@ if (isset($_SESSION['datainjection']['go'])) {
 } else if (isset($_POST['upload'])) {
    $model = new PluginDatainjectionModel();
    $model->can($_POST['id'], READ);
-   $_SESSION['datainjection']['infos'] = (isset($_POST['info'])?$_POST['info']:array());
+   $_SESSION['datainjection']['infos'] = (isset($_POST['info'])?$_POST['info']:[]);
 
    //If additional informations provided : check if mandatory infos are present
    if (!$model->checkMandatoryFields($_SESSION['datainjection']['infos'])) {
@@ -57,12 +57,14 @@ if (isset($_SESSION['datainjection']['go'])) {
             && !$_FILES['filename']['error']
                && $_FILES['filename']['size']) {
 
-        //Read file using automatic encoding detection, and do not delete file once readed
-        $options = array('file_encoding' => $_POST['file_encoding'],
-                       'mode'          => PluginDatainjectionModel::PROCESS,
-                       'delete_file'   => false);
-        $response = $model->processUploadedFile($options);
-        $model->cleanData();
+      //Read file using automatic encoding detection, and do not delete file once readed
+      $options = [
+         'file_encoding' => $_POST['file_encoding'],
+         'mode'          => PluginDatainjectionModel::PROCESS,
+         'delete_file'   => false
+      ];
+      $response = $model->processUploadedFile($options);
+      $model->cleanData();
 
       if ($response) {
          //File uploaded successfully and matches the given model : switch to the import tab

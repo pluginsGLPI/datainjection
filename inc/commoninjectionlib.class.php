@@ -32,18 +32,18 @@ class PluginDatainjectionCommonInjectionLib
 {
 
     //Injection results
-   private $results = array();
+   private $results = [];
 
     //Values to inject
-   private $values = array();
+   private $values = [];
 
     //Fields mandatory for injection
-   private $mandatory_fields = array();
+   private $mandatory_fields = [];
 
     //List of fields which can agregate more than one value (type multiline_text)
-   private $severalvalues_fields = array();
+   private $severalvalues_fields = [];
 
-   private $optional_infos = array();
+   private $optional_infos = [];
 
     //Injection class to use
    private $injectionClass;
@@ -52,13 +52,13 @@ class PluginDatainjectionCommonInjectionLib
    private $primary_type;
 
     //Store checks to perform on values
-   private $checks = array();
+   private $checks = [];
 
     //Store rights
-   private $rights = array();
+   private $rights = [];
 
     //Store specific fields formats
-   private $formats = array();
+   private $formats = [];
 
     //Entity in which data will be inserted
    private $entity = 0;
@@ -123,24 +123,24 @@ class PluginDatainjectionCommonInjectionLib
    **/
    function setDefaultValues() {
 
-      $this->checks = array('ip'           => false, 'mac'          => false,
+      $this->checks = ['ip'           => false, 'mac'          => false,
                           'integer'      => false, 'yes'          => false,
                           'bool'         => false, 'date'         => false,
                           'float'        => false, 'string'       => false,
                           'right_r'      => false, 'right_rw'     => false,
                           'interface'    => false, 'auth_method'  => false,
-                          'port_unicity' => false);
+                          'port_unicity' => false];
 
       //Rights options
-      $this->rights = array('add_dropdown'              => false,
+      $this->rights = ['add_dropdown'              => false,
                           'overwrite_notempty_fields' => false,
                           'can_add'                   => false,
                           'can_update'                => false,
-                          'can_delete'                => false);
+                          'can_delete'                => false];
 
       //Field format options
-      $this->formats = array('date_format'  => self::DATE_TYPE_YYYYMMDD,
-                           'float_format' => self::FLOAT_TYPE_COMMA);
+      $this->formats = ['date_format'  => self::DATE_TYPE_YYYYMMDD,
+                           'float_format' => self::FLOAT_TYPE_COMMA];
    }
 
 
@@ -155,7 +155,7 @@ class PluginDatainjectionCommonInjectionLib
     *
     * @return nothinActiong
    **/
-   function __construct($injectionClass, $values=array(), $injection_options=array()) {
+   function __construct($injectionClass, $values = [], $injection_options = []) {
 
       $this->setDefaultValues();
 
@@ -188,8 +188,8 @@ class PluginDatainjectionCommonInjectionLib
       if (isset($injection_options['formats'])) {
          $this->formats = $injection_options['formats'];
       } else {
-         $this->formats = array('date_format'  => self::DATE_TYPE_YYYYMMDD,
-                            'float_format' => self::FLOAT_TYPE_DOT);
+         $this->formats = ['date_format'  => self::DATE_TYPE_YYYYMMDD,
+                            'float_format' => self::FLOAT_TYPE_DOT];
       }
 
       //Store values to inject
@@ -248,7 +248,7 @@ class PluginDatainjectionCommonInjectionLib
                 && self::isFieldADropdown($option['displaytype']))
             ) {
                $status_check = false;
-               $this->results[self::ACTION_CHECK][] = array(self::MANDATORY, $option['name']);
+               $this->results[self::ACTION_CHECK][] = [self::MANDATORY, $option['name']];
             }
          }
       }
@@ -266,8 +266,8 @@ class PluginDatainjectionCommonInjectionLib
    static function isFieldADropdown($field_type) {
 
       if (!in_array(
-          $field_type, array('integer', 'decimal', 'tree',
-          'text', 'multiline_text', 'date')
+          $field_type, ['integer', 'decimal', 'tree',
+          'text', 'multiline_text', 'date']
       )) {
          return true;
       }
@@ -347,12 +347,12 @@ class PluginDatainjectionCommonInjectionLib
       //2 : id
       // 19 : date_mod
       // 80 : entity
-      $blacklist = array(2, 19, 80, 201, 202, 203, 204);
+      $blacklist = [2, 19, 80, 201, 202, 203, 204];
 
       //add document fields
       if (in_array($itemtype, $CFG_GLPI["document_types"])) {
          $tabs            = Document::rawSearchOptionsToAdd();
-         $document_fields = array();
+         $document_fields = [];
          unset($tabs['document']);
          foreach ($tabs as $k => $v) {
             $document_fields[] = $k;
@@ -364,7 +364,7 @@ class PluginDatainjectionCommonInjectionLib
       //add infocoms fields
       if (in_array($itemtype, $CFG_GLPI["infocom_types"])) {
          $tabs           = Infocom::rawSearchOptionsToAdd($itemtype);
-         $infocom_fields = array();
+         $infocom_fields = [];
          unset($tabs['financial']);
          foreach ($tabs as $k => $v) {
             $infocom_fields[] = $k;
@@ -375,7 +375,7 @@ class PluginDatainjectionCommonInjectionLib
       //add contract fields
       if (in_array($itemtype, $CFG_GLPI["contract_types"])) {
          $tabs            = Contract::rawSearchOptionsToAdd();
-         $contract_fields = array();
+         $contract_fields = [];
          unset($tabs['contract']);
          foreach ($tabs as $k => $v) {
             $contract_fields[] = $k;
@@ -387,7 +387,7 @@ class PluginDatainjectionCommonInjectionLib
       //add networkport fields
       if (in_array($itemtype, $CFG_GLPI["networkport_types"])) {
          $tabs               = NetworkPort::rawSearchOptionsToAdd($itemtype);
-         $networkport_fields = array();
+         $networkport_fields = [];
          unset($tabs['network']);
          foreach ($tabs as $k => $v) {
             $networkport_fields[] = $k;
@@ -398,7 +398,7 @@ class PluginDatainjectionCommonInjectionLib
 
       //add ticket_types fields
       if (in_array($itemtype, $CFG_GLPI["ticket_types"])) {
-         $ticket_fields = array(60, 140);
+         $ticket_fields = [60, 140];
          $blacklist     = array_merge($blacklist, $ticket_fields);
       }
 
@@ -499,7 +499,7 @@ class PluginDatainjectionCommonInjectionLib
    **/
    private function manageFieldValues() {
 
-      $blacklisted_fields = array('id');
+      $blacklisted_fields = ['id'];
 
       foreach ($this->values as $itemtype => $data) {
          $injectionClass = self::getInjectionClassInstance($itemtype);
@@ -535,7 +535,7 @@ class PluginDatainjectionCommonInjectionLib
     * @return nothing
    **/
    private function getFieldValue($injectionClass, $itemtype, $searchOption, $field, $value,
-        $add=true
+        $add = true
     ) {
       if (isset($searchOption['storevaluein'])) {
          $linkfield = $searchOption['storevaluein'];
@@ -572,8 +572,8 @@ class PluginDatainjectionCommonInjectionLib
             $item    = new $tmptype();
             if ($item instanceof CommonTreeDropdown) {
                // use findID instead of getID
-               $input = array ('completename' => $value,
-                               'entities_id'  => $this->entity);
+               $input =  ['completename' => $value,
+                               'entities_id'  => $this->entity];
 
                if ($item->canCreate() && $this->rights['add_dropdown']) {
                   $id = $item->import($input);
@@ -600,8 +600,8 @@ class PluginDatainjectionCommonInjectionLib
             if ($value && $id <= 0) {
                  $this->results['status']                     = self::WARNING;
                  $this->results[self::ACTION_CHECK]['status'] = self::WARNING;
-                 $this->results[self::ACTION_CHECK][]         = array(self::WARNING_NOTFOUND,
-                                                          $searchOption['name']."='$value'");
+                 $this->results[self::ACTION_CHECK][]         = [self::WARNING_NOTFOUND,
+                                                          $searchOption['name']."='$value'"];
             }
             break;
 
@@ -656,9 +656,9 @@ class PluginDatainjectionCommonInjectionLib
 
       global $DB;
 
-      $external = array();
+      $external = [];
       $values   = $this->getValuesForItemtype($itemtype);
-      $toadd    = array('manufacturers_id' => 'manufacturer');
+      $toadd    = ['manufacturers_id' => 'manufacturer'];
 
       foreach ($toadd as $field => $addvalue) {
          if (isset($values[$field])) {
@@ -843,7 +843,7 @@ class PluginDatainjectionCommonInjectionLib
     * @param value of the field
     * @param fromdb boolean
    **/
-   private function setValueForItemtype($itemtype, $field, $value, $fromdb=false) {
+   private function setValueForItemtype($itemtype, $field, $value, $fromdb = false) {
 
       // TODO awfull hack, text ftom CSV set more than once, so check if "another" value
       if (isset($this->values[$itemtype][$field]) && $this->values[$itemtype][$field]!=$value) {
@@ -1024,8 +1024,8 @@ class PluginDatainjectionCommonInjectionLib
       switch ($format) {
          case self::FLOAT_TYPE_COMMA :
             $value = str_replace(
-                array(" ", ","),
-                array("","."),
+                [" ", ","],
+                ["","."],
                 $value
             );
             break;
@@ -1145,7 +1145,7 @@ class PluginDatainjectionCommonInjectionLib
             if ($value == self::EMPTY_VALUE && $mandatory) {
                $this->results['status']                     = self::FAILED;
                $this->results[self::ACTION_CHECK]['status'] = self::FAILED;
-               $this->results[self::ACTION_CHECK][]         = array(self::MANDATORY, $field);
+               $this->results[self::ACTION_CHECK][]         = [self::MANDATORY, $field];
                $continue = false;
 
             } else {
@@ -1153,8 +1153,8 @@ class PluginDatainjectionCommonInjectionLib
                    $injectionClass, $option, $field, $value,
                    $mandatory
                );
-               $this->results[self::ACTION_CHECK][] = array($check_result,
-                                                       $field."='$value'");
+               $this->results[self::ACTION_CHECK][] = [$check_result,
+                                                       $field."='$value'"];
 
                if ($check_result != self::SUCCESS) {
                    $this->results[self::ACTION_CHECK]['status'] = self::FAILED;
@@ -1500,10 +1500,10 @@ class PluginDatainjectionCommonInjectionLib
     *
     * @return the id of the object added or updated
    **/
-   private function effectiveAddOrUpdate($injectionClass, $item, $values, $add=true) {
+   private function effectiveAddOrUpdate($injectionClass, $item, $values, $add = true) {
 
       //Insert data using the standard add() method
-      $toinject = array();
+      $toinject = [];
       $options  = $injectionClass->getOptions();
 
       foreach ($values as $key => $value) {
@@ -1522,7 +1522,7 @@ class PluginDatainjectionCommonInjectionLib
 
       if (method_exists($injectionClass, 'customimport')) {
          $newID = call_user_func(
-             array($injectionClass, 'customimport'), $toinject, $add,
+             [$injectionClass, 'customimport'], $toinject, $add,
              $this->rights
          );
       } else if ($item instanceof CommonDropdown && $add) {
@@ -1867,7 +1867,7 @@ class PluginDatainjectionCommonInjectionLib
     *
     * @return nothing
    **/
-   static function logAddOrUpdate($item, $add=true) {
+   static function logAddOrUpdate($item, $add = true) {
 
       if ($item->dohistory) {
          $changes[0] = 0;
@@ -1892,9 +1892,9 @@ class PluginDatainjectionCommonInjectionLib
    **/
    static function getActionLabel($action) {
 
-      $actions = array(self::IMPORT_ADD    => __('Add'),
+      $actions = [self::IMPORT_ADD    => __('Add'),
                      self::IMPORT_UPDATE => __('Update'),
-                     self::IMPORT_DELETE => __('Delete'));
+                     self::IMPORT_DELETE => __('Delete')];
 
       if (isset($actions[$action])) {
           return  $actions[$action];
@@ -1974,8 +1974,8 @@ class PluginDatainjectionCommonInjectionLib
 
       //Add linkfield for theses fields : no massive action is allowed in the core, but they can be
       //imported using the commonlib
-      $add_linkfield = array('comment' => 'comment',
-                           'notepad' => 'notepad');
+      $add_linkfield = ['comment' => 'comment',
+                           'notepad' => 'notepad'];
 
       foreach ($type_searchOptions as $id => $tmp) {
          if (!is_array($tmp) || !isset($tmp['field']) || in_array($id, $options['ignore_fields'])) {
@@ -2004,7 +2004,7 @@ class PluginDatainjectionCommonInjectionLib
          }
       }
 
-      foreach (array('displaytype', 'checktype') as $paramtype) {
+      foreach (['displaytype', 'checktype'] as $paramtype) {
          if (isset($options[$paramtype])) {
             foreach ($options[$paramtype] as $type => $tabsID) {
                foreach ($tabsID as $tabID) {
@@ -2026,7 +2026,7 @@ class PluginDatainjectionCommonInjectionLib
     *
     * @return nothing
    **/
-   static function addTemplateSearchOptions($injectionClass,&$tab) {
+   static function addTemplateSearchOptions($injectionClass, &$tab) {
 
       $itemtype = self::getItemtypeByInjectionClass($injectionClass);
       $item     = new $itemtype();

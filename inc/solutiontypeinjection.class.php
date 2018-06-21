@@ -52,7 +52,7 @@ class PluginDatainjectionSolutionTypeInjection extends SolutionType
 
    function connectedTo() {
 
-      return array();
+      return [];
    }
 
 
@@ -65,12 +65,12 @@ class PluginDatainjectionSolutionTypeInjection extends SolutionType
 
       //Remove some options because some fields cannot be imported
       $blacklist     = PluginDatainjectionCommonInjectionLib::getBlacklistedOptions(get_parent_class($this));
-      $notimportable = array();
+      $notimportable = [];
 
       $options['ignore_fields'] = array_merge($blacklist, $notimportable);
 
-      $options['displaytype']   = array("multiline_text" => array(16),
-                                      "bool"           => array(86));
+      $options['displaytype']   = ["multiline_text" => [16],
+                                      "bool"           => [86]];
 
       return PluginDatainjectionCommonInjectionLib::addToSearchOptions($tab, $options, $this);
    }
@@ -79,7 +79,7 @@ class PluginDatainjectionSolutionTypeInjection extends SolutionType
     /**
     * @see plugins/datainjection/inc/PluginDatainjectionInjectionInterface::addOrUpdateObject()
    **/
-   function addOrUpdateObject($values=array(), $options=array()) {
+   function addOrUpdateObject($values = [], $options = []) {
 
       $lib = new PluginDatainjectionCommonInjectionLib($this, $values, $options);
       $lib->processAddOrUpdate();

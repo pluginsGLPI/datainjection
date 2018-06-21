@@ -52,25 +52,25 @@ class PluginDatainjectionEntityInjection extends Entity
 
    function connectedTo() {
 
-      return array('Document');
+      return ['Document'];
    }
 
 
     /**
     * @see plugins/datainjection/inc/PluginDatainjectionInjectionInterface::getOptions()
    **/
-   function getOptions($primary_type='') {
+   function getOptions($primary_type = '') {
 
       $tab           = Search::getOptions(get_parent_class($this));
 
       //Remove some options because some fields cannot be imported
       $blacklist     = PluginDatainjectionCommonInjectionLib::getBlacklistedOptions(get_parent_class($this));
-      $notimportable = array(14, 26, 27, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41,
-                           42, 43, 44, 45, 47, 48, 49,50, 51, 52, 53, 54, 55, 91, 92, 93);
+      $notimportable = [14, 26, 27, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41,
+                           42, 43, 44, 45, 47, 48, 49,50, 51, 52, 53, 54, 55, 91, 92, 93];
 
       $options['ignore_fields'] = array_merge($blacklist, $notimportable);
-      $options['displaytype']   = array("multiline_text" => array(3, 16, 17, 24),
-                                      "dropdown"       => array(9));
+      $options['displaytype']   = ["multiline_text" => [3, 16, 17, 24],
+                                      "dropdown"       => [9]];
 
       return PluginDatainjectionCommonInjectionLib::addToSearchOptions($tab, $options, $this);
    }
@@ -79,7 +79,7 @@ class PluginDatainjectionEntityInjection extends Entity
     /**
     * @see plugins/datainjection/inc/PluginDatainjectionInjectionInterface::addOrUpdateObject()
    **/
-   function addOrUpdateObject($values=array(), $options=array()) {
+   function addOrUpdateObject($values = [], $options = []) {
 
       $lib = new PluginDatainjectionCommonInjectionLib($this, $values, $options);
       $lib->processAddOrUpdate();
@@ -92,7 +92,7 @@ class PluginDatainjectionEntityInjection extends Entity
     * @param $add                (true by default)
     * @param $rights    array
    **/
-   function customimport($input=array(), $add=true, $rights=array()) {
+   function customimport($input = [], $add = true, $rights = []) {
 
       if (!isset($input['completename']) || empty($input['completename'])) {
          return -1;
