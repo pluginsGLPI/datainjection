@@ -52,25 +52,25 @@ class PluginDatainjectionDeviceDriveInjection extends DeviceDrive
 
    function connectedTo() {
 
-      return array("Computer");
+      return ["Computer"];
    }
 
 
     /**
     * @see plugins/datainjection/inc/PluginDatainjectionInjectionInterface::getOptions()
    **/
-   function getOptions($primary_type='') {
+   function getOptions($primary_type = '') {
 
       $tab           = Search::getOptions(get_parent_class($this));
 
       //Remove some options because some fields cannot be imported
       $blacklist     = PluginDatainjectionCommonInjectionLib::getBlacklistedOptions(get_parent_class($this));
-      $notimportable = array();
+      $notimportable = [];
 
       $options['ignore_fields'] = array_merge($blacklist, $notimportable);
-      $options['displaytype']   = array("multiline_text" => array(16),
-                                      "dropdown"       => array(14, 23),
-                                      "bool"           => array(12));
+      $options['displaytype']   = ["multiline_text" => [16],
+                                      "dropdown"       => [14, 23],
+                                      "bool"           => [12]];
 
       return PluginDatainjectionCommonInjectionLib::addToSearchOptions($tab, $options, $this);
    }
@@ -81,7 +81,7 @@ class PluginDatainjectionDeviceDriveInjection extends DeviceDrive
     * @param $add             (true by default)
     * @param $rights    array
     */
-   function processAfterInsertOrUpdate($values, $add=true, $rights=array()) {
+   function processAfterInsertOrUpdate($values, $add = true, $rights = []) {
 
       if (isset($values['Computer']['id'])) {
 
@@ -108,7 +108,7 @@ class PluginDatainjectionDeviceDriveInjection extends DeviceDrive
     /**
     * @see plugins/datainjection/inc/PluginDatainjectionInjectionInterface::addOrUpdateObject()
    **/
-   function addOrUpdateObject($values=array(), $options=array()) {
+   function addOrUpdateObject($values = [], $options = []) {
 
       $lib = new PluginDatainjectionCommonInjectionLib($this, $values, $options);
       $lib->processAddOrUpdate();

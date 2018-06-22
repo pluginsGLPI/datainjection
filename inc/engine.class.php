@@ -37,10 +37,10 @@ class PluginDatainjectionEngine
    private $entity;
 
     //Additional infos to be added
-   private $infos = array();
+   private $infos = [];
 
     //Lines in error
-   private $error_lines = array();
+   private $error_lines = [];
 
 
     /**
@@ -48,7 +48,7 @@ class PluginDatainjectionEngine
     * @param $infos     array
     * @param $entity             (default 0)
     */
-   function __construct($model, $infos=array(), $entity=0) {
+   function __construct($model, $infos = [], $entity = 0) {
 
       //Instanciate model
       $this->model = $model;
@@ -71,8 +71,8 @@ class PluginDatainjectionEngine
    function injectLine($line, $index) {
 
       //Store all fields to injection, sorted by itemtype
-      $fields_toinject  = array();
-      $mandatory_fields = array();
+      $fields_toinject  = [];
+      $mandatory_fields = [];
 
       //Get the injectionclass associated to the itemtype
       $itemtype       = $this->getModel()->getItemtype();
@@ -110,7 +110,7 @@ class PluginDatainjectionEngine
 
       //--------------- Set all needed options ------------------//
       //Check options
-      $checks = array('ip'           => true,
+      $checks = ['ip'           => true,
                     'mac'          => true,
                     'integer'      => true,
                     'yes'          => true,
@@ -122,26 +122,26 @@ class PluginDatainjectionEngine
                     'right_rw'     => true,
                     'interface'    => true,
                     'auth_method'  => true,
-                    'port_unicity' => $this->getModel()->getPortUnicity());
+                    'port_unicity' => $this->getModel()->getPortUnicity()];
 
       //Rights options
-      $rights = array('add_dropdown'              => $this->getModel()->getCanAddDropdown(),
+      $rights = ['add_dropdown'              => $this->getModel()->getCanAddDropdown(),
                     'overwrite_notempty_fields' => $this->getModel()->getCanOverwriteIfNotEmpty(),
                     'can_add'                   => $this->model->getBehaviorAdd(),
                     'can_update'                => $this->model->getBehaviorUpdate(),
-                    'can_delete'                => false);
+                    'can_delete'                => false];
 
       //Field format options
-      $formats = array('date_format'  => $this->getModel()->getDateFormat(),
-                     'float_format' => $this->getModel()->getFloatFormat());
+      $formats = ['date_format'  => $this->getModel()->getDateFormat(),
+                     'float_format' => $this->getModel()->getFloatFormat()];
 
       //Check options : by default check all types
-      $options = array('checks'           => $checks,
+      $options = ['checks'           => $checks,
                      'entities_id'      => $this->getEntity(),
                      'rights'           => $rights,
                      'formats'          => $formats,
                      'mandatory_fields' => $mandatory_fields,
-                     'optional_data'    => $optional_data);
+                     'optional_data'    => $optional_data];
 
       //Will manage add or update
       $results = $injectionClass->addOrUpdateObject($fields_toinject, $options);
@@ -163,7 +163,7 @@ class PluginDatainjectionEngine
     *
     * @return nothing
    **/
-   function addRequiredFields($itemtype, &$fields_toinject=array()) {
+   function addRequiredFields($itemtype, &$fields_toinject = []) {
 
       //Add entity to the primary type
       $fields_toinject[$itemtype]['entities_id'] = $this->entity;
@@ -182,7 +182,7 @@ class PluginDatainjectionEngine
     * @return nothing
    **/
    function addValueToInject(&$fields_toinject, $searchOptions, $mapping, $value,
-        $several = array()
+        $several = []
     ) {
 
       // Option will be found only for "main" type.
@@ -214,7 +214,7 @@ class PluginDatainjectionEngine
    **/
    function addAdditionalInformations() {
 
-      $additional_infos = array();
+      $additional_infos = [];
       foreach ($this->model->getInfos() as $info) {
          if (isset($this->infos[$info->getValue()])
              && PluginDatainjectionInfo::keepInfo($info, $this->infos[$info->getValue()])

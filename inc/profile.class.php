@@ -35,14 +35,14 @@ class PluginDatainjectionProfile extends Profile
 
    static function getAllRights() {
 
-      $rights = array(
-        array('itemtype'  => 'PluginDatainjectionModel',
+      $rights = [
+        ['itemtype'  => 'PluginDatainjectionModel',
               'label'     => __('Model management', 'datainjection'),
-              'field'     => 'plugin_datainjection_model'),
-        array('itemtype'  => 'PluginDatainjectionModel',
+              'field'     => 'plugin_datainjection_model'],
+        ['itemtype'  => 'PluginDatainjectionModel',
               'label'     => __('Injection of the file', 'datainjection'),
               'field'     => 'plugin_datainjection_use',
-              'rights'    => array(READ => __('Read'))));
+              'rights'    => [READ => __('Read')]]];
       return $rights;
    }
 
@@ -60,7 +60,7 @@ class PluginDatainjectionProfile extends Profile
       $DB->query($query);
    }
 
-   function getTabNameForItem(CommonGLPI $item, $withtemplate=0) {
+   function getTabNameForItem(CommonGLPI $item, $withtemplate = 0) {
 
       if ($item->getType() == 'Profile') {
          if ($item->getField('interface') == 'central') {
@@ -72,7 +72,7 @@ class PluginDatainjectionProfile extends Profile
    }
 
 
-   static function displayTabContentForItem(CommonGLPI $item, $tabnum=1, $withtemplate=0) {
+   static function displayTabContentForItem(CommonGLPI $item, $tabnum = 1, $withtemplate = 0) {
 
       if ($item->getType() == 'Profile') {
          $profile = new self();
@@ -80,7 +80,7 @@ class PluginDatainjectionProfile extends Profile
          //In case there's no right datainjection for this profile, create it
          self::addDefaultProfileInfos(
              $item->getID(),
-             array('plugin_datainjection_model' => 0)
+             ['plugin_datainjection_model' => 0]
          );
          $profile->showForm($ID);
       }
@@ -118,8 +118,8 @@ class PluginDatainjectionProfile extends Profile
       foreach (self::getAllRights() as $right) {
          self::addDefaultProfileInfos(
              $profiles_id,
-             array('plugin_datainjection_model' => ALLSTANDARDRIGHT,
-             'plugin_datainjection_use' => READ)
+             ['plugin_datainjection_model' => ALLSTANDARDRIGHT,
+             'plugin_datainjection_use' => READ]
          );
       }
    }
@@ -148,11 +148,11 @@ class PluginDatainjectionProfile extends Profile
                   $value = 0;
                 break;
             }
-            self::addDefaultProfileInfos($id, array('plugin_datainjection_model' => $value));
+            self::addDefaultProfileInfos($id, ['plugin_datainjection_model' => $value]);
             if ($value > 0) {
-               self::addDefaultProfileInfos($id, array('plugin_datainjection_use' => READ));
+               self::addDefaultProfileInfos($id, ['plugin_datainjection_use' => READ]);
             } else {
-               self::addDefaultProfileInfos($id, array('plugin_datainjection_model' => 0));
+               self::addDefaultProfileInfos($id, ['plugin_datainjection_model' => 0]);
             }
          }
       }
@@ -166,10 +166,10 @@ class PluginDatainjectionProfile extends Profile
     *
     * @return nothing
     **/
-   function showForm($profiles_id=0, $openform=true, $closeform=true) {
+   function showForm($profiles_id = 0, $openform = true, $closeform = true) {
 
       echo "<div class='firstbloc'>";
-      if (($canedit = Session::haveRightsOr(self::$rightname, array(CREATE, UPDATE, PURGE)))
+      if (($canedit = Session::haveRightsOr(self::$rightname, [CREATE, UPDATE, PURGE]))
           && $openform
       ) {
          $profile = new Profile();
@@ -182,16 +182,16 @@ class PluginDatainjectionProfile extends Profile
       $rights = self::getAllRights();
       $profile->displayRightsChoiceMatrix(
           self::getAllRights(),
-          array('canedit'       => $canedit,
+          ['canedit'       => $canedit,
                                               'default_class' => 'tab_bg_2',
-          'title'         => __('General'))
+          'title'         => __('General')]
       );
       if ($canedit
           && $closeform
       ) {
                                             echo "<div class='center'>";
-                                            echo Html::hidden('id', array('value' => $profiles_id));
-                                            echo Html::submit(_sx('button', 'Save'), array('name' => 'update'));
+                                            echo Html::hidden('id', ['value' => $profiles_id]);
+                                            echo Html::submit(_sx('button', 'Save'), ['name' => 'update']);
                                             echo "</div>\n";
                                             Html::closeForm();
       }

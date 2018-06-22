@@ -52,14 +52,14 @@ class PluginDatainjectionDocumentInjection extends Document
 
    function connectedTo() {
 
-      return array();
+      return [];
    }
 
 
     /**
     * @see plugins/datainjection/inc/PluginDatainjectionInjectionInterface::getOptions()
    **/
-   function getOptions($primary_type='') {
+   function getOptions($primary_type = '') {
       return Search::getOptions(get_parent_class($this));
 
    }
@@ -68,7 +68,7 @@ class PluginDatainjectionDocumentInjection extends Document
     /**
     * @see plugins/datainjection/inc/PluginDatainjectionInjectionInterface::addOrUpdateObject()
    **/
-   function addOrUpdateObject($values=array(), $options=array()) {
+   function addOrUpdateObject($values = [], $options = []) {
 
       $lib = new PluginDatainjectionCommonInjectionLib($this, $values, $options);
       $lib->processAddOrUpdate();

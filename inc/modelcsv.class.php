@@ -152,7 +152,7 @@ class PluginDatainjectionModelcsv extends CommonDBChild
     * @param $model              PluginDatainjectionModel object
     * @param $options   array
    **/
-   function showAdditionnalForm(PluginDatainjectionModel $model, $options=array()) {
+   function showAdditionnalForm(PluginDatainjectionModel $model, $options = []) {
 
       $id      = $this->getFromDBByModelID($model->fields['id']);
       $canedit = $this->can($id, UPDATE);

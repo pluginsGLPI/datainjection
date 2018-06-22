@@ -61,7 +61,7 @@ class PluginDatainjectionNetworkportInjection extends NetworkPort
     /**
     * @see plugins/datainjection/inc/PluginDatainjectionInjectionInterface::getOptions()
    **/
-   function getOptions($primary_type='') {
+   function getOptions($primary_type = '') {
 
       $tab                      = Search::getOptions(get_parent_class($this));
 
@@ -105,13 +105,13 @@ class PluginDatainjectionNetworkportInjection extends NetworkPort
       $tab[100]['storevaluein']  = $tab[100]['linkfield'];
 
       $blacklist     = PluginDatainjectionCommonInjectionLib::getBlacklistedOptions(get_parent_class($this));
-      $notimportable = array(20, 21);
+      $notimportable = [20, 21];
 
       $options['ignore_fields'] = array_merge($blacklist, $notimportable);
 
-      $options['displaytype']   = array("dropdown"           => array(9),
-                                      "multiline_text"     => array(16),
-                                      "instantiation_type" => array(87));
+      $options['displaytype']   = ["dropdown"           => [9],
+                                      "multiline_text"     => [16],
+                                      "instantiation_type" => [87]];
 
       return PluginDatainjectionCommonInjectionLib::addToSearchOptions($tab, $options, $this);
    }
@@ -121,7 +121,7 @@ class PluginDatainjectionNetworkportInjection extends NetworkPort
     * @param $primary_type
     * @param $values
    **/
-   function addSpecificNeededFields($primary_type,$values) {
+   function addSpecificNeededFields($primary_type, $values) {
 
       if (isset($values[$primary_type]['instantiation_type'])) {
          $fields['instantiation_type'] = $values[$primary_type]['instantiation_type'];
@@ -136,22 +136,22 @@ class PluginDatainjectionNetworkportInjection extends NetworkPort
     * @param $info      array
     * @param $option    array
    **/
-   function showAdditionalInformation($info=array(), $option=array()) {
+   function showAdditionalInformation($info = [], $option = []) {
 
       $name = "info[".$option['linkfield']."]";
 
       switch ($option['displaytype']) {
          case 'instantiation_type' :
-            $instantiations = array();
+            $instantiations = [];
             $class          = get_parent_class($this);
             foreach ($class::getNetworkPortInstantiations() as $inst_type) {
-               if (call_user_func(array($inst_type, 'canCreate'))) {
-                  $instantiations[$inst_type] = call_user_func(array($inst_type, 'getTypeName'));
+               if (call_user_func([$inst_type, 'canCreate'])) {
+                  $instantiations[$inst_type] = call_user_func([$inst_type, 'getTypeName']);
                }
             }
             Dropdown::showFromArray(
                 'instantiation_type', $instantiations,
-                array('value' => 'NetworkPortEthernet')
+                ['value' => 'NetworkPortEthernet']
             );
             break;
 
@@ -164,7 +164,7 @@ class PluginDatainjectionNetworkportInjection extends NetworkPort
     /**
     * @see plugins/datainjection/inc/PluginDatainjectionInjectionInterface::addOrUpdateObject()
    **/
-   function addOrUpdateObject($values=array(), $options=array()) {
+   function addOrUpdateObject($values = [], $options = []) {
 
       $lib = new PluginDatainjectionCommonInjectionLib($this, $values, $options);
       $lib->processAddOrUpdate();
@@ -176,7 +176,7 @@ class PluginDatainjectionNetworkportInjection extends NetworkPort
     * @param $fields_toinject    array
     * @param $options            array
    **/
-   function checkPresent($fields_toinject=array(), $options=array()) {
+   function checkPresent($fields_toinject = [], $options = []) {
 
       return $this->getUnicityRequest($fields_toinject['NetworkPort'], $options['checks']);
    }
@@ -188,30 +188,30 @@ class PluginDatainjectionNetworkportInjection extends NetworkPort
    **/
    function checkParameters($fields_toinject, $options) {
 
-      $fields_tocheck = array();
+      $fields_tocheck = [];
       switch ($options['checks']['port_unicity']) {
          case PluginDatainjectionCommonInjectionLib::UNICITY_NETPORT_LOGICAL_NUMBER :
-            $fields_tocheck = array('logical_number');
+            $fields_tocheck = ['logical_number'];
             break;
 
          case PluginDatainjectionCommonInjectionLib::UNICITY_NETPORT_LOGICAL_NUMBER_MAC :
-            $fields_tocheck = array('logical_number', 'mac');
+            $fields_tocheck = ['logical_number', 'mac'];
             break;
 
          case PluginDatainjectionCommonInjectionLib::UNICITY_NETPORT_LOGICAL_NUMBER_NAME :
-            $fields_tocheck = array('logical_number', 'name');
+            $fields_tocheck = ['logical_number', 'name'];
             break;
 
          case PluginDatainjectionCommonInjectionLib::UNICITY_NETPORT_LOGICAL_NUMBER_NAME_MAC :
-            $fields_tocheck = array('logical_number', 'mac', 'name');
+            $fields_tocheck = ['logical_number', 'mac', 'name'];
             break;
 
          case PluginDatainjectionCommonInjectionLib::UNICITY_NETPORT_MACADDRESS :
-            $fields_tocheck = array('mac');
+            $fields_tocheck = ['mac'];
             break;
 
          case PluginDatainjectionCommonInjectionLib::UNICITY_NETPORT_NAME :
-            $fields_tocheck = array('name');
+            $fields_tocheck = ['name'];
             break;
       }
 
@@ -236,7 +236,7 @@ class PluginDatainjectionNetworkportInjection extends NetworkPort
     *
     * @return the sql where clause
    **/
-   function getUnicityRequest($fields_toinject=array(), $options=array()) {
+   function getUnicityRequest($fields_toinject = [], $options = []) {
 
       $where = "";
 
@@ -291,7 +291,7 @@ class PluginDatainjectionNetworkportInjection extends NetworkPort
     *
     * @return true if check ok, false if not ok
    **/
-   function lastCheck($values=array()) {
+   function lastCheck($values = []) {
 
       if ((!isset($values['NetworkPort']['name']) || empty($values['NetworkPort']['name']))
           && (!isset($values['NetworkPort']['mac']) || empty($values['NetworkPort']['mac']))
@@ -309,7 +309,7 @@ class PluginDatainjectionNetworkportInjection extends NetworkPort
     * @param $add                (true by default)
     * @param $rights    array
    **/
-   function processAfterInsertOrUpdate($values, $add=true, $rights=array()) {
+   function processAfterInsertOrUpdate($values, $add = true, $rights = []) {
 
       global $DB;
 

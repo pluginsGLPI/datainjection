@@ -28,7 +28,12 @@
  @since     2009
  ---------------------------------------------------------------------- */
 
-define ('PLUGIN_DATAINJECTION_VERSION', '2.5.2');
+define ('PLUGIN_DATAINJECTION_VERSION', '2.6.0');
+
+// Minimal GLPI version, inclusive
+define("PLUGIN_DATAINJECTION_MIN_GLPI", "9.3");
+// Maximum GLPI version, exclusive
+define("PLUGIN_DATAINJECTION_MAX_GLPI", "9.4");
 
 if (!defined("PLUGIN_DATAINJECTION_UPLOAD_DIR")) {
     define("PLUGIN_DATAINJECTION_UPLOAD_DIR", GLPI_PLUGIN_DOC_DIR."/datainjection/");
@@ -36,12 +41,12 @@ if (!defined("PLUGIN_DATAINJECTION_UPLOAD_DIR")) {
 
 function plugin_init_datainjection() {
 
-    global $PLUGIN_HOOKS, $CFG_GLPI, $INJECTABLE_TYPES;
+   global $PLUGIN_HOOKS, $CFG_GLPI, $INJECTABLE_TYPES;
 
-    $PLUGIN_HOOKS['csrf_compliant']['datainjection'] = true;
-    $PLUGIN_HOOKS['migratetypes']['datainjection'] = 'plugin_datainjection_migratetypes_datainjection';
+   $PLUGIN_HOOKS['csrf_compliant']['datainjection'] = true;
+   $PLUGIN_HOOKS['migratetypes']['datainjection'] = 'plugin_datainjection_migratetypes_datainjection';
 
-    $plugin = new Plugin();
+   $plugin = new Plugin();
    if ($plugin->isActivated("datainjection")) {
 
       Plugin::registerClass(
@@ -64,7 +69,7 @@ function plugin_init_datainjection() {
           $PLUGIN_HOOKS["menu_toadd"]['datainjection'] = ['tools'  => 'PluginDatainjectionMenu'];
       }
 
-         $PLUGIN_HOOKS['pre_item_purge']['datainjection']
+      $PLUGIN_HOOKS['pre_item_purge']['datainjection']
           = ['Profile' => ['PluginDatainjectionProfile', 'purgeProfiles']];
 
          // Css file
@@ -72,12 +77,12 @@ function plugin_init_datainjection() {
          $PLUGIN_HOOKS['add_css']['datainjection'] = 'css/datainjection.css';
       }
 
-         // Javascript file
-         $PLUGIN_HOOKS['add_javascript']['datainjection'] = 'js/datainjection.js';
+      // Javascript file
+      $PLUGIN_HOOKS['add_javascript']['datainjection'] = 'js/datainjection.js';
 
-         // Inbtegration with Webservices plugin
-         $PLUGIN_HOOKS['webservices']['datainjection'] = 'plugin_datainjection_registerMethods';
-         $INJECTABLE_TYPES = [];
+      // Inbtegration with Webservices plugin
+      $PLUGIN_HOOKS['webservices']['datainjection'] = 'plugin_datainjection_registerMethods';
+      $INJECTABLE_TYPES = [];
 
    }
 }
@@ -85,36 +90,48 @@ function plugin_init_datainjection() {
 
 function plugin_version_datainjection() {
 
-    return [
-           'name'           => __('File injection', 'datainjection'),
-           'minGlpiVersion' => '9.2',
-           'author'         => 'Walid Nouh, Remi Collet, Nelly Mahu-Lasson, Xavier Caillaud',
-           'homepage'       => 'https://github.com/pluginsGLPI/datainjection',
-           'license'        => 'GPLv2+',
-           'version'        => PLUGIN_DATAINJECTION_VERSION,
-           'requirements'   => [
-              'glpi' => [
-                 'min' => '9.2',
-                  'dev' => 1
-               ]
-            ]
-         ];
+   return [
+      'name'         => __('File injection', 'datainjection'),
+      'author'       => 'Walid Nouh, Remi Collet, Nelly Mahu-Lasson, Xavier Caillaud',
+      'homepage'     => 'https://github.com/pluginsGLPI/datainjection',
+      'license'      => 'GPLv2+',
+      'version'      => PLUGIN_DATAINJECTION_VERSION,
+      'requirements' => [
+         'glpi' => [
+            'min' => PLUGIN_DATAINJECTION_MIN_GLPI,
+            'max' => PLUGIN_DATAINJECTION_MAX_GLPI,
+         ]
+      ]
+   ];
 }
 
 
 function plugin_datainjection_check_prerequisites() {
-   $version = rtrim(GLPI_VERSION, '-dev');
-   if (version_compare($version, '9.2', 'lt')) {
-      echo "This plugin requires GLPI 9.2";
-      return false;
+
+   //Version check is not done by core in GLPI < 9.2 but has to be delegated to core in GLPI >= 9.2.
+   $version = preg_replace('/^((\d+\.?)+).*$/', '$1', GLPI_VERSION);
+   if (version_compare($version, '9.2', '<')) {
+      $matchMinGlpiReq = version_compare($version, PLUGIN_DATAINJECTION_MIN_GLPI, '>=');
+      $matchMaxGlpiReq = version_compare($version, PLUGIN_DATAINJECTION_MAX_GLPI, '<');
+
+      if (!$matchMinGlpiReq || !$matchMaxGlpiReq) {
+         echo vsprintf(
+            'This plugin requires GLPI >= %1$s and < %2$s.',
+            [
+               PLUGIN_DATAINJECTION_MIN_GLPI,
+               PLUGIN_DATAINJECTION_MAX_GLPI,
+            ]
+         );
+         return false;
+      }
    }
 
-    return true;
+   return true;
 }
 
 
-function plugin_datainjection_check_config($verbose=false) {
-    return true;
+function plugin_datainjection_check_config($verbose = false) {
+   return true;
 }
 
 
@@ -125,14 +142,14 @@ function plugin_datainjection_check_config($verbose=false) {
  */
 function getTypesToInject() {
 
-    global $INJECTABLE_TYPES,$PLUGIN_HOOKS;
+   global $INJECTABLE_TYPES,$PLUGIN_HOOKS;
 
    if (count($INJECTABLE_TYPES)) {
       // already populated
       return;
    }
 
-    $INJECTABLE_TYPES = ['PluginDatainjectionCartridgeItemInjection'              => 'datainjection',
+   $INJECTABLE_TYPES = ['PluginDatainjectionCartridgeItemInjection'              => 'datainjection',
                         'PluginDatainjectionBudgetInjection'                      => 'datainjection',
                         'PluginDatainjectionComputerInjection'                    => 'datainjection',
                         'PluginDatainjectionNotepadInjection'                     => 'datainjection',
@@ -221,29 +238,29 @@ function getTypesToInject() {
                         'PluginDatainjectionDeviceMotherboardInjection'           => 'datainjection',
                         'PluginDatainjectionDeviceDriveInjection'                 => 'datainjection',
                         'PluginDatainjectionDeviceNetworkCardInjection'           => 'datainjection'
-                     ];
-    //Add plugins
-    Plugin::doHook('plugin_datainjection_populate');
+   ];
+   //Add plugins
+   Plugin::doHook('plugin_datainjection_populate');
 }
 
 
 function plugin_datainjection_migratetypes_datainjection($types) {
 
-    $types[996] = 'NetworkPort';
-    $types[999] = 'NetworkPort';
-    return $types;
+   $types[996] = 'NetworkPort';
+   $types[999] = 'NetworkPort';
+   return $types;
 }
 
 
 function plugin_datainjection_checkDirectories() {
 
-    $plugin = new Plugin();
+   $plugin = new Plugin();
 
    if ($plugin->isInstalled('datainjection')
-        && (!file_exists(PLUGIN_DATAINJECTION_UPLOAD_DIR)
-        || !is_writable(PLUGIN_DATAINJECTION_UPLOAD_DIR))
-    ) {
+       && (!file_exists(PLUGIN_DATAINJECTION_UPLOAD_DIR)
+       || !is_writable(PLUGIN_DATAINJECTION_UPLOAD_DIR))
+   ) {
       return false;
    }
-    return true;
+   return true;
 }

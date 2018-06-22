@@ -63,7 +63,7 @@ class PluginDatainjectionContract_ItemInjection extends Contract_Item
     /**
     * @see plugins/datainjection/inc/PluginDatainjectionInjectionInterface::getOptions()
    **/
-   function getOptions($primary_type='') {
+   function getOptions($primary_type = '') {
 
       $tab[100]['table']         = 'glpi_contracts';
       $tab[100]['field']         = 'name';
@@ -92,7 +92,7 @@ class PluginDatainjectionContract_ItemInjection extends Contract_Item
     /**
     * @see plugins/datainjection/inc/PluginDatainjectionInjectionInterface::addOrUpdateObject()
    **/
-   function addOrUpdateObject($values=array(), $options=array()) {
+   function addOrUpdateObject($values = [], $options = []) {
 
       $lib = new PluginDatainjectionCommonInjectionLib($this, $values, $options);
       $lib->processAddOrUpdate();

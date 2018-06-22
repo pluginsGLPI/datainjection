@@ -36,7 +36,7 @@ class PluginDatainjectionInfoCollection
 
    function __construct() {
 
-      $this->infosCollection = array();
+      $this->infosCollection = [];
    }
 
 

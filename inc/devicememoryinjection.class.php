@@ -52,24 +52,24 @@ class PluginDatainjectionDeviceMemoryInjection extends DeviceMemory
 
    function connectedTo() {
 
-      return array("Computer");
+      return ["Computer"];
    }
 
 
     /**
     * @see plugins/datainjection/inc/PluginDatainjectionInjectionInterface::getOptions()
    **/
-   function getOptions($primary_type='') {
+   function getOptions($primary_type = '') {
 
       $tab           = Search::getOptions(get_parent_class($this));
 
       //Remove some options because some fields cannot be imported
       $blacklist     = PluginDatainjectionCommonInjectionLib::getBlacklistedOptions(get_parent_class($this));
-      $notimportable = array();
+      $notimportable = [];
 
       $options['ignore_fields'] = array_merge($blacklist, $notimportable);
-      $options['displaytype']   = array("multiline_text" => array(16),
-                                      "dropdown"       => array(13, 23));
+      $options['displaytype']   = ["multiline_text" => [16],
+                                      "dropdown"       => [13, 23]];
 
       return PluginDatainjectionCommonInjectionLib::addToSearchOptions($tab, $options, $this);
    }
@@ -80,7 +80,7 @@ class PluginDatainjectionDeviceMemoryInjection extends DeviceMemory
     * @param $add                (true by default)
     * @param $rights    array
    **/
-   function processAfterInsertOrUpdate($values, $add=true, $rights=array()) {
+   function processAfterInsertOrUpdate($values, $add = true, $rights = []) {
 
       if (isset($values['Computer']['id'])) {
          $class   = "Item_".get_parent_class($this);
@@ -113,7 +113,7 @@ class PluginDatainjectionDeviceMemoryInjection extends DeviceMemory
     /**
     * @see plugins/datainjection/inc/PluginDatainjectionInjectionInterface::addOrUpdateObject()
    **/
-   function addOrUpdateObject($values=array(), $options=array()) {
+   function addOrUpdateObject($values = [], $options = []) {
 
       $lib = new PluginDatainjectionCommonInjectionLib($this, $values, $options);
       $lib->processAddOrUpdate();
@@ -127,7 +127,7 @@ class PluginDatainjectionDeviceMemoryInjection extends DeviceMemory
    **/
    function addSpecificNeededFields($primary_type, $values) {
 
-      $fields = array();
+      $fields = [];
       if (!isset($values['size_default'])) {
          if (isset($values[get_parent_class($this)]['size'])) {
             $fields['size_default'] = $values[get_parent_class($this)]['size'];
