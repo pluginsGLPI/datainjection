@@ -39,7 +39,7 @@ if (isset($_POST["update"])) {
 
     $info = new PluginDatainjectionInfo();
    foreach ($_POST["item"] as $key => $val) {
-      $input = array('id' => $key);
+      $input = ['id' => $key];
       if ($val == 1) {
          $info->check($key, UPDATE);
          $info->delete($input);

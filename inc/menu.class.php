@@ -44,7 +44,7 @@ class PluginDatainjectionMenu extends CommonGLPI
 
       $injectionFormUrl = '/plugins/datainjection/front/clientinjection.form.php';
 
-      $menu          = array();
+      $menu          = [];
       $menu['title'] = self::getMenuName();
       $menu['page']  = $injectionFormUrl;
 

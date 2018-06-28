@@ -35,14 +35,14 @@ class PluginDatainjectionWebservice
    static function methodInject($params, $protocol) {
 
       if (isset($params['help'])) {
-         return array('uri'      => 'string,mandatory',
+         return ['uri'      => 'string,mandatory',
                    'base64'     => 'string,optional',
                    'additional' => 'array,optional',
                    'models_id'  => 'integer, mandatory',
                    'entities_id'=> 'integer,mandatory',
                    'mandatory'  => 'array,optional',
                    'uri'        => 'uri,mandatory',
-                   'help'       => 'bool,optional');
+                   'help'       => 'bool,optional'];
       }
 
       $model = new PluginDatainjectionModel();
@@ -128,7 +128,7 @@ class PluginDatainjectionWebservice
       }
 
       //Mandatory fields
-      $additional_infos = array();
+      $additional_infos = [];
       if (isset($params['additional']) && is_array($params['additional'])) {
          $additional_infos = $params['additional'];
       }
@@ -145,38 +145,40 @@ class PluginDatainjectionWebservice
           return $response;
       }
 
-       //Uploade successful : now perform import !
-       $options = array('file_encoding'     => PluginDatainjectionBackend::ENCODING_AUTO, //Detect automatically file encoding
-                     'webservice'        => true, //Use webservice CSV file import
-                     'original_filename' => $params['uri'], //URI to the CSV file
-                     'unique_filename'   => $filename, //Unique filename
-                     'mode'              => PluginDatainjectionModel::PROCESS,
-                     'delete_file'       => false, //Do not delete file once imported
-                     'protocol'          => $protocol); //The Webservice protocol used
+      //Uploade successful : now perform import !
+      $options = ['file_encoding'     => PluginDatainjectionBackend::ENCODING_AUTO, //Detect automatically file encoding
+                  'webservice'        => true, //Use webservice CSV file import
+                  'original_filename' => $params['uri'], //URI to the CSV file
+                  'unique_filename'   => $filename, //Unique filename
+                  'mode'              => PluginDatainjectionModel::PROCESS,
+                  'delete_file'       => false, //Do not delete file once imported
+                  'protocol'          => $protocol]; //The Webservice protocol used
 
-       $results  = array();
-       $response = $model->processUploadedFile($options);
+      $results  = [];
+      $response = $model->processUploadedFile($options);
       if (!PluginWebservicesMethodCommon::isError($protocol, $response)) {
-         $engine  = new PluginDatainjectionEngine($model, $additional_infos, $params['entities_id']);
+         $engine  = new PluginDatainjectionEngine(
+            $model,
+            $additional_infos,
+            $params['entities_id']
+         );
          //Remove first line if header is present
          $first = true;
          foreach ($model->injectionData->getData() as $id => $data) {
-            if ($first
-                 && $model->getSpecificModel()->isHeaderPresent()
-             ) {
+            if ($first && $model->getSpecificModel()->isHeaderPresent()) {
                $first = false;
             } else {
                $results[] = $engine->injectLine($data[0], $id);
             }
          }
-          $model->cleanData();
-          return $results;
+         $model->cleanData();
+         return $results;
       }
-         return $response;
+      return $response;
    }
 
 
-   static function methodGetModel($params,$protocol) {
+   static function methodGetModel($params, $protocol) {
 
       $params['itemtype'] = 'PluginDatainjectionModel';
       return PluginWebservicesMethodInventaire::methodGetObject($params, $protocol);
@@ -193,7 +195,7 @@ class PluginDatainjectionWebservice
    static function methodListItemtypes($params, $protocol) {
 
       if (isset($params['help'])) {
-         return array('help' => 'bool,optional');
+         return ['help' => 'bool,optional'];
       }
 
       if (!isset($_SESSION['glpiID'])) {

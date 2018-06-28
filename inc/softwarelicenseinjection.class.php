@@ -53,14 +53,14 @@ class PluginDatainjectionSoftwareLicenseInjection extends SoftwareLicense
 
    function connectedTo() {
 
-      return array('Software');
+      return ['Software'];
    }
 
 
     /**
     * @see plugins/datainjection/inc/PluginDatainjectionInjectionInterface::getOptions()
    **/
-   function getOptions($primary_type='') {
+   function getOptions($primary_type = '') {
 
       $tab                 = Search::getOptions(get_parent_class($this));
 
@@ -79,17 +79,17 @@ class PluginDatainjectionSoftwareLicenseInjection extends SoftwareLicense
 
       //Remove some options because some fields cannot be imported
       $blacklist     = PluginDatainjectionCommonInjectionLib::getBlacklistedOptions(get_parent_class($this));
-      $notimportable = array();
+      $notimportable = [];
 
       $options['ignore_fields'] = array_merge($blacklist, $notimportable);
 
       $key = array_search(2, $options['ignore_fields']);
       unset($options['ignore_fields'][$key]);
 
-      $options['displaytype']   = array("dropdown"       => array(5, 6, 7, 110),
-                                      "date"           => array(8),
-                                      "multiline_text" => array(16),
-                                      "software" => array(100));
+      $options['displaytype']   = ["dropdown"       => [5, 6, 7, 110],
+                                      "date"           => [8],
+                                      "multiline_text" => [16],
+                                      "software" => [100]];
 
       return PluginDatainjectionCommonInjectionLib::addToSearchOptions($tab, $options, $this);
    }
@@ -99,24 +99,24 @@ class PluginDatainjectionSoftwareLicenseInjection extends SoftwareLicense
     * @param $info      array
     * @param $option    array
    **/
-   function showAdditionalInformation($info=array(), $option=array()) {
+   function showAdditionalInformation($info = [], $option = []) {
 
       $name = "info[".$option['linkfield']."]";
 
       switch ($option['displaytype']) {
          case 'computer' :
             Computer::dropdown(
-                array('name'        => $name,
+                ['name'        => $name,
                                    'entity'      => $_SESSION['glpiactive_entity'],
-                                   'entity_sons' => false)
+                                   'entity_sons' => false]
             );
             break;
 
          case 'software' :
             Software::dropdown(
-                array('name'        => $name,
+                ['name'        => $name,
                                    'entity'      => $_SESSION['glpiactive_entity'],
-                                   'entity_sons' => false)
+                                   'entity_sons' => false]
             );
             break;
 
@@ -129,7 +129,7 @@ class PluginDatainjectionSoftwareLicenseInjection extends SoftwareLicense
     /**
     * @see plugins/datainjection/inc/PluginDatainjectionInjectionInterface::addOrUpdateObject()
    **/
-   function addOrUpdateObject($values=array(), $options=array()) {
+   function addOrUpdateObject($values = [], $options = []) {
 
       $lib = new PluginDatainjectionCommonInjectionLib($this, $values, $options);
       $lib->processAddOrUpdate();
@@ -140,7 +140,7 @@ class PluginDatainjectionSoftwareLicenseInjection extends SoftwareLicense
     /**
     * @param $fields_toinject    array
    **/
-   function getValueForAdditionalMandatoryFields($fields_toinject=array()) {
+   function getValueForAdditionalMandatoryFields($fields_toinject = []) {
 
       global $DB;
 
@@ -178,7 +178,7 @@ class PluginDatainjectionSoftwareLicenseInjection extends SoftwareLicense
    **/
    function addSpecificNeededFields($primary_type, $values) {
 
-      $fields = array();
+      $fields = [];
       if ($primary_type == 'Software') {
          $fields['softwares_id'] = $values[$primary_type]['id'];
       }
@@ -190,7 +190,7 @@ class PluginDatainjectionSoftwareLicenseInjection extends SoftwareLicense
     * @param $fields_toinject    array
     * @param $options            array
    **/
-   function checkPresent($fields_toinject=array(), $options=array()) {
+   function checkPresent($fields_toinject = [], $options = []) {
 
       if ($options['itemtype'] != 'SoftwareLicense') {
          return (" AND `softwares_id` = '".$fields_toinject['Software']['id']."'

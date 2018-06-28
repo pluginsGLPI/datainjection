@@ -77,8 +77,10 @@ if (isset($_POST["add"])) {
       $model->check($_POST['id'], UPDATE);
 
       if ($model->processUploadedFile(
-          array('file_encoding' => 'csv',
-          'mode'          => PluginDatainjectionModel::CREATION)
+          [
+             'file_encoding' => 'csv',
+            'mode'          => PluginDatainjectionModel::CREATION
+          ]
       )) {
          Session::setActiveTab('PluginDatainjectionModel', 'PluginDatainjectionModel$4');
       } else {
@@ -103,6 +105,6 @@ Html::header(
     "tools", "plugindatainjectionmenu", "model"
 );
 
-$model->display(array('id' =>$_GET["id"]));
+$model->display(['id' =>$_GET["id"]]);
 
 Html::footer();

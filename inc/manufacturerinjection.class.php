@@ -53,7 +53,7 @@ class PluginDatainjectionManufacturerInjection extends Manufacturer
 
    function connectedTo() {
 
-      return array();
+      return [];
    }
 
 
@@ -66,7 +66,7 @@ class PluginDatainjectionManufacturerInjection extends Manufacturer
 
       //Remove some options because some fields cannot be imported
       $blacklist     = PluginDatainjectionCommonInjectionLib::getBlacklistedOptions(get_parent_class($this));
-      $notimportable = array();
+      $notimportable = [];
 
       $options['ignore_fields'] = array_merge($blacklist, $notimportable);
 
@@ -77,7 +77,7 @@ class PluginDatainjectionManufacturerInjection extends Manufacturer
     /**
     * @see plugins/datainjection/inc/PluginDatainjectionInjectionInterface::addOrUpdateObject()
    **/
-   function addOrUpdateObject($values=array(), $options=array()) {
+   function addOrUpdateObject($values = [], $options = []) {
 
       $lib = new PluginDatainjectionCommonInjectionLib($this, $values, $options);
       $lib->processAddOrUpdate();

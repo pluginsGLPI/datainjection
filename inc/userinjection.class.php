@@ -52,14 +52,14 @@ class PluginDatainjectionUserInjection extends User
 
    function connectedTo() {
 
-      return array();
+      return [];
    }
 
 
     /**
     * @see plugins/datainjection/inc/PluginDatainjectionInjectionInterface::getOptions()
    **/
-   function getOptions($primary_type='') {
+   function getOptions($primary_type = '') {
 
       $tab                       = Search::getOptions(get_parent_class($this));
 
@@ -96,15 +96,15 @@ class PluginDatainjectionUserInjection extends User
 
       //Remove some options because some fields cannot be imported
       $blacklist     = PluginDatainjectionCommonInjectionLib::getBlacklistedOptions(get_parent_class($this));
-      $notimportable = array(13, 14, 15, 17, 20, 23, 30, 31, 60, 61, 77, 91, 92, 93);
+      $notimportable = [13, 14, 15, 17, 20, 23, 30, 31, 60, 61, 77, 91, 92, 93];
 
       $options['ignore_fields']  = array_merge($blacklist, $notimportable);
 
       //Add displaytype value
-      $options['displaytype']    = array("dropdown"       => array(3, 79, 81, 82),
-                                      "multiline_text" => array(16),
-                                      "bool"           => array(8),
-                                      "password"       => array(4));
+      $options['displaytype']    = ["dropdown"       => [3, 79, 81, 82],
+                                      "multiline_text" => [16],
+                                      "bool"           => [8],
+                                      "password"       => [4]];
 
       return PluginDatainjectionCommonInjectionLib::addToSearchOptions($tab, $options, $this);
    }
@@ -113,7 +113,7 @@ class PluginDatainjectionUserInjection extends User
     /**
     * @see plugins/datainjection/inc/PluginDatainjectionInjectionInterface::addOrUpdateObject()
    **/
-   function addOrUpdateObject($values=array(), $options=array()) {
+   function addOrUpdateObject($values = [], $options = []) {
 
       $lib = new PluginDatainjectionCommonInjectionLib($this, $values, $options);
       $lib->processAddOrUpdate();
@@ -141,7 +141,7 @@ class PluginDatainjectionUserInjection extends User
     * @param $add                (true by default)
     * @param $rights    array
     */
-   function processAfterInsertOrUpdate($values, $add=true, $rights=array()) {
+   function processAfterInsertOrUpdate($values, $add = true, $rights = []) {
 
       global $DB;
 

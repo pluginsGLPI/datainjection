@@ -37,7 +37,7 @@ class PluginDatainjectionGroup_UserInjection extends Group_User
 {
 
 
-   static function getTypeName($nb=0) {
+   static function getTypeName($nb = 0) {
 
       return sprintf(__('%1$s - %2$s'), __('Group'), __('User'));
    }
@@ -58,15 +58,15 @@ class PluginDatainjectionGroup_UserInjection extends Group_User
 
    function connectedTo() {
 
-      //return array();
-      return array('Group');
+      //return [];
+      return ['Group'];
    }
 
 
     /**
     * @see plugins/datainjection/inc/PluginDatainjectionInjectionInterface::getOptions()
    **/
-   function getOptions($primary_type='') {
+   function getOptions($primary_type = '') {
 
       $tab                    = Search::getOptions(get_parent_class($this));
 
@@ -78,11 +78,11 @@ class PluginDatainjectionGroup_UserInjection extends Group_User
 
       //Remove some options because some fields cannot be imported
       $blacklist     = PluginDatainjectionCommonInjectionLib::getBlacklistedOptions(get_parent_class($this));
-      $notimportable = array(4);
+      $notimportable = [4];
 
       $options['ignore_fields'] = array_merge($blacklist, $notimportable);
-      $options['displaytype']   = array("bool"    => array(3, 6, 7),
-                                      "dropdown" => array(4));
+      $options['displaytype']   = ["bool"    => [3, 6, 7],
+                                      "dropdown" => [4]];
 
       return PluginDatainjectionCommonInjectionLib::addToSearchOptions($tab, $options, $this);
    }
@@ -91,7 +91,7 @@ class PluginDatainjectionGroup_UserInjection extends Group_User
     /**
     * @see plugins/datainjection/inc/PluginDatainjectionInjectionInterface::addOrUpdateObject()
    **/
-   function addOrUpdateObject($values=array(), $options=array()) {
+   function addOrUpdateObject($values = [], $options = []) {
 
       $lib = new PluginDatainjectionCommonInjectionLib($this, $values, $options);
       $lib->processAddOrUpdate();

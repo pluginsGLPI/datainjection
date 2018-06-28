@@ -40,7 +40,7 @@ interface PluginDatainjectionBackendInterface
     *
     * @param $numberOfLines (default 1)
    **/
-    function read($numberOfLines=1);
+    function read($numberOfLines = 1);
 
 
     /**

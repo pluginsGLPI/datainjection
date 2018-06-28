@@ -52,14 +52,14 @@ class PluginDatainjectionSoftwareInjection extends Software
 
    function connectedTo() {
 
-      return array();
+      return [];
    }
 
 
     /**
     * @see plugins/datainjection/inc/PluginDatainjectionInjectionInterface::getOptions()
    **/
-   function getOptions($primary_type='') {
+   function getOptions($primary_type = '') {
 
       $tab                    = Search::getOptions(get_parent_class($this));
 
@@ -68,14 +68,14 @@ class PluginDatainjectionSoftwareInjection extends Software
 
       //Remove some options because some fields cannot be imported
       $blacklist     = PluginDatainjectionCommonInjectionLib::getBlacklistedOptions(get_parent_class($this));
-      $notimportable = array(4, 5, 31, 72, 91, 92, 93, 160, 161, 162, 163, 164, 165, 166, 170);
+      $notimportable = [4, 5, 31, 72, 91, 92, 93, 160, 161, 162, 163, 164, 165, 166, 170];
 
       $options['ignore_fields'] = array_merge($blacklist, $notimportable);
 
-      $options['displaytype']   = array("dropdown"       => array(3, 23, 49, 62, 71),
-                                      "bool"           => array(61, 86),
-                                      "user"           => array(24, 70),
-                                      "multiline_text" => array(16, 90));
+      $options['displaytype']   = ["dropdown"       => [3, 23, 49, 62, 71],
+                                      "bool"           => [61, 86],
+                                      "user"           => [24, 70],
+                                      "multiline_text" => [16, 90]];
 
       return PluginDatainjectionCommonInjectionLib::addToSearchOptions($tab, $options, $this);
    }
@@ -96,7 +96,7 @@ class PluginDatainjectionSoftwareInjection extends Software
          $params['manufacturer'] = '';
       }
       $rulecollection = new RuleDictionnarySoftwareCollection();
-      $res_rule       = $rulecollection->processAllRules($params, array(), array());
+      $res_rule       = $rulecollection->processAllRules($params, [], []);
 
       if (!isset($res_rule['_no_rule_matches'])) {
          //Software dictionnary explicitly refuse import
@@ -125,7 +125,7 @@ class PluginDatainjectionSoftwareInjection extends Software
     /**
     * @see plugins/datainjection/inc/PluginDatainjectionInjectionInterface::addOrUpdateObject()
    **/
-   function addOrUpdateObject($values=array(), $options=array()) {
+   function addOrUpdateObject($values = [], $options = []) {
 
       $lib = new PluginDatainjectionCommonInjectionLib($this, $values, $options);
       $lib->processAddOrUpdate();

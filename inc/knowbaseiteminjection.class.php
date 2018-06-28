@@ -53,14 +53,14 @@ class PluginDatainjectionKnowbaseItemInjection extends KnowbaseItem
 
    function connectedTo() {
 
-      return array();
+      return [];
    }
 
 
     /**
     * @see plugins/datainjection/inc/PluginDatainjectionInjectionInterface::getOptions()
    **/
-   function getOptions($primary_type='') {
+   function getOptions($primary_type = '') {
 
       $tab                 = Search::getOptions(get_parent_class($this));
 
@@ -68,15 +68,15 @@ class PluginDatainjectionKnowbaseItemInjection extends KnowbaseItem
 
       //Remove some options because some fields cannot be imported
       $blacklist     = PluginDatainjectionCommonInjectionLib::getBlacklistedOptions(get_parent_class($this));
-      $notimportable = array();
+      $notimportable = [];
 
       $options['ignore_fields'] = array_merge($blacklist, $notimportable);
 
-      $options['displaytype']   = array("dropdown"       => array(4),
-                                      "date"           => array(5),
-                                      "multiline_text" => array(6,7),
-                                      "bool"           => array(8, 9, 86),
-                                      "user"           => array(70));
+      $options['displaytype']   = ["dropdown"       => [4],
+                                      "date"           => [5],
+                                      "multiline_text" => [6,7],
+                                      "bool"           => [8, 9, 86],
+                                      "user"           => [70]];
 
       return PluginDatainjectionCommonInjectionLib::addToSearchOptions($tab, $options, $this);
    }
@@ -85,7 +85,7 @@ class PluginDatainjectionKnowbaseItemInjection extends KnowbaseItem
     /**
     * @see plugins/datainjection/inc/PluginDatainjectionInjectionInterface::addOrUpdateObject()
    **/
-   function addOrUpdateObject($values=array(), $options=array()) {
+   function addOrUpdateObject($values = [], $options = []) {
 
       $lib = new PluginDatainjectionCommonInjectionLib($this, $values, $options);
       $lib->processAddOrUpdate();

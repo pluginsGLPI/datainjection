@@ -53,26 +53,26 @@ class PluginDatainjectionContactInjection extends Contact
 
    function connectedTo() {
 
-      return array('Supplier');
+      return ['Supplier'];
    }
 
 
     /**
     * @see plugins/datainjection/inc/PluginDatainjectionInjectionInterface::getOptions()
    **/
-   function getOptions($primary_type='') {
+   function getOptions($primary_type = '') {
 
       $tab           = Search::getOptions(get_parent_class($this));
 
       //Remove some options because some fields cannot be imported
       $blacklist     = PluginDatainjectionCommonInjectionLib::getBlacklistedOptions(get_parent_class($this));
-      $notimportable = array(8);
+      $notimportable = [8];
 
       $options['ignore_fields'] = array_merge($blacklist, $notimportable);
 
-      $options['displaytype']   = array("dropdown"       => array(8, 9),
-                                      "bool"           => array(86),
-                                      "multiline_text" => array(16, 82, 90));
+      $options['displaytype']   = ["dropdown"       => [8, 9],
+                                      "bool"           => [86],
+                                      "multiline_text" => [16, 82, 90]];
 
       return PluginDatainjectionCommonInjectionLib::addToSearchOptions($tab, $options, $this);
    }
@@ -81,7 +81,7 @@ class PluginDatainjectionContactInjection extends Contact
     /**
     * @see plugins/datainjection/inc/PluginDatainjectionInjectionInterface::addOrUpdateObject()
    **/
-   function addOrUpdateObject($values=array(), $options=array()) {
+   function addOrUpdateObject($values = [], $options = []) {
 
       $lib = new PluginDatainjectionCommonInjectionLib($this, $values, $options);
       $lib->processAddOrUpdate();

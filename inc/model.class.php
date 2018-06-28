@@ -52,7 +52,7 @@ class PluginDatainjectionModel extends CommonDBTM
    public $injectionData = false;
 
     //Store field of type 'multline_text' several times mapped
-   public $severaltimes_mapped = array();
+   public $severaltimes_mapped = [];
 
     //Private or public model
     const MODEL_PRIVATE  = 1;
@@ -70,7 +70,7 @@ class PluginDatainjectionModel extends CommonDBTM
 
 
 
-   static function getTypeName($nb=0) {
+   static function getTypeName($nb = 0) {
 
       return __('Model management', 'datainjection');
    }
@@ -246,7 +246,7 @@ class PluginDatainjectionModel extends CommonDBTM
     /**
     * @param $options   array
    **/
-   static function dropdown($options=array()) {
+   static function dropdown($options = []) {
 
       global $CFG_GLPI;
 
@@ -254,7 +254,7 @@ class PluginDatainjectionModel extends CommonDBTM
           Session::getLoginUserID(), 'name', $_SESSION['glpiactive_entity'],
           false
       );
-      $p      = array('models_id' => '__VALUE__');
+      $p      = ['models_id' => '__VALUE__'];
 
       if (isset($_SESSION['datainjection']['models_id'])) {
           $value = $_SESSION['datainjection']['models_id'];
@@ -318,7 +318,7 @@ class PluginDatainjectionModel extends CommonDBTM
 
       global $DB;
 
-      $models = array ();
+      $models =  [];
       $query = "SELECT `id`, `name`, `is_private`, `entities_id`, `is_recursive`, `itemtype`,
                        `step`, `comment`
                 FROM `glpi_plugin_datainjection_models` ";
@@ -351,99 +351,147 @@ class PluginDatainjectionModel extends CommonDBTM
 
 
     //Standard functions
-   function getSearchOptions() {
+   function rawSearchOptions() {
 
-      $tab                       = array();
+      $tab = [];
 
-      $tab['common']             = self::getTypeName();
+      $tab[] = [
+         'id'   => 'common',
+         'name' => self::getTypeName(),
+      ];
 
-      $tab[1]['table']           = $this->getTable();
-      $tab[1]['field']           = 'name';
-      $tab[1]['name']            = __('Name');
-      $tab[1]['datatype']        = 'itemlink';
-      $tab[1]['itemlink_type']   = $this->getType();
+      $tab[] = [
+         'id'            => 1,
+         'table'         => $this->getTable(),
+         'field'         => 'name',
+         'name'          => __('Name'),
+         'datatype'      => 'itemlink',
+         'itemlink_type' => $this->getType(),
+      ];
 
-      $tab[2]['table']           = $this->getTable();
-      $tab[2]['field']           = 'id';
-      $tab[2]['name']            = __('ID');
+      $tab[] = [
+         'id'            => 2,
+         'table'         => $this->getTable(),
+         'field'         => 'id',
+         'name'          => __('ID'),
+      ];
 
-      $tab[3]['table']           = $this->getTable();
-      $tab[3]['field']           = 'behavior_add';
-      $tab[3]['name']            = __('Allow lines creation', 'datainjection');
-      $tab[3]['datatype']        = 'bool';
-      $tab[3]['massiveaction']   = false;
+      $tab[] = [
+         'id'            => 3,
+         'table'         => $this->getTable(),
+         'field'         => 'behavior_add',
+         'name'          => __('Allow lines creation', 'datainjection'),
+         'datatype'      => 'bool',
+         'massiveaction' => false,
+      ];
 
-      $tab[4]['table']           = $this->getTable();
-      $tab[4]['field']           = 'behavior_update';
-      $tab[4]['name']            = __('Allow lines update', 'datainjection');
-      $tab[4]['datatype']        = 'bool';
-      $tab[4]['massiveaction']   = false;
+      $tab[] = [
+         'id'            => 4,
+         'table'         => $this->getTable(),
+         'field'         => 'behavior_update',
+         'name'          => __('Allow lines update', 'datainjection'),
+         'datatype'      => 'bool',
+         'massiveaction' => false,
+      ];
 
-      $tab[5]['table']           = $this->getTable();
-      $tab[5]['field']           = 'itemtype';
-      $tab[5]['name']            = __('Type of data to import', 'datainjection');
-      $tab[5]['datatype']        = 'itemtypename';
-      $tab[5]['nosearch']        = true;
-      $tab[5]['massiveaction']   = false;
+      $tab[] = [
+         'id'            => 5,
+         'table'         => $this->getTable(),
+         'field'         => 'itemtype',
+         'name'          => __('Type of data to import', 'datainjection'),
+         'datatype'      => 'itemtypename',
+         'nosearch'      => true,
+         'massiveaction' => false,
+      ];
 
-      $tab[6]['table']           = $this->getTable();
-      $tab[6]['field']           = 'can_add_dropdown';
-      $tab[6]['name']            = __('Allow creation of dropdowns', 'datainjection');
-      $tab[6]['datatype']        = 'bool';
+      $tab[] = [
+         'id'            => 6,
+         'table'         => $this->getTable(),
+         'field'         => 'can_add_dropdown',
+         'name'          => __('Allow creation of dropdowns', 'datainjection'),
+         'datatype'      => 'bool',
+      ];
 
-      $tab[7]['table']           = $this->getTable();
-      $tab[7]['field']           = 'date_format';
-      $tab[7]['name']            = __('Dates format', 'datainjection');
-      $tab[7]['datatype']        = 'specific';
-      $tab[7]['searchtype']      = 'equals';
+      $tab[] = [
+         'id'            => 7,
+         'table'         => $this->getTable(),
+         'field'         => 'date_format',
+         'name'          => __('Dates format', 'datainjection'),
+         'datatype'      => 'specific',
+         'searchtype'    => 'equals',
+      ];
 
-      $tab[8]['table']           = $this->getTable();
-      $tab[8]['field']           = 'float_format';
-      $tab[8]['name']            = __('Float format', 'datainjection');
-      $tab[8]['datatype']        = 'specific';
-      $tab[8]['searchtype']      = 'equals';
+      $tab[] = [
+         'id'            => 8,
+         'table'         => $this->getTable(),
+         'field'         => 'float_format',
+         'name'          => __('Float format', 'datainjection'),
+         'datatype'      => 'specific',
+         'searchtype'    => 'equals',
+      ];
 
-      $tab[9]['table']           = $this->getTable();
-      $tab[9]['field']           = 'perform_network_connection';
-      $tab[9]['name']            = __(
-          'Try to establish network connection is possible',
-          'datainjection'
-      );
-      $tab[9]['datatype']        = 'bool';
+      $tab[] = [
+         'id'            => 9,
+         'table'         => $this->getTable(),
+         'field'         => 'perform_network_connection',
+         'name'          => __(
+            'Try to establish network connection is possible',
+            'datainjection'
+            ),
+         'datatype'      => 'bool',
+      ];
 
-      $tab[10]['table']          = $this->getTable();
-      $tab[10]['field']          = 'port_unicity';
-      $tab[10]['name']           = __('Port unicity criteria', 'datainjection');
-      $tab[10]['datatype']       = 'specific';
-      $tab[10]['searchtype']     = 'equals';
+      $tab[] = [
+         'id'            => 10,
+         'table'         => $this->getTable(),
+         'field'         => 'port_unicity',
+         'name'          => __('Port unicity criteria', 'datainjection'),
+         'datatype'      => 'specific',
+         'searchtype'    => 'equals',
+      ];
 
-      $tab[11]['table']          = $this->getTable();
-      $tab[11]['field']          = 'is_private';
-      $tab[11]['name']           = __('Private');
-      $tab[11]['datatype']       = 'bool';
-      $tab[11]['massiveaction']  = false;
+      $tab[] = [
+         'id'            => 11,
+         'table'         => $this->getTable(),
+         'field'         => 'is_private',
+         'name'          => __('Private'),
+         'datatype'      => 'bool',
+         'massiveaction' => false,
+      ];
 
-      $tab[12]['table']          = $this->getTable();
-      $tab[12]['field']          = 'step';
-      $tab[12]['name']           = __('Status');
-      $tab[12]['massiveaction']  = false;
-      $tab[12]['datatype']       = 'specific';
-      $tab[12]['searchtype']     = 'equals';
+      $tab[] = [
+         'id'            => 12,
+         'table'         => $this->getTable(),
+         'field'         => 'step',
+         'name'          => __('Status'),
+         'datatype'      => 'specific',
+         'searchtype'    => 'equals',
+         'massiveaction' => false,
+      ];
 
-      $tab[16]['table']          = $this->getTable();
-      $tab[16]['field']          = 'comment';
-      $tab[16]['name']           = __('Comments');
-      $tab[16]['datatype']       = 'text';
+      $tab[] = [
+         'id'            => 16,
+         'table'         => $this->getTable(),
+         'field'         => 'comment',
+         'name'          => __('Comments'),
+         'datatype'      => 'text',
+      ];
 
-      $tab[80]['table']          = 'glpi_entities';
-      $tab[80]['field']          = 'completename';
-      $tab[80]['name']           = __('Entity');
-      $tab[80]['datatype']       = 'dropdown';
+      $tab[] = [
+         'id'            => 80,
+         'table'         => 'glpi_entities',
+         'field'         => 'completename',
+         'name'          => __('Entity'),
+         'datatype'      => 'dropdown',
+      ];
 
-      $tab[86]['table']          = $this->getTable();
-      $tab[86]['field']          = 'is_recursive';
-      $tab[86]['name']           = __('Child entities');
-      $tab[86]['datatype']       = 'bool';
+      $tab[] = [
+         'id'            => 86,
+         'table'         => $this->getTable(),
+         'field'         => 'is_recursive',
+         'name'          => __('Child entities'),
+         'datatype'      => 'bool',
+      ];
 
       return $tab;
    }
@@ -456,10 +504,10 @@ class PluginDatainjectionModel extends CommonDBTM
     * @param $values
     * @param $options   array
    **/
-   static function getSpecificValueToDisplay($field, $values, array $options=array()) {
+   static function getSpecificValueToDisplay($field, $values, array $options = []) {
 
       if (!is_array($values)) {
-         $values = array($field => $values);
+         $values = [$field => $values];
       }
       switch ($field) {
          case "port_unicity" :
@@ -486,10 +534,10 @@ class PluginDatainjectionModel extends CommonDBTM
     * @param $values             (defaut '')
     * @param $options   array
    **/
-   static function getSpecificValueToSelect($field, $name='', $values='', array $options=array()) {
+   static function getSpecificValueToSelect($field, $name = '', $values = '', array $options = []) {
 
       if (!is_array($values)) {
-         $values = array($field => $values);
+         $values = [$field => $values];
       }
       $options['display'] = false;
       switch ($field) {
@@ -526,7 +574,7 @@ class PluginDatainjectionModel extends CommonDBTM
    }
 
 
-   function showForm($ID, $options = array()) {
+   function showForm($ID, $options = []) {
 
       if ($ID > 0) {
          $this->check($ID, READ);
@@ -546,7 +594,7 @@ class PluginDatainjectionModel extends CommonDBTM
    }
 
 
-   function showAdvancedForm($ID, $options = array()) {
+   function showAdvancedForm($ID, $options = []) {
 
       if ($ID > 0) {
          $this->check($ID, READ);
@@ -554,7 +602,7 @@ class PluginDatainjectionModel extends CommonDBTM
          // Create item
          $this->check(-1, UPDATE);
          $this->getEmpty();
-         echo Html::hidden('step', array('value' => 1));
+         echo Html::hidden('step', ['value' => 1]);
       }
 
       echo "<form name='form' method='post' action='".Toolbox::getItemTypeFormURL(__CLASS__)."'>";
@@ -573,13 +621,31 @@ class PluginDatainjectionModel extends CommonDBTM
       echo "</td>";
       echo "<td colspan='2'></td></tr>";
 
+      $rand = mt_rand();
       echo "<tr class='tab_bg_1'>";
-      echo "<td colspan='4' class='center'>";
-      Dropdown::showPrivatePublicSwitch(
-          $this->fields["is_private"], $this->fields["entities_id"],
-          $this->fields["is_recursive"]
+      echo "<td><label for='dropdown_is_private$rand'>".__('Visibility') . "</label></td>";
+      echo "<td colspan='3'>";
+      Dropdown::showFromArray(
+         'is_private', [
+            1  => __('Private'),
+            0  => __('Public')
+         ], [
+            'value'  => $this->fields['is_private'],
+            'rand'   => $rand
+         ]
       );
-      echo "</td></tr>";
+      echo "</td>";
+      echo "</tr>";
+      echo "<tr class='tab_bg_2'>";
+      echo "<td>".__('Entity')."</td>";
+      echo "<td>";
+      Entity::dropdown(['value' => $this->fields["entities_id"]]);
+      echo "</td>";
+      echo "<td>". __('Child entities')."</td>";
+      echo "<td>";
+      Dropdown::showYesNo('is_recursive', $this->fields["is_recursive"]);
+      echo "</td>";
+      echo "</tr>";
 
       echo "<tr class='tab_bg_1'>";
       echo "<td>".__('Comments')."</td>";
@@ -620,7 +686,7 @@ class PluginDatainjectionModel extends CommonDBTM
        echo "<td>";
        Dropdown::showFromArray(
           'date_format', PluginDatainjectionDropdown::dateFormats(),
-          array('value' => $this->fields['date_format'])
+          ['value' => $this->fields['date_format']]
        );
        echo "</td></tr>";
 
@@ -633,7 +699,7 @@ class PluginDatainjectionModel extends CommonDBTM
        echo "<td>";
        Dropdown::showFromArray(
           'float_format', PluginDatainjectionDropdown::floatFormats(),
-          array('value' => $this->fields['float_format'])
+          ['value' => $this->fields['float_format']]
        );
        echo "</td></tr>";
 
@@ -646,7 +712,7 @@ class PluginDatainjectionModel extends CommonDBTM
        echo "<td>";
        Dropdown::showFromArray(
           'port_unicity', PluginDatainjectionDropdown::portUnicityValues(),
-          array('value' => $this->fields['port_unicity'])
+          ['value' => $this->fields['port_unicity']]
        );
        echo "</td></tr>";
 
@@ -680,9 +746,9 @@ class PluginDatainjectionModel extends CommonDBTM
 
 
     //Tabs management
-   function defineTabs($options = array()) {
+   function defineTabs($options = []) {
 
-      $tabs = array();
+      $tabs = [];
       $this->addStandardTab(__CLASS__, $tabs, $options);
       $this->addStandardTab('Log', $tabs, $options);
       return $tabs;
@@ -690,7 +756,7 @@ class PluginDatainjectionModel extends CommonDBTM
 
 
     //Tabs management
-   function getTabNameForItem(CommonGLPI $item, $withtemplate=0) {
+   function getTabNameForItem(CommonGLPI $item, $withtemplate = 0) {
 
       $canedit = Session::haveRight('plugin_datainjection_model', UPDATE);
 
@@ -721,7 +787,7 @@ class PluginDatainjectionModel extends CommonDBTM
    }
 
 
-   static function displayTabContentForItem(CommonGLPI $item, $tabnum=1, $withtemplate=0) {
+   static function displayTabContentForItem(CommonGLPI $item, $tabnum = 1, $withtemplate = 0) {
 
       if ($item->getType() == __CLASS__) {
          switch ($tabnum) {
@@ -760,12 +826,12 @@ class PluginDatainjectionModel extends CommonDBTM
 
    function cleanDBonPurge() {
 
-      $itemtypes = array("PluginDatainjectionModelcsv", "PluginDatainjectionMapping",
-                       "PluginDatainjectionInfo");
+      $itemtypes = ["PluginDatainjectionModelcsv", "PluginDatainjectionMapping",
+                       "PluginDatainjectionInfo"];
 
       foreach ($itemtypes as $itemtype) {
           $item = new $itemtype();
-          $item->deleteByCriteria(array("models_id" => $this->getID()));
+          $item->deleteByCriteria(["models_id" => $this->getID()]);
       }
    }
 
@@ -775,7 +841,7 @@ class PluginDatainjectionModel extends CommonDBTM
     *
     * @param $crit array of criteria (ex array('itemtype'=>'PluginAppliancesAppliance'))
    **/
-   static function clean($crit=array()) {
+   static function clean($crit = []) {
 
       global $DB;
 
@@ -828,10 +894,6 @@ class PluginDatainjectionModel extends CommonDBTM
          return false;
       }
 
-      if (isset($input['is_private']) && ($input['is_private'] == 1)) {
-         $input['entities_id']  = $_SESSION['glpiactive_entity'];
-         $input['is_recursive'] = 1;
-      }
       $input['step'] = self::FILE_STEP;
 
       return $input;
@@ -841,9 +903,6 @@ class PluginDatainjectionModel extends CommonDBTM
    function prepareInputForUpdate($input) {
 
       if (isset($input['is_private']) && ($input['is_private'] == 1)) {
-         $input['entities_id']  = $_SESSION['glpiactive_entity'];
-         $input['is_recursive'] = 1;
-
          if (isset($input['users_id']) && ($input['users_id'] != $this->fields['users_id'])) {
             Session::addMessageAfterRedirect(
                 __(
@@ -887,7 +946,7 @@ class PluginDatainjectionModel extends CommonDBTM
     /**
     * @param $options   array
    **/
-   function readUploadedFile($options=array()) {
+   function readUploadedFile($options = []) {
 
       $file_encoding     = (isset($options['file_encoding'])
                           ?$options['file_encoding'] :PluginDatainjectionBackend::ENCODING_AUTO);
@@ -908,11 +967,11 @@ class PluginDatainjectionModel extends CommonDBTM
          $unique_filename             = tempnam(realpath(PLUGIN_DATAINJECTION_UPLOAD_DIR), "PWS");
 
          if (!move_uploaded_file($temporary_uploaded_filename, $unique_filename)) {
-            return array('status'  => PluginDatainjectionCommonInjectionLib::FAILED,
+            return ['status'  => PluginDatainjectionCommonInjectionLib::FAILED,
                      'message' => sprintf(
                          __('Impossible to copy the file in %s', 'datainjection'),
                          realpath(PLUGIN_DATAINJECTION_UPLOAD_DIR)
-                     ));
+                     )];
          }
       }
 
@@ -924,8 +983,8 @@ class PluginDatainjectionModel extends CommonDBTM
             Session::addMessageAfterRedirect($message, true, ERROR, false);
          }
          //unlink($temporary_uniquefilename);
-         return array('status'  => ERROR,
-                   'message' => $message);
+         return ['status'  => ERROR,
+                   'message' => $message];
 
       } else {
          //Initialise a new backend
@@ -978,7 +1037,7 @@ class PluginDatainjectionModel extends CommonDBTM
     *
     * @return boolean
    **/
-   function processUploadedFile($options=array()) {
+   function processUploadedFile($options = []) {
 
       $file_encoding = (isset($options['file_encoding'])
                       ?$options['file_encoding'] :PluginDatainjectionBackend::ENCODING_AUTO);
@@ -1094,23 +1153,23 @@ class PluginDatainjectionModel extends CommonDBTM
               count($header)
           );
 
-          return array('status'         => PluginDatainjectionCommonInjectionLib::FAILED,
+          return ['status'         => PluginDatainjectionCommonInjectionLib::FAILED,
                     'field_in_error' => false,
-                    'error_message'  => $error_message);
+                    'error_message'  => $error_message];
       }
 
        //If no header in the CSV file, exit method
       if (!$this->specific_model->isHeaderPresent()) {
-          return array('status'         => PluginDatainjectionCommonInjectionLib::SUCCESS,
+          return ['status'         => PluginDatainjectionCommonInjectionLib::SUCCESS,
                     'field_in_error' => false,
-                    'error_message'  => '');
+                    'error_message'  => ''];
       }
 
-         $error = array('status'         => PluginDatainjectionCommonInjectionLib::SUCCESS,
-                   'field_in_error' => false,
-                   'error_message'  => '');
+      $error = ['status'         => PluginDatainjectionCommonInjectionLib::SUCCESS,
+                'field_in_error' => false,
+                'error_message'  => ''];
 
-         //Check each mapping to be sure it has exactly the same name
+      //Check each mapping to be sure it has exactly the same name
       foreach ($this->getMappings() as $key => $mapping) {
          if (!isset($header[$key])) {
             $error['status']         = PluginDatainjectionCommonInjectionLib::FAILED;
@@ -1120,8 +1179,8 @@ class PluginDatainjectionModel extends CommonDBTM
             //If name of the mapping is not equal in the csv file header and in the DB
             $name_from_file = trim(
             mb_strtoupper(
-                stripslashes($header[$mapping->getRank()]),
-                'UTF-8'
+             stripslashes($header[$mapping->getRank()]),
+             'UTF-8'
             )
             );
             $name_from_db   = trim(mb_strtoupper(stripslashes($mapping->getName()), 'UTF-8'));
@@ -1135,9 +1194,9 @@ class PluginDatainjectionModel extends CommonDBTM
                 $error['field_in_error'] = false;
 
                 $error['error_message'] .= "<br>".sprintf(
-                   __('%1$s: %2$s'),
-                   __('Into the file', 'datainjection'),
-                   $name_from_file
+                __('%1$s: %2$s'),
+                __('Into the file', 'datainjection'),
+                $name_from_file
                 )."\n";
                 $error['error_message'] .=sprintf(
                    __('%1$s: %2$s'),
@@ -1147,7 +1206,7 @@ class PluginDatainjectionModel extends CommonDBTM
             }
          }
       }
-         return $error;
+      return $error;
    }
 
 
@@ -1241,7 +1300,7 @@ class PluginDatainjectionModel extends CommonDBTM
 
       //Reset parameters stored in session
       PluginDatainjectionSession::removeParams();
-      PluginDatainjectionSession::setParam('infos', array());
+      PluginDatainjectionSession::setParam('infos', []);
    }
 
 
@@ -1297,13 +1356,13 @@ class PluginDatainjectionModel extends CommonDBTM
               true
           )
       );
-      $todisplay = array();
+      $todisplay = [];
       $model     = new self();
       $model->getFromDB($models_id);
 
       if (!empty($results)) {
          foreach ($results as $result) {
-            $tmp = array('line'           => $result['line'],
+            $tmp = ['line'           => $result['line'],
                      'status'         => $result['status'],
                      'check_sumnary'  => PluginDatainjectionCommonInjectionLib::getLogLabel(PluginDatainjectionCommonInjectionLib::SUCCESS),
                      'check_message'  => PluginDatainjectionCommonInjectionLib::getLogLabel(PluginDatainjectionCommonInjectionLib::SUCCESS),
@@ -1311,7 +1370,7 @@ class PluginDatainjectionModel extends CommonDBTM
                      'status_message' => PluginDatainjectionCommonInjectionLib::getLogLabel($result['status']),
                      'itemtype'       => $model->fields['itemtype'],
                      'url'            => '',
-                     'item'           => '');
+                     'item'           => ''];
 
             if (isset($result[PluginDatainjectionCommonInjectionLib::ACTION_CHECK])) {
                 $check_infos          = $result[PluginDatainjectionCommonInjectionLib::ACTION_CHECK];
@@ -1509,7 +1568,7 @@ class PluginDatainjectionModel extends CommonDBTM
 
    function cleanData() {
 
-      $this->injectionData = array();
+      $this->injectionData = [];
    }
 
 }

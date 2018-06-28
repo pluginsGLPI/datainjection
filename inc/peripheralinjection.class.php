@@ -51,14 +51,14 @@ class PluginDatainjectionPeripheralInjection extends Peripheral
 
    function connectedTo() {
 
-      return array('Computer', 'Document');
+      return ['Computer', 'Document'];
    }
 
 
     /**
     * @see plugins/datainjection/inc/PluginDatainjectionInjectionInterface::getOptions()
    **/
-   function getOptions($primary_type='') {
+   function getOptions($primary_type = '') {
 
       $tab                 = Search::getOptions(get_parent_class($this));
 
@@ -67,14 +67,14 @@ class PluginDatainjectionPeripheralInjection extends Peripheral
 
       //Remove some options because some fields cannot be imported
       $blacklist     = PluginDatainjectionCommonInjectionLib::getBlacklistedOptions(get_parent_class($this));
-      $notimportable = array(91, 92, 93);
+      $notimportable = [91, 92, 93];
 
       $options['ignore_fields'] = array_merge($blacklist, $notimportable);
 
-      $options['displaytype']   = array("dropdown"       => array(3, 4, 23, 31, 40, 49, 71),
-                                      "user"           => array(24, 70),
-                                      "bool"           => array(82),
-                                      "multiline_text" => array(16, 90));
+      $options['displaytype']   = ["dropdown"       => [3, 4, 23, 31, 40, 49, 71],
+                                      "user"           => [24, 70],
+                                      "bool"           => [82],
+                                      "multiline_text" => [16, 90]];
 
       return PluginDatainjectionCommonInjectionLib::addToSearchOptions($tab, $options, $this);
    }
@@ -83,7 +83,7 @@ class PluginDatainjectionPeripheralInjection extends Peripheral
     /**
     * @see plugins/datainjection/inc/PluginDatainjectionInjectionInterface::addOrUpdateObject()
    **/
-   function addOrUpdateObject($values=array(), $options=array()) {
+   function addOrUpdateObject($values = [], $options = []) {
 
       $lib = new PluginDatainjectionCommonInjectionLib($this, $values, $options);
       $lib->processAddOrUpdate();
@@ -97,7 +97,7 @@ class PluginDatainjectionPeripheralInjection extends Peripheral
    **/
    function addSpecificNeededFields($primary_type, $values) {
 
-      $fields = array();
+      $fields = [];
       if (isset($values[$primary_type]['is_global'])) {
          if (empty($values[$primary_type]['is_global'])) {
             $fields['is_global'] = 0;

@@ -52,27 +52,27 @@ class PluginDatainjectionITILCategoryInjection extends ITILCategory
 
    function connectedTo() {
 
-      return array();
+      return [];
    }
 
 
     /**
     * @see plugins/datainjection/inc/PluginDatainjectionInjectionInterface::getOptions()
    **/
-   function getOptions($primary_type='') {
+   function getOptions($primary_type = '') {
 
       $tab           = Search::getOptions(get_parent_class($this));
 
       //Remove some options because some fields cannot be imported
       $blacklist     = PluginDatainjectionCommonInjectionLib::getBlacklistedOptions(get_parent_class($this));
-      $notimportable = array(14, 98, 77, 78);
+      $notimportable = [14, 98, 77, 78];
 
       $options['ignore_fields'] = array_merge($blacklist, $notimportable);
 
-      $options['displaytype'] = array("dropdown"       => array(71, 72, 73),
-                                    "bool"           => array(3, 74, 75, 76, 86),
-                                    "user"           => array(70),
-                                    "multiline_text" => array(16));
+      $options['displaytype'] = ["dropdown"       => [71, 72, 73],
+                                    "bool"           => [3, 74, 75, 76, 86],
+                                    "user"           => [70],
+                                    "multiline_text" => [16]];
 
       return PluginDatainjectionCommonInjectionLib::addToSearchOptions($tab, $options, $this);
    }
@@ -81,7 +81,7 @@ class PluginDatainjectionITILCategoryInjection extends ITILCategory
     /**
     * @see plugins/datainjection/inc/PluginDatainjectionInjectionInterface::addOrUpdateObject()
    **/
-   function addOrUpdateObject($values=array(), $options=array()) {
+   function addOrUpdateObject($values = [], $options = []) {
 
       $lib = new PluginDatainjectionCommonInjectionLib($this, $values, $options);
       $lib->processAddOrUpdate();

@@ -62,7 +62,7 @@ interface PluginDatainjectionInjectionInterface
     *
     * @return an array of search options, as defined in each commondbtm object
    **/
-    function getOptions($primary_type='');
+    function getOptions($primary_type = '');
 
 
     /**
@@ -72,7 +72,7 @@ interface PluginDatainjectionInjectionInterface
     *
     * This method is optionnal ! Implement it if the itemtype to display special information
    **/
-    //function showAdditionalInformation($info=array());
+    //function showAdditionalInformation($info=[]);
 
 
     /**
@@ -84,7 +84,7 @@ interface PluginDatainjectionInjectionInterface
     * @return an array of IDs of newly created objects:
     * for example array(Computer=>1, Networkport=>10)
    **/
-    function addOrUpdateObject($values=array(), $options=array());
+    function addOrUpdateObject($values = [], $options = []);
 
 
 
@@ -107,7 +107,7 @@ interface PluginDatainjectionInjectionInterface
     *
     * @param $values array
    **/
-    //function reformat(&$values=array());
+    //function reformat(&$values=[]);
 
 
     /**
@@ -118,7 +118,7 @@ interface PluginDatainjectionInjectionInterface
     *
     * @return nothing
    **/
-    //function checkPresent($fields_toinject=array(), $options=array());
+    //function checkPresent($fields_toinject=[], $options=[]);
 
 
     /**

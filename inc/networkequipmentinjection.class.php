@@ -52,14 +52,14 @@ class PluginDatainjectionNetworkEquipmentInjection extends NetworkEquipment
 
    function connectedTo() {
 
-      return array();
+      return [];
    }
 
 
     /**
     * @see plugins/datainjection/inc/PluginDatainjectionInjectionInterface::getOptions()
    **/
-   function getOptions($primary_type='') {
+   function getOptions($primary_type = '') {
 
       $tab                       = Search::getOptions(get_parent_class($this));
 
@@ -83,11 +83,11 @@ class PluginDatainjectionNetworkEquipmentInjection extends NetworkEquipment
 
       $options['ignore_fields'] = array_merge($blacklist, $notimportable);
 
-      $options['displaytype']   = array("dropdown"       => array(3, 4, 11, 23, 31, 32, 33,
-                                                                40, 49, 71),
-                                      "bool"           => array(86),
-                                      "user"           => array(24, 70),
-                                      "multiline_text" => array(16, 90));
+      $options['displaytype']   = ["dropdown"       => [3, 4, 11, 23, 31, 32, 33,
+                                                                40, 49, 71],
+                                      "bool"           => [86],
+                                      "user"           => [24, 70],
+                                      "multiline_text" => [16, 90]];
 
       return PluginDatainjectionCommonInjectionLib::addToSearchOptions($tab, $options, $this);
    }
@@ -96,7 +96,7 @@ class PluginDatainjectionNetworkEquipmentInjection extends NetworkEquipment
     /**
     * @see plugins/datainjection/inc/PluginDatainjectionInjectionInterface::addOrUpdateObject()
    **/
-   function addOrUpdateObject($values=array(), $options=array()) {
+   function addOrUpdateObject($values = [], $options = []) {
 
       $lib = new PluginDatainjectionCommonInjectionLib($this, $values, $options);
       $lib->processAddOrUpdate();
@@ -109,11 +109,11 @@ class PluginDatainjectionNetworkEquipmentInjection extends NetworkEquipment
     * @param $add                (true by default)
     * @param $rights    array
     */
-   function processAfterInsertOrUpdate($values, $add=true, $rights=array()) {
+   function processAfterInsertOrUpdate($values, $add = true, $rights = []) {
 
       if (isset($values['NetworkEquipment']['nb_ports'])) {
          for ($i=1; $i<=$values['NetworkEquipment']['nb_ports']; $i++) {
-            $input   = array();
+            $input   = [];
             $netport = new NetworkPort();
             $add     = "";
 
