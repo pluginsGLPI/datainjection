@@ -29,7 +29,7 @@ msgstr "Import souboru"
 
 #: front/clientinjection.form.php:50
 msgid "One mandatory field is not filled"
-msgstr "Povinné pole není vyplněno"
+msgstr "Povinná kolonka není vyplněná"
 
 #: front/popup.php:37 inc/mapping.class.php:117
 msgid "See the file"
@@ -89,7 +89,7 @@ msgstr "Import se nezdařil"
 
 #: inc/commoninjectionlib.class.php:1939
 msgid "At least one mandatory field is not present"
-msgstr "Přinejmenším jedna povinná kolonka chybí"
+msgstr "Přinejmenším jedna povinná kolonka není vyplněná"
 
 #: inc/commoninjectionlib.class.php:1943
 msgid "Data to insert are correct"
@@ -97,7 +97,7 @@ msgstr "Data pro vložení jsou v pořádku"
 
 #: inc/commoninjectionlib.class.php:1947
 msgid "One data is not the good type"
-msgstr "Jedny data nejsou dobrého typu"
+msgstr "Jedna data nejsou správného typu"
 
 #: inc/commoninjectionlib.class.php:1951
 msgid "Warning"
@@ -105,15 +105,15 @@ msgstr "Varování"
 
 #: inc/commoninjectionlib.class.php:1955
 msgid "Data not found"
-msgstr "Nebyla nalezena žádná data"
+msgstr "Data nebyla nalezena"
 
 #: inc/commoninjectionlib.class.php:1959 inc/model.class.php:1369
 msgid "Undetermined"
-msgstr "Nezjištěno"
+msgstr "Nespecifikováno"
 
 #: inc/profile.class.php:40 inc/model.class.php:75
 msgid "Model management"
-msgstr "Správa modelů"
+msgstr "Správa šablon"
 
 #: inc/profile.class.php:43 inc/menu.class.php:58 inc/menu.class.php:59
 #: inc/clientinjection.class.php:214
@@ -122,11 +122,11 @@ msgstr "Import souboru"
 
 #: inc/webservice.class.php:78
 msgid "Model unknown"
-msgstr "Neznámý model"
+msgstr "Neznámá šablona"
 
 #: inc/webservice.class.php:86 inc/webservice.class.php:95
 msgid "You cannot access this model"
-msgstr "Tento model vám není přístupný"
+msgstr "K této šabloně nemáte přístup"
 
 #: inc/webservice.class.php:115
 msgid "Entity unknown"
@@ -138,15 +138,15 @@ msgstr "Tato entita vám není přístupná"
 
 #: inc/clientinjection.class.php:88
 msgid "Use an existing model"
-msgstr "Použít existující model"
+msgstr "Použít existující šablonu"
 
 #: inc/clientinjection.class.php:96
 msgid "No model currently available"
-msgstr "V tuto chvíli není k dispozici žádný model"
+msgstr "V tuto chvíli není k dispozici žádná šablona"
 
 #: inc/clientinjection.class.php:105
 msgid "You can start the model creation by hitting the button"
-msgstr "Vytvoření modelu je možné zahájit kliknutím na tlačítko"
+msgstr "Vytváření šablony zahájíte kliknutím na tlačítko"
 
 #: inc/clientinjection.class.php:153 inc/model.class.php:769
 #: inc/dropdown.class.php:87
@@ -218,11 +218,11 @@ msgstr "Dokončit"
 
 #: inc/model.class.php:383 inc/model.class.php:669
 msgid "Allow lines creation"
-msgstr "Umožnit vytváření propojení"
+msgstr "Umožnit vytváření řádků"
 
 #: inc/model.class.php:392 inc/model.class.php:672
 msgid "Allow lines update"
-msgstr "Umožnit aktualizace řádků"
+msgstr "Umožnit aktualizaci řádků"
 
 #: inc/model.class.php:401 inc/model.class.php:657
 msgid "Type of data to import"
@@ -234,7 +234,7 @@ msgstr "Umožnit vytváření rozbalovacích nabídek"
 
 #: inc/model.class.php:419 inc/model.class.php:685
 msgid "Dates format"
-msgstr "Formát datumů"
+msgstr "Formát data"
 
 #: inc/model.class.php:428 inc/model.class.php:698
 msgid "Float format"
@@ -242,7 +242,7 @@ msgstr "Formát desetinné čárky"
 
 #: inc/model.class.php:438 inc/model.class.php:707
 msgid "Try to establish network connection is possible"
-msgstr "Je možné pokusit se navázat síťové spojení"
+msgstr "Pokusit se navázat síťové spojení"
 
 #: inc/model.class.php:448 inc/model.class.php:711
 msgid "Port unicity criteria"
@@ -259,7 +259,7 @@ msgstr "Umožnit aktualizovat existující kolonky"
 #: inc/model.class.php:737
 msgctxt "button"
 msgid "Validate the model"
-msgstr "Ověřit model"
+msgstr "Ověřit šablonu"
 
 #: inc/model.class.php:771 inc/dropdown.class.php:88
 msgid "Mappings"
@@ -275,15 +275,15 @@ msgstr "Načíst tento soubor"
 
 #: inc/model.class.php:881
 msgid "Please enter a name for the model"
-msgstr "Zadejte název pro model"
+msgstr "Zadejte název pro šablonu"
 
 #: inc/model.class.php:890
 msgid "Your model should allow import and/or update of data"
-msgstr "Váš model by měl umožnit import a/nebo aktualizaci dat"
+msgstr "Vaše šablona by měl umožnit import a/nebo aktualizaci dat"
 
 #: inc/model.class.php:909
 msgid "You are not the initial creator of this model"
-msgstr "Nejste původním tvůrcem tohoto modelu"
+msgstr "Nejste tvůrcem této šablony"
 
 #: inc/model.class.php:972
 #, php-format
@@ -338,7 +338,7 @@ msgstr "Do souboru"
 
 #: inc/model.class.php:1203
 msgid "From the model"
-msgstr "Z modelu"
+msgstr "Ze šablony"
 
 #: inc/model.class.php:1434 inc/model.class.php:1517
 msgid "Array of successful injections"
@@ -357,7 +357,7 @@ msgstr "Import dat"
 #: inc/model.class.php:1443 inc/model.class.php:1474 inc/model.class.php:1522
 #: inc/model.class.php:1543
 msgid "Injection type"
-msgstr "Typ vpravení"
+msgstr "Typ importu"
 
 #: inc/model.class.php:1444 inc/model.class.php:1475 inc/model.class.php:1523
 #: inc/model.class.php:1544
@@ -366,7 +366,7 @@ msgstr "Identifikátor objektu"
 
 #: inc/model.class.php:1464 inc/model.class.php:1537
 msgid "Array of unsuccessful injections"
-msgstr "Pole neúspěšných vpravení"
+msgstr "Pole neúspěšných importů"
 
 #: inc/model.class.php:1472 inc/model.class.php:1541 inc/model.class.php:1558
 msgid "Data check"
@@ -378,7 +378,7 @@ msgstr "-------Zvolte tabulku-------"
 
 #: inc/injectiontype.class.php:192
 msgid "-------Choose a field-------"
-msgstr "-------Zvolte pole-------"
+msgstr "-------Zvolte kolonku-------"
 
 #: inc/networkequipmentinjection.class.php:72
 msgid "Number of ports"
@@ -394,7 +394,7 @@ msgstr "Tabulky"
 
 #: inc/mapping.class.php:126
 msgid "Link field"
-msgstr "Propojená pole"
+msgstr "Propojená kolonka"
 
 #: inc/info.class.php:86 inc/info.class.php:143
 msgid "Mandatory information"
@@ -402,7 +402,7 @@ msgstr "Povinné informace"
 
 #: inc/info.class.php:142
 msgid "Fields"
-msgstr "Pole"
+msgstr "Kolonky"
 
 #: inc/info.class.php:246
 msgid "Complementary information"
@@ -414,15 +414,15 @@ msgstr "Stáhnout ukázku souboru"
 
 #: inc/dropdown.class.php:37
 msgid "dd-mm-yyyy"
-msgstr "dd-mm-yyyy"
+msgstr "dd-mm-rrrr"
 
 #: inc/dropdown.class.php:39
 msgid "mm-dd-yyyy"
-msgstr "mm-dd-yyyy"
+msgstr "mm-dd-rrrr"
 
 #: inc/dropdown.class.php:41
 msgid "yyyy-mm-dd"
-msgstr "yyyy-mm-dd"
+msgstr "rrrr-mm-dd"
 
 #: inc/dropdown.class.php:60
 msgid "1 234.56"
@@ -438,7 +438,7 @@ msgstr "1 234,56"
 
 #: inc/dropdown.class.php:94
 msgid "Model available for use"
-msgstr "Model který je možné použít"
+msgstr "Šablona kterou je možné použít"
 
 #: inc/dropdown.class.php:119
 msgid "Automatic detection"
