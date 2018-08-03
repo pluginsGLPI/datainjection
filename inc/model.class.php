@@ -1344,6 +1344,15 @@ class PluginDatainjectionModel extends CommonDBTM
                 $tmp['item'] = $result[$model->fields['itemtype']];
                 $url         = Toolbox::getItemTypeFormURL($model->fields['itemtype'])."?id=".
                                                   $result[$model->fields['itemtype']];
+               //redefine genericobject url of needed
+               $plugin = new Plugin();
+               if ($plugin->isActivated('genericobject')
+                  && array_key_exists($model->fields['itemtype'], PluginGenericobjectType::getTypes())) {
+                  global $CFG_GLPI;
+                  $url = $CFG_GLPI['root_doc']."/plugins/genericobject/front/object.form.php".
+                  "?itemtype=".$model->fields['itemtype']."&id=".$result[$model->fields['itemtype']];
+               }
+
                 $tmp['url']  = "<a href='".$url."'>".$result[$model->fields['itemtype']]."</a>";
             }
 
