@@ -128,9 +128,9 @@ class PluginDatainjectionEntityInjection extends Entity
          $tmp['entities_id'] = $parent;
 
          //Does the entity alread exists ?
-         $results = getAllDatasFromTable(//TODO Deprecated
+         $results = getAllDatasFromTable(
              'glpi_entities',
-             "`name`='$name' AND `entities_id`='$parent'"
+             ['name' => $name, 'entities_id' => $parent]
          );
          //Entity doesn't exists => create it
          if (empty($results)) {
