@@ -87,9 +87,11 @@ class PluginDatainjectionDeviceProcessorInjection extends DeviceProcessor
          $item    = new $class();
          $foreign = getForeignKeyFieldForTable(getTableForItemType(get_parent_class($this)));
 
-         $where   = "`$foreign`='".$values[get_parent_class($this)]['id']."'
-                      AND `itemtype`='Computer'
-                      AND `items_id`='".$values['Computer']['id']."'";
+         $where   = [
+            $foreign   => $values[get_parent_class($this)]['id'],
+            'itemtype' => 'Computer',
+            'items_id' => $values['Computer']['id'],
+         ];
 
          if (!countElementsInTable($item->getTable(), $where)) {
 

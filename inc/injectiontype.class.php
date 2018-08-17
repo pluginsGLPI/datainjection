@@ -351,7 +351,7 @@ class PluginDatainjectionInjectionType {
       $table = (($p['called_by'] == 'PluginDatainjectionMapping') ?"glpi_plugin_datainjection_mappings"
                                                               :"glpi_plugin_datainjection_infos");
 
-      $datas = getAllDatasFromTable($table, "`models_id` = '".$mapping_or_info['models_id']."'");
+      $datas = getAllDatasFromTable($table, ['models_id' => $mapping_or_info['models_id']]);
 
       $injectionClass = PluginDatainjectionCommonInjectionLib::getInjectionClassInstance($p['itemtype']);
       $options        = $injectionClass->getOptions();

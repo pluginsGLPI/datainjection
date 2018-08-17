@@ -1717,8 +1717,7 @@ function plugin_datainjection_update210_220() {
 function plugin_datainjection_update220_230() {
    global $DB;
 
-   if (countElementsInTable("glpi_plugin_datainjection_models",
-                            "`entities_id`='-1'")) {
+   if (countElementsInTable("glpi_plugin_datainjection_models", ['entities_id' => -1])) {
       $query = "UPDATE `glpi_plugin_datainjection_models`
                 SET `is_private` = '1',
                     `entities_id` = '0',
