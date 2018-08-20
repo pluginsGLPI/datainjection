@@ -348,58 +348,51 @@ class PluginDatainjectionCommonInjectionLib
       // 19 : date_mod
       // 80 : entity
       $blacklist = [2, 19, 80, 201, 202, 203, 204];
+      
+      $raw_options_to_blacklist = [];
 
       //add document fields
       if (in_array($itemtype, $CFG_GLPI["document_types"])) {
-         $tabs            = Document::rawSearchOptionsToAdd();
-         $document_fields = [];
-         unset($tabs['document']);
-         foreach ($tabs as $k => $v) {
-            $document_fields[] = $k;
-         }
-
-         $blacklist = array_merge($blacklist, $document_fields);
+         $raw_options_to_blacklist = array_merge(
+            $raw_options_to_blacklist,
+            Document::rawSearchOptionsToAdd($itemtype)
+         );
       }
 
       //add infocoms fields
       if (in_array($itemtype, $CFG_GLPI["infocom_types"])) {
-         $tabs           = Infocom::rawSearchOptionsToAdd($itemtype);
-         $infocom_fields = [];
-         unset($tabs['financial']);
-         foreach ($tabs as $k => $v) {
-            $infocom_fields[] = $k;
-         }
-
-         $blacklist = array_merge($blacklist, $infocom_fields);
+         $raw_options_to_blacklist = array_merge(
+            $raw_options_to_blacklist,
+            Infocom::rawSearchOptionsToAdd($itemtype)
+         );
       }
       //add contract fields
       if (in_array($itemtype, $CFG_GLPI["contract_types"])) {
-         $tabs            = Contract::rawSearchOptionsToAdd();
-         $contract_fields = [];
-         unset($tabs['contract']);
-         foreach ($tabs as $k => $v) {
-            $contract_fields[] = $k;
-         }
-
-         $blacklist = array_merge($blacklist, $contract_fields);
+         $raw_options_to_blacklist = array_merge(
+            $raw_options_to_blacklist,
+            Contract::rawSearchOptionsToAdd($itemtype)
+         );
       }
 
       //add networkport fields
       if (in_array($itemtype, $CFG_GLPI["networkport_types"])) {
-         $tabs               = NetworkPort::rawSearchOptionsToAdd($itemtype);
-         $networkport_fields = [];
-         unset($tabs['network']);
-         foreach ($tabs as $k => $v) {
-            $networkport_fields[] = $k;
-         }
-
-         $blacklist = array_merge($blacklist, $networkport_fields);
+         $raw_options_to_blacklist = array_merge(
+            $raw_options_to_blacklist,
+            NetworkPort::rawSearchOptionsToAdd($itemtype)
+         );
       }
 
+      foreach ($raw_options_to_blacklist as $raw_option) {
+         if (!is_numeric($raw_option['id'])) {
+            continue;
+         }
+         $blacklist[] = $raw_option['id'];
+      }
+    
       //add ticket_types fields
       if (in_array($itemtype, $CFG_GLPI["ticket_types"])) {
-         $ticket_fields = [60, 140];
-         $blacklist     = array_merge($blacklist, $ticket_fields);
+         $blacklist[] = 60;
+         $blacklist[] = 140;
       }
 
       return $blacklist;
