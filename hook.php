@@ -105,7 +105,7 @@ function plugin_datainjection_install() {
                      `name` VARCHAR( 255 ) NOT NULL ,
                      `value` VARCHAR( 255 ) NOT NULL ,
                      `is_mandatory` TINYINT( 1 ) NOT NULL DEFAULT '0'
-                   ) ENGINE = MYISAM CHARSET=utf8 COLLATE=utf8_unicode_ci ;";
+                   ) ENGINE = InnoDB CHARSET=utf8 COLLATE=utf8_unicode_ci ;";
           $DB->queryOrDie($query, $DB->error());
 
           $query = "CREATE TABLE IF NOT EXISTS `glpi_plugin_datainjection_infos` (
@@ -114,7 +114,7 @@ function plugin_datainjection_install() {
                      `itemtype` varchar(255) NOT NULL default '',
                      `value` VARCHAR( 255 ) NOT NULL ,
                      `is_mandatory` TINYINT( 1 ) NOT NULL DEFAULT '0'
-                   ) ENGINE = MYISAM CHARSET=utf8 COLLATE=utf8_unicode_ci ;";
+                   ) ENGINE = InnoDB CHARSET=utf8 COLLATE=utf8_unicode_ci ;";
           $DB->queryOrDie($query, $DB->error());
 
          if (!is_dir(PLUGIN_DATAINJECTION_UPLOAD_DIR)) {
