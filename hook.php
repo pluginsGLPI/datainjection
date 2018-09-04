@@ -84,7 +84,7 @@ function plugin_datainjection_install() {
                      `port_unicity` tinyint( 1 ) NOT NULL DEFAULT '0',
                      `step` int( 11 ) NOT NULL DEFAULT '0',
                      PRIMARY KEY  (`id`)
-                   ) ENGINE=MyISAM CHARSET=utf8 COLLATE=utf8_unicode_ci";
+                   ) ENGINE=InnoDB CHARSET=utf8 COLLATE=utf8_unicode_ci";
           $DB->queryOrDie($query, $DB->error());
 
           $query = "CREATE TABLE IF NOT EXISTS `glpi_plugin_datainjection_modelcsvs` (
@@ -94,7 +94,7 @@ function plugin_datainjection_install() {
                      `delimiter` varchar(1) NOT NULL default ';',
                      `is_header_present` tinyint(1) NOT NULL default '1',
                      PRIMARY KEY  (`ID`)
-                   ) ENGINE=MyISAM CHARSET=utf8 COLLATE=utf8_unicode_ci;";
+                   ) ENGINE=InnoDB CHARSET=utf8 COLLATE=utf8_unicode_ci;";
           $DB->queryOrDie($query, $DB->error());
 
           $query = "CREATE TABLE IF NOT EXISTS `glpi_plugin_datainjection_mappings` (
@@ -1717,8 +1717,7 @@ function plugin_datainjection_update210_220() {
 function plugin_datainjection_update220_230() {
    global $DB;
 
-   if (countElementsInTable("glpi_plugin_datainjection_models",
-                            "`entities_id`='-1'")) {
+   if (countElementsInTable("glpi_plugin_datainjection_models", ['entities_id' => -1])) {
       $query = "UPDATE `glpi_plugin_datainjection_models`
                 SET `is_private` = '1',
                     `entities_id` = '0',

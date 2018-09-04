@@ -153,8 +153,10 @@ class PluginDatainjectionUserInjection extends User
 
          if (!countElementsInTable(
              "glpi_useremails",
-             "`users_id`='".$values['User']['id']."'
-                                       AND `email`='".$values['User']['useremails_id']."'"
+             [
+                'users_id' => $values['User']['id'],
+                'email'    => $values['User']['useremails_id'],
+             ]
          )) {
             $useremail       = new UserEmail();
             $tmp['users_id'] = $values['User']['id'];

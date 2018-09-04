@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-06-28 09:54+0000\n"
+"POT-Creation-Date: 2018-08-21 14:46+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: Cédric Anne, 2018\n"
 "Language-Team: Turkish (Turkey) (https://www.transifex.com/teclib/teams/28042/tr_TR/)\n"
@@ -59,55 +59,55 @@ msgstr ""
 msgid "Can't create folder"
 msgstr "Klasör oluşturulamadı"
 
-#: inc/commoninjectionlib.class.php:1876
+#: inc/commoninjectionlib.class.php:1870
 msgid "Add from CSV file"
 msgstr "CSV dosyasından ekle"
 
-#: inc/commoninjectionlib.class.php:1878
+#: inc/commoninjectionlib.class.php:1872
 msgid "Update from CSV file"
 msgstr "CSV dosyasından güncelle"
 
-#: inc/commoninjectionlib.class.php:1919
+#: inc/commoninjectionlib.class.php:1913
 msgid "No right to import data"
 msgstr "Veri alma izni yok"
 
-#: inc/commoninjectionlib.class.php:1923
+#: inc/commoninjectionlib.class.php:1917
 msgid "No right to update data"
 msgstr "Veri güncelleme izni yok"
 
-#: inc/commoninjectionlib.class.php:1927
+#: inc/commoninjectionlib.class.php:1921
 msgid "Size of the inserted value is to expansive"
 msgstr "Eklenen değerin boyutu çok genişleyebilir"
 
-#: inc/commoninjectionlib.class.php:1931
+#: inc/commoninjectionlib.class.php:1925
 msgid "Import not allowed"
 msgstr "Alma işlemine izin verilmiyor"
 
-#: inc/commoninjectionlib.class.php:1935
+#: inc/commoninjectionlib.class.php:1929
 msgid "Import failed"
 msgstr "Alma işlemi yapılamadı"
 
-#: inc/commoninjectionlib.class.php:1939
+#: inc/commoninjectionlib.class.php:1933
 msgid "At least one mandatory field is not present"
 msgstr "En az bir zorunlu alan bulunamadı"
 
-#: inc/commoninjectionlib.class.php:1943
+#: inc/commoninjectionlib.class.php:1937
 msgid "Data to insert are correct"
 msgstr "Eklenecek veri doğru"
 
-#: inc/commoninjectionlib.class.php:1947
+#: inc/commoninjectionlib.class.php:1941
 msgid "One data is not the good type"
 msgstr "Bir verinin türü iyi değil"
 
-#: inc/commoninjectionlib.class.php:1951
+#: inc/commoninjectionlib.class.php:1945
 msgid "Warning"
 msgstr "Uyarı"
 
-#: inc/commoninjectionlib.class.php:1955
+#: inc/commoninjectionlib.class.php:1949
 msgid "Data not found"
 msgstr "Veri bulunamadı"
 
-#: inc/commoninjectionlib.class.php:1959 inc/model.class.php:1369
+#: inc/commoninjectionlib.class.php:1953 inc/model.class.php:1369
 msgid "Undetermined"
 msgstr "Belirlenmemiş"
 

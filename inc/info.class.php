@@ -229,7 +229,7 @@ class PluginDatainjectionInfo extends CommonDBTM
 
       $infos = getAllDatasFromTable(
           'glpi_plugin_datainjection_infos',
-          "`models_id` = '". $model->getField('id')."'"
+          ['models_id' => $model->getField('id')]
       );
 
       $table     = false;
