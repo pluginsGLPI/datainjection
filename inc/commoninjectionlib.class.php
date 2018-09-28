@@ -860,7 +860,11 @@ class PluginDatainjectionCommonInjectionLib
          }
 
       } else { // First value
-         $this->values[$itemtype][$field] = $value;
+         if (is_null($value)) {
+            $this->values[$itemtype][$field] = "NULL";
+         } else {
+            $this->values[$itemtype][$field] = $value;
+         }
       }
    }
 
