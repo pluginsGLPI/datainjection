@@ -808,7 +808,7 @@ class PluginDatainjectionCommonInjectionLib
 
       $values = $this->getValuesForItemtype($itemtype);
       if ($values) {
-         return (isset($values[$field])?$values[$field]:false);
+         return (isset($values[$field])?Toolbox::addslashes_deep($values[$field]):false);
       }
       return false;
    }
