@@ -28,7 +28,7 @@
  @since     2009
  ---------------------------------------------------------------------- */
 
-define ('PLUGIN_DATAINJECTION_VERSION', '2.6.3');
+define ('PLUGIN_DATAINJECTION_VERSION', '2.6.4');
 
 // Minimal GLPI version, inclusive
 define("PLUGIN_DATAINJECTION_MIN_GLPI", "9.3");
