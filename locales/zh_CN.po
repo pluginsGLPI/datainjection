@@ -10,417 +10,409 @@ msgstr ""
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-08-21 14:46+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: Cédric Anne, 2018\n"
-"Language-Team: French (France) (https://www.transifex.com/teclib/teams/28042/fr_FR/)\n"
+"Last-Translator: liAnGjiA <liangjia@qq.com>, 2018\n"
+"Language-Team: Chinese (China) (https://www.transifex.com/teclib/teams/28042/zh_CN/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: fr_FR\n"
-"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"Language: zh_CN\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
 
 #: front/model.form.php:88 front/clientinjection.form.php:83
 msgid "The file could not be found"
-msgstr "Le fichier est introuvable"
+msgstr "文件未找到"
 
 #: front/clientinjection.form.php:34 inc/profile.class.php:67
 #: inc/menu.class.php:38 setup.php:94
 msgid "File injection"
-msgstr "Injection de fichiers"
+msgstr "文件注入"
 
 #: front/clientinjection.form.php:50
 msgid "One mandatory field is not filled"
-msgstr "Un champ obligatoire n'est pas rempli"
+msgstr "一个必填字段没有填"
 
 #: front/popup.php:37 inc/mapping.class.php:117
 msgid "See the file"
-msgstr "Voir un aperçu du fichier"
+msgstr "查看文件"
 
 #: front/popup.php:43 inc/model.class.php:1508
 msgid "File injection report"
-msgstr "Rapport d'injection du fichier"
+msgstr "文件注入报告"
 
 #: front/mapping.form.php:60
 msgid ""
 "One link field must be selected: it will be used to check if data already "
 "exists"
-msgstr ""
-"Au moins un champ de liaison doit être sélectionné: il sera utilisé pour "
-"vérifier si des données existent déjà"
+msgstr " 必须选择一个关联字段：它将用于检查数据是否已经存在。 "
 
 #: front/mapping.form.php:76
 msgid ""
 "This step allows you to add informations not present in the file. You'll be "
 "asked for theses informations while using the model."
-msgstr ""
-"Vous pouvez à présent définir des données qui devront être saisies "
-"manuellement au moment de l'import."
+msgstr " 此步骤允许您添加文件中不存在的信息。在使用该模型时，会要求您提供这些信息。 "
 
 #: hook.php:124 hook.php:141 setup.php:63
 msgid "Can't create folder"
-msgstr "Impossible de créer le dossier"
+msgstr "无法创建文件夹"
 
 #: inc/commoninjectionlib.class.php:1870
 msgid "Add from CSV file"
-msgstr "Ajout depuis le fichier CSV"
+msgstr "从CSV文件添加"
 
 #: inc/commoninjectionlib.class.php:1872
 msgid "Update from CSV file"
-msgstr "Mis à jour depuis le fichier CSV"
+msgstr "从CSV文件更新"
 
 #: inc/commoninjectionlib.class.php:1913
 msgid "No right to import data"
-msgstr "Vous n'avez pas les droits nécessaires pour importer des données"
+msgstr "无权导入数据"
 
 #: inc/commoninjectionlib.class.php:1917
 msgid "No right to update data"
-msgstr "Vous n'avez pas les droits nécessaires pour mettre à jour des données"
+msgstr "无权更新数据"
 
 #: inc/commoninjectionlib.class.php:1921
 msgid "Size of the inserted value is to expansive"
-msgstr "Le nombre de valeurs à insérer est trop important"
+msgstr ""
 
 #: inc/commoninjectionlib.class.php:1925
 msgid "Import not allowed"
-msgstr "Import interdit"
+msgstr "禁止导入"
 
 #: inc/commoninjectionlib.class.php:1929
 msgid "Import failed"
-msgstr "Import impossible"
+msgstr "导入失败"
 
 #: inc/commoninjectionlib.class.php:1933
 msgid "At least one mandatory field is not present"
-msgstr "Au moins un champ obligatoire n'est pas rempli"
+msgstr "至少有一个必填字段还没有"
 
 #: inc/commoninjectionlib.class.php:1937
 msgid "Data to insert are correct"
-msgstr "Les données à importer sont valides"
+msgstr "插入数据正确"
 
 #: inc/commoninjectionlib.class.php:1941
 msgid "One data is not the good type"
-msgstr "Au moins une donnée n'a pas le bon format / type"
+msgstr "一个数据类型不对"
 
 #: inc/commoninjectionlib.class.php:1945
 msgid "Warning"
-msgstr "Attention"
+msgstr "警告"
 
 #: inc/commoninjectionlib.class.php:1949
 msgid "Data not found"
-msgstr "Donnée introuvable"
+msgstr "数据未找到"
 
 #: inc/commoninjectionlib.class.php:1953 inc/model.class.php:1369
 msgid "Undetermined"
-msgstr "Indéterminé"
+msgstr " 未确定的"
 
 #: inc/profile.class.php:40 inc/model.class.php:75
 msgid "Model management"
-msgstr "Gestion des modèles"
+msgstr "模型管理"
 
 #: inc/profile.class.php:43 inc/menu.class.php:58 inc/menu.class.php:59
 #: inc/clientinjection.class.php:214
 msgid "Injection of the file"
-msgstr "Importation du fichier"
+msgstr "文件注入"
 
 #: inc/webservice.class.php:78
 msgid "Model unknown"
-msgstr "Modèle inconnu"
+msgstr "未知模型"
 
 #: inc/webservice.class.php:86 inc/webservice.class.php:95
 msgid "You cannot access this model"
-msgstr "Vous n'avez pas le droit d'accéder à ce modèle"
+msgstr "您无权访问此模型"
 
 #: inc/webservice.class.php:115
 msgid "Entity unknown"
-msgstr "Entité inconnue"
+msgstr "未知实体"
 
 #: inc/webservice.class.php:123
 msgid "You cannot access this entity"
-msgstr "Vous ne pouvez pas accéder à cette entité"
+msgstr "您无权访问此实体"
 
 #: inc/clientinjection.class.php:88
 msgid "Use an existing model"
-msgstr "Utiliser un modèle existant"
+msgstr "使用一个存在的模型"
 
 #: inc/clientinjection.class.php:96
 msgid "No model currently available"
-msgstr "Aucun modèle n'est disponible actuellement"
+msgstr "当前没有可用的模型"
 
 #: inc/clientinjection.class.php:105
 msgid "You can start the model creation by hitting the button"
-msgstr "Vous pouvez en créer un en cliquant sur le bouton"
+msgstr "您可以通过点击按钮开始模型创建"
 
 #: inc/clientinjection.class.php:153 inc/model.class.php:769
 #: inc/dropdown.class.php:87
 msgid "File to inject"
-msgstr "Fichier à injecter"
+msgstr "文件注入"
 
 #: inc/clientinjection.class.php:156 inc/info.class.php:247
 msgid "Choose a file"
-msgstr "Choix du fichier"
+msgstr "选择文件"
 
 #: inc/clientinjection.class.php:162
 msgid "File encoding"
-msgstr "Encodage du fichier"
+msgstr "文件编码"
 
 #: inc/clientinjection.class.php:170
 msgid "Warning : existing data will be overridden"
-msgstr "Attention : Les données existantes seront écrasées !"
+msgstr "警告：已有数据将会被覆盖掉"
 
 #: inc/clientinjection.class.php:173
 msgid ""
 "Watch out, you're about to inject data into GLPI. Are you sure you want to "
 "do it ?"
-msgstr ""
-"Attention, vous êtes sur le point d'importer des données dans GLPI. Êtes-"
-"vous sûr de vouloir le faire ?"
+msgstr "当心了，您将有往GLPI里注入数据。您确定要这样做么？"
 
 #: inc/clientinjection.class.php:180
 msgid "Launch the import"
-msgstr "Procéder à l'import"
+msgstr "启动导入"
 
 #: inc/clientinjection.class.php:210
 msgid "Import progress"
-msgstr "Etat d'avancement de l'import"
+msgstr "导入进度"
 
 #: inc/clientinjection.class.php:280
 #, php-format
 msgid "Injection of the file... %d%%"
-msgstr "Importation du fichier... %d%%"
+msgstr "注入文件... %d%%"
 
 #: inc/clientinjection.class.php:297
 msgid "Injection finished"
-msgstr "Importation terminée"
+msgstr "注入完成"
 
 #: inc/clientinjection.class.php:369
 msgid "Injection's results"
-msgstr "Résultat de l'importation"
+msgstr "注入结果"
 
 #: inc/clientinjection.class.php:374
 msgid "Injection successful"
-msgstr "L'importation a réussi"
+msgstr "注入成功"
 
 #: inc/clientinjection.class.php:377
 msgid "Injection encounters errors"
-msgstr "L'importation a rencontré des erreurs"
+msgstr "注入遇到错误"
 
 #: inc/clientinjection.class.php:386
 msgid "See the log"
-msgstr "Voir le rapport"
+msgstr "查看日志"
 
 #: inc/clientinjection.class.php:392
 msgid "Export rapport in PDF"
-msgstr "Exporter le rapport en PDF"
+msgstr "导出PDF报表"
 
 #: inc/clientinjection.class.php:398
 msgid "Export the log"
-msgstr "Générer CSV des erreurs"
+msgstr "导出日志"
 
 #: inc/clientinjection.class.php:406
 msgid "Finish"
-msgstr "Terminer"
+msgstr "完成"
 
 #: inc/model.class.php:383 inc/model.class.php:669
 msgid "Allow lines creation"
-msgstr "Création des lignes"
+msgstr ""
 
 #: inc/model.class.php:392 inc/model.class.php:672
 msgid "Allow lines update"
-msgstr "Mise à jour des lignes"
+msgstr ""
 
 #: inc/model.class.php:401 inc/model.class.php:657
 msgid "Type of data to import"
-msgstr "Type de données à importer"
+msgstr "导入数据类型"
 
 #: inc/model.class.php:411 inc/model.class.php:681
 msgid "Allow creation of dropdowns"
-msgstr "Ajouter des intitulés"
+msgstr ""
 
 #: inc/model.class.php:419 inc/model.class.php:685
 msgid "Dates format"
-msgstr "Format des dates"
+msgstr "数据格式"
 
 #: inc/model.class.php:428 inc/model.class.php:698
 msgid "Float format"
-msgstr "Format des nombres décimaux"
+msgstr "浮点格式"
 
 #: inc/model.class.php:438 inc/model.class.php:707
 msgid "Try to establish network connection is possible"
-msgstr "Essayer de réaliser les connexions réseau"
+msgstr ""
 
 #: inc/model.class.php:448 inc/model.class.php:711
 msgid "Port unicity criteria"
-msgstr "Critère d'unicité d'un port"
+msgstr ""
 
 #: inc/model.class.php:677
 msgid "Advanced options"
-msgstr "Options avancées"
+msgstr "高级选项"
 
 #: inc/model.class.php:694
 msgid "Allow update of existing fields"
-msgstr "Mise à jour des champs existants"
+msgstr ""
 
 #: inc/model.class.php:737
 msgctxt "button"
 msgid "Validate the model"
-msgstr "Valider le modèle"
+msgstr "无效模型"
 
 #: inc/model.class.php:771 inc/dropdown.class.php:88
 msgid "Mappings"
-msgstr "Correspondances"
+msgstr ""
 
 #: inc/model.class.php:774 inc/dropdown.class.php:90
 msgid "Additional Information"
-msgstr "Infos complémentaires"
+msgstr ""
 
 #: inc/model.class.php:802
 msgid "Load this file"
-msgstr "Charger le fichier"
+msgstr "加载此文件"
 
 #: inc/model.class.php:881
 msgid "Please enter a name for the model"
-msgstr "Merci d'entrer un nom pour le modèle"
+msgstr "请给模型命名"
 
 #: inc/model.class.php:890
 msgid "Your model should allow import and/or update of data"
-msgstr "Votre modèle devrait permettre l'import ou la mise à jour de données"
+msgstr ""
 
 #: inc/model.class.php:909
 msgid "You are not the initial creator of this model"
-msgstr "Vous n'êtes pas le créateur de ce modèle"
+msgstr ""
 
 #: inc/model.class.php:972
 #, php-format
 msgid "Impossible to copy the file in %s"
-msgstr "Impossible de copier le fichier dans %s"
+msgstr ""
 
 #: inc/model.class.php:980
 msgid "File format is wrong"
-msgstr "Le fichier n'a pas le bon format"
+msgstr "文件格式错误"
 
 #: inc/model.class.php:981
 msgid "Extension csv required"
-msgstr "L'extension csv est requise"
+msgstr ""
 
 #: inc/model.class.php:1058
 msgid "Not data to import"
-msgstr "Pas de données à insérer"
+msgstr "无数据导入"
 
 #: inc/model.class.php:1118
 msgid "The file is ok."
-msgstr "The fichier est ok."
+msgstr "文件没问题。"
 
 #: inc/model.class.php:1143
 msgid "The number of columns of the file is incorrect."
-msgstr "Le nombre de colonnes du fichier n'est pas correct : "
+msgstr ""
 
 #: inc/model.class.php:1145
 #, php-format
 msgid "%d awaited column"
 msgid_plural "%d awaited columns"
-msgstr[0] "%d Colonne attendue"
-msgstr[1] "%d Colonnes attendues"
+msgstr[0] ""
 
 #: inc/model.class.php:1150
 #, php-format
 msgid "%d found column"
 msgid_plural "%d found columns"
-msgstr[0] "%d Colonne trouvée"
-msgstr[1] "%d Colonnes trouvées"
+msgstr[0] ""
 
 #: inc/model.class.php:1190
 msgid "At least one column is incorrect"
-msgstr "Au moins une colonne est incorrecte : "
+msgstr ""
 
 #: inc/model.class.php:1198
 msgid "Into the file"
-msgstr "Dans le fichier"
+msgstr ""
 
 #: inc/model.class.php:1203
 msgid "From the model"
-msgstr "Depuis le modèle"
+msgstr ""
 
 #: inc/model.class.php:1434 inc/model.class.php:1517
 msgid "Array of successful injections"
-msgstr "Tableau des imports qui ont réussis"
+msgstr ""
 
 #: inc/model.class.php:1441 inc/model.class.php:1471 inc/model.class.php:1520
 #: inc/model.class.php:1540
 msgid "Line"
-msgstr "Ligne"
+msgstr ""
 
 #: inc/model.class.php:1442 inc/model.class.php:1473 inc/model.class.php:1521
 #: inc/model.class.php:1542
 msgid "Data Import"
-msgstr "Import des données"
+msgstr "数据导入"
 
 #: inc/model.class.php:1443 inc/model.class.php:1474 inc/model.class.php:1522
 #: inc/model.class.php:1543
 msgid "Injection type"
-msgstr "Type d'injection"
+msgstr "注入类型"
 
 #: inc/model.class.php:1444 inc/model.class.php:1475 inc/model.class.php:1523
 #: inc/model.class.php:1544
 msgid "Object Identifier"
-msgstr "Identifiant de l'objet"
+msgstr ""
 
 #: inc/model.class.php:1464 inc/model.class.php:1537
 msgid "Array of unsuccessful injections"
-msgstr "Tableau des imports qui ont échoués ou partiellement réussis"
+msgstr ""
 
 #: inc/model.class.php:1472 inc/model.class.php:1541 inc/model.class.php:1558
 msgid "Data check"
-msgstr "Vérification des données"
+msgstr "数据检查"
 
 #: inc/injectiontype.class.php:131
 msgid "-------Choose a table-------"
-msgstr "-------Choisir une table-------"
+msgstr "-------选择表-------"
 
 #: inc/injectiontype.class.php:192
 msgid "-------Choose a field-------"
-msgstr "-------Choisir un champ-------"
+msgstr "-------选择字段-------"
 
 #: inc/networkequipmentinjection.class.php:72
 msgid "Number of ports"
-msgstr "Nombre de ports"
+msgstr "端口号"
 
 #: inc/mapping.class.php:123
 msgid "Header of the file"
-msgstr "En-tête du fichier"
+msgstr "文件头"
 
 #: inc/mapping.class.php:124 inc/info.class.php:84 inc/info.class.php:141
 msgid "Tables"
-msgstr "Tables"
+msgstr "表"
 
 #: inc/mapping.class.php:126
 msgid "Link field"
-msgstr "Champs de liaison"
+msgstr "关联字段"
 
 #: inc/info.class.php:86 inc/info.class.php:143
 msgid "Mandatory information"
-msgstr "Information obligatoire"
+msgstr "必填信息"
 
 #: inc/info.class.php:142
 msgid "Fields"
-msgstr "Champs"
+msgstr "字段"
 
 #: inc/info.class.php:246
 msgid "Complementary information"
-msgstr "Information complémentaire"
+msgstr "补充信息"
 
 #: inc/info.class.php:256
 msgid "Download file sample"
-msgstr "Téléchargement fichier exemple"
+msgstr "下载示例文件"
 
 #: inc/dropdown.class.php:37
 msgid "dd-mm-yyyy"
-msgstr "jj-mm-aaaa"
+msgstr "dd-mm-yyyy"
 
 #: inc/dropdown.class.php:39
 msgid "mm-dd-yyyy"
-msgstr "mm-jj-aaaa"
+msgstr "mm-dd-yyyy"
 
 #: inc/dropdown.class.php:41
 msgid "yyyy-mm-dd"
-msgstr "aaaa-mm-jj"
+msgstr "yyyy-mm-dd"
 
 #: inc/dropdown.class.php:60
 msgid "1 234.56"
@@ -436,11 +428,11 @@ msgstr "1,234.56"
 
 #: inc/dropdown.class.php:94
 msgid "Model available for use"
-msgstr "Modèle utilisable"
+msgstr "可供使用的模型"
 
 #: inc/dropdown.class.php:119
 msgid "Automatic detection"
-msgstr "Détection automatique"
+msgstr "自动检测"
 
 #: inc/dropdown.class.php:122
 msgid "UTF-8"
@@ -452,16 +444,16 @@ msgstr "ISO8859-1"
 
 #: inc/modelcsv.class.php:160
 msgid "Specific file format options"
-msgstr "Options spécifiques au format de fichier"
+msgstr "特殊格式选项"
 
 #: inc/modelcsv.class.php:163
 msgid "Header's presence"
-msgstr "Présence d'un en-tête"
+msgstr ""
 
 #: inc/modelcsv.class.php:167
 msgid "File delimitor"
-msgstr "Délimiteur du fichier"
+msgstr "文件分隔符"
 
 #: inc/networkportinjection.class.php:89
 msgid "Port MAC address"
-msgstr "Adresse MAC du port"
+msgstr "MAC地址端口"

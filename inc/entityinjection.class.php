@@ -130,7 +130,7 @@ class PluginDatainjectionEntityInjection extends Entity
          //Does the entity alread exists ?
          $results = getAllDatasFromTable(
              'glpi_entities',
-             "`name`='$name' AND `entities_id`='$parent'"
+             ['name' => $name, 'entities_id' => $parent]
          );
          //Entity doesn't exists => create it
          if (empty($results)) {
@@ -157,7 +157,7 @@ class PluginDatainjectionEntityInjection extends Entity
       }
       $results = getAllDatasFromTable(
           'glpi_entities',
-          "`completename`='".$values['completename']."'"
+          ['completename' => $values['completename']]
       );
 
       if (empty($results)) {
