@@ -351,6 +351,8 @@ class PluginDatainjectionCommonInjectionLib
       
       $raw_options_to_blacklist = [];
 
+      $raw_options_to_blacklist = [];
+
       //add document fields
       if (in_array($itemtype, $CFG_GLPI["document_types"])) {
          $raw_options_to_blacklist = array_merge(
@@ -366,6 +368,7 @@ class PluginDatainjectionCommonInjectionLib
             Infocom::rawSearchOptionsToAdd($itemtype)
          );
       }
+
       //add contract fields
       if (in_array($itemtype, $CFG_GLPI["contract_types"])) {
          $raw_options_to_blacklist = array_merge(
@@ -380,6 +383,13 @@ class PluginDatainjectionCommonInjectionLib
             $raw_options_to_blacklist,
             NetworkPort::rawSearchOptionsToAdd($itemtype)
          );
+      }
+
+      foreach ($raw_options_to_blacklist as $raw_option) {
+         if (!is_numeric($raw_option['id'])) {
+            continue;
+         }
+         $blacklist[] = $raw_option['id'];
       }
 
       foreach ($raw_options_to_blacklist as $raw_option) {
@@ -859,7 +869,11 @@ class PluginDatainjectionCommonInjectionLib
          }
 
       } else { // First value
-         $this->values[$itemtype][$field] = $value;
+         if (is_null($value)) {
+            $this->values[$itemtype][$field] = "NULL";
+         } else {
+            $this->values[$itemtype][$field] = $value;
+         }
       }
    }
 
@@ -2007,7 +2021,36 @@ class PluginDatainjectionCommonInjectionLib
          }
       }
 
-         return $type_searchOptions;
+      /*
+       * Preserve only one option per linkfield, as mapping process is based on arrays indexed by linkfield.
+       * This is a hack to handle behaviour explained in issue https://github.com/pluginsGLPI/datainjection/issues/121.
+       *
+       * Preserved option is "complename" if existing, or "name" if existing,
+       * or first founded option for each linkfield.
+       */
+      $linkfield_preserved_option = array_fill_keys(array_column($type_searchOptions, 'linkfield'), null);
+      foreach ($type_searchOptions as $option) {
+         if (!array_key_exists('linkfield', $option)) {
+            continue;
+         }
+
+         $linkfield = $option['linkfield'];
+
+         if (null === $linkfield_preserved_option[$linkfield]
+             || ('name' === $option['field'] && 'completename' !== $linkfield_preserved_option[$linkfield]['field'])
+             || 'completename' === $option['field']) {
+            $linkfield_preserved_option[$linkfield] = $option;
+         }
+      }
+
+      $type_searchOptions = array_filter(
+         $type_searchOptions,
+         function ($option) use ($linkfield_preserved_option) {
+            return in_array($option, $linkfield_preserved_option);
+         }
+      );
+
+      return $type_searchOptions;
    }
 
 

@@ -58,6 +58,7 @@ function plugin_datainjection_install() {
          plugin_datainjection_upgrade23_240($migration);
          plugin_datainjection_migration_24_250($migration);
          plugin_datainjection_migration_251_252($migration);
+         plugin_datainjection_migration_264_270($migration);
          break;
 
       case 0 :
@@ -84,7 +85,7 @@ function plugin_datainjection_install() {
                      `port_unicity` tinyint( 1 ) NOT NULL DEFAULT '0',
                      `step` int( 11 ) NOT NULL DEFAULT '0',
                      PRIMARY KEY  (`id`)
-                   ) ENGINE=MyISAM CHARSET=utf8 COLLATE=utf8_unicode_ci";
+                   ) ENGINE=InnoDB CHARSET=utf8 COLLATE=utf8_unicode_ci";
           $DB->queryOrDie($query, $DB->error());
 
           $query = "CREATE TABLE IF NOT EXISTS `glpi_plugin_datainjection_modelcsvs` (
@@ -94,7 +95,7 @@ function plugin_datainjection_install() {
                      `delimiter` varchar(1) NOT NULL default ';',
                      `is_header_present` tinyint(1) NOT NULL default '1',
                      PRIMARY KEY  (`ID`)
-                   ) ENGINE=MyISAM CHARSET=utf8 COLLATE=utf8_unicode_ci;";
+                   ) ENGINE=InnoDB CHARSET=utf8 COLLATE=utf8_unicode_ci;";
           $DB->queryOrDie($query, $DB->error());
 
           $query = "CREATE TABLE IF NOT EXISTS `glpi_plugin_datainjection_mappings` (
@@ -105,7 +106,7 @@ function plugin_datainjection_install() {
                      `name` VARCHAR( 255 ) NOT NULL ,
                      `value` VARCHAR( 255 ) NOT NULL ,
                      `is_mandatory` TINYINT( 1 ) NOT NULL DEFAULT '0'
-                   ) ENGINE = MYISAM CHARSET=utf8 COLLATE=utf8_unicode_ci ;";
+                   ) ENGINE = InnoDB CHARSET=utf8 COLLATE=utf8_unicode_ci ;";
           $DB->queryOrDie($query, $DB->error());
 
           $query = "CREATE TABLE IF NOT EXISTS `glpi_plugin_datainjection_infos` (
@@ -114,7 +115,7 @@ function plugin_datainjection_install() {
                      `itemtype` varchar(255) NOT NULL default '',
                      `value` VARCHAR( 255 ) NOT NULL ,
                      `is_mandatory` TINYINT( 1 ) NOT NULL DEFAULT '0'
-                   ) ENGINE = MYISAM CHARSET=utf8 COLLATE=utf8_unicode_ci ;";
+                   ) ENGINE = InnoDB CHARSET=utf8 COLLATE=utf8_unicode_ci ;";
           $DB->queryOrDie($query, $DB->error());
 
          if (!is_dir(PLUGIN_DATAINJECTION_UPLOAD_DIR)) {
@@ -172,19 +173,21 @@ function plugin_datainjection_install() {
             plugin_datainjection_update170_20();
          }
 
-          plugin_datainjection_update210_220();
+         plugin_datainjection_update210_220();
 
-          plugin_datainjection_update220_230();
+         plugin_datainjection_update220_230();
 
-          plugin_datainjection_upgrade23_240($migration);
+         plugin_datainjection_upgrade23_240($migration);
 
-          plugin_datainjection_migration_24_250($migration);
+         plugin_datainjection_migration_24_250($migration);
 
-          plugin_datainjection_migration_251_252($migration);
-        break;
+         plugin_datainjection_migration_251_252($migration);
+
+         plugin_datainjection_migration_264_270($migration);
+         break;
 
       default :
-        break;
+         break;
    }
 
    return true;
@@ -213,6 +216,29 @@ function plugin_datainjection_uninstall() {
 
       plugin_init_datainjection();
       return true;
+}
+
+function plugin_datainjection_migration_264_270(Migration $migration) {
+
+   global $DB;
+
+   $migration->setVersion('2.7.0');
+
+   $migration->addPostQuery(
+      $DB->buildUpdate(
+         'glpi_plugin_datainjection_mappings',
+         [
+            'value' => 'licenseid',
+         ],
+         [
+            'itemtype' => 'Item_OperatingSystem',
+            'value'    => 'license_id',
+         ]
+      ),
+      'Changing "license_id" field of "Item_OperatingSystem" to "licenseid".'
+   );
+
+   $migration->executeMigration();
 }
 
 function plugin_datainjection_migration_251_252(Migration $migration) {
@@ -485,7 +511,7 @@ function plugin_datainjection_update170_20() {
          [
             'to' => 'users_id',
             'tables' => [
-               'glpi_ticketfollowups',
+               'glpi_itilfollowups',
                'glpi_knowbaseitems',
                'glpi_tickets'
             ]
@@ -1717,8 +1743,7 @@ function plugin_datainjection_update210_220() {
 function plugin_datainjection_update220_230() {
    global $DB;
 
-   if (countElementsInTable("glpi_plugin_datainjection_models",
-                            "`entities_id`='-1'")) {
+   if (countElementsInTable("glpi_plugin_datainjection_models", ['entities_id' => -1])) {
       $query = "UPDATE `glpi_plugin_datainjection_models`
                 SET `is_private` = '1',
                     `entities_id` = '0',

@@ -28,12 +28,12 @@
  @since     2009
  ---------------------------------------------------------------------- */
 
-define ('PLUGIN_DATAINJECTION_VERSION', '2.6.1');
+define ('PLUGIN_DATAINJECTION_VERSION', '2.7.0');
 
 // Minimal GLPI version, inclusive
-define("PLUGIN_DATAINJECTION_MIN_GLPI", "9.3");
+define("PLUGIN_DATAINJECTION_MIN_GLPI", "9.4");
 // Maximum GLPI version, exclusive
-define("PLUGIN_DATAINJECTION_MAX_GLPI", "9.4");
+define("PLUGIN_DATAINJECTION_MAX_GLPI", "9.5");
 
 if (!defined("PLUGIN_DATAINJECTION_UPLOAD_DIR")) {
     define("PLUGIN_DATAINJECTION_UPLOAD_DIR", GLPI_PLUGIN_DOC_DIR."/datainjection/");

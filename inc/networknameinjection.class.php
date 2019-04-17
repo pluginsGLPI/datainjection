@@ -112,9 +112,11 @@ class PluginDatainjectionNetworkNameInjection extends NetworkName
       if (isset($values['NetworkName']['ipaddresses_id'])) {
          if (!countElementsInTable(
              "glpi_ipaddresses",
-             "`items_id`='".$values['NetworkName']['id']."'
-                                       AND `itemtype`='NetworkName'
-                                       AND `name`='".$values['NetworkName']['ipaddresses_id']."'"
+             [
+                'items_id' => $values['NetworkName']['id'],
+                'itemtype' => 'NetworkName',
+                'name'     => $values['NetworkName']['ipaddresses_id'],
+             ]
          )) {
 
             $ip                  = new IPAddress();
