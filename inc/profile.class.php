@@ -64,7 +64,7 @@ class PluginDatainjectionProfile extends Profile
 
       if ($item->getType() == 'Profile') {
          if ($item->getField('interface') == 'central') {
-            return __('File injection', 'datainjection');
+            return __('Data injection', 'datainjection');
          }
          return '';
       }
