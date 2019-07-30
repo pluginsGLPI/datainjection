@@ -45,5 +45,5 @@ Else
 	Download the tarball of this plugin
 	Uncompress it in the plugins directory of your glpi installation
 
-Once copied in the repertory, go the the "Configuration"->"Plugins"->"File injection" menu, and install the plugin
+Once copied in the repertory, go the the "Configuration"->"Plugins"->"Data injection" menu, and install the plugin
 

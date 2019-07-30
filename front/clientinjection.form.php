@@ -31,7 +31,7 @@
 require '../../../inc/includes.php';
 
 Html::header(
-    __('File injection', 'datainjection'), $_SERVER["PHP_SELF"],
+    __('Data injection', 'datainjection'), $_SERVER["PHP_SELF"],
     "tools", "plugindatainjectionmenu", "client"
 );
 

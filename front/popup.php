@@ -40,7 +40,7 @@ switch ($_GET["popup"]) {
     break;
 
    case "log" :
-       Html::popHeader(__('File injection report', 'datainjection'), $_SERVER['PHP_SELF']);
+       Html::popHeader(__('Data injection report', 'datainjection'), $_SERVER['PHP_SELF']);
        PluginDatainjectionModel::showLogResults($_GET['models_id']);
        Html::popFooter();
     break;
