@@ -29,6 +29,5 @@
  ---------------------------------------------------------------------- */
 
 require '../../../inc/includes.php';
-require "../../../lib/ezpdf/class.ezpdf.php";
 
 PluginDatainjectionModel::exportAsPDF($_GET['models_id']);
