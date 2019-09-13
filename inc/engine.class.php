@@ -103,7 +103,7 @@ class PluginDatainjectionEngine
       }
 
       //Add fields needed for injection
-      if(!isset($fields_toinject[$itemtype]['entities_id'])){
+      if (!isset($fields_toinject[$itemtype]['entities_id'])) {
          //Add fields needed for injection
          $this->addRequiredFields($itemtype, $fields_toinject);
       }
