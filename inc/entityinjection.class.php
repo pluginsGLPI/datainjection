@@ -134,7 +134,7 @@ class PluginDatainjectionEntityInjection extends Entity
          );
          //Entity doesn't exists => create it
          if (empty($results)) {
-             $parent = CommonDropdown::import($tmp);
+             $parent = $entity->import($tmp);
          } else {
              //Entity already exists, use the ID as parent
              $ent    = array_pop($results);
