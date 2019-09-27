@@ -200,7 +200,7 @@ class PluginDatainjectionCommonInjectionLib
       $this->primary_type   = self::getItemtypeByInjectionClass($injectionClass);
 
       //If entity is in file : check if it's an integer or the name
-      if (isset($this->values[$this->primary_type]['entities_id'])) {
+      if (isset($this->values[$this->primary_type]['entities_id']) && $this->primary_type != 'Entity') {
          $entity = $this->values[$this->primary_type]['entities_id'];
          if (!is_integer($entity)) {
             $entities = new Entity();
