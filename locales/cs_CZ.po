@@ -6,16 +6,16 @@
 # Translators:
 # Cédric Anne, 2018
 # David Stepan <stepand@tiscali.cz>, 2018
-# Pavel Borecki <pavel.borecki@gmail.com>, 2018
+# Pavel Borecki <pavel.borecki@gmail.com>, 2019
 # 
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-07-30 15:44+0200\n"
+"POT-Creation-Date: 2019-11-08 14:49+0000\n"
 "PO-Revision-Date: 2018-06-21 12:57+0000\n"
-"Last-Translator: Pavel Borecki <pavel.borecki@gmail.com>, 2018\n"
+"Last-Translator: Pavel Borecki <pavel.borecki@gmail.com>, 2019\n"
 "Language-Team: Czech (Czech Republic) (https://www.transifex.com/teclib/teams/28042/cs_CZ/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -23,104 +23,25 @@ msgstr ""
 "Language: cs_CZ\n"
 "Plural-Forms: nplurals=4; plural=(n == 1 && n % 1 == 0) ? 0 : (n >= 2 && n <= 4 && n % 1 == 0) ? 1: (n % 1 != 0 ) ? 2 : 3;\n"
 
-#: setup.php:63 hook.php:125 hook.php:142
-msgid "Can't create folder"
-msgstr "Složku není možné vytvořit"
+#: inc/networkequipmentinjection.class.php:72
+msgid "Number of ports"
+msgstr "Počet portů"
 
-#: setup.php:94 front/clientinjection.form.php:34 inc/menu.class.php:38
-#: inc/profile.class.php:67
-msgid "Data injection"
-msgstr ""
-
-#: front/mapping.form.php:60
-msgid ""
-"One link field must be selected: it will be used to check if data already "
-"exists"
-msgstr ""
-"Je třeba vybrat jednu kolonku odkazu: bude použito pro kontrolu zda data už "
-"existují"
-
-#: front/mapping.form.php:76
-msgid ""
-"This step allows you to add informations not present in the file. You'll be "
-"asked for theses informations while using the model."
-msgstr ""
-"V tomto kroku je možné přidat informace které se nenacházejí v souboru. O "
-"tyto informace budete požádáni při používání modelu."
-
-#: front/model.form.php:88 front/clientinjection.form.php:83
-msgid "The file could not be found"
-msgstr "Soubor se nepodařilo nalézt"
-
-#: front/clientinjection.form.php:50
-msgid "One mandatory field is not filled"
-msgstr "Povinná kolonka není vyplněná"
-
-#: front/popup.php:37 inc/mapping.class.php:117
+#: inc/mapping.class.php:117 front/popup.php:37
 msgid "See the file"
 msgstr "Zobrazit soubor"
 
-#: front/popup.php:43 inc/model.class.php:1517
-msgid "Data injection report"
-msgstr ""
+#: inc/mapping.class.php:123
+msgid "Header of the file"
+msgstr "Hlavička souboru"
 
-#: inc/menu.class.php:58 inc/menu.class.php:59 inc/profile.class.php:43
-#: inc/clientinjection.class.php:214
-msgid "Injection of the file"
-msgstr "Import souboru"
+#: inc/mapping.class.php:124 inc/info.class.php:84 inc/info.class.php:141
+msgid "Tables"
+msgstr "Tabulky"
 
-#: inc/dropdown.class.php:37
-msgid "dd-mm-yyyy"
-msgstr "dd-mm-rrrr"
-
-#: inc/dropdown.class.php:39
-msgid "mm-dd-yyyy"
-msgstr "mm-dd-rrrr"
-
-#: inc/dropdown.class.php:41
-msgid "yyyy-mm-dd"
-msgstr "rrrr-mm-dd"
-
-#: inc/dropdown.class.php:60
-msgid "1 234.56"
-msgstr "1 234,56"
-
-#: inc/dropdown.class.php:62
-msgid "1 234,56"
-msgstr "1 234,56"
-
-#: inc/dropdown.class.php:64
-msgid "1,234.56"
-msgstr "1 234,56"
-
-#: inc/dropdown.class.php:87 inc/model.class.php:769
-#: inc/clientinjection.class.php:153
-msgid "File to inject"
-msgstr "Soubor k importu"
-
-#: inc/dropdown.class.php:88 inc/model.class.php:771
-msgid "Mappings"
-msgstr "Mapování"
-
-#: inc/dropdown.class.php:90 inc/model.class.php:774
-msgid "Additional Information"
-msgstr "Další informace"
-
-#: inc/dropdown.class.php:94
-msgid "Model available for use"
-msgstr "Šablona kterou je možné použít"
-
-#: inc/dropdown.class.php:119
-msgid "Automatic detection"
-msgstr "Automatické zjištění"
-
-#: inc/dropdown.class.php:122
-msgid "UTF-8"
-msgstr "UTF-8"
-
-#: inc/dropdown.class.php:123
-msgid "ISO8859-1"
-msgstr "ISO8859-1"
+#: inc/mapping.class.php:126
+msgid "Link field"
+msgstr "Propojená kolonka"
 
 #: inc/model.class.php:75 inc/profile.class.php:40
 msgid "Model management"
@@ -170,6 +91,19 @@ msgstr "Umožnit aktualizovat existující kolonky"
 msgctxt "button"
 msgid "Validate the model"
 msgstr "Ověřit šablonu"
+
+#: inc/model.class.php:769 inc/clientinjection.class.php:153
+#: inc/dropdown.class.php:87
+msgid "File to inject"
+msgstr "Soubor k importu"
+
+#: inc/model.class.php:771 inc/dropdown.class.php:88
+msgid "Mappings"
+msgstr "Mapování"
+
+#: inc/model.class.php:774 inc/dropdown.class.php:90
+msgid "Additional Information"
+msgstr "Další informace"
 
 #: inc/model.class.php:802
 msgid "Load this file"
@@ -278,13 +212,41 @@ msgstr "Pole neúspěšných importů"
 msgid "Data check"
 msgstr "Kontrola dat"
 
-#: inc/networkequipmentinjection.class.php:72
-msgid "Number of ports"
-msgstr "Počet portů"
+#: inc/model.class.php:1517 front/popup.php:43
+msgid "Data injection report"
+msgstr "Výkaz o vpravení dat"
 
-#: inc/networkportinjection.class.php:89
-msgid "Port MAC address"
-msgstr "MAC adresa portu"
+#: inc/modelcsv.class.php:160
+msgid "Specific file format options"
+msgstr "Předvolby konkrétního souborového formátu"
+
+#: inc/modelcsv.class.php:163
+msgid "Header's presence"
+msgstr "Přítomnost hlavičky"
+
+#: inc/modelcsv.class.php:167
+msgid "File delimitor"
+msgstr "Oddělovač souboru"
+
+#: inc/info.class.php:86 inc/info.class.php:143
+msgid "Mandatory information"
+msgstr "Povinné informace"
+
+#: inc/info.class.php:142
+msgid "Fields"
+msgstr "Kolonky"
+
+#: inc/info.class.php:246
+msgid "Complementary information"
+msgstr "Doplňující informace"
+
+#: inc/info.class.php:247 inc/clientinjection.class.php:156
+msgid "Choose a file"
+msgstr "Zvolte soubor"
+
+#: inc/info.class.php:256
+msgid "Download file sample"
+msgstr "Stáhnout ukázku souboru"
 
 #: inc/clientinjection.class.php:88
 msgid "Use an existing model"
@@ -298,17 +260,13 @@ msgstr "V tuto chvíli není k dispozici žádná šablona"
 msgid "You can start the model creation by hitting the button"
 msgstr "Vytváření šablony zahájíte kliknutím na tlačítko"
 
-#: inc/clientinjection.class.php:156 inc/info.class.php:247
-msgid "Choose a file"
-msgstr "Zvolte soubor"
-
 #: inc/clientinjection.class.php:162
 msgid "File encoding"
 msgstr "Znaková sada souboru"
 
 #: inc/clientinjection.class.php:170
 msgid "Warning : existing mapped column will be overridden"
-msgstr ""
+msgstr "Varování: existující mapovaný sloupec bude přepsán"
 
 #: inc/clientinjection.class.php:173
 msgid ""
@@ -323,6 +281,11 @@ msgstr "Spustit import"
 #: inc/clientinjection.class.php:210
 msgid "Import progress"
 msgstr "Ukazatel postupu importu"
+
+#: inc/clientinjection.class.php:214 inc/profile.class.php:43
+#: inc/menu.class.php:58 inc/menu.class.php:59
+msgid "Injection of the file"
+msgstr "Import souboru"
 
 #: inc/clientinjection.class.php:280
 #, php-format
@@ -360,42 +323,6 @@ msgstr "Exportovat záznam událostí"
 #: inc/clientinjection.class.php:406
 msgid "Finish"
 msgstr "Dokončit"
-
-#: inc/injectiontype.class.php:131
-msgid "-------Choose a table-------"
-msgstr "-------Zvolte tabulku-------"
-
-#: inc/injectiontype.class.php:192
-msgid "-------Choose a field-------"
-msgstr "-------Zvolte kolonku-------"
-
-#: inc/info.class.php:84 inc/info.class.php:141 inc/mapping.class.php:124
-msgid "Tables"
-msgstr "Tabulky"
-
-#: inc/info.class.php:86 inc/info.class.php:143
-msgid "Mandatory information"
-msgstr "Povinné informace"
-
-#: inc/info.class.php:142
-msgid "Fields"
-msgstr "Kolonky"
-
-#: inc/info.class.php:246
-msgid "Complementary information"
-msgstr "Doplňující informace"
-
-#: inc/info.class.php:256
-msgid "Download file sample"
-msgstr "Stáhnout ukázku souboru"
-
-#: inc/mapping.class.php:123
-msgid "Header of the file"
-msgstr "Hlavička souboru"
-
-#: inc/mapping.class.php:126
-msgid "Link field"
-msgstr "Propojená kolonka"
 
 #: inc/commoninjectionlib.class.php:1874
 msgid "Add from CSV file"
@@ -445,6 +372,63 @@ msgstr "Varování"
 msgid "Data not found"
 msgstr "Data nebyla nalezena"
 
+#: inc/injectiontype.class.php:131
+msgid "-------Choose a table-------"
+msgstr "-------Zvolte tabulku-------"
+
+#: inc/injectiontype.class.php:192
+msgid "-------Choose a field-------"
+msgstr "-------Zvolte kolonku-------"
+
+#: inc/profile.class.php:67 inc/menu.class.php:38
+#: front/clientinjection.form.php:34 setup.php:94
+msgid "Data injection"
+msgstr "Vpravení dat"
+
+#: inc/dropdown.class.php:37
+msgid "dd-mm-yyyy"
+msgstr "dd-mm-rrrr"
+
+#: inc/dropdown.class.php:39
+msgid "mm-dd-yyyy"
+msgstr "mm-dd-rrrr"
+
+#: inc/dropdown.class.php:41
+msgid "yyyy-mm-dd"
+msgstr "rrrr-mm-dd"
+
+#: inc/dropdown.class.php:60
+msgid "1 234.56"
+msgstr "1 234,56"
+
+#: inc/dropdown.class.php:62
+msgid "1 234,56"
+msgstr "1 234,56"
+
+#: inc/dropdown.class.php:64
+msgid "1,234.56"
+msgstr "1 234,56"
+
+#: inc/dropdown.class.php:94
+msgid "Model available for use"
+msgstr "Šablona kterou je možné použít"
+
+#: inc/dropdown.class.php:119
+msgid "Automatic detection"
+msgstr "Automatické zjištění"
+
+#: inc/dropdown.class.php:122
+msgid "UTF-8"
+msgstr "UTF-8"
+
+#: inc/dropdown.class.php:123
+msgid "ISO8859-1"
+msgstr "ISO8859-1"
+
+#: inc/networkportinjection.class.php:89
+msgid "Port MAC address"
+msgstr "MAC adresa portu"
+
 #: inc/webservice.class.php:78
 msgid "Model unknown"
 msgstr "Neznámá šablona"
@@ -461,14 +445,30 @@ msgstr "Neznámá entita"
 msgid "You cannot access this entity"
 msgstr "Tato entita vám není přístupná"
 
-#: inc/modelcsv.class.php:160
-msgid "Specific file format options"
-msgstr "Předvolby konkrétního souborového formátu"
+#: front/model.form.php:88 front/clientinjection.form.php:83
+msgid "The file could not be found"
+msgstr "Soubor se nepodařilo nalézt"
 
-#: inc/modelcsv.class.php:163
-msgid "Header's presence"
-msgstr "Přítomnost hlavičky"
+#: front/mapping.form.php:60
+msgid ""
+"One link field must be selected: it will be used to check if data already "
+"exists"
+msgstr ""
+"Je třeba vybrat jednu kolonku odkazu: bude použito pro kontrolu zda data už "
+"existují"
 
-#: inc/modelcsv.class.php:167
-msgid "File delimitor"
-msgstr "Oddělovač souboru"
+#: front/mapping.form.php:76
+msgid ""
+"This step allows you to add informations not present in the file. You'll be "
+"asked for theses informations while using the model."
+msgstr ""
+"V tomto kroku je možné přidat informace které se nenacházejí v souboru. O "
+"tyto informace budete požádáni při používání modelu."
+
+#: front/clientinjection.form.php:50
+msgid "One mandatory field is not filled"
+msgstr "Povinná kolonka není vyplněná"
+
+#: setup.php:63 hook.php:125 hook.php:142
+msgid "Can't create folder"
+msgstr "Složku není možné vytvořit"

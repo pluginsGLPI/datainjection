@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-07-30 15:44+0200\n"
-"PO-Revision-Date: 2019-07-30 15:44+0200\n"
+"POT-Creation-Date: 2019-11-08 14:49+0000\n"
+"PO-Revision-Date: 2019-11-08 14:49+0000\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
 "Language: en_GB\n"
@@ -17,104 +17,25 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: setup.php:63 hook.php:125 hook.php:142
-msgid "Can't create folder"
-msgstr "Can't create folder"
+#: inc/networkequipmentinjection.class.php:72
+msgid "Number of ports"
+msgstr "Number of ports"
 
-#: setup.php:94 front/clientinjection.form.php:34 inc/menu.class.php:38
-#: inc/profile.class.php:67
-msgid "Data injection"
-msgstr "Data injection"
-
-#: front/mapping.form.php:60
-msgid ""
-"One link field must be selected: it will be used to check if data already "
-"exists"
-msgstr ""
-"One link field must be selected: it will be used to check if data already "
-"exists"
-
-#: front/mapping.form.php:76
-msgid ""
-"This step allows you to add informations not present in the file. You'll be "
-"asked for theses informations while using the model."
-msgstr ""
-"This step allows you to add informations not present in the file. You'll be "
-"asked for theses informations while using the model."
-
-#: front/model.form.php:88 front/clientinjection.form.php:83
-msgid "The file could not be found"
-msgstr "The file could not be found"
-
-#: front/clientinjection.form.php:50
-msgid "One mandatory field is not filled"
-msgstr "One mandatory field is not filled"
-
-#: front/popup.php:37 inc/mapping.class.php:117
+#: inc/mapping.class.php:117 front/popup.php:37
 msgid "See the file"
 msgstr "See the file"
 
-#: front/popup.php:43 inc/model.class.php:1517
-msgid "Data injection report"
-msgstr "Data injection report"
+#: inc/mapping.class.php:123
+msgid "Header of the file"
+msgstr "Header of the file"
 
-#: inc/menu.class.php:58 inc/menu.class.php:59 inc/profile.class.php:43
-#: inc/clientinjection.class.php:214
-msgid "Injection of the file"
-msgstr "Injection of the file"
+#: inc/mapping.class.php:124 inc/info.class.php:84 inc/info.class.php:141
+msgid "Tables"
+msgstr "Tables"
 
-#: inc/dropdown.class.php:37
-msgid "dd-mm-yyyy"
-msgstr "dd-mm-yyyy"
-
-#: inc/dropdown.class.php:39
-msgid "mm-dd-yyyy"
-msgstr "mm-dd-yyyy"
-
-#: inc/dropdown.class.php:41
-msgid "yyyy-mm-dd"
-msgstr "yyyy-mm-dd"
-
-#: inc/dropdown.class.php:60
-msgid "1 234.56"
-msgstr "1 234.56"
-
-#: inc/dropdown.class.php:62
-msgid "1 234,56"
-msgstr "1 234,56"
-
-#: inc/dropdown.class.php:64
-msgid "1,234.56"
-msgstr "1,234.56"
-
-#: inc/dropdown.class.php:87 inc/model.class.php:769
-#: inc/clientinjection.class.php:153
-msgid "File to inject"
-msgstr "File to inject"
-
-#: inc/dropdown.class.php:88 inc/model.class.php:771
-msgid "Mappings"
-msgstr "Mappings"
-
-#: inc/dropdown.class.php:90 inc/model.class.php:774
-msgid "Additional Information"
-msgstr "Additional Information"
-
-#: inc/dropdown.class.php:94
-msgid "Model available for use"
-msgstr "Model available for use"
-
-#: inc/dropdown.class.php:119
-msgid "Automatic detection"
-msgstr "Automatic detection"
-
-#: inc/dropdown.class.php:122
-msgid "UTF-8"
-msgstr "UTF-8"
-
-#: inc/dropdown.class.php:123
-msgid "ISO8859-1"
-msgstr "ISO8859-1"
+#: inc/mapping.class.php:126
+msgid "Link field"
+msgstr "Link field"
 
 #: inc/model.class.php:75 inc/profile.class.php:40
 msgid "Model management"
@@ -164,6 +85,19 @@ msgstr "Allow update of existing fields"
 msgctxt "button"
 msgid "Validate the model"
 msgstr "Validate the model"
+
+#: inc/model.class.php:769 inc/clientinjection.class.php:153
+#: inc/dropdown.class.php:87
+msgid "File to inject"
+msgstr "File to inject"
+
+#: inc/model.class.php:771 inc/dropdown.class.php:88
+msgid "Mappings"
+msgstr "Mappings"
+
+#: inc/model.class.php:774 inc/dropdown.class.php:90
+msgid "Additional Information"
+msgstr "Additional Information"
 
 #: inc/model.class.php:802
 msgid "Load this file"
@@ -268,13 +202,41 @@ msgstr "Array of unsuccessful injections"
 msgid "Data check"
 msgstr "Data check"
 
-#: inc/networkequipmentinjection.class.php:72
-msgid "Number of ports"
-msgstr "Number of ports"
+#: inc/model.class.php:1517 front/popup.php:43
+msgid "Data injection report"
+msgstr "Data injection report"
 
-#: inc/networkportinjection.class.php:89
-msgid "Port MAC address"
-msgstr "Port MAC address"
+#: inc/modelcsv.class.php:160
+msgid "Specific file format options"
+msgstr "Specific file format options"
+
+#: inc/modelcsv.class.php:163
+msgid "Header's presence"
+msgstr "Header's presence"
+
+#: inc/modelcsv.class.php:167
+msgid "File delimitor"
+msgstr "File delimitor"
+
+#: inc/info.class.php:86 inc/info.class.php:143
+msgid "Mandatory information"
+msgstr "Mandatory information"
+
+#: inc/info.class.php:142
+msgid "Fields"
+msgstr "Fields"
+
+#: inc/info.class.php:246
+msgid "Complementary information"
+msgstr "Complementary information"
+
+#: inc/info.class.php:247 inc/clientinjection.class.php:156
+msgid "Choose a file"
+msgstr "Choose a file"
+
+#: inc/info.class.php:256
+msgid "Download file sample"
+msgstr "Download file sample"
 
 #: inc/clientinjection.class.php:88
 msgid "Use an existing model"
@@ -287,10 +249,6 @@ msgstr "No model currently available"
 #: inc/clientinjection.class.php:105
 msgid "You can start the model creation by hitting the button"
 msgstr "You can start the model creation by hitting the button"
-
-#: inc/clientinjection.class.php:156 inc/info.class.php:247
-msgid "Choose a file"
-msgstr "Choose a file"
 
 #: inc/clientinjection.class.php:162
 msgid "File encoding"
@@ -315,6 +273,11 @@ msgstr "Launch the import"
 #: inc/clientinjection.class.php:210
 msgid "Import progress"
 msgstr "Import progress"
+
+#: inc/clientinjection.class.php:214 inc/profile.class.php:43
+#: inc/menu.class.php:58 inc/menu.class.php:59
+msgid "Injection of the file"
+msgstr "Injection of the file"
 
 #: inc/clientinjection.class.php:280
 #, php-format
@@ -352,42 +315,6 @@ msgstr "Export the log"
 #: inc/clientinjection.class.php:406
 msgid "Finish"
 msgstr "Finish"
-
-#: inc/injectiontype.class.php:131
-msgid "-------Choose a table-------"
-msgstr "-------Choose a table-------"
-
-#: inc/injectiontype.class.php:192
-msgid "-------Choose a field-------"
-msgstr "-------Choose a field-------"
-
-#: inc/info.class.php:84 inc/info.class.php:141 inc/mapping.class.php:124
-msgid "Tables"
-msgstr "Tables"
-
-#: inc/info.class.php:86 inc/info.class.php:143
-msgid "Mandatory information"
-msgstr "Mandatory information"
-
-#: inc/info.class.php:142
-msgid "Fields"
-msgstr "Fields"
-
-#: inc/info.class.php:246
-msgid "Complementary information"
-msgstr "Complementary information"
-
-#: inc/info.class.php:256
-msgid "Download file sample"
-msgstr "Download file sample"
-
-#: inc/mapping.class.php:123
-msgid "Header of the file"
-msgstr "Header of the file"
-
-#: inc/mapping.class.php:126
-msgid "Link field"
-msgstr "Link field"
 
 #: inc/commoninjectionlib.class.php:1874
 msgid "Add from CSV file"
@@ -437,6 +364,63 @@ msgstr "Warning"
 msgid "Data not found"
 msgstr "Data not found"
 
+#: inc/injectiontype.class.php:131
+msgid "-------Choose a table-------"
+msgstr "-------Choose a table-------"
+
+#: inc/injectiontype.class.php:192
+msgid "-------Choose a field-------"
+msgstr "-------Choose a field-------"
+
+#: inc/profile.class.php:67 inc/menu.class.php:38
+#: front/clientinjection.form.php:34 setup.php:94
+msgid "Data injection"
+msgstr "Data injection"
+
+#: inc/dropdown.class.php:37
+msgid "dd-mm-yyyy"
+msgstr "dd-mm-yyyy"
+
+#: inc/dropdown.class.php:39
+msgid "mm-dd-yyyy"
+msgstr "mm-dd-yyyy"
+
+#: inc/dropdown.class.php:41
+msgid "yyyy-mm-dd"
+msgstr "yyyy-mm-dd"
+
+#: inc/dropdown.class.php:60
+msgid "1 234.56"
+msgstr "1 234.56"
+
+#: inc/dropdown.class.php:62
+msgid "1 234,56"
+msgstr "1 234,56"
+
+#: inc/dropdown.class.php:64
+msgid "1,234.56"
+msgstr "1,234.56"
+
+#: inc/dropdown.class.php:94
+msgid "Model available for use"
+msgstr "Model available for use"
+
+#: inc/dropdown.class.php:119
+msgid "Automatic detection"
+msgstr "Automatic detection"
+
+#: inc/dropdown.class.php:122
+msgid "UTF-8"
+msgstr "UTF-8"
+
+#: inc/dropdown.class.php:123
+msgid "ISO8859-1"
+msgstr "ISO8859-1"
+
+#: inc/networkportinjection.class.php:89
+msgid "Port MAC address"
+msgstr "Port MAC address"
+
 #: inc/webservice.class.php:78
 msgid "Model unknown"
 msgstr "Model unknown"
@@ -453,14 +437,30 @@ msgstr "Entity unknown"
 msgid "You cannot access this entity"
 msgstr "You cannot access this entity"
 
-#: inc/modelcsv.class.php:160
-msgid "Specific file format options"
-msgstr "Specific file format options"
+#: front/model.form.php:88 front/clientinjection.form.php:83
+msgid "The file could not be found"
+msgstr "The file could not be found"
 
-#: inc/modelcsv.class.php:163
-msgid "Header's presence"
-msgstr "Header's presence"
+#: front/mapping.form.php:60
+msgid ""
+"One link field must be selected: it will be used to check if data already "
+"exists"
+msgstr ""
+"One link field must be selected: it will be used to check if data already "
+"exists"
 
-#: inc/modelcsv.class.php:167
-msgid "File delimitor"
-msgstr "File delimitor"
+#: front/mapping.form.php:76
+msgid ""
+"This step allows you to add informations not present in the file. You'll be "
+"asked for theses informations while using the model."
+msgstr ""
+"This step allows you to add informations not present in the file. You'll be "
+"asked for theses informations while using the model."
+
+#: front/clientinjection.form.php:50
+msgid "One mandatory field is not filled"
+msgstr "One mandatory field is not filled"
+
+#: setup.php:63 hook.php:125 hook.php:142
+msgid "Can't create folder"
+msgstr "Can't create folder"
