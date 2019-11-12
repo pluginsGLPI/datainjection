@@ -367,6 +367,7 @@ class PluginDatainjectionModel extends CommonDBTM
          'name'          => __('Name'),
          'datatype'      => 'itemlink',
          'itemlink_type' => $this->getType(),
+         'autocomplete'  => true,
       ];
 
       $tab[] = [
