@@ -303,7 +303,7 @@ class PluginDatainjectionModel extends CommonDBTM
       }
          echo "</select>";
 
-         $url = $CFG_GLPI["root_doc"]."/plugins/datainjection/ajax/dropdownSelectModel.php";
+         $url = Plugin::getWebDir('datainjection')."/ajax/dropdownSelectModel.php";
          Ajax::updateItemOnSelectEvent("dropdown_models$rand", "span_injection", $url, $p);
    }
 
@@ -1409,8 +1409,7 @@ class PluginDatainjectionModel extends CommonDBTM
                $plugin = new Plugin();
                if ($plugin->isActivated('genericobject')
                   && array_key_exists($model->fields['itemtype'], PluginGenericobjectType::getTypes())) {
-                  global $CFG_GLPI;
-                  $url = $CFG_GLPI['root_doc']."/plugins/genericobject/front/object.form.php".
+                  $url = Plugin::getWebDir('datainjection')."/front/object.form.php".
                   "?itemtype=".$model->fields['itemtype']."&id=".$result[$model->fields['itemtype']];
                }
 

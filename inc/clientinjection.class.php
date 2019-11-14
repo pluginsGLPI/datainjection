@@ -64,7 +64,7 @@ class PluginDatainjectionClientInjection
          $buttons[$url] = PluginDatainjectionModel::getTypeName();
          $title         = "";
          Html::displayTitle(
-             $CFG_GLPI["root_doc"] . "/plugins/datainjection/pics/datainjection.png",
+             Plugin::getWebDir('datainjection') . "/pics/datainjection.png",
              PluginDatainjectionModel::getTypeName(), $title, $buttons
          );
       }
@@ -123,12 +123,12 @@ class PluginDatainjectionClientInjection
 
          switch (PluginDatainjectionSession::getParam('step')) {
             case self::STEP_UPLOAD :
-                   $url = $CFG_GLPI["root_doc"]."/plugins/datainjection/ajax/dropdownSelectModel.php";
+                   $url = Plugin::getWebDir('datainjection')."/ajax/dropdownSelectModel.php";
                    Ajax::updateItem("span_injection", $url, $p);
                break;
 
             case self::STEP_RESULT :
-                   $url = $CFG_GLPI["root_doc"]."/plugins/datainjection/ajax/results.php";
+                   $url = Plugin::getWebDir('datainjection')."/ajax/results.php";
                    Ajax::updateItem("span_injection", $url, $p);
                break;
          }
@@ -319,7 +319,7 @@ class PluginDatainjectionClientInjection
 
          unset($_SESSION['datainjection']['go']);
 
-         $url = $CFG_GLPI["root_doc"]."/plugins/datainjection/ajax/results.php";
+         $url = Plugin::getWebDir('datainjection')."/ajax/results.php";
          Ajax::updateItem("span_injection", $url, $p);
    }
 
@@ -363,40 +363,41 @@ class PluginDatainjectionClientInjection
          }
       }
 
-      echo "<form method='post' action='".$CFG_GLPI['root_doc'].
-           "/plugins/datainjection/front/clientinjection.form.php'>";
+      $di_base_url = Plugin::getWebDir('datainjection');
+
+      echo "<form method='post' action='$di_base_url/front/clientinjection.form.php'>";
       echo "<table class='tab_cadre_fixe'>";
       echo "<tr class='tab_bg_1'><th>" . __("Injection's results", 'datainjection')."</th></tr>";
 
       echo "<tr class='tab_bg_1'><td class='center'>";
       if ($ok) {
-         echo "<img src='".$CFG_GLPI['root_doc']."/plugins/datainjection/pics/ok.png'>";
+         echo "<img src='$di_base_url/pics/ok.png'>";
          echo __('Injection successful', 'datainjection');
       } else {
-         echo "<img src='".$CFG_GLPI['root_doc']."/plugins/datainjection/pics/danger.png'>";
+         echo "<img src='$di_base_url/pics/danger.png'>";
          echo __('Injection encounters errors', 'datainjection');
       }
       echo "</td></tr>";
 
       echo "<tr class='tab_bg_1'><td class='center'>";
-      $url = $CFG_GLPI["root_doc"]."/plugins/datainjection/front/popup.php?popup=log&amp;models_id=".
+      $url = "$di_base_url/front/popup.php?popup=log&amp;models_id=".
            $model->fields['id'];
       echo "<a href='#' onClick=\"var w = window.open('$url' , 'glpipopup', ".
            "'height=400, width=1000, top=100, left=100, scrollbars=yes' );w.focus();\"/' ".
            "title='".__('See the log', 'datainjection')."'>";
-      echo "<img src='".$CFG_GLPI['root_doc']."/plugins/datainjection/pics/seereport.png'></a>";
+      echo "<img src='$di_base_url/pics/seereport.png'></a>";
 
       $plugin = new Plugin;
       if ($plugin->isActivated('pdf')) {
          echo "&nbsp;<a href='#' onclick=\"location.href='export.pdf.php?models_id=".
                    $model->fields['id']."'\" title='".__('Export rapport in PDF', 'datainjection')."'>";
-         echo "<img src='".$CFG_GLPI['root_doc']."/plugins/datainjection/pics/reportpdf.png'></a>";
+         echo "<img src='$di_base_url/pics/reportpdf.png'></a>";
       }
 
       if (!empty($error_lines)) {
          echo "&nbsp;<a href='#' onclick=\"location.href='export.csv.php'\"title='".
                    __('Export the log', 'datainjection')."'>";
-         echo "<img src='".$CFG_GLPI['root_doc']."/plugins/datainjection/pics/failedcsv.png'></a>";
+         echo "<img src='$di_base_url/pics/failedcsv.png'></a>";
       }
 
       echo "</td></tr>";

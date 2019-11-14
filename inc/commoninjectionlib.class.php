@@ -1793,7 +1793,7 @@ class PluginDatainjectionCommonInjectionLib
 
             $result = $DB->query($sql);
             if ($DB->numrows($result) > 0) {
-               $db_fields = $DB->fetch_assoc($result);
+               $db_fields = $DB->fetchAssoc($result);
                foreach ($db_fields as $key => $value) {
                   $this->setValueForItemtype($itemtype, $key, $value, true);
                }
