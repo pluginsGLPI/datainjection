@@ -348,7 +348,7 @@ class PluginDatainjectionNetworkportInjection extends NetworkPort
       $nb = $DB->numrows($res);
       if ($nb == 1) {
          //Get data for this port
-         $netport         = $DB->fetch_array($res);
+         $netport         = $DB->fetchArray($res);
          $netport_netport = new NetworkPort_NetworkPort();
          //If this port already connected to another one ?
          if (!$netport_netport->getOppositeContact($netport['id'])) {

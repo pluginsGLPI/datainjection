@@ -31,9 +31,9 @@
 define ('PLUGIN_DATAINJECTION_VERSION', '2.7.1');
 
 // Minimal GLPI version, inclusive
-define("PLUGIN_DATAINJECTION_MIN_GLPI", "9.4");
+define("PLUGIN_DATAINJECTION_MIN_GLPI", "9.5");
 // Maximum GLPI version, exclusive
-define("PLUGIN_DATAINJECTION_MAX_GLPI", "9.5");
+define("PLUGIN_DATAINJECTION_MAX_GLPI", "9.6");
 
 if (!defined("PLUGIN_DATAINJECTION_UPLOAD_DIR")) {
     define("PLUGIN_DATAINJECTION_UPLOAD_DIR", GLPI_PLUGIN_DOC_DIR."/datainjection/");
@@ -73,7 +73,7 @@ function plugin_init_datainjection() {
           = ['Profile' => ['PluginDatainjectionProfile', 'purgeProfiles']];
 
          // Css file
-      if (strpos($_SERVER['REQUEST_URI'], "plugins/datainjection") !== false) {
+      if (strpos($_SERVER['REQUEST_URI'], Plugin::getPhpDir('datainjection', false)) !== false) {
          $PLUGIN_HOOKS['add_css']['datainjection'] = 'css/datainjection.css';
       }
 
@@ -103,35 +103,6 @@ function plugin_version_datainjection() {
          ]
       ]
    ];
-}
-
-
-function plugin_datainjection_check_prerequisites() {
-
-   //Version check is not done by core in GLPI < 9.2 but has to be delegated to core in GLPI >= 9.2.
-   $version = preg_replace('/^((\d+\.?)+).*$/', '$1', GLPI_VERSION);
-   if (version_compare($version, '9.2', '<')) {
-      $matchMinGlpiReq = version_compare($version, PLUGIN_DATAINJECTION_MIN_GLPI, '>=');
-      $matchMaxGlpiReq = version_compare($version, PLUGIN_DATAINJECTION_MAX_GLPI, '<');
-
-      if (!$matchMinGlpiReq || !$matchMaxGlpiReq) {
-         echo vsprintf(
-            'This plugin requires GLPI >= %1$s and < %2$s.',
-            [
-               PLUGIN_DATAINJECTION_MIN_GLPI,
-               PLUGIN_DATAINJECTION_MAX_GLPI,
-            ]
-         );
-         return false;
-      }
-   }
-
-   return true;
-}
-
-
-function plugin_datainjection_check_config($verbose = false) {
-   return true;
 }
 
 

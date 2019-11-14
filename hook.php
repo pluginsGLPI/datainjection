@@ -46,7 +46,7 @@ function plugin_datainjection_registerMethods() {
 function plugin_datainjection_install() {
    global $DB;
 
-   include_once GLPI_ROOT."/plugins/datainjection/inc/profile.class.php";
+   include_once Plugin::getPhpDir('datainjection')."/inc/profile.class.php";
 
    $migration = new Migration(null);
 
@@ -66,8 +66,8 @@ function plugin_datainjection_install() {
                      `id` int(11) NOT NULL auto_increment,
                      `name` varchar(255) NOT NULL,
                      `comment` text NULL,
-                     `date_mod` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-                     `date_creation` datetime DEFAULT NULL,
+                     `date_mod` timestamp NULL DEFAULT NULL,
+                     `date_creation` timestamp NULL DEFAULT NULL,
                      `filetype` varchar(255) NOT NULL default 'csv',
                      `itemtype` varchar(255) NOT NULL default '',
                      `entities_id` int(11) NOT NULL default '0',
@@ -251,7 +251,7 @@ function plugin_datainjection_migration_251_252(Migration $migration) {
          'glpi_plugin_datainjection_models',
          'date_mod',
          'date_mod',
-         'datetime NOT NULL DEFAULT CURRENT_TIMESTAMP'
+         'timestamp NULL DEFAULT NULL'
       );
       $migration->migrationOneTable('glpi_plugin_datainjection_models');
    }
@@ -266,7 +266,7 @@ function plugin_datainjection_migration_24_250(Migration $migration) {
 
    if ($DB->tableExists('glpi_plugin_datainjection_models')
        && !$DB->fieldExists('glpi_plugin_datainjection_models', 'date_creation')) {
-      $migration->addField('glpi_plugin_datainjection_models', 'date_creation', 'datetime');
+      $migration->addField('glpi_plugin_datainjection_models', 'date_creation', 'timestamp');
       $migration->addKey('glpi_plugin_datainjection_models', 'date_creation');
       $migration->migrationOneTable('glpi_plugin_datainjection_models');
    }

@@ -150,8 +150,9 @@ class PluginDatainjectionInjectionType {
       );
 
       $p['itemtype'] = '__VALUE__';
-      $url_field     = $CFG_GLPI["root_doc"]."/plugins/datainjection/ajax/dropdownChooseField.php";
-      $url_mandatory = $CFG_GLPI["root_doc"]."/plugins/datainjection/ajax/dropdownMandatory.php";
+      $di_base_url   = Plugin::getWebDir('datainjection');
+      $url_field     = "$di_base_url/ajax/dropdownChooseField.php";
+      $url_mandatory = "$di_base_url/ajax/dropdownMandatory.php";
       $toobserve     = "dropdown_data[".$mapping_or_info->getID()."][itemtype]$rand";
       $toupdate      = "span_field_".$mappings_id;
       Ajax::updateItem($toupdate, $url_field, $p, $toobserve);
@@ -230,7 +231,7 @@ class PluginDatainjectionInjectionType {
           'used'  => $used]
       );
 
-      $url = $CFG_GLPI["root_doc"]."/plugins/datainjection/ajax/dropdownMandatory.php";
+      $url = Plugin::getWebDir('datainjection')."/ajax/dropdownMandatory.php";
       Ajax::updateItem(
           "span_mandatory_".$mapping_or_info['id'], $url, $p,
           "dropdown_data[".$mapping_or_info['id']."][value]$rand"
@@ -351,7 +352,7 @@ class PluginDatainjectionInjectionType {
       $table = (($p['called_by'] == 'PluginDatainjectionMapping') ?"glpi_plugin_datainjection_mappings"
                                                               :"glpi_plugin_datainjection_infos");
 
-      $datas = getAllDatasFromTable($table, ['models_id' => $mapping_or_info['models_id']]);
+      $datas = getAllDataFromTable($table, ['models_id' => $mapping_or_info['models_id']]);
 
       $injectionClass = PluginDatainjectionCommonInjectionLib::getInjectionClassInstance($p['itemtype']);
       $options        = $injectionClass->getOptions();
