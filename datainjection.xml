@@ -29,7 +29,8 @@
    <versions>
       <version>
           <num>2.7.0</num>
-          <compatibility>9.4</compatibility>
+          <compatibility>~9.4.0</compatibility>
+         <download_url>https://github.com/pluginsGLPI/datainjection/releases/download/2.7.0/glpi-datainjection-2.7.0.tar.bz2</download_url>
       </version>
       <version>
           <num>2.6.4</num>
@@ -216,5 +217,11 @@
             <tag>entités</tag>
          </fr>
    </tags>
+      <screenshots>
+      <screenshot>https://raw.githubusercontent.com/pluginsGLPI/datainjection/master/screenshots/datainjection.gif</screenshot>
+      <screenshot>https://raw.githubusercontent.com/pluginsGLPI/datainjection/master/screenshots/datainjection_conf.png</screenshot>
+      <screenshot>https://raw.githubusercontent.com/pluginsGLPI/datainjection/master/screenshots/datainjection_mapping.png</screenshot>
+      <screenshot>https://raw.githubusercontent.com/pluginsGLPI/datainjection/master/screenshots/datainjection_import_success.png</screenshot>
+   </screenshots>
    <license>GPL v2+</license>
 </root>

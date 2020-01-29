@@ -1,4 +1,15 @@
-## English
+# Datainjection GLPI plugin
+
+[![License](https://img.shields.io/github/license/pluginsGLPI/datainjection.svg?&label=License)](https://github.com/pluginsGLPI/datainjection/blob/develop/LICENSE)
+[![Follow twitter](https://img.shields.io/twitter/follow/Teclib.svg?style=social&label=Twitter&style=flat-square)](https://twitter.com/teclib)
+[![Telegram Group](https://img.shields.io/badge/Telegram-Group-blue.svg)](https://t.me/glpien)
+[![Project Status: Active](http://www.repostatus.org/badges/latest/active.svg)](http://www.repostatus.org/#active)
+[![GitHub release](https://img.shields.io/github/release/pluginsGLPI/datainjection.svg)](https://github.com/pluginsGLPI/datainjection/releases)
+[![GitHub build](https://travis-ci.org/pluginsGLPI/datainjection.svg?)](https://travis-ci.org/pluginsGLPI/datainjection/)
+
+
+![Screenshot](./screenshots/datainjection.gif "Alert")
+
 
 This plugin allows data import into [GLPI](http://glpi-project.org) using CSV files.
 
@@ -13,7 +24,24 @@ Data to be imported using the plugins are:
 - management data (contract, contact, supplier),
 - configuration data (user, group, entity).
 
-### Contributing
+## Documentation
+
+We maintain a detailed documentation here -> [Documentation](https://glpi-plugins.readthedocs.io/en/latest/datainjection/index.html)
+
+## Contact
+
+For notices about major changes and general discussion of datainjection, subscribe to the [/r/glpi](https://www.reddit.com/r/glpi/) subreddit.
+You can also chat with us via IRC in [#glpi on freenode](http://webchat.freenode.net/?channels=glpi) or [@glpi on Telegram](https://t.me/glpien).
+
+## Professional Services
+
+![GLPI Network](./glpi_network.png "GLPI network")
+
+The GLPI Network services are available through our [Partner's Network](http://www.teclib-edition.com/en/partners/). We provide special training, bug fixes with editor subscription, contributions for new features, and more.
+
+Obtain a personalized service experience, associated with benefits and opportunities.
+
+## Contributing
 
 * Open a ticket for each bug/feature so it can be discussed
 * Follow [development guidelines](http://glpi-developer-documentation.readthedocs.io/en/latest/plugins/index.html)
@@ -21,25 +49,7 @@ Data to be imported using the plugins are:
 * Work on a new branch on your own fork
 * Open a PR that will be reviewed by a developer
 
-## Français
+## Copying
 
-Cette extension permet l'injection de données dans [GLPI](http://glpi-project.org) à l'aide de fichiers CSV
-
-Elle permet de créer des modèles d'injection pour une réutilisation future, et a été créée afin de répondre aux besoins suivants :
-
-- reprise des données d'autres outils d'inventaires
-- injection de bons de livraisons électroniques
-
-Les données pouvant-être injectées sont :
-
-- données d'inventaires (sauf logiciels et licences),
-- données de gestion (contrat, contact, fournisseur),
-- données de configuration (utilisateur, groupe, entité).
-
-### Contribuer
-
-* Ouvrez un ticket pour chaque bogue/fonctionnalité que cela puisse être discuté
-* Suivez [les règles de développement](http://glpi-developer-documentation.readthedocs.io/en/latest/plugins/index.html)
-* Référez-vous au processus [GitFlow](http://git-flow.readthedocs.io/) pour gérer les branches
-* Travaillez sur une nouvelle branche sur votre fork
-* Ouvrez une PR qui sera revue par un développeur
+* **Code**: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License ([GPL-2.0](https://www.gnu.org/licenses/gpl-2.0.en.html)).
