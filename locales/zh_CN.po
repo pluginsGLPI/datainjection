@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-11-08 14:49+0000\n"
+"POT-Creation-Date: 2020-02-06 13:07+0000\n"
 "PO-Revision-Date: 2018-06-21 12:57+0000\n"
 "Last-Translator: liAnGjiA <liangjia@qq.com>, 2018\n"
 "Language-Team: Chinese (China) (https://www.transifex.com/teclib/teams/28042/zh_CN/)\n"
@@ -21,300 +21,42 @@ msgstr ""
 "Language: zh_CN\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
-#: inc/networkequipmentinjection.class.php:72
-msgid "Number of ports"
-msgstr "端口号"
+#: front/model.form.php:88 front/clientinjection.form.php:83
+msgid "The file could not be found"
+msgstr "文件未找到"
 
-#: inc/mapping.class.php:117 front/popup.php:37
+#: front/clientinjection.form.php:34 inc/profile.class.php:67
+#: inc/menu.class.php:38 setup.php:94
+msgid "Data injection"
+msgstr ""
+
+#: front/clientinjection.form.php:50
+msgid "One mandatory field is not filled"
+msgstr "一个必填字段没有填"
+
+#: front/popup.php:37 inc/mapping.class.php:117
 msgid "See the file"
 msgstr "查看文件"
 
-#: inc/mapping.class.php:123
-msgid "Header of the file"
-msgstr "文件头"
-
-#: inc/mapping.class.php:124 inc/info.class.php:84 inc/info.class.php:141
-msgid "Tables"
-msgstr "表"
-
-#: inc/mapping.class.php:126
-msgid "Link field"
-msgstr "关联字段"
-
-#: inc/model.class.php:75 inc/profile.class.php:40
-msgid "Model management"
-msgstr "模型管理"
-
-#: inc/model.class.php:383 inc/model.class.php:669
-msgid "Allow lines creation"
-msgstr ""
-
-#: inc/model.class.php:392 inc/model.class.php:672
-msgid "Allow lines update"
-msgstr ""
-
-#: inc/model.class.php:401 inc/model.class.php:657
-msgid "Type of data to import"
-msgstr "导入数据类型"
-
-#: inc/model.class.php:411 inc/model.class.php:681
-msgid "Allow creation of dropdowns"
-msgstr ""
-
-#: inc/model.class.php:419 inc/model.class.php:685
-msgid "Dates format"
-msgstr "数据格式"
-
-#: inc/model.class.php:428 inc/model.class.php:698
-msgid "Float format"
-msgstr "浮点格式"
-
-#: inc/model.class.php:438 inc/model.class.php:707
-msgid "Try to establish network connection is possible"
-msgstr ""
-
-#: inc/model.class.php:448 inc/model.class.php:711
-msgid "Port unicity criteria"
-msgstr ""
-
-#: inc/model.class.php:677
-msgid "Advanced options"
-msgstr "高级选项"
-
-#: inc/model.class.php:694
-msgid "Allow update of existing fields"
-msgstr ""
-
-#: inc/model.class.php:737
-msgctxt "button"
-msgid "Validate the model"
-msgstr "无效模型"
-
-#: inc/model.class.php:769 inc/clientinjection.class.php:153
-#: inc/dropdown.class.php:87
-msgid "File to inject"
-msgstr "文件注入"
-
-#: inc/model.class.php:771 inc/dropdown.class.php:88
-msgid "Mappings"
-msgstr ""
-
-#: inc/model.class.php:774 inc/dropdown.class.php:90
-msgid "Additional Information"
-msgstr ""
-
-#: inc/model.class.php:802
-msgid "Load this file"
-msgstr "加载此文件"
-
-#: inc/model.class.php:881
-msgid "Please enter a name for the model"
-msgstr "请给模型命名"
-
-#: inc/model.class.php:890
-msgid "Your model should allow import and/or update of data"
-msgstr ""
-
-#: inc/model.class.php:909
-msgid "You are not the initial creator of this model"
-msgstr ""
-
-#: inc/model.class.php:972
-#, php-format
-msgid "Impossible to copy the file in %s"
-msgstr ""
-
-#: inc/model.class.php:980
-msgid "File format is wrong"
-msgstr "文件格式错误"
-
-#: inc/model.class.php:981
-msgid "Extension csv required"
-msgstr ""
-
-#: inc/model.class.php:1058
-msgid "Not data to import"
-msgstr "无数据导入"
-
-#: inc/model.class.php:1118
-msgid "The file is ok."
-msgstr "文件没问题。"
-
-#: inc/model.class.php:1143
-msgid "The number of columns of the file is incorrect."
-msgstr ""
-
-#: inc/model.class.php:1145
-#, php-format
-msgid "%d awaited column"
-msgid_plural "%d awaited columns"
-msgstr[0] ""
-
-#: inc/model.class.php:1150
-#, php-format
-msgid "%d found column"
-msgid_plural "%d found columns"
-msgstr[0] ""
-
-#: inc/model.class.php:1190
-msgid "At least one column is incorrect"
-msgstr ""
-
-#: inc/model.class.php:1198
-msgid "Into the file"
-msgstr ""
-
-#: inc/model.class.php:1203
-msgid "From the model"
-msgstr ""
-
-#: inc/model.class.php:1369 inc/commoninjectionlib.class.php:1957
-msgid "Undetermined"
-msgstr " 未确定的"
-
-#: inc/model.class.php:1443 inc/model.class.php:1526
-msgid "Array of successful injections"
-msgstr ""
-
-#: inc/model.class.php:1450 inc/model.class.php:1480 inc/model.class.php:1529
-#: inc/model.class.php:1549
-msgid "Line"
-msgstr ""
-
-#: inc/model.class.php:1451 inc/model.class.php:1482 inc/model.class.php:1530
-#: inc/model.class.php:1551
-msgid "Data Import"
-msgstr "数据导入"
-
-#: inc/model.class.php:1452 inc/model.class.php:1483 inc/model.class.php:1531
-#: inc/model.class.php:1552
-msgid "Injection type"
-msgstr "注入类型"
-
-#: inc/model.class.php:1453 inc/model.class.php:1484 inc/model.class.php:1532
-#: inc/model.class.php:1553
-msgid "Object Identifier"
-msgstr ""
-
-#: inc/model.class.php:1473 inc/model.class.php:1546
-msgid "Array of unsuccessful injections"
-msgstr ""
-
-#: inc/model.class.php:1481 inc/model.class.php:1550 inc/model.class.php:1567
-msgid "Data check"
-msgstr "数据检查"
-
-#: inc/model.class.php:1517 front/popup.php:43
+#: front/popup.php:43 inc/model.class.php:1518
 msgid "Data injection report"
 msgstr ""
 
-#: inc/modelcsv.class.php:160
-msgid "Specific file format options"
-msgstr "特殊格式选项"
-
-#: inc/modelcsv.class.php:163
-msgid "Header's presence"
-msgstr ""
-
-#: inc/modelcsv.class.php:167
-msgid "File delimitor"
-msgstr "文件分隔符"
-
-#: inc/info.class.php:86 inc/info.class.php:143
-msgid "Mandatory information"
-msgstr "必填信息"
-
-#: inc/info.class.php:142
-msgid "Fields"
-msgstr "字段"
-
-#: inc/info.class.php:246
-msgid "Complementary information"
-msgstr "补充信息"
-
-#: inc/info.class.php:247 inc/clientinjection.class.php:156
-msgid "Choose a file"
-msgstr "选择文件"
-
-#: inc/info.class.php:256
-msgid "Download file sample"
-msgstr "下载示例文件"
-
-#: inc/clientinjection.class.php:88
-msgid "Use an existing model"
-msgstr "使用一个存在的模型"
-
-#: inc/clientinjection.class.php:96
-msgid "No model currently available"
-msgstr "当前没有可用的模型"
-
-#: inc/clientinjection.class.php:105
-msgid "You can start the model creation by hitting the button"
-msgstr "您可以通过点击按钮开始模型创建"
-
-#: inc/clientinjection.class.php:162
-msgid "File encoding"
-msgstr "文件编码"
-
-#: inc/clientinjection.class.php:170
-msgid "Warning : existing mapped column will be overridden"
-msgstr ""
-
-#: inc/clientinjection.class.php:173
+#: front/mapping.form.php:60
 msgid ""
-"Watch out, you're about to inject data into GLPI. Are you sure you want to "
-"do it ?"
-msgstr "当心了，您将有往GLPI里注入数据。您确定要这样做么？"
+"One link field must be selected: it will be used to check if data already "
+"exists"
+msgstr " 必须选择一个关联字段：它将用于检查数据是否已经存在。 "
 
-#: inc/clientinjection.class.php:180
-msgid "Launch the import"
-msgstr "启动导入"
+#: front/mapping.form.php:76
+msgid ""
+"This step allows you to add informations not present in the file. You'll be "
+"asked for theses informations while using the model."
+msgstr " 此步骤允许您添加文件中不存在的信息。在使用该模型时，会要求您提供这些信息。 "
 
-#: inc/clientinjection.class.php:210
-msgid "Import progress"
-msgstr "导入进度"
-
-#: inc/clientinjection.class.php:214 inc/profile.class.php:43
-#: inc/menu.class.php:58 inc/menu.class.php:59
-msgid "Injection of the file"
-msgstr "文件注入"
-
-#: inc/clientinjection.class.php:280
-#, php-format
-msgid "Injection of the file... %d%%"
-msgstr "注入文件... %d%%"
-
-#: inc/clientinjection.class.php:297
-msgid "Injection finished"
-msgstr "注入完成"
-
-#: inc/clientinjection.class.php:369
-msgid "Injection's results"
-msgstr "注入结果"
-
-#: inc/clientinjection.class.php:374
-msgid "Injection successful"
-msgstr "注入成功"
-
-#: inc/clientinjection.class.php:377
-msgid "Injection encounters errors"
-msgstr "注入遇到错误"
-
-#: inc/clientinjection.class.php:386
-msgid "See the log"
-msgstr "查看日志"
-
-#: inc/clientinjection.class.php:392
-msgid "Export rapport in PDF"
-msgstr "导出PDF报表"
-
-#: inc/clientinjection.class.php:398
-msgid "Export the log"
-msgstr "导出日志"
-
-#: inc/clientinjection.class.php:406
-msgid "Finish"
-msgstr "完成"
+#: hook.php:124 hook.php:141 setup.php:63
+msgid "Can't create folder"
+msgstr "无法创建文件夹"
 
 #: inc/commoninjectionlib.class.php:1874
 msgid "Add from CSV file"
@@ -364,6 +106,265 @@ msgstr "警告"
 msgid "Data not found"
 msgstr "数据未找到"
 
+#: inc/commoninjectionlib.class.php:1957 inc/model.class.php:1370
+msgid "Undetermined"
+msgstr " 未确定的"
+
+#: inc/profile.class.php:40 inc/model.class.php:75
+msgid "Model management"
+msgstr "模型管理"
+
+#: inc/profile.class.php:43 inc/menu.class.php:58 inc/menu.class.php:59
+#: inc/clientinjection.class.php:214
+msgid "Injection of the file"
+msgstr "文件注入"
+
+#: inc/webservice.class.php:78
+msgid "Model unknown"
+msgstr "未知模型"
+
+#: inc/webservice.class.php:86 inc/webservice.class.php:95
+msgid "You cannot access this model"
+msgstr "您无权访问此模型"
+
+#: inc/webservice.class.php:115
+msgid "Entity unknown"
+msgstr "未知实体"
+
+#: inc/webservice.class.php:123
+msgid "You cannot access this entity"
+msgstr "您无权访问此实体"
+
+#: inc/clientinjection.class.php:88
+msgid "Use an existing model"
+msgstr "使用一个存在的模型"
+
+#: inc/clientinjection.class.php:96
+msgid "No model currently available"
+msgstr "当前没有可用的模型"
+
+#: inc/clientinjection.class.php:105
+msgid "You can start the model creation by hitting the button"
+msgstr "您可以通过点击按钮开始模型创建"
+
+#: inc/clientinjection.class.php:153 inc/model.class.php:770
+#: inc/dropdown.class.php:87
+msgid "File to inject"
+msgstr "文件注入"
+
+#: inc/clientinjection.class.php:156 inc/info.class.php:247
+msgid "Choose a file"
+msgstr "选择文件"
+
+#: inc/clientinjection.class.php:162
+msgid "File encoding"
+msgstr "文件编码"
+
+#: inc/clientinjection.class.php:170
+msgid "Warning : existing mapped column will be overridden"
+msgstr ""
+
+#: inc/clientinjection.class.php:173
+msgid ""
+"Watch out, you're about to inject data into GLPI. Are you sure you want to "
+"do it ?"
+msgstr "当心了，您将有往GLPI里注入数据。您确定要这样做么？"
+
+#: inc/clientinjection.class.php:180
+msgid "Launch the import"
+msgstr "启动导入"
+
+#: inc/clientinjection.class.php:210
+msgid "Import progress"
+msgstr "导入进度"
+
+#: inc/clientinjection.class.php:280
+#, php-format
+msgid "Injection of the file... %d%%"
+msgstr "注入文件... %d%%"
+
+#: inc/clientinjection.class.php:297
+msgid "Injection finished"
+msgstr "注入完成"
+
+#: inc/clientinjection.class.php:369
+msgid "Injection's results"
+msgstr "注入结果"
+
+#: inc/clientinjection.class.php:374
+msgid "Injection successful"
+msgstr "注入成功"
+
+#: inc/clientinjection.class.php:377
+msgid "Injection encounters errors"
+msgstr "注入遇到错误"
+
+#: inc/clientinjection.class.php:386
+msgid "See the log"
+msgstr "查看日志"
+
+#: inc/clientinjection.class.php:392
+msgid "Export rapport in PDF"
+msgstr "导出PDF报表"
+
+#: inc/clientinjection.class.php:398
+msgid "Export the log"
+msgstr "导出日志"
+
+#: inc/clientinjection.class.php:406
+msgid "Finish"
+msgstr "完成"
+
+#: inc/model.class.php:384 inc/model.class.php:670
+msgid "Allow lines creation"
+msgstr ""
+
+#: inc/model.class.php:393 inc/model.class.php:673
+msgid "Allow lines update"
+msgstr ""
+
+#: inc/model.class.php:402 inc/model.class.php:658
+msgid "Type of data to import"
+msgstr "导入数据类型"
+
+#: inc/model.class.php:412 inc/model.class.php:682
+msgid "Allow creation of dropdowns"
+msgstr ""
+
+#: inc/model.class.php:420 inc/model.class.php:686
+msgid "Dates format"
+msgstr "数据格式"
+
+#: inc/model.class.php:429 inc/model.class.php:699
+msgid "Float format"
+msgstr "浮点格式"
+
+#: inc/model.class.php:439 inc/model.class.php:708
+msgid "Try to establish network connection is possible"
+msgstr ""
+
+#: inc/model.class.php:449 inc/model.class.php:712
+msgid "Port unicity criteria"
+msgstr ""
+
+#: inc/model.class.php:678
+msgid "Advanced options"
+msgstr "高级选项"
+
+#: inc/model.class.php:695
+msgid "Allow update of existing fields"
+msgstr ""
+
+#: inc/model.class.php:738
+msgctxt "button"
+msgid "Validate the model"
+msgstr "无效模型"
+
+#: inc/model.class.php:772 inc/dropdown.class.php:88
+msgid "Mappings"
+msgstr ""
+
+#: inc/model.class.php:775 inc/dropdown.class.php:90
+msgid "Additional Information"
+msgstr ""
+
+#: inc/model.class.php:803
+msgid "Load this file"
+msgstr "加载此文件"
+
+#: inc/model.class.php:882
+msgid "Please enter a name for the model"
+msgstr "请给模型命名"
+
+#: inc/model.class.php:891
+msgid "Your model should allow import and/or update of data"
+msgstr ""
+
+#: inc/model.class.php:910
+msgid "You are not the initial creator of this model"
+msgstr ""
+
+#: inc/model.class.php:973
+#, php-format
+msgid "Impossible to copy the file in %s"
+msgstr ""
+
+#: inc/model.class.php:981
+msgid "File format is wrong"
+msgstr "文件格式错误"
+
+#: inc/model.class.php:982
+msgid "Extension csv required"
+msgstr ""
+
+#: inc/model.class.php:1059
+msgid "Not data to import"
+msgstr "无数据导入"
+
+#: inc/model.class.php:1119
+msgid "The file is ok."
+msgstr "文件没问题。"
+
+#: inc/model.class.php:1144
+msgid "The number of columns of the file is incorrect."
+msgstr ""
+
+#: inc/model.class.php:1146
+#, php-format
+msgid "%d awaited column"
+msgid_plural "%d awaited columns"
+msgstr[0] ""
+
+#: inc/model.class.php:1151
+#, php-format
+msgid "%d found column"
+msgid_plural "%d found columns"
+msgstr[0] ""
+
+#: inc/model.class.php:1191
+msgid "At least one column is incorrect"
+msgstr ""
+
+#: inc/model.class.php:1199
+msgid "Into the file"
+msgstr ""
+
+#: inc/model.class.php:1204
+msgid "From the model"
+msgstr ""
+
+#: inc/model.class.php:1444 inc/model.class.php:1527
+msgid "Array of successful injections"
+msgstr ""
+
+#: inc/model.class.php:1451 inc/model.class.php:1481 inc/model.class.php:1530
+#: inc/model.class.php:1550
+msgid "Line"
+msgstr ""
+
+#: inc/model.class.php:1452 inc/model.class.php:1483 inc/model.class.php:1531
+#: inc/model.class.php:1552
+msgid "Data Import"
+msgstr "数据导入"
+
+#: inc/model.class.php:1453 inc/model.class.php:1484 inc/model.class.php:1532
+#: inc/model.class.php:1553
+msgid "Injection type"
+msgstr "注入类型"
+
+#: inc/model.class.php:1454 inc/model.class.php:1485 inc/model.class.php:1533
+#: inc/model.class.php:1554
+msgid "Object Identifier"
+msgstr ""
+
+#: inc/model.class.php:1474 inc/model.class.php:1547
+msgid "Array of unsuccessful injections"
+msgstr ""
+
+#: inc/model.class.php:1482 inc/model.class.php:1551 inc/model.class.php:1568
+msgid "Data check"
+msgstr "数据检查"
+
 #: inc/injectiontype.class.php:131
 msgid "-------Choose a table-------"
 msgstr "-------选择表-------"
@@ -372,10 +373,37 @@ msgstr "-------选择表-------"
 msgid "-------Choose a field-------"
 msgstr "-------选择字段-------"
 
-#: inc/profile.class.php:67 inc/menu.class.php:38
-#: front/clientinjection.form.php:34 setup.php:94
-msgid "Data injection"
-msgstr ""
+#: inc/networkequipmentinjection.class.php:72
+msgid "Number of ports"
+msgstr "端口号"
+
+#: inc/mapping.class.php:123
+msgid "Header of the file"
+msgstr "文件头"
+
+#: inc/mapping.class.php:124 inc/info.class.php:84 inc/info.class.php:141
+msgid "Tables"
+msgstr "表"
+
+#: inc/mapping.class.php:126
+msgid "Link field"
+msgstr "关联字段"
+
+#: inc/info.class.php:86 inc/info.class.php:143
+msgid "Mandatory information"
+msgstr "必填信息"
+
+#: inc/info.class.php:142
+msgid "Fields"
+msgstr "字段"
+
+#: inc/info.class.php:246
+msgid "Complementary information"
+msgstr "补充信息"
+
+#: inc/info.class.php:256
+msgid "Download file sample"
+msgstr "下载示例文件"
 
 #: inc/dropdown.class.php:37
 msgid "dd-mm-yyyy"
@@ -417,46 +445,18 @@ msgstr "UTF-8"
 msgid "ISO8859-1"
 msgstr "ISO8859-1"
 
+#: inc/modelcsv.class.php:160
+msgid "Specific file format options"
+msgstr "特殊格式选项"
+
+#: inc/modelcsv.class.php:163
+msgid "Header's presence"
+msgstr ""
+
+#: inc/modelcsv.class.php:167
+msgid "File delimitor"
+msgstr "文件分隔符"
+
 #: inc/networkportinjection.class.php:89
 msgid "Port MAC address"
 msgstr "MAC地址端口"
-
-#: inc/webservice.class.php:78
-msgid "Model unknown"
-msgstr "未知模型"
-
-#: inc/webservice.class.php:86 inc/webservice.class.php:95
-msgid "You cannot access this model"
-msgstr "您无权访问此模型"
-
-#: inc/webservice.class.php:115
-msgid "Entity unknown"
-msgstr "未知实体"
-
-#: inc/webservice.class.php:123
-msgid "You cannot access this entity"
-msgstr "您无权访问此实体"
-
-#: front/model.form.php:88 front/clientinjection.form.php:83
-msgid "The file could not be found"
-msgstr "文件未找到"
-
-#: front/mapping.form.php:60
-msgid ""
-"One link field must be selected: it will be used to check if data already "
-"exists"
-msgstr " 必须选择一个关联字段：它将用于检查数据是否已经存在。 "
-
-#: front/mapping.form.php:76
-msgid ""
-"This step allows you to add informations not present in the file. You'll be "
-"asked for theses informations while using the model."
-msgstr " 此步骤允许您添加文件中不存在的信息。在使用该模型时，会要求您提供这些信息。 "
-
-#: front/clientinjection.form.php:50
-msgid "One mandatory field is not filled"
-msgstr "一个必填字段没有填"
-
-#: setup.php:63 hook.php:125 hook.php:142
-msgid "Can't create folder"
-msgstr "无法创建文件夹"
