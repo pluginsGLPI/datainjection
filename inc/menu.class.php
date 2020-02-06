@@ -35,7 +35,7 @@ class PluginDatainjectionMenu extends CommonGLPI
 
    static function getMenuName() {
 
-      return __('File injection', 'datainjection');
+      return __('Data injection', 'datainjection');
    }
 
    static function getMenuContent() {

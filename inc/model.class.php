@@ -367,6 +367,7 @@ class PluginDatainjectionModel extends CommonDBTM
          'name'          => __('Name'),
          'datatype'      => 'itemlink',
          'itemlink_type' => $this->getType(),
+         'autocomplete'  => true,
       ];
 
       $tab[] = [
@@ -1514,7 +1515,7 @@ class PluginDatainjectionModel extends CommonDBTM
          $pdf->setHeader(
              sprintf(
                  __('%1$s (%2$s)'),
-                 __('File injection report', 'datainjection') . ' - <b>' .
+                 __('Data injection report', 'datainjection') . ' - <b>' .
                                  PluginDatainjectionSession::getParam('file_name') . '</b>',
                  $model->getName()
              )

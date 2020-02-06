@@ -30,17 +30,16 @@
 
 function plugin_datainjection_registerMethods() {
 
-    global $WEBSERVICES_METHOD;
+   global $WEBSERVICES_METHOD;
 
-    $methods = ['getModel'      => 'methodGetModel',
+   $methods = ['getModel'      => 'methodGetModel',
                'listModels'    => 'methodListModels',
                'inject'        => 'methodInject',
                'listItemtypes' => 'methodListItemtypes'];
 
-    foreach ($methods as $code => $method) {
-        $WEBSERVICES_METHOD['datainjection.'.$code]
-         = ['PluginDatainjectionWebservice', $method];
-      }
+   foreach ($methods as $code => $method) {
+      $WEBSERVICES_METHOD['datainjection.'.$code] = ['PluginDatainjectionWebservice', $method];
+   }
 }
 
 
@@ -195,27 +194,27 @@ function plugin_datainjection_install() {
 
 
 function plugin_datainjection_uninstall() {
-    global $DB;
+   global $DB;
 
-    $tables = ["glpi_plugin_datainjection_models",
+   $tables = ["glpi_plugin_datainjection_models",
               "glpi_plugin_datainjection_modelcsvs",
               "glpi_plugin_datainjection_mappings",
               "glpi_plugin_datainjection_infos",
               "glpi_plugin_datainjection_filetype",
               "glpi_plugin_datainjection_profiles"];
 
-    foreach ($tables as $table) {
-       if ($DB->tableExists($table)) {
-          $DB->queryOrDie("DROP TABLE IF EXISTS `".$table."`", $DB->error());
-         }
+   foreach ($tables as $table) {
+      if ($DB->tableExists($table)) {
+         $DB->queryOrDie("DROP TABLE IF EXISTS `".$table."`", $DB->error());
       }
+   }
 
-      if (is_dir(PLUGIN_DATAINJECTION_UPLOAD_DIR)) {
-          Toolbox::deleteDir(PLUGIN_DATAINJECTION_UPLOAD_DIR);
-      }
+   if (is_dir(PLUGIN_DATAINJECTION_UPLOAD_DIR)) {
+      Toolbox::deleteDir(PLUGIN_DATAINJECTION_UPLOAD_DIR);
+   }
 
-      plugin_init_datainjection();
-      return true;
+   plugin_init_datainjection();
+   return true;
 }
 
 function plugin_datainjection_migration_264_270(Migration $migration) {
@@ -310,64 +309,64 @@ function plugin_datainjection_upgrade23_240(Migration $migration) {
 
 function plugin_datainjection_update131_14() {
 
-    global $DB;
+   global $DB;
 
-    $migration = new Migration('1.4');
+   $migration = new Migration('1.4');
 
-    $migration->addField(
-        'glpi_plugin_data_injection_models', 'float_format',
-        'bool'
-    );
+   $migration->addField(
+      'glpi_plugin_data_injection_models', 'float_format',
+      'bool'
+   );
 
-    //Template recursivity : need standardize names in order to use privatePublicSwitch
-    $migration->changeField(
-        'glpi_plugin_data_injection_models', 'user_id',
-        'FK_users', 'integer'
-    );
-    $migration->changeField(
-        'glpi_plugin_data_injection_models', 'public',
-        'private', 'bool'
-    );
+   //Template recursivity : need standardize names in order to use privatePublicSwitch
+   $migration->changeField(
+      'glpi_plugin_data_injection_models', 'user_id',
+      'FK_users', 'integer'
+   );
+   $migration->changeField(
+      'glpi_plugin_data_injection_models', 'public',
+      'private', 'bool'
+   );
 
-    $migration->migrationOneTable('glpi_plugin_data_injection_models');
+   $migration->migrationOneTable('glpi_plugin_data_injection_models');
 
-    $sql = "UPDATE `glpi_plugin_data_injection_models`
+   $sql = "UPDATE `glpi_plugin_data_injection_models`
            SET `FK_entities` = '-1',
                `private` = '1'
            WHERE `private` = '0'";
-    $DB->query($sql);
+   $DB->query($sql);
 
-    $sql = "UPDATE `glpi_plugin_data_injection_models`
+   $sql = "UPDATE `glpi_plugin_data_injection_models`
            SET `private` = '0'
            WHERE `private` = '1'
                 AND `FK_entities` > '0'";
-    $DB->query($sql);
+   $DB->query($sql);
 
-    $migration->addField(
-        'glpi_plugin_data_injection_models', 'recursive',
-        'bool'
-    );
+   $migration->addField(
+      'glpi_plugin_data_injection_models', 'recursive',
+      'bool'
+   );
 
-    $sql = "UPDATE `glpi_plugin_data_injection_profiles`
+   $sql = "UPDATE `glpi_plugin_data_injection_profiles`
            SET `create_model` = `use_model`
            WHERE `create_model` IS NULL";
-    $DB->query($sql);
+   $DB->query($sql);
 
-    $migration->dropField('glpi_plugin_data_injection_profiles', 'use_model');
-    $migration->changeField(
-        'glpi_plugin_data_injection_profiles',
-        'create_model', 'model', 'char'
-    );
+   $migration->dropField('glpi_plugin_data_injection_profiles', 'use_model');
+   $migration->changeField(
+      'glpi_plugin_data_injection_profiles',
+      'create_model', 'model', 'char'
+   );
 
-    $migration->executeMigration();
+   $migration->executeMigration();
 }
 
 
 function plugin_datainjection_update15_170() {
 
-    global $DB;
+   global $DB;
 
-    $tables = ["glpi_plugin_data_injection_models"     => "glpi_plugin_datainjection_models",
+   $tables = ["glpi_plugin_data_injection_models"     => "glpi_plugin_datainjection_models",
               "glpi_plugin_data_injection_models_csv" => "glpi_plugin_datainjection_models_csv",
               "glpi_plugin_data_injection_models_csv" => "glpi_plugin_datainjection_models_csv",
               "glpi_plugin_data_injection_mappings"   => "glpi_plugin_datainjection_mappings",
@@ -375,10 +374,10 @@ function plugin_datainjection_update15_170() {
               "glpi_plugin_data_injection_filetype"   => "glpi_plugin_datainjection_filetype",
               "glpi_plugin_data_injection_profiles"   => "glpi_plugin_datainjection_profiles"];
 
-    foreach ($tables as $oldname => $newname) {
-        $query = "RENAME TABLE IF EXISTS `".$oldname."` TO `".$newname."`";
-        $DB->query($query);
-      }
+   foreach ($tables as $oldname => $newname) {
+      $query = "RENAME TABLE IF EXISTS `".$oldname."` TO `".$newname."`";
+      $DB->query($query);
+   }
 }
 
 

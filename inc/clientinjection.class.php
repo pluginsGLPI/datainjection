@@ -142,7 +142,7 @@ class PluginDatainjectionClientInjection
    static function showUploadFileForm($options = []) {
 
       $add_form = (isset($options['add_form']) && $options['add_form']);
-      $confirm  = (isset($options['confirm']) && $options['confirm']);
+      $confirm  = (isset($options['confirm'])? $options['confirm'] : false);
       $url      = (($confirm == 'creation')?Toolbox::getItemTypeFormURL('PluginDatainjectionModel')
                                          :Toolbox::getItemTypeFormURL(__CLASS__));
       if ($add_form) {
@@ -167,9 +167,9 @@ class PluginDatainjectionClientInjection
       echo "<td colspan='2' class='center'>";
       if ($confirm) {
          if ($confirm == 'creation') {
-            $message = __('Warning : existing data will be overridden', 'datainjection');
+            $message = __s('Warning : existing mapped column will be overridden', 'datainjection');
          } else {
-            $message = __(
+            $message = __s(
               "Watch out, you're about to inject data into GLPI. Are you sure you want to do it ?",
               'datainjection'
             );
