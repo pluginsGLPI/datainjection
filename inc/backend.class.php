@@ -34,7 +34,7 @@ abstract class PluginDatainjectionBackend
 {
 
    protected $file = "";
-   protected $delimiter;
+   protected $delimiter = "";
    protected $encoding;
    protected $errmsg;
    protected $numberOfLines = 0;
