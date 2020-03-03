@@ -1248,6 +1248,7 @@ class PluginDatainjectionModel extends CommonDBTM
 
       $tmp         = $this->fields;
       $tmp['step'] = self::READY_TO_USE_STEP;
+      $tmp = Toolbox::addslashes_deep($tmp);
       $this->update($tmp);
    }
 
