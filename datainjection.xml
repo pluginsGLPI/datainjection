@@ -19,6 +19,7 @@
    <homepage>http://plugins.glpi-project.org/#/plugin/datainjection</homepage>
    <download>https://github.com/pluginsGLPI/datainjection/releases</download>
    <issues>https://github.com/pluginsGLPI/datainjection/issues</issues>
+   <readme>https://glpi-plugins.readthedocs.io/en/latest/datainjection/index.html</readme>
    <authors>
       <author>Walid Nouh</author>
       <author>Dévi Balpe</author>
