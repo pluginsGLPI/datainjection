@@ -72,7 +72,7 @@ class PluginDatainjectionModel extends CommonDBTM
 
    static function getTypeName($nb = 0) {
 
-      return __('Model management', 'datainjection');
+      return _n('Model', 'Models', $nb);
    }
 
 
