@@ -44,31 +44,41 @@ class PluginDatainjectionMenu extends CommonGLPI
 
       $injectionFormUrl = "/".Plugin::getWebDir('datainjection', false).'/front/clientinjection.form.php';
 
-      $menu          = [];
-      $menu['title'] = self::getMenuName();
-      $menu['page']  = $injectionFormUrl;
+      $menu = [
+         'title' => self::getMenuName(),
+         'page'  => $injectionFormUrl,
+         'icon'  => 'fas fa-file-import',
+      ];
 
       if (Session::haveRight(static::$rightname, READ)) {
 
-         $image_model  = "<img src='".$CFG_GLPI["root_doc"]."/pics/menu_addtemplate.png' title='";
-         $image_model .= PluginDatainjectionModel::getTypeName();
-         $image_model .= "' alt='".PluginDatainjectionModel::getTypeName()."'>";
-
-         $image_import  = "<img src='".$CFG_GLPI["root_doc"]."/pics/actualiser.png' title='";
+         $image_import  = "<i class='fas fa-upload' title='";
          $image_import .= __s('Injection of the file', 'datainjection');
-         $image_import .= "' alt='".__s('Injection of the file', 'datainjection')."'>";
+         $image_import .= "' alt='".__s('Injection of the file', 'datainjection')."'></i>";
 
-         $menu['options']['client']['title'] = self::getMenuName();
-         $menu['options']['client']['page'] = $injectionFormUrl;
+         $menu['options'] = [
+            'client' => [
+               'title' => __s('Injection of the file', 'datainjection'),
+               'page'  => $injectionFormUrl,
+               'icon'  => 'fas fa-upload',
+            ],
+            'model' => [
+               'icon'  => 'fas fa-layer-group',
+               'links' => [
+                  $image_import => $injectionFormUrl
+               ]
+            ]
+         ];
+
+         $model_name  = PluginDatainjectionModel::getTypeName(Session::getPluralNumber());
+         $image_model = "<i class='fas fa-layer-group' title='$model_name' alt='$model_name'></i>";
 
          if (Session::haveRight('plugin_datainjection_model', READ)) {
-            $menu['options']['model']['title'] = PluginDatainjectionModel::getTypeName();
+            $menu['options']['model']['title'] = $model_name;
             $menu['options']['model']['page'] = Toolbox::getItemTypeSearchUrl('PluginDatainjectionModel', false);
             $menu['options']['model']['links']['search'] = Toolbox::getItemTypeSearchUrl('PluginDatainjectionModel', false);
             $menu['options']['client']['links'][$image_model]  = Toolbox::getItemTypeSearchUrl('PluginDatainjectionModel', false);
          }
-
-         $menu['options']['model']['links'][$image_import] = $injectionFormUrl;
 
          if (Session::haveRight('plugin_datainjection_model', UPDATE) || Session::haveRight('plugin_datainjection_model', CREATE)) {
             $menu['options']['model']['links']['add'] = Toolbox::getItemTypeFormUrl('PluginDatainjectionModel', false);
