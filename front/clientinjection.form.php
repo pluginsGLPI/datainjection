@@ -30,6 +30,8 @@
 
 require '../../../inc/includes.php';
 
+Session::checkRight("plugin_datainjection_use", READ);
+
 Html::header(
     __('Data injection', 'datainjection'), $_SERVER["PHP_SELF"],
     "tools", "plugindatainjectionmenu", "client"
