@@ -8,7 +8,7 @@
 [![GitHub build](https://travis-ci.org/pluginsGLPI/datainjection.svg?)](https://travis-ci.org/pluginsGLPI/datainjection/)
 
 
-
+![Screenshot](./screenshots/datainjection.gif "Alert")
 
 Changes 23.06.2017:
 Enhanced memory and processor import
