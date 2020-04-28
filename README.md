@@ -10,25 +10,21 @@
 
 ![Screenshot](./screenshots/datainjection.gif "Alert")
 
-Changes 23.06.2017:
-Enhanced memory and processor import
-Volumes import
-Automatic tasks for data injection
+Add automatic action for data injection
 
 All customizations are signed by comments
 // WP
 // START
 
 // END
-New files has Copyright string added
-@copyright Copyright (C) 2017 Wuerth Phoenix, http://www.wuerth-phoenix.com
 
-./src/datainjection/inc/deviceprocessorinjection.class.php
-./src/datainjection/inc/computerdiskinjection.class.php
-./src/datainjection/inc/model.class.php
-./src/datainjection/inc/devicememoryinjection.class.php
-./src/datainjection/hook.php
-./src/datainjection/setup.php
+Usage for configuring automatic action:
+
+The plugin regitests two automatic actions:
+
+Within Comments field define:
+<datainject_model_name>;<full_path_to_csv_file>;<integer of key column. Starts from 0>
+Windows_Servers_model;/var/log/glpi/extras/glpi_import/Computers.csv;0
 
 Starting version:
 git remote add glpi_plugin_datainjection_orig https://github.com/pluginsGLPI/datainjection.git
