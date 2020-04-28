@@ -8,8 +8,36 @@
 [![GitHub build](https://travis-ci.org/pluginsGLPI/datainjection.svg?)](https://travis-ci.org/pluginsGLPI/datainjection/)
 
 
-![Screenshot](./screenshots/datainjection.gif "Alert")
 
+
+Changes 23.06.2017:
+Enhanced memory and processor import
+Volumes import
+Automatic tasks for data injection
+
+All customizations are signed by comments
+// WP
+// START
+
+// END
+New files has Copyright string added
+@copyright Copyright (C) 2017 Wuerth Phoenix, http://www.wuerth-phoenix.com
+
+./src/datainjection/inc/deviceprocessorinjection.class.php
+./src/datainjection/inc/computerdiskinjection.class.php
+./src/datainjection/inc/model.class.php
+./src/datainjection/inc/devicememoryinjection.class.php
+./src/datainjection/hook.php
+./src/datainjection/setup.php
+
+Starting version:
+git remote add glpi_plugin_datainjection_orig https://github.com/pluginsGLPI/datainjection.git
+TAG 2.4.1
+
+### How do I get set up? ###
+
+
+## English
 
 This plugin allows data import into [GLPI](http://glpi-project.org) using CSV files.
 

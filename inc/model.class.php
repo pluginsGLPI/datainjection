@@ -961,7 +961,11 @@ class PluginDatainjectionModel extends CommonDBTM
       //Get model & model specific fields
       $this->loadSpecificModel();
 
-      if (!$webservice) {
+      // WP - load local file by cron
+      // START
+      // if (!$webservice) {
+      if (!$webservice && !$unique_filename) {
+      // END
          //Get and store uploaded file
          $original_filename           = $_FILES['filename']['name'];
          $temporary_uploaded_filename = $_FILES["filename"]["tmp_name"];
@@ -1571,14 +1575,168 @@ class PluginDatainjectionModel extends CommonDBTM
                }
             }
          }
-            $pdf->render();
+         $pdf->render();
       }
    }
 
 
    function cleanData() {
-
-      $this->injectionData = [];
+      $this->injectionData = array();
    }
 
+// WP - register cronjobs DataInjection and DataInjectionAdditional
+// START
+    /**
+    * Give localized information about 1 task
+    *
+    * @param $name of the task
+    *
+    * @return array of strings
+    */
+   static function cronInfo($name) {
+
+      switch ($name) {
+         case 'DataInjection' :
+            return array('description' => __('Data Injection', 'datainjection'));
+         case 'DataInjectionAdditional' :
+            return array('description' => __('Data Injection Additional', 'datainjection'));
+      }
+      return array();
+   }
+
+  /**
+    * The Cron Job
+    * @param CronTask $item
+    * @return number
+    */
+    public static function cronDataInjectionAdditional(CronTask $item) {
+      return self::cronDataInjection($item);
+    }
+
+
+  /**
+    * The Cron Job
+    * @param CronTask $item
+    * @return number
+    */
+    public static function cronDataInjection(CronTask $item) {
+      global $DB;
+      // To prevent problem of execution time during injection
+      ini_set("max_execution_time", "0");
+
+      //model exists
+      $parameters = $item->fields['comment'];
+      if (!isset($parameters)) {
+         error_log('[ERROR] no model and file found');
+         return 0;
+      }
+      $numberparams = substr_count($parameters, ";");
+      if ( $numberparams < 1) {
+         error_log('[ERROR] less than two params: modelname;csv filename');
+         return 0;
+      }else if ( $numberparams == 1){
+          $parameters = $parameters . ";";
+      }
+
+
+      list ($modelname, $filename, $mandatory ) = explode(';', $parameters);
+      if (!isset($modelname) || !isset($filename) ) {
+         error_log('[ERROR] missing model or file in comment (separated by ;)');
+         return 0;
+      }
+      if (!file_exists($filename)) {
+         error_log('[ERROR] file do not exist: '.$filename);
+         return 0;
+      }
+
+      $query = "SELECT `id`, `entities_id` FROM `glpi_plugin_datainjection_models` WHERE `name` = '$modelname'";
+      $modelid = 0;
+      foreach ($DB->request($query) as $data) {
+        $modelid = $data['id'];
+        $model_entityid = $data['entities_id'];
+      }
+      if ( $modelid == 0 ) {
+         error_log('[ERROR] no model found: '.$modelname);
+         return 0;
+      }
+      $madatorylist = array();
+      if (isset($mandatory) && $mandatory != '') {
+         $madatorylist = explode('|', $mandatory);
+      }
+
+
+      $model = new PluginDatainjectionModel();
+      $model->can($modelid, READ);
+
+      //Read file using automatic encoding detection, and do not delete file once readed
+      $options = array('file_encoding'   => PluginDatainjectionBackend::ENCODING_AUTO,
+                       'mode'            => PluginDatainjectionModel::PROCESS,
+                       'unique_filename' => $filename,
+                       'original_filename' => $filename,
+                       'delete_file'     => false);
+      $response = $model->processUploadedFile($options);
+      $model->cleanData();
+
+      if (!$response) {
+         error_log('[ERROR] import errors for: '.$modelname);
+         return 0;
+      }
+      //New injection engine
+      //Define destination entity for import
+      $engine = new PluginDatainjectionEngine($model,array(),$model_entityid);
+      $backend = $model->getBackend();
+      $model->loadSpecificModel();
+
+      //Open CSV file
+      $backend->openFile();
+
+      $index = 0;
+      $skipped = 0;
+
+      //Read CSV file
+      $line = $backend->getNextLine();
+
+      //If header is present, then get the second line
+      if ($model->getSpecificModel()->isHeaderPresent()) {
+         $line = $backend->getNextLine();
+      }
+
+      //While CSV file is not EOF
+      while ($line != null) {
+         $skip = 0;
+         //check mandatory fields against field ids specified as third parameter : modelname;csv filename;mandatoryid1|mandatoryid2|mandatoryid3
+         for($cnt = 0; $cnt < count($madatorylist); $cnt++) {
+            if ( !isset($line[0][ $madatorylist[$cnt] ]) || $line[0][ $madatorylist[$cnt] ] == '' || $line[0][ $madatorylist[$cnt] ] == 'NULL' ) {
+               $skip = 1;
+               $skipped++;
+               break;
+            }
+         }
+         if ( $skip ) {
+            error_log('[ERROR] mandatory field is missing: '.$mandatory.' Skip line :'.$index);
+         } else {
+            //Inject line
+            $injectionline    = $index + ($model->getSpecificModel()->isHeaderPresent()?2:1);
+            $injectionresults = $engine->injectLine($line[0],$injectionline);
+            if ($injectionresults['status'] != PluginDatainjectionCommonInjectionLib::SUCCESS) {
+                error_log('[ERROR] import errors for: '.$modelname.' line '.$index);
+            }
+         }
+         $line = $backend->getNextLine();
+         $index++;
+      }
+      //Close CSV file
+      $backend->closeFile();
+      error_log('Processed rows '.$index.' rows. Skipped '.$skipped);
+
+      //Delete CSV file
+      //$backend->deleteFile();
+      return ($index - $skipped);
+    }
+
+
+// END
+
+
 }
+?>
