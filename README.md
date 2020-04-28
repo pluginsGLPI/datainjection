@@ -18,9 +18,11 @@ All customizations are signed by comments
 
 // END
 
-Usage for configuring automatic action:
+The plugin registers two automatic actions:
 
-The plugin regitests two automatic actions:
+How-To:
+- Define a datainject import model
+- Configure one of the provided two automatic actions according this structure:
 
 Within Comments field define:
 <datainject_model_name>;<full_path_to_csv_file>;<integer of key column. Starts from 0>
