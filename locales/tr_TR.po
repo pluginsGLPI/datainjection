@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-02-06 13:07+0000\n"
+"POT-Creation-Date: 2020-07-10 10:45+0000\n"
 "PO-Revision-Date: 2018-06-21 12:57+0000\n"
 "Last-Translator: Kaya Zeren <kayazeren@gmail.com>, 2019\n"
 "Language-Team: Turkish (Turkey) (https://www.transifex.com/teclib/teams/28042/tr_TR/)\n"
@@ -22,26 +22,9 @@ msgstr ""
 "Language: tr_TR\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
-#: front/model.form.php:88 front/clientinjection.form.php:83
-msgid "The file could not be found"
-msgstr "Dosya bulunamadı"
-
-#: front/clientinjection.form.php:34 inc/profile.class.php:67
-#: inc/menu.class.php:38 setup.php:94
-msgid "Data injection"
-msgstr "Veri enjeksiyonu"
-
-#: front/clientinjection.form.php:50
-msgid "One mandatory field is not filled"
-msgstr "Zorunlu alanlardan biri doldurulmamış"
-
-#: front/popup.php:37 inc/mapping.class.php:117
-msgid "See the file"
-msgstr "Dosyaya bakın"
-
-#: front/popup.php:43 inc/model.class.php:1518
-msgid "Data injection report"
-msgstr "Veri enjeksiyonu raporu"
+#: hook.php:124 hook.php:141 setup.php:63
+msgid "Can't create folder"
+msgstr "Klasör oluşturulamadı"
 
 #: front/mapping.form.php:60
 msgid ""
@@ -59,168 +42,88 @@ msgstr ""
 "Bu adımda dosyada bulunmayan bilgiler eklenebilir. Modeli kullanırken tez "
 "bilgileri sorulacak."
 
-#: hook.php:124 hook.php:141 setup.php:63
-msgid "Can't create folder"
-msgstr "Klasör oluşturulamadı"
+#: front/clientinjection.form.php:34 inc/profile.class.php:67
+#: inc/menu.class.php:38 setup.php:94
+msgid "Data injection"
+msgstr "Veri enjeksiyonu"
 
-#: inc/commoninjectionlib.class.php:1874
-msgid "Add from CSV file"
-msgstr "CSV dosyasından ekle"
+#: front/clientinjection.form.php:50
+msgid "One mandatory field is not filled"
+msgstr "Zorunlu alanlardan biri doldurulmamış"
 
-#: inc/commoninjectionlib.class.php:1876
-msgid "Update from CSV file"
-msgstr "CSV dosyasından güncelle"
+#: front/clientinjection.form.php:83 front/model.form.php:88
+msgid "The file could not be found"
+msgstr "Dosya bulunamadı"
 
-#: inc/commoninjectionlib.class.php:1917
-msgid "No right to import data"
-msgstr "Veri alma izni yok"
+#: front/popup.php:37 inc/mapping.class.php:117
+msgid "See the file"
+msgstr "Dosyaya bakın"
 
-#: inc/commoninjectionlib.class.php:1921
-msgid "No right to update data"
-msgstr "Veri güncelleme izni yok"
+#: front/popup.php:43 inc/model.class.php:1518
+msgid "Data injection report"
+msgstr "Veri enjeksiyonu raporu"
 
-#: inc/commoninjectionlib.class.php:1925
-msgid "Size of the inserted value is to expansive"
-msgstr "Eklenen değerin boyutu çok genişleyebilir"
+#: inc/dropdown.class.php:37
+msgid "dd-mm-yyyy"
+msgstr "gg-aa-yyyy"
 
-#: inc/commoninjectionlib.class.php:1929
-msgid "Import not allowed"
-msgstr "Alma işlemine izin verilmiyor"
+#: inc/dropdown.class.php:39
+msgid "mm-dd-yyyy"
+msgstr "aa-gg-yyyy"
 
-#: inc/commoninjectionlib.class.php:1933
-msgid "Import failed"
-msgstr "Alma işlemi yapılamadı"
+#: inc/dropdown.class.php:41
+msgid "yyyy-mm-dd"
+msgstr "yyyy-aa-gg"
 
-#: inc/commoninjectionlib.class.php:1937
-msgid "At least one mandatory field is not present"
-msgstr "En az bir zorunlu alan bulunamadı"
+#: inc/dropdown.class.php:60
+msgid "1 234.56"
+msgstr "1 234.56"
 
-#: inc/commoninjectionlib.class.php:1941
-msgid "Data to insert are correct"
-msgstr "Eklenecek veri doğru"
+#: inc/dropdown.class.php:62
+msgid "1 234,56"
+msgstr "1 234,56"
 
-#: inc/commoninjectionlib.class.php:1945
-msgid "One data is not the good type"
-msgstr "Bir verinin türü iyi değil"
+#: inc/dropdown.class.php:64
+msgid "1,234.56"
+msgstr "1,234.56"
 
-#: inc/commoninjectionlib.class.php:1949
-msgid "Warning"
-msgstr "Uyarı"
-
-#: inc/commoninjectionlib.class.php:1953
-msgid "Data not found"
-msgstr "Veri bulunamadı"
-
-#: inc/commoninjectionlib.class.php:1957 inc/model.class.php:1370
-msgid "Undetermined"
-msgstr "Belirlenmemiş"
-
-#: inc/profile.class.php:40 inc/model.class.php:75
-msgid "Model management"
-msgstr "Model yönetimi"
-
-#: inc/profile.class.php:43 inc/menu.class.php:58 inc/menu.class.php:59
-#: inc/clientinjection.class.php:214
-msgid "Injection of the file"
-msgstr "Dosya enjeksiyonu"
-
-#: inc/webservice.class.php:78
-msgid "Model unknown"
-msgstr "Model bilinmiyor"
-
-#: inc/webservice.class.php:86 inc/webservice.class.php:95
-msgid "You cannot access this model"
-msgstr "Bu modele erişme izniniz yok"
-
-#: inc/webservice.class.php:115
-msgid "Entity unknown"
-msgstr "Varlık bilinmiyor"
-
-#: inc/webservice.class.php:123
-msgid "You cannot access this entity"
-msgstr "Bu varlığa erişme izniniz yok"
-
-#: inc/clientinjection.class.php:88
-msgid "Use an existing model"
-msgstr "Varolan bir model kullanılsın"
-
-#: inc/clientinjection.class.php:96
-msgid "No model currently available"
-msgstr "Kullanılabilecek bir model yok"
-
-#: inc/clientinjection.class.php:105
-msgid "You can start the model creation by hitting the button"
-msgstr "Düğmeye tıklayarak model oluşturmaya başlayabilirsiniz"
-
-#: inc/clientinjection.class.php:153 inc/model.class.php:770
-#: inc/dropdown.class.php:87
+#: inc/dropdown.class.php:87 inc/model.class.php:770
+#: inc/clientinjection.class.php:153
 msgid "File to inject"
 msgstr "Enjekte edilecek dosya"
 
-#: inc/clientinjection.class.php:156 inc/info.class.php:247
-msgid "Choose a file"
-msgstr "Bir dosya seçin"
+#: inc/dropdown.class.php:88 inc/model.class.php:772
+msgid "Mappings"
+msgstr "Eşleştirmeler"
 
-#: inc/clientinjection.class.php:162
-msgid "File encoding"
-msgstr "Dosya kodlaması"
+#: inc/dropdown.class.php:90 inc/model.class.php:775
+msgid "Additional Information"
+msgstr "Ek Bilgiler"
 
-#: inc/clientinjection.class.php:170
-msgid "Warning : existing mapped column will be overridden"
-msgstr "Uyarı : Eşlenmiş sütunda var olan bilgilerin üzerine yazılacak"
+#: inc/dropdown.class.php:94
+msgid "Model available for use"
+msgstr "Kullanılacak model"
 
-#: inc/clientinjection.class.php:173
-msgid ""
-"Watch out, you're about to inject data into GLPI. Are you sure you want to "
-"do it ?"
-msgstr ""
-"Dikkatli olun. GLPI üzerine veri enjekte etmek üzeresiniz. Bu işlemi yapmak "
-"istediğinize emin misiniz?"
+#: inc/dropdown.class.php:119
+msgid "Automatic detection"
+msgstr "Otomatik algılama"
 
-#: inc/clientinjection.class.php:180
-msgid "Launch the import"
-msgstr "Alma işlemini başlat"
+#: inc/dropdown.class.php:122
+msgid "UTF-8"
+msgstr "UTF-8"
 
-#: inc/clientinjection.class.php:210
-msgid "Import progress"
-msgstr "Alma işlemi"
+#: inc/dropdown.class.php:123
+msgid "ISO8859-1"
+msgstr "ISO8859-1"
 
-#: inc/clientinjection.class.php:280
-#, php-format
-msgid "Injection of the file... %d%%"
-msgstr "Dosya enjeksiyonu... %d%%"
+#: inc/profile.class.php:40
+msgid "Model management"
+msgstr "Model yönetimi"
 
-#: inc/clientinjection.class.php:297
-msgid "Injection finished"
-msgstr "Enjeksiyon tamamlandı"
-
-#: inc/clientinjection.class.php:369
-msgid "Injection's results"
-msgstr "Enjeksiyon sonuçları"
-
-#: inc/clientinjection.class.php:374
-msgid "Injection successful"
-msgstr "Enjeksiyon tamamlandı"
-
-#: inc/clientinjection.class.php:377
-msgid "Injection encounters errors"
-msgstr "Enjeksiyon sırasında sorun çıktı"
-
-#: inc/clientinjection.class.php:386
-msgid "See the log"
-msgstr "Günlüğe bakın"
-
-#: inc/clientinjection.class.php:392
-msgid "Export rapport in PDF"
-msgstr "Raporu PDF Olarak Ver"
-
-#: inc/clientinjection.class.php:398
-msgid "Export the log"
-msgstr "Günlüğü Ver"
-
-#: inc/clientinjection.class.php:406
-msgid "Finish"
-msgstr "Bitti"
+#: inc/profile.class.php:43 inc/clientinjection.class.php:214
+#: inc/menu.class.php:56 inc/menu.class.php:57 inc/menu.class.php:61
+msgid "Injection of the file"
+msgstr "Dosya enjeksiyonu"
 
 #: inc/model.class.php:384 inc/model.class.php:670
 msgid "Allow lines creation"
@@ -266,14 +169,6 @@ msgstr "Varolan alanlar güncellenebilsin"
 msgctxt "button"
 msgid "Validate the model"
 msgstr "Modeli doğrula"
-
-#: inc/model.class.php:772 inc/dropdown.class.php:88
-msgid "Mappings"
-msgstr "Eşleştirmeler"
-
-#: inc/model.class.php:775 inc/dropdown.class.php:90
-msgid "Additional Information"
-msgstr "Ek Bilgiler"
 
 #: inc/model.class.php:803
 msgid "Load this file"
@@ -342,6 +237,10 @@ msgstr "Dosya içine"
 msgid "From the model"
 msgstr "Modelden"
 
+#: inc/model.class.php:1371 inc/commoninjectionlib.class.php:1957
+msgid "Undetermined"
+msgstr "Belirlenmemiş"
+
 #: inc/model.class.php:1444 inc/model.class.php:1527
 msgid "Array of successful injections"
 msgstr "Başarılı enjeksiyonların dizisi"
@@ -374,29 +273,86 @@ msgstr "Başarısız enjeksiyonlar dizisi"
 msgid "Data check"
 msgstr "Veri denetimi"
 
-#: inc/injectiontype.class.php:131
-msgid "-------Choose a table-------"
-msgstr "-------Bir tablo seçin-------"
+#: inc/clientinjection.class.php:88
+msgid "Use an existing model"
+msgstr "Varolan bir model kullanılsın"
 
-#: inc/injectiontype.class.php:192
-msgid "-------Choose a field-------"
-msgstr "-------Bir alan seçin-------"
+#: inc/clientinjection.class.php:96
+msgid "No model currently available"
+msgstr "Kullanılabilecek bir model yok"
 
-#: inc/networkequipmentinjection.class.php:72
-msgid "Number of ports"
-msgstr "Kapıların numarası"
+#: inc/clientinjection.class.php:105
+msgid "You can start the model creation by hitting the button"
+msgstr "Düğmeye tıklayarak model oluşturmaya başlayabilirsiniz"
 
-#: inc/mapping.class.php:123
-msgid "Header of the file"
-msgstr "Dosya üst bilgisi"
+#: inc/clientinjection.class.php:156 inc/info.class.php:247
+msgid "Choose a file"
+msgstr "Bir dosya seçin"
 
-#: inc/mapping.class.php:124 inc/info.class.php:84 inc/info.class.php:141
+#: inc/clientinjection.class.php:162
+msgid "File encoding"
+msgstr "Dosya kodlaması"
+
+#: inc/clientinjection.class.php:170
+msgid "Warning : existing mapped column will be overridden"
+msgstr "Uyarı : Eşlenmiş sütunda var olan bilgilerin üzerine yazılacak"
+
+#: inc/clientinjection.class.php:173
+msgid ""
+"Watch out, you're about to inject data into GLPI. Are you sure you want to "
+"do it ?"
+msgstr ""
+"Dikkatli olun. GLPI üzerine veri enjekte etmek üzeresiniz. Bu işlemi yapmak "
+"istediğinize emin misiniz?"
+
+#: inc/clientinjection.class.php:180
+msgid "Launch the import"
+msgstr "Alma işlemini başlat"
+
+#: inc/clientinjection.class.php:210
+msgid "Import progress"
+msgstr "Alma işlemi"
+
+#: inc/clientinjection.class.php:280
+#, php-format
+msgid "Injection of the file... %d%%"
+msgstr "Dosya enjeksiyonu... %d%%"
+
+#: inc/clientinjection.class.php:297
+msgid "Injection finished"
+msgstr "Enjeksiyon tamamlandı"
+
+#: inc/clientinjection.class.php:370
+msgid "Injection's results"
+msgstr "Enjeksiyon sonuçları"
+
+#: inc/clientinjection.class.php:375
+msgid "Injection successful"
+msgstr "Enjeksiyon tamamlandı"
+
+#: inc/clientinjection.class.php:378
+msgid "Injection encounters errors"
+msgstr "Enjeksiyon sırasında sorun çıktı"
+
+#: inc/clientinjection.class.php:387
+msgid "See the log"
+msgstr "Günlüğe bakın"
+
+#: inc/clientinjection.class.php:393
+msgid "Export rapport in PDF"
+msgstr "Raporu PDF Olarak Ver"
+
+#: inc/clientinjection.class.php:399
+msgid "Export the log"
+msgstr "Günlüğü Ver"
+
+#: inc/clientinjection.class.php:407
+msgid "Finish"
+msgstr "Bitti"
+
+#: inc/info.class.php:84 inc/info.class.php:141 inc/mapping.class.php:124
 msgid "Tables"
 msgstr "Tablolar"
-
-#: inc/mapping.class.php:126
-msgid "Link field"
-msgstr "Bağlantı alanı"
 
 #: inc/info.class.php:86 inc/info.class.php:143
 msgid "Mandatory information"
@@ -414,45 +370,25 @@ msgstr "Tamamlayıcı Bilgiler"
 msgid "Download file sample"
 msgstr "Örnek dosyayı indir"
 
-#: inc/dropdown.class.php:37
-msgid "dd-mm-yyyy"
-msgstr "gg-aa-yyyy"
+#: inc/webservice.class.php:78
+msgid "Model unknown"
+msgstr "Model bilinmiyor"
 
-#: inc/dropdown.class.php:39
-msgid "mm-dd-yyyy"
-msgstr "aa-gg-yyyy"
+#: inc/webservice.class.php:86 inc/webservice.class.php:95
+msgid "You cannot access this model"
+msgstr "Bu modele erişme izniniz yok"
 
-#: inc/dropdown.class.php:41
-msgid "yyyy-mm-dd"
-msgstr "yyyy-aa-gg"
+#: inc/webservice.class.php:115
+msgid "Entity unknown"
+msgstr "Varlık bilinmiyor"
 
-#: inc/dropdown.class.php:60
-msgid "1 234.56"
-msgstr "1 234.56"
+#: inc/webservice.class.php:123
+msgid "You cannot access this entity"
+msgstr "Bu varlığa erişme izniniz yok"
 
-#: inc/dropdown.class.php:62
-msgid "1 234,56"
-msgstr "1 234,56"
-
-#: inc/dropdown.class.php:64
-msgid "1,234.56"
-msgstr "1,234.56"
-
-#: inc/dropdown.class.php:94
-msgid "Model available for use"
-msgstr "Kullanılacak model"
-
-#: inc/dropdown.class.php:119
-msgid "Automatic detection"
-msgstr "Otomatik algılama"
-
-#: inc/dropdown.class.php:122
-msgid "UTF-8"
-msgstr "UTF-8"
-
-#: inc/dropdown.class.php:123
-msgid "ISO8859-1"
-msgstr "ISO8859-1"
+#: inc/computerinjection.class.php:72
+msgid "Antivirus name"
+msgstr ""
 
 #: inc/modelcsv.class.php:160
 msgid "Specific file format options"
@@ -466,6 +402,74 @@ msgstr "Üst bilginin varlığı"
 msgid "File delimitor"
 msgstr "Dosya ayracı"
 
+#: inc/networkequipmentinjection.class.php:72
+msgid "Number of ports"
+msgstr "Kapıların numarası"
+
+#: inc/mapping.class.php:123
+msgid "Header of the file"
+msgstr "Dosya üst bilgisi"
+
+#: inc/mapping.class.php:126
+msgid "Link field"
+msgstr "Bağlantı alanı"
+
 #: inc/networkportinjection.class.php:89
 msgid "Port MAC address"
 msgstr "Kapı MAC adresi"
+
+#: inc/injectiontype.class.php:131
+msgid "-------Choose a table-------"
+msgstr "-------Bir tablo seçin-------"
+
+#: inc/injectiontype.class.php:193
+msgid "-------Choose a field-------"
+msgstr "-------Bir alan seçin-------"
+
+#: inc/commoninjectionlib.class.php:1874
+msgid "Add from CSV file"
+msgstr "CSV dosyasından ekle"
+
+#: inc/commoninjectionlib.class.php:1876
+msgid "Update from CSV file"
+msgstr "CSV dosyasından güncelle"
+
+#: inc/commoninjectionlib.class.php:1917
+msgid "No right to import data"
+msgstr "Veri alma izni yok"
+
+#: inc/commoninjectionlib.class.php:1921
+msgid "No right to update data"
+msgstr "Veri güncelleme izni yok"
+
+#: inc/commoninjectionlib.class.php:1925
+msgid "Size of the inserted value is to expansive"
+msgstr "Eklenen değerin boyutu çok genişleyebilir"
+
+#: inc/commoninjectionlib.class.php:1929
+msgid "Import not allowed"
+msgstr "Alma işlemine izin verilmiyor"
+
+#: inc/commoninjectionlib.class.php:1933
+msgid "Import failed"
+msgstr "Alma işlemi yapılamadı"
+
+#: inc/commoninjectionlib.class.php:1937
+msgid "At least one mandatory field is not present"
+msgstr "En az bir zorunlu alan bulunamadı"
+
+#: inc/commoninjectionlib.class.php:1941
+msgid "Data to insert are correct"
+msgstr "Eklenecek veri doğru"
+
+#: inc/commoninjectionlib.class.php:1945
+msgid "One data is not the good type"
+msgstr "Bir verinin türü iyi değil"
+
+#: inc/commoninjectionlib.class.php:1949
+msgid "Warning"
+msgstr "Uyarı"
+
+#: inc/commoninjectionlib.class.php:1953
+msgid "Data not found"
+msgstr "Veri bulunamadı"

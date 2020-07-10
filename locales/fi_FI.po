@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-02-06 13:07+0000\n"
+"POT-Creation-Date: 2020-07-10 10:45+0000\n"
 "PO-Revision-Date: 2018-06-21 12:57+0000\n"
 "Last-Translator: Cédric Anne, 2018\n"
 "Language-Team: Finnish (Finland) (https://www.transifex.com/teclib/teams/28042/fi_FI/)\n"
@@ -21,26 +21,9 @@ msgstr ""
 "Language: fi_FI\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: front/model.form.php:88 front/clientinjection.form.php:83
-msgid "The file could not be found"
-msgstr "Tiedostoa ei löytynyt"
-
-#: front/clientinjection.form.php:34 inc/profile.class.php:67
-#: inc/menu.class.php:38 setup.php:94
-msgid "Data injection"
-msgstr ""
-
-#: front/clientinjection.form.php:50
-msgid "One mandatory field is not filled"
-msgstr "Pakollista kenttää ei ole täytetty"
-
-#: front/popup.php:37 inc/mapping.class.php:117
-msgid "See the file"
-msgstr "Katso tiedosto"
-
-#: front/popup.php:43 inc/model.class.php:1518
-msgid "Data injection report"
-msgstr ""
+#: hook.php:124 hook.php:141 setup.php:63
+msgid "Can't create folder"
+msgstr "Kansioa ei voi luoda"
 
 #: front/mapping.form.php:60
 msgid ""
@@ -58,166 +41,88 @@ msgstr ""
 "Tässä vaiheessa voit lisätä tietoja, joita ei ole tiedostossa. Sinulta "
 "kysytään näitä tietoja, kun käytät mallia."
 
-#: hook.php:124 hook.php:141 setup.php:63
-msgid "Can't create folder"
-msgstr "Kansioa ei voi luoda"
+#: front/clientinjection.form.php:34 inc/profile.class.php:67
+#: inc/menu.class.php:38 setup.php:94
+msgid "Data injection"
+msgstr ""
 
-#: inc/commoninjectionlib.class.php:1874
-msgid "Add from CSV file"
-msgstr "Lisää CSV-tiedostosta"
+#: front/clientinjection.form.php:50
+msgid "One mandatory field is not filled"
+msgstr "Pakollista kenttää ei ole täytetty"
 
-#: inc/commoninjectionlib.class.php:1876
-msgid "Update from CSV file"
-msgstr "Päivitä CSV-tiedostosta"
+#: front/clientinjection.form.php:83 front/model.form.php:88
+msgid "The file could not be found"
+msgstr "Tiedostoa ei löytynyt"
 
-#: inc/commoninjectionlib.class.php:1917
-msgid "No right to import data"
-msgstr "Ei oikeutta tuoda tietoja"
+#: front/popup.php:37 inc/mapping.class.php:117
+msgid "See the file"
+msgstr "Katso tiedosto"
 
-#: inc/commoninjectionlib.class.php:1921
-msgid "No right to update data"
-msgstr "Ei oikeutta päivittää tietoja"
+#: front/popup.php:43 inc/model.class.php:1518
+msgid "Data injection report"
+msgstr ""
 
-#: inc/commoninjectionlib.class.php:1925
-msgid "Size of the inserted value is to expansive"
-msgstr "Syötetyn arvo koko laajeneva"
+#: inc/dropdown.class.php:37
+msgid "dd-mm-yyyy"
+msgstr "pp-kk-vvvv"
 
-#: inc/commoninjectionlib.class.php:1929
-msgid "Import not allowed"
-msgstr "Tuonti ei sallittu"
+#: inc/dropdown.class.php:39
+msgid "mm-dd-yyyy"
+msgstr "kk-pp-vvvv"
 
-#: inc/commoninjectionlib.class.php:1933
-msgid "Import failed"
-msgstr "Tuonti epäonnistui"
+#: inc/dropdown.class.php:41
+msgid "yyyy-mm-dd"
+msgstr "vvvv-kk-pp"
 
-#: inc/commoninjectionlib.class.php:1937
-msgid "At least one mandatory field is not present"
-msgstr "Ainakin yksi pakollinen kenttä puuttuu"
+#: inc/dropdown.class.php:60
+msgid "1 234.56"
+msgstr "1 234.56"
 
-#: inc/commoninjectionlib.class.php:1941
-msgid "Data to insert are correct"
-msgstr "Syötetyt tiedot ovat oikeita"
+#: inc/dropdown.class.php:62
+msgid "1 234,56"
+msgstr "1 234,56"
 
-#: inc/commoninjectionlib.class.php:1945
-msgid "One data is not the good type"
-msgstr "Yksi tieto ei ole oikeaa tyyppiä"
+#: inc/dropdown.class.php:64
+msgid "1,234.56"
+msgstr "1,234.56"
 
-#: inc/commoninjectionlib.class.php:1949
-msgid "Warning"
-msgstr "Varoitus"
-
-#: inc/commoninjectionlib.class.php:1953
-msgid "Data not found"
-msgstr "Tietoja ei löytynyt"
-
-#: inc/commoninjectionlib.class.php:1957 inc/model.class.php:1370
-msgid "Undetermined"
-msgstr "Määrittelemätön"
-
-#: inc/profile.class.php:40 inc/model.class.php:75
-msgid "Model management"
-msgstr "Mallinhallinta"
-
-#: inc/profile.class.php:43 inc/menu.class.php:58 inc/menu.class.php:59
-#: inc/clientinjection.class.php:214
-msgid "Injection of the file"
-msgstr "Tiedoston tuonti"
-
-#: inc/webservice.class.php:78
-msgid "Model unknown"
-msgstr "Malli tuntematon"
-
-#: inc/webservice.class.php:86 inc/webservice.class.php:95
-msgid "You cannot access this model"
-msgstr "Et voi käyttää tätä mallia"
-
-#: inc/webservice.class.php:115
-msgid "Entity unknown"
-msgstr "Tuntematon yksikkö"
-
-#: inc/webservice.class.php:123
-msgid "You cannot access this entity"
-msgstr "Ei pääsyä tähän yksikköön"
-
-#: inc/clientinjection.class.php:88
-msgid "Use an existing model"
-msgstr "Käytä olemassa olevaa mallia"
-
-#: inc/clientinjection.class.php:96
-msgid "No model currently available"
-msgstr "Ei saatavilla olevaa mallia"
-
-#: inc/clientinjection.class.php:105
-msgid "You can start the model creation by hitting the button"
-msgstr "Voit aloittaa mallin luomisen napsauttamalla painiketta"
-
-#: inc/clientinjection.class.php:153 inc/model.class.php:770
-#: inc/dropdown.class.php:87
+#: inc/dropdown.class.php:87 inc/model.class.php:770
+#: inc/clientinjection.class.php:153
 msgid "File to inject"
 msgstr "Tuotava tiedosto"
 
-#: inc/clientinjection.class.php:156 inc/info.class.php:247
-msgid "Choose a file"
-msgstr "Valitse tiedosto"
+#: inc/dropdown.class.php:88 inc/model.class.php:772
+msgid "Mappings"
+msgstr "Linkitykset"
 
-#: inc/clientinjection.class.php:162
-msgid "File encoding"
-msgstr "Tiedoston koodaus"
+#: inc/dropdown.class.php:90 inc/model.class.php:775
+msgid "Additional Information"
+msgstr "Lisätiedot"
 
-#: inc/clientinjection.class.php:170
-msgid "Warning : existing mapped column will be overridden"
-msgstr ""
+#: inc/dropdown.class.php:94
+msgid "Model available for use"
+msgstr "Malli on käytettävissä"
 
-#: inc/clientinjection.class.php:173
-msgid ""
-"Watch out, you're about to inject data into GLPI. Are you sure you want to "
-"do it ?"
-msgstr "Huomio! Olet tuomassa tietoja GLPI:hen. Haluatko varmasti tehdä sen?"
+#: inc/dropdown.class.php:119
+msgid "Automatic detection"
+msgstr "Automaattinen tunnistus"
 
-#: inc/clientinjection.class.php:180
-msgid "Launch the import"
-msgstr "Käynnistä tuonti"
+#: inc/dropdown.class.php:122
+msgid "UTF-8"
+msgstr "UTF-8"
 
-#: inc/clientinjection.class.php:210
-msgid "Import progress"
-msgstr "Tuonnin edistyminen"
+#: inc/dropdown.class.php:123
+msgid "ISO8859-1"
+msgstr "ISO8859-1"
 
-#: inc/clientinjection.class.php:280
-#, php-format
-msgid "Injection of the file... %d%%"
-msgstr "Tiedostoa käsitellään... %d %%"
+#: inc/profile.class.php:40
+msgid "Model management"
+msgstr "Mallinhallinta"
 
-#: inc/clientinjection.class.php:297
-msgid "Injection finished"
-msgstr "Tuonti suoritettu loppuun"
-
-#: inc/clientinjection.class.php:369
-msgid "Injection's results"
-msgstr "Tuonnin tulokset"
-
-#: inc/clientinjection.class.php:374
-msgid "Injection successful"
-msgstr "Tuonti onnistui"
-
-#: inc/clientinjection.class.php:377
-msgid "Injection encounters errors"
-msgstr "Tuonti sisälsi virheitä"
-
-#: inc/clientinjection.class.php:386
-msgid "See the log"
-msgstr "Katso loki"
-
-#: inc/clientinjection.class.php:392
-msgid "Export rapport in PDF"
-msgstr "Vie raportti PDF-muodossa"
-
-#: inc/clientinjection.class.php:398
-msgid "Export the log"
-msgstr "Vie loki"
-
-#: inc/clientinjection.class.php:406
-msgid "Finish"
-msgstr "Lopeta"
+#: inc/profile.class.php:43 inc/clientinjection.class.php:214
+#: inc/menu.class.php:56 inc/menu.class.php:57 inc/menu.class.php:61
+msgid "Injection of the file"
+msgstr "Tiedoston tuonti"
 
 #: inc/model.class.php:384 inc/model.class.php:670
 msgid "Allow lines creation"
@@ -263,14 +168,6 @@ msgstr "Salli nykyisten kenttien päivittäminen"
 msgctxt "button"
 msgid "Validate the model"
 msgstr "Vahvista malli"
-
-#: inc/model.class.php:772 inc/dropdown.class.php:88
-msgid "Mappings"
-msgstr "Linkitykset"
-
-#: inc/model.class.php:775 inc/dropdown.class.php:90
-msgid "Additional Information"
-msgstr "Lisätiedot"
 
 #: inc/model.class.php:803
 msgid "Load this file"
@@ -339,6 +236,10 @@ msgstr "Tiedostoon"
 msgid "From the model"
 msgstr "Mallista"
 
+#: inc/model.class.php:1371 inc/commoninjectionlib.class.php:1957
+msgid "Undetermined"
+msgstr "Määrittelemätön"
+
 #: inc/model.class.php:1444 inc/model.class.php:1527
 msgid "Array of successful injections"
 msgstr "Tuonti onnistui"
@@ -371,29 +272,84 @@ msgstr "Tuonti epäonnistui"
 msgid "Data check"
 msgstr "Tietojen tarkistus"
 
-#: inc/injectiontype.class.php:131
-msgid "-------Choose a table-------"
-msgstr "-------Valitse taulukko-------"
+#: inc/clientinjection.class.php:88
+msgid "Use an existing model"
+msgstr "Käytä olemassa olevaa mallia"
 
-#: inc/injectiontype.class.php:192
-msgid "-------Choose a field-------"
-msgstr "-------Valitse kenttä-------"
+#: inc/clientinjection.class.php:96
+msgid "No model currently available"
+msgstr "Ei saatavilla olevaa mallia"
 
-#: inc/networkequipmentinjection.class.php:72
-msgid "Number of ports"
-msgstr "Porttien lukumäärä"
+#: inc/clientinjection.class.php:105
+msgid "You can start the model creation by hitting the button"
+msgstr "Voit aloittaa mallin luomisen napsauttamalla painiketta"
 
-#: inc/mapping.class.php:123
-msgid "Header of the file"
-msgstr "Tiedoston otsikko"
+#: inc/clientinjection.class.php:156 inc/info.class.php:247
+msgid "Choose a file"
+msgstr "Valitse tiedosto"
 
-#: inc/mapping.class.php:124 inc/info.class.php:84 inc/info.class.php:141
+#: inc/clientinjection.class.php:162
+msgid "File encoding"
+msgstr "Tiedoston koodaus"
+
+#: inc/clientinjection.class.php:170
+msgid "Warning : existing mapped column will be overridden"
+msgstr ""
+
+#: inc/clientinjection.class.php:173
+msgid ""
+"Watch out, you're about to inject data into GLPI. Are you sure you want to "
+"do it ?"
+msgstr "Huomio! Olet tuomassa tietoja GLPI:hen. Haluatko varmasti tehdä sen?"
+
+#: inc/clientinjection.class.php:180
+msgid "Launch the import"
+msgstr "Käynnistä tuonti"
+
+#: inc/clientinjection.class.php:210
+msgid "Import progress"
+msgstr "Tuonnin edistyminen"
+
+#: inc/clientinjection.class.php:280
+#, php-format
+msgid "Injection of the file... %d%%"
+msgstr "Tiedostoa käsitellään... %d %%"
+
+#: inc/clientinjection.class.php:297
+msgid "Injection finished"
+msgstr "Tuonti suoritettu loppuun"
+
+#: inc/clientinjection.class.php:370
+msgid "Injection's results"
+msgstr "Tuonnin tulokset"
+
+#: inc/clientinjection.class.php:375
+msgid "Injection successful"
+msgstr "Tuonti onnistui"
+
+#: inc/clientinjection.class.php:378
+msgid "Injection encounters errors"
+msgstr "Tuonti sisälsi virheitä"
+
+#: inc/clientinjection.class.php:387
+msgid "See the log"
+msgstr "Katso loki"
+
+#: inc/clientinjection.class.php:393
+msgid "Export rapport in PDF"
+msgstr "Vie raportti PDF-muodossa"
+
+#: inc/clientinjection.class.php:399
+msgid "Export the log"
+msgstr "Vie loki"
+
+#: inc/clientinjection.class.php:407
+msgid "Finish"
+msgstr "Lopeta"
+
+#: inc/info.class.php:84 inc/info.class.php:141 inc/mapping.class.php:124
 msgid "Tables"
 msgstr "Taulukot"
-
-#: inc/mapping.class.php:126
-msgid "Link field"
-msgstr "Linkkikenttä"
 
 #: inc/info.class.php:86 inc/info.class.php:143
 msgid "Mandatory information"
@@ -411,45 +367,25 @@ msgstr "Täydentävät tiedot"
 msgid "Download file sample"
 msgstr "Lataa näytetiedosto"
 
-#: inc/dropdown.class.php:37
-msgid "dd-mm-yyyy"
-msgstr "pp-kk-vvvv"
+#: inc/webservice.class.php:78
+msgid "Model unknown"
+msgstr "Malli tuntematon"
 
-#: inc/dropdown.class.php:39
-msgid "mm-dd-yyyy"
-msgstr "kk-pp-vvvv"
+#: inc/webservice.class.php:86 inc/webservice.class.php:95
+msgid "You cannot access this model"
+msgstr "Et voi käyttää tätä mallia"
 
-#: inc/dropdown.class.php:41
-msgid "yyyy-mm-dd"
-msgstr "vvvv-kk-pp"
+#: inc/webservice.class.php:115
+msgid "Entity unknown"
+msgstr "Tuntematon yksikkö"
 
-#: inc/dropdown.class.php:60
-msgid "1 234.56"
-msgstr "1 234.56"
+#: inc/webservice.class.php:123
+msgid "You cannot access this entity"
+msgstr "Ei pääsyä tähän yksikköön"
 
-#: inc/dropdown.class.php:62
-msgid "1 234,56"
-msgstr "1 234,56"
-
-#: inc/dropdown.class.php:64
-msgid "1,234.56"
-msgstr "1,234.56"
-
-#: inc/dropdown.class.php:94
-msgid "Model available for use"
-msgstr "Malli on käytettävissä"
-
-#: inc/dropdown.class.php:119
-msgid "Automatic detection"
-msgstr "Automaattinen tunnistus"
-
-#: inc/dropdown.class.php:122
-msgid "UTF-8"
-msgstr "UTF-8"
-
-#: inc/dropdown.class.php:123
-msgid "ISO8859-1"
-msgstr "ISO8859-1"
+#: inc/computerinjection.class.php:72
+msgid "Antivirus name"
+msgstr ""
 
 #: inc/modelcsv.class.php:160
 msgid "Specific file format options"
@@ -463,6 +399,74 @@ msgstr "Otsikko on olemassa"
 msgid "File delimitor"
 msgstr "Tietojen erotinmerkki"
 
+#: inc/networkequipmentinjection.class.php:72
+msgid "Number of ports"
+msgstr "Porttien lukumäärä"
+
+#: inc/mapping.class.php:123
+msgid "Header of the file"
+msgstr "Tiedoston otsikko"
+
+#: inc/mapping.class.php:126
+msgid "Link field"
+msgstr "Linkkikenttä"
+
 #: inc/networkportinjection.class.php:89
 msgid "Port MAC address"
 msgstr "Portin MAC-osoite"
+
+#: inc/injectiontype.class.php:131
+msgid "-------Choose a table-------"
+msgstr "-------Valitse taulukko-------"
+
+#: inc/injectiontype.class.php:193
+msgid "-------Choose a field-------"
+msgstr "-------Valitse kenttä-------"
+
+#: inc/commoninjectionlib.class.php:1874
+msgid "Add from CSV file"
+msgstr "Lisää CSV-tiedostosta"
+
+#: inc/commoninjectionlib.class.php:1876
+msgid "Update from CSV file"
+msgstr "Päivitä CSV-tiedostosta"
+
+#: inc/commoninjectionlib.class.php:1917
+msgid "No right to import data"
+msgstr "Ei oikeutta tuoda tietoja"
+
+#: inc/commoninjectionlib.class.php:1921
+msgid "No right to update data"
+msgstr "Ei oikeutta päivittää tietoja"
+
+#: inc/commoninjectionlib.class.php:1925
+msgid "Size of the inserted value is to expansive"
+msgstr "Syötetyn arvo koko laajeneva"
+
+#: inc/commoninjectionlib.class.php:1929
+msgid "Import not allowed"
+msgstr "Tuonti ei sallittu"
+
+#: inc/commoninjectionlib.class.php:1933
+msgid "Import failed"
+msgstr "Tuonti epäonnistui"
+
+#: inc/commoninjectionlib.class.php:1937
+msgid "At least one mandatory field is not present"
+msgstr "Ainakin yksi pakollinen kenttä puuttuu"
+
+#: inc/commoninjectionlib.class.php:1941
+msgid "Data to insert are correct"
+msgstr "Syötetyt tiedot ovat oikeita"
+
+#: inc/commoninjectionlib.class.php:1945
+msgid "One data is not the good type"
+msgstr "Yksi tieto ei ole oikeaa tyyppiä"
+
+#: inc/commoninjectionlib.class.php:1949
+msgid "Warning"
+msgstr "Varoitus"
+
+#: inc/commoninjectionlib.class.php:1953
+msgid "Data not found"
+msgstr "Tietoja ei löytynyt"
