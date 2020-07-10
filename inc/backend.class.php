@@ -33,11 +33,11 @@
 abstract class PluginDatainjectionBackend
 {
 
-   private $file = "";
-   private $delimiter;
-   private $encoding;
-   private $errmsg;
-   private $numberOfLines = 0;
+   protected $file = "";
+   protected $delimiter = "";
+   protected $encoding;
+   protected $errmsg;
+   protected $numberOfLines = 0;
 
     const ENCODING_ISO8859_1 = 0;
     const ENCODING_UFT8      = 1;

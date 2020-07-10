@@ -89,11 +89,11 @@ class PluginDatainjectionDeviceHardDriveInjection extends DeviceHardDrive
 
          if (!countElementsInTable(
              $item->getTable(),
-            [
-               $foreign   => $values[get_parent_class($this)]['id'],
-               'itemtype' => 'Computer',
-               'items_id' => $values['Computer']['id'],
-            ]
+             [
+                $foreign   => $values[get_parent_class($this)]['id'],
+                'itemtype' => 'Computer',
+                'items_id' => $values['Computer']['id'],
+             ]
          )) {
             $tmp[$foreign]   = $values[get_parent_class($this)]['id'];
             $tmp['items_id'] = $values['Computer']['id'];

@@ -114,7 +114,7 @@ class PluginDatainjectionProfile extends Profile
     */
    static function createFirstAccess($profiles_id) {
 
-      include_once GLPI_ROOT."/plugins/datainjection/inc/profile.class.php";
+      include_once Plugin::getPhpDir('datainjection')."/inc/profile.class.php";
       foreach (self::getAllRights() as $right) {
          self::addDefaultProfileInfos(
              $profiles_id,
@@ -130,7 +130,7 @@ class PluginDatainjectionProfile extends Profile
          return true;
       }
 
-      $profiles = getAllDatasFromTable('glpi_plugin_datainjection_profiles');
+      $profiles = getAllDataFromTable('glpi_plugin_datainjection_profiles');
       foreach ($profiles as $id => $profile) {
          $query = "SELECT `id` FROM `glpi_profiles` WHERE `name`='".$profile['name']."'";
          $result = $DB->query($query);

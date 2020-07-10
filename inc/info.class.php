@@ -227,7 +227,7 @@ class PluginDatainjectionInfo extends CommonDBTM
    **/
    static function showAdditionalInformationsForm(PluginDatainjectionModel $model) {
 
-      $infos = getAllDatasFromTable(
+      $infos = getAllDataFromTable(
           'glpi_plugin_datainjection_infos',
           ['models_id' => $model->getField('id')]
       );

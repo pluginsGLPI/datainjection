@@ -34,7 +34,7 @@ if (!extension_loaded("xmlrpc")) {
 
 chdir(dirname($_SERVER["SCRIPT_FILENAME"]));
 chdir("../../..");
-$url = "/".basename(getcwd())."/plugins/webservices/xmlrpc.php";
+$url = "/".basename(getcwd()).Plugin::getWebDir('webservices', false)."/xmlrpc.php";
 
 $args = [];
 if ($_SERVER['argc'] > 1) {

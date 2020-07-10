@@ -128,7 +128,7 @@ class PluginDatainjectionEntityInjection extends Entity
          $tmp['entities_id'] = $parent;
 
          //Does the entity alread exists ?
-         $results = getAllDatasFromTable(
+         $results = getAllDataFromTable(
              'glpi_entities',
              ['name' => $name, 'entities_id' => $parent]
          );
@@ -155,7 +155,7 @@ class PluginDatainjectionEntityInjection extends Entity
       if (!isset($values['completename'])) {
          return false;
       }
-      $results = getAllDatasFromTable(
+      $results = getAllDataFromTable(
           'glpi_entities',
           ['completename' => $values['completename']]
       );
