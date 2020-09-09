@@ -65,7 +65,7 @@ class PluginDatainjectionEntityInjection extends Entity
 
       //Remove some options because some fields cannot be imported
       $blacklist     = PluginDatainjectionCommonInjectionLib::getBlacklistedOptions(get_parent_class($this));
-      $notimportable = [14, 26, 27, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41,
+      $notimportable = [26, 27, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41,
                            42, 43, 44, 45, 47, 48, 49,50, 51, 52, 53, 54, 55, 91, 92, 93];
 
       $options['ignore_fields'] = array_merge($blacklist, $notimportable);
@@ -84,88 +84,6 @@ class PluginDatainjectionEntityInjection extends Entity
       $lib = new PluginDatainjectionCommonInjectionLib($this, $values, $options);
       $lib->processAddOrUpdate();
       return $lib->getInjectionResults();
-   }
-
-
-    /**
-    * @param $input     array
-    * @param $add                (true by default)
-    * @param $rights    array
-   **/
-   function customimport($input = [], $add = true, $rights = []) {
-
-      if (!isset($input['completename']) || empty($input['completename'])) {
-         return -1;
-      }
-
-      // Import a full tree from completename
-      $names  = explode('>', $input['completename']);
-      $fk     = $this->getForeignKeyField();
-      $i      = count($names);
-      $parent = 0;
-      $entity = new Entity();
-      $level  = 0;
-
-      foreach ($names as $name) {
-         $name = trim($name);
-         $i--;
-         $level++;
-         if (empty($name)) {
-            // Skip empty name (completename starting/endind with >, double >, ...)
-            continue;
-         }
-         $tmp['name'] = $name;
-
-         if (!$i) {
-            // Other fields (comment, ...) only for last node of the tree
-            foreach ($input as $key => $val) {
-               if ($key != 'completename') {
-                  $tmp[$key] = $val;
-               }
-            }
-         }
-         $tmp['level']       = $level;
-         $tmp['entities_id'] = $parent;
-
-         //Does the entity alread exists ?
-         $results = getAllDataFromTable(
-             'glpi_entities',
-             ['name' => $name, 'entities_id' => $parent]
-         );
-         //Entity doesn't exists => create it
-         if (empty($results)) {
-             $parent = CommonDropdown::import($tmp);
-         } else {
-             //Entity already exists, use the ID as parent
-             $ent    = array_pop($results);
-             $parent = $ent['id'];
-         }
-      }
-      return $parent;
-   }
-
-
-    /**
-    * @param $injectionClass
-    * @param $values
-    * @param $options
-   **/
-   function customDataAlreadyInDB($injectionClass, $values, $options) {
-
-      if (!isset($values['completename'])) {
-         return false;
-      }
-      $results = getAllDataFromTable(
-          'glpi_entities',
-          ['completename' => $values['completename']]
-      );
-
-      if (empty($results)) {
-          return false;
-      }
-
-       $ent    = array_pop($results);
-       return $ent['id'];
    }
 
 }
