@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-07-10 10:45+0000\n"
+"POT-Creation-Date: 2020-10-27 14:24+0000\n"
 "PO-Revision-Date: 2018-06-21 12:57+0000\n"
 "Last-Translator: Cédric Anne, 2018\n"
 "Language-Team: Finnish (Finland) (https://www.transifex.com/teclib/teams/28042/fi_FI/)\n"
@@ -236,7 +236,7 @@ msgstr "Tiedostoon"
 msgid "From the model"
 msgstr "Mallista"
 
-#: inc/model.class.php:1371 inc/commoninjectionlib.class.php:1957
+#: inc/model.class.php:1371 inc/commoninjectionlib.class.php:1959
 msgid "Undetermined"
 msgstr "Määrittelemätön"
 
@@ -423,50 +423,50 @@ msgstr "-------Valitse taulukko-------"
 msgid "-------Choose a field-------"
 msgstr "-------Valitse kenttä-------"
 
-#: inc/commoninjectionlib.class.php:1874
+#: inc/commoninjectionlib.class.php:1876
 msgid "Add from CSV file"
 msgstr "Lisää CSV-tiedostosta"
 
-#: inc/commoninjectionlib.class.php:1876
+#: inc/commoninjectionlib.class.php:1878
 msgid "Update from CSV file"
 msgstr "Päivitä CSV-tiedostosta"
 
-#: inc/commoninjectionlib.class.php:1917
+#: inc/commoninjectionlib.class.php:1919
 msgid "No right to import data"
 msgstr "Ei oikeutta tuoda tietoja"
 
-#: inc/commoninjectionlib.class.php:1921
+#: inc/commoninjectionlib.class.php:1923
 msgid "No right to update data"
 msgstr "Ei oikeutta päivittää tietoja"
 
-#: inc/commoninjectionlib.class.php:1925
+#: inc/commoninjectionlib.class.php:1927
 msgid "Size of the inserted value is to expansive"
 msgstr "Syötetyn arvo koko laajeneva"
 
-#: inc/commoninjectionlib.class.php:1929
+#: inc/commoninjectionlib.class.php:1931
 msgid "Import not allowed"
 msgstr "Tuonti ei sallittu"
 
-#: inc/commoninjectionlib.class.php:1933
+#: inc/commoninjectionlib.class.php:1935
 msgid "Import failed"
 msgstr "Tuonti epäonnistui"
 
-#: inc/commoninjectionlib.class.php:1937
+#: inc/commoninjectionlib.class.php:1939
 msgid "At least one mandatory field is not present"
 msgstr "Ainakin yksi pakollinen kenttä puuttuu"
 
-#: inc/commoninjectionlib.class.php:1941
+#: inc/commoninjectionlib.class.php:1943
 msgid "Data to insert are correct"
 msgstr "Syötetyt tiedot ovat oikeita"
 
-#: inc/commoninjectionlib.class.php:1945
+#: inc/commoninjectionlib.class.php:1947
 msgid "One data is not the good type"
 msgstr "Yksi tieto ei ole oikeaa tyyppiä"
 
-#: inc/commoninjectionlib.class.php:1949
+#: inc/commoninjectionlib.class.php:1951
 msgid "Warning"
 msgstr "Varoitus"
 
-#: inc/commoninjectionlib.class.php:1953
+#: inc/commoninjectionlib.class.php:1955
 msgid "Data not found"
 msgstr "Tietoja ei löytynyt"

@@ -502,7 +502,12 @@ class PluginDatainjectionCommonInjectionLib
          foreach ($data as $field => $value) {
             if (!in_array($field, $blacklisted_fields)) {
                $searchOption = self::findSearchOption($searchOptions, $field);
-               $this->getFieldValue($injectionClass, $itemtype, $searchOption, $field, $value);
+               //searchoption relation type is already manage by manageRelations()
+               //skip it
+               if ((isset($searchOption['displaytype']) && $searchOption['displaytype'] != 'relation')
+                  || !isset($searchOption['displaytype'])) {
+                     $this->getFieldValue($injectionClass, $itemtype, $searchOption, $field, $value);
+               }
             }
          }
 
@@ -1627,9 +1632,6 @@ class PluginDatainjectionCommonInjectionLib
                    null, $option['relationclass'], $option, $option['linkfield'],
                    $value, true
                );
-
-               //Remove the old option
-               $this->unsetValue($itemtype, $option['linkfield']);
             }
          }
       }
