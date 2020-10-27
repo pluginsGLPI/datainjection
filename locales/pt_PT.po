@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-07-10 10:45+0000\n"
+"POT-Creation-Date: 2020-10-27 14:24+0000\n"
 "PO-Revision-Date: 2018-06-21 12:57+0000\n"
 "Last-Translator: Rui Melo <viper5000pt@gmail.com>, 2019\n"
 "Language-Team: Portuguese (Portugal) (https://www.transifex.com/teclib/teams/28042/pt_PT/)\n"
@@ -237,7 +237,7 @@ msgstr "Para o arquivo"
 msgid "From the model"
 msgstr "Partir do modelo"
 
-#: inc/model.class.php:1371 inc/commoninjectionlib.class.php:1957
+#: inc/model.class.php:1371 inc/commoninjectionlib.class.php:1959
 msgid "Undetermined"
 msgstr "Indeterminado"
 
@@ -426,50 +426,50 @@ msgstr "———Escolha uma mesa———"
 msgid "-------Choose a field-------"
 msgstr "———Escolha um campo———"
 
-#: inc/commoninjectionlib.class.php:1874
+#: inc/commoninjectionlib.class.php:1876
 msgid "Add from CSV file"
 msgstr "Adicionar a partir do ficheiro CSV"
 
-#: inc/commoninjectionlib.class.php:1876
+#: inc/commoninjectionlib.class.php:1878
 msgid "Update from CSV file"
 msgstr "Atualizara partir do ficheiro CSV"
 
-#: inc/commoninjectionlib.class.php:1917
+#: inc/commoninjectionlib.class.php:1919
 msgid "No right to import data"
 msgstr "Não há direito de importar dados"
 
-#: inc/commoninjectionlib.class.php:1921
+#: inc/commoninjectionlib.class.php:1923
 msgid "No right to update data"
 msgstr "Não há direito de atualizar dados"
 
-#: inc/commoninjectionlib.class.php:1925
+#: inc/commoninjectionlib.class.php:1927
 msgid "Size of the inserted value is to expansive"
 msgstr "Tamanho do valor inserido é a expansivo"
 
-#: inc/commoninjectionlib.class.php:1929
+#: inc/commoninjectionlib.class.php:1931
 msgid "Import not allowed"
 msgstr "Importação não permitida"
 
-#: inc/commoninjectionlib.class.php:1933
+#: inc/commoninjectionlib.class.php:1935
 msgid "Import failed"
 msgstr "Importação falhada"
 
-#: inc/commoninjectionlib.class.php:1937
+#: inc/commoninjectionlib.class.php:1939
 msgid "At least one mandatory field is not present"
 msgstr "Pelo menos um campo obrigatório não está presente"
 
-#: inc/commoninjectionlib.class.php:1941
+#: inc/commoninjectionlib.class.php:1943
 msgid "Data to insert are correct"
 msgstr "Dados para inserir estão corretos"
 
-#: inc/commoninjectionlib.class.php:1945
+#: inc/commoninjectionlib.class.php:1947
 msgid "One data is not the good type"
 msgstr "Dados não são do tipo bom"
 
-#: inc/commoninjectionlib.class.php:1949
+#: inc/commoninjectionlib.class.php:1951
 msgid "Warning"
 msgstr "Aviso"
 
-#: inc/commoninjectionlib.class.php:1953
+#: inc/commoninjectionlib.class.php:1955
 msgid "Data not found"
 msgstr "Dados não encontrados"

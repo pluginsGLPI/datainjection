@@ -5,16 +5,16 @@
 # 
 # Translators:
 # Cédric Anne, 2018
-# Kaya Zeren <kayazeren@gmail.com>, 2019
+# Kaya Zeren <kayazeren@gmail.com>, 2020
 # 
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-07-10 10:45+0000\n"
+"POT-Creation-Date: 2020-10-27 14:24+0000\n"
 "PO-Revision-Date: 2018-06-21 12:57+0000\n"
-"Last-Translator: Kaya Zeren <kayazeren@gmail.com>, 2019\n"
+"Last-Translator: Kaya Zeren <kayazeren@gmail.com>, 2020\n"
 "Language-Team: Turkish (Turkey) (https://www.transifex.com/teclib/teams/28042/tr_TR/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -237,7 +237,7 @@ msgstr "Dosya içine"
 msgid "From the model"
 msgstr "Modelden"
 
-#: inc/model.class.php:1371 inc/commoninjectionlib.class.php:1957
+#: inc/model.class.php:1371 inc/commoninjectionlib.class.php:1959
 msgid "Undetermined"
 msgstr "Belirlenmemiş"
 
@@ -388,7 +388,7 @@ msgstr "Bu varlığa erişme izniniz yok"
 
 #: inc/computerinjection.class.php:72
 msgid "Antivirus name"
-msgstr ""
+msgstr "Antivirus adı"
 
 #: inc/modelcsv.class.php:160
 msgid "Specific file format options"
@@ -426,50 +426,50 @@ msgstr "-------Bir tablo seçin-------"
 msgid "-------Choose a field-------"
 msgstr "-------Bir alan seçin-------"
 
-#: inc/commoninjectionlib.class.php:1874
+#: inc/commoninjectionlib.class.php:1876
 msgid "Add from CSV file"
 msgstr "CSV dosyasından ekle"
 
-#: inc/commoninjectionlib.class.php:1876
+#: inc/commoninjectionlib.class.php:1878
 msgid "Update from CSV file"
 msgstr "CSV dosyasından güncelle"
 
-#: inc/commoninjectionlib.class.php:1917
+#: inc/commoninjectionlib.class.php:1919
 msgid "No right to import data"
 msgstr "Veri alma izni yok"
 
-#: inc/commoninjectionlib.class.php:1921
+#: inc/commoninjectionlib.class.php:1923
 msgid "No right to update data"
 msgstr "Veri güncelleme izni yok"
 
-#: inc/commoninjectionlib.class.php:1925
+#: inc/commoninjectionlib.class.php:1927
 msgid "Size of the inserted value is to expansive"
 msgstr "Eklenen değerin boyutu çok genişleyebilir"
 
-#: inc/commoninjectionlib.class.php:1929
+#: inc/commoninjectionlib.class.php:1931
 msgid "Import not allowed"
 msgstr "Alma işlemine izin verilmiyor"
 
-#: inc/commoninjectionlib.class.php:1933
+#: inc/commoninjectionlib.class.php:1935
 msgid "Import failed"
 msgstr "Alma işlemi yapılamadı"
 
-#: inc/commoninjectionlib.class.php:1937
+#: inc/commoninjectionlib.class.php:1939
 msgid "At least one mandatory field is not present"
 msgstr "En az bir zorunlu alan bulunamadı"
 
-#: inc/commoninjectionlib.class.php:1941
+#: inc/commoninjectionlib.class.php:1943
 msgid "Data to insert are correct"
 msgstr "Eklenecek veri doğru"
 
-#: inc/commoninjectionlib.class.php:1945
+#: inc/commoninjectionlib.class.php:1947
 msgid "One data is not the good type"
 msgstr "Bir verinin türü iyi değil"
 
-#: inc/commoninjectionlib.class.php:1949
+#: inc/commoninjectionlib.class.php:1951
 msgid "Warning"
 msgstr "Uyarı"
 
-#: inc/commoninjectionlib.class.php:1953
+#: inc/commoninjectionlib.class.php:1955
 msgid "Data not found"
 msgstr "Veri bulunamadı"
