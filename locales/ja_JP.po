@@ -1,0 +1,466 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+# 
+# Translators:
+# AOZO, 2020
+# 
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2020-10-27 14:24+0000\n"
+"PO-Revision-Date: 2018-06-21 12:57+0000\n"
+"Last-Translator: AOZO, 2020\n"
+"Language-Team: Japanese (Japan) (https://www.transifex.com/teclib/teams/28042/ja_JP/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: ja_JP\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+#: hook.php:124 hook.php:141 setup.php:63
+msgid "Can't create folder"
+msgstr "フォルダを作成できません"
+
+#: front/mapping.form.php:60
+msgid ""
+"One link field must be selected: it will be used to check if data already "
+"exists"
+msgstr "１つ以上のリンクフィールドを選択してください：同じデータか確認するために使用します"
+
+#: front/mapping.form.php:76
+msgid ""
+"This step allows you to add informations not present in the file. You'll be "
+"asked for theses informations while using the model."
+msgstr "このタブでは、ファイルに存在しない追加情報を定義できます。追加情報はインジェクションの途中で入力が求められます。"
+
+#: front/clientinjection.form.php:34 inc/profile.class.php:67
+#: inc/menu.class.php:38 setup.php:94
+msgid "Data injection"
+msgstr "インジェクション"
+
+#: front/clientinjection.form.php:50
+msgid "One mandatory field is not filled"
+msgstr "1つの必須フィールドが入力されていません"
+
+#: front/clientinjection.form.php:83 front/model.form.php:88
+msgid "The file could not be found"
+msgstr "ファイルが見つかりませんでした"
+
+#: front/popup.php:37 inc/mapping.class.php:117
+msgid "See the file"
+msgstr "ファイルを見る"
+
+#: front/popup.php:43 inc/model.class.php:1518
+msgid "Data injection report"
+msgstr "インジェクション レポート"
+
+#: inc/dropdown.class.php:37
+msgid "dd-mm-yyyy"
+msgstr "dd-mm-yyyy"
+
+#: inc/dropdown.class.php:39
+msgid "mm-dd-yyyy"
+msgstr "mm-dd-yyyy"
+
+#: inc/dropdown.class.php:41
+msgid "yyyy-mm-dd"
+msgstr "yyyy-mm-dd"
+
+#: inc/dropdown.class.php:60
+msgid "1 234.56"
+msgstr "1 234.56"
+
+#: inc/dropdown.class.php:62
+msgid "1 234,56"
+msgstr "1 234.56"
+
+#: inc/dropdown.class.php:64
+msgid "1,234.56"
+msgstr "1,234.56"
+
+#: inc/dropdown.class.php:87 inc/model.class.php:770
+#: inc/clientinjection.class.php:153
+msgid "File to inject"
+msgstr "インジェクションするファイル"
+
+#: inc/dropdown.class.php:88 inc/model.class.php:772
+msgid "Mappings"
+msgstr "マッピング"
+
+#: inc/dropdown.class.php:90 inc/model.class.php:775
+msgid "Additional Information"
+msgstr "追加情報"
+
+#: inc/dropdown.class.php:94
+msgid "Model available for use"
+msgstr "モデルは使用可能です"
+
+#: inc/dropdown.class.php:119
+msgid "Automatic detection"
+msgstr "自動検出"
+
+#: inc/dropdown.class.php:122
+msgid "UTF-8"
+msgstr "UTF-8"
+
+#: inc/dropdown.class.php:123
+msgid "ISO8859-1"
+msgstr "ISO8859-1"
+
+#: inc/profile.class.php:40
+msgid "Model management"
+msgstr "モデル管理"
+
+#: inc/profile.class.php:43 inc/clientinjection.class.php:214
+#: inc/menu.class.php:56 inc/menu.class.php:57 inc/menu.class.php:61
+msgid "Injection of the file"
+msgstr "ファイルをインジェクション"
+
+#: inc/model.class.php:384 inc/model.class.php:670
+msgid "Allow lines creation"
+msgstr "行を追加する"
+
+#: inc/model.class.php:393 inc/model.class.php:673
+msgid "Allow lines update"
+msgstr "行を更新する"
+
+#: inc/model.class.php:402 inc/model.class.php:658
+msgid "Type of data to import"
+msgstr "インポートタイプ"
+
+#: inc/model.class.php:412 inc/model.class.php:682
+msgid "Allow creation of dropdowns"
+msgstr "ドロップダウンを作成する"
+
+#: inc/model.class.php:420 inc/model.class.php:686
+msgid "Dates format"
+msgstr "日付形式"
+
+#: inc/model.class.php:429 inc/model.class.php:699
+msgid "Float format"
+msgstr "小数点形式"
+
+#: inc/model.class.php:439 inc/model.class.php:708
+msgid "Try to establish network connection is possible"
+msgstr "ネットワーク接続の登録を試みる"
+
+#: inc/model.class.php:449 inc/model.class.php:712
+msgid "Port unicity criteria"
+msgstr "ポートユニティ基準"
+
+#: inc/model.class.php:678
+msgid "Advanced options"
+msgstr "高度なオプション"
+
+#: inc/model.class.php:695
+msgid "Allow update of existing fields"
+msgstr "フィールドの値を更新する"
+
+#: inc/model.class.php:738
+msgctxt "button"
+msgid "Validate the model"
+msgstr "モデルを検証する"
+
+#: inc/model.class.php:803
+msgid "Load this file"
+msgstr "このファイルをロード"
+
+#: inc/model.class.php:882
+msgid "Please enter a name for the model"
+msgstr "モデルの名前を入力してください"
+
+#: inc/model.class.php:891
+msgid "Your model should allow import and/or update of data"
+msgstr "モデルはデータの追加/更新を許可する必要があります"
+
+#: inc/model.class.php:910
+msgid "You are not the initial creator of this model"
+msgstr "あなたはこのモデルの作成者ではありません"
+
+#: inc/model.class.php:973
+#, php-format
+msgid "Impossible to copy the file in %s"
+msgstr "%s でファイルをコピーできない"
+
+#: inc/model.class.php:981
+msgid "File format is wrong"
+msgstr "ファイル形式が間違っています"
+
+#: inc/model.class.php:982
+msgid "Extension csv required"
+msgstr "拡張csvが必要"
+
+#: inc/model.class.php:1059
+msgid "Not data to import"
+msgstr "データがありません"
+
+#: inc/model.class.php:1119
+msgid "The file is ok."
+msgstr "ファイルに問題ありません。"
+
+#: inc/model.class.php:1144
+msgid "The number of columns of the file is incorrect."
+msgstr "ファイルの列数が間違っています。"
+
+#: inc/model.class.php:1146
+#, php-format
+msgid "%d awaited column"
+msgid_plural "%d awaited columns"
+msgstr[0] "%d 列必要です　"
+
+#: inc/model.class.php:1151
+#, php-format
+msgid "%d found column"
+msgid_plural "%d found columns"
+msgstr[0] "%d 列あります"
+
+#: inc/model.class.php:1191
+msgid "At least one column is incorrect"
+msgstr "少なくとも1つの列が正しくありません"
+
+#: inc/model.class.php:1199
+msgid "Into the file"
+msgstr "ファイルへ "
+
+#: inc/model.class.php:1204
+msgid "From the model"
+msgstr "モデルから"
+
+#: inc/model.class.php:1371 inc/commoninjectionlib.class.php:1959
+msgid "Undetermined"
+msgstr "未定"
+
+#: inc/model.class.php:1444 inc/model.class.php:1527
+msgid "Array of successful injections"
+msgstr "一連のインジェクションが成功"
+
+#: inc/model.class.php:1451 inc/model.class.php:1481 inc/model.class.php:1530
+#: inc/model.class.php:1550
+msgid "Line"
+msgstr "行"
+
+#: inc/model.class.php:1452 inc/model.class.php:1483 inc/model.class.php:1531
+#: inc/model.class.php:1552
+msgid "Data Import"
+msgstr "データのインポート"
+
+#: inc/model.class.php:1453 inc/model.class.php:1484 inc/model.class.php:1532
+#: inc/model.class.php:1553
+msgid "Injection type"
+msgstr "インジェクション タイプ"
+
+#: inc/model.class.php:1454 inc/model.class.php:1485 inc/model.class.php:1533
+#: inc/model.class.php:1554
+msgid "Object Identifier"
+msgstr "オブジェクト識別子"
+
+#: inc/model.class.php:1474 inc/model.class.php:1547
+msgid "Array of unsuccessful injections"
+msgstr "一連のインジェクションが失敗"
+
+#: inc/model.class.php:1482 inc/model.class.php:1551 inc/model.class.php:1568
+msgid "Data check"
+msgstr "データチェック"
+
+#: inc/clientinjection.class.php:88
+msgid "Use an existing model"
+msgstr "モデルの選択"
+
+#: inc/clientinjection.class.php:96
+msgid "No model currently available"
+msgstr "利用可能なモデルはありません"
+
+#: inc/clientinjection.class.php:105
+msgid "You can start the model creation by hitting the button"
+msgstr "ボタンを押すとモデルの作成を開始できます"
+
+#: inc/clientinjection.class.php:156 inc/info.class.php:247
+msgid "Choose a file"
+msgstr "ファイルを選択"
+
+#: inc/clientinjection.class.php:162
+msgid "File encoding"
+msgstr "文字コード"
+
+#: inc/clientinjection.class.php:170
+msgid "Warning : existing mapped column will be overridden"
+msgstr "警告：既存のマップされた列は上書きされます"
+
+#: inc/clientinjection.class.php:173
+msgid ""
+"Watch out, you're about to inject data into GLPI. Are you sure you want to "
+"do it ?"
+msgstr "GLPIにデータをインジェクションします。 実行してもよろしいですか？"
+
+#: inc/clientinjection.class.php:180
+msgid "Launch the import"
+msgstr "インジェクション開始"
+
+#: inc/clientinjection.class.php:210
+msgid "Import progress"
+msgstr "インジェクション状況"
+
+#: inc/clientinjection.class.php:280
+#, php-format
+msgid "Injection of the file... %d%%"
+msgstr "ファイルのインジェクション... %d%%"
+
+#: inc/clientinjection.class.php:297
+msgid "Injection finished"
+msgstr "インジェクション完了"
+
+#: inc/clientinjection.class.php:370
+msgid "Injection's results"
+msgstr "インジェクションの結果"
+
+#: inc/clientinjection.class.php:375
+msgid "Injection successful"
+msgstr "インジェクション成功"
+
+#: inc/clientinjection.class.php:378
+msgid "Injection encounters errors"
+msgstr "インジェクションでエラーが発生しました"
+
+#: inc/clientinjection.class.php:387
+msgid "See the log"
+msgstr "ログを見る"
+
+#: inc/clientinjection.class.php:393
+msgid "Export rapport in PDF"
+msgstr "PDFでレポートを表示"
+
+#: inc/clientinjection.class.php:399
+msgid "Export the log"
+msgstr "ログを表示"
+
+#: inc/clientinjection.class.php:407
+msgid "Finish"
+msgstr "完了"
+
+#: inc/info.class.php:84 inc/info.class.php:141 inc/mapping.class.php:124
+msgid "Tables"
+msgstr "テーブル"
+
+#: inc/info.class.php:86 inc/info.class.php:143
+msgid "Mandatory information"
+msgstr "必須情報"
+
+#: inc/info.class.php:142
+msgid "Fields"
+msgstr "フィールド"
+
+#: inc/info.class.php:246
+msgid "Complementary information"
+msgstr "補足情報"
+
+#: inc/info.class.php:256
+msgid "Download file sample"
+msgstr "サンプルファイルをダウンロード"
+
+#: inc/webservice.class.php:78
+msgid "Model unknown"
+msgstr "不明なモデル"
+
+#: inc/webservice.class.php:86 inc/webservice.class.php:95
+msgid "You cannot access this model"
+msgstr "このモデルにアクセスできません"
+
+#: inc/webservice.class.php:115
+msgid "Entity unknown"
+msgstr "不明なエンティティ"
+
+#: inc/webservice.class.php:123
+msgid "You cannot access this entity"
+msgstr "このエンティティにアクセスできません"
+
+#: inc/computerinjection.class.php:72
+msgid "Antivirus name"
+msgstr "ウイルス対策ソフト"
+
+#: inc/modelcsv.class.php:160
+msgid "Specific file format options"
+msgstr "ファイル形式のオプション"
+
+#: inc/modelcsv.class.php:163
+msgid "Header's presence"
+msgstr "ヘッダー有り"
+
+#: inc/modelcsv.class.php:167
+msgid "File delimitor"
+msgstr "列の区切り文字"
+
+#: inc/networkequipmentinjection.class.php:72
+msgid "Number of ports"
+msgstr "ポート数"
+
+#: inc/mapping.class.php:123
+msgid "Header of the file"
+msgstr "ファイルのヘッダー"
+
+#: inc/mapping.class.php:126
+msgid "Link field"
+msgstr "リンクフィールド"
+
+#: inc/networkportinjection.class.php:89
+msgid "Port MAC address"
+msgstr "ポートMACアドレス"
+
+#: inc/injectiontype.class.php:131
+msgid "-------Choose a table-------"
+msgstr "------- テーブルを選択 ---------"
+
+#: inc/injectiontype.class.php:193
+msgid "-------Choose a field-------"
+msgstr "------- フィールドを選択 ---------"
+
+#: inc/commoninjectionlib.class.php:1876
+msgid "Add from CSV file"
+msgstr "CSVファイルから追加"
+
+#: inc/commoninjectionlib.class.php:1878
+msgid "Update from CSV file"
+msgstr "CSVファイルから更新"
+
+#: inc/commoninjectionlib.class.php:1919
+msgid "No right to import data"
+msgstr "インジェクションする権限がありません"
+
+#: inc/commoninjectionlib.class.php:1923
+msgid "No right to update data"
+msgstr "データを更新する権利がありません"
+
+#: inc/commoninjectionlib.class.php:1927
+msgid "Size of the inserted value is to expansive"
+msgstr "挿入された値のサイズを拡張する "
+
+#: inc/commoninjectionlib.class.php:1931
+msgid "Import not allowed"
+msgstr "データの追加は許可されていません"
+
+#: inc/commoninjectionlib.class.php:1935
+msgid "Import failed"
+msgstr "インポートに失敗しました"
+
+#: inc/commoninjectionlib.class.php:1939
+msgid "At least one mandatory field is not present"
+msgstr "少なくとも1つの必須フィールドが存在しません"
+
+#: inc/commoninjectionlib.class.php:1943
+msgid "Data to insert are correct"
+msgstr "挿入するデータは正しい"
+
+#: inc/commoninjectionlib.class.php:1947
+msgid "One data is not the good type"
+msgstr "1つのデータは適切なタイプではありません"
+
+#: inc/commoninjectionlib.class.php:1951
+msgid "Warning"
+msgstr "警告"
+
+#: inc/commoninjectionlib.class.php:1955
+msgid "Data not found"
+msgstr "データが見つかりません"
