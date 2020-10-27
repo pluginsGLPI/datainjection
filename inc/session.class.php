@@ -45,7 +45,7 @@ class PluginDatainjectionSession
       }
       if (in_array($param, ['results', 'error_lines'])) {
          $fic = $_SESSION['datainjection'][$param];
-         return file_get_contents(GLPI_DOC_DIR.'/_tmp/'.$fic);
+         return file_get_contents(GLPI_TMP_DIR.'/'.$fic);
       }
       return $_SESSION['datainjection'][$param];
    }
@@ -63,7 +63,7 @@ class PluginDatainjectionSession
 
       if (in_array($param, ['results', 'error_lines'])) {
          $fic = Session::getLoginUserID().'_'.$param.'_'.microtime(true);
-         file_put_contents(GLPI_DOC_DIR.'/_tmp/'.$fic, $results);
+         file_put_contents(GLPI_TMP_DIR.'/'.$fic, $results);
          $_SESSION['datainjection'][$param] = $fic;
       } else {
          $_SESSION['datainjection'][$param] = $results;
@@ -79,10 +79,10 @@ class PluginDatainjectionSession
    static function removeParams() {
 
       if (isset($_SESSION['datainjection']['results'])) {
-         unlink(GLPI_DOC_DIR.'/_tmp/'.$_SESSION['datainjection']['results']);
+         unlink(GLPI_TMP_DIR.'/'.$_SESSION['datainjection']['results']);
       }
       if (isset($_SESSION['datainjection']['error_lines'])) {
-         unlink(GLPI_DOC_DIR.'/_tmp/'.$_SESSION['datainjection']['error_lines']);
+         unlink(GLPI_TMP_DIR.'/'.$_SESSION['datainjection']['error_lines']);
       }
       unset($_SESSION['datainjection']);
    }
