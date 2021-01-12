@@ -1691,7 +1691,7 @@ class PluginDatainjectionCommonInjectionLib
                //Type is a relation : check it this relation still exists
                //Define the side of the relation to use
 
-               if (method_exists($item, 'relationSide')) {
+               if (method_exists($injectionClass, 'relationSide')) {
                   $side = $injectionClass->relationSide();
                } else {
                   $side = true;
