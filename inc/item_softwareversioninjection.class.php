@@ -32,34 +32,33 @@ if (!defined('GLPI_ROOT')) {
     die("Sorry. You can't access directly to this file");
 }
 
-class PluginDatainjectionComputer_SoftwareLicenseInjection extends Computer_SoftwareLicense
+class PluginDatainjectionItem_SoftwareVersionInjection extends Item_SoftwareVersion
                                                 implements PluginDatainjectionInjectionInterface
 {
 
 
    static function getTypeName($nb = 0) {
-
       return __('Computer');
    }
 
 
    static function getTable($classname = null) {
-
       $parenttype = get_parent_class();
       return $parenttype::getTable();
-
    }
 
 
    function isPrimaryType() {
+      return false;
+   }
 
+   function relationSide() {
       return false;
    }
 
 
    function connectedTo() {
-
-      return ['SoftwareLicense'];
+      return ['Software', 'SoftwareVersion'];
    }
 
 
@@ -117,9 +116,10 @@ class PluginDatainjectionComputer_SoftwareLicenseInjection extends Computer_Soft
 
 
    function addSpecificMandatoryFields() {
-
-      return ['computers_id'        => 1,
-                 'softwarelicenses_id' => 1];
+      return [
+         'computers_id'        => 1,
+         'softwareversions_id' => 1
+      ];
    }
 
 
@@ -127,11 +127,17 @@ class PluginDatainjectionComputer_SoftwareLicenseInjection extends Computer_Soft
     * @param $primary_type
     * @param $values
    **/
-   function addSpecificNeededFields($primary_type, $values) {
 
-      if (isset($values['SoftwareLicense'])) {
-         $fields['softwarelicenses_id'] = $values['SoftwareLicense']['id'];
+   function addSpecificNeededFields($primary_type, $values) {
+      if (isset($values['SoftwareVersion'])) {
+         $fields['softwareversions_id'] = $values['SoftwareVersion']['id'];
       }
+
+      if (isset($values['Item_SoftwareVersion'])) {
+         $fields['itemtype'] = "Computer";
+         $fields['items_id'] = $values['Item_SoftwareVersion']['computers_id'];
+      }
+
       return $fields;
    }
 
