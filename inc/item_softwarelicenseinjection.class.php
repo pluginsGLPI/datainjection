@@ -32,33 +32,34 @@ if (!defined('GLPI_ROOT')) {
     die("Sorry. You can't access directly to this file");
 }
 
-class PluginDatainjectionComputer_SoftwareVersionInjection extends Computer_SoftwareVersion
+class PluginDatainjectionItem_SoftwareLicenseInjection extends Item_SoftwareLicense
                                                 implements PluginDatainjectionInjectionInterface
 {
 
 
    static function getTypeName($nb = 0) {
-
       return __('Computer');
    }
 
 
    static function getTable($classname = null) {
-
       $parenttype = get_parent_class();
       return $parenttype::getTable();
+
    }
 
 
    function isPrimaryType() {
+      return false;
+   }
 
+   function relationSide() {
       return false;
    }
 
 
    function connectedTo() {
-
-      return ['Software', 'SoftwareVersion'];
+      return ['SoftwareLicense', 'Software'];
    }
 
 
@@ -66,7 +67,6 @@ class PluginDatainjectionComputer_SoftwareVersionInjection extends Computer_Soft
     * @see plugins/datainjection/inc/PluginDatainjectionInjectionInterface::getOptions()
    **/
    function getOptions($primary_type = '') {
-
       $tab[110]['table']        = 'glpi_computers';
       $tab[110]['field']        = 'name';
       $tab[110]['linkfield']    = 'name';
@@ -108,7 +108,6 @@ class PluginDatainjectionComputer_SoftwareVersionInjection extends Computer_Soft
     * @see plugins/datainjection/inc/PluginDatainjectionInjectionInterface::addOrUpdateObject()
    **/
    function addOrUpdateObject($values = [], $options = []) {
-
       $lib = new PluginDatainjectionCommonInjectionLib($this, $values, $options);
       $lib->processAddOrUpdate();
       return $lib->getInjectionResults();
@@ -116,9 +115,10 @@ class PluginDatainjectionComputer_SoftwareVersionInjection extends Computer_Soft
 
 
    function addSpecificMandatoryFields() {
-
-      return ['computers_id'        => 1,
-                 'softwareversions_id' => 1];
+      return [
+         'computers_id'        => 1,
+         'softwarelicenses_id' => 1
+      ];
    }
 
 
@@ -126,12 +126,16 @@ class PluginDatainjectionComputer_SoftwareVersionInjection extends Computer_Soft
     * @param $primary_type
     * @param $values
    **/
-
    function addSpecificNeededFields($primary_type, $values) {
-
-      if (isset($values['SoftwareVersion'])) {
-         $fields['softwareversions_id'] = $values['SoftwareVersion']['id'];
+      if (isset($values['SoftwareLicense'])) {
+         $fields['softwarelicenses_id'] = $values['SoftwareLicense']['id'];
       }
+
+      if (isset($values['Item_SoftwareLicense'])) {
+         $fields['itemtype'] = "Computer";
+         $fields['items_id'] = $values['Item_SoftwareLicense']['computers_id'];
+      }
+
       return $fields;
    }
 
