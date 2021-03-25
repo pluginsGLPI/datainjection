@@ -189,6 +189,22 @@ function plugin_datainjection_install() {
          break;
    }
 
+   // WP - Register crontasks DataInjection and DataInjectionAdditional - both disabled.
+   // START
+   // CronTask registers your plugin by the class name and
+   // the 2nd parameter as a static method with ‘cron’ prepended to it.
+   // The 3rd parameter is how often the job should run in seconds.
+   // The final parameter is an array of options where:
+   // 'comment' => 'File injection Model;/full/path.csv;0|1|2'  where the third param is the list of mandatory fields != '' && != NULL strrting from 0 index
+   CronTask::Register('PluginDatainjectionModel', 'DataInjection', 86400, array('hourmin' => 0, 'hourmax' => 24, 'mode' => CronTask::MODE_EXTERNAL,
+                                                                                                'state'   => CronTask::STATE_DISABLE,
+                                                                                                'comment' => 'File injection Model;/full/path.csv;0|1|2' ));
+   CronTask::Register('PluginDatainjectionModel', 'DataInjectionAdditional', 86400, array('hourmin' => 0, 'hourmax' => 24, 'mode' => CronTask::MODE_EXTERNAL,
+                                                                                                'state'   => CronTask::STATE_DISABLE,
+                                                                                                'comment' => 'File injection Model;/full/path.csv' ));
+   // END
+
+
    return true;
 }
 
@@ -214,6 +230,10 @@ function plugin_datainjection_uninstall() {
    }
 
    plugin_init_datainjection();
+   //WP
+   CronTask::Unregister('PluginDatainjectionModel');
+   //END
+
    return true;
 }
 

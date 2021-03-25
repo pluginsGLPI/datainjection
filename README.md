@@ -10,6 +10,32 @@
 
 ![Screenshot](./screenshots/datainjection.gif "Alert")
 
+Add automatic action for data injection
+
+All customizations are signed by comments
+// WP
+// START
+
+// END
+
+The plugin registers two automatic actions:
+
+How-To:
+- Define a datainject import model
+- Configure one of the provided two automatic actions according this structure:
+
+Within Comments field define:
+<datainject_model_name>;<full_path_to_csv_file>;<integer of key column. Starts from 0>
+Windows_Servers_model;/var/log/glpi/extras/glpi_import/Computers.csv;0
+
+Starting version:
+git remote add glpi_plugin_datainjection_orig https://github.com/pluginsGLPI/datainjection.git
+TAG 2.4.1
+
+### How do I get set up? ###
+
+
+## English
 
 This plugin allows data import into [GLPI](http://glpi-project.org) using CSV files.
 
