@@ -201,7 +201,25 @@ class PluginDatainjectionCommonInjectionLib
 
       //If entity is given stores it, then use root entity
       if (isset($injection_options['entities_id'])) {
-         $this->entity = $injection_options['entities_id'];
+         $entity = $this->values[$this->primary_type]['entities_id'];
+         if (!is_integer($entity)) {
+            $entities = new Entity();
+            $values   = $entities->find(['OR' => ['name' => $entity, 'completename' => $entity]]);
+            if (count($values) == 1) {
+               $entity = array_shift($values);
+               $entity = $entity['id'];
+            } else {
+               //If entity is given stores it, then use root entity
+               if (isset($injection_options['entities_id'])) {
+                  $this->entity = $injection_options['entities_id'];
+               } else {
+                  $this->entity = 0;
+               }
+            }
+         }
+         $this->entity                                               = $entity;
+         $this->values[$this->primary_type]['entities_id']           = $entity;
+         $this->mandatory_fields[$this->primary_type]['entities_id'] = 1;
       } else {
          $this->entity = 0;
       }
@@ -243,7 +261,7 @@ class PluginDatainjectionCommonInjectionLib
             //If field not defined, or if value is the dropdown's default value
             //If no value found or value is 0 and field is a dropdown,
             //then mandatory field management failed
-            if (($value == false)
+            if (($value === false)
                 || (($value == self::DROPDOWN_EMPTY_VALUE)
                 && self::isFieldADropdown($option['displaytype']))
             ) {
@@ -347,7 +365,7 @@ class PluginDatainjectionCommonInjectionLib
       //2 : id
       // 19 : date_mod
       // 80 : entity
-      $blacklist = [2, 19, 80, 201, 202, 203, 204];
+      $blacklist = [2, 19, 201, 202, 203, 204];
 
       $raw_options_to_blacklist = [];
 
@@ -1145,7 +1163,7 @@ class PluginDatainjectionCommonInjectionLib
             //Get search option associated with the field
             $option = self::findSearchOption($searchOptions, $field);
 
-            if ($value == self::EMPTY_VALUE && $mandatory) {
+            if ($value === self::EMPTY_VALUE && $mandatory) {
                $this->results['status']                     = self::FAILED;
                $this->results[self::ACTION_CHECK]['status'] = self::FAILED;
                $this->results[self::ACTION_CHECK][]         = [self::MANDATORY, $field];
