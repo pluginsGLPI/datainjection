@@ -211,9 +211,9 @@ class PluginDatainjectionCommonInjectionLib
             } else {
                //If entity is given stores it, then use root entity
                if (isset($injection_options['entities_id'])) {
-                  $this->entity = $injection_options['entities_id'];
+                  $entity = $injection_options['entities_id'];
                } else {
-                  $this->entity = 0;
+                  $entity = 0;
                }
             }
          }
@@ -364,7 +364,6 @@ class PluginDatainjectionCommonInjectionLib
 
       //2 : id
       // 19 : date_mod
-      // 80 : entity
       $blacklist = [2, 19, 201, 202, 203, 204];
 
       $raw_options_to_blacklist = [];
