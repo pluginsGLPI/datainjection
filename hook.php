@@ -50,6 +50,9 @@ function plugin_datainjection_install() {
 
    $migration = new Migration(null);
 
+   $default_charset = DBConnection::getDefaultCharset();
+   $default_collation = DBConnection::getDefaultCollation();
+
    switch (plugin_datainjection_needUpdateOrInstall()) {
       case -1 :
          // Migrations from version 2.2.0+
@@ -63,58 +66,58 @@ function plugin_datainjection_install() {
       case 0 :
          // Plugin installation
           $query = "CREATE TABLE IF NOT EXISTS `glpi_plugin_datainjection_models` (
-                     `id` int(11) NOT NULL auto_increment,
+                     `id` int unsigned NOT NULL auto_increment,
                      `name` varchar(255) NOT NULL,
                      `comment` text NULL,
                      `date_mod` timestamp NULL DEFAULT NULL,
                      `date_creation` timestamp NULL DEFAULT NULL,
                      `filetype` varchar(255) NOT NULL default 'csv',
                      `itemtype` varchar(255) NOT NULL default '',
-                     `entities_id` int(11) NOT NULL default '0',
-                     `behavior_add` tinyint(1) NOT NULL default '1',
-                     `behavior_update` tinyint(1) NOT NULL default '0',
-                     `can_add_dropdown` tinyint(1) NOT NULL default '0',
-                     `can_overwrite_if_not_empty` int(1) NOT NULL default '1',
-                     `is_private` tinyint(1) NOT NULL default '1',
-                     `is_recursive` tinyint(1) NOT NULL default '0',
-                     `perform_network_connection` tinyint(1) NOT NULL default '0',
-                     `users_id` int(11) NOT NULL,
+                     `entities_id` int unsigned NOT NULL default '0',
+                     `behavior_add` tinyint NOT NULL default '1',
+                     `behavior_update` tinyint NOT NULL default '0',
+                     `can_add_dropdown` tinyint NOT NULL default '0',
+                     `can_overwrite_if_not_empty` int NOT NULL default '1',
+                     `is_private` tinyint NOT NULL default '1',
+                     `is_recursive` tinyint NOT NULL default '0',
+                     `perform_network_connection` tinyint NOT NULL default '0',
+                     `users_id` int unsigned NOT NULL,
                      `date_format` varchar(11) NOT NULL default 'yyyy-mm-dd',
-                     `float_format` tinyint( 1 ) NOT NULL DEFAULT '0',
-                     `port_unicity` tinyint( 1 ) NOT NULL DEFAULT '0',
-                     `step` int( 11 ) NOT NULL DEFAULT '0',
+                     `float_format` tinyint NOT NULL DEFAULT '0',
+                     `port_unicity` tinyint NOT NULL DEFAULT '0',
+                     `step` int NOT NULL DEFAULT '0',
                      PRIMARY KEY  (`id`)
-                   ) ENGINE=InnoDB CHARSET=utf8 COLLATE=utf8_unicode_ci";
+                   ) ENGINE=InnoDB DEFAULT CHARSET={$default_charset} COLLATE={$default_collation} ROW_FORMAT=DYNAMIC;";
           $DB->queryOrDie($query, $DB->error());
 
           $query = "CREATE TABLE IF NOT EXISTS `glpi_plugin_datainjection_modelcsvs` (
-                     `id` int(11) NOT NULL auto_increment,
-                     `models_id` int(11) NOT NULL,
+                     `id` int unsigned NOT NULL auto_increment,
+                     `models_id` int unsigned NOT NULL,
                      `itemtype` varchar(255) NOT NULL default '',
                      `delimiter` varchar(1) NOT NULL default ';',
-                     `is_header_present` tinyint(1) NOT NULL default '1',
+                     `is_header_present` tinyint NOT NULL default '1',
                      PRIMARY KEY  (`ID`)
-                   ) ENGINE=InnoDB CHARSET=utf8 COLLATE=utf8_unicode_ci;";
+                   ) ENGINE=InnoDB DEFAULT CHARSET={$default_charset} COLLATE={$default_collation} ROW_FORMAT=DYNAMIC;";
           $DB->queryOrDie($query, $DB->error());
 
           $query = "CREATE TABLE IF NOT EXISTS `glpi_plugin_datainjection_mappings` (
-                     `id` INT( 11 ) NOT NULL AUTO_INCREMENT PRIMARY KEY ,
-                     `models_id` INT( 11 ) NOT NULL ,
+                     `id` INT unsigned NOT NULL AUTO_INCREMENT PRIMARY KEY ,
+                     `models_id` INT unsigned NOT NULL ,
                      `itemtype` varchar(255) NOT NULL default '',
-                     `rank` INT( 11 ) NOT NULL ,
+                     `rank` INT NOT NULL ,
                      `name` VARCHAR( 255 ) NOT NULL ,
                      `value` VARCHAR( 255 ) NOT NULL ,
-                     `is_mandatory` TINYINT( 1 ) NOT NULL DEFAULT '0'
-                   ) ENGINE = InnoDB CHARSET=utf8 COLLATE=utf8_unicode_ci ;";
+                     `is_mandatory` TINYINT NOT NULL DEFAULT '0'
+                   ) ENGINE=InnoDB DEFAULT CHARSET={$default_charset} COLLATE={$default_collation} ROW_FORMAT=DYNAMIC;";
           $DB->queryOrDie($query, $DB->error());
 
           $query = "CREATE TABLE IF NOT EXISTS `glpi_plugin_datainjection_infos` (
-                     `id` INT( 11 ) NOT NULL AUTO_INCREMENT PRIMARY KEY ,
-                     `models_id` INT( 11 ) NOT NULL ,
+                     `id` INT unsigned NOT NULL AUTO_INCREMENT PRIMARY KEY ,
+                     `models_id` INT unsigned NOT NULL ,
                      `itemtype` varchar(255) NOT NULL default '',
                      `value` VARCHAR( 255 ) NOT NULL ,
-                     `is_mandatory` TINYINT( 1 ) NOT NULL DEFAULT '0'
-                   ) ENGINE = InnoDB CHARSET=utf8 COLLATE=utf8_unicode_ci ;";
+                     `is_mandatory` TINYINT NOT NULL DEFAULT '0'
+                   ) ENGINE=InnoDB DEFAULT CHARSET={$default_charset} COLLATE={$default_collation} ROW_FORMAT=DYNAMIC;";
           $DB->queryOrDie($query, $DB->error());
 
          if (!is_dir(PLUGIN_DATAINJECTION_UPLOAD_DIR)) {
@@ -183,6 +186,7 @@ function plugin_datainjection_install() {
          plugin_datainjection_migration_251_252($migration);
 
          plugin_datainjection_migration_264_270($migration);
+         plugin_datainjection_migration_290_2100($migration);
          break;
 
       default :
@@ -216,6 +220,29 @@ function plugin_datainjection_uninstall() {
    plugin_init_datainjection();
    return true;
 }
+
+function plugin_datainjection_migration_290_2100(Migration $migration) {
+    global $DB;
+
+    $migration->setVersion('2.10.0');
+
+    $migration->addPostQuery(
+        $DB->buildUpdate(
+        'glpi_plugin_datainjection_mappings',
+        [
+            'value' => 'date_creation',
+        ],
+        [
+            'itemtype' => 'KnowbaseItem',
+            'value'    => 'date',
+        ]
+        ),
+        'Changing "date" field of "KnowbaseItem" to "date_creation".'
+    );
+
+ $migration->executeMigration();
+}
+
 
 function plugin_datainjection_migration_264_270(Migration $migration) {
 
@@ -321,7 +348,7 @@ function plugin_datainjection_update131_14() {
    //Template recursivity : need standardize names in order to use privatePublicSwitch
    $migration->changeField(
       'glpi_plugin_data_injection_models', 'user_id',
-      'FK_users', 'integer'
+      'FK_users', "int unsigned NOT NULL default '0'"
    );
    $migration->changeField(
       'glpi_plugin_data_injection_models', 'public',
@@ -395,11 +422,11 @@ function plugin_datainjection_update170_20() {
    $migration->changeField('glpi_plugin_datainjection_models', 'device_type',
                            'itemtype', 'string', ['value' => '']);
    $migration->changeField('glpi_plugin_datainjection_models', 'FK_entities',
-                           'entities_id', 'integer');
+                           'entities_id', "int unsigned NOT NULL default '0'");
    $migration->changeField('glpi_plugin_datainjection_models', 'private',
                            'is_private', 'bool');
    $migration->changeField('glpi_plugin_datainjection_models', 'FK_users',
-                            'users_id', 'integer');
+                            'users_id', "int unsigned NOT NULL default '0'");
    $migration->changeField('glpi_plugin_datainjection_models', 'recursive',
                             'is_recursive', 'bool');
 
@@ -418,7 +445,7 @@ function plugin_datainjection_update170_20() {
                             'glpi_plugin_datainjection_modelcsvs');
 
    $migration->changeField('glpi_plugin_datainjection_modelcsvs', 'model_id',
-                            'models_id', 'integer');
+                            'models_id', "int unsigned NOT NULL default '0'");
    $migration->changeField('glpi_plugin_datainjection_modelcsvs', 'device_type',
                             'itemtype', 'string', ['value' => '']);
    $migration->changeField('glpi_plugin_datainjection_modelcsvs', 'header_present',
@@ -429,12 +456,12 @@ function plugin_datainjection_update170_20() {
    $migration->changeField('glpi_plugin_datainjection_mappings', 'type',
                             'itemtype', 'string', ['value' => '']);
    $migration->changeField('glpi_plugin_datainjection_mappings', 'model_id',
-                            'models_id', 'integer');
+                            'models_id', "int unsigned NOT NULL default '0'");
 
    $migration->changeField('glpi_plugin_datainjection_infos', 'type',
                             'itemtype', 'string', ['value' => '']);
    $migration->changeField('glpi_plugin_datainjection_infos', 'model_id',
-                            'models_id', 'integer');
+                            'models_id', "int unsigned NOT NULL default '0'");
    $migration->changeField('glpi_plugin_datainjection_infos', 'mandatory',
                             'is_mandatory', 'bool');
 

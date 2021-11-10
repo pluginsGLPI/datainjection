@@ -32,8 +32,9 @@ if (!defined('GLPI_ROOT')) {
     die("Sorry. You can't access directly to this file");
 }
 
-class PluginDatainjectionKnowbaseItemInjection extends KnowbaseItem
-                                               implements PluginDatainjectionInjectionInterface
+
+class PluginDatainjectionDatabaseInjection extends Database
+                                         implements PluginDatainjectionInjectionInterface
 {
 
 
@@ -64,19 +65,19 @@ class PluginDatainjectionKnowbaseItemInjection extends KnowbaseItem
 
       $tab                 = Search::getOptions(get_parent_class($this));
 
-      $tab[121]['checktype'] = 'datetime';
+      $tab[5]['checktype'] = 'date';
+      $tab[10]['checktype'] = 'date';
 
       //Remove some options because some fields cannot be imported
-      $blacklist     = PluginDatainjectionCommonInjectionLib::getBlacklistedOptions(get_parent_class($this));
-      $notimportable = [];
-
+      $blacklist = PluginDatainjectionCommonInjectionLib::getBlacklistedOptions(get_parent_class($this));
+      $notimportable            = [];
       $options['ignore_fields'] = array_merge($blacklist, $notimportable);
 
-      $options['displaytype']   = ["dropdown"       => [4],
-                                      "date"           => [121],
-                                      "multiline_text" => [6,7],
-                                      "bool"           => [8, 9, 86],
-                                      "user"           => [70]];
+      $options['displaytype']   = [
+          "dropdown" => [11],
+          "date"     => [5, 10],
+          "yesno"    => [8]
+        ];
 
       return PluginDatainjectionCommonInjectionLib::addToSearchOptions($tab, $options, $this);
    }

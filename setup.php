@@ -31,9 +31,9 @@
 define ('PLUGIN_DATAINJECTION_VERSION', '2.9.0');
 
 // Minimal GLPI version, inclusive
-define("PLUGIN_DATAINJECTION_MIN_GLPI", "9.5");
+define("PLUGIN_DATAINJECTION_MIN_GLPI", "10.0.0");
 // Maximum GLPI version, exclusive
-define("PLUGIN_DATAINJECTION_MAX_GLPI", "9.6");
+define("PLUGIN_DATAINJECTION_MAX_GLPI", "10.0.99");
 
 if (!defined("PLUGIN_DATAINJECTION_UPLOAD_DIR")) {
     define("PLUGIN_DATAINJECTION_UPLOAD_DIR", GLPI_PLUGIN_DOC_DIR."/datainjection/");
@@ -123,6 +123,8 @@ function getTypesToInject() {
    $INJECTABLE_TYPES = ['PluginDatainjectionCartridgeItemInjection'              => 'datainjection',
                         'PluginDatainjectionBudgetInjection'                      => 'datainjection',
                         'PluginDatainjectionComputerInjection'                    => 'datainjection',
+                        'PluginDatainjectionDatabaseInjection'                    => 'datainjection',
+                        'PluginDatainjectionDatabaseInstanceInjection'            => 'datainjection',
                         'PluginDatainjectionNotepadInjection'                     => 'datainjection',
                         'PluginDatainjectionComputer_ItemInjection'               => 'datainjection',
                         'PluginDatainjectionConsumableItemInjection'              => 'datainjection',
