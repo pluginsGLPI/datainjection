@@ -28,11 +28,13 @@
  * -------------------------------------------------------------------------
  */
 
+ use Glpi\Socket;
+
 if (!defined('GLPI_ROOT')) {
     die("Sorry. You can't access directly to this file");
 }
 
-class PluginDatainjectionNetpointInjection extends Netpoint
+class PluginDatainjectionNetpointInjection extends Socket
                                            implements PluginDatainjectionInjectionInterface
 {
 
