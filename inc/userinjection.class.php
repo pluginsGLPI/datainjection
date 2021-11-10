@@ -32,6 +32,8 @@ if (!defined('GLPI_ROOT')) {
     die("Sorry. You can't access directly to this file");
 }
 
+use Glpi\Toolbox\Sanitizer;
+
 class PluginDatainjectionUserInjection extends User
                                        implements PluginDatainjectionInjectionInterface
 {
@@ -168,7 +170,7 @@ class PluginDatainjectionUserInjection extends User
       if (isset($values['User']['password']) && ($values['User']['password'] != '')) {
          //We use an SQL request because updating the password is unesasy
          //(self reset password process in $user->prepareInputForUpdate())
-         $password = sha1(Toolbox::unclean_cross_side_scripting_deep(stripslashes($values['User']["password"])));
+         $password = sha1(Sanitizer::unsanitize($values['User']["password"]));
 
          $query = "UPDATE `glpi_users`
                    SET `password` = '".$password."'

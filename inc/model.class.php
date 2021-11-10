@@ -618,7 +618,12 @@ class PluginDatainjectionModel extends CommonDBTM
       echo "<td><input type='hidden' name='users_id' value='".Session::getLoginUserID()."'>".
                __('Name')."</td>";
       echo "<td>";
-      Html::autocompletionTextField($this, "name");
+      echo Html::input(
+         'name',
+         [
+            'value' => $this->fields["name"],
+         ]
+      );
       echo "</td>";
       echo "<td colspan='2'></td></tr>";
 
