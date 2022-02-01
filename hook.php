@@ -52,6 +52,7 @@ function plugin_datainjection_install() {
 
    $default_charset = DBConnection::getDefaultCharset();
    $default_collation = DBConnection::getDefaultCollation();
+   $default_key_sign = method_exists('DBConnection', 'getDefaultPrimaryKeySignOption') ? DBConnection::getDefaultPrimaryKeySignOption() : '';
 
    switch (plugin_datainjection_needUpdateOrInstall()) {
       case -1 :
@@ -66,14 +67,14 @@ function plugin_datainjection_install() {
       case 0 :
          // Plugin installation
           $query = "CREATE TABLE IF NOT EXISTS `glpi_plugin_datainjection_models` (
-                     `id` int unsigned NOT NULL auto_increment,
+                     `id` int {$default_key_sign} NOT NULL auto_increment,
                      `name` varchar(255) NOT NULL,
                      `comment` text NULL,
                      `date_mod` timestamp NULL DEFAULT NULL,
                      `date_creation` timestamp NULL DEFAULT NULL,
                      `filetype` varchar(255) NOT NULL default 'csv',
                      `itemtype` varchar(255) NOT NULL default '',
-                     `entities_id` int unsigned NOT NULL default '0',
+                     `entities_id` int {$default_key_sign} NOT NULL default '0',
                      `behavior_add` tinyint NOT NULL default '1',
                      `behavior_update` tinyint NOT NULL default '0',
                      `can_add_dropdown` tinyint NOT NULL default '0',
@@ -81,7 +82,7 @@ function plugin_datainjection_install() {
                      `is_private` tinyint NOT NULL default '1',
                      `is_recursive` tinyint NOT NULL default '0',
                      `perform_network_connection` tinyint NOT NULL default '0',
-                     `users_id` int unsigned NOT NULL,
+                     `users_id` int {$default_key_sign} NOT NULL,
                      `date_format` varchar(11) NOT NULL default 'yyyy-mm-dd',
                      `float_format` tinyint NOT NULL DEFAULT '0',
                      `port_unicity` tinyint NOT NULL DEFAULT '0',
@@ -91,8 +92,8 @@ function plugin_datainjection_install() {
           $DB->queryOrDie($query, $DB->error());
 
           $query = "CREATE TABLE IF NOT EXISTS `glpi_plugin_datainjection_modelcsvs` (
-                     `id` int unsigned NOT NULL auto_increment,
-                     `models_id` int unsigned NOT NULL,
+                     `id` int {$default_key_sign} NOT NULL auto_increment,
+                     `models_id` int {$default_key_sign} NOT NULL,
                      `itemtype` varchar(255) NOT NULL default '',
                      `delimiter` varchar(1) NOT NULL default ';',
                      `is_header_present` tinyint NOT NULL default '1',
@@ -101,8 +102,8 @@ function plugin_datainjection_install() {
           $DB->queryOrDie($query, $DB->error());
 
           $query = "CREATE TABLE IF NOT EXISTS `glpi_plugin_datainjection_mappings` (
-                     `id` INT unsigned NOT NULL AUTO_INCREMENT PRIMARY KEY ,
-                     `models_id` INT unsigned NOT NULL ,
+                     `id` INT {$default_key_sign} NOT NULL AUTO_INCREMENT PRIMARY KEY ,
+                     `models_id` INT {$default_key_sign} NOT NULL ,
                      `itemtype` varchar(255) NOT NULL default '',
                      `rank` INT NOT NULL ,
                      `name` VARCHAR( 255 ) NOT NULL ,
@@ -112,8 +113,8 @@ function plugin_datainjection_install() {
           $DB->queryOrDie($query, $DB->error());
 
           $query = "CREATE TABLE IF NOT EXISTS `glpi_plugin_datainjection_infos` (
-                     `id` INT unsigned NOT NULL AUTO_INCREMENT PRIMARY KEY ,
-                     `models_id` INT unsigned NOT NULL ,
+                     `id` INT {$default_key_sign} NOT NULL AUTO_INCREMENT PRIMARY KEY ,
+                     `models_id` INT {$default_key_sign} NOT NULL ,
                      `itemtype` varchar(255) NOT NULL default '',
                      `value` VARCHAR( 255 ) NOT NULL ,
                      `is_mandatory` TINYINT NOT NULL DEFAULT '0'
@@ -338,6 +339,8 @@ function plugin_datainjection_update131_14() {
 
    global $DB;
 
+   $default_key_sign = method_exists('DBConnection', 'getDefaultPrimaryKeySignOption') ? DBConnection::getDefaultPrimaryKeySignOption() : '';
+
    $migration = new Migration('1.4');
 
    $migration->addField(
@@ -348,7 +351,7 @@ function plugin_datainjection_update131_14() {
    //Template recursivity : need standardize names in order to use privatePublicSwitch
    $migration->changeField(
       'glpi_plugin_data_injection_models', 'user_id',
-      'FK_users', "int unsigned NOT NULL default '0'"
+      'FK_users', "int {$default_key_sign} NOT NULL default '0'"
    );
    $migration->changeField(
       'glpi_plugin_data_injection_models', 'public',
@@ -410,6 +413,9 @@ function plugin_datainjection_update15_170() {
 
 function plugin_datainjection_update170_20() {
    global $DB;
+
+   $default_key_sign = method_exists('DBConnection', 'getDefaultPrimaryKeySignOption') ? DBConnection::getDefaultPrimaryKeySignOption() : '';
+
    $migration = new Migration('2.0');
 
    $migration->changeField('glpi_plugin_datainjection_models', 'ID', 'id',
@@ -422,11 +428,11 @@ function plugin_datainjection_update170_20() {
    $migration->changeField('glpi_plugin_datainjection_models', 'device_type',
                            'itemtype', 'string', ['value' => '']);
    $migration->changeField('glpi_plugin_datainjection_models', 'FK_entities',
-                           'entities_id', "int unsigned NOT NULL default '0'");
+                           'entities_id', "int {$default_key_sign} NOT NULL default '0'");
    $migration->changeField('glpi_plugin_datainjection_models', 'private',
                            'is_private', 'bool');
    $migration->changeField('glpi_plugin_datainjection_models', 'FK_users',
-                            'users_id', "int unsigned NOT NULL default '0'");
+                            'users_id', "int {$default_key_sign} NOT NULL default '0'");
    $migration->changeField('glpi_plugin_datainjection_models', 'recursive',
                             'is_recursive', 'bool');
 
@@ -445,7 +451,7 @@ function plugin_datainjection_update170_20() {
                             'glpi_plugin_datainjection_modelcsvs');
 
    $migration->changeField('glpi_plugin_datainjection_modelcsvs', 'model_id',
-                            'models_id', "int unsigned NOT NULL default '0'");
+                            'models_id', "int {$default_key_sign} NOT NULL default '0'");
    $migration->changeField('glpi_plugin_datainjection_modelcsvs', 'device_type',
                             'itemtype', 'string', ['value' => '']);
    $migration->changeField('glpi_plugin_datainjection_modelcsvs', 'header_present',
@@ -456,12 +462,12 @@ function plugin_datainjection_update170_20() {
    $migration->changeField('glpi_plugin_datainjection_mappings', 'type',
                             'itemtype', 'string', ['value' => '']);
    $migration->changeField('glpi_plugin_datainjection_mappings', 'model_id',
-                            'models_id', "int unsigned NOT NULL default '0'");
+                            'models_id', "int {$default_key_sign} NOT NULL default '0'");
 
    $migration->changeField('glpi_plugin_datainjection_infos', 'type',
                             'itemtype', 'string', ['value' => '']);
    $migration->changeField('glpi_plugin_datainjection_infos', 'model_id',
-                            'models_id', "int unsigned NOT NULL default '0'");
+                            'models_id', "int {$default_key_sign} NOT NULL default '0'");
    $migration->changeField('glpi_plugin_datainjection_infos', 'mandatory',
                             'is_mandatory', 'bool');
 
