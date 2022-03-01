@@ -505,8 +505,9 @@ class PluginDatainjectionCommonInjectionLib
                $searchOption = self::findSearchOption($searchOptions, $field);
                //searchoption relation type is already manage by manageRelations()
                //skip it
-               if ((isset($searchOption['displaytype']) && $searchOption['displaytype'] != 'relation')
-                  || !isset($searchOption['displaytype'])) {
+               if ($searchOption !== false &&
+                   ((isset($searchOption['displaytype']) && $searchOption['displaytype'] != 'relation')
+                  || !isset($searchOption['displaytype']))) {
                      $this->getFieldValue($injectionClass, $itemtype, $searchOption, $field, $value);
                }
             }
@@ -1512,7 +1513,7 @@ class PluginDatainjectionCommonInjectionLib
 
       foreach ($values as $key => $value) {
          $option = self::findSearchOption($options, $key);
-         if (!isset($option['checktype']) || $option['checktype'] != self::FIELD_VIRTUAL) {
+         if ($option !== false && (!isset($option['checktype']) || $option['checktype'] != self::FIELD_VIRTUAL)) {
             //If field is a dropdown and value is '', then replace it by 0
             if (self::isFieldADropdown($option['displaytype']) && $value == self::EMPTY_VALUE) {
                $toinject[$key] = self::DROPDOWN_EMPTY_VALUE;
