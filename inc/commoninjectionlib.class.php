@@ -2005,6 +2005,13 @@ class PluginDatainjectionCommonInjectionLib
          }
       }
 
+       // Drop not injectable fields
+       foreach ($type_searchOptions as $id => $tmp) {
+           if (!isset($tmp['injectable']) || $tmp['injectable'] <= 0) {
+               unset($type_searchOptions[$id]);
+           }
+       }
+
       foreach (['displaytype', 'checktype'] as $paramtype) {
          if (isset($options[$paramtype])) {
             foreach ($options[$paramtype] as $type => $tabsID) {
