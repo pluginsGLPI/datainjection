@@ -1438,6 +1438,8 @@ class PluginDatainjectionModel extends CommonDBTM
    static function showLogResults($models_id) {
 
       $logresults = self::prepareLogResults($models_id);
+      $resume = [];
+      $nblines = 0;
       if (!empty($logresults)) {
          if (!empty($logresults[PluginDatainjectionCommonInjectionLib::SUCCESS])) {
             echo "<table>\n";
@@ -1465,6 +1467,11 @@ class PluginDatainjectionModel extends CommonDBTM
                echo "<td>".nl2br($result['status_message'])."</td>";
                echo "<td>".$result['type']."</td>";
                echo "<td>".$result['url']."</td><tr>\n";
+               if(!isset($resume[$result['status']][$result['type']])) {
+                  $resume[$result['status']][$result['type']] = 0;
+               }
+               $resume[$result['status']][$result['type']]++;
+               $nblines++;
             }
             echo "</table></div>\n";
          }
@@ -1497,9 +1504,58 @@ class PluginDatainjectionModel extends CommonDBTM
                echo "<td>".nl2br($result['status_message'])."</td>";
                echo "<td>".$result['type']."</td>";
                echo "<td>".$result['url']."</td><tr>\n";
+               if(!isset($resume[$result['status']][$result['type']])) {
+                  $resume[$result['status']][$result['type']] = 0;
+               }
+               $resume[$result['status']][$result['type']]++;
+               $nblines++;
             }
             echo "</table></div>\n";
             echo "<script type='text/javascript'>document.getElementById('log1_table').style.display='none'</script>";
+         }
+
+         if (!empty($resume)) {
+            echo "<table>";
+            echo "<tr>";
+            echo "<td style='width:30px'>";
+            echo "<a href=\"javascript:show_log('3')\"><img src='../pics/minus.png' alt='minus' id='log3'>";
+            echo "</a></td>";
+            echo "<td style='width: 450px;font-size: 14px;font-weight: bold;padding-left: 20px'>".
+               __('Global report', 'datainjection')."</td>";
+            echo "<td style='width: 450px;font-style:italic'>" . __('Number of lines processed', 'datainjection') . " : " . $nblines . "</td>";
+            echo "</tr>\n";
+            echo "</table>\n";
+
+            echo "<div id='log2_table'>";
+            echo "<table class='tab_cadre_fixe center'>\n";
+            echo "<th></th>";
+            echo "<th>" . __('Data Import', 'datainjection') . "</th>";
+            echo "<th>" . __('Injection type', 'datainjection') . "</th>";
+            echo "<th>" . __('Counter', 'datainjection') . "</th>";
+            echo "</tr>";
+            foreach ($resume as $status => $types) {
+               echo "<tr>";
+               $html = '';
+               $rowspan = 0;
+               foreach ($types as $type => $value) {
+                  $html .= "<td>" . $type .  "</td>";
+                  $html .= "<td>" . $value . "</td>";
+                  $rowspan++;
+               }
+               echo "<td rowspan=" . $rowspan . ">";
+               if ($status == PluginDatainjectionCommonInjectionLib::SUCCESS) {
+                  echo "<img src='../pics/ok.png'> ";
+               } else {
+                  echo "<img src='../pics/notok.png'> ";
+               }
+               echo "</td>";
+               echo "<td rowspan=" . $rowspan . ">";
+               echo PluginDatainjectionCommonInjectionLib::getLogLabel($status);
+               echo "</td>";
+               echo $html;
+               echo "</tr>";
+            }
+            echo "</table></div>\n";
          }
       }
 
