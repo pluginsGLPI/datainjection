@@ -52,7 +52,7 @@ function plugin_datainjection_install() {
 
    $default_charset = DBConnection::getDefaultCharset();
    $default_collation = DBConnection::getDefaultCollation();
-   $default_key_sign = method_exists('DBConnection', 'getDefaultPrimaryKeySignOption') ? DBConnection::getDefaultPrimaryKeySignOption() : '';
+   $default_key_sign = DBConnection::getDefaultPrimaryKeySignOption();
 
    switch (plugin_datainjection_needUpdateOrInstall()) {
       case -1 :
@@ -339,7 +339,7 @@ function plugin_datainjection_update131_14() {
 
    global $DB;
 
-   $default_key_sign = method_exists('DBConnection', 'getDefaultPrimaryKeySignOption') ? DBConnection::getDefaultPrimaryKeySignOption() : '';
+   $default_key_sign = DBConnection::getDefaultPrimaryKeySignOption();
 
    $migration = new Migration('1.4');
 
@@ -414,7 +414,7 @@ function plugin_datainjection_update15_170() {
 function plugin_datainjection_update170_20() {
    global $DB;
 
-   $default_key_sign = method_exists('DBConnection', 'getDefaultPrimaryKeySignOption') ? DBConnection::getDefaultPrimaryKeySignOption() : '';
+   $default_key_sign = DBConnection::getDefaultPrimaryKeySignOption();
 
    $migration = new Migration('2.0');
 
