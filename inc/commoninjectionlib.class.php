@@ -1521,6 +1521,10 @@ class PluginDatainjectionCommonInjectionLib
                $toinject[$key] = $value;
             }
          }
+
+         if ($key === 'entities_id') {
+            $toinject[$key] = $value;
+         }
       }
 
       $toinject = Toolbox::addslashes_deep($toinject);
