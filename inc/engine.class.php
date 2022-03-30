@@ -192,7 +192,7 @@ class PluginDatainjectionEngine
       );
       $return_value = $value;
 
-      if (($option['displaytype'] == 'multiline_text')
+      if ($option !== false && ($option['displaytype'] == 'multiline_text')
           && in_array($mapping->getValue(), $several)
           && ($value != PluginDatainjectionCommonInjectionLib::EMPTY_VALUE)
       ) {
