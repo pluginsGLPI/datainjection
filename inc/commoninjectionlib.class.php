@@ -1525,6 +1525,12 @@ class PluginDatainjectionCommonInjectionLib
          if ($key === 'entities_id') {
             $toinject[$key] = $value;
          }
+
+         //useful for fields
+         if (strpos(get_class($item), 'PluginFields') !== false &&
+           ($key === 'items_id' || $key === 'itemtype')) {
+            $toinject[$key] = $value;
+         }
       }
 
       $toinject = Toolbox::addslashes_deep($toinject);
