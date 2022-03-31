@@ -73,7 +73,7 @@ function plugin_init_datainjection() {
           = ['Profile' => ['PluginDatainjectionProfile', 'purgeProfiles']];
 
          // Css file
-      if (strpos($_SERVER['REQUEST_URI'], Plugin::getPhpDir('datainjection', false)) !== false) {
+      if (strpos($_SERVER['REQUEST_URI'] ?? '', Plugin::getPhpDir('datainjection', false)) !== false) {
          $PLUGIN_HOOKS['add_css']['datainjection'] = 'css/datainjection.css';
       }
 
