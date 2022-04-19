@@ -1531,6 +1531,17 @@ class PluginDatainjectionCommonInjectionLib
            ($key === 'items_id' || $key === 'itemtype')) {
             $toinject[$key] = $value;
          }
+
+         //useful for Infocom
+         if (get_class($item) == Infocom::getType() &&
+         ($key === 'items_id' || $key === 'itemtype')) {
+            $toinject[$key] = $value;
+         }
+
+         //keep id in case of update
+         if (!$add && $key === 'id') {
+            $toinject[$key] = $value;
+         }
       }
 
       $toinject = Toolbox::addslashes_deep($toinject);
