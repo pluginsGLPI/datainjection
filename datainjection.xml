@@ -44,6 +44,11 @@
           <download_url>https://github.com/pluginsGLPI/datainjection/releases/download/2.11.0-rc1/glpi-datainjection-2.11.0-rc1.tar.bz2</download_url>
       </version>
       <version>
+          <num>2.10.2</num>
+          <compatibility>~9.5.0</compatibility>
+          <download_url>https://github.com/pluginsGLPI/datainjection/releases/download/2.10.2/glpi-datainjection-2.10.2.tar.bz2</download_url>
+      </version>
+      <version>
           <num>2.10.1</num>
           <compatibility>~9.5.0</compatibility>
           <download_url>https://github.com/pluginsGLPI/datainjection/releases/download/2.10.1/glpi-datainjection-2.10.1.tar.bz2</download_url>
