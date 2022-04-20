@@ -29,19 +29,9 @@
    </authors>
    <versions>
       <version>
-          <num>2.11.0-rc3</num>
+          <num>2.11.0</num>
           <compatibility>~10.0.0</compatibility>
-          <download_url>https://github.com/pluginsGLPI/datainjection/releases/download/2.11.0-rc3/glpi-datainjection-2.11.0-rc3.tar.bz2</download_url>
-      </version>
-      <version>
-          <num>2.11.0-rc2</num>
-          <compatibility>~10.0.0</compatibility>
-          <download_url>https://github.com/pluginsGLPI/datainjection/releases/download/2.11.0-rc2/glpi-datainjection-2.11.0-rc2.tar.bz2</download_url>
-      </version>
-      <version>
-          <num>2.11.0-rc1</num>
-          <compatibility>~10.0.0</compatibility>
-          <download_url>https://github.com/pluginsGLPI/datainjection/releases/download/2.11.0-rc1/glpi-datainjection-2.11.0-rc1.tar.bz2</download_url>
+          <download_url>https://github.com/pluginsGLPI/datainjection/releases/download/2.11.0/glpi-datainjection-2.11.0.tar.bz2</download_url>
       </version>
       <version>
           <num>2.10.2</num>
