@@ -1532,9 +1532,16 @@ class PluginDatainjectionCommonInjectionLib
             $toinject[$key] = $value;
          }
 
-         //useful for Infocom
-         if (get_class($item) == Infocom::getType() &&
-         ($key === 'items_id' || $key === 'itemtype')) {
+         if (
+            in_array(get_class($item), [
+               Infocom::getType(),
+               Item_OperatingSystem::getType()
+            ])
+            && in_array($key, [
+               'items_id',
+               'itemtype'
+            ])
+         ) {
             $toinject[$key] = $value;
          }
 

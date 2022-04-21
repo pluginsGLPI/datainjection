@@ -91,4 +91,15 @@ class PluginDatainjectionItem_OperatingsystemInjection extends Item_OperatingSys
       $lib->processAddOrUpdate();
       return $lib->getInjectionResults();
    }
+
+   /**
+    * @param $primary_type
+    * @param $values
+   **/
+   function addSpecificNeededFields($primary_type, $values) {
+      $fields['items_id'] = $values[$primary_type]['id'];
+      $fields['itemtype'] = $primary_type;
+
+      return $fields;
+   }
 }
