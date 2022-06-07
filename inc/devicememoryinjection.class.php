@@ -95,10 +95,10 @@ class PluginDatainjectionDeviceMemoryInjection extends DeviceMemory
 
          if (!countElementsInTable($item->getTable(), $where)) {
 
-            if (isset($values[get_parent_class($this)]['size'])
-                && ($values[get_parent_class($this)]['size'] > 0)
+            if (isset($values[get_parent_class($this)]['size_default'])
+            && ($values[get_parent_class($this)]['size_default'] > 0)
             ) {
-               $tmp['size'] = $values[get_parent_class($this)]['size'];
+               $tmp['size'] = $values[get_parent_class($this)]['size_default'];
             } else {
                $tmp['size'] = 0;
             }
@@ -120,24 +120,6 @@ class PluginDatainjectionDeviceMemoryInjection extends DeviceMemory
       $lib = new PluginDatainjectionCommonInjectionLib($this, $values, $options);
       $lib->processAddOrUpdate();
       return $lib->getInjectionResults();
-   }
-
-
-    /**
-    * @param $primary_type
-    * @param $values
-   **/
-   function addSpecificNeededFields($primary_type, $values) {
-
-      $fields = [];
-      if (!isset($values['size_default'])) {
-         if (isset($values[get_parent_class($this)]['size'])) {
-            $fields['size_default'] = $values[get_parent_class($this)]['size'];
-         } else {
-            $fields['size_default'] = 0;
-         }
-      }
-      return $fields;
    }
 
 }
