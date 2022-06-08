@@ -94,15 +94,15 @@ class PluginDatainjectionDeviceProcessorInjection extends DeviceProcessor
          ];
 
          if (!countElementsInTable($item->getTable(), $where)) {
-            //try first default_frequency, then frequency
-            if (isset($values[get_parent_class($this)]['frequency_default'])
-                && ($values[get_parent_class($this)]['frequency_default'] > 0)
-            ) {
-               $tmp['frequency'] = $values[get_parent_class($this)]['frequency_default'];
-            } else if (isset($values[get_parent_class($this)]['frequency'])
-               && ($values[get_parent_class($this)]['frequency'] > 0)
+            //try first frequency, then default_frequency
+            if (isset($values[get_parent_class($this)]['frequency'])
+                && ($values[get_parent_class($this)]['frequency'] > 0)
             ) {
                $tmp['frequency'] = $values[get_parent_class($this)]['frequency'];
+            } else if (isset($values[get_parent_class($this)]['frequency_default'])
+               && ($values[get_parent_class($this)]['frequency_default'] > 0)
+            ) {
+               $tmp['frequency'] = $values[get_parent_class($this)]['frequency_default'];
             } else {
                $tmp['frequency'] = 0;
             }
