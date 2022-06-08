@@ -94,12 +94,16 @@ class PluginDatainjectionDeviceProcessorInjection extends DeviceProcessor
          ];
 
          if (!countElementsInTable($item->getTable(), $where)) {
-
-            if (isset($values[get_parent_class($this)]['frequency'])
-                && ($values[get_parent_class($this)]['frequency'] > 0)
+            //try first default_frequency, then frequency
+            if (isset($values[get_parent_class($this)]['frequency_default'])
+                && ($values[get_parent_class($this)]['frequency_default'] > 0)
+            ) {
+               $tmp['frequency'] = $values[get_parent_class($this)]['frequency_default'];
+            } else if (isset($values[get_parent_class($this)]['frequency'])
+               && ($values[get_parent_class($this)]['frequency'] > 0)
             ) {
                $tmp['frequency'] = $values[get_parent_class($this)]['frequency'];
-            } else {
+            }else{
                $tmp['frequency'] = 0;
             }
 
@@ -120,24 +124,6 @@ class PluginDatainjectionDeviceProcessorInjection extends DeviceProcessor
       $lib = new PluginDatainjectionCommonInjectionLib($this, $values, $options);
       $lib->processAddOrUpdate();
       return $lib->getInjectionResults();
-   }
-
-
-    /**
-    * @param $primary_type
-    * @param $values
-   **/
-   function addSpecificNeededFields($primary_type, $values) {
-
-      $fields = [];
-      if (!isset($values['frequency_default'])) {
-         if (isset($values[get_parent_class($this)]['frequency'])) {
-            $fields['frequency_default'] = $values[get_parent_class($this)]['frequency'];
-         } else {
-            $fields['frequency_default'] = 0;
-         }
-      }
-      return $fields;
    }
 
 }
