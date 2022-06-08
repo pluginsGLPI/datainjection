@@ -103,7 +103,7 @@ class PluginDatainjectionDeviceProcessorInjection extends DeviceProcessor
                && ($values[get_parent_class($this)]['frequency'] > 0)
             ) {
                $tmp['frequency'] = $values[get_parent_class($this)]['frequency'];
-            }else{
+            } else {
                $tmp['frequency'] = 0;
             }
 
