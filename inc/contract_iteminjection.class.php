@@ -48,7 +48,7 @@ class PluginDatainjectionContract_ItemInjection extends Contract_Item
 
    function relationSide() {
 
-      return false;
+      return true;
    }
 
 
