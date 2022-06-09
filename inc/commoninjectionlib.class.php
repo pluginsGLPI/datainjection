@@ -1534,8 +1534,7 @@ class PluginDatainjectionCommonInjectionLib
 
          if (
             in_array(get_class($item), [
-               Infocom::getType(),
-               Item_OperatingSystem::getType()
+               Infocom::getType()
             ])
             && in_array($key, [
                'items_id',
@@ -1543,6 +1542,17 @@ class PluginDatainjectionCommonInjectionLib
             ])
          ) {
             $toinject[$key] = $value;
+         }
+
+         if (
+            $item instanceof CommonDBRelation
+            && in_array($key, [
+               'items_id',
+               'itemtype',
+               $item::$items_id_1
+            ])
+         ) {
+               $toinject[$key] = $value;
          }
 
          //keep id in case of update
