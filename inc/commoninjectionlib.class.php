@@ -1793,9 +1793,14 @@ class PluginDatainjectionCommonInjectionLib
                if ($itemtype == $this->primary_type) {
                   foreach ($this->mandatory_fields[$itemtype] as $field => $is_mandatory) {
                      if ($is_mandatory) {
-                        $option = self::findSearchOption($searchOptions, $field);
-                        $where .= " AND `" . $field . "`='".
-                          $this->getValueByItemtypeAndName($itemtype, $field) . "'";
+                        if ($item instanceof User && $field == "useremails_id") {
+                           $email = addslashes($this->getValueByItemtypeAndName($itemtype, $field));
+                           $where .= " AND `id` IN (SELECT `users_id` FROM glpi_useremails WHERE `email` = '$email') ";
+                        } else {
+                           $where .= " AND `" . $field . "`='".
+                              $this->getValueByItemtypeAndName($itemtype, $field) . "'";
+                        }
+
                      }
                   }
 
