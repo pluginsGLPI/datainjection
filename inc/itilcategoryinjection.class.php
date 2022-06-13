@@ -69,7 +69,7 @@ class PluginDatainjectionITILCategoryInjection extends ITILCategory
 
       $options['ignore_fields'] = array_merge($blacklist, $notimportable);
 
-      $options['displaytype'] = ["dropdown"       => [71, 72, 73],
+      $options['displaytype'] = ["dropdown"       => [13, 71, 72, 73],
                                     "bool"           => [3, 74, 75, 76, 86],
                                     "user"           => [70],
                                     "multiline_text" => [16]];
