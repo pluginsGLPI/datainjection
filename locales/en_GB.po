@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-04-20 12:00+0000\n"
-"PO-Revision-Date: 2022-04-20 12:00+0000\n"
+"POT-Creation-Date: 2022-06-15 14:24+0000\n"
+"PO-Revision-Date: 2022-06-15 14:24+0000\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
 "Language: en_GB\n"
@@ -51,7 +51,7 @@ msgstr "1 234.56"
 msgid "1,234.56"
 msgstr "1,234.56"
 
-#: inc/commoninjectionlib.class.php:1900
+#: inc/commoninjectionlib.class.php:1922
 msgid "Add from CSV file"
 msgstr "Add from CSV file"
 
@@ -95,7 +95,7 @@ msgstr "Array of unsuccessful injections"
 msgid "At least one column is incorrect"
 msgstr "At least one column is incorrect"
 
-#: inc/commoninjectionlib.class.php:1963
+#: inc/commoninjectionlib.class.php:1985
 msgid "At least one mandatory field is not present"
 msgstr "At least one mandatory field is not present"
 
@@ -124,7 +124,7 @@ msgstr "Data Import"
 msgid "Data check"
 msgstr "Data check"
 
-#: front/clientinjection.form.php:34 inc/profile.class.php:67
+#: front/clientinjection.form.php:36 inc/profile.class.php:67
 #: inc/menu.class.php:38 setup.php:94
 msgid "Data injection"
 msgstr "Data injection"
@@ -133,11 +133,11 @@ msgstr "Data injection"
 msgid "Data injection report"
 msgstr "Data injection report"
 
-#: inc/commoninjectionlib.class.php:1979
+#: inc/commoninjectionlib.class.php:2001
 msgid "Data not found"
 msgstr "Data not found"
 
-#: inc/commoninjectionlib.class.php:1967
+#: inc/commoninjectionlib.class.php:1989
 msgid "Data to insert are correct"
 msgstr "Data to insert are correct"
 
@@ -210,11 +210,11 @@ msgstr "Header's presence"
 msgid "ISO8859-1"
 msgstr "ISO8859-1"
 
-#: inc/commoninjectionlib.class.php:1959
+#: inc/commoninjectionlib.class.php:1981
 msgid "Import failed"
 msgstr "Import failed"
 
-#: inc/commoninjectionlib.class.php:1955
+#: inc/commoninjectionlib.class.php:1977
 msgid "Import not allowed"
 msgstr "Import not allowed"
 
@@ -303,11 +303,11 @@ msgstr "Model unknown"
 msgid "No model currently available"
 msgstr "No model currently available"
 
-#: inc/commoninjectionlib.class.php:1943
+#: inc/commoninjectionlib.class.php:1965
 msgid "No right to import data"
 msgstr "No right to import data"
 
-#: inc/commoninjectionlib.class.php:1947
+#: inc/commoninjectionlib.class.php:1969
 msgid "No right to update data"
 msgstr "No right to update data"
 
@@ -324,7 +324,7 @@ msgstr "Number of ports"
 msgid "Object Identifier"
 msgstr "Object Identifier"
 
-#: inc/commoninjectionlib.class.php:1971
+#: inc/commoninjectionlib.class.php:1993
 msgid "One data is not the good type"
 msgstr "One data is not the good type"
 
@@ -336,7 +336,7 @@ msgstr ""
 "One link field must be selected: it will be used to check if data already "
 "exists"
 
-#: front/clientinjection.form.php:50
+#: front/clientinjection.form.php:52
 msgid "One mandatory field is not filled"
 msgstr "One mandatory field is not filled"
 
@@ -360,7 +360,7 @@ msgstr "See the file"
 msgid "See the log"
 msgstr "See the log"
 
-#: inc/commoninjectionlib.class.php:1951
+#: inc/commoninjectionlib.class.php:1973
 msgid "Size of the inserted value is to expansive"
 msgstr "Size of the inserted value is to expansive"
 
@@ -372,7 +372,7 @@ msgstr "Specific file format options"
 msgid "Tables"
 msgstr "Tables"
 
-#: front/clientinjection.form.php:83 front/model.form.php:88
+#: front/clientinjection.form.php:85 front/model.form.php:88
 msgid "The file could not be found"
 msgstr "The file could not be found"
 
@@ -404,11 +404,11 @@ msgstr "Type of data to import"
 msgid "UTF-8"
 msgstr "UTF-8"
 
-#: inc/model.class.php:1376 inc/commoninjectionlib.class.php:1983
+#: inc/model.class.php:1376 inc/commoninjectionlib.class.php:2005
 msgid "Undetermined"
 msgstr "Undetermined"
 
-#: inc/commoninjectionlib.class.php:1902
+#: inc/commoninjectionlib.class.php:1924
 msgid "Update from CSV file"
 msgstr "Update from CSV file"
 
@@ -421,7 +421,7 @@ msgctxt "button"
 msgid "Validate the model"
 msgstr "Validate the model"
 
-#: inc/commoninjectionlib.class.php:1975
+#: inc/commoninjectionlib.class.php:1997
 msgid "Warning"
 msgstr "Warning"
 
