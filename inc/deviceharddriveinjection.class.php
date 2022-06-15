@@ -98,6 +98,15 @@ class PluginDatainjectionDeviceHardDriveInjection extends DeviceHardDrive
             $tmp[$foreign]   = $values[get_parent_class($this)]['id'];
             $tmp['items_id'] = $values['Computer']['id'];
             $tmp['itemtype'] = 'Computer';
+
+            if (isset($values[get_parent_class($this)]['capacity_default'])
+            && ($values[get_parent_class($this)]['capacity_default'] > 0)
+            ) {
+               $tmp['capacity'] = $values[get_parent_class($this)]['capacity_default'];
+            } else {
+               $tmp['capacity'] = 0;
+            }
+
             $item->add($tmp);
          }
       }
