@@ -1533,9 +1533,7 @@ class PluginDatainjectionCommonInjectionLib
          }
 
          if (
-            in_array(get_class($item), [
-               Infocom::getType()
-            ])
+            $item instanceof CommonDBChild
             && in_array($key, [
                'items_id',
                'itemtype'
