@@ -1466,11 +1466,11 @@ class PluginDatainjectionCommonInjectionLib
 
                //Process other types
 
-               //change order of item if needed
+               //change order of items if needed
                if(isset($this->values['NetworkPort']) && isset($this->values['NetworkName'])){
                   $np = $this->values['NetworkPort'];
                   unset($this->values['NetworkPort']);
-                  array_unshift($this->values, $np);
+                  $this->values = array('NetworkPort' => $np) + $this->values;
                }
 
                foreach ($this->values as $itemtype => $data) {
