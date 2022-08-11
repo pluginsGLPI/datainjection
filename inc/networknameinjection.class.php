@@ -124,7 +124,9 @@ class PluginDatainjectionNetworkNameInjection extends NetworkName
             $tmp['itemtype']     = "NetworkName";
             $tmp['name']         = $values['NetworkName']['ipaddresses_id'];
             $tmp['is_dynamic']   = 0;
-            $ip->add($tmp);
+            if (!$ip->getFromDBByCrit($tmp)) {
+               $ip->add($tmp);
+            }
          }
       }
    }
