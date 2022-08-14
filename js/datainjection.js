@@ -26,6 +26,11 @@
  * -------------------------------------------------------------------------
  */
 
+/**
+ *
+ * @param cpt
+ * @deprecated No longer used
+ */
 function show_comments(cpt) {
 
    sel = document.getElementById('dropdown');
@@ -40,7 +45,11 @@ function show_comments(cpt) {
    }
 }
 
-
+/**
+ *
+ * @param totalline
+ * @deprecated No longer used
+ */
 function file_popup(totalline) {
    var nbline = document.getElementById('nbline').value;
 
@@ -64,7 +73,11 @@ function file_popup(totalline) {
    window.open('../front/plugin_datainjection.popup.file.php?nbline='+nbline+'', 'Popup', 'resizable=no, location=no, menubar=no, scrollbars=yes, toolbar=no, status=no, width=970, height='+height+', left='+x+', top='+y+'');
 }
 
-
+/**
+ *
+ * @param nbline
+ * @deprecated No longer used
+ */
 function log_popup(nbline) {
    var x = screen.width;
    var y = screen.height;
@@ -77,7 +90,10 @@ function log_popup(nbline) {
    window.open('../front/plugin_datainjection.popup.log.php', 'Popup', 'resizable=no, location=no, menubar=no, scrollbars=yes, toolbar=no, status=no, width=1010, height='+height+', left='+x+', top='+y+'');
 }
 
-
+/**
+ *
+ * @param num
+ */
 function show_log(num) {
 
    if (document.getElementById('log'+num+'_table').style.display == 'none') {
@@ -89,7 +105,9 @@ function show_log(num) {
    }
 }
 
-
+/**
+ * @deprecated No longer used
+ */
 function show_option() {
 
    if (document.getElementById('option').style.display == 'none') {
@@ -101,7 +119,12 @@ function show_option() {
    }
 }
 
-
+/**
+ *
+ * @param id
+ * @param type
+ * @deprecated No longer used
+ */
 function go_mapping(id,type) {
    var xhr = getXhr();
 
@@ -132,7 +155,11 @@ function go_mapping(id,type) {
    xhr.send("id="+id+"&idMapping="+idtable+"&name="+nom);
 }
 
-
+/**
+ *
+ * @param id
+ * @deprecated No longer used
+ */
 function go_info(id) {
    var xhr = getXhr();
 
