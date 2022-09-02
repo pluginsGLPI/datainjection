@@ -1521,14 +1521,15 @@ class PluginDatainjectionCommonInjectionLib
 
       foreach ($values as $key => $value) {
          $option = self::findSearchOption($options, $key);
-         if ($option === false) {
+         if ($option !== false && isset($option['checktype']) && $option['checktype'] == self::FIELD_VIRTUAL) {
+             break;
+         }
+
+         if ($option !== false && self::isFieldADropdown($option['displaytype']) && $value == self::EMPTY_VALUE) {
+             //If field is a dropdown and value is '', then replace it by 0
+             $toinject[$key] = self::DROPDOWN_EMPTY_VALUE;
+         } else {
              $toinject[$key] = $value;
-         } else if (!isset($option['checktype']) || $option['checktype'] != self::FIELD_VIRTUAL) {
-             if (self::isFieldADropdown($option['displaytype']) && $value == self::EMPTY_VALUE) {
-                 $toinject[$key] = self::DROPDOWN_EMPTY_VALUE;
-             } else {
-                 $toinject[$key] = $value;
-             }
          }
 
          if ($key === 'entities_id') {
