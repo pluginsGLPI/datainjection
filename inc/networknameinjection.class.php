@@ -119,12 +119,14 @@ class PluginDatainjectionNetworkNameInjection extends NetworkName
              ]
          )) {
 
-            $ip                  = new IPAddress();
+            $ip                  = new IPAddress($values['NetworkName']['ipaddresses_id']);
             $tmp['items_id']     = $values['NetworkName']['id'];
             $tmp['itemtype']     = "NetworkName";
-            $tmp['name']         = $values['NetworkName']['ipaddresses_id'];
+            $tmp['name']         =  $ip->getTextual();
             $tmp['is_dynamic']   = 0;
-            $ip->add($tmp);
+            if (!$ip->getFromDBByCrit($tmp)) {
+               $ip->add($tmp);
+            }
          }
       }
    }
