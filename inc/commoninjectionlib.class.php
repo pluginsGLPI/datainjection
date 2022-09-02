@@ -1465,6 +1465,14 @@ class PluginDatainjectionCommonInjectionLib
                $this->results[get_class($item)] = $newID;
 
                //Process other types
+
+               //change order of items if needed
+               if(isset($this->values['NetworkPort']) && isset($this->values['NetworkName'])){
+                  $np = $this->values['NetworkPort'];
+                  unset($this->values['NetworkPort']);
+                  $this->values = array('NetworkPort' => $np) + $this->values;
+               }
+
                foreach ($this->values as $itemtype => $data) {
                   //Do not process primary_type
 
