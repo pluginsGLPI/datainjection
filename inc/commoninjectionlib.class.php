@@ -1531,42 +1531,6 @@ class PluginDatainjectionCommonInjectionLib
          } else {
              $toinject[$key] = $value;
          }
-
-         if ($key === 'entities_id') {
-            $toinject[$key] = $value;
-         }
-
-         //useful for fields
-         if (strpos(get_class($item), 'PluginFields') !== false &&
-           ($key === 'items_id' || $key === 'itemtype')) {
-            $toinject[$key] = $value;
-         }
-
-         if (
-            $item instanceof CommonDBChild
-            && in_array($key, [
-               'items_id',
-               'itemtype'
-            ])
-         ) {
-            $toinject[$key] = $value;
-         }
-
-         if (
-            $item instanceof CommonDBRelation
-            && in_array($key, [
-               'items_id',
-               'itemtype',
-               $item::$items_id_1
-            ])
-         ) {
-               $toinject[$key] = $value;
-         }
-
-         //keep id in case of update
-         if (!$add && $key === 'id') {
-            $toinject[$key] = $value;
-         }
       }
 
       $toinject = Toolbox::addslashes_deep($toinject);
