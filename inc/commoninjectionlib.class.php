@@ -28,6 +28,8 @@
  * -------------------------------------------------------------------------
  */
 
+use Glpi\Toolbox\Sanitizer;
+
 class PluginDatainjectionCommonInjectionLib
 {
 
@@ -1369,6 +1371,7 @@ class PluginDatainjectionCommonInjectionLib
       $add      = true;
       $accepted = false;
 
+      $this->values = Sanitizer::dbUnescapeRecursive($this->values);
       //Toolbox::logDebug("processAddOrUpdate(), start with", $this->values);
 
       // Initial value, will be change when problem
@@ -1559,6 +1562,8 @@ class PluginDatainjectionCommonInjectionLib
             $toinject[$key] = $value;
          }
       }
+
+      $toinject = Sanitizer::dbEscapeRecursive($toinject);
 
       $newID = null;
       if (method_exists($injectionClass, 'customimport')) {
