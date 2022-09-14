@@ -1523,49 +1523,15 @@ class PluginDatainjectionCommonInjectionLib
 
       foreach ($values as $key => $value) {
          $option = self::findSearchOption($options, $key);
-         if ($key === 'id' || $option !== false && (!isset($option['checktype']) || $option['checktype'] != self::FIELD_VIRTUAL)) {
-            //If field is a dropdown and value is '', then replace it by 0
-            if ($option !== false && self::isFieldADropdown($option['displaytype']) && $value == self::EMPTY_VALUE) {
-               $toinject[$key] = self::DROPDOWN_EMPTY_VALUE;
-            } else {
-               $toinject[$key] = $value;
-            }
+         if ($option !== false && isset($option['checktype']) && $option['checktype'] == self::FIELD_VIRTUAL) {
+             break;
          }
 
-         if ($key === 'entities_id') {
-            $toinject[$key] = $value;
-         }
-
-         //useful for fields
-         if (strpos(get_class($item), 'PluginFields') !== false &&
-           ($key === 'items_id' || $key === 'itemtype')) {
-            $toinject[$key] = $value;
-         }
-
-         if (
-            $item instanceof CommonDBChild
-            && in_array($key, [
-               'items_id',
-               'itemtype'
-            ])
-         ) {
-            $toinject[$key] = $value;
-         }
-
-         if (
-            $item instanceof CommonDBRelation
-            && in_array($key, [
-               'items_id',
-               'itemtype',
-               $item::$items_id_1
-            ])
-         ) {
-               $toinject[$key] = $value;
-         }
-
-         //keep id in case of update
-         if (!$add && $key === 'id') {
-            $toinject[$key] = $value;
+         if ($option !== false && self::isFieldADropdown($option['displaytype']) && $value == self::EMPTY_VALUE) {
+             //If field is a dropdown and value is '', then replace it by 0
+             $toinject[$key] = self::DROPDOWN_EMPTY_VALUE;
+         } else {
+             $toinject[$key] = $value;
          }
       }
 
