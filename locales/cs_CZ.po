@@ -13,7 +13,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-06-15 14:24+0000\n"
+"POT-Creation-Date: 2022-09-14 10:56+0000\n"
 "PO-Revision-Date: 2018-06-21 12:57+0000\n"
 "Last-Translator: David Stepan <stepand@tiscali.cz>, 2020\n"
 "Language-Team: Czech (Czech Republic) (https://www.transifex.com/teclib/teams/28042/cs_CZ/)\n"
@@ -61,7 +61,7 @@ msgstr "1 234,56"
 msgid "1,234.56"
 msgstr "1 234,56"
 
-#: inc/commoninjectionlib.class.php:1922
+#: inc/commoninjectionlib.class.php:1896
 msgid "Add from CSV file"
 msgstr "Přidat z CSV souboru"
 
@@ -93,11 +93,11 @@ msgstr "Umožnit aktualizovat existující kolonky"
 msgid "Antivirus name"
 msgstr "Název antiviru"
 
-#: inc/model.class.php:1449 inc/model.class.php:1532
+#: inc/model.class.php:1451 inc/model.class.php:1588
 msgid "Array of successful injections"
 msgstr "Pole úspěšných importů"
 
-#: inc/model.class.php:1479 inc/model.class.php:1552
+#: inc/model.class.php:1486 inc/model.class.php:1608
 msgid "Array of unsuccessful injections"
 msgstr "Pole neúspěšných importů"
 
@@ -105,7 +105,7 @@ msgstr "Pole neúspěšných importů"
 msgid "At least one column is incorrect"
 msgstr "Přinejmenším jeden sloupec není správný"
 
-#: inc/commoninjectionlib.class.php:1985
+#: inc/commoninjectionlib.class.php:1959
 msgid "At least one mandatory field is not present"
 msgstr "Přinejmenším jedna povinná kolonka není vyplněná"
 
@@ -125,12 +125,16 @@ msgstr "Zvolte soubor"
 msgid "Complementary information"
 msgstr "Doplňující informace"
 
-#: inc/model.class.php:1457 inc/model.class.php:1488 inc/model.class.php:1536
-#: inc/model.class.php:1557
+#: inc/model.class.php:1534
+msgid "Counter"
+msgstr ""
+
+#: inc/model.class.php:1459 inc/model.class.php:1495 inc/model.class.php:1532
+#: inc/model.class.php:1592 inc/model.class.php:1613
 msgid "Data Import"
 msgstr "Import dat"
 
-#: inc/model.class.php:1487 inc/model.class.php:1556 inc/model.class.php:1573
+#: inc/model.class.php:1494 inc/model.class.php:1612 inc/model.class.php:1629
 msgid "Data check"
 msgstr "Kontrola dat"
 
@@ -139,15 +143,15 @@ msgstr "Kontrola dat"
 msgid "Data injection"
 msgstr "Vpravení dat"
 
-#: front/popup.php:43 inc/model.class.php:1523
+#: front/popup.php:43 inc/model.class.php:1579
 msgid "Data injection report"
 msgstr "Výkaz o vpravení dat"
 
-#: inc/commoninjectionlib.class.php:2001
+#: inc/commoninjectionlib.class.php:1975
 msgid "Data not found"
 msgstr "Data nebyla nalezena"
 
-#: inc/commoninjectionlib.class.php:1989
+#: inc/commoninjectionlib.class.php:1963
 msgid "Data to insert are correct"
 msgstr "Data pro vložení jsou v pořádku"
 
@@ -208,6 +212,10 @@ msgstr "Formát desetinné čárky"
 msgid "From the model"
 msgstr "Ze šablony"
 
+#: inc/model.class.php:1524
+msgid "Global report"
+msgstr ""
+
 #: inc/mapping.class.php:123
 msgid "Header of the file"
 msgstr "Hlavička souboru"
@@ -220,11 +228,11 @@ msgstr "Přítomnost hlavičky"
 msgid "ISO8859-1"
 msgstr "ISO8859-1"
 
-#: inc/commoninjectionlib.class.php:1981
+#: inc/commoninjectionlib.class.php:1955
 msgid "Import failed"
 msgstr "Import se nezdařil"
 
-#: inc/commoninjectionlib.class.php:1977
+#: inc/commoninjectionlib.class.php:1951
 msgid "Import not allowed"
 msgstr "Import není dovolen"
 
@@ -259,8 +267,8 @@ msgstr "Import souboru… %d%%"
 msgid "Injection successful"
 msgstr "Import úspěšný"
 
-#: inc/model.class.php:1458 inc/model.class.php:1489 inc/model.class.php:1537
-#: inc/model.class.php:1558
+#: inc/model.class.php:1460 inc/model.class.php:1496 inc/model.class.php:1533
+#: inc/model.class.php:1593 inc/model.class.php:1614
 msgid "Injection type"
 msgstr "Typ importu"
 
@@ -276,8 +284,8 @@ msgstr "Do souboru"
 msgid "Launch the import"
 msgstr "Spustit import"
 
-#: inc/model.class.php:1456 inc/model.class.php:1486 inc/model.class.php:1535
-#: inc/model.class.php:1555
+#: inc/model.class.php:1458 inc/model.class.php:1493 inc/model.class.php:1591
+#: inc/model.class.php:1611
 msgid "Line"
 msgstr "Řádek"
 
@@ -313,11 +321,11 @@ msgstr "Neznámá šablona"
 msgid "No model currently available"
 msgstr "V tuto chvíli není k dispozici žádná šablona"
 
-#: inc/commoninjectionlib.class.php:1965
+#: inc/commoninjectionlib.class.php:1939
 msgid "No right to import data"
 msgstr "Nemáte oprávnění importovat data"
 
-#: inc/commoninjectionlib.class.php:1969
+#: inc/commoninjectionlib.class.php:1943
 msgid "No right to update data"
 msgstr "Nemáte oprávnění aktualizovat data"
 
@@ -325,16 +333,20 @@ msgstr "Nemáte oprávnění aktualizovat data"
 msgid "Not data to import"
 msgstr "Žádná data k importu"
 
+#: inc/model.class.php:1525
+msgid "Number of lines processed"
+msgstr ""
+
 #: inc/networkequipmentinjection.class.php:72
 msgid "Number of ports"
 msgstr "Počet portů"
 
-#: inc/model.class.php:1459 inc/model.class.php:1490 inc/model.class.php:1538
-#: inc/model.class.php:1559
+#: inc/model.class.php:1461 inc/model.class.php:1497 inc/model.class.php:1594
+#: inc/model.class.php:1615
 msgid "Object Identifier"
 msgstr "Identifikátor objektu"
 
-#: inc/commoninjectionlib.class.php:1993
+#: inc/commoninjectionlib.class.php:1967
 msgid "One data is not the good type"
 msgstr "Jedna data nejsou správného typu"
 
@@ -370,7 +382,7 @@ msgstr "Zobrazit soubor"
 msgid "See the log"
 msgstr "Zobrazit záznam událostí (log)"
 
-#: inc/commoninjectionlib.class.php:1973
+#: inc/commoninjectionlib.class.php:1947
 msgid "Size of the inserted value is to expansive"
 msgstr "Velikost vkládané hodnoty je příliš obsáhlá"
 
@@ -414,11 +426,11 @@ msgstr "Typ dat k importu"
 msgid "UTF-8"
 msgstr "UTF-8"
 
-#: inc/model.class.php:1376 inc/commoninjectionlib.class.php:2005
+#: inc/model.class.php:1376 inc/commoninjectionlib.class.php:1979
 msgid "Undetermined"
 msgstr "Nespecifikováno"
 
-#: inc/commoninjectionlib.class.php:1924
+#: inc/commoninjectionlib.class.php:1898
 msgid "Update from CSV file"
 msgstr "Aktualizovat z CSV souboru"
 
@@ -431,7 +443,7 @@ msgctxt "button"
 msgid "Validate the model"
 msgstr "Ověřit šablonu"
 
-#: inc/commoninjectionlib.class.php:1997
+#: inc/commoninjectionlib.class.php:1971
 msgid "Warning"
 msgstr "Varování"
 
