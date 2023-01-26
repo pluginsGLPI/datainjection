@@ -1,14 +1,14 @@
 # English translations for PACKAGE package.
-# Copyright (C) 2022 THE PACKAGE'S COPYRIGHT HOLDER
+# Copyright (C) 2023 THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
-# Automatically generated, 2022.
+# Automatically generated, 2023.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-09-14 10:56+0000\n"
-"PO-Revision-Date: 2022-09-14 10:56+0000\n"
+"POT-Creation-Date: 2023-01-26 07:49+0000\n"
+"PO-Revision-Date: 2023-01-26 07:49+0000\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
 "Language: en_GB\n"
@@ -107,11 +107,11 @@ msgstr "Automatic detection"
 msgid "Can't create folder"
 msgstr "Can't create folder"
 
-#: inc/clientinjection.class.php:156 inc/info.class.php:247
+#: inc/info.class.php:262 inc/clientinjection.class.php:156
 msgid "Choose a file"
 msgstr "Choose a file"
 
-#: inc/info.class.php:246
+#: inc/info.class.php:261
 msgid "Complementary information"
 msgstr "Complementary information"
 
@@ -128,12 +128,12 @@ msgstr "Data Import"
 msgid "Data check"
 msgstr "Data check"
 
-#: front/clientinjection.form.php:36 inc/profile.class.php:67
-#: inc/menu.class.php:38 setup.php:94
+#: inc/profile.class.php:67 inc/menu.class.php:38
+#: front/clientinjection.form.php:36 setup.php:94
 msgid "Data injection"
 msgstr "Data injection"
 
-#: front/popup.php:43 inc/model.class.php:1579
+#: inc/model.class.php:1579 front/popup.php:43
 msgid "Data injection report"
 msgstr "Data injection report"
 
@@ -149,7 +149,11 @@ msgstr "Data to insert are correct"
 msgid "Dates format"
 msgstr "Dates format"
 
-#: inc/info.class.php:256
+#: inc/phoneinjection.class.php:67
+msgid "Domain name"
+msgstr "Domain name"
+
+#: inc/info.class.php:271
 msgid "Download file sample"
 msgstr "Download file sample"
 
@@ -243,8 +247,8 @@ msgstr "Injection encounters errors"
 msgid "Injection finished"
 msgstr "Injection finished"
 
-#: inc/profile.class.php:43 inc/clientinjection.class.php:214
-#: inc/menu.class.php:56 inc/menu.class.php:57 inc/menu.class.php:61
+#: inc/profile.class.php:43 inc/menu.class.php:56 inc/menu.class.php:57
+#: inc/menu.class.php:61 inc/clientinjection.class.php:214
 msgid "Injection of the file"
 msgstr "Injection of the file"
 
@@ -364,7 +368,7 @@ msgstr "Port MAC address"
 msgid "Port unicity criteria"
 msgstr "Port unicity criteria"
 
-#: front/popup.php:37 inc/mapping.class.php:117
+#: inc/mapping.class.php:117 front/popup.php:37
 msgid "See the file"
 msgstr "See the file"
 
@@ -380,11 +384,11 @@ msgstr "Size of the inserted value is to expansive"
 msgid "Specific file format options"
 msgstr "Specific file format options"
 
-#: inc/info.class.php:84 inc/info.class.php:141 inc/mapping.class.php:124
+#: inc/mapping.class.php:124 inc/info.class.php:84 inc/info.class.php:141
 msgid "Tables"
 msgstr "Tables"
 
-#: front/clientinjection.form.php:85 front/model.form.php:88
+#: front/model.form.php:88 front/clientinjection.form.php:85
 msgid "The file could not be found"
 msgstr "The file could not be found"
 

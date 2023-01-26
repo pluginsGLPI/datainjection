@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-09-14 10:56+0000\n"
+"POT-Creation-Date: 2023-01-26 07:49+0000\n"
 "PO-Revision-Date: 2018-06-21 12:57+0000\n"
 "Last-Translator: Cédric Anne, 2018\n"
 "Language-Team: Finnish (Finland) (https://www.transifex.com/teclib/teams/28042/fi_FI/)\n"
@@ -111,11 +111,11 @@ msgstr "Automaattinen tunnistus"
 msgid "Can't create folder"
 msgstr "Kansioa ei voi luoda"
 
-#: inc/clientinjection.class.php:156 inc/info.class.php:247
+#: inc/info.class.php:262 inc/clientinjection.class.php:156
 msgid "Choose a file"
 msgstr "Valitse tiedosto"
 
-#: inc/info.class.php:246
+#: inc/info.class.php:261
 msgid "Complementary information"
 msgstr "Täydentävät tiedot"
 
@@ -132,12 +132,12 @@ msgstr "Tuo tiedot"
 msgid "Data check"
 msgstr "Tietojen tarkistus"
 
-#: front/clientinjection.form.php:36 inc/profile.class.php:67
-#: inc/menu.class.php:38 setup.php:94
+#: inc/profile.class.php:67 inc/menu.class.php:38
+#: front/clientinjection.form.php:36 setup.php:94
 msgid "Data injection"
 msgstr ""
 
-#: front/popup.php:43 inc/model.class.php:1579
+#: inc/model.class.php:1579 front/popup.php:43
 msgid "Data injection report"
 msgstr ""
 
@@ -153,7 +153,11 @@ msgstr "Syötetyt tiedot ovat oikeita"
 msgid "Dates format"
 msgstr "Päiväyksen muoto"
 
-#: inc/info.class.php:256
+#: inc/phoneinjection.class.php:67
+msgid "Domain name"
+msgstr ""
+
+#: inc/info.class.php:271
 msgid "Download file sample"
 msgstr "Lataa näytetiedosto"
 
@@ -247,8 +251,8 @@ msgstr "Tuonti sisälsi virheitä"
 msgid "Injection finished"
 msgstr "Tuonti suoritettu loppuun"
 
-#: inc/profile.class.php:43 inc/clientinjection.class.php:214
-#: inc/menu.class.php:56 inc/menu.class.php:57 inc/menu.class.php:61
+#: inc/profile.class.php:43 inc/menu.class.php:56 inc/menu.class.php:57
+#: inc/menu.class.php:61 inc/clientinjection.class.php:214
 msgid "Injection of the file"
 msgstr "Tiedoston tuonti"
 
@@ -368,7 +372,7 @@ msgstr "Portin MAC-osoite"
 msgid "Port unicity criteria"
 msgstr "Porttiyhtenäisyyden kriteerit"
 
-#: front/popup.php:37 inc/mapping.class.php:117
+#: inc/mapping.class.php:117 front/popup.php:37
 msgid "See the file"
 msgstr "Katso tiedosto"
 
@@ -384,11 +388,11 @@ msgstr "Syötetyn arvo koko laajeneva"
 msgid "Specific file format options"
 msgstr "Erityiset tiedostomuotoasetukset"
 
-#: inc/info.class.php:84 inc/info.class.php:141 inc/mapping.class.php:124
+#: inc/mapping.class.php:124 inc/info.class.php:84 inc/info.class.php:141
 msgid "Tables"
 msgstr "Taulukot"
 
-#: front/clientinjection.form.php:85 front/model.form.php:88
+#: front/model.form.php:88 front/clientinjection.form.php:85
 msgid "The file could not be found"
 msgstr "Tiedostoa ei löytynyt"
 

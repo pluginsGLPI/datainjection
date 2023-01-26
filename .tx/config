@@ -1,8 +1,8 @@
 [main]
 host = https://www.transifex.com
 
-[glpi-plugin-datainjection.datainjection-pot]
+[o:teclib:p:glpi-plugin-datainjection:r:datainjection-pot]
 file_filter = locales/<lang>.po
 source_file = locales/datainjection.pot
 source_lang = en
-type = PO
+type        = PO

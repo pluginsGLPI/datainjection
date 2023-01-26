@@ -5,16 +5,16 @@
 # 
 # Translators:
 # mab18, 2020
-# Cédric Anne, 2022
+# Cédric Anne, 2023
 # 
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-09-14 10:56+0000\n"
+"POT-Creation-Date: 2023-01-26 07:49+0000\n"
 "PO-Revision-Date: 2018-06-21 12:57+0000\n"
-"Last-Translator: Cédric Anne, 2022\n"
+"Last-Translator: Cédric Anne, 2023\n"
 "Language-Team: French (France) (https://www.transifex.com/teclib/teams/28042/fr_FR/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -114,11 +114,11 @@ msgstr "Détection automatique"
 msgid "Can't create folder"
 msgstr "Impossible de créer le dossier"
 
-#: inc/clientinjection.class.php:156 inc/info.class.php:247
+#: inc/info.class.php:262 inc/clientinjection.class.php:156
 msgid "Choose a file"
 msgstr "Choix du fichier"
 
-#: inc/info.class.php:246
+#: inc/info.class.php:261
 msgid "Complementary information"
 msgstr "Information complémentaire"
 
@@ -135,12 +135,12 @@ msgstr "Import des données"
 msgid "Data check"
 msgstr "Vérification des données"
 
-#: front/clientinjection.form.php:36 inc/profile.class.php:67
-#: inc/menu.class.php:38 setup.php:94
+#: inc/profile.class.php:67 inc/menu.class.php:38
+#: front/clientinjection.form.php:36 setup.php:94
 msgid "Data injection"
 msgstr "Data Injection"
 
-#: front/popup.php:43 inc/model.class.php:1579
+#: inc/model.class.php:1579 front/popup.php:43
 msgid "Data injection report"
 msgstr "Rapport de Data Injection"
 
@@ -156,7 +156,11 @@ msgstr "Les données à importer sont valides"
 msgid "Dates format"
 msgstr "Format des dates"
 
-#: inc/info.class.php:256
+#: inc/phoneinjection.class.php:67
+msgid "Domain name"
+msgstr "Nom de domaine"
+
+#: inc/info.class.php:271
 msgid "Download file sample"
 msgstr "Téléchargement fichier exemple"
 
@@ -250,8 +254,8 @@ msgstr "L'importation a rencontré des erreurs"
 msgid "Injection finished"
 msgstr "Importation terminée"
 
-#: inc/profile.class.php:43 inc/clientinjection.class.php:214
-#: inc/menu.class.php:56 inc/menu.class.php:57 inc/menu.class.php:61
+#: inc/profile.class.php:43 inc/menu.class.php:56 inc/menu.class.php:57
+#: inc/menu.class.php:61 inc/clientinjection.class.php:214
 msgid "Injection of the file"
 msgstr "Importation du fichier"
 
@@ -371,7 +375,7 @@ msgstr "Adresse MAC du port"
 msgid "Port unicity criteria"
 msgstr "Critère d'unicité d'un port"
 
-#: front/popup.php:37 inc/mapping.class.php:117
+#: inc/mapping.class.php:117 front/popup.php:37
 msgid "See the file"
 msgstr "Voir un aperçu du fichier"
 
@@ -387,11 +391,11 @@ msgstr "Le nombre de valeurs à insérer est trop important"
 msgid "Specific file format options"
 msgstr "Options spécifiques au format de fichier"
 
-#: inc/info.class.php:84 inc/info.class.php:141 inc/mapping.class.php:124
+#: inc/mapping.class.php:124 inc/info.class.php:84 inc/info.class.php:141
 msgid "Tables"
 msgstr "Tables"
 
-#: front/clientinjection.form.php:85 front/model.form.php:88
+#: front/model.form.php:88 front/clientinjection.form.php:85
 msgid "The file could not be found"
 msgstr "Le fichier est introuvable"
 

@@ -4,16 +4,16 @@
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 # 
 # Translators:
-# Milo Ivir <mail@milotype.de>, 2020
+# Milo Ivir <mail@milotype.de>, 2022
 # 
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-09-14 10:56+0000\n"
+"POT-Creation-Date: 2023-01-26 07:49+0000\n"
 "PO-Revision-Date: 2018-06-21 12:57+0000\n"
-"Last-Translator: Milo Ivir <mail@milotype.de>, 2020\n"
+"Last-Translator: Milo Ivir <mail@milotype.de>, 2022\n"
 "Language-Team: Croatian (Croatia) (https://www.transifex.com/teclib/teams/28042/hr_HR/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -27,15 +27,15 @@ msgid "%d awaited column"
 msgid_plural "%d awaited columns"
 msgstr[0] "očekuje se %d stupac"
 msgstr[1] "očekuju se %d stupca"
-msgstr[2] "očekuje se %d stupaca"
+msgstr[2] "očekuju se %d stupaca"
 
 #: inc/model.class.php:1156
 #, php-format
 msgid "%d found column"
 msgid_plural "%d found columns"
-msgstr[0] "nađen je %d stupac"
-msgstr[1] "nađena su %d stupca"
-msgstr[2] "nađeno je %d stupaca"
+msgstr[0] "pronađen je %d stupac"
+msgstr[1] "pronađena su %d stupca"
+msgstr[2] "pronađeno je %d stupaca"
 
 #: inc/injectiontype.class.php:193
 msgid "-------Choose a field-------"
@@ -113,17 +113,17 @@ msgstr "Automatsko prepoznavanje"
 msgid "Can't create folder"
 msgstr "Nije moguće stvori mapu"
 
-#: inc/clientinjection.class.php:156 inc/info.class.php:247
+#: inc/info.class.php:262 inc/clientinjection.class.php:156
 msgid "Choose a file"
 msgstr "Odaberi datoteku"
 
-#: inc/info.class.php:246
+#: inc/info.class.php:261
 msgid "Complementary information"
 msgstr "Dodatne informacije"
 
 #: inc/model.class.php:1534
 msgid "Counter"
-msgstr ""
+msgstr "Brojač"
 
 #: inc/model.class.php:1459 inc/model.class.php:1495 inc/model.class.php:1532
 #: inc/model.class.php:1592 inc/model.class.php:1613
@@ -134,12 +134,12 @@ msgstr "Uvoz podataka"
 msgid "Data check"
 msgstr "Provjera podataka"
 
-#: front/clientinjection.form.php:36 inc/profile.class.php:67
-#: inc/menu.class.php:38 setup.php:94
+#: inc/profile.class.php:67 inc/menu.class.php:38
+#: front/clientinjection.form.php:36 setup.php:94
 msgid "Data injection"
 msgstr "Umetanje podataka"
 
-#: front/popup.php:43 inc/model.class.php:1579
+#: inc/model.class.php:1579 front/popup.php:43
 msgid "Data injection report"
 msgstr "Izvještaj o umetanju podataka"
 
@@ -155,7 +155,11 @@ msgstr "Podaci za umetanje su ispravni"
 msgid "Dates format"
 msgstr "Format datuma"
 
-#: inc/info.class.php:256
+#: inc/phoneinjection.class.php:67
+msgid "Domain name"
+msgstr ""
+
+#: inc/info.class.php:271
 msgid "Download file sample"
 msgstr "Preuzmi uzorak datoteke"
 
@@ -210,7 +214,7 @@ msgstr "Od modela"
 
 #: inc/model.class.php:1524
 msgid "Global report"
-msgstr ""
+msgstr "Globalni izvještaj"
 
 #: inc/mapping.class.php:123
 msgid "Header of the file"
@@ -249,15 +253,15 @@ msgstr "Greške pri umetanju podataka"
 msgid "Injection finished"
 msgstr "Umetanje završeno"
 
-#: inc/profile.class.php:43 inc/clientinjection.class.php:214
-#: inc/menu.class.php:56 inc/menu.class.php:57 inc/menu.class.php:61
+#: inc/profile.class.php:43 inc/menu.class.php:56 inc/menu.class.php:57
+#: inc/menu.class.php:61 inc/clientinjection.class.php:214
 msgid "Injection of the file"
-msgstr "Umetanje iz datoteke"
+msgstr "Umetanje datoteke"
 
 #: inc/clientinjection.class.php:280
 #, php-format
 msgid "Injection of the file... %d%%"
-msgstr "Umetanje podataka … %d%%"
+msgstr "Umetanje datoteke … %d %%"
 
 #: inc/clientinjection.class.php:375
 msgid "Injection successful"
@@ -331,7 +335,7 @@ msgstr "Nema podataka za uvoz"
 
 #: inc/model.class.php:1525
 msgid "Number of lines processed"
-msgstr ""
+msgstr "Broj obrađenih redaka"
 
 #: inc/networkequipmentinjection.class.php:72
 msgid "Number of ports"
@@ -370,7 +374,7 @@ msgstr "MAC adresa priključka"
 msgid "Port unicity criteria"
 msgstr "Kriterij jedinstvenosti priključka"
 
-#: front/popup.php:37 inc/mapping.class.php:117
+#: inc/mapping.class.php:117 front/popup.php:37
 msgid "See the file"
 msgstr "Pogledaj datoteku"
 
@@ -386,11 +390,11 @@ msgstr "Umetnute vrijednosti su predugačke"
 msgid "Specific file format options"
 msgstr "Opcije za određeni datotečni format"
 
-#: inc/info.class.php:84 inc/info.class.php:141 inc/mapping.class.php:124
+#: inc/mapping.class.php:124 inc/info.class.php:84 inc/info.class.php:141
 msgid "Tables"
 msgstr "Tablice"
 
-#: front/clientinjection.form.php:85 front/model.form.php:88
+#: front/model.form.php:88 front/clientinjection.form.php:85
 msgid "The file could not be found"
 msgstr "Datoteka nije pronađena"
 

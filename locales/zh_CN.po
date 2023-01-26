@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-09-14 10:56+0000\n"
+"POT-Creation-Date: 2023-01-26 07:49+0000\n"
 "PO-Revision-Date: 2018-06-21 12:57+0000\n"
 "Last-Translator: zhongxin li <lizxing141421@163.com>, 2021\n"
 "Language-Team: Chinese (China) (https://www.transifex.com/teclib/teams/28042/zh_CN/)\n"
@@ -110,11 +110,11 @@ msgstr "自动检测"
 msgid "Can't create folder"
 msgstr "无法创建文件夹"
 
-#: inc/clientinjection.class.php:156 inc/info.class.php:247
+#: inc/info.class.php:262 inc/clientinjection.class.php:156
 msgid "Choose a file"
 msgstr "选择文件"
 
-#: inc/info.class.php:246
+#: inc/info.class.php:261
 msgid "Complementary information"
 msgstr "补充信息"
 
@@ -131,12 +131,12 @@ msgstr "数据导入"
 msgid "Data check"
 msgstr "数据检查"
 
-#: front/clientinjection.form.php:36 inc/profile.class.php:67
-#: inc/menu.class.php:38 setup.php:94
+#: inc/profile.class.php:67 inc/menu.class.php:38
+#: front/clientinjection.form.php:36 setup.php:94
 msgid "Data injection"
 msgstr "数据注入"
 
-#: front/popup.php:43 inc/model.class.php:1579
+#: inc/model.class.php:1579 front/popup.php:43
 msgid "Data injection report"
 msgstr "数据注入报告"
 
@@ -152,7 +152,11 @@ msgstr "插入数据正确"
 msgid "Dates format"
 msgstr "数据格式"
 
-#: inc/info.class.php:256
+#: inc/phoneinjection.class.php:67
+msgid "Domain name"
+msgstr ""
+
+#: inc/info.class.php:271
 msgid "Download file sample"
 msgstr "下载示例文件"
 
@@ -246,8 +250,8 @@ msgstr "注入遇到错误"
 msgid "Injection finished"
 msgstr "注入完成"
 
-#: inc/profile.class.php:43 inc/clientinjection.class.php:214
-#: inc/menu.class.php:56 inc/menu.class.php:57 inc/menu.class.php:61
+#: inc/profile.class.php:43 inc/menu.class.php:56 inc/menu.class.php:57
+#: inc/menu.class.php:61 inc/clientinjection.class.php:214
 msgid "Injection of the file"
 msgstr "文件注入"
 
@@ -365,7 +369,7 @@ msgstr "MAC地址端口"
 msgid "Port unicity criteria"
 msgstr ""
 
-#: front/popup.php:37 inc/mapping.class.php:117
+#: inc/mapping.class.php:117 front/popup.php:37
 msgid "See the file"
 msgstr "查看文件"
 
@@ -381,11 +385,11 @@ msgstr ""
 msgid "Specific file format options"
 msgstr "特殊格式选项"
 
-#: inc/info.class.php:84 inc/info.class.php:141 inc/mapping.class.php:124
+#: inc/mapping.class.php:124 inc/info.class.php:84 inc/info.class.php:141
 msgid "Tables"
 msgstr "表"
 
-#: front/clientinjection.form.php:85 front/model.form.php:88
+#: front/model.form.php:88 front/clientinjection.form.php:85
 msgid "The file could not be found"
 msgstr "文件未找到"
 

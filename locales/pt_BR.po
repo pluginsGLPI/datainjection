@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-09-14 10:56+0000\n"
+"POT-Creation-Date: 2023-01-26 07:49+0000\n"
 "PO-Revision-Date: 2018-06-21 12:57+0000\n"
 "Last-Translator: Cédric Anne, 2018\n"
 "Language-Team: Portuguese (Brazil) (https://www.transifex.com/teclib/teams/28042/pt_BR/)\n"
@@ -113,11 +113,11 @@ msgstr "Detecção automática"
 msgid "Can't create folder"
 msgstr "Não é possível criar a pasta"
 
-#: inc/clientinjection.class.php:156 inc/info.class.php:247
+#: inc/info.class.php:262 inc/clientinjection.class.php:156
 msgid "Choose a file"
 msgstr "Escolha um arquivo"
 
-#: inc/info.class.php:246
+#: inc/info.class.php:261
 msgid "Complementary information"
 msgstr "Informação complementar"
 
@@ -134,12 +134,12 @@ msgstr "Importar dados"
 msgid "Data check"
 msgstr "Verificar dados"
 
-#: front/clientinjection.form.php:36 inc/profile.class.php:67
-#: inc/menu.class.php:38 setup.php:94
+#: inc/profile.class.php:67 inc/menu.class.php:38
+#: front/clientinjection.form.php:36 setup.php:94
 msgid "Data injection"
 msgstr ""
 
-#: front/popup.php:43 inc/model.class.php:1579
+#: inc/model.class.php:1579 front/popup.php:43
 msgid "Data injection report"
 msgstr ""
 
@@ -155,7 +155,11 @@ msgstr "Dados para importação estão corretos"
 msgid "Dates format"
 msgstr "Formato de data"
 
-#: inc/info.class.php:256
+#: inc/phoneinjection.class.php:67
+msgid "Domain name"
+msgstr ""
+
+#: inc/info.class.php:271
 msgid "Download file sample"
 msgstr "Fazer download de arquivo de exemplo"
 
@@ -249,8 +253,8 @@ msgstr "Erros encontrados"
 msgid "Injection finished"
 msgstr "Inserção finalizada"
 
-#: inc/profile.class.php:43 inc/clientinjection.class.php:214
-#: inc/menu.class.php:56 inc/menu.class.php:57 inc/menu.class.php:61
+#: inc/profile.class.php:43 inc/menu.class.php:56 inc/menu.class.php:57
+#: inc/menu.class.php:61 inc/clientinjection.class.php:214
 msgid "Injection of the file"
 msgstr "Injetando o arquivo"
 
@@ -370,7 +374,7 @@ msgstr "Porta do endereço MAC"
 msgid "Port unicity criteria"
 msgstr "Critério de unicidade de porta"
 
-#: front/popup.php:37 inc/mapping.class.php:117
+#: inc/mapping.class.php:117 front/popup.php:37
 msgid "See the file"
 msgstr "Ver o arquivo"
 
@@ -386,11 +390,11 @@ msgstr "O tamanho do valor inserido é expansivo"
 msgid "Specific file format options"
 msgstr "Opções de formato de arquivo específico"
 
-#: inc/info.class.php:84 inc/info.class.php:141 inc/mapping.class.php:124
+#: inc/mapping.class.php:124 inc/info.class.php:84 inc/info.class.php:141
 msgid "Tables"
 msgstr "Tabelas"
 
-#: front/clientinjection.form.php:85 front/model.form.php:88
+#: front/model.form.php:88 front/clientinjection.form.php:85
 msgid "The file could not be found"
 msgstr "O arquivo não pode ser encontrado"
 
