@@ -161,6 +161,7 @@ function getTypesToInject() {
                         'PluginDatainjectionNetpointInjection'                    => 'datainjection',
                         'PluginDatainjectionKnowbaseItemCategoryInjection'        => 'datainjection',
                         'PluginDatainjectionKnowbaseItemInjection'                => 'datainjection',
+                        'PluginDatainjectionITILFollowupTemplateInjection'        => 'datainjection',
                         'PluginDatainjectionITILCategoryInjection'                => 'datainjection',
                         'PluginDatainjectionTaskCategoryInjection'                => 'datainjection',
                         'PluginDatainjectionTaskTemplateInjection'                => 'datainjection',
