@@ -70,7 +70,8 @@ class PluginDatainjectionITILFollowupTemplateInjection extends ITILFollowupTempl
       $options['ignore_fields'] = array_merge($blacklist, $notimportable);
 
       $options['displaytype']   = ["bool"           => [86],
-                                      "multiline_text" => [4, 16]];
+                                       "dropdown" => [5],
+                                       "multiline_text" => [4, 16]];
 
       return PluginDatainjectionCommonInjectionLib::addToSearchOptions($tab, $options, $this);
    }
