@@ -78,7 +78,7 @@ class PluginDatainjectionComputerInjection extends Computer
          //OS fields
          41, 43, 44, 45, 46, 48, 61, 63, 64,
          91, 92, 93, 150, 151, 152, 153, 154, 155, 156, 160, 161, 162, 163,
-         164 ,165, 166
+         164 ,165, 166, 180 /*rack*/, 205 /*domain*/, 900 /*agent*/
       ];
 
       $options['ignore_fields'] = array_merge($blacklist, $notimportable);
