@@ -32,7 +32,7 @@ if (!defined('GLPI_ROOT')) {
     die("Sorry. You can't access directly to this file");
 }
 
-class PluginDatainjectionTaskTemplateInjection extends TaskTemplate
+class PluginDatainjectionITILFollowupTemplateInjection extends ITILFollowupTemplate
                                         implements PluginDatainjectionInjectionInterface
 {
 
@@ -70,8 +70,8 @@ class PluginDatainjectionTaskTemplateInjection extends TaskTemplate
       $options['ignore_fields'] = array_merge($blacklist, $notimportable);
 
       $options['displaytype']   = ["bool"           => [86],
-                                      "dropdown" => [3],
-                                      "multiline_text" => [4, 16]];
+                                       "dropdown" => [5],
+                                       "multiline_text" => [4, 16]];
 
       return PluginDatainjectionCommonInjectionLib::addToSearchOptions($tab, $options, $this);
    }
