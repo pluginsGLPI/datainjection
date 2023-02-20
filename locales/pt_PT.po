@@ -5,7 +5,7 @@
 # 
 # Translators:
 # Rui Melo <viper5000pt@gmail.com>, 2019
-# Pedro B., 2021
+# Pedro B., 2023
 # 
 #, fuzzy
 msgid ""
@@ -14,7 +14,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-01-26 07:49+0000\n"
 "PO-Revision-Date: 2018-06-21 12:57+0000\n"
-"Last-Translator: Pedro B., 2021\n"
+"Last-Translator: Pedro B., 2023\n"
 "Language-Team: Portuguese (Portugal) (https://www.transifex.com/teclib/teams/28042/pt_PT/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -44,7 +44,7 @@ msgstr "———Escolha um campo———"
 
 #: inc/injectiontype.class.php:131
 msgid "-------Choose a table-------"
-msgstr "———Escolha uma mesa———"
+msgstr "———Escolha uma tabela———"
 
 #: inc/dropdown.class.php:62
 msgid "1 234,56"
@@ -124,7 +124,7 @@ msgstr "Informação complementar"
 
 #: inc/model.class.php:1534
 msgid "Counter"
-msgstr ""
+msgstr "Contador"
 
 #: inc/model.class.php:1459 inc/model.class.php:1495 inc/model.class.php:1532
 #: inc/model.class.php:1592 inc/model.class.php:1613
@@ -158,7 +158,7 @@ msgstr "Formato de datas"
 
 #: inc/phoneinjection.class.php:67
 msgid "Domain name"
-msgstr ""
+msgstr "Nome do domínio"
 
 #: inc/info.class.php:271
 msgid "Download file sample"
@@ -182,11 +182,11 @@ msgstr "Extensão csv exigida"
 
 #: inc/info.class.php:142
 msgid "Fields"
-msgstr "Ficheiros"
+msgstr "Campos"
 
 #: inc/modelcsv.class.php:167
 msgid "File delimitor"
-msgstr "Delimitor ficheiro"
+msgstr "Delimitador ficheiro"
 
 #: inc/clientinjection.class.php:162
 msgid "File encoding"
@@ -207,15 +207,15 @@ msgstr "Finalizada"
 
 #: inc/model.class.php:429 inc/model.class.php:704
 msgid "Float format"
-msgstr "Formato de numero de ponto flutuante"
+msgstr "Formato numérico"
 
 #: inc/model.class.php:1209
 msgid "From the model"
-msgstr "Partir do modelo"
+msgstr "A partir do modelo"
 
 #: inc/model.class.php:1524
 msgid "Global report"
-msgstr ""
+msgstr "Relatório Global"
 
 #: inc/mapping.class.php:123
 msgid "Header of the file"
@@ -244,7 +244,7 @@ msgstr "Progresso da importação"
 #: inc/model.class.php:978
 #, php-format
 msgid "Impossible to copy the file in %s"
-msgstr "Impossível para copiar o ficheiro em %s"
+msgstr "Impossível copiar o ficheiro em %s"
 
 #: inc/clientinjection.class.php:378
 msgid "Injection encounters errors"
@@ -336,7 +336,7 @@ msgstr "Não há dados para importar"
 
 #: inc/model.class.php:1525
 msgid "Number of lines processed"
-msgstr ""
+msgstr "Numero de linhas processadas"
 
 #: inc/networkequipmentinjection.class.php:72
 msgid "Number of ports"
@@ -349,7 +349,7 @@ msgstr "Identificador de objeto"
 
 #: inc/commoninjectionlib.class.php:1967
 msgid "One data is not the good type"
-msgstr "Dados não são do tipo bom"
+msgstr "Dados não são do tipo correto"
 
 #: front/mapping.form.php:60
 msgid ""
@@ -369,7 +369,7 @@ msgstr "Por favor introduza um nome para o modelo"
 
 #: inc/networkportinjection.class.php:89
 msgid "Port MAC address"
-msgstr "Porta de endereço de MAC"
+msgstr "Porta de endereço MAC"
 
 #: inc/model.class.php:449 inc/model.class.php:717
 msgid "Port unicity criteria"
@@ -421,7 +421,7 @@ msgstr "Tente estabelecer a conexão de rede é possível"
 
 #: inc/model.class.php:402 inc/model.class.php:663
 msgid "Type of data to import"
-msgstr "Tipo de dados para importar"
+msgstr "Tipo de dados a importar"
 
 #: inc/dropdown.class.php:122
 msgid "UTF-8"
@@ -433,7 +433,7 @@ msgstr "Indeterminado"
 
 #: inc/commoninjectionlib.class.php:1898
 msgid "Update from CSV file"
-msgstr "Atualizara partir do ficheiro CSV"
+msgstr "Atualizar a partir do ficheiro CSV"
 
 #: inc/clientinjection.class.php:88
 msgid "Use an existing model"
@@ -470,15 +470,15 @@ msgstr "Você pode iniciar a criação do modelo clicando no botão"
 
 #: inc/webservice.class.php:123
 msgid "You cannot access this entity"
-msgstr "Você não pode acessar esta entidade"
+msgstr "Você não pode aceder a esta entidade"
 
 #: inc/webservice.class.php:86 inc/webservice.class.php:95
 msgid "You cannot access this model"
-msgstr "Você não pode acessar este modelo"
+msgstr "Você não pode aceder este modelo"
 
 #: inc/model.class.php:896
 msgid "Your model should allow import and/or update of data"
-msgstr "Seu modelo deve permitir a importação e/ou atualização de dados"
+msgstr "O seu modelo deve permitir a importação e/ou atualização de dados"
 
 #: inc/dropdown.class.php:37
 msgid "dd-mm-yyyy"
