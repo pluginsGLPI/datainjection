@@ -2070,6 +2070,11 @@ class PluginDatainjectionCommonInjectionLib
          }
       );
 
+      foreach ($type_searchOptions as $key => &$value) {
+         $itemtype = getItemTypeForTable($value['table']);
+         $value['name'] = $value['name'] . " (" . $itemtype::getTypeName(1) . ")";
+      }
+
       return $type_searchOptions;
    }
 
