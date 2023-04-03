@@ -231,7 +231,7 @@ function plugin_datainjection_migration_2121_2122(Migration $migration) {
    $migration->dropField("glpi_plugin_datainjection_models", "perform_network_connection");
 
    //remove related display pref
-   $migration->updateDisplayPrefs([],["PluginDatainjectionModel" => 9]);
+   $migration->updateDisplayPrefs([],["PluginDatainjectionModel" => [9]]);
    $migration->executeMigration();
 }
 
