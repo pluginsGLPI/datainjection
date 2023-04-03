@@ -62,6 +62,7 @@ function plugin_datainjection_install() {
          plugin_datainjection_migration_24_250($migration);
          plugin_datainjection_migration_251_252($migration);
          plugin_datainjection_migration_264_270($migration);
+         plugin_datainjection_migration_2121_2122($migration);
          break;
 
       case 0 :
@@ -81,7 +82,6 @@ function plugin_datainjection_install() {
                      `can_overwrite_if_not_empty` int NOT NULL default '1',
                      `is_private` tinyint NOT NULL default '1',
                      `is_recursive` tinyint NOT NULL default '0',
-                     `perform_network_connection` tinyint NOT NULL default '0',
                      `users_id` int {$default_key_sign} NOT NULL,
                      `date_format` varchar(11) NOT NULL default 'yyyy-mm-dd',
                      `float_format` tinyint NOT NULL DEFAULT '0',
@@ -188,6 +188,7 @@ function plugin_datainjection_install() {
 
          plugin_datainjection_migration_264_270($migration);
          plugin_datainjection_migration_290_2100($migration);
+         plugin_datainjection_migration_2121_2122($migration);
          break;
 
       default :
@@ -220,6 +221,18 @@ function plugin_datainjection_uninstall() {
 
    plugin_init_datainjection();
    return true;
+}
+
+function plugin_datainjection_migration_2121_2122(Migration $migration) {
+
+   $migration->setVersion('2.12.2');
+
+   //remove useless field
+   $migration->dropField("glpi_plugin_datainjection_models", "perform_network_connection");
+
+   //remove related display pref
+   $migration->updateDisplayPrefs([],["PluginDatainjectionModel" => [9]]);
+   $migration->executeMigration();
 }
 
 function plugin_datainjection_migration_290_2100(Migration $migration) {
@@ -267,6 +280,7 @@ function plugin_datainjection_migration_264_270(Migration $migration) {
 
    $migration->executeMigration();
 }
+
 
 function plugin_datainjection_migration_251_252(Migration $migration) {
    global $DB;

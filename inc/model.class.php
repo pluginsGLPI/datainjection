@@ -432,17 +432,6 @@ class PluginDatainjectionModel extends CommonDBTM
       ];
 
       $tab[] = [
-         'id'            => 9,
-         'table'         => $this->getTable(),
-         'field'         => 'perform_network_connection',
-         'name'          => __(
-            'Try to establish network connection is possible',
-            'datainjection'
-            ),
-         'datatype'      => 'bool',
-      ];
-
-      $tab[] = [
          'id'            => 10,
          'table'         => $this->getTable(),
          'field'         => 'port_unicity',
@@ -706,19 +695,6 @@ class PluginDatainjectionModel extends CommonDBTM
        Dropdown::showFromArray(
           'float_format', PluginDatainjectionDropdown::floatFormats(),
           ['value' => $this->fields['float_format']]
-       );
-       echo "</td></tr>";
-
-       echo "<tr class='tab_bg_1'>";
-       echo "<td>".__('Try to establish network connection is possible', 'datainjection')."</td>";
-       echo "<td>";
-       Dropdown::showYesNo("perform_network_connection", $this->fields['perform_network_connection']);
-       echo "</td>";
-       echo "<td>".__('Port unicity criteria', 'datainjection')."</td>";
-       echo "<td>";
-       Dropdown::showFromArray(
-          'port_unicity', PluginDatainjectionDropdown::portUnicityValues(),
-          ['value' => $this->fields['port_unicity']]
        );
        echo "</td></tr>";
 
