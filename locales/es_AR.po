@@ -1,0 +1,488 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+# 
+# Translators:
+# Nicolás Gaviola, 2023
+# 
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2023-05-25 11:40+0000\n"
+"PO-Revision-Date: 2018-06-21 12:57+0000\n"
+"Last-Translator: Nicolás Gaviola, 2023\n"
+"Language-Team: Spanish (Argentina) (https://app.transifex.com/teclib/teams/28042/es_AR/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: es_AR\n"
+"Plural-Forms: nplurals=3; plural=n == 1 ? 0 : n != 0 && n % 1000000 == 0 ? 1 : 2;\n"
+
+#: inc/model.class.php:1127
+#, php-format
+msgid "%d awaited column"
+msgid_plural "%d awaited columns"
+msgstr[0] "%d columna esperada"
+msgstr[1] "%d columnas esperadas"
+msgstr[2] "%d columnas esperadas"
+
+#: inc/model.class.php:1132
+#, php-format
+msgid "%d found column"
+msgid_plural "%d found columns"
+msgstr[0] "%d columna encontrada"
+msgstr[1] "%d columnas encontradas"
+msgstr[2] "%d columnas encontradas"
+
+#: inc/injectiontype.class.php:193
+msgid "-------Choose a field-------"
+msgstr "-------Elige un campo-------"
+
+#: inc/injectiontype.class.php:131
+msgid "-------Choose a table-------"
+msgstr "-------Elige una tabla-------"
+
+#: inc/dropdown.class.php:62
+msgid "1 234,56"
+msgstr "1 234,56"
+
+#: inc/dropdown.class.php:60
+msgid "1 234.56"
+msgstr "1 234.56"
+
+#: inc/dropdown.class.php:64
+msgid "1,234.56"
+msgstr "1,234.56"
+
+#: inc/commoninjectionlib.class.php:1896
+msgid "Add from CSV file"
+msgstr "Añadir desde un archivo CSV"
+
+#: inc/dropdown.class.php:90 inc/model.class.php:756
+msgid "Additional Information"
+msgstr "Información adicional"
+
+#: inc/model.class.php:672
+msgid "Advanced options"
+msgstr "Opciones avanzadas"
+
+#: inc/model.class.php:412 inc/model.class.php:676
+msgid "Allow creation of dropdowns"
+msgstr "Permitir la creación de menús desplegables"
+
+#: inc/model.class.php:384 inc/model.class.php:664
+msgid "Allow lines creation"
+msgstr "Permitir la creación de líneas"
+
+#: inc/model.class.php:393 inc/model.class.php:667
+msgid "Allow lines update"
+msgstr "Permitir actualización de líneas"
+
+#: inc/model.class.php:689
+msgid "Allow update of existing fields"
+msgstr "Permitir la actualización de campos existentes"
+
+#: inc/computerinjection.class.php:72
+msgid "Antivirus name"
+msgstr "Nombre del antivirus"
+
+#: inc/model.class.php:1427 inc/model.class.php:1564
+msgid "Array of successful injections"
+msgstr "Matriz de inyecciones exitosas"
+
+#: inc/model.class.php:1462 inc/model.class.php:1584
+msgid "Array of unsuccessful injections"
+msgstr "Matriz de inyecciones fallidas"
+
+#: inc/model.class.php:1172
+msgid "At least one column is incorrect"
+msgstr "Al menos una columna es incorrecta"
+
+#: inc/commoninjectionlib.class.php:1959
+msgid "At least one mandatory field is not present"
+msgstr "Al menos un campo obligatorio no está presente"
+
+#: inc/dropdown.class.php:119
+msgid "Automatic detection"
+msgstr "Detección automática"
+
+#: hook.php:128 hook.php:145 setup.php:63
+msgid "Can't create folder"
+msgstr "No se puede crear la carpeta"
+
+#: inc/info.class.php:262 inc/clientinjection.class.php:156
+msgid "Choose a file"
+msgstr "Elegir un archivo"
+
+#: inc/info.class.php:261
+msgid "Complementary information"
+msgstr "Información complementaria"
+
+#: inc/model.class.php:1510
+msgid "Counter"
+msgstr "Contador"
+
+#: inc/model.class.php:1435 inc/model.class.php:1471 inc/model.class.php:1508
+#: inc/model.class.php:1568 inc/model.class.php:1589
+msgid "Data Import"
+msgstr "Importación de datos"
+
+#: inc/model.class.php:1470 inc/model.class.php:1588 inc/model.class.php:1605
+msgid "Data check"
+msgstr "Comprobación de datos"
+
+#: inc/profile.class.php:67 inc/menu.class.php:38
+#: front/clientinjection.form.php:36 setup.php:94
+msgid "Data injection"
+msgstr "Inyección de datos"
+
+#: inc/model.class.php:1555 front/popup.php:43
+msgid "Data injection report"
+msgstr "Informe de inyección de datos"
+
+#: inc/commoninjectionlib.class.php:1975
+msgid "Data not found"
+msgstr "Datos no encontrados"
+
+#: inc/commoninjectionlib.class.php:1963
+msgid "Data to insert are correct"
+msgstr "Los datos a insertar son correctos"
+
+#: inc/model.class.php:420 inc/model.class.php:680
+msgid "Dates format"
+msgstr "Formato de fechas"
+
+#: inc/phoneinjection.class.php:67
+msgid "Domain name"
+msgstr "Nombre de dominio"
+
+#: inc/info.class.php:271
+msgid "Download file sample"
+msgstr "Descargar archivo de muestra"
+
+#: inc/webservice.class.php:115
+msgid "Entity unknown"
+msgstr "Entidad desconocida"
+
+#: inc/clientinjection.class.php:393
+msgid "Export rapport in PDF"
+msgstr "Exportar informe en PDF"
+
+#: inc/clientinjection.class.php:399
+msgid "Export the log"
+msgstr "Exportar el registro"
+
+#: inc/model.class.php:963
+msgid "Extension csv required"
+msgstr "Extensión csv requerida"
+
+#: inc/info.class.php:142
+msgid "Fields"
+msgstr "Campos"
+
+#: inc/modelcsv.class.php:167
+msgid "File delimitor"
+msgstr "Delimitador de archivos"
+
+#: inc/clientinjection.class.php:162
+msgid "File encoding"
+msgstr "Codificación de archivos"
+
+#: inc/model.class.php:962
+msgid "File format is wrong"
+msgstr "El formato de archivo es incorrecto"
+
+#: inc/dropdown.class.php:87 inc/model.class.php:751
+#: inc/clientinjection.class.php:153
+msgid "File to inject"
+msgstr "Archivo para inyectar"
+
+#: inc/clientinjection.class.php:407
+msgid "Finish"
+msgstr "Finalizar"
+
+#: inc/model.class.php:429 inc/model.class.php:693
+msgid "Float format"
+msgstr "Formato flotante"
+
+#: inc/model.class.php:1185
+msgid "From the model"
+msgstr "Del modelo"
+
+#: inc/model.class.php:1500
+msgid "Global report"
+msgstr "Informe global"
+
+#: inc/mapping.class.php:123
+msgid "Header of the file"
+msgstr "Encabezado del archivo"
+
+#: inc/modelcsv.class.php:163
+msgid "Header's presence"
+msgstr "Presencia de cabecera"
+
+#: inc/dropdown.class.php:123
+msgid "ISO8859-1"
+msgstr "ISO8859-1"
+
+#: inc/commoninjectionlib.class.php:1955
+msgid "Import failed"
+msgstr "Importación fallida"
+
+#: inc/commoninjectionlib.class.php:1951
+msgid "Import not allowed"
+msgstr "Importación no permitida"
+
+#: inc/clientinjection.class.php:210
+msgid "Import progress"
+msgstr "Progreso de la importación"
+
+#: inc/model.class.php:954
+#, php-format
+msgid "Impossible to copy the file in %s"
+msgstr "Imposible copiar el archivo en %s"
+
+#: inc/clientinjection.class.php:378
+msgid "Injection encounters errors"
+msgstr "Se encontraron errores en la inyección"
+
+#: inc/clientinjection.class.php:297
+msgid "Injection finished"
+msgstr "Inyección terminada"
+
+#: inc/profile.class.php:43 inc/menu.class.php:56 inc/menu.class.php:57
+#: inc/menu.class.php:61 inc/clientinjection.class.php:214
+msgid "Injection of the file"
+msgstr "Inyección del archivo"
+
+#: inc/clientinjection.class.php:280
+#, php-format
+msgid "Injection of the file... %d%%"
+msgstr "Inyección del archivo... %d%%"
+
+#: inc/clientinjection.class.php:375
+msgid "Injection successful"
+msgstr "Inyección exitosa"
+
+#: inc/model.class.php:1436 inc/model.class.php:1472 inc/model.class.php:1509
+#: inc/model.class.php:1569 inc/model.class.php:1590
+msgid "Injection type"
+msgstr "Tipo de inyección"
+
+#: inc/clientinjection.class.php:370
+msgid "Injection's results"
+msgstr "Resultados de la inyección"
+
+#: inc/model.class.php:1180
+msgid "Into the file"
+msgstr "En el archivo"
+
+#: inc/clientinjection.class.php:180
+msgid "Launch the import"
+msgstr "Iniciar la importación"
+
+#: inc/model.class.php:1434 inc/model.class.php:1469 inc/model.class.php:1567
+#: inc/model.class.php:1587
+msgid "Line"
+msgstr "Línea"
+
+#: inc/mapping.class.php:126
+msgid "Link field"
+msgstr "Campo de enlace"
+
+#: inc/model.class.php:784
+msgid "Load this file"
+msgstr "Cargar este archivo"
+
+#: inc/info.class.php:86 inc/info.class.php:143
+msgid "Mandatory information"
+msgstr "Información obligatoria"
+
+#: inc/dropdown.class.php:88 inc/model.class.php:753
+msgid "Mappings"
+msgstr "Mapeos"
+
+#: inc/dropdown.class.php:94
+msgid "Model available for use"
+msgstr "Modelo disponible para su uso"
+
+#: inc/profile.class.php:40
+msgid "Model management"
+msgstr "Gestión de modelos"
+
+#: inc/webservice.class.php:78
+msgid "Model unknown"
+msgstr "Modelo desconocido"
+
+#: inc/clientinjection.class.php:96
+msgid "No model currently available"
+msgstr "Ningún modelo disponible actualmente"
+
+#: inc/commoninjectionlib.class.php:1939
+msgid "No right to import data"
+msgstr "Sin permiso para importar datos"
+
+#: inc/commoninjectionlib.class.php:1943
+msgid "No right to update data"
+msgstr "Sin permiso para actualizar datos"
+
+#: inc/model.class.php:1040
+msgid "Not data to import"
+msgstr "No hay datos para importar"
+
+#: inc/model.class.php:1501
+msgid "Number of lines processed"
+msgstr "Número de líneas procesadas"
+
+#: inc/networkequipmentinjection.class.php:72
+msgid "Number of ports"
+msgstr "Número de puertos"
+
+#: inc/model.class.php:1437 inc/model.class.php:1473 inc/model.class.php:1570
+#: inc/model.class.php:1591
+msgid "Object Identifier"
+msgstr "Identificador de objeto"
+
+#: inc/commoninjectionlib.class.php:1967
+msgid "One data is not the good type"
+msgstr "Un dato no es del tipo bueno"
+
+#: front/mapping.form.php:60
+msgid ""
+"One link field must be selected: it will be used to check if data already "
+"exists"
+msgstr ""
+"Se debe seleccionar un campo de enlace: se utilizará para comprobar si ya "
+"existen datos"
+
+#: front/clientinjection.form.php:52
+msgid "One mandatory field is not filled"
+msgstr "Un campo obligatorio no está lleno"
+
+#: inc/model.class.php:863
+msgid "Please enter a name for the model"
+msgstr "Por favor, introduzca un nombre para el modelo."
+
+#: inc/networkportinjection.class.php:89
+msgid "Port MAC address"
+msgstr "Dirección MAC del puerto"
+
+#: inc/model.class.php:438
+msgid "Port unicity criteria"
+msgstr "Criterios de unicidad del puerto"
+
+#: inc/mapping.class.php:117 front/popup.php:37
+msgid "See the file"
+msgstr "Ver el archivo"
+
+#: inc/clientinjection.class.php:387
+msgid "See the log"
+msgstr "Ver el registro"
+
+#: inc/commoninjectionlib.class.php:1947
+msgid "Size of the inserted value is to expansive"
+msgstr "El tamaño del valor insertado es demasiado grande"
+
+#: inc/modelcsv.class.php:160
+msgid "Specific file format options"
+msgstr "Opciones específicas de formato de archivo"
+
+#: inc/mapping.class.php:124 inc/info.class.php:84 inc/info.class.php:141
+msgid "Tables"
+msgstr "Tablas"
+
+#: front/model.form.php:88 front/clientinjection.form.php:85
+msgid "The file could not be found"
+msgstr "No se ha encontrado el archivo"
+
+#: inc/model.class.php:1100
+msgid "The file is ok."
+msgstr "El archivo es correcto."
+
+#: inc/model.class.php:1125
+msgid "The number of columns of the file is incorrect."
+msgstr "El número de columnas del fichero es incorrecto."
+
+#: front/mapping.form.php:76
+msgid ""
+"This step allows you to add informations not present in the file. You'll be "
+"asked for theses informations while using the model."
+msgstr ""
+"Este paso le permite agregar información que no está presente en el archivo."
+" Se le pedirá esta información mientras usa el modelo."
+
+#: inc/model.class.php:402 inc/model.class.php:652
+msgid "Type of data to import"
+msgstr "Tipo de datos a importar"
+
+#: inc/dropdown.class.php:122
+msgid "UTF-8"
+msgstr "UTF-8"
+
+#: inc/model.class.php:1352 inc/commoninjectionlib.class.php:1979
+msgid "Undetermined"
+msgstr "Indeterminado"
+
+#: inc/commoninjectionlib.class.php:1898
+msgid "Update from CSV file"
+msgstr "Actualizar desde archivo CSV"
+
+#: inc/clientinjection.class.php:88
+msgid "Use an existing model"
+msgstr "Utilizar un modelo existente"
+
+#: inc/model.class.php:719
+msgctxt "button"
+msgid "Validate the model"
+msgstr "Validar el modelo"
+
+#: inc/commoninjectionlib.class.php:1971
+msgid "Warning"
+msgstr "Advertencia"
+
+#: inc/clientinjection.class.php:170
+msgid "Warning : existing mapped column will be overridden"
+msgstr "Advertencia: la columna mapeada existente se anulará"
+
+#: inc/clientinjection.class.php:173
+msgid ""
+"Watch out, you're about to inject data into GLPI. Are you sure you want to "
+"do it ?"
+msgstr ""
+"Cuidado, está a punto de inyectar datos en GLPI. ¿Estás seguro de que "
+"quieres hacerlo?"
+
+#: inc/model.class.php:891
+msgid "You are not the initial creator of this model"
+msgstr "No eres el creador inicial de este modelo."
+
+#: inc/clientinjection.class.php:105
+msgid "You can start the model creation by hitting the button"
+msgstr "Puede iniciar la creación del modelo presionando el botón"
+
+#: inc/webservice.class.php:123
+msgid "You cannot access this entity"
+msgstr "No puedes acceder a esta entidad"
+
+#: inc/webservice.class.php:86 inc/webservice.class.php:95
+msgid "You cannot access this model"
+msgstr "No puedes acceder a este modelo"
+
+#: inc/model.class.php:872
+msgid "Your model should allow import and/or update of data"
+msgstr "Su modelo debe permitir la importación y/o actualización de datos"
+
+#: inc/dropdown.class.php:37
+msgid "dd-mm-yyyy"
+msgstr "dd-mm-aaaa"
+
+#: inc/dropdown.class.php:39
+msgid "mm-dd-yyyy"
+msgstr "mm-dd-aaaa"
+
+#: inc/dropdown.class.php:41
+msgid "yyyy-mm-dd"
+msgstr "aaaa-mm-dd"
