@@ -22,7 +22,7 @@
  * You should have received a copy of the GNU General Public License
  * along with DataInjection. If not, see <http://www.gnu.org/licenses/>.
  * -------------------------------------------------------------------------
- * @copyright Copyright (C) 2007-2022 by DataInjection plugin team.
+ * @copyright Copyright (C) 2007-2023 by DataInjection plugin team.
  * @license   GPLv2 https://www.gnu.org/licenses/gpl-2.0.html
  * @link      https://github.com/pluginsGLPI/datainjection
  * -------------------------------------------------------------------------
