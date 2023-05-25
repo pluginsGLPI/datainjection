@@ -2070,6 +2070,21 @@ class PluginDatainjectionCommonInjectionLib
          }
       );
 
+      $main_itemtype = self::getItemtypeByInjectionClass($injectionClass);
+      foreach ($type_searchOptions as $key => &$value) {
+         $value_itemtype = getItemTypeForTable($value['table']);
+         $value_itemtype_name_singular = $value_itemtype::getTypeName(1);
+         $value_itemtype_name_plural   = $value_itemtype::getTypeName(Session::getPluralNumber());
+         if (
+             $main_itemtype === $value_itemtype
+             || $value['name'] === $value_itemtype_name_singular
+             || $value['name'] === $value_itemtype_name_plural
+         ) {
+             continue;
+         }
+         $value['name'] = $value['name'] . " (" . $value_itemtype_name_singular . ")";
+      }
+
       return $type_searchOptions;
    }
 
