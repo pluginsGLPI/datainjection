@@ -110,7 +110,7 @@ class PluginDatainjectionInfocomInjection extends Infocom
       unset($options['ignore_fields'][$key]);
 
       $options['displaytype']   = ["date"           => [4, 5, 23, 24, 25, 27, 28, 159],
-                                      "dropdown"         => [6, 9, 19, 123],
+                                      "dropdown"         => [6, 9, 19, 123, 173],
                                       "dropdown_integer" => [6, 14],
                                       "decimal"          => [8, 13, 17],
                                       "sink_type"        => [15],
