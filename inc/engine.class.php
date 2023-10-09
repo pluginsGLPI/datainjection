@@ -149,6 +149,10 @@ class PluginDatainjectionEngine
       //Add injected line number to the result array
       $results['line'] = $index;
       if ($results['status'] != PluginDatainjectionCommonInjectionLib::SUCCESS) {
+          $errorMessage = $results['hookerrormessage'];
+          if (isset($errorMessage)) {
+            array_push($line, $errorMessage);
+          }
           $this->error_lines[] = $line;
       }
        return $results;

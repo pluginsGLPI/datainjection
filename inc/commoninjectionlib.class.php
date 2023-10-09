@@ -1367,6 +1367,7 @@ class PluginDatainjectionCommonInjectionLib
     * @return an array which contains the injection results
    **/
    public function processAddOrUpdate() {
+      global $DB, $PLUGIN_HOOKS;
       $process  = false;
       $add      = true;
       $accepted = false;
@@ -1377,6 +1378,27 @@ class PluginDatainjectionCommonInjectionLib
       // Initial value, will be change when problem
       $this->results['status']                     = self::SUCCESS;
       $this->results[self::ACTION_CHECK]['status'] = self::SUCCESS;
+
+      $plugin = new Plugin();
+
+      if ($plugin->isInstalled('statecheck') && $plugin->isActivated('statecheck')) {
+
+        $versionInfo = Plugin::doOneHook('statecheck', 'plugin_version_statecheck');
+        $statecheckVersion = $versionInfo['version'];
+
+        if (version_compare($statecheckVersion, PLUGIN_DATAINJECTION_MIN_STATECHECK, 'ge')){
+            $hookResult = Plugin::doOneHook('statecheck', 'plugin_pre_item_add_statecheck', $this->values);
+            if($hookResult['hookerror']) {
+                $this->results['status']                     = self::FAILED;
+                $this->results[self::ACTION_CHECK]['status'] = self::FAILED;
+                if (isset($hookResult['hookmessage'])) {
+                    $this->results['hookerrormessage'] = $hookResult['hookmessage'];
+                }
+                return $this->results;
+            }
+        }
+
+      }
 
       //Manage fields belonging to relations between tables
       $this->manageRelations();
@@ -1503,7 +1525,6 @@ class PluginDatainjectionCommonInjectionLib
       }
       return $this->results;
    }
-
 
     /**
     * Perform data injection into GLPI DB

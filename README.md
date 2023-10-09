@@ -24,6 +24,10 @@ Data to be imported using the plugins are:
 - management data (contract, contact, supplier),
 - configuration data (user, group, entity).
 
+## Plugins Integrations
+*>= 2.13.4*: **Statecheck @2.4.0** - From these versions, if Statecheck is installed and activated, Data Injection invokes its hook to check defined rules for each CSV entry;
+The resulting CSV contains the last column with all the rules fired but not respected.
+
 ## Documentation
 
 We maintain a detailed documentation here -> [Documentation](https://glpi-plugins.readthedocs.io/en/latest/datainjection/index.html)
