@@ -63,7 +63,7 @@ class PluginDatainjectionApplianceInjection extends Appliance
       $options['ignore_fields'] = array_merge($blacklist, $notimportable);
       $options['displaytype']   = [
                "multiline_text" => [4],
-               "dropdown"       => [10, 11, 32],
+               "dropdown"       => [8, 10, 11, 32, 49],
                "user"           => [6, 24],
                "bool"           => [7, 61]
       ];
