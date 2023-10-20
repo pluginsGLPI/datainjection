@@ -87,6 +87,8 @@ function plugin_datainjection_install() {
                      `float_format` tinyint NOT NULL DEFAULT '0',
                      `port_unicity` tinyint NOT NULL DEFAULT '0',
                      `step` int NOT NULL DEFAULT '0',
+		               `csvfilename` VARCHAR(255) NOT NULL DEFAULT '',
+                     `enable_scheduled_injection` tinyint NOT NULL DEFAULT 0,
                      PRIMARY KEY  (`id`)
                    ) ENGINE=InnoDB DEFAULT CHARSET={$default_charset} COLLATE={$default_collation} ROW_FORMAT=DYNAMIC;";
           $DB->queryOrDie($query, $DB->error());
@@ -193,9 +195,25 @@ function plugin_datainjection_install() {
 
       default :
          break;
-   }
+  }
+   
+	// Register crontask DataInjection
 
-   return true;
+	$cron = new CronTask ();
+
+	if (! $cron->getFromDBbyName ( 'PluginDatainjectionCron', 'DataInjection' )) {
+		CronTask::Register ( 'PluginDatainjectionCron', 'DataInjection', DAY_TIMESTAMP, // 86400 sec
+		[ // 'allowmode', 'comment', 'hourmax', 'hourmin', 'logs_lifetime', 'mode', 'param', 'state'
+				'state' => CronTask::STATE_DISABLE,
+				'comment' => 'File injection from CSV with defined models',
+				'mode' => CronTask::MODE_EXTERNAL,
+				'hourmin' => '3',
+				'hourmax' => '8'
+		] );
+	}
+
+
+	return true;
 }
 
 
@@ -220,6 +238,9 @@ function plugin_datainjection_uninstall() {
    }
 
    plugin_init_datainjection();
+   
+   CronTask::Unregister('PluginDatainjectionCron');
+   
    return true;
 }
 
