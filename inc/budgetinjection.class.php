@@ -65,19 +65,19 @@ class PluginDatainjectionBudgetInjection extends Budget
 
       $tab                 = Search::getOptions(get_parent_class($this));
 
-      $tab[3]['checktype'] = 'date';
-      $tab[4]['checktype'] = 'float';
-      $tab[5]['checktype'] = 'date';
+      $tab[5]['checktype'] = 'date'; // start date
+      $tab[6]['checktype'] = 'date'; // end date
+      $tab[7]['checktype'] = 'float'; // amount
 
       //Remove some options because some fields cannot be imported
       $blacklist = PluginDatainjectionCommonInjectionLib::getBlacklistedOptions(get_parent_class($this));
       $notimportable            = [];
       $options['ignore_fields'] = array_merge($blacklist, $notimportable);
 
-      $options['displaytype']   = ["date"           => [3,5],
+      $options['displaytype']   = ["date"           => [5,6],
                                       "yesno"          => [86],
                                       "multiline_text" => [16, 90],
-                                      "decimal"        => [4]];
+                                      "decimal"        => [7]];
 
       return PluginDatainjectionCommonInjectionLib::addToSearchOptions($tab, $options, $this);
    }
