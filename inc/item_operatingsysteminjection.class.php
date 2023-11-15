@@ -92,6 +92,25 @@ class PluginDatainjectionItem_OperatingsystemInjection extends Item_OperatingSys
       return $lib->getInjectionResults();
    }
 
+
+   /**
+    * @param $injectionClass
+    * @param $values
+    * @param $options
+   **/
+  function customDataAlreadyInDB($injectionClass, $values, $options) {
+      $item_operatingsystem = new Item_OperatingSystem();
+      if (!$item_operatingsystem->getFromDBByCrit([
+         'itemtype' => $values['itemtype'],
+         'items_id' => $values['items_id'],
+      ])) {
+         return false;
+      } else {
+         return $item_operatingsystem->getID();
+      }
+   }
+
+
    /**
     * @param $primary_type
     * @param $values
