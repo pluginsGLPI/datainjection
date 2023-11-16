@@ -94,9 +94,9 @@ class PluginDatainjectionItem_OperatingsystemInjection extends Item_OperatingSys
 
 
    /**
-    * @param $injectionClass
-    * @param $values
-    * @param $options
+    * @param PluginDatainjectionInjectionInterface $injectionClass
+    * @param array $values
+    * @param array $options
    **/
   function customDataAlreadyInDB($injectionClass, $values, $options) {
       $item_operatingsystem = new Item_OperatingSystem();
