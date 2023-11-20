@@ -338,7 +338,7 @@ msgstr "İşlenecek satır sayısı"
 
 #: inc/networkequipmentinjection.class.php:72
 msgid "Number of ports"
-msgstr "Kapıların numarası"
+msgstr "Bağlantı noktası sayısı"
 
 #: inc/model.class.php:1437 inc/model.class.php:1473 inc/model.class.php:1570
 #: inc/model.class.php:1591
@@ -367,11 +367,11 @@ msgstr "Bu model için bir ad yazın"
 
 #: inc/networkportinjection.class.php:89
 msgid "Port MAC address"
-msgstr "Kapı MAC adresi"
+msgstr "Bağlantı noktası MAC adresi"
 
 #: inc/model.class.php:438
 msgid "Port unicity criteria"
-msgstr "Kapı eşsizlik ölçütü"
+msgstr "Bağlantı noktası eşsizlik ölçütü"
 
 #: inc/mapping.class.php:117 front/popup.php:37
 msgid "See the file"
