@@ -3,7 +3,7 @@
    <name>Data Injection</name>
    <key>datainjection</key>
    <state>stable</state>
-   <logo>https://raw.githubusercontent.com/pluginsGLPI/datainjection/master/datainjection.png</logo>
+   <logo>https://raw.githubusercontent.com/pluginsGLPI/datainjection/main/datainjection.png</logo>
    <description>
       <short>
          <cs><![CDATA[Tento zásuvný modul umožňuje importovat do GLPI data z CSV souborů.]]></cs>
@@ -299,10 +299,10 @@
          </fr>
    </tags>
       <screenshots>
-      <screenshot>https://raw.githubusercontent.com/pluginsGLPI/datainjection/master/screenshots/datainjection.gif</screenshot>
-      <screenshot>https://raw.githubusercontent.com/pluginsGLPI/datainjection/master/screenshots/datainjection_conf.png</screenshot>
-      <screenshot>https://raw.githubusercontent.com/pluginsGLPI/datainjection/master/screenshots/datainjection_mapping.png</screenshot>
-      <screenshot>https://raw.githubusercontent.com/pluginsGLPI/datainjection/master/screenshots/datainjection_import_success.png</screenshot>
+      <screenshot>https://raw.githubusercontent.com/pluginsGLPI/datainjection/main/screenshots/datainjection.gif</screenshot>
+      <screenshot>https://raw.githubusercontent.com/pluginsGLPI/datainjection/main/screenshots/datainjection_conf.png</screenshot>
+      <screenshot>https://raw.githubusercontent.com/pluginsGLPI/datainjection/main/screenshots/datainjection_mapping.png</screenshot>
+      <screenshot>https://raw.githubusercontent.com/pluginsGLPI/datainjection/main/screenshots/datainjection_import_success.png</screenshot>
    </screenshots>
    <license>GPL v2+</license>
 </root>
