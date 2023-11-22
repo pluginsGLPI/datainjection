@@ -1552,6 +1552,9 @@ class PluginDatainjectionCommonInjectionLib
                self::logAddOrUpdate($item, $add);
             }
          } else {
+            if ($item->maybeDynamic()) {
+               $toinject['is_dynamic'] = 0;
+            }
             if ($item->update($toinject)) {
                $newID = $toinject['id'];
                self::logAddOrUpdate($item, $add);
