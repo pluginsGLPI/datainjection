@@ -65,8 +65,8 @@ class PluginDatainjectionEngine
     /**
     * Inject one line of data
     *
-    * @param $line   one line of data to import
-    * @param $index  the line number is the file
+    * @param string $line   one line of data to import
+    * @param int $index  the line number is the file
    **/
    function injectLine($line, $index) {
 

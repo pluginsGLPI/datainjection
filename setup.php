@@ -79,9 +79,11 @@ function plugin_init_datainjection() {
 
       // Javascript file
       $PLUGIN_HOOKS['add_javascript']['datainjection'] = 'js/datainjection.js';
+      $PLUGIN_HOOKS[\Glpi\Plugin\Hooks::API_CONTROLLERS]['datainjection'] = [
+         PluginDatainjectionApiController::class
+      ];
 
       $INJECTABLE_TYPES = [];
-
    }
 }
 

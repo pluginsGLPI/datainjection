@@ -932,7 +932,7 @@ class PluginDatainjectionModel extends CommonDBTM
 
       $file_encoding     = (isset($options['file_encoding'])
                           ?$options['file_encoding'] :PluginDatainjectionBackend::ENCODING_AUTO);
-      $webservice        = (isset($options['webservice'])?$options['webservice']:false);
+      $from_api        = (isset($options['from_api'])?$options['from_api']:false);
       $original_filename = (isset($options['original_filename'])?$options['original_filename']:false);
       $unique_filename   = (isset($options['unique_filename'])?$options['unique_filename']:false);
       $injectionData     = false;
@@ -942,7 +942,7 @@ class PluginDatainjectionModel extends CommonDBTM
       //Get model & model specific fields
       $this->loadSpecificModel();
 
-      if (!$webservice) {
+      if (!$from_api) {
          //Get and store uploaded file
          $original_filename           = $_FILES['filename']['name'];
          $temporary_uploaded_filename = $_FILES["filename"]["tmp_name"];
@@ -961,7 +961,7 @@ class PluginDatainjectionModel extends CommonDBTM
       if ($this->specific_model->checkFileName($original_filename)) {
          $message  = __('File format is wrong', 'datainjection');
          $message .= "<br>".__('Extension csv required', 'datainjection');
-         if (!$webservice) {
+         if (!$from_api) {
             Session::addMessageAfterRedirect($message, true, ERROR, false);
          }
          //unlink($temporary_uniquefilename);
@@ -976,8 +976,8 @@ class PluginDatainjectionModel extends CommonDBTM
          $backend->setHeaderPresent($this->specific_model->fields['is_header_present']);
          $backend->setDelimiter($this->specific_model->fields['delimiter']);
 
-         if (!$webservice) {
-            //Read n line from the CSV file if not webservice
+         if (!$from_api) {
+            //Read n line from the CSV file if not from API
             $injectionData = $backend->read(20);
          } else {
             //Read the whole file
