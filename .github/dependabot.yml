@@ -14,5 +14,8 @@ updates:
     allow:
       - dependency-type: "direct"
     open-pull-requests-limit: 100
-    target-branch: "main"
     versioning-strategy: "increase"
+    groups:
+      dev-dependencies:
+        patterns:
+          - "*"
