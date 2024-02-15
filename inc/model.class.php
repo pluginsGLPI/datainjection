@@ -991,7 +991,7 @@ class PluginDatainjectionModel extends CommonDBTM
 
          if (!$webservice) {
             //Read n line from the CSV file if not webservice
-            $injectionData = $backend->read(20);
+            $injectionData = $backend->read(-1);
          } else {
             //Read the whole file
             $injectionData = $backend->read(-1);
