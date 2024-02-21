@@ -214,7 +214,9 @@ function getTypesToInject() {
                         'PluginDatainjectionDeviceDriveInjection'                 => 'datainjection',
                         'PluginDatainjectionDeviceNetworkCardInjection'           => 'datainjection',
                         'PluginDatainjectionApplianceInjection'                   => 'datainjection',
-                        'PluginDatainjectionCertificateInjection'                 => 'datainjection'
+			               'PluginDatainjectionCertificateInjection'                 => 'datainjection',
+                        'PluginDatainjectionItem_DiskInjection'                   => 'datainjection',
+			      			'PluginDatainjectionComputerVirtualMachineInjection'	    => 'datainjection'
    ];
    //Add plugins
    Plugin::doHook('plugin_datainjection_populate');
