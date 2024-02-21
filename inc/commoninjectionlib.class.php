@@ -2153,7 +2153,7 @@ class PluginDatainjectionCommonInjectionLib
 
         $type_searchOptions = array_filter(
             $type_searchOptions,
-            public function ($option) use ($linkfield_preserved_option) {
+            function ($option) use ($linkfield_preserved_option) {
                 return in_array($option, $linkfield_preserved_option);
             }
         );
