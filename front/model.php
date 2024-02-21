@@ -31,8 +31,11 @@
 require '../../../inc/includes.php';
 
 Html::header(
-    PluginDatainjectionModel::getTypeName(), '', "tools",
-    "plugindatainjectionmenu", "model"
+    PluginDatainjectionModel::getTypeName(),
+    '',
+    "tools",
+    "plugindatainjectionmenu",
+    "model"
 );
 
 $model = new PluginDatainjectionModel();

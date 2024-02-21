@@ -30,48 +30,51 @@
 
 class PluginDatainjectionModelcsv extends CommonDBChild
 {
-
-   static $rightname = "plugin_datainjection_model";
-    var $specific_fields;
+    public static $rightname = "plugin_datainjection_model";
+    public $specific_fields;
 
     // From CommonDBChild
-   static public $itemtype  = 'PluginDatainjectionModel';
-   static public $items_id  = 'models_id';
-   public $dohistory        = true;
+    public static $itemtype  = 'PluginDatainjectionModel';
+    public static $items_id  = 'models_id';
+    public $dohistory        = true;
 
 
-   function getEmpty() {
+    public function getEmpty()
+    {
 
-      $this->fields['delimiter']         = ';';
-      $this->fields['is_header_present'] = 1;
-   }
+        $this->fields['delimiter']         = ';';
+        $this->fields['is_header_present'] = 1;
+    }
 
-   function init() {
-
-   }
+    public function init()
+    {
+    }
 
 
     //---- Getters -----//
 
-   function getDelimiter() {
+    public function getDelimiter()
+    {
 
-      return $this->fields["delimiter"];
-   }
+        return $this->fields["delimiter"];
+    }
 
 
-   function isHeaderPresent() {
+    public function isHeaderPresent()
+    {
 
-      return $this->fields["is_header_present"];
-   }
+        return $this->fields["is_header_present"];
+    }
 
 
     /**
     * If a Sample could be generated
    **/
-   function haveSample() {
+    public function haveSample()
+    {
 
-      return $this->fields["is_header_present"];
-   }
+        return $this->fields["is_header_present"];
+    }
 
 
     /**
@@ -79,25 +82,27 @@ class PluginDatainjectionModelcsv extends CommonDBChild
     *
     * @param $model     PluginDatainjectionModel object
    **/
-   function showSample(PluginDatainjectionModel $model) {
+    public function showSample(PluginDatainjectionModel $model)
+    {
 
-      $headers = PluginDatainjectionMapping::getMappingsSortedByRank($model->fields['id']);
-      $sample = '"'.implode('"'.$this->getDelimiter().'"', $headers)."\"\n";
+        $headers = PluginDatainjectionMapping::getMappingsSortedByRank($model->fields['id']);
+        $sample = '"' . implode('"' . $this->getDelimiter() . '"', $headers) . "\"\n";
 
-      header(
-          'Content-disposition: attachment; filename="'.str_replace(
-              ' ', '_',
-              $model->getName()
-          ).'.csv"'
-      );
-      header('Content-Type: text/comma-separated-values');
-      header('Content-Transfer-Encoding: UTF-8');
-      header('Content-Length: '.mb_strlen($sample, 'UTF-8'));
-      header('Pragma: no-cache');
-      header('Cache-Control: no-store, no-cache, must-revalidate, post-check=0, pre-check=0');
-      header('Expires: 0');
-      echo $sample;
-   }
+        header(
+            'Content-disposition: attachment; filename="' . str_replace(
+                ' ',
+                '_',
+                $model->getName()
+            ) . '.csv"'
+        );
+        header('Content-Type: text/comma-separated-values');
+        header('Content-Transfer-Encoding: UTF-8');
+        header('Content-Length: ' . mb_strlen($sample, 'UTF-8'));
+        header('Pragma: no-cache');
+        header('Cache-Control: no-store, no-cache, must-revalidate, post-check=0, pre-check=0');
+        header('Expires: 0');
+        echo $sample;
+    }
 
 
     /**
@@ -107,10 +112,11 @@ class PluginDatainjectionModelcsv extends CommonDBChild
     *
     * @return boolean true if name is correct, false is not
    **/
-   function checkFileName($filename) {
+    public function checkFileName($filename)
+    {
 
-      return ( !strstr(strtolower(substr($filename, strlen($filename)-4)), '.csv'));
-   }
+        return ( !strstr(strtolower(substr($filename, strlen($filename) - 4)), '.csv'));
+    }
 
 
     /**
@@ -121,68 +127,69 @@ class PluginDatainjectionModelcsv extends CommonDBChild
     *
     * @return the ID of the row in glpi_plugin_datainjection_modelcsv
    **/
-   function getFromDBByModelID($models_id) {
+    public function getFromDBByModelID($models_id)
+    {
 
-      global $DB;
+        global $DB;
 
-      $query = "SELECT `id`
-                FROM `".$this->getTable()."`
-                WHERE `models_id` = '".$models_id."'";
+        $query = "SELECT `id`
+                FROM `" . $this->getTable() . "`
+                WHERE `models_id` = '" . $models_id . "'";
 
-      $results = $DB->query($query);
-      $id = 0;
+        $results = $DB->query($query);
+        $id = 0;
 
-      if ($DB->numrows($results) > 0) {
-         $id = $DB->result($results, 0, 'id');
-         $this->getFromDB($id);
+        if ($DB->numrows($results) > 0) {
+            $id = $DB->result($results, 0, 'id');
+            $this->getFromDB($id);
+        } else {
+            $this->getEmpty();
+            $tmp = $this->fields;
+            $tmp['models_id'] = $models_id;
+            $id  = $this->add($tmp);
+            $this->getFromDB($id);
+        }
 
-      } else {
-         $this->getEmpty();
-         $tmp = $this->fields;
-         $tmp['models_id'] = $models_id;
-         $id  = $this->add($tmp);
-         $this->getFromDB($id);
-      }
-
-      return $id;
-   }
+        return $id;
+    }
 
 
     /**
     * @param $model              PluginDatainjectionModel object
     * @param $options   array
    **/
-   function showAdditionnalForm(PluginDatainjectionModel $model, $options = []) {
+    public function showAdditionnalForm(PluginDatainjectionModel $model, $options = [])
+    {
 
-      $id      = $this->getFromDBByModelID($model->fields['id']);
-      $canedit = $this->can($id, UPDATE);
+        $id      = $this->getFromDBByModelID($model->fields['id']);
+        $canedit = $this->can($id, UPDATE);
 
-      echo "<tr><th colspan='4'>".__('Specific file format options', 'datainjection')."</th></tr>";
+        echo "<tr><th colspan='4'>" . __('Specific file format options', 'datainjection') . "</th></tr>";
 
-      echo "<tr class='tab_bg_1'>";
-      echo "<td>".__("Header's presence", 'datainjection')."</td>";
-      echo "<td>";
-      Dropdown::showYesNo('is_header_present', $this->isHeaderPresent());
-      echo "</td>";
-      echo "<td>".__('File delimitor', 'datainjection')."</td>";
-      echo "<td>";
-      echo "<input type='text' size='1' name='delimiter' value='".$this->getDelimiter()."'";
-      echo "</td></tr>";
-   }
+        echo "<tr class='tab_bg_1'>";
+        echo "<td>" . __("Header's presence", 'datainjection') . "</td>";
+        echo "<td>";
+        Dropdown::showYesNo('is_header_present', $this->isHeaderPresent());
+        echo "</td>";
+        echo "<td>" . __('File delimitor', 'datainjection') . "</td>";
+        echo "<td>";
+        echo "<input type='text' size='1' name='delimiter' value='" . $this->getDelimiter() . "'";
+        echo "</td></tr>";
+    }
 
 
     /**
     * @param $fields
    **/
-   function saveFields($fields) {
+    public function saveFields($fields)
+    {
 
-      $csv                      = clone $this;
-      $tmp['models_id']         = $fields['id'];
-      $tmp['delimiter']         = $fields['delimiter'];
-      $tmp['is_header_present'] = $fields['is_header_present'];
-      $csv->getFromDBByModelID($fields['id']);
-      $tmp['id']                = $csv->fields['id'];
-      $csv->update($tmp);
-   }
-
+        $csv                      = clone $this;
+        $tmp['models_id']         = $fields['id'];
+        $tmp['delimiter']         = $fields['delimiter'];
+        $tmp['is_header_present'] = $fields['is_header_present'];
+        $csv->getFromDBByModelID($fields['id']);
+        $tmp['id']                = $csv->fields['id'];
+        $csv->update($tmp);
+    }
 }

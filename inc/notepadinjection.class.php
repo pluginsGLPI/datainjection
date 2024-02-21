@@ -29,83 +29,86 @@
  */
 
 if (!defined('GLPI_ROOT')) {
-   die("Sorry. You can't access directly to this file");
+    die("Sorry. You can't access directly to this file");
 }
 
-class PluginDatainjectionNotepadInjection extends Notepad
-                                                implements PluginDatainjectionInjectionInterface {
+class PluginDatainjectionNotepadInjection extends Notepad implements PluginDatainjectionInjectionInterface
+{
+    public static function getTable($classname = null)
+    {
+
+        $parenttype = get_parent_class();
+        return $parenttype::getTable();
+    }
+
+    public function isPrimaryType()
+    {
+        return false;
+    }
 
 
-   static function getTable($classname = null) {
+    public function connectedTo()
+    {
+        return ['Computer', 'NetworkEquipment', 'Printer'];
+    }
 
-      $parenttype = get_parent_class();
-      return $parenttype::getTable();
-
-   }
-
-   function isPrimaryType() {
-      return false;
-   }
-
-
-   function connectedTo() {
-      return ['Computer', 'NetworkEquipment', 'Printer'];
-   }
-
-   function customDataAlreadyInDB($injectionClass, $values, $options) {
-      //Do not manage updating notes: only creation
-      return false;
-   }
+    public function customDataAlreadyInDB($injectionClass, $values, $options)
+    {
+       //Do not manage updating notes: only creation
+        return false;
+    }
 
    /**
     * @see plugins/datainjection/inc/PluginDatainjectionInjectionInterface::getOptions()
    **/
-   function getOptions($primary_type = '') {
+    public function getOptions($primary_type = '')
+    {
 
-      $tab = Notepad::rawSearchOptionsToAdd();
-      $searchoptions = [];
-      foreach ($tab as $option) {
-         if (is_numeric($option['id'])) {
-            if ($option['table'] != 'glpi_notepads') {
-               $option['linkfield'] = getForeignKeyFieldForTable($option['table']);
-            } else {
-               $option['linkfield'] = $option['field'];
+        $tab = Notepad::rawSearchOptionsToAdd();
+        $searchoptions = [];
+        foreach ($tab as $option) {
+            if (is_numeric($option['id'])) {
+                if ($option['table'] != 'glpi_notepads') {
+                    $option['linkfield'] = getForeignKeyFieldForTable($option['table']);
+                } else {
+                    $option['linkfield'] = $option['field'];
+                }
+                $searchoptions[$option['id']] = $option;
             }
-            $searchoptions[$option['id']] = $option;
-         }
-      }
+        }
 
-      $options['ignore_fields'] = [201, 203, 204];
-      $options['displaytype'] = [
-         "multiline_text" => [200],
-         "dropdown"       => [202]
+        $options['ignore_fields'] = [201, 203, 204];
+        $options['displaytype'] = [
+            "multiline_text" => [200],
+            "dropdown"       => [202]
 
-      ];
+        ];
 
-      return PluginDatainjectionCommonInjectionLib::addToSearchOptions($searchoptions, $options, $this);
-   }
+        return PluginDatainjectionCommonInjectionLib::addToSearchOptions($searchoptions, $options, $this);
+    }
 
 
    /**
     * @see plugins/datainjection/inc/PluginDatainjectionInjectionInterface::addOrUpdateObject()
    **/
-   function addOrUpdateObject($values = [], $options = []) {
+    public function addOrUpdateObject($values = [], $options = [])
+    {
 
-      $lib = new PluginDatainjectionCommonInjectionLib($this, $values, $options);
-      $lib->processAddOrUpdate();
-      return $lib->getInjectionResults();
-   }
+        $lib = new PluginDatainjectionCommonInjectionLib($this, $values, $options);
+        $lib->processAddOrUpdate();
+        return $lib->getInjectionResults();
+    }
 
 
    /**
     * @param $primary_type
     * @param $values
    **/
-   function addSpecificNeededFields($primary_type, $values) {
+    public function addSpecificNeededFields($primary_type, $values)
+    {
 
-      $fields['items_id'] = $values[$primary_type]['id'];
-      $fields['itemtype'] = $primary_type;
-      return $fields;
-   }
-
+        $fields['items_id'] = $values[$primary_type]['id'];
+        $fields['itemtype'] = $primary_type;
+        return $fields;
+    }
 }

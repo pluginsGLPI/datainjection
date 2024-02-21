@@ -30,7 +30,6 @@
 
 class PluginDatainjectionSession
 {
-
     /**
     * Get a parameter from the HTTP session
     *
@@ -38,17 +37,18 @@ class PluginDatainjectionSession
     *
     * @return the param's value
    **/
-   static function getParam($param) {
+    public static function getParam($param)
+    {
 
-      if (!isset($_SESSION['datainjection'][$param])) {
-         return false;
-      }
-      if (in_array($param, ['results', 'error_lines'])) {
-         $fic = $_SESSION['datainjection'][$param];
-         return file_get_contents(GLPI_TMP_DIR.'/'.$fic);
-      }
-      return $_SESSION['datainjection'][$param];
-   }
+        if (!isset($_SESSION['datainjection'][$param])) {
+            return false;
+        }
+        if (in_array($param, ['results', 'error_lines'])) {
+            $fic = $_SESSION['datainjection'][$param];
+            return file_get_contents(GLPI_TMP_DIR . '/' . $fic);
+        }
+        return $_SESSION['datainjection'][$param];
+    }
 
 
     /**
@@ -59,16 +59,17 @@ class PluginDatainjectionSession
     *
     * @return nothing
    **/
-   static function setParam($param, $results) {
+    public static function setParam($param, $results)
+    {
 
-      if (in_array($param, ['results', 'error_lines'])) {
-         $fic = Session::getLoginUserID().'_'.$param.'_'.microtime(true);
-         file_put_contents(GLPI_TMP_DIR.'/'.$fic, $results);
-         $_SESSION['datainjection'][$param] = $fic;
-      } else {
-         $_SESSION['datainjection'][$param] = $results;
-      }
-   }
+        if (in_array($param, ['results', 'error_lines'])) {
+            $fic = Session::getLoginUserID() . '_' . $param . '_' . microtime(true);
+            file_put_contents(GLPI_TMP_DIR . '/' . $fic, $results);
+            $_SESSION['datainjection'][$param] = $fic;
+        } else {
+            $_SESSION['datainjection'][$param] = $results;
+        }
+    }
 
 
     /**
@@ -76,15 +77,15 @@ class PluginDatainjectionSession
     *
     * @return nothing
     */
-   static function removeParams() {
+    public static function removeParams()
+    {
 
-      if (isset($_SESSION['datainjection']['results'])) {
-         unlink(GLPI_TMP_DIR.'/'.$_SESSION['datainjection']['results']);
-      }
-      if (isset($_SESSION['datainjection']['error_lines'])) {
-         unlink(GLPI_TMP_DIR.'/'.$_SESSION['datainjection']['error_lines']);
-      }
-      unset($_SESSION['datainjection']);
-   }
-
+        if (isset($_SESSION['datainjection']['results'])) {
+            unlink(GLPI_TMP_DIR . '/' . $_SESSION['datainjection']['results']);
+        }
+        if (isset($_SESSION['datainjection']['error_lines'])) {
+            unlink(GLPI_TMP_DIR . '/' . $_SESSION['datainjection']['error_lines']);
+        }
+        unset($_SESSION['datainjection']);
+    }
 }

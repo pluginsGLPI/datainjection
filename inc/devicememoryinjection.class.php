@@ -32,47 +32,49 @@ if (!defined('GLPI_ROOT')) {
     die("Sorry. You can't access directly to this file");
 }
 
-class PluginDatainjectionDeviceMemoryInjection extends DeviceMemory
-                                               implements PluginDatainjectionInjectionInterface
+class PluginDatainjectionDeviceMemoryInjection extends DeviceMemory implements PluginDatainjectionInjectionInterface
 {
+    public static function getTable($classname = null)
+    {
+
+        $parenttype = get_parent_class();
+        return $parenttype::getTable();
+    }
 
 
-   static function getTable($classname = null) {
+    public function isPrimaryType()
+    {
 
-      $parenttype = get_parent_class();
-      return $parenttype::getTable();
-   }
-
-
-   function isPrimaryType() {
-
-      return true;
-   }
+        return true;
+    }
 
 
-   function connectedTo() {
+    public function connectedTo()
+    {
 
-      return ["Computer"];
-   }
+        return ["Computer"];
+    }
 
 
     /**
     * @see plugins/datainjection/inc/PluginDatainjectionInjectionInterface::getOptions()
    **/
-   function getOptions($primary_type = '') {
+    public function getOptions($primary_type = '')
+    {
 
-      $tab           = Search::getOptions(get_parent_class($this));
+        $tab           = Search::getOptions(get_parent_class($this));
 
-      //Remove some options because some fields cannot be imported
-      $blacklist     = PluginDatainjectionCommonInjectionLib::getBlacklistedOptions(get_parent_class($this));
-      $notimportable = [];
+       //Remove some options because some fields cannot be imported
+        $blacklist     = PluginDatainjectionCommonInjectionLib::getBlacklistedOptions(get_parent_class($this));
+        $notimportable = [];
 
-      $options['ignore_fields'] = array_merge($blacklist, $notimportable);
-      $options['displaytype']   = ["multiline_text" => [16],
-                                      "dropdown"       => [13, 23]];
+        $options['ignore_fields'] = array_merge($blacklist, $notimportable);
+        $options['displaytype']   = ["multiline_text" => [16],
+            "dropdown"       => [13, 23]
+        ];
 
-      return PluginDatainjectionCommonInjectionLib::addToSearchOptions($tab, $options, $this);
-   }
+        return PluginDatainjectionCommonInjectionLib::addToSearchOptions($tab, $options, $this);
+    }
 
 
     /**
@@ -80,46 +82,47 @@ class PluginDatainjectionDeviceMemoryInjection extends DeviceMemory
     * @param $add                (true by default)
     * @param $rights    array
    **/
-   function processAfterInsertOrUpdate($values, $add = true, $rights = []) {
+    public function processAfterInsertOrUpdate($values, $add = true, $rights = [])
+    {
 
-      if (isset($values['Computer']['id'])) {
-         $class   = "Item_".get_parent_class($this);
-         $item    = new $class();
-         $foreign = getForeignKeyFieldForTable(getTableForItemType(get_parent_class($this)));
+        if (isset($values['Computer']['id'])) {
+            $class   = "Item_" . get_parent_class($this);
+            $item    = new $class();
+            $foreign = getForeignKeyFieldForTable(getTableForItemType(get_parent_class($this)));
 
-         $where = [
-            $foreign   => $values[get_parent_class($this)]['id'],
-            'itemtype' => 'Computer',
-            'items_id' => $values['Computer']['id'],
-         ];
+            $where = [
+                $foreign   => $values[get_parent_class($this)]['id'],
+                'itemtype' => 'Computer',
+                'items_id' => $values['Computer']['id'],
+            ];
 
-         if (!countElementsInTable($item->getTable(), $where)) {
+            if (!countElementsInTable($item->getTable(), $where)) {
+                if (
+                    isset($values[get_parent_class($this)]['size_default'])
+                    && ($values[get_parent_class($this)]['size_default'] > 0)
+                ) {
+                    $tmp['size'] = $values[get_parent_class($this)]['size_default'];
+                } else {
+                    $tmp['size'] = 0;
+                }
 
-            if (isset($values[get_parent_class($this)]['size_default'])
-            && ($values[get_parent_class($this)]['size_default'] > 0)
-            ) {
-               $tmp['size'] = $values[get_parent_class($this)]['size_default'];
-            } else {
-               $tmp['size'] = 0;
+                $tmp[$foreign]   = $values[get_parent_class($this)]['id'];
+                $tmp['items_id'] = $values['Computer']['id'];
+                $tmp['itemtype'] = 'Computer';
+                $item->add($tmp);
             }
-
-            $tmp[$foreign]   = $values[get_parent_class($this)]['id'];
-            $tmp['items_id'] = $values['Computer']['id'];
-            $tmp['itemtype'] = 'Computer';
-            $item->add($tmp);
-         }
-      }
-   }
+        }
+    }
 
 
     /**
     * @see plugins/datainjection/inc/PluginDatainjectionInjectionInterface::addOrUpdateObject()
    **/
-   function addOrUpdateObject($values = [], $options = []) {
+    public function addOrUpdateObject($values = [], $options = [])
+    {
 
-      $lib = new PluginDatainjectionCommonInjectionLib($this, $values, $options);
-      $lib->processAddOrUpdate();
-      return $lib->getInjectionResults();
-   }
-
+        $lib = new PluginDatainjectionCommonInjectionLib($this, $values, $options);
+        $lib->processAddOrUpdate();
+        return $lib->getInjectionResults();
+    }
 }
