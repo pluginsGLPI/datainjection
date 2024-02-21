@@ -80,8 +80,6 @@ function plugin_init_datainjection() {
       // Javascript file
       $PLUGIN_HOOKS['add_javascript']['datainjection'] = 'js/datainjection.js';
 
-      // Inbtegration with Webservices plugin
-      $PLUGIN_HOOKS['webservices']['datainjection'] = 'plugin_datainjection_registerMethods';
       $INJECTABLE_TYPES = [];
 
    }
