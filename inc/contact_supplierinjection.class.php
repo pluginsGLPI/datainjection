@@ -32,68 +32,69 @@ if (!defined('GLPI_ROOT')) {
     die("Sorry. You can't access directly to this file");
 }
 
-class PluginDatainjectionContact_SupplierInjection extends Contact_Supplier
-                                                   implements PluginDatainjectionInjectionInterface
+class PluginDatainjectionContact_SupplierInjection extends Contact_Supplier implements PluginDatainjectionInjectionInterface
 {
+    public static function getTable($classname = null)
+    {
+
+        $parenttype = get_parent_class();
+        return $parenttype::getTable();
+    }
 
 
-   static function getTable($classname = null) {
+    public function isPrimaryType()
+    {
 
-      $parenttype = get_parent_class();
-      return $parenttype::getTable();
-
-   }
-
-
-   function isPrimaryType() {
-
-      return false;
-   }
+        return false;
+    }
 
 
-   function connectedTo() {
+    public function connectedTo()
+    {
 
-      return ['Contact', 'Supplier'];
-   }
+        return ['Contact', 'Supplier'];
+    }
 
 
     /**
     * @see plugins/datainjection/inc/PluginDatainjectionInjectionInterface::getOptions()
    **/
-   function getOptions($primary_type = '') {
+    public function getOptions($primary_type = '')
+    {
 
-      $tab[100]['table']         = 'glpi_suppliers';
-      $tab[100]['field']         = 'name';
-      $tab[100]['linkfield']     = 'suppliers_id';
-      $tab[100]['name']          = __('Associated suppliers');
-      $tab[100]['displaytype']   = 'relation';
-      $tab[100]['relationclass'] = 'Contact_Supplier';
-      $tab[100]['injectable']    = true;
+        $tab[100]['table']         = 'glpi_suppliers';
+        $tab[100]['field']         = 'name';
+        $tab[100]['linkfield']     = 'suppliers_id';
+        $tab[100]['name']          = __('Associated suppliers');
+        $tab[100]['displaytype']   = 'relation';
+        $tab[100]['relationclass'] = 'Contact_Supplier';
+        $tab[100]['injectable']    = true;
 
-      return $tab;
-   }
+        return $tab;
+    }
 
 
     /**
     * @see plugins/datainjection/inc/PluginDatainjectionInjectionInterface::addOrUpdateObject()
    **/
-   function addOrUpdateObject($values = [], $options = []) {
+    public function addOrUpdateObject($values = [], $options = [])
+    {
 
-      $lib = new PluginDatainjectionCommonInjectionLib($this, $values, $options);
-      $lib->processAddOrUpdate();
-      return $lib->getInjectionResults();
-   }
+        $lib = new PluginDatainjectionCommonInjectionLib($this, $values, $options);
+        $lib->processAddOrUpdate();
+        return $lib->getInjectionResults();
+    }
 
 
     /**
     * @param $primary_type
     * @param $values
    **/
-   function addSpecificNeededFields($primary_type, $values) {
+    public function addSpecificNeededFields($primary_type, $values)
+    {
 
-      $fields[getForeignKeyFieldForTable(getTableForItemType($primary_type))]
+        $fields[getForeignKeyFieldForTable(getTableForItemType($primary_type))]
           = $values[$primary_type]['id'];
-      return $fields;
-   }
-
+        return $fields;
+    }
 }

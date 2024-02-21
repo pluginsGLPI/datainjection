@@ -32,71 +32,74 @@ if (!defined('GLPI_ROOT')) {
     die("Sorry. You can't access directly to this file");
 }
 
-class PluginDatainjectionNetworkNameInjection extends NetworkName
-                                                   implements PluginDatainjectionInjectionInterface
+class PluginDatainjectionNetworkNameInjection extends NetworkName implements PluginDatainjectionInjectionInterface
 {
+    public static function getTable($classname = null)
+    {
+
+        $parenttype = get_parent_class();
+        return $parenttype::getTable();
+    }
 
 
-   static function getTable($classname = null) {
+    public function isPrimaryType()
+    {
 
-      $parenttype = get_parent_class();
-      return $parenttype::getTable();
-   }
-
-
-   function isPrimaryType() {
-
-      return false;
-   }
+        return false;
+    }
 
 
-   function connectedTo() {
-
-      global $CFG_GLPI;
-      return $CFG_GLPI["networkport_types"];
-   }
+    public function connectedTo()
+    {
+        /** @var array $CFG_GLPI */
+        global $CFG_GLPI;
+        return $CFG_GLPI["networkport_types"];
+    }
 
 
     /**
     * @see plugins/datainjection/inc/PluginDatainjectionInjectionInterface::getOptions()
    **/
-   function getOptions($primary_type = '') {
+    public function getOptions($primary_type = '')
+    {
 
-      $tab           = Search::getOptions(get_parent_class($this));
+        $tab           = Search::getOptions(get_parent_class($this));
 
-      //Remove some options because some fields cannot be imported
-      $blacklist     = PluginDatainjectionCommonInjectionLib::getBlacklistedOptions(get_parent_class($this));
-      $notimportable = [20, 21];
+       //Remove some options because some fields cannot be imported
+        $blacklist     = PluginDatainjectionCommonInjectionLib::getBlacklistedOptions(get_parent_class($this));
+        $notimportable = [20, 21];
 
-      $options['ignore_fields'] = array_merge($blacklist, $notimportable);
-      $options['displaytype']   = ["dropdown" => [12]];
+        $options['ignore_fields'] = array_merge($blacklist, $notimportable);
+        $options['displaytype']   = ["dropdown" => [12]];
 
-      return PluginDatainjectionCommonInjectionLib::addToSearchOptions($tab, $options, $this);
-   }
+        return PluginDatainjectionCommonInjectionLib::addToSearchOptions($tab, $options, $this);
+    }
 
 
     /**
     * @see plugins/datainjection/inc/PluginDatainjectionInjectionInterface::addOrUpdateObject()
    **/
-   function addOrUpdateObject($values = [], $options = []) {
+    public function addOrUpdateObject($values = [], $options = [])
+    {
 
-      $lib = new PluginDatainjectionCommonInjectionLib($this, $values, $options);
-      $lib->processAddOrUpdate();
-      return $lib->getInjectionResults();
-   }
+        $lib = new PluginDatainjectionCommonInjectionLib($this, $values, $options);
+        $lib->processAddOrUpdate();
+        return $lib->getInjectionResults();
+    }
 
 
     /**
     * @param $primary_type
     * @param $values
    **/
-   function addSpecificNeededFields($primary_type, $values) {
+    public function addSpecificNeededFields($primary_type, $values)
+    {
 
-      $fields['items_id']  = $values['NetworkPort']['id'];
-      $fields['itemtype']      = "NetworkPort";
+        $fields['items_id']  = $values['NetworkPort']['id'];
+        $fields['itemtype']      = "NetworkPort";
 
-      return $fields;
-   }
+        return $fields;
+    }
 
 
     /**
@@ -104,31 +107,32 @@ class PluginDatainjectionNetworkNameInjection extends NetworkName
     * @param $add                   (true by default)
     * @param $rights    array
     */
-   function processAfterInsertOrUpdate($values, $add = true, $rights = []) {
+    public function processAfterInsertOrUpdate($values, $add = true, $rights = [])
+    {
+        /** @var DBmysql $DB */
+        global $DB;
 
-      global $DB;
-
-      //Manage ip adresses
-      if (isset($values['NetworkName']['ipaddresses_id'])) {
-         if (!countElementsInTable(
-             "glpi_ipaddresses",
-             [
-                'items_id' => $values['NetworkName']['id'],
-                'itemtype' => 'NetworkName',
-                'name'     => $values['NetworkName']['ipaddresses_id'],
-             ]
-         )) {
-
-            $ip                  = new IPAddress($values['NetworkName']['ipaddresses_id']);
-            $tmp['items_id']     = $values['NetworkName']['id'];
-            $tmp['itemtype']     = "NetworkName";
-            $tmp['name']         =  $ip->getTextual();
-            $tmp['is_dynamic']   = 0;
-            if (!$ip->getFromDBByCrit($tmp)) {
-               $ip->add($tmp);
+       //Manage ip adresses
+        if (isset($values['NetworkName']['ipaddresses_id'])) {
+            if (
+                !countElementsInTable(
+                    "glpi_ipaddresses",
+                    [
+                        'items_id' => $values['NetworkName']['id'],
+                        'itemtype' => 'NetworkName',
+                        'name'     => $values['NetworkName']['ipaddresses_id'],
+                    ]
+                )
+            ) {
+                $ip                  = new IPAddress($values['NetworkName']['ipaddresses_id']);
+                $tmp['items_id']     = $values['NetworkName']['id'];
+                $tmp['itemtype']     = "NetworkName";
+                $tmp['name']         =  $ip->getTextual();
+                $tmp['is_dynamic']   = 0;
+                if (!$ip->getFromDBByCrit($tmp)) {
+                    $ip->add($tmp);
+                }
             }
-         }
-      }
-   }
-
+        }
+    }
 }

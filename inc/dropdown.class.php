@@ -30,72 +30,76 @@
 
 class PluginDatainjectionDropdown
 {
+    public static function dateFormats()
+    {
 
-   static function dateFormats() {
-
-      $date_format[PluginDatainjectionCommonInjectionLib::DATE_TYPE_DDMMYYYY]
+        $date_format[PluginDatainjectionCommonInjectionLib::DATE_TYPE_DDMMYYYY]
                                                           = __('dd-mm-yyyy', 'datainjection');
-      $date_format[PluginDatainjectionCommonInjectionLib::DATE_TYPE_MMDDYYYY]
+        $date_format[PluginDatainjectionCommonInjectionLib::DATE_TYPE_MMDDYYYY]
                                                           = __('mm-dd-yyyy', 'datainjection');
-      $date_format[PluginDatainjectionCommonInjectionLib::DATE_TYPE_YYYYMMDD]
+        $date_format[PluginDatainjectionCommonInjectionLib::DATE_TYPE_YYYYMMDD]
                                                           = __('yyyy-mm-dd', 'datainjection');
 
-      return $date_format;
-   }
+        return $date_format;
+    }
 
 
-   static function getDateFormat($date) {
+    public static function getDateFormat($date)
+    {
 
-      $dates = self::dateFormats();
-      if (isset($dates[$date])) {
-         return $dates[$date];
-      }
-      return "";
-   }
+        $dates = self::dateFormats();
+        if (isset($dates[$date])) {
+            return $dates[$date];
+        }
+        return "";
+    }
 
 
-   static function floatFormats() {
+    public static function floatFormats()
+    {
 
-      $float_format[PluginDatainjectionCommonInjectionLib::FLOAT_TYPE_DOT]
+        $float_format[PluginDatainjectionCommonInjectionLib::FLOAT_TYPE_DOT]
                                                           = __('1 234.56', 'datainjection');
-      $float_format[PluginDatainjectionCommonInjectionLib::FLOAT_TYPE_COMMA]
+        $float_format[PluginDatainjectionCommonInjectionLib::FLOAT_TYPE_COMMA]
                                                           = __('1 234,56', 'datainjection');
-      $float_format[PluginDatainjectionCommonInjectionLib::FLOAT_TYPE_DOT_AND_COM]
+        $float_format[PluginDatainjectionCommonInjectionLib::FLOAT_TYPE_DOT_AND_COM]
                                                           = __('1,234.56', 'datainjection');
 
-      return $float_format;
-   }
+        return $float_format;
+    }
 
 
     /**
     * @param $format
    **/
-   static function getFloatFormat($format) {
+    public static function getFloatFormat($format)
+    {
 
-      $formats = self::floatFormats();
-      if (isset($formats[$format])) {
-         return $formats[$format];
-      }
-      return "";
-   }
+        $formats = self::floatFormats();
+        if (isset($formats[$format])) {
+            return $formats[$format];
+        }
+        return "";
+    }
 
 
-   static function statusLabels() {
+    public static function statusLabels()
+    {
 
-      $states[0]                                            = Dropdown::EMPTY_VALUE;
-      //$states[PluginDatainjectionModel::INITIAL_STEP] = __('Creation of the model on going', 'datainjection');
-      $states[PluginDatainjectionModel::FILE_STEP]          = __('File to inject', 'datainjection');
-      $states[PluginDatainjectionModel::MAPPING_STEP]       = __('Mappings', 'datainjection');
-      $states[PluginDatainjectionModel::OTHERS_STEP]        = __(
-          'Additional Information',
-          'datainjection'
-      );
-      $states[PluginDatainjectionModel::READY_TO_USE_STEP]  = __(
-          'Model available for use',
-          'datainjection'
-      );
-      return $states;
-   }
+        $states[0]                                            = Dropdown::EMPTY_VALUE;
+       //$states[PluginDatainjectionModel::INITIAL_STEP] = __('Creation of the model on going', 'datainjection');
+        $states[PluginDatainjectionModel::FILE_STEP]          = __('File to inject', 'datainjection');
+        $states[PluginDatainjectionModel::MAPPING_STEP]       = __('Mappings', 'datainjection');
+        $states[PluginDatainjectionModel::OTHERS_STEP]        = __(
+            'Additional Information',
+            'datainjection'
+        );
+        $states[PluginDatainjectionModel::READY_TO_USE_STEP]  = __(
+            'Model available for use',
+            'datainjection'
+        );
+        return $states;
+    }
 
 
     /**
@@ -103,61 +107,65 @@ class PluginDatainjectionDropdown
     *
     * @return nothing
    **/
-   static function getStatusLabel($step) {
+    public static function getStatusLabel($step)
+    {
 
-      $states = self::statusLabels();
-      if (isset($states[$step])) {
-         return $states[$step];
-      }
-      return "";
-   }
-
-
-   static function dropdownFileEncoding() {
-
-      $values[PluginDatainjectionBackend::ENCODING_AUTO]      = __(
-          'Automatic detection',
-          'datainjection'
-      );
-      $values[PluginDatainjectionBackend::ENCODING_UFT8]      = __('UTF-8', 'datainjection');
-      $values[PluginDatainjectionBackend::ENCODING_ISO8859_1] = __('ISO8859-1', 'datainjection');
-
-      Dropdown::showFromArray(
-          'file_encoding', $values,
-          ['value' => PluginDatainjectionBackend::ENCODING_AUTO]
-      );
-   }
+        $states = self::statusLabels();
+        if (isset($states[$step])) {
+            return $states[$step];
+        }
+        return "";
+    }
 
 
-   static function portUnicityValues() {
+    public static function dropdownFileEncoding()
+    {
 
-      $values[PluginDatainjectionCommonInjectionLib::UNICITY_NETPORT_LOGICAL_NUMBER]
+        $values[PluginDatainjectionBackend::ENCODING_AUTO]      = __(
+            'Automatic detection',
+            'datainjection'
+        );
+        $values[PluginDatainjectionBackend::ENCODING_UFT8]      = __('UTF-8', 'datainjection');
+        $values[PluginDatainjectionBackend::ENCODING_ISO8859_1] = __('ISO8859-1', 'datainjection');
+
+        Dropdown::showFromArray(
+            'file_encoding',
+            $values,
+            ['value' => PluginDatainjectionBackend::ENCODING_AUTO]
+        );
+    }
+
+
+    public static function portUnicityValues()
+    {
+
+        $values[PluginDatainjectionCommonInjectionLib::UNICITY_NETPORT_LOGICAL_NUMBER]
                                            = __('Port number');
-      $values[PluginDatainjectionCommonInjectionLib::UNICITY_NETPORT_NAME]
+        $values[PluginDatainjectionCommonInjectionLib::UNICITY_NETPORT_NAME]
                                            = __('Name');
-      $values[PluginDatainjectionCommonInjectionLib::UNICITY_NETPORT_MACADDRESS]
+        $values[PluginDatainjectionCommonInjectionLib::UNICITY_NETPORT_MACADDRESS]
                                            = __('Mac address');
-      $values[PluginDatainjectionCommonInjectionLib::UNICITY_NETPORT_LOGICAL_NUMBER_NAME]
-                                           = __('Port number')."+".__('Name');
-      $values[PluginDatainjectionCommonInjectionLib::UNICITY_NETPORT_LOGICAL_NUMBER_MAC]
-                                           = __('Port number')."+".__('Mac address');
-      $values[PluginDatainjectionCommonInjectionLib::UNICITY_NETPORT_LOGICAL_NUMBER_NAME_MAC]
-                                           = __('Port number')."+".__('Name')."+".
+        $values[PluginDatainjectionCommonInjectionLib::UNICITY_NETPORT_LOGICAL_NUMBER_NAME]
+                                           = __('Port number') . "+" . __('Name');
+        $values[PluginDatainjectionCommonInjectionLib::UNICITY_NETPORT_LOGICAL_NUMBER_MAC]
+                                           = __('Port number') . "+" . __('Mac address');
+        $values[PluginDatainjectionCommonInjectionLib::UNICITY_NETPORT_LOGICAL_NUMBER_NAME_MAC]
+                                           = __('Port number') . "+" . __('Name') . "+" .
                                              __('Mac address');
-      return $values;
-   }
+        return $values;
+    }
 
 
     /**
     * @param $value
    **/
-   static function getPortUnicityValues($value) {
+    public static function getPortUnicityValues($value)
+    {
 
-      $values = self::portUnicityValues();
-      if (isset($values[$value])) {
-         return $values[$value];
-      }
-      return "";
-   }
-
+        $values = self::portUnicityValues();
+        if (isset($values[$value])) {
+            return $values[$value];
+        }
+        return "";
+    }
 }

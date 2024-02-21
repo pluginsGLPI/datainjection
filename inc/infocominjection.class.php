@@ -32,143 +32,150 @@ if (!defined('GLPI_ROOT')) {
     die("Sorry. You can't access directly to this file");
 }
 
-class PluginDatainjectionInfocomInjection extends Infocom
-                                          implements PluginDatainjectionInjectionInterface
+class PluginDatainjectionInfocomInjection extends Infocom implements PluginDatainjectionInjectionInterface
 {
+    public static function getTable($classname = null)
+    {
+
+        $parenttype = get_parent_class();
+        return $parenttype::getTable();
+    }
 
 
-   static function getTable($classname = null) {
+    public function isPrimaryType()
+    {
 
-      $parenttype = get_parent_class();
-      return $parenttype::getTable();
-   }
-
-
-   function isPrimaryType() {
-
-      return false;
-   }
+        return false;
+    }
 
 
-   function connectedTo() {
+    public function connectedTo()
+    {
+        /** @var array $CFG_GLPI */
+        global $CFG_GLPI;
 
-      global $CFG_GLPI;
-
-      return $CFG_GLPI["infocom_types"];
-   }
+        return $CFG_GLPI["infocom_types"];
+    }
 
 
     /**
     * @see plugins/datainjection/inc/PluginDatainjectionInjectionInterface::getOptions()
    **/
-   function getOptions($primary_type = '') {
+    public function getOptions($primary_type = '')
+    {
 
-      $tab                    = Search::getOptions(get_parent_class($this));
+        $tab                    = Search::getOptions(get_parent_class($this));
 
-      $tab[4]['checktype']    = 'date';
-      $tab[5]['checktype']    = 'date';
+        $tab[4]['checktype']    = 'date';
+        $tab[5]['checktype']    = 'date';
 
-      //Warranty_duration
-      $tab[6]['minvalue']     = 0;
-      $tab[6]['maxvalue']     = 120;
-      $tab[6]['step']         = 1;
-      $tab[6]['-1']           = __('Lifelong');
-      $tab[6]['checktype']    = 'integer';
+       //Warranty_duration
+        $tab[6]['minvalue']     = 0;
+        $tab[6]['maxvalue']     = 120;
+        $tab[6]['step']         = 1;
+        $tab[6]['-1']           = __('Lifelong');
+        $tab[6]['checktype']    = 'integer';
 
-      $tab[8]['checktype']    = 'float';
+        $tab[8]['checktype']    = 'float';
 
-      $tab[13]['checktype']   = 'float';
+        $tab[13]['checktype']   = 'float';
 
-      $tab[14]['minvalue']    = 0;
-      $tab[14]['maxvalue']    = 15;
-      $tab[14]['step']        = 1;
-      $tab[14]['checktype']   = 'integer';
+        $tab[14]['minvalue']    = 0;
+        $tab[14]['maxvalue']    = 15;
+        $tab[14]['step']        = 1;
+        $tab[14]['checktype']   = 'integer';
 
-      $tab[17]['size']        = 14;
-      $tab[17]['default']     = 0;
-      $tab[17]['checktype']   = 'integer';
+        $tab[17]['size']        = 14;
+        $tab[17]['default']     = 0;
+        $tab[17]['checktype']   = 'integer';
 
-      $tab[15]['minvalue']    = 0;
-      $tab[15]['maxvalue']    = 2;
-      $tab[15]['step']        = 1;
-      $tab[15]['checktype']   = 'integer';
+        $tab[15]['minvalue']    = 0;
+        $tab[15]['maxvalue']    = 2;
+        $tab[15]['step']        = 1;
+        $tab[15]['checktype']   = 'integer';
 
-      $tab[23]['checktype']   = 'date';
-      $tab[24]['checktype']   = 'date';
-      $tab[25]['checktype']   = 'date';
-      $tab[27]['checktype']   = 'date';
-      $tab[28]['checktype']   = 'date';
-      $tab[159]['checktype']  = 'date';
+        $tab[23]['checktype']   = 'date';
+        $tab[24]['checktype']   = 'date';
+        $tab[25]['checktype']   = 'date';
+        $tab[27]['checktype']   = 'date';
+        $tab[28]['checktype']   = 'date';
+        $tab[159]['checktype']  = 'date';
 
-      //Remove some options because some fields cannot be imported
-      $blacklist     = PluginDatainjectionCommonInjectionLib::getBlacklistedOptions(get_parent_class($this));
-      $notimportable = [20, 21, 86];
+       //Remove some options because some fields cannot be imported
+        $blacklist     = PluginDatainjectionCommonInjectionLib::getBlacklistedOptions(get_parent_class($this));
+        $notimportable = [20, 21, 86];
 
-      $options['ignore_fields'] = array_merge($blacklist, $notimportable);
+        $options['ignore_fields'] = array_merge($blacklist, $notimportable);
 
-      $key                      = array_search(19, $options['ignore_fields']);
-      unset($options['ignore_fields'][$key]);
+        $key                      = array_search(19, $options['ignore_fields']);
+        unset($options['ignore_fields'][$key]);
 
-      $options['displaytype']   = ["date"           => [4, 5, 23, 24, 25, 27, 28, 159],
-                                      "dropdown"         => [6, 9, 19, 123, 173],
-                                      "dropdown_integer" => [6, 14],
-                                      "decimal"          => [8, 13, 17],
-                                      "sink_type"        => [15],
-                                      "alert"            => [22],
-                                      "multiline_text"   => [16]];
+        $options['displaytype']   = ["date"           => [4, 5, 23, 24, 25, 27, 28, 159],
+            "dropdown"         => [6, 9, 19, 123, 173],
+            "dropdown_integer" => [6, 14],
+            "decimal"          => [8, 13, 17],
+            "sink_type"        => [15],
+            "alert"            => [22],
+            "multiline_text"   => [16]
+        ];
 
-      return PluginDatainjectionCommonInjectionLib::addToSearchOptions($tab, $options, $this);
-   }
+        return PluginDatainjectionCommonInjectionLib::addToSearchOptions($tab, $options, $this);
+    }
 
 
     /**
     * @param $info      array
     * @param $option    array
    **/
-   function showAdditionalInformation($info = [], $option = []) {
+    public function showAdditionalInformation($info = [], $option = [])
+    {
 
-      $name = "info[".$option['linkfield']."]";
+        $name = "info[" . $option['linkfield'] . "]";
 
-      switch ($option['displaytype']) {
-         case 'sink_type' :
-            Infocom::dropdownAmortType($name);
-            break;
+        switch ($option['displaytype']) {
+            case 'sink_type':
+                Infocom::dropdownAmortType($name);
+                break;
 
-         case 'alert' :
-            Infocom::dropdownAlert(['name' => $name]);
-            break;
+            case 'alert':
+                Infocom::dropdownAlert(['name' => $name]);
+                break;
 
-         default:
-            break;
-      }
-   }
+            default:
+                break;
+        }
+    }
 
 
     /**
     * @param $values    array
    **/
-   function reformat(&$values = []) {
+    public function reformat(&$values = [])
+    {
 
-      foreach (['order_date', 'use_date', 'buy_date', 'warranty_date', 'delivery_date',
-                   'inventory_date'] as $date) {
-
-         if (isset($values['Infocom'][$date])
-             && ($values['Infocom'][$date] == PluginDatainjectionCommonInjectionLib::EMPTY_VALUE)
-         ) {
-            $values['Infocom'][$date] = "NULL";
-         }
-      }
-   }
+        foreach (
+            ['order_date', 'use_date', 'buy_date', 'warranty_date', 'delivery_date',
+                'inventory_date'
+            ] as $date
+        ) {
+            if (
+                isset($values['Infocom'][$date])
+                && ($values['Infocom'][$date] == PluginDatainjectionCommonInjectionLib::EMPTY_VALUE)
+            ) {
+                $values['Infocom'][$date] = "NULL";
+            }
+        }
+    }
 
 
     /**
     * @see plugins/datainjection/inc/PluginDatainjectionInjectionInterface::addOrUpdateObject()
    **/
-   function addOrUpdateObject($values = [], $options = []) {
+    public function addOrUpdateObject($values = [], $options = [])
+    {
 
-      $lib = new PluginDatainjectionCommonInjectionLib($this, $values, $options);
-      $lib->processAddOrUpdate();
-      return $lib->getInjectionResults();
-   }
-
+        $lib = new PluginDatainjectionCommonInjectionLib($this, $values, $options);
+        $lib->processAddOrUpdate();
+        return $lib->getInjectionResults();
+    }
 }

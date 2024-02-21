@@ -28,87 +28,90 @@
  * -------------------------------------------------------------------------
  */
 
-class PluginDatainjectionContract_ItemInjection extends Contract_Item
-                                                implements PluginDatainjectionInjectionInterface
+class PluginDatainjectionContract_ItemInjection extends Contract_Item implements PluginDatainjectionInjectionInterface
 {
+    public static function getTable($classname = null)
+    {
+
+        $parenttype = get_parent_class();
+        return $parenttype::getTable();
+    }
 
 
-   static function getTable($classname = null) {
+    public function isPrimaryType()
+    {
 
-      $parenttype = get_parent_class();
-      return $parenttype::getTable();
-   }
-
-
-   function isPrimaryType() {
-
-      return false;
-   }
+        return false;
+    }
 
 
-   function relationSide() {
+    public function relationSide()
+    {
 
-      return true;
-   }
+        return true;
+    }
 
 
-   function connectedTo() {
+    public function connectedTo()
+    {
+        /** @var array $CFG_GLPI */
+        global $CFG_GLPI;
 
-      global $CFG_GLPI;
-
-      return $CFG_GLPI["contract_types"];
-   }
+        return $CFG_GLPI["contract_types"];
+    }
 
 
     /**
     * @see plugins/datainjection/inc/PluginDatainjectionInjectionInterface::getOptions()
    **/
-   function getOptions($primary_type = '') {
+    public function getOptions($primary_type = '')
+    {
 
-      $tab[100]['table']         = 'glpi_contracts';
-      $tab[100]['field']         = 'name';
-      $tab[100]['linkfield']     = 'name';
-      $tab[100]['name']          = __('Name');
-      $tab[100]['injectable']    = true;
-      $tab[100]['checktype']     = 'text';
-      $tab[100]['displaytype']   = 'relation';
-      $tab[100]['relationclass'] = 'Contract_Item';
-      $tab[100]['storevaluein']  = 'contracts_id';
+        $tab[100]['table']         = 'glpi_contracts';
+        $tab[100]['field']         = 'name';
+        $tab[100]['linkfield']     = 'name';
+        $tab[100]['name']          = __('Name');
+        $tab[100]['injectable']    = true;
+        $tab[100]['checktype']     = 'text';
+        $tab[100]['displaytype']   = 'relation';
+        $tab[100]['relationclass'] = 'Contract_Item';
+        $tab[100]['storevaluein']  = 'contracts_id';
 
-      $tab[101]['table']         = 'glpi_contracts';
-      $tab[101]['field']         = 'num';
-      $tab[101]['linkfield']     = 'num';
-      $tab[101]['name']          = __('Serial number');
-      $tab[101]['injectable']    = true;
-      $tab[101]['checktype']     = 'text';
-      $tab[101]['displaytype']   = 'relation';
-      $tab[101]['relationclass'] = 'Contract_Item';
-      $tab[101]['storevaluein']  = 'contracts_id';
+        $tab[101]['table']         = 'glpi_contracts';
+        $tab[101]['field']         = 'num';
+        $tab[101]['linkfield']     = 'num';
+        $tab[101]['name']          = __('Serial number');
+        $tab[101]['injectable']    = true;
+        $tab[101]['checktype']     = 'text';
+        $tab[101]['displaytype']   = 'relation';
+        $tab[101]['relationclass'] = 'Contract_Item';
+        $tab[101]['storevaluein']  = 'contracts_id';
 
-      return $tab;
-   }
+        return $tab;
+    }
 
 
     /**
     * @see plugins/datainjection/inc/PluginDatainjectionInjectionInterface::addOrUpdateObject()
    **/
-   function addOrUpdateObject($values = [], $options = []) {
+    public function addOrUpdateObject($values = [], $options = [])
+    {
 
-      $lib = new PluginDatainjectionCommonInjectionLib($this, $values, $options);
-      $lib->processAddOrUpdate();
-      return $lib->getInjectionResults();
-   }
+        $lib = new PluginDatainjectionCommonInjectionLib($this, $values, $options);
+        $lib->processAddOrUpdate();
+        return $lib->getInjectionResults();
+    }
 
 
     /**
     * @param $primary_type
     * @param $values
    **/
-   function addSpecificNeededFields($primary_type, $values) {
+    public function addSpecificNeededFields($primary_type, $values)
+    {
 
-      $fields['items_id'] = $values[$primary_type]['id'];
-      $fields['itemtype'] = $primary_type;
-      return $fields;
-   }
-
+        $fields['items_id'] = $values[$primary_type]['id'];
+        $fields['itemtype'] = $primary_type;
+        return $fields;
+    }
 }

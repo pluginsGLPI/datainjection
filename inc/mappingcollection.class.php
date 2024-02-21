@@ -30,13 +30,13 @@
 
 class PluginDatainjectionMappingCollection
 {
+    private $mappingCollection;
 
-   private $mappingCollection;
+    public function __construct()
+    {
 
-   function __construct() {
-
-      $this->mappingCollection = [];
-   }
+        $this->mappingCollection = [];
+    }
 
 
     //---- Getter ----//
@@ -46,25 +46,26 @@ class PluginDatainjectionMappingCollection
     *
     * @param model_ids the model ID
    **/
-   function load($models_id) {
+    public function load($models_id)
+    {
+        /** @var DBmysql $DB */
+        global $DB;
 
-      global $DB;
-
-      $sql = "SELECT *
+        $sql = "SELECT *
               FROM `glpi_plugin_datainjection_mappings`
               WHERE `models_id` = '$models_id'
               ORDER BY `rank` ASC";
 
-      $this->mappingCollection = [];
+        $this->mappingCollection = [];
 
-      foreach ($data = $DB->request($sql) as $data) {
-         // Addslashes to conform to value return by PluginDatainjectionBackendcsv::parseLine
-         $data["name"]              = addslashes($data["name"]);
-         $mapping                   = new PluginDatainjectionMapping();
-         $mapping->fields           = $data;
-         $this->mappingCollection[] = $mapping;
-      }
-   }
+        foreach ($data = $DB->request($sql) as $data) {
+           // Addslashes to conform to value return by PluginDatainjectionBackendcsv::parseLine
+            $data["name"]              = addslashes($data["name"]);
+            $mapping                   = new PluginDatainjectionMapping();
+            $mapping->fields           = $data;
+            $this->mappingCollection[] = $mapping;
+        }
+    }
 
 
     /**
@@ -72,10 +73,11 @@ class PluginDatainjectionMappingCollection
     *
     * @return the list of all the mappings for this model
    **/
-   function getAllMappings() {
+    public function getAllMappings()
+    {
 
-      return $this->mappingCollection;
-   }
+        return $this->mappingCollection;
+    }
 
 
     /**
@@ -85,10 +87,11 @@ class PluginDatainjectionMappingCollection
     *
     * @return the PluginDatainjectionMapping object associated or null
    **/
-   function getMappingByName($name) {
+    public function getMappingByName($name)
+    {
 
-      return $this->getMappingsByField("name", $name);
-   }
+        return $this->getMappingsByField("name", $name);
+    }
 
 
     /**
@@ -98,10 +101,11 @@ class PluginDatainjectionMappingCollection
     *
     * @return the PluginDatainjectionMapping object associated or null
    **/
-   function getMappingByRank($rank) {
+    public function getMappingByRank($rank)
+    {
 
-      return $this->getMappingsByField("rank", $rank);
-   }
+        return $this->getMappingsByField("rank", $rank);
+    }
 
 
     /**
@@ -112,15 +116,16 @@ class PluginDatainjectionMappingCollection
     *
     * @return the PluginDatainjectionMapping object associated or null
    **/
-   function getMappingsByField($field, $value) {
+    public function getMappingsByField($field, $value)
+    {
 
-      foreach ($this->mappingCollection as $mapping) {
-         if ($mapping->equal($field, $value)) {
-            return $mapping;
-         }
-      }
-      return null;
-   }
+        foreach ($this->mappingCollection as $mapping) {
+            if ($mapping->equal($field, $value)) {
+                return $mapping;
+            }
+        }
+        return null;
+    }
 
 
     //---- Save ----//
@@ -128,25 +133,27 @@ class PluginDatainjectionMappingCollection
     /**
     * Save in database the model and all his associated mappings
    **/
-   function saveAllMappings() {
+    public function saveAllMappings()
+    {
 
-      foreach ($this->mappingCollection as $mapping) {
-         if (isset($mapping->fields["id"])) {
-            $mapping->update($mapping->fields);
-         } else {
-            $mapping->fields["id"] = $mapping->add($mapping->fields);
-         }
-      }
-   }
+        foreach ($this->mappingCollection as $mapping) {
+            if (isset($mapping->fields["id"])) {
+                $mapping->update($mapping->fields);
+            } else {
+                $mapping->fields["id"] = $mapping->add($mapping->fields);
+            }
+        }
+    }
 
 
     //---- Delete ----//
 
-   function deleteMappingsFromDB($model_id) {
+    public function deleteMappingsFromDB($model_id)
+    {
 
-      $mapping = new PluginDatainjectionMapping();
-      $mapping->deleteByCriteria(['models_id' => $model_id]);
-   }
+        $mapping = new PluginDatainjectionMapping();
+        $mapping->deleteByCriteria(['models_id' => $model_id]);
+    }
 
 
     //---- Add ----//
@@ -156,10 +163,11 @@ class PluginDatainjectionMappingCollection
     *
     * @param mapping the new PluginDatainjectionMapping to add
    **/
-   function addNewMapping($mapping) {
+    public function addNewMapping($mapping)
+    {
 
-      $this->mappingCollection[] = $mapping;
-   }
+        $this->mappingCollection[] = $mapping;
+    }
 
 
     /**
@@ -167,35 +175,37 @@ class PluginDatainjectionMappingCollection
     *
     * @param mappins the array of PluginDatainjectionMapping objects
    **/
-   function replaceMappings($mappings) {
+    public function replaceMappings($mappings)
+    {
 
-      $this->mappingCollection = $mappings;
-   }
+        $this->mappingCollection = $mappings;
+    }
 
 
     /**
     * Check if at least one mapping is defined, and if one mandatory field
    */
-   static function checkMappings($models_id) {
-
-   }
-
-
-   function getMandatoryMappings() {
-
-      $mandatories = [];
-      foreach ($this->mappingCollection as $mapping) {
-         if ($mapping->isMandatory()) {
-            $mandatories[] = $mapping;
-         }
-      }
-      return $mandatories;
-   }
+    public static function checkMappings($models_id)
+    {
+    }
 
 
-   function getNumberOfMappings() {
+    public function getMandatoryMappings()
+    {
 
-      return count($this->mappingCollection);
-   }
+        $mandatories = [];
+        foreach ($this->mappingCollection as $mapping) {
+            if ($mapping->isMandatory()) {
+                $mandatories[] = $mapping;
+            }
+        }
+        return $mandatories;
+    }
 
+
+    public function getNumberOfMappings()
+    {
+
+        return count($this->mappingCollection);
+    }
 }

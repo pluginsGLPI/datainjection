@@ -32,65 +32,67 @@ if (!defined('GLPI_ROOT')) {
     die("Sorry. You can't access directly to this file");
 }
 
-class PluginDatainjectionItem_OperatingsystemInjection extends Item_OperatingSystem
-                                                implements PluginDatainjectionInjectionInterface
+class PluginDatainjectionItem_OperatingsystemInjection extends Item_OperatingSystem implements PluginDatainjectionInjectionInterface
 {
+    public static function getTable($classname = null)
+    {
 
+        $parenttype = get_parent_class();
+        return $parenttype::getTable();
+    }
 
-   static function getTable($classname = null) {
+    public function isPrimaryType()
+    {
 
-      $parenttype = get_parent_class();
-      return $parenttype::getTable();
-   }
-
-   function isPrimaryType() {
-
-      return false;
-   }
+        return false;
+    }
 
    /**
    * @see plugins/datainjection/inc/PluginDatainjectionInjectionInterface::getOptions()
   **/
-   function getOptions($primary_type = '') {
+    public function getOptions($primary_type = '')
+    {
 
-      $tab = Item_OperatingSystem::rawSearchOptionsToAdd(get_parent_class($this));
-      $searchoptions = [];
-      foreach ($tab as $option) {
-         if (is_numeric($option['id'])) {
-            if ($option['table'] != 'glpi_items_operatingsystems') {
-               $option['linkfield'] = getForeignKeyFieldForTable($option['table']);
-            } else {
-               $option['linkfield'] = $option['field'];
+        $tab = Item_OperatingSystem::rawSearchOptionsToAdd(get_parent_class($this));
+        $searchoptions = [];
+        foreach ($tab as $option) {
+            if (is_numeric($option['id'])) {
+                if ($option['table'] != 'glpi_items_operatingsystems') {
+                    $option['linkfield'] = getForeignKeyFieldForTable($option['table']);
+                } else {
+                    $option['linkfield'] = $option['field'];
+                }
+                $searchoptions[$option['id']] = $option;
             }
-            $searchoptions[$option['id']] = $option;
-         }
-      }
+        }
 
-      $options['ignore_fields'] = [];
-      $options['displaytype'] = [
-         "dropdown" => [
-           41, 45, 46, 48, 61, 63, 64
-         ],
-         "text" => [43, 44]
-      ];
-      return PluginDatainjectionCommonInjectionLib::addToSearchOptions($searchoptions, $options, $this);
-   }
+        $options['ignore_fields'] = [];
+        $options['displaytype'] = [
+            "dropdown" => [
+                41, 45, 46, 48, 61, 63, 64
+            ],
+            "text" => [43, 44]
+        ];
+        return PluginDatainjectionCommonInjectionLib::addToSearchOptions($searchoptions, $options, $this);
+    }
 
-   function connectedTo() {
+    public function connectedTo()
+    {
 
-      return ['Computer', 'NetworkEquipment'];
-   }
+        return ['Computer', 'NetworkEquipment'];
+    }
 
 
     /**
     * @see plugins/datainjection/inc/PluginDatainjectionInjectionInterface::addOrUpdateObject()
    **/
-   function addOrUpdateObject($values = [], $options = []) {
+    public function addOrUpdateObject($values = [], $options = [])
+    {
 
-      $lib = new PluginDatainjectionCommonInjectionLib($this, $values, $options);
-      $lib->processAddOrUpdate();
-      return $lib->getInjectionResults();
-   }
+        $lib = new PluginDatainjectionCommonInjectionLib($this, $values, $options);
+        $lib->processAddOrUpdate();
+        return $lib->getInjectionResults();
+    }
 
 
    /**
@@ -98,34 +100,37 @@ class PluginDatainjectionItem_OperatingsystemInjection extends Item_OperatingSys
     * @param array $values
     * @param array $options
    **/
-  function customDataAlreadyInDB($injectionClass, $values, $options) {
-      global $DB;
-      $item_operatingsystem = new \Item_OperatingSystem();
-      $matching_os = $DB->request([
-         'FROM' => $item_operatingsystem->getTable(),
-         'WHERE' => [
-            'itemtype' => $values['itemtype'],
-            'items_id' => $values['items_id'],
-         ],
-         'LIMIT' => 1, // Get the first item_OS
-      ]);
-      if ($matching_os->count() > 0) {
-         $item_operatingsystem->getFromResultSet($matching_os->current());
-         return $item_operatingsystem->fields['id'];
-      } else {
-         return false;
-      }
-   }
+    public function customDataAlreadyInDB($injectionClass, $values, $options)
+    {
+        /** @var DBmysql $DB */
+        global $DB;
+        $item_operatingsystem = new \Item_OperatingSystem();
+        $matching_os = $DB->request([
+            'FROM' => $item_operatingsystem->getTable(),
+            'WHERE' => [
+                'itemtype' => $values['itemtype'],
+                'items_id' => $values['items_id'],
+            ],
+            'LIMIT' => 1, // Get the first item_OS
+        ]);
+        if ($matching_os->count() > 0) {
+            $item_operatingsystem->getFromResultSet($matching_os->current());
+            return $item_operatingsystem->fields['id'];
+        } else {
+            return false;
+        }
+    }
 
 
    /**
     * @param $primary_type
     * @param $values
    **/
-   function addSpecificNeededFields($primary_type, $values) {
-      $fields['items_id'] = $values[$primary_type]['id'];
-      $fields['itemtype'] = $primary_type;
+    public function addSpecificNeededFields($primary_type, $values)
+    {
+        $fields['items_id'] = $values[$primary_type]['id'];
+        $fields['itemtype'] = $primary_type;
 
-      return $fields;
-   }
+        return $fields;
+    }
 }

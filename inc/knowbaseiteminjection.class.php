@@ -32,64 +32,65 @@ if (!defined('GLPI_ROOT')) {
     die("Sorry. You can't access directly to this file");
 }
 
-class PluginDatainjectionKnowbaseItemInjection extends KnowbaseItem
-                                               implements PluginDatainjectionInjectionInterface
+class PluginDatainjectionKnowbaseItemInjection extends KnowbaseItem implements PluginDatainjectionInjectionInterface
 {
+    public static function getTable($classname = null)
+    {
+
+        $parenttype = get_parent_class();
+        return $parenttype::getTable();
+    }
 
 
-   static function getTable($classname = null) {
+    public function isPrimaryType()
+    {
 
-      $parenttype = get_parent_class();
-      return $parenttype::getTable();
-
-   }
-
-
-   function isPrimaryType() {
-
-      return true;
-   }
+        return true;
+    }
 
 
-   function connectedTo() {
+    public function connectedTo()
+    {
 
-      return [];
-   }
+        return [];
+    }
 
 
     /**
     * @see plugins/datainjection/inc/PluginDatainjectionInjectionInterface::getOptions()
    **/
-   function getOptions($primary_type = '') {
+    public function getOptions($primary_type = '')
+    {
 
-      $tab                 = Search::getOptions(get_parent_class($this));
+        $tab                 = Search::getOptions(get_parent_class($this));
 
-      $tab[121]['checktype'] = 'datetime';
+        $tab[121]['checktype'] = 'datetime';
 
-      //Remove some options because some fields cannot be imported
-      $blacklist     = PluginDatainjectionCommonInjectionLib::getBlacklistedOptions(get_parent_class($this));
-      $notimportable = [];
+       //Remove some options because some fields cannot be imported
+        $blacklist     = PluginDatainjectionCommonInjectionLib::getBlacklistedOptions(get_parent_class($this));
+        $notimportable = [];
 
-      $options['ignore_fields'] = array_merge($blacklist, $notimportable);
+        $options['ignore_fields'] = array_merge($blacklist, $notimportable);
 
-      $options['displaytype']   = ["dropdown"       => [4],
-                                      "date"           => [121],
-                                      "multiline_text" => [6,7],
-                                      "bool"           => [8, 9, 86],
-                                      "user"           => [70]];
+        $options['displaytype']   = ["dropdown"       => [4],
+            "date"           => [121],
+            "multiline_text" => [6,7],
+            "bool"           => [8, 9, 86],
+            "user"           => [70]
+        ];
 
-      return PluginDatainjectionCommonInjectionLib::addToSearchOptions($tab, $options, $this);
-   }
+        return PluginDatainjectionCommonInjectionLib::addToSearchOptions($tab, $options, $this);
+    }
 
 
     /**
     * @see plugins/datainjection/inc/PluginDatainjectionInjectionInterface::addOrUpdateObject()
    **/
-   function addOrUpdateObject($values = [], $options = []) {
+    public function addOrUpdateObject($values = [], $options = [])
+    {
 
-      $lib = new PluginDatainjectionCommonInjectionLib($this, $values, $options);
-      $lib->processAddOrUpdate();
-      return $lib->getInjectionResults();
-   }
-
+        $lib = new PluginDatainjectionCommonInjectionLib($this, $values, $options);
+        $lib->processAddOrUpdate();
+        return $lib->getInjectionResults();
+    }
 }

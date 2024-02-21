@@ -33,12 +33,11 @@
  */
 abstract class PluginDatainjectionBackend
 {
-
-   protected $file = "";
-   protected $delimiter = "";
-   protected $encoding;
-   protected $errmsg;
-   protected $numberOfLines = 0;
+    protected $file = "";
+    protected $delimiter = "";
+    protected $encoding;
+    protected $errmsg;
+    protected $numberOfLines = 0;
 
     const ENCODING_ISO8859_1 = 0;
     const ENCODING_UFT8      = 1;
@@ -53,18 +52,20 @@ abstract class PluginDatainjectionBackend
     *
     * @return array with the data from the header
    **/
-   static function getHeader(PluginDatainjectionData $injectionData, $header_present) {
+    public static function getHeader(PluginDatainjectionData $injectionData, $header_present)
+    {
 
-      if ($header_present) {
-         return $injectionData->getDataAtLine(0);
-      }
+        if ($header_present) {
+            return $injectionData->getDataAtLine(0);
+        }
 
-      $nb = count($injectionData->getDataAtLine(0));
-      for ($i=0; $i<$nb; $i++) {
-         $header[] = $i;
-      }
-      return $header;
-   }
+        $nb = count($injectionData->getDataAtLine(0));
+        $header = [];
+        for ($i = 0; $i < $nb; $i++) {
+            $header[] = $i;
+        }
+        return $header;
+    }
 
 
     /**
@@ -72,18 +73,20 @@ abstract class PluginDatainjectionBackend
     *
     * @param $type
    **/
-   static function getInstance($type) {
+    public static function getInstance($type)
+    {
 
-      $class = 'PluginDatainjectionBackend'.$type;
-      return new $class();
-   }
+        $class = 'PluginDatainjectionBackend' . $type;
+        return new $class();
+    }
 
 
-   static function is_utf8($string) {
+    public static function is_utf8($string) // phpcs:ignore
+    {
 
-      // From http://w3.org/International/questions/qa-forms-utf-8.html
-      return preg_match(
-          '%^(?:
+       // From http://w3.org/International/questions/qa-forms-utf-8.html
+        return preg_match(
+            '%^(?:
              [\x09\x0A\x0D\x20-\x7E]            # ASCII
            | [\xC2-\xDF][\x80-\xBF]             # non-overlong 2-byte
            |  \xE0[\xA0-\xBF][\x80-\xBF]        # excluding overlongs
@@ -92,17 +95,18 @@ abstract class PluginDatainjectionBackend
            |  \xF0[\x90-\xBF][\x80-\xBF]{2}     # planes 1-3
            | [\xF1-\xF3][\x80-\xBF]{3}          # planes 4-15
            |  \xF4[\x80-\x8F][\x80-\xBF]{2}     # plane 16
-       )*$%xs', $string
-      );
-   }
+       )*$%xs',
+            $string
+        );
+    }
 
 
-   static function toUTF8($string) {
+    public static function toUTF8($string)
+    {
 
-      if (!self::is_utf8($string)) {
-         return utf8_encode($string);
-      }
-      return $string;
-   }
-
+        if (!self::is_utf8($string)) {
+            return utf8_encode($string);
+        }
+        return $string;
+    }
 }

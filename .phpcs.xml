@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<ruleset>
+    <file>.</file>
+    <exclude-pattern>/.git/</exclude-pattern>
+    <exclude-pattern type="relative">^node_modules/</exclude-pattern>
+    <exclude-pattern type="relative">^vendor/</exclude-pattern>
+
+    <arg name="colors" />
+    <arg name="extensions" value="php" />
+    <arg value="p" />
+    <arg name="warning-severity" value="0" />
+
+    <rule ref="PSR12">
+        <exclude name="Generic.Files.LineLength" />
+        <exclude name="PSR1.Classes.ClassDeclaration.MissingNamespace" />
+
+        <!-- Plugin specific rules to bypass checks that we can't change without BC -->
+        <exclude name="Squiz.Classes.ValidClassName"/>
+    </rule>
+    <rule ref="Generic.Arrays.ArrayIndent"></rule>
+</ruleset>

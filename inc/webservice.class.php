@@ -30,179 +30,188 @@
 
 class PluginDatainjectionWebservice
 {
+    public static function methodInject($params, $protocol)
+    {
 
+        if (isset($params['help'])) {
+            return ['uri'      => 'string,mandatory',
+                'base64'     => 'string,optional',
+                'additional' => 'array,optional',
+                'models_id'  => 'integer, mandatory',
+                'entities_id' => 'integer,mandatory',
+                'mandatory'  => 'array,optional',
+                'uri'        => 'uri,mandatory',
+                'help'       => 'bool,optional'
+            ];
+        }
 
-   static function methodInject($params, $protocol) {
+        $model = new PluginDatainjectionModel();
 
-      if (isset($params['help'])) {
-         return ['uri'      => 'string,mandatory',
-                   'base64'     => 'string,optional',
-                   'additional' => 'array,optional',
-                   'models_id'  => 'integer, mandatory',
-                   'entities_id'=> 'integer,mandatory',
-                   'mandatory'  => 'array,optional',
-                   'uri'        => 'uri,mandatory',
-                   'help'       => 'bool,optional'];
-      }
-
-      $model = new PluginDatainjectionModel();
-
-      //-----------------------------------------------------------------
-      //-------------------------- Check parameters ---------------------
-      //-----------------------------------------------------------------
-      if (!isset($_SESSION['glpiID'])) {
-         return PluginWebservicesMethodCommon::Error(
-             $protocol,
-             WEBSERVICES_ERROR_NOTAUTHENTICATED
-         );
-      }
-
-      if (!isset($params['uri']) && !isset($params['base64'])) {
-         return PluginWebservicesMethodCommon::Error(
-             $protocol,
-             WEBSERVICES_ERROR_MISSINGPARAMETER,
-             '', 'uri or base64'
-         );
-      }
-
-      if (!isset($params['models_id'])) {
-         return PluginWebservicesMethodCommon::Error(
-             $protocol,
-             WEBSERVICES_ERROR_MISSINGPARAMETER,
-             'models_id'
-         );
-      }
-      if (!$model->getFromDB($params['models_id'])) {
-         return PluginWebservicesMethodCommon::Error(
-             $protocol, WEBSERVICES_ERROR_NOTFOUND,
-             __('Model unknown', 'datainjection')
-         );
-
-      }
-      if (!$model->can($params['models_id'], READ)) {
-         return PluginWebservicesMethodCommon::Error(
-             $protocol, WEBSERVICES_ERROR_NOTALLOWED,
-             __(
-                 'You cannot access this model',
-                 'datainjection'
-             )
-         );
-      }
-      if ($model->fields['step'] < PluginDatainjectionModel::READY_TO_USE_STEP) {
-         return PluginWebservicesMethodCommon::Error(
-             $protocol, WEBSERVICES_ERROR_NOTALLOWED,
-             __(
-                 'You cannot access this model',
-                 'datainjection'
-             )
-         );
-      }
-
-      //Check entity
-      if (!isset($params['entities_id'])) {
-         return PluginWebservicesMethodCommon::Error(
-             $protocol,
-             WEBSERVICES_ERROR_MISSINGPARAMETER,
-             'entities_id'
-         );
-      }
-      $entities_id = $params['entities_id'];
-      if ($entities_id > 0) {
-         $entity = new Entity();
-         if (!$entity->getFromDB($entities_id)) {
+       //-----------------------------------------------------------------
+       //-------------------------- Check parameters ---------------------
+       //-----------------------------------------------------------------
+        if (!isset($_SESSION['glpiID'])) {
             return PluginWebservicesMethodCommon::Error(
-                $protocol, WEBSERVICES_ERROR_NOTFOUND,
-                __('Entity unknown', 'datainjection')
+                $protocol,
+                WEBSERVICES_ERROR_NOTAUTHENTICATED
             );
+        }
 
-         }
-         if (!Session::haveAccessToEntity($entities_id)) {
+        if (!isset($params['uri']) && !isset($params['base64'])) {
             return PluginWebservicesMethodCommon::Error(
-                $protocol, WEBSERVICES_ERROR_NOTALLOWED,
+                $protocol,
+                WEBSERVICES_ERROR_MISSINGPARAMETER,
+                '',
+                'uri or base64'
+            );
+        }
+
+        if (!isset($params['models_id'])) {
+            return PluginWebservicesMethodCommon::Error(
+                $protocol,
+                WEBSERVICES_ERROR_MISSINGPARAMETER,
+                'models_id'
+            );
+        }
+        if (!$model->getFromDB($params['models_id'])) {
+            return PluginWebservicesMethodCommon::Error(
+                $protocol,
+                WEBSERVICES_ERROR_NOTFOUND,
+                __('Model unknown', 'datainjection')
+            );
+        }
+        if (!$model->can($params['models_id'], READ)) {
+            return PluginWebservicesMethodCommon::Error(
+                $protocol,
+                WEBSERVICES_ERROR_NOTALLOWED,
                 __(
-                    'You cannot access this entity',
+                    'You cannot access this model',
                     'datainjection'
                 )
             );
-         }
-      }
+        }
+        if ($model->fields['step'] < PluginDatainjectionModel::READY_TO_USE_STEP) {
+            return PluginWebservicesMethodCommon::Error(
+                $protocol,
+                WEBSERVICES_ERROR_NOTALLOWED,
+                __(
+                    'You cannot access this model',
+                    'datainjection'
+                )
+            );
+        }
 
-      //Mandatory fields
-      $additional_infos = [];
-      if (isset($params['additional']) && is_array($params['additional'])) {
-         $additional_infos = $params['additional'];
-      }
-
-      //Upload CSV file
-      $document_name = basename($params['uri']);
-      $filename      = tempnam(PLUGIN_DATAINJECTION_UPLOAD_DIR, 'PWS');
-      $response      = PluginWebservicesMethodCommon::uploadDocument(
-          $params, $protocol, $filename,
-          $document_name
-      );
-
-      if (PluginWebservicesMethodCommon::isError($protocol, $response)) {
-          return $response;
-      }
-
-      //Uploade successful : now perform import !
-      $options = ['file_encoding'     => PluginDatainjectionBackend::ENCODING_AUTO, //Detect automatically file encoding
-                  'webservice'        => true, //Use webservice CSV file import
-                  'original_filename' => $params['uri'], //URI to the CSV file
-                  'unique_filename'   => $filename, //Unique filename
-                  'mode'              => PluginDatainjectionModel::PROCESS,
-                  'delete_file'       => false, //Do not delete file once imported
-                  'protocol'          => $protocol]; //The Webservice protocol used
-
-      $results  = [];
-      $response = $model->processUploadedFile($options);
-      if (!PluginWebservicesMethodCommon::isError($protocol, $response)) {
-         $engine  = new PluginDatainjectionEngine(
-            $model,
-            $additional_infos,
-            $params['entities_id']
-         );
-         //Remove first line if header is present
-         $first = true;
-         foreach ($model->injectionData->getData() as $id => $data) {
-            if ($first && $model->getSpecificModel()->isHeaderPresent()) {
-               $first = false;
-            } else {
-               $results[] = $engine->injectLine($data[0], $id);
+       //Check entity
+        if (!isset($params['entities_id'])) {
+            return PluginWebservicesMethodCommon::Error(
+                $protocol,
+                WEBSERVICES_ERROR_MISSINGPARAMETER,
+                'entities_id'
+            );
+        }
+        $entities_id = $params['entities_id'];
+        if ($entities_id > 0) {
+            $entity = new Entity();
+            if (!$entity->getFromDB($entities_id)) {
+                return PluginWebservicesMethodCommon::Error(
+                    $protocol,
+                    WEBSERVICES_ERROR_NOTFOUND,
+                    __('Entity unknown', 'datainjection')
+                );
             }
-         }
-         $model->cleanData();
-         return $results;
-      }
-      return $response;
-   }
+            if (!Session::haveAccessToEntity($entities_id)) {
+                return PluginWebservicesMethodCommon::Error(
+                    $protocol,
+                    WEBSERVICES_ERROR_NOTALLOWED,
+                    __(
+                        'You cannot access this entity',
+                        'datainjection'
+                    )
+                );
+            }
+        }
+
+       //Mandatory fields
+        $additional_infos = [];
+        if (isset($params['additional']) && is_array($params['additional'])) {
+            $additional_infos = $params['additional'];
+        }
+
+       //Upload CSV file
+        $document_name = basename($params['uri']);
+        $filename      = tempnam(PLUGIN_DATAINJECTION_UPLOAD_DIR, 'PWS');
+        $response      = PluginWebservicesMethodCommon::uploadDocument(
+            $params,
+            $protocol,
+            $filename,
+            $document_name
+        );
+
+        if (PluginWebservicesMethodCommon::isError($protocol, $response)) {
+            return $response;
+        }
+
+       //Uploade successful : now perform import !
+        $options = ['file_encoding'     => PluginDatainjectionBackend::ENCODING_AUTO, //Detect automatically file encoding
+            'webservice'        => true, //Use webservice CSV file import
+            'original_filename' => $params['uri'], //URI to the CSV file
+            'unique_filename'   => $filename, //Unique filename
+            'mode'              => PluginDatainjectionModel::PROCESS,
+            'delete_file'       => false, //Do not delete file once imported
+            'protocol'          => $protocol
+        ]; //The Webservice protocol used
+
+        $results  = [];
+        $response = $model->processUploadedFile($options);
+        if (!PluginWebservicesMethodCommon::isError($protocol, $response)) {
+            $engine  = new PluginDatainjectionEngine(
+                $model,
+                $additional_infos,
+                $params['entities_id']
+            );
+           //Remove first line if header is present
+            $first = true;
+            foreach ($model->injectionData->getData() as $id => $data) {
+                if ($first && $model->getSpecificModel()->isHeaderPresent()) {
+                    $first = false;
+                } else {
+                    $results[] = $engine->injectLine($data[0], $id);
+                }
+            }
+            $model->cleanData();
+            return $results;
+        }
+        return $response;
+    }
 
 
-   static function methodGetModel($params, $protocol) {
+    public static function methodGetModel($params, $protocol)
+    {
 
-      $params['itemtype'] = 'PluginDatainjectionModel';
-      return PluginWebservicesMethodInventaire::methodGetObject($params, $protocol);
-   }
-
-
-   static function methodListModels($params, $protocol) {
-
-      $params['itemtype'] = 'PluginDatainjectionModel';
-      return PluginWebservicesMethodInventaire::methodListObjects($params, $protocol);
-   }
+        $params['itemtype'] = 'PluginDatainjectionModel';
+        return PluginWebservicesMethodInventaire::methodGetObject($params, $protocol);
+    }
 
 
-   static function methodListItemtypes($params, $protocol) {
+    public static function methodListModels($params, $protocol)
+    {
 
-      if (isset($params['help'])) {
-         return ['help' => 'bool,optional'];
-      }
+        $params['itemtype'] = 'PluginDatainjectionModel';
+        return PluginWebservicesMethodInventaire::methodListObjects($params, $protocol);
+    }
 
-      if (!isset($_SESSION['glpiID'])) {
-         return self::Error($protocol, WEBSERVICES_ERROR_NOTAUTHENTICATED);
-      }
 
-      return PluginDatainjectionInjectionType::getItemtypes();
-   }
+    public static function methodListItemtypes($params, $protocol)
+    {
 
+        if (isset($params['help'])) {
+            return ['help' => 'bool,optional'];
+        }
+
+        if (!isset($_SESSION['glpiID'])) {
+            return self::Error($protocol, WEBSERVICES_ERROR_NOTAUTHENTICATED);
+        }
+
+        return PluginDatainjectionInjectionType::getItemtypes();
+    }
 }

@@ -48,14 +48,12 @@ if (isset($_POST["add"])) {
 
     //Set display to the advanced options tab
     Session::setActiveTab('PluginDatainjectionModel', 'PluginDatainjectionModel$3');
-    Html::redirect(Toolbox::getItemTypeFormURL('PluginDatainjectionModel')."?id=$newID");
-
+    Html::redirect(Toolbox::getItemTypeFormURL('PluginDatainjectionModel') . "?id=$newID");
 } else if (isset($_POST["delete"])) {
     /* delete */
     $model->check($_POST['id'], DELETE);
     $model->delete($_POST);
     $model->redirectToList();
-
 } else if (isset($_POST["update"])) {
     /* update */
     //Update model
@@ -65,33 +63,34 @@ if (isset($_POST["add"])) {
     $specific_model = PluginDatainjectionModel::getInstance('csv');
     $specific_model->saveFields($_POST);
     Html::back();
-
 } else if (isset($_POST["validate"])) {
     /* update order */
     $model->check($_POST['id'], UPDATE);
     $model->switchReadyToUse();
     Html::back();
-
 } else if (isset($_POST['upload'])) {
-   if (!empty($_FILES)) {
-      $model->check($_POST['id'], UPDATE);
+    if (!empty($_FILES)) {
+        $model->check($_POST['id'], UPDATE);
 
-      if ($model->processUploadedFile(
-          [
-             'file_encoding' => 'csv',
-            'mode'          => PluginDatainjectionModel::CREATION
-          ]
-      )) {
-         Session::setActiveTab('PluginDatainjectionModel', 'PluginDatainjectionModel$4');
-      } else {
-         Session::addMessageAfterRedirect(
-            __('The file could not be found', 'datainjection'),
-            true, ERROR, true
-         );
-      }
-   }
+        if (
+            $model->processUploadedFile(
+                [
+                    'file_encoding' => 'csv',
+                    'mode'          => PluginDatainjectionModel::CREATION
+                ]
+            )
+        ) {
+            Session::setActiveTab('PluginDatainjectionModel', 'PluginDatainjectionModel$4');
+        } else {
+            Session::addMessageAfterRedirect(
+                __('The file could not be found', 'datainjection'),
+                true,
+                ERROR,
+                true
+            );
+        }
+    }
     Html::back();
-
 } else if (isset($_GET['sample'])) {
     $model->check($_GET['sample'], READ);
     $modeltype = PluginDatainjectionModel::getInstance($model->getField('filetype'));
@@ -101,10 +100,13 @@ if (isset($_POST["add"])) {
 }
 
 Html::header(
-    PluginDatainjectionModel::getTypeName(), '',
-    "tools", "plugindatainjectionmenu", "model"
+    PluginDatainjectionModel::getTypeName(),
+    '',
+    "tools",
+    "plugindatainjectionmenu",
+    "model"
 );
 
-$model->display(['id' =>$_GET["id"]]);
+$model->display(['id' => $_GET["id"]]);
 
 Html::footer();

@@ -30,14 +30,14 @@
 
 class PluginDatainjectionInfoCollection
 {
+    public $infosCollection;
 
-    var $infosCollection;
 
+    public function __construct()
+    {
 
-   function __construct() {
-
-      $this->infosCollection = [];
-   }
+        $this->infosCollection = [];
+    }
 
 
     //---- Getter ----//
@@ -47,30 +47,31 @@ class PluginDatainjectionInfoCollection
     *
     * @param model_id the model ID
    **/
-   function load($models_id) {
+    public function load($models_id)
+    {
+        /** @var DBmysql $DB */
+        global $DB;
 
-      global $DB;
-
-      $query = "SELECT *
+        $query = "SELECT *
                 FROM `glpi_plugin_datainjection_infos`
-                WHERE `models_id` = '".$models_id."'
+                WHERE `models_id` = '" . $models_id . "'
                 ORDER BY `itemtype` ASC";
 
-      foreach ($DB->request($query) as $data) {
-         $infos = new PluginDatainjectionInfo;
-         $infos->fields = $data;
-         $this->infosCollection[] = $infos;
-      }
-   }
+        foreach ($DB->request($query) as $data) {
+            $infos = new PluginDatainjectionInfo();
+            $infos->fields = $data;
+            $this->infosCollection[] = $infos;
+        }
+    }
 
     /**
     * Return all the mappings for this model
     *
     * @return the list of all the mappings for this model
    **/
-   function getAllInfos() {
+    public function getAllInfos()
+    {
 
-      return $this->infosCollection;
-   }
-
+        return $this->infosCollection;
+    }
 }

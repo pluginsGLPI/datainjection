@@ -33,20 +33,18 @@
 **/
 interface PluginDatainjectionBackendInterface
 {
-
-
     /**
     * Read from file
     *
     * @param $numberOfLines (default 1)
    **/
-    function read($numberOfLines = 1);
+    public function read($numberOfLines = 1);
 
 
     /**
     * Delete file
    **/
-    function deleteFile();
+    public function deleteFile();
 
 
     /**
@@ -58,12 +56,11 @@ interface PluginDatainjectionBackendInterface
     /**
     * Store the number of lines red from the file
    **/
-    function storeNumberOfLines();
+    public function storeNumberOfLines();
 
 
     /**
     * Get the number of lines in the file
    **/
-    function getNumberOfLines();
-
+    public function getNumberOfLines();
 }

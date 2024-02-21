@@ -32,76 +32,78 @@ if (!defined('GLPI_ROOT')) {
     die("Sorry. You can't access directly to this file");
 }
 
-class PluginDatainjectionProfile_UserInjection extends Profile_User
-                                               implements PluginDatainjectionInjectionInterface
+class PluginDatainjectionProfile_UserInjection extends Profile_User implements PluginDatainjectionInjectionInterface
 {
+    public static function getTable($classname = null)
+    {
+
+        $parenttype = get_parent_class();
+        return $parenttype::getTable();
+    }
 
 
-   static function getTable($classname = null) {
+    public function isPrimaryType()
+    {
 
-      $parenttype = get_parent_class();
-      return $parenttype::getTable();
-   }
-
-
-   function isPrimaryType() {
-
-      return false;
-   }
+        return false;
+    }
 
 
-   function connectedTo() {
+    public function connectedTo()
+    {
 
-      return [];
-   }
+        return [];
+    }
 
 
     /**
     * @see plugins/datainjection/inc/PluginDatainjectionInjectionInterface::getOptions()
    **/
-   function getOptions($primary_type = '') {
+    public function getOptions($primary_type = '')
+    {
 
-      $tab = Search::getOptions(get_parent_class($this));
+        $tab = Search::getOptions(get_parent_class($this));
 
-      $tab[3]['checktype']   = 'bool';
-      $tab[3]['displaytype'] = 'bool';
+        $tab[3]['checktype']   = 'bool';
+        $tab[3]['displaytype'] = 'bool';
 
-      $tab[4]['checktype']   = 'text';
-      $tab[4]['displaytype'] = 'dropdown';
+        $tab[4]['checktype']   = 'text';
+        $tab[4]['displaytype'] = 'dropdown';
 
-      $tab[5]['checktype']   = 'text';
-      $tab[5]['displaytype'] = 'dropdown';
+        $tab[5]['checktype']   = 'text';
+        $tab[5]['displaytype'] = 'dropdown';
 
-      //Remove some options because some fields cannot be imported
-      $blacklist     = PluginDatainjectionCommonInjectionLib::getBlacklistedOptions(get_parent_class($this));
-      $notimportable = [];
+       //Remove some options because some fields cannot be imported
+        $blacklist     = PluginDatainjectionCommonInjectionLib::getBlacklistedOptions(get_parent_class($this));
+        $notimportable = [];
 
-      $options['ignore_fields'] = array_merge($blacklist, $notimportable);
-      $options['displaytype']   = ["bool"           => [86]];
+        $options['ignore_fields'] = array_merge($blacklist, $notimportable);
+        $options['displaytype']   = ["bool"           => [86]];
 
-      return PluginDatainjectionCommonInjectionLib::addToSearchOptions($tab, $options, $this);
-   }
+        return PluginDatainjectionCommonInjectionLib::addToSearchOptions($tab, $options, $this);
+    }
 
 
     /**
     * @see plugins/datainjection/inc/PluginDatainjectionInjectionInterface::addOrUpdateObject()
    **/
-   function addOrUpdateObject($values = [], $options = []) {
+    public function addOrUpdateObject($values = [], $options = [])
+    {
 
-      $lib = new PluginDatainjectionCommonInjectionLib($this, $values, $options);
-      $lib->processAddOrUpdate();
-      return $lib->getInjectionResults();
-   }
+        $lib = new PluginDatainjectionCommonInjectionLib($this, $values, $options);
+        $lib->processAddOrUpdate();
+        return $lib->getInjectionResults();
+    }
 
 
     /**
     * @param $primary_type
     * @param $values
    **/
-   function addSpecificNeededFields($primary_type, $values) {
+    public function addSpecificNeededFields($primary_type, $values)
+    {
 
-      $fields['users_id'] = $values['User']['id'];
-      return $fields;
-   }
-
+        $fields['users_id'] = $values['User']['id'];
+        return $fields;
+    }
 }

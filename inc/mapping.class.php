@@ -30,127 +30,134 @@
 
 class PluginDatainjectionMapping extends CommonDBTM
 {
-
-   static $rightname = "plugin_datainjection_model";
+    public static $rightname = "plugin_datainjection_model";
 
     /**
     * @param $field
     * @param $value
    **/
-   function equal($field, $value) {
+    public function equal($field, $value)
+    {
 
-      if (!isset($this->fields[$field])) {
-         return false;
-      }
+        if (!isset($this->fields[$field])) {
+            return false;
+        }
 
-      if ($this->fields[$field] == $value) {
-         return true;
-      }
+        if ($this->fields[$field] == $value) {
+            return true;
+        }
 
-      return false;
-   }
-
-
-   function getMappingName() {
-
-      return $this->fields["name"];
-   }
+        return false;
+    }
 
 
-   function getRank() {
+    public function getMappingName()
+    {
 
-      return $this->fields["rank"];
-   }
-
-
-   function isMandatory() {
-
-      return $this->fields["is_mandatory"];
-   }
+        return $this->fields["name"];
+    }
 
 
-   function getValue() {
+    public function getRank()
+    {
 
-      return $this->fields["value"];
-   }
-
-
-   function getID() {
-
-      return $this->fields["id"];
-   }
+        return $this->fields["rank"];
+    }
 
 
-   function getItemtype() {
+    public function isMandatory()
+    {
 
-      return $this->fields["itemtype"];
-   }
+        return $this->fields["is_mandatory"];
+    }
+
+
+    public function getValue()
+    {
+
+        return $this->fields["value"];
+    }
+
+
+    public function getID()
+    {
+
+        return $this->fields["id"];
+    }
+
+
+    public function getItemtype()
+    {
+
+        return $this->fields["itemtype"];
+    }
 
 
     /**
     * @param $model  PluginDatainjectionModel object
    **/
-   static function showFormMappings(PluginDatainjectionModel $model) {
+    public static function showFormMappings(PluginDatainjectionModel $model)
+    {
+        /** @var array $CFG_GLPI */
+        global $CFG_GLPI;
 
-      global $CFG_GLPI;
+        $canedit = $model->can($model->fields['id'], UPDATE);
 
-      $canedit = $model->can($model->fields['id'], UPDATE);
+        if (isset($_SESSION['datainjection']['lines'])) {
+            $lines = unserialize($_SESSION['datainjection']['lines']);
+        } else {
+            $lines = [];
+        }
 
-      if (isset($_SESSION['datainjection']['lines'])) {
-         $lines = unserialize($_SESSION['datainjection']['lines']);
-      } else {
-         $lines = [];
-      }
+        echo "<form method='post' name=form action='" . Toolbox::getItemTypeFormURL(__CLASS__) . "'>";
 
-      echo "<form method='post' name=form action='".Toolbox::getItemTypeFormURL(__CLASS__)."'>";
-
-      //Display link to the preview popup
-      if (isset($_SESSION['datainjection']['lines']) && !empty($lines)) {
-         $nblines = $_SESSION['datainjection']['nblines'];
-         echo "<table class='tab_cadre_fixe'>";
-         echo "<tr class='tab_bg_1'><td class='center'>";
-         $url = Plugin::getWebDir('datainjection').
-             "/front/popup.php?popup=preview&amp;models_id=".
+       //Display link to the preview popup
+        if (isset($_SESSION['datainjection']['lines']) && !empty($lines)) {
+            $nblines = $_SESSION['datainjection']['nblines'];
+            echo "<table class='tab_cadre_fixe'>";
+            echo "<tr class='tab_bg_1'><td class='center'>";
+            $url = Plugin::getWebDir('datainjection') .
+             "/front/popup.php?popup=preview&amp;models_id=" .
              $model->getID();
-         echo "<a href=#  onClick=\"var w = window.open('$url' , 'glpipopup', ".
+            echo "<a href=#  onClick=\"var w = window.open('$url' , 'glpipopup', " .
              "'height=400, width=600, top=100, left=100, scrollbars=yes' );w.focus();\"/>";
-         echo __('See the file', 'datainjection')."</a>";
-         echo "</td></tr>";
-      }
+            echo __('See the file', 'datainjection') . "</a>";
+            echo "</td></tr>";
+        }
 
-      echo "<table class='tab_cadre_fixe'>";
-      echo "<tr>";
-      echo "<th>" . __('Header of the file', 'datainjection') . "</th>";
-      echo "<th>" . __('Tables', 'datainjection') . "</th>";
-      echo "<th>" . _n('Field', 'Fields', 2) . "</th>";
-      echo "<th>" . __('Link field', 'datainjection') . "</th>";
-      echo "</tr>";
+        echo "<table class='tab_cadre_fixe'>";
+        echo "<tr>";
+        echo "<th>" . __('Header of the file', 'datainjection') . "</th>";
+        echo "<th>" . __('Tables', 'datainjection') . "</th>";
+        echo "<th>" . _n('Field', 'Fields', 2) . "</th>";
+        echo "<th>" . __('Link field', 'datainjection') . "</th>";
+        echo "</tr>";
 
-      $model->loadMappings();
+        $model->loadMappings();
 
-      foreach ($model->getMappings() as $mapping) {
-         $mapping->fields = Toolbox::stripslashes_deep($mapping->fields);
-         $mappings_id     = $mapping->getID();
-         echo "<tr class='tab_bg_1'>";
-         echo "<td class='center'>".$mapping->fields['name']."</td>";
-         echo "<td class='center'>";
-         $options = ['primary_type' => $model->fields['itemtype']];
-         PluginDatainjectionInjectionType::dropdownLinkedTypes($mapping, $options);
-         echo "</td>";
-         echo "<td class='center'><span id='span_field_$mappings_id'>";
-         echo "</span></td>";
-         echo "<td class='center'><span id='span_mandatory_$mappings_id'></span></td>";
-      }
+        foreach ($model->getMappings() as $mapping) {
+            $mapping->fields = Toolbox::stripslashes_deep($mapping->fields);
+            $mappings_id     = $mapping->getID();
+            echo "<tr class='tab_bg_1'>";
+            echo "<td class='center'>" . $mapping->fields['name'] . "</td>";
+            echo "<td class='center'>";
+            $options = ['primary_type' => $model->fields['itemtype']];
+            PluginDatainjectionInjectionType::dropdownLinkedTypes($mapping, $options);
+            echo "</td>";
+            echo "<td class='center'><span id='span_field_$mappings_id'>";
+            echo "</span></td>";
+            echo "<td class='center'><span id='span_mandatory_$mappings_id'></span></td>";
+        }
 
-      if ($canedit) {
-         echo "<tr> <td class='tab_bg_2 center' colspan='4'>";
-         echo "<input type='hidden' name='models_id' value='".$model->fields['id']."'>";
-         echo "<input type='submit' name='update' value='"._sx('button', 'Save')."' class='submit'>";
-         echo "</td></tr>";
-      }
-      echo "</table>";
-      Html::closeForm();
-   }
+        if ($canedit) {
+            echo "<tr> <td class='tab_bg_2 center' colspan='4'>";
+            echo "<input type='hidden' name='models_id' value='" . $model->fields['id'] . "'>";
+            echo "<input type='submit' name='update' value='" . _sx('button', 'Save') . "' class='submit'>";
+            echo "</td></tr>";
+        }
+        echo "</table>";
+        Html::closeForm();
+    }
 
 
     /**
@@ -160,42 +167,43 @@ class PluginDatainjectionMapping extends CommonDBTM
     *
     * @return true if more than one value to inject, false if not
    **/
-   static function getSeveralMappedField($models_id) {
+    public static function getSeveralMappedField($models_id)
+    {
+        /** @var DBmysql $DB */
+        global $DB;
 
-      global $DB;
-
-      $several = [];
-      $query  = "SELECT `value`,
+        $several = [];
+        $query  = "SELECT `value`,
                         COUNT(*) AS counter
                  FROM `glpi_plugin_datainjection_mappings`
-                 WHERE `models_id` = '".$models_id."'
+                 WHERE `models_id` = '" . $models_id . "'
                        AND `value` NOT IN ('none')
                  GROUP BY `value`
                  HAVING `counter` > 1";
 
-      foreach ($DB->request($query) as $mapping) {
-         $several[] = $mapping['value'];
-      }
-      return $several;
-   }
+        foreach ($DB->request($query) as $mapping) {
+            $several[] = $mapping['value'];
+        }
+        return $several;
+    }
 
 
     /**
     * @param $models_id
    **/
-   static function getMappingsSortedByRank($models_id) {
+    public static function getMappingsSortedByRank($models_id)
+    {
+        /** @var DBmysql $DB */
+        global $DB;
 
-      global $DB;
-
-      $mappings = [];
-      $query    = "SELECT `name`
+        $mappings = [];
+        $query    = "SELECT `name`
                    FROM `glpi_plugin_datainjection_mappings`
-                   WHERE `models_id` = '".$models_id."'
+                   WHERE `models_id` = '" . $models_id . "'
                    ORDER BY `rank` ASC";
-      foreach ($DB->request($query) as $data) {
-         $mappings[] = $data['name'];
-      }
-      return $mappings;
-   }
-
+        foreach ($DB->request($query) as $data) {
+            $mappings[] = $data['name'];
+        }
+        return $mappings;
+    }
 }

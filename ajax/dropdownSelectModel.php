@@ -37,8 +37,9 @@ if (strpos($_SERVER['PHP_SELF'], "dropdownSelectModel.php")) {
 
 Session::checkCentralAccess();
 
-if (isset($_SESSION['datainjection']['models_id'])
-    && $_SESSION['datainjection']['models_id']!=$_POST['models_id']
+if (
+    isset($_SESSION['datainjection']['models_id'])
+    && $_SESSION['datainjection']['models_id'] != $_POST['models_id']
 ) {
     PluginDatainjectionModel::cleanSessionVariables();
 }
@@ -46,7 +47,8 @@ if (isset($_SESSION['datainjection']['models_id'])
 $_SESSION['datainjection']['step'] = PluginDatainjectionClientInjection::STEP_UPLOAD;
 $model = new PluginDatainjectionModel();
 
-if (($_POST['models_id'] > 0)
+if (
+    ($_POST['models_id'] > 0)
     && $model->can($_POST['models_id'], READ)
 ) {
     PluginDatainjectionInfo::showAdditionalInformationsForm($model);
