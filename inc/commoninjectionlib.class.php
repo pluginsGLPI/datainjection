@@ -825,8 +825,8 @@ class PluginDatainjectionCommonInjectionLib
             );
         }
 
-        /** @phpstan-ignore-next-line */
         $query .= " AND `" . $searchOption['field'] . "` = '$value'";
+        /** @phpstan-ignore-next-line */
         $result = $DB->query($query); // phpcs:ignore
 
         if ($DB->numrows($result) > 0) {
