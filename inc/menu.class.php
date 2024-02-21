@@ -40,7 +40,7 @@ class PluginDatainjectionMenu extends CommonGLPI
 
     public static function getMenuContent()
     {
-
+        /** @var array $CFG_GLPI */
         global $CFG_GLPI;
 
         $injectionFormUrl = "/" . Plugin::getWebDir('datainjection', false) . '/front/clientinjection.form.php';

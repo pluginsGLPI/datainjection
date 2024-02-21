@@ -85,7 +85,7 @@ class PluginDatainjectionBackendcsv extends PluginDatainjectionBackend implement
    **/
     public static function parseLine($fic, $data, $encoding = 1)
     {
-
+        /** @var DBmysql $DB */
         global $DB;
 
         $csv = [];

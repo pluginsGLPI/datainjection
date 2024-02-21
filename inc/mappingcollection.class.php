@@ -48,7 +48,7 @@ class PluginDatainjectionMappingCollection
    **/
     public function load($models_id)
     {
-
+        /** @var DBmysql $DB */
         global $DB;
 
         $sql = "SELECT *

@@ -137,6 +137,8 @@ class PluginDatainjectionItem_SoftwareVersionInjection extends Item_SoftwareVers
 
     public function addSpecificNeededFields($primary_type, $values)
     {
+        $fields = [];
+
         if (isset($values['SoftwareVersion'])) {
             $fields['softwareversions_id'] = $values['SoftwareVersion']['id'];
         }

@@ -44,6 +44,8 @@ class PluginDatainjectionModelcsv extends CommonDBChild
 
         $this->fields['delimiter']         = ';';
         $this->fields['is_header_present'] = 1;
+
+        return true;
     }
 
     public function init()
@@ -125,18 +127,18 @@ class PluginDatainjectionModelcsv extends CommonDBChild
     *
     * @param $models_id the model ID
     *
-    * @return the ID of the row in glpi_plugin_datainjection_modelcsv
+    * @return int the ID of the row in glpi_plugin_datainjection_modelcsv
    **/
     public function getFromDBByModelID($models_id)
     {
-
+        /** @var DBmysql $DB */
         global $DB;
 
         $query = "SELECT `id`
                 FROM `" . $this->getTable() . "`
                 WHERE `models_id` = '" . $models_id . "'";
 
-        $results = $DB->query($query);
+        $results = $DB->doQuery($query);
         $id = 0;
 
         if ($DB->numrows($results) > 0) {

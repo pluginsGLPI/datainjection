@@ -49,7 +49,7 @@ class PluginDatainjectionInfoCollection
    **/
     public function load($models_id)
     {
-
+        /** @var DBmysql $DB */
         global $DB;
 
         $query = "SELECT *

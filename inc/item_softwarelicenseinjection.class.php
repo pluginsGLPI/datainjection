@@ -134,6 +134,8 @@ class PluginDatainjectionItem_SoftwareLicenseInjection extends Item_SoftwareLice
    **/
     public function addSpecificNeededFields($primary_type, $values)
     {
+        $fields = [];
+
         if (isset($values['SoftwareLicense'])) {
             $fields['softwarelicenses_id'] = $values['SoftwareLicense']['id'];
         }

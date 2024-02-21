@@ -34,26 +34,18 @@ class PluginDatainjectionInfo extends CommonDBTM
 
     public function getEmpty()
     {
-
         $this->fields['itemtype']     = PluginDatainjectionInjectionType::NO_VALUE;
         $this->fields['value']        = PluginDatainjectionInjectionType::NO_VALUE;
         $this->fields['is_mandatory'] = 0;
+
+        return true;
     }
 
 
     public function isMandatory()
     {
-
         return $this->fields["is_mandatory"];
     }
-
-
-    public function getInfosText()
-    {
-
-        return $this->text;
-    }
-
 
     public function getValue()
     {
@@ -212,7 +204,7 @@ class PluginDatainjectionInfo extends CommonDBTM
    **/
     public static function manageInfos($models_id, $infos = [])
     {
-
+        /** @var DBmysql $DB */
         global $DB;
 
         $info = new self();
@@ -338,14 +330,14 @@ class PluginDatainjectionInfo extends CommonDBTM
 
 
     /**
-    * Display command additional informations
-    *
-    * @param info
-    * @param option
-    * @param injectionClass
-    *
-    * @return nothing
-   **/
+     * Display command additional informations
+     *
+     * @param $info
+     * @param $option
+     * @param $injectionClass
+     *
+     * @return void
+     */
     public static function showAdditionalInformation(
         PluginDatainjectionInfo $info,
         $option,
@@ -493,7 +485,7 @@ class PluginDatainjectionInfo extends CommonDBTM
    **/
     public static function dropdownTemplates($name, $table)
     {
-
+        /** @var DBmysql $DB */
         global $DB;
 
         $values    = [0 => Dropdown::EMPTY_VALUE];

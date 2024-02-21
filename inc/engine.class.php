@@ -109,7 +109,7 @@ class PluginDatainjectionEngine
         $this->addRequiredFields($itemtype, $fields_toinject);
 
        //Optional data to be added to the fields to inject (won't be checked !)
-        $optional_data = $this->addAdditionalInformations($this->infos);
+        $optional_data = $this->addAdditionalInformations();
 
        //--------------- Set all needed options ------------------//
        //Check options
@@ -163,39 +163,38 @@ class PluginDatainjectionEngine
 
 
     /**
-    * Add fields needed for injection
-    *
-    * @param $itemtype                    the itemtype to inject
-    * @param $fields_toinject    array    the list of fields representing the object
-    *
-    * @return nothing
-   **/
-    public function addRequiredFields($itemtype, &$fields_toinject = [])
+     * Add fields needed for injection
+     *
+     * @param $itemtype                    the itemtype to inject
+     * @param $fields_toinject    array    the list of fields representing the object
+     *
+     * @return void nothing
+     */
+    public function addRequiredFields($itemtype, &$fields_toinject = []): void
     {
-
-       //Add entity to the primary type
+        //Add entity to the primary type
         $fields_toinject[$itemtype]['entities_id'] = $this->entity;
     }
 
 
     /**
-    * Add a value to the fields to inject
-    *
-    * @param  $fields_toinject                the fields
-    * @param  $searchOptions                  options related to the itemtype to inject
-    * @param  $mapping                        the mapping which matches the field
-    * @param  $value                          the value for this field, as readed from the CSV file
-    * @param  $several            array       of all fields which can be mapping more than one time
-    *                                        in the model
-    * @return nothing
-   **/
+      * Add a value to the fields to inject
+      *
+      * @param  $fields_toinject                the fields
+      * @param  $searchOptions                  options related to the itemtype to inject
+      * @param  $mapping                        the mapping which matches the field
+      * @param  $value                          the value for this field, as readed from the CSV file
+      * @param  $several            array       of all fields which can be mapping more than one time
+      *                                        in the model
+      * @return void nothing
+     */
     public function addValueToInject(
         &$fields_toinject,
         $searchOptions,
         $mapping,
         $value,
         $several = []
-    ) {
+    ): void {
 
        // Option will be found only for "main" type.
         $option       = PluginDatainjectionCommonInjectionLib::findSearchOption(

@@ -51,7 +51,7 @@ class PluginDatainjectionInfocomInjection extends Infocom implements PluginDatai
 
     public function connectedTo()
     {
-
+        /** @var array $CFG_GLPI */
         global $CFG_GLPI;
 
         return $CFG_GLPI["infocom_types"];

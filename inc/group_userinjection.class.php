@@ -108,6 +108,7 @@ class PluginDatainjectionGroup_UserInjection extends Group_User implements Plugi
    **/
     public function addSpecificNeededFields($primary_type, $values)
     {
+        $fields = [];
 
         if ($primary_type == "User") {
             $fields['users_id'] = $values['User']['id'];

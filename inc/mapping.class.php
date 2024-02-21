@@ -98,7 +98,7 @@ class PluginDatainjectionMapping extends CommonDBTM
    **/
     public static function showFormMappings(PluginDatainjectionModel $model)
     {
-
+        /** @var array $CFG_GLPI */
         global $CFG_GLPI;
 
         $canedit = $model->can($model->fields['id'], UPDATE);
@@ -169,7 +169,7 @@ class PluginDatainjectionMapping extends CommonDBTM
    **/
     public static function getSeveralMappedField($models_id)
     {
-
+        /** @var DBmysql $DB */
         global $DB;
 
         $several = [];
@@ -193,7 +193,7 @@ class PluginDatainjectionMapping extends CommonDBTM
    **/
     public static function getMappingsSortedByRank($models_id)
     {
-
+        /** @var DBmysql $DB */
         global $DB;
 
         $mappings = [];

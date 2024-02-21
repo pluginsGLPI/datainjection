@@ -120,9 +120,9 @@ class PluginDatainjectionCommonInjectionLib
     /**
     * Set default values for injection parameters
     *
-    * @return nothing
+    * @return void nothing
    **/
-    public function setDefaultValues()
+    public function setDefaultValues(): void
     {
 
         $this->checks = ['ip'           => false, 'mac'          => false,
@@ -294,7 +294,7 @@ class PluginDatainjectionCommonInjectionLib
     *
     * @param $injectionClassName the injection class name
     *
-    * @return an instance of the itemtype associated to the injection class name
+    * @return CommonDBTM instance of the itemtype associated to the injection class name
     */
     public static function getItemtypeInstanceByInjection($injectionClassName)
     {
@@ -309,7 +309,7 @@ class PluginDatainjectionCommonInjectionLib
     *
     * @param $injectionClassName the injection class name
     *
-    * @return the itemtype associated
+    * @return string the itemtype associated
     */
     public static function getItemtypeByInjection($injectionClassName)
     {
@@ -323,7 +323,7 @@ class PluginDatainjectionCommonInjectionLib
     *
     * @param $injectionClassName the injection class object
     *
-    * @return an instance of the itemtype associated to the injection class
+    * @return string instance of the itemtype associated to the injection class
     */
     public static function getItemtypeByInjectionClass($injectionClass)
     {
@@ -360,7 +360,7 @@ class PluginDatainjectionCommonInjectionLib
     */
     public static function getBlacklistedOptions($itemtype)
     {
-
+        /** @var array $CFG_GLPI */
         global $CFG_GLPI;
 
        //2 : id
@@ -391,7 +391,7 @@ class PluginDatainjectionCommonInjectionLib
         if (in_array($itemtype, $CFG_GLPI["contract_types"])) {
             $raw_options_to_blacklist = array_merge(
                 $raw_options_to_blacklist,
-                Contract::rawSearchOptionsToAdd($itemtype)
+                Contract::rawSearchOptionsToAdd()
             );
         }
 
@@ -515,7 +515,7 @@ class PluginDatainjectionCommonInjectionLib
     /**
     * Get ID associate to the value from the CSV file is needed (for example for dropdown tables)
     *
-    * @return nothing
+    * @return void nothing
    **/
     private function manageFieldValues()
     {
@@ -561,7 +561,7 @@ class PluginDatainjectionCommonInjectionLib
     * @param $value                  the value coming from the CSV file
     * @param $add                    is insertion (true) or update (false) (true by default)
     *
-    * @return nothing
+    * @return void nothing
    **/
     private function getFieldValue(
         $injectionClass,
@@ -694,7 +694,7 @@ class PluginDatainjectionCommonInjectionLib
    **/
     private function addExternalDropdownParameters($itemtype)
     {
-
+        /** @var DBmysql $DB */
         global $DB;
 
         $external = [];
@@ -738,7 +738,7 @@ class PluginDatainjectionCommonInjectionLib
    **/
     private static function findUser($value, $entity)
     {
-
+        /** @var DBmysql $DB */
         global $DB;
 
         $sql = "SELECT `id`
@@ -746,7 +746,7 @@ class PluginDatainjectionCommonInjectionLib
               WHERE LOWER(`name`) = '" . strtolower($value) . "'
                  OR (CONCAT(LOWER(`realname`),' ',LOWER(`firstname`)) = '" . strtolower($value) . "'
                     OR CONCAT(LOWER(`firstname`),' ',LOWER(`realname`)) = '" . strtolower($value) . "')";
-        $result = $DB->query($sql);
+        $result = $DB->doQuery($sql);
         if ($DB->numrows($result) > 0) {
            //check if user has right on the current entity
             $ID       = $DB->result($result, 0, "id");
@@ -771,7 +771,7 @@ class PluginDatainjectionCommonInjectionLib
    */
     private static function findContact($value, $entity)
     {
-
+        /** @var DBmysql $DB */
         global $DB;
 
         $sql = "SELECT `id`
@@ -780,7 +780,7 @@ class PluginDatainjectionCommonInjectionLib
                  AND (LOWER(`name`) = '" . strtolower($value) . "'
                     OR (CONCAT(LOWER(`name`),' ',LOWER(`firstname`)) = '" . strtolower($value) . "'
                        OR CONCAT(LOWER(`firstname`),' ',LOWER(`name`)) = '" . strtolower($value) . "'))";
-        $result = $DB->query($sql);
+        $result = $DB->doQuery($sql);
 
         if ($DB->numrows($result) > 0) {
            //check if user has right on the current entity
@@ -802,7 +802,7 @@ class PluginDatainjectionCommonInjectionLib
    **/
     private static function findSingle($item, $searchOption, $entity, $value)
     {
-
+        /** @var DBmysql $DB */
         global $DB;
 
         $query = "SELECT `id`
@@ -824,7 +824,7 @@ class PluginDatainjectionCommonInjectionLib
         }
 
         $query .= " AND `" . $searchOption['field'] . "` = '$value'";
-        $result = $DB->query($query);
+        $result = $DB->doQuery($query);
 
         if ($DB->numrows($result) > 0) {
            //check if user has right on the current entity
@@ -874,7 +874,7 @@ class PluginDatainjectionCommonInjectionLib
     *
     * @param the itemtype
     *
-    * @return nothing
+    * @return void nothing
    **/
     private function unsetValue($itemtype, $field)
     {
@@ -886,13 +886,13 @@ class PluginDatainjectionCommonInjectionLib
 
 
     /**
-    * Set values to inject for an itemtype
-    *
-    * @param itemtype
-    * @param field name
-    * @param value of the field
-    * @param fromdb boolean
-   **/
+     * Set values to inject for an itemtype
+     *
+     * @param $itemtype
+     * @param $field name
+     * @param $value of the field
+     * @param $fromdb boolean
+     **/
     private function setValueForItemtype($itemtype, $field, $value, $fromdb = false)
     {
 
@@ -935,14 +935,14 @@ class PluginDatainjectionCommonInjectionLib
    **/
     private static function getTemplateIDByName($itemtype, $name)
     {
-
+        /** @var DBmysql $DB */
         global $DB;
         $item = new $itemtype();
         $query = "SELECT `id`
                 FROM `" . getTableForItemType($itemtype) . "`
                 WHERE `is_template` = '1'
                       AND `template_name` = '$name'";
-        $result = $DB->query($query);
+        $result = $DB->doQuery($query);
 
         if ($DB->numrows($result) > 0) {
             return $DB->result($result, 0, 'id');
@@ -960,7 +960,7 @@ class PluginDatainjectionCommonInjectionLib
     /**
     * First pass of data reformat : check values like NULL or values coming from dropdown tables
     *
-    * @return nothing
+    * @return void nothing
    **/
     private function reformatFirstPass()
     {
@@ -974,7 +974,9 @@ class PluginDatainjectionCommonInjectionLib
 
             foreach ($data as $field => $value) {
                 if ($value && $value == "NULL") {
-                    if (isset($option['datatype']) && self::isFieldADropdown($option['displaytype'])) {
+                    // TODO: fix this code
+                    // if (isset($option['datatype']) && self::isFieldADropdown($option['displaytype'])) {
+                    if (false) {
                         $this->values[$itemtype][$field] = self::EMPTY_VALUE;
                     }
                 }
@@ -986,7 +988,7 @@ class PluginDatainjectionCommonInjectionLib
     /**
     * Second pass of reformat : check if the itemtype needs specific reformat (like Software)
     *
-    * @return nothing
+    * @return void nothing
    **/
     private function reformatSecondPass()
     {
@@ -1006,7 +1008,7 @@ class PluginDatainjectionCommonInjectionLib
    */
     private function reformatThirdPass()
     {
-
+        /** @var array $CFG_GLPI */
         global $CFG_GLPI;
 
         foreach ($this->values as $itemtype => $data) {
@@ -1050,7 +1052,7 @@ class PluginDatainjectionCommonInjectionLib
     * Perform field reformat (if needed)
     * Composed of 3 passes (one is optional, and depends on the itemtype to inject)
     *
-    * @return nothing
+    * @return void nothing
    **/
     private function reformat()
     {
@@ -1116,6 +1118,7 @@ class PluginDatainjectionCommonInjectionLib
         if (empty($original_date)) {
             return "NULL"; // required to avoid "0000-00-00" in the DB
         }
+        $new_date = "";
         switch ($date_format) {
             case self::DATE_TYPE_YYYYMMDD:
                 $new_date = preg_replace(
@@ -1184,7 +1187,7 @@ class PluginDatainjectionCommonInjectionLib
     /**
     * Check all data to be imported
     *
-    * @return nothing
+    * @return void nothing
    **/
     private function check()
     {
@@ -1347,7 +1350,7 @@ class PluginDatainjectionCommonInjectionLib
     /**
     * Add fields needed for all type injection
     *
-    * @return nothing
+    * @return void nothing
    **/
     private function addNecessaryFields()
     {
@@ -1370,7 +1373,7 @@ class PluginDatainjectionCommonInjectionLib
     * @param injectionClass class which represents the object to inject
     * @param itemtype the itemtype to inject
     *
-    * @return nothing
+    * @return void nothing
    **/
     private function addNeededFields($injectionClass, $itemtype)
     {
@@ -1409,7 +1412,7 @@ class PluginDatainjectionCommonInjectionLib
     /**
     * Check value before processing import. Last change to stop import of data
     *
-    * @return nothing
+    * @return bool
    **/
     private function lastCheckBeforeProcess($injectionClass, $values)
     {
@@ -1636,7 +1639,7 @@ class PluginDatainjectionCommonInjectionLib
     /**
     * Add optional informations filled by the user
     *
-    * @return nothing
+    * @return void nothing
    **/
     private function addOptionalInfos()
     {
@@ -1669,7 +1672,7 @@ class PluginDatainjectionCommonInjectionLib
     * @param  itemtype being injected
     * @param  field the optional info field
     * @param  value the optional info value
-    * @return nothing
+    * @return void nothing
     */
     protected function addSpecificOptionalInfos($itemtype, $field, $value)
     {
@@ -1679,7 +1682,7 @@ class PluginDatainjectionCommonInjectionLib
     * Process dictionnaries if needed
     *
     * @since  2.1.6
-    * @return nothing
+    * @return bool
     */
     protected function processDictionnariesIfNeeded()
     {
@@ -1696,7 +1699,7 @@ class PluginDatainjectionCommonInjectionLib
     /**
     * Manage fields tagged as relations
     *
-    * @return nothing
+    * @return void nothing
    **/
     private function manageRelations()
     {
@@ -1736,11 +1739,11 @@ class PluginDatainjectionCommonInjectionLib
     * @param class which represents type to inject
     * @param itemtype the itemtype to inject
     *
-    * @return nothing
+    * @return void nothing
    **/
     private function dataAlreadyInDB($injectionClass, $itemtype)
     {
-
+        /** @var DBmysql $DB */
         global $DB;
 
         $where    = "";
@@ -1886,7 +1889,7 @@ class PluginDatainjectionCommonInjectionLib
                     $sql .= " WHERE 1 " . $where_entity . " " . $where;
                 }
 
-                $result = $DB->query($sql);
+                $result = $DB->doQuery($sql);
                 if ($DB->numrows($result) > 0) {
                     $db_fields = $DB->fetchAssoc($result);
                     foreach ($db_fields as $key => $value) {
@@ -1904,9 +1907,9 @@ class PluginDatainjectionCommonInjectionLib
     /**
     * Add fields coming for a template to the values to be injected
     *
-    * @param itemtype the itemtype to inject
+    * @param $itemtype the itemtype to inject
     *
-    * @return nothing
+    * @return void
    **/
     private function addTemplateFields($itemtype)
     {
@@ -1965,7 +1968,7 @@ class PluginDatainjectionCommonInjectionLib
     * @param device_id the id of the inserted item
     * @param the action_type the type of action(add or update)
     *
-    * @return nothing
+    * @return void nothing
    **/
     public static function logAddOrUpdate($item, $add = true)
     {
@@ -2183,7 +2186,7 @@ class PluginDatainjectionCommonInjectionLib
     * @param injectionClass the injection class to use
     * @param tab the options tab, as an array (passed as a reference)
     *
-    * @return nothing
+    * @return void nothing
    **/
     public static function addTemplateSearchOptions($injectionClass, &$tab)
     {
@@ -2216,7 +2219,7 @@ class PluginDatainjectionCommonInjectionLib
     * If itemtype injection needs to process things after data is written in DB
     *
     * @param  add true if an item is created, false if it's an update
-    * @return nothing
+    * @return void nothing
    **/
     private function processAfterInsertOrUpdate($injectionClass, $add = true)
     {

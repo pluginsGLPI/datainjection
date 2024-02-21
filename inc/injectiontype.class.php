@@ -42,7 +42,7 @@ class PluginDatainjectionInjectionType
    **/
     public static function getItemtypes($only_primary = false)
     {
-
+        /** @var array $INJECTABLE_TYPES */
         global $INJECTABLE_TYPES;
 
         getTypesToInject();
@@ -104,7 +104,8 @@ class PluginDatainjectionInjectionType
    **/
     public static function dropdownLinkedTypes($mapping_or_info, $options = [])
     {
-
+        /** @var array $INJECTABLE_TYPES */
+        /** @var array $CFG_GLPI */
         global $INJECTABLE_TYPES, $CFG_GLPI;
 
         getTypesToInject(); // populate $INJECTABLE_TYPES
@@ -172,7 +173,7 @@ class PluginDatainjectionInjectionType
    **/
     public static function dropdownFields($options = [])
     {
-
+        /** @var array $CFG_GLPI */
         global $CFG_GLPI;
 
         $used                 = [];
@@ -345,7 +346,7 @@ class PluginDatainjectionInjectionType
    **/
     public static function getUsedMappingsOrInfos($options = [])
     {
-
+        /** @var DBmysql $DB */
         global $DB;
 
         $p['itemtype']        = self::NO_VALUE;

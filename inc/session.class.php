@@ -57,9 +57,9 @@ class PluginDatainjectionSession
     * @param $param     the parameter
     * @param $results   the value to store
     *
-    * @return nothing
+    * @return void
    **/
-    public static function setParam($param, $results)
+    public static function setParam($param, $results): void
     {
 
         if (in_array($param, ['results', 'error_lines'])) {
@@ -75,9 +75,9 @@ class PluginDatainjectionSession
     /**
     * Remove all parameters from the HTTP session
     *
-    * @return nothing
+    * @return void
     */
-    public static function removeParams()
+    public static function removeParams(): void
     {
 
         if (isset($_SESSION['datainjection']['results'])) {

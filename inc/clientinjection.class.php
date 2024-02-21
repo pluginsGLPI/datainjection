@@ -49,11 +49,11 @@ class PluginDatainjectionClientInjection
     /**
     * Print a good title for group pages
     *
-    *@return nothing (display)
+    *@return void nothing (display)
    **/
-    public function title()
+    public function title(): void
     {
-
+        /** @var array $CFG_GLPI */
         global $CFG_GLPI;
 
         $buttons =  [];
@@ -75,7 +75,7 @@ class PluginDatainjectionClientInjection
 
     public function showForm($ID, $options = [])
     {
-
+        /** @var array $CFG_GLPI */
         global $CFG_GLPI;
 
         echo "<form method='post' name=form action='" . Toolbox::getItemTypeFormURL(__CLASS__) . "'" .
@@ -169,6 +169,7 @@ class PluginDatainjectionClientInjection
 
         echo "<tr class='tab_bg_1'>";
         echo "<td colspan='2' class='center'>";
+        $alert = "";
         if ($confirm) {
             if ($confirm == 'creation') {
                 $message = __s('Warning : existing mapped column will be overridden', 'datainjection');
@@ -231,7 +232,7 @@ class PluginDatainjectionClientInjection
    **/
     public static function processInjection(PluginDatainjectionModel $model, $entities_id)
     {
-
+        /** @var array $CFG_GLPI */
         global $CFG_GLPI;
 
        // To prevent problem of execution time during injection
@@ -358,7 +359,7 @@ class PluginDatainjectionClientInjection
    **/
     public static function showResultsForm(PluginDatainjectionModel $model)
     {
-
+        /** @var array $CFG_GLPI */
         global $CFG_GLPI;
 
         $results     = json_decode(PluginDatainjectionSession::getParam('results'), true);

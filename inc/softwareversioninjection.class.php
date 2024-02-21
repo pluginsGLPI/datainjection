@@ -142,7 +142,7 @@ class PluginDatainjectionSoftwareVersionInjection extends SoftwareVersion implem
    **/
     public function getValueForAdditionalMandatoryFields($fields_toinject = [])
     {
-
+        /** @var DBmysql $DB */
         global $DB;
 
         if (!isset($fields_toinject['SoftwareVersion']['softwares_id'])) {
@@ -159,7 +159,7 @@ class PluginDatainjectionSoftwareVersionInjection extends SoftwareVersion implem
                         $fields_toinject['SoftwareVersion']['entities_id'],
                         true
                     );
-        $result = $DB->query($query);
+        $result = $DB->doQuery($query);
 
         if ($DB->numrows($result) > 0) {
             $id = $DB->result($result, 0, 'id');

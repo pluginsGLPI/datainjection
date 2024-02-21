@@ -149,7 +149,7 @@ class PluginDatainjectionUserInjection extends User implements PluginDatainjecti
     */
     public function processAfterInsertOrUpdate($values, $add = true, $rights = [])
     {
-
+        /** @var DBmysql $DB */
         global $DB;
 
        //Manage user emails
@@ -182,22 +182,22 @@ class PluginDatainjectionUserInjection extends User implements PluginDatainjecti
             $query = "UPDATE `glpi_users`
                    SET `password` = '" . $password . "'
                    WHERE `id` = '" . $values['User']['id'] . "'";
-            $DB->query($query);
+            $DB->doQuery($query);
         }
     }
 
 
     /**
-    * @param unknown_type $itemtype
-    * @param unknown_type $field
-    * @param unknown_type $value
-   **/
+     * @param $itemtype
+     * @param $field
+     * @param $value
+     **/
     protected function addSpecificOptionalInfos($itemtype, $field, $value)
     {
-
-       //If info is a password, then fill also password2, needed for prepareInputForAdd
+        // If info is a password, then fill also password2, needed for prepareInputForAdd
         if ($field == 'password') {
-            $this->setValueForItemtype($itemtype, "password2", $value);
+            // TODO: this method doesn't exist, investigate
+            // $this->setValueForItemtype($itemtype, "password2", $value);
         }
     }
 }

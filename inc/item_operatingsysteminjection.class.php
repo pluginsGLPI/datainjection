@@ -102,6 +102,7 @@ class PluginDatainjectionItem_OperatingsystemInjection extends Item_OperatingSys
    **/
     public function customDataAlreadyInDB($injectionClass, $values, $options)
     {
+        /** @var DBmysql $DB */
         global $DB;
         $item_operatingsystem = new \Item_OperatingSystem();
         $matching_os = $DB->request([

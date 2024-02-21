@@ -56,12 +56,12 @@ class PluginDatainjectionProfile extends Profile
    **/
     public function cleanProfiles($ID)
     {
-
+        /** @var DBmysql $DB */
         global $DB;
         $query = "DELETE FROM `glpi_profiles`
                 WHERE `profiles_id`='$ID'
                    AND `name` LIKE '%plugin_datainjection%'";
-        $DB->query($query);
+        $DB->doQuery($query);
     }
 
     public function getTabNameForItem(CommonGLPI $item, $withtemplate = 0)
@@ -137,6 +137,7 @@ class PluginDatainjectionProfile extends Profile
 
     public static function migrateProfiles()
     {
+        /** @var DBmysql $DB */
         global $DB;
         if (!$DB->tableExists('glpi_plugin_datainjection_profiles')) {
             return true;
@@ -145,7 +146,7 @@ class PluginDatainjectionProfile extends Profile
         $profiles = getAllDataFromTable('glpi_plugin_datainjection_profiles');
         foreach ($profiles as $id => $profile) {
             $query = "SELECT `id` FROM `glpi_profiles` WHERE `name`='" . $profile['name'] . "'";
-            $result = $DB->query($query);
+            $result = $DB->doQuery($query);
             if ($DB->numrows($result) == 1) {
                 $id = $DB->result($result, 0, 'id');
                 switch ($profile['model']) {
@@ -199,5 +200,7 @@ class PluginDatainjectionProfile extends Profile
             Html::closeForm();
         }
         echo "</div>";
+
+        return true;
     }
 }

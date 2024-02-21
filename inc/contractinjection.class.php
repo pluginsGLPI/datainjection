@@ -140,49 +140,47 @@ class PluginDatainjectionContractInjection extends Contract implements PluginDat
                 break;
 
             case 'billing':
-                Dropdown::showNumber(
-                    $name,
-                    ['value' => 0,
-                        'min'   => 12,
-                        'max'   => 60,
-                        'step'  => 12,
-                        'toadd' => [0 => Dropdown::EMPTY_VALUE,
-                            1 => sprintf(
-                                _n(
-                                    '%d month',
-                                    '%d months',
-                                    1
-                                ),
+                Dropdown::showNumber($name, [
+                    'value' => 0,
+                    'min'   => 12,
+                    'max'   => 60,
+                    'step'  => 12,
+                    'toadd' => [0 => Dropdown::EMPTY_VALUE,
+                        1 => sprintf(
+                            _n(
+                                '%d month',
+                                '%d months',
                                 1
                             ),
-                            2 => sprintf(
-                                _n(
-                                    '%d month',
-                                    '%d months',
-                                    2
-                                ),
+                            1
+                        ),
+                        2 => sprintf(
+                            _n(
+                                '%d month',
+                                '%d months',
                                 2
                             ),
-                            3 => sprintf(
-                                _n(
-                                    '%d month',
-                                    '%d months',
-                                    3
-                                ),
+                            2
+                        ),
+                        3 => sprintf(
+                            _n(
+                                '%d month',
+                                '%d months',
                                 3
                             ),
-                            6 => sprintf(
-                                _n(
-                                    '%d month',
-                                    '%d months',
-                                    6
-                                ),
+                            3
+                        ),
+                        6 => sprintf(
+                            _n(
+                                '%d month',
+                                '%d months',
                                 6
-                            )
-                        ]
+                            ),
+                            6
+                        )
                     ],
-                    ['unit' => 'month']
-                );
+                    'unit' => 'month'
+                ]);
                 break;
 
             default:

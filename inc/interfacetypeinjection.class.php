@@ -63,7 +63,6 @@ class PluginDatainjectionInterfaceTypeInjection extends InterfaceType implements
     {
 
         $tab           = Search::getOptions(get_parent_class($this));
-        $
        //Remove some options because some fields cannot be imported
         $blacklist     = PluginDatainjectionCommonInjectionLib::getBlacklistedOptions(get_parent_class($this));
         $notimportable = [];

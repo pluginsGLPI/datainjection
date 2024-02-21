@@ -274,7 +274,7 @@ class PluginDatainjectionModel extends CommonDBTM
    **/
     public static function dropdown($options = [])
     {
-
+        /** @var array $CFG_GLPI */
         global $CFG_GLPI;
 
         $models = self::getModels(
@@ -330,10 +330,12 @@ class PluginDatainjectionModel extends CommonDBTM
         if ($prev >= -1) {
             echo "</optgroup>";
         }
-         echo "</select>";
+        echo "</select>";
 
-         $url = Plugin::getWebDir('datainjection') . "/ajax/dropdownSelectModel.php";
-         Ajax::updateItemOnSelectEvent("dropdown_models$rand", "span_injection", $url, $p);
+        $url = Plugin::getWebDir('datainjection') . "/ajax/dropdownSelectModel.php";
+        Ajax::updateItemOnSelectEvent("dropdown_models$rand", "span_injection", $url, $p);
+
+        return true;
     }
 
 
@@ -345,7 +347,7 @@ class PluginDatainjectionModel extends CommonDBTM
    **/
     public static function getModels($user_id, $order = "name", $entity = -1, $all = false)
     {
-
+        /** @var DBmysql $DB */
         global $DB;
 
         $models =  [];
@@ -815,6 +817,8 @@ class PluginDatainjectionModel extends CommonDBTM
                     return '';
             }
         }
+
+        return '';
     }
 
 
@@ -877,7 +881,7 @@ class PluginDatainjectionModel extends CommonDBTM
    **/
     public static function clean($crit = [])
     {
-
+        /** @var DBmysql $DB */
         global $DB;
 
         $model = new self();
@@ -1102,9 +1106,9 @@ class PluginDatainjectionModel extends CommonDBTM
             if (!isset($options['webservice'])) {
                 return false;
             }
-            return PluginWebservicesMethodCommon::Error(
+            return PluginWebservicesMethodCommon::Error( /** @phpstan-ignore-line */
                 $options['protocol'],
-                WEBSERVICES_ERROR_FAILED,
+                WEBSERVICES_ERROR_FAILED, /** @phpstan-ignore-line */
                 sprintf(
                     __(
                         'Not data to import',
@@ -1127,9 +1131,9 @@ class PluginDatainjectionModel extends CommonDBTM
                     Session::addMessageAfterRedirect($check['error_message'], true, ERROR);
                     return false;
                 }
-                return PluginWebservicesMethodCommon::Error(
+                return PluginWebservicesMethodCommon::Error( /** @phpstan-ignore-line */
                     $options['protocol'],
-                    WEBSERVICES_ERROR_FAILED,
+                    WEBSERVICES_ERROR_FAILED, /** @phpstan-ignore-line */
                     $check['error_message']
                 );
             }
@@ -1325,7 +1329,7 @@ class PluginDatainjectionModel extends CommonDBTM
    **/
     public static function checkRightOnModel($models_id)
     {
-
+        /** @var DBmysql $DB */
         global $DB;
 
         $model = new self();
@@ -1475,7 +1479,7 @@ class PluginDatainjectionModel extends CommonDBTM
                     $plugin = new Plugin();
                     if (
                         $plugin->isActivated('genericobject')
-                        && array_key_exists($model->fields['itemtype'], PluginGenericobjectType::getTypes())
+                        && array_key_exists($model->fields['itemtype'], PluginGenericobjectType::getTypes()) /** @phpstan-ignore-line */
                     ) {
                         $url = Plugin::getWebDir('datainjection') . "/front/object.form.php" .
                         "?itemtype=" . $model->fields['itemtype'] . "&id=" . $result[$model->fields['itemtype']];
@@ -1637,7 +1641,7 @@ class PluginDatainjectionModel extends CommonDBTM
         $model->getFromDB($models_id);
 
         if (!empty($logresults)) {
-            $pdf = new PluginPdfSimplePDF('a4', 'landscape');
+            $pdf = new PluginPdfSimplePDF('a4', 'landscape'); /** @phpstan-ignore-line */
             $pdf->setHeader(
                 sprintf(
                     __('%1$s (%2$s)'),

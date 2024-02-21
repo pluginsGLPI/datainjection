@@ -51,7 +51,7 @@ class PluginDatainjectionNetworkNameInjection extends NetworkName implements Plu
 
     public function connectedTo()
     {
-
+        /** @var array $CFG_GLPI */
         global $CFG_GLPI;
         return $CFG_GLPI["networkport_types"];
     }
@@ -109,7 +109,7 @@ class PluginDatainjectionNetworkNameInjection extends NetworkName implements Plu
     */
     public function processAfterInsertOrUpdate($values, $add = true, $rights = [])
     {
-
+        /** @var DBmysql $DB */
         global $DB;
 
        //Manage ip adresses

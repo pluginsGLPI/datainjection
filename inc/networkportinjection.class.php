@@ -51,7 +51,7 @@ class PluginDatainjectionNetworkportInjection extends NetworkPort implements Plu
 
     public function connectedTo()
     {
-
+        /** @var array $CFG_GLPI */
         global $CFG_GLPI;
 
         return $CFG_GLPI["networkport_types"];
@@ -324,7 +324,7 @@ class PluginDatainjectionNetworkportInjection extends NetworkPort implements Plu
    **/
     public function processAfterInsertOrUpdate($values, $add = true, $rights = [])
     {
-
+        /** @var DBmysql $DB */
         global $DB;
 
        //Should the port be connected to another one ?
@@ -356,7 +356,7 @@ class PluginDatainjectionNetworkportInjection extends NetworkPort implements Plu
         if ($use_mac) {
             $sql .= " AND `glpi_networkports`.`mac` = '" . $values['NetworkPort']["netmac"] . "'";
         }
-        $res = $DB->query($sql);
+        $res = $DB->doQuery($sql);
 
        //if at least one parameter is given
         $nb = $DB->numrows($res);

@@ -147,7 +147,7 @@ class PluginDatainjectionSoftwareLicenseInjection extends SoftwareLicense implem
    **/
     public function getValueForAdditionalMandatoryFields($fields_toinject = [])
     {
-
+        /** @var DBmysql $DB */
         global $DB;
 
         if (!isset($fields_toinject['SoftwareLicense']['softwares_id'])) {
@@ -164,7 +164,7 @@ class PluginDatainjectionSoftwareLicenseInjection extends SoftwareLicense implem
                         $fields_toinject['SoftwareLicense']['entities_id'],
                         true
                     );
-        $result = $DB->query($query);
+        $result = $DB->doQuery($query);
 
         if ($DB->numrows($result) > 0) {
             $id = $DB->result($result, 0, 'id');

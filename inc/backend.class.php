@@ -60,6 +60,7 @@ abstract class PluginDatainjectionBackend
         }
 
         $nb = count($injectionData->getDataAtLine(0));
+        $header = [];
         for ($i = 0; $i < $nb; $i++) {
             $header[] = $i;
         }

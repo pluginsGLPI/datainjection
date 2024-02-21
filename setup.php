@@ -31,7 +31,7 @@
 define('PLUGIN_DATAINJECTION_VERSION', '2.13.4');
 
 // Minimal GLPI version, inclusive
-define("PLUGIN_DATAINJECTION_MIN_GLPI", "10.0.0");
+define("PLUGIN_DATAINJECTION_MIN_GLPI", "10.0.11");
 // Maximum GLPI version, exclusive
 define("PLUGIN_DATAINJECTION_MAX_GLPI", "10.0.99");
 
@@ -41,7 +41,9 @@ if (!defined("PLUGIN_DATAINJECTION_UPLOAD_DIR")) {
 
 function plugin_init_datainjection()
 {
-
+    /** @var array $PLUGIN_HOOKS */
+    /** @var array $CFG_GLPI */
+    /** @var array $INJECTABLE_TYPES */
     global $PLUGIN_HOOKS, $CFG_GLPI, $INJECTABLE_TYPES;
 
     $PLUGIN_HOOKS['csrf_compliant']['datainjection'] = true;
@@ -110,11 +112,12 @@ function plugin_version_datainjection()
 /**
  * Return all types that can be injected using datainjection
  *
- * @return an array of injection class => plugin
+ * @return void
  */
-function getTypesToInject()
+function getTypesToInject(): void
 {
-
+    /** @var array $INJECTABLE_TYPES */
+    /** @var array $PLUGIN_HOOKS */
     global $INJECTABLE_TYPES,$PLUGIN_HOOKS;
 
     if (count($INJECTABLE_TYPES)) {
