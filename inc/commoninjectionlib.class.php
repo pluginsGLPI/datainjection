@@ -746,6 +746,7 @@ class PluginDatainjectionCommonInjectionLib
               WHERE LOWER(`name`) = '" . strtolower($value) . "'
                  OR (CONCAT(LOWER(`realname`),' ',LOWER(`firstname`)) = '" . strtolower($value) . "'
                     OR CONCAT(LOWER(`firstname`),' ',LOWER(`realname`)) = '" . strtolower($value) . "')";
+        /** @phpstan-ignore-next-line */
         $result = $DB->query($sql); // phpcs:ignore
         if ($DB->numrows($result) > 0) {
            //check if user has right on the current entity
@@ -780,6 +781,7 @@ class PluginDatainjectionCommonInjectionLib
                  AND (LOWER(`name`) = '" . strtolower($value) . "'
                     OR (CONCAT(LOWER(`name`),' ',LOWER(`firstname`)) = '" . strtolower($value) . "'
                        OR CONCAT(LOWER(`firstname`),' ',LOWER(`name`)) = '" . strtolower($value) . "'))";
+        /** @phpstan-ignore-next-line */
         $result = $DB->query($sql); // phpcs:ignore
 
         if ($DB->numrows($result) > 0) {
@@ -823,6 +825,7 @@ class PluginDatainjectionCommonInjectionLib
             );
         }
 
+        /** @phpstan-ignore-next-line */
         $query .= " AND `" . $searchOption['field'] . "` = '$value'";
         $result = $DB->query($query); // phpcs:ignore
 
@@ -942,6 +945,7 @@ class PluginDatainjectionCommonInjectionLib
                 FROM `" . getTableForItemType($itemtype) . "`
                 WHERE `is_template` = '1'
                       AND `template_name` = '$name'";
+        /** @phpstan-ignore-next-line */
         $result = $DB->query($query); // phpcs:ignore
 
         if ($DB->numrows($result) > 0) {
@@ -1889,6 +1893,7 @@ class PluginDatainjectionCommonInjectionLib
                     $sql .= " WHERE 1 " . $where_entity . " " . $where;
                 }
 
+                /** @phpstan-ignore-next-line */
                 $result = $DB->query($sql); // phpcs:ignore
                 if ($DB->numrows($result) > 0) {
                     $db_fields = $DB->fetchAssoc($result);

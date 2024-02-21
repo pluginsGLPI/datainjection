@@ -159,6 +159,7 @@ class PluginDatainjectionSoftwareVersionInjection extends SoftwareVersion implem
                         $fields_toinject['SoftwareVersion']['entities_id'],
                         true
                     );
+        /** @phpstan-ignore-next-line */
         $result = $DB->query($query); // phpcs:ignore
 
         if ($DB->numrows($result) > 0) {
