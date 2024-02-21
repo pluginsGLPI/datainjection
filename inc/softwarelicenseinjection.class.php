@@ -164,7 +164,8 @@ class PluginDatainjectionSoftwareLicenseInjection extends SoftwareLicense implem
                         $fields_toinject['SoftwareLicense']['entities_id'],
                         true
                     );
-        $result = $DB->doQuery($query);
+        /** @phpstan-ignore-next-line */
+        $result = $DB->query($query); // phpcs:ignore
 
         if ($DB->numrows($result) > 0) {
             $id = $DB->result($result, 0, 'id');

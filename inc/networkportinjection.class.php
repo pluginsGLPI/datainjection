@@ -356,7 +356,8 @@ class PluginDatainjectionNetworkportInjection extends NetworkPort implements Plu
         if ($use_mac) {
             $sql .= " AND `glpi_networkports`.`mac` = '" . $values['NetworkPort']["netmac"] . "'";
         }
-        $res = $DB->doQuery($sql);
+        /** @phpstan-ignore-next-line */
+        $res = $DB->query($sql); // phpcs:ignore
 
        //if at least one parameter is given
         $nb = $DB->numrows($res);
