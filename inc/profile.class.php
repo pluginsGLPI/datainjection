@@ -61,7 +61,7 @@ class PluginDatainjectionProfile extends Profile
         $query = "DELETE FROM `glpi_profiles`
                 WHERE `profiles_id`='$ID'
                    AND `name` LIKE '%plugin_datainjection%'";
-        $DB->doQuery($query);
+        $DB->query($query); // phpcs:ignore
     }
 
     public function getTabNameForItem(CommonGLPI $item, $withtemplate = 0)
@@ -146,7 +146,7 @@ class PluginDatainjectionProfile extends Profile
         $profiles = getAllDataFromTable('glpi_plugin_datainjection_profiles');
         foreach ($profiles as $id => $profile) {
             $query = "SELECT `id` FROM `glpi_profiles` WHERE `name`='" . $profile['name'] . "'";
-            $result = $DB->doQuery($query);
+            $result = $DB->query($query); // phpcs:ignore
             if ($DB->numrows($result) == 1) {
                 $id = $DB->result($result, 0, 'id');
                 switch ($profile['model']) {

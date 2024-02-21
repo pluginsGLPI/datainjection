@@ -182,7 +182,7 @@ class PluginDatainjectionUserInjection extends User implements PluginDatainjecti
             $query = "UPDATE `glpi_users`
                    SET `password` = '" . $password . "'
                    WHERE `id` = '" . $values['User']['id'] . "'";
-            $DB->doQuery($query);
+            $DB->query($query); // phpcs:ignore
         }
     }
 

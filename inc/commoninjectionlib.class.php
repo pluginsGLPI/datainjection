@@ -746,7 +746,7 @@ class PluginDatainjectionCommonInjectionLib
               WHERE LOWER(`name`) = '" . strtolower($value) . "'
                  OR (CONCAT(LOWER(`realname`),' ',LOWER(`firstname`)) = '" . strtolower($value) . "'
                     OR CONCAT(LOWER(`firstname`),' ',LOWER(`realname`)) = '" . strtolower($value) . "')";
-        $result = $DB->doQuery($sql);
+        $result = $DB->query($sql); // phpcs:ignore
         if ($DB->numrows($result) > 0) {
            //check if user has right on the current entity
             $ID       = $DB->result($result, 0, "id");
@@ -780,7 +780,7 @@ class PluginDatainjectionCommonInjectionLib
                  AND (LOWER(`name`) = '" . strtolower($value) . "'
                     OR (CONCAT(LOWER(`name`),' ',LOWER(`firstname`)) = '" . strtolower($value) . "'
                        OR CONCAT(LOWER(`firstname`),' ',LOWER(`name`)) = '" . strtolower($value) . "'))";
-        $result = $DB->doQuery($sql);
+        $result = $DB->query($sql); // phpcs:ignore
 
         if ($DB->numrows($result) > 0) {
            //check if user has right on the current entity
@@ -824,7 +824,7 @@ class PluginDatainjectionCommonInjectionLib
         }
 
         $query .= " AND `" . $searchOption['field'] . "` = '$value'";
-        $result = $DB->doQuery($query);
+        $result = $DB->query($query); // phpcs:ignore
 
         if ($DB->numrows($result) > 0) {
            //check if user has right on the current entity
@@ -942,7 +942,7 @@ class PluginDatainjectionCommonInjectionLib
                 FROM `" . getTableForItemType($itemtype) . "`
                 WHERE `is_template` = '1'
                       AND `template_name` = '$name'";
-        $result = $DB->doQuery($query);
+        $result = $DB->query($query); // phpcs:ignore
 
         if ($DB->numrows($result) > 0) {
             return $DB->result($result, 0, 'id');
@@ -1889,7 +1889,7 @@ class PluginDatainjectionCommonInjectionLib
                     $sql .= " WHERE 1 " . $where_entity . " " . $where;
                 }
 
-                $result = $DB->doQuery($sql);
+                $result = $DB->query($sql); // phpcs:ignore
                 if ($DB->numrows($result) > 0) {
                     $db_fields = $DB->fetchAssoc($result);
                     foreach ($db_fields as $key => $value) {
