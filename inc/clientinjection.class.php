@@ -157,7 +157,8 @@ class PluginDatainjectionClientInjection
         echo "<tr><th colspan='2'>" . __('File to inject', 'datainjection') . "</th></tr>";
 
         echo "<tr class='tab_bg_1'>";
-        echo "<td>" . __('Choose a file', 'datainjection') . "</td>";
+        $size = sprintf(__(' (%1$s)'), Document::getMaxUploadSize());
+        echo "<td>" . __('Choose a file', 'datainjection') . $size . "</td>";
         echo "<td><input type='file' name='filename'>";
         echo "<input type='hidden' name='id' value='" . $options['models_id'] . "'>";
         echo "</td></tr>";

@@ -85,7 +85,7 @@ if (isset($_SESSION['datainjection']['go'])) {
         }
     } else {
         Session::addMessageAfterRedirect(
-            __('The file could not be found', 'datainjection'),
+            __('The file could not be found (Maybe it exceeds the maximum size allowed)', 'datainjection'),
             true,
             ERROR,
             true
