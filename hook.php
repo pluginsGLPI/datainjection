@@ -1986,9 +1986,9 @@ function plugin_datainjection_addDefaultWhere($itemtype)
                 foreach ($models as $model) {
                     $tab[] = $model['id'];
                 }
-                if (count($tab) > 0) {
-                    return "`glpi_plugin_datainjection_models`.`id` IN ('" . implode("','", $tab) . "')";
-                }
+                return "`glpi_plugin_datainjection_models`.`id` IN ('" . implode("','", $tab) . "')";
+            } else {
+                return "1 = 0"; //no model available -> force WHERE clause to get no result
             }
             return false;
         default:

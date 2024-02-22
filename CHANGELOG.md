@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+### Fixed
+
+- Fix visibility of injection models
+
 
 ## [2.13.5] - 2024-02-22
 
