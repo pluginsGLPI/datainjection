@@ -12,10 +12,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Added
 
-- Add short label for split action buttons in timeline footer
 
 ### Fixed
 
-- Fix group dropdown depending on the configuration ```use_filter_assign_group```
-- Fix permission checks in ticket escalation
-- Fix group filtering in escalation process
+- Allow lockedfield update
