@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+### Added
+
+- Display max upload size
+
+
 ### Fixed
 
 - Fix visibility of injection models
