@@ -1598,10 +1598,34 @@ class PluginDatainjectionCommonInjectionLib
                 break;
             }
 
+            //CommonDBRelation are managed separately, so related field should be ignored
+            // Ex : User -> groups_id -> Group_User
+            // groups_id should not be injected in User (field contains group name (string))
+            if ($option !== false && isset($option['displaytype']) && $option['displaytype'] == 'relation') {
+                continue;
+            }
+
             if ($option !== false && self::isFieldADropdown($option['displaytype']) && $value == self::EMPTY_VALUE) {
                 //If field is a dropdown and value is '', then replace it by 0
                 $toinject[$key] = self::DROPDOWN_EMPTY_VALUE;
             } else {
+                $toinject[$key] = $value;
+            }
+
+            //for CommonDBRelation, keep items_id and itemtype and items_id_1
+            if (
+                $item instanceof CommonDBRelation
+                && in_array($key, [
+                    'items_id',
+                    'itemtype',
+                    $item::$items_id_1
+                ])
+            ) {
+                $toinject[$key] = $value;
+            }
+
+            //keep id in case of update
+            if (!$add && $key === 'id') {
                 $toinject[$key] = $value;
             }
         }
