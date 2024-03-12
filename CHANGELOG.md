@@ -11,11 +11,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 - Display max upload size
 
-
 ### Fixed
 
 - Fix visibility of injection models
-
+- Fix ```CommonDBRelation``` import
 
 ## [2.13.5] - 2024-02-22
 
