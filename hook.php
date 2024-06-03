@@ -52,7 +52,7 @@ function plugin_datainjection_install()
 
     include_once Plugin::getPhpDir('datainjection') . "/inc/profile.class.php";
 
-    $migration = new Migration(null);
+    $migration = new Migration("");
 
     $default_charset = DBConnection::getDefaultCharset();
     $default_collation = DBConnection::getDefaultCollation();
@@ -1990,7 +1990,6 @@ function plugin_datainjection_addDefaultWhere($itemtype)
             } else {
                 return "1 = 0"; //no model available -> force WHERE clause to get no result
             }
-            return false;
         default:
             break;
     }

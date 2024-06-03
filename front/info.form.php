@@ -44,6 +44,6 @@ if (isset($_POST["update"])) {
     }
     Html::back();
 }
-
+/** @phpstan-ignore-next-line */
 Session::setActiveTab('PluginDatainjectionModel', 'PluginDatainjectionModel$5');
 Html::back();

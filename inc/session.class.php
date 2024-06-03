@@ -35,7 +35,7 @@ class PluginDatainjectionSession
     *
     * @param $param  the parameter to get
     *
-    * @return the param's value
+    * @return mixed the param's value
    **/
     public static function getParam($param)
     {

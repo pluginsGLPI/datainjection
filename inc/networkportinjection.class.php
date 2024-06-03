@@ -244,7 +244,7 @@ class PluginDatainjectionNetworkportInjection extends NetworkPort implements Plu
     * @param $fields_toinject    array    the fields to insert into DB
     * @param $options            array
     *
-    * @return the sql where clause
+    * @return string the sql where clause
    **/
     public function getUnicityRequest($fields_toinject = [], $options = [])
     {
@@ -300,7 +300,7 @@ class PluginDatainjectionNetworkportInjection extends NetworkPort implements Plu
     *
     * @param $values    array    the values to inject
     *
-    * @return true if check ok, false if not ok
+    * @return boolean true if check ok, false if not ok
    **/
     public function lastCheck($values = [])
     {
@@ -366,7 +366,7 @@ class PluginDatainjectionNetworkportInjection extends NetworkPort implements Plu
             $netport         = $DB->fetchArray($res);
             $netport_netport = new NetworkPort_NetworkPort();
            //If this port already connected to another one ?
-            if (!$netport_netport->getOppositeContact($netport['id'])) {
+            if (!$netport_netport->getOppositeContact((int) $netport['id'])) {
                //No, add a new port to port connection
                 $tmp['networkports_id_1'] = $values['NetworkPort']['id'];
                 $tmp['networkports_id_2'] = $netport['id'];

@@ -165,7 +165,7 @@ class PluginDatainjectionMapping extends CommonDBTM
     *
     * @param $models_id the model ID
     *
-    * @return true if more than one value to inject, false if not
+    * @return array true if more than one value to inject, false if not
    **/
     public static function getSeveralMappedField($models_id)
     {

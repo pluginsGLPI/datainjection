@@ -69,6 +69,7 @@ class PluginDatainjectionProfile extends Profile
     {
 
         if ($item->getType() == 'Profile') {
+            /** @phpstan-ignore-next-line */
             if ($item->getField('interface') == 'central') {
                 return __('Data injection', 'datainjection');
             }
@@ -83,9 +84,11 @@ class PluginDatainjectionProfile extends Profile
 
         if ($item->getType() == 'Profile') {
             $profile = new self();
+            /** @phpstan-ignore-next-line */
             $ID   = $item->getField('id');
            //In case there's no right datainjection for this profile, create it
             self::addDefaultProfileInfos(
+                /** @phpstan-ignore-next-line */
                 $item->getID(),
                 ['plugin_datainjection_model' => 0]
             );

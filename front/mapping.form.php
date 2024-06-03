@@ -72,6 +72,7 @@ if (isset($_POST["update"])) {
                 $_POST['models_id'],
                 PluginDatainjectionModel::OTHERS_STEP
             );
+            /** @phpstan-ignore-next-line */
             Session::setActiveTab('PluginDatainjectionModel', 'PluginDatainjectionModel$5');
             Session::addMessageAfterRedirect(
                 __(

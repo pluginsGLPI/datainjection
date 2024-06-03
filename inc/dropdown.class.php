@@ -105,7 +105,7 @@ class PluginDatainjectionDropdown
     /**
     * Return current status of the model
     *
-    * @return nothing
+    * @return string
    **/
     public static function getStatusLabel($step)
     {

@@ -40,10 +40,10 @@ class PluginDatainjectionClientInjection
     private $results = [];
 
     //Model used for injection
-    private $model;
+    private $model; /** @phpstan-ignore-line */
 
     //Overall injection results
-    private $global_results;
+    private $global_results; /** @phpstan-ignore-line */
 
 
     /**

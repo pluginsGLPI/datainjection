@@ -271,6 +271,8 @@ class PluginDatainjectionModel extends CommonDBTM
 
     /**
     * @param $options   array
+    *
+    * @return boolean
    **/
     public static function dropdown($options = [])
     {
@@ -795,7 +797,11 @@ class PluginDatainjectionModel extends CommonDBTM
     }
 
 
-    //Tabs management
+    /**
+    * Tabs management
+    *
+    * @return array|string
+   **/
     public function getTabNameForItem(CommonGLPI $item, $withtemplate = 0)
     {
 
@@ -805,16 +811,15 @@ class PluginDatainjectionModel extends CommonDBTM
             switch ($item->getType()) {
                 case __CLASS__:
                     $tabs[1] = __('Model');
-                    if (!$this->isNewID($item->fields['id'])) {
+                    if (!$this->isNewID($item->fields['id'])) { /** @phpstan-ignore-line */
                         if ($canedit) {
                             $tabs[3] = __('File to inject', 'datainjection');
                         }
                         $tabs[4] = __('Mappings', 'datainjection');
-
+                        /** @phpstan-ignore-next-line */
                         if ($item->fields['step'] > self::MAPPING_STEP) {
                             $tabs[5] = __('Additional Information', 'datainjection');
-
-                            if ($canedit && $item->fields['step'] != self::READY_TO_USE_STEP) {
+                            if ($canedit && $item->fields['step'] != self::READY_TO_USE_STEP) { /** @phpstan-ignore-line */
                                 $tabs[6] = __('Validation');
                             }
                         }
@@ -836,30 +841,30 @@ class PluginDatainjectionModel extends CommonDBTM
         if ($item->getType() == __CLASS__) {
             switch ($tabnum) {
                 case 1:
-                    $item->showAdvancedForm($item->getID());
+                    $item->showAdvancedForm($item->getID()); /** @phpstan-ignore-line */
                     break;
 
                 case 3:
                     $options['confirm']   = 'creation';
-                    $options['models_id'] = $item->fields['id'];
+                    $options['models_id'] = $item->fields['id']; /** @phpstan-ignore-line */
                     $options['add_form']  = true;
                     $options['submit']    = __('Load this file', 'datainjection');
                     PluginDatainjectionClientInjection::showUploadFileForm($options);
                     break;
 
                 case 4:
-                    PluginDatainjectionMapping::showFormMappings($item);
+                    PluginDatainjectionMapping::showFormMappings($item);/** @phpstan-ignore-line */
                     break;
 
                 case 5:
-                    if ($item->fields['step'] > self::MAPPING_STEP) {
-                        PluginDatainjectionInfo::showFormInfos($item);
+                    if ($item->fields['step'] > self::MAPPING_STEP) { /** @phpstan-ignore-line */
+                        PluginDatainjectionInfo::showFormInfos($item);/** @phpstan-ignore-line */
                     }
                     break;
 
                 case 6:
-                    if ($item->fields['step'] > self::MAPPING_STEP) {
-                        $item->showValidationForm();
+                    if ($item->fields['step'] > self::MAPPING_STEP) { /** @phpstan-ignore-line */
+                        $item->showValidationForm(); /** @phpstan-ignore-line */
                     }
                     break;
             }
@@ -998,7 +1003,6 @@ class PluginDatainjectionModel extends CommonDBTM
         $model->getFromDB($models_id);
         $specific = self::getInstance($model->getFiletype());
         $specific->getFromDBByModelID($models_id);
-        $model->setSpecificModel($specific);
         return $model;
     }
 
@@ -1189,7 +1193,7 @@ class PluginDatainjectionModel extends CommonDBTM
     /**
     * Try to parse an input file
     *
-    * @return true if the file is a CSV file
+    * @return array true if the file is a CSV file
    **/
     public function isFileCorrect()
     {
@@ -1640,7 +1644,6 @@ class PluginDatainjectionModel extends CommonDBTM
         echo "</div>";
     }
 
-
     public static function exportAsPDF($models_id)
     {
 
@@ -1650,7 +1653,7 @@ class PluginDatainjectionModel extends CommonDBTM
 
         if (!empty($logresults)) {
             $pdf = new PluginPdfSimplePDF('a4', 'landscape'); /** @phpstan-ignore-line */
-            $pdf->setHeader(
+            $pdf->setHeader(/** @phpstan-ignore-line */
                 sprintf(
                     __('%1$s (%2$s)'),
                     __('Data injection report', 'datainjection') . ' - <b>' .
@@ -1658,22 +1661,22 @@ class PluginDatainjectionModel extends CommonDBTM
                     $model->getName()
                 )
             );
-            $pdf->newPage();
+            $pdf->newPage();/** @phpstan-ignore-line */
 
             if (isset($logresults[PluginDatainjectionCommonInjectionLib::SUCCESS])) {
-                  $pdf->setColumnsSize(100);
-                  $pdf->displayTitle('<b>' . __('Array of successful injections', 'datainjection') . '</b>');
-                  $pdf->setColumnsSize(6, 54, 20, 20);
-                  $pdf->setColumnsAlign('center', 'center', 'center', 'center');
+                  $pdf->setColumnsSize(100);/** @phpstan-ignore-line */
+                  $pdf->displayTitle('<b>' . __('Array of successful injections', 'datainjection') . '</b>');/** @phpstan-ignore-line */
+                  $pdf->setColumnsSize(6, 54, 20, 20);/** @phpstan-ignore-line */
+                  $pdf->setColumnsAlign('center', 'center', 'center', 'center');/** @phpstan-ignore-line */
                   $col0 = '<b>' . __('Line', 'datainjection') . '</b>';
                   $col1 = '<b>' . __('Data Import', 'datainjection') . '</b>';
                   $col2 = '<b>' . __('Injection type', 'datainjection') . '</b>';
                   $col3 = '<b>' . __('Object Identifier', 'datainjection') . '</b>';
-                  $pdf->displayTitle($col0, $col1, $col2, $col3);
+                  $pdf->displayTitle($col0, $col1, $col2, $col3);/** @phpstan-ignore-line */
 
                   $index = 0;
                 foreach ($logresults[PluginDatainjectionCommonInjectionLib::SUCCESS] as $result) {
-                    $pdf->displayLine(
+                    $pdf->displayLine(/** @phpstan-ignore-line */
                         $result['line'],
                         $result['status_message'],
                         $result['type'],
@@ -1683,22 +1686,22 @@ class PluginDatainjectionModel extends CommonDBTM
             }
 
             if (isset($logresults[PluginDatainjectionCommonInjectionLib::FAILED])) {
-                $pdf->setColumnsSize(100);
-                $pdf->displayTitle('<b>' . __('Array of unsuccessful injections', 'datainjection') . '</b>');
-                $pdf->setColumnsSize(6, 16, 38, 20, 20);
-                $pdf->setColumnsAlign('center', 'center', 'center', 'center', 'center');
+                $pdf->setColumnsSize(100);/** @phpstan-ignore-line */
+                $pdf->displayTitle('<b>' . __('Array of unsuccessful injections', 'datainjection') . '</b>');/** @phpstan-ignore-line */
+                $pdf->setColumnsSize(6, 16, 38, 20, 20);/** @phpstan-ignore-line */
+                $pdf->setColumnsAlign('center', 'center', 'center', 'center', 'center');/** @phpstan-ignore-line */
                 $col0 = '<b>' . __('Line', 'datainjection') . '</b>';
                 $col1 = '<b>' . __('Data check', 'datainjection') . '</b>';
                 $col2 = '<b>' . __('Data Import', 'datainjection') . '</b>';
                 $col3 = '<b>' . __('Injection type', 'datainjection') . '</b>';
                 $col4 = '<b>' . __('Object Identifier', 'datainjection') . '</b>';
-                $pdf->displayTitle($col0, $col1, $col2, $col3, $col4);
+                $pdf->displayTitle($col0, $col1, $col2, $col3, $col4);/** @phpstan-ignore-line */
 
                 $index = 0;
                 foreach ($logresults[PluginDatainjectionCommonInjectionLib::FAILED] as $result) {
-                    $pdf->setColumnsSize(6, 16, 38, 20, 20);
-                    $pdf->setColumnsAlign('center', 'center', 'center', 'center', 'center');
-                    $pdf->displayLine(
+                    $pdf->setColumnsSize(6, 16, 38, 20, 20);/** @phpstan-ignore-line */
+                    $pdf->setColumnsAlign('center', 'center', 'center', 'center', 'center');/** @phpstan-ignore-line */
+                    $pdf->displayLine(/** @phpstan-ignore-line */
                         $result['line'],
                         $result['check_sumnary'],
                         $result['status_message'],
@@ -1707,7 +1710,7 @@ class PluginDatainjectionModel extends CommonDBTM
                     );
 
                     if ($result['check_message']) {
-                           $pdf->displayText(
+                           $pdf->displayText(/** @phpstan-ignore-line */
                                '<b>' . __('Data check', 'datainjection') . '</b> :',
                                $result['check_message'],
                                1
@@ -1715,7 +1718,7 @@ class PluginDatainjectionModel extends CommonDBTM
                     }
                 }
             }
-            $pdf->render();
+            $pdf->render();/** @phpstan-ignore-line */
         }
     }
 

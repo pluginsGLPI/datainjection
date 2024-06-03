@@ -47,6 +47,7 @@ if (isset($_POST["add"])) {
     $newID = $model->add($_POST);
 
     //Set display to the advanced options tab
+    /** @phpstan-ignore-next-line */
     Session::setActiveTab('PluginDatainjectionModel', 'PluginDatainjectionModel$3');
     Html::redirect(Toolbox::getItemTypeFormURL('PluginDatainjectionModel') . "?id=$newID");
 } else if (isset($_POST["delete"])) {
@@ -80,6 +81,7 @@ if (isset($_POST["add"])) {
                 ]
             )
         ) {
+            /** @phpstan-ignore-next-line */
             Session::setActiveTab('PluginDatainjectionModel', 'PluginDatainjectionModel$4');
         } else {
             Session::addMessageAfterRedirect(

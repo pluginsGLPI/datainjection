@@ -155,7 +155,7 @@ class PluginDatainjectionEngine
 
        //Add injected line number to the result array
         $results['line'] = $index;
-        if ($results['status'] != PluginDatainjectionCommonInjectionLib::SUCCESS) {
+        if ($results['status'] != PluginDatainjectionCommonInjectionLib::SUCCESS) { /** @phpstan-ignore-line */
             $this->error_lines[] = $line;
         }
         return $results;
@@ -224,7 +224,7 @@ class PluginDatainjectionEngine
     /**
     * Add additonal informations, as selected by the user which performs the CSV file import
     *
-    * @return additional informations to inject
+    * @return array additional informations to inject
    **/
     public function addAdditionalInformations()
     {

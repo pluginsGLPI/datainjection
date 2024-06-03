@@ -38,7 +38,7 @@ class PluginDatainjectionInjectionType
     *
     * @param $only_primary    return only primary types (false by default)
     *
-    * @return an array which contains array(itemtype => itemtype name)
+    * @return array an array which contains array(itemtype => itemtype name)
    **/
     public static function getItemtypes($only_primary = false)
     {
@@ -55,7 +55,7 @@ class PluginDatainjectionInjectionType
             if (
                 class_exists($type)
                 && (!$only_primary
-                || ($only_primary && $injectionclass->isPrimaryType()))
+                || ($only_primary && $injectionclass->isPrimaryType()))/** @phpstan-ignore-line */
             ) {
                 $instance = new $type();
                 //If user has no right to create an object of this type, do not display type in the list
@@ -82,8 +82,6 @@ class PluginDatainjectionInjectionType
     *
     * @param $value           the selected value (default '')
     * @param $only_primary    (false by default)
-    *
-    * @return nothing
    **/
     public static function dropdown($value = '', $only_primary = false)
     {
