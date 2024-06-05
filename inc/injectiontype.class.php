@@ -38,7 +38,7 @@ class PluginDatainjectionInjectionType
     *
     * @param $only_primary    return only primary types (false by default)
     *
-    * @return array an array which contains array(itemtype => itemtype name)
+    * @return array which contains array(itemtype => itemtype name)
    **/
     public static function getItemtypes($only_primary = false)
     {

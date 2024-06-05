@@ -503,7 +503,7 @@ class PluginDatainjectionCommonInjectionLib
     /**
     * Return injection results
     *
-    * @return array an array which contains the reformat/check/injection logs
+    * @return array which contains the reformat/check/injection logs
    **/
     public function getInjectionResults()
     {
@@ -727,7 +727,7 @@ class PluginDatainjectionCommonInjectionLib
     *
     * @param $itemtype dropdrown's itemtype
     *
-    * @return array an array with additional options to be added
+    * @return array with additional options to be added
    **/
     private function addExternalDropdownParameters($itemtype)
     {
