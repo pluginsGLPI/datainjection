@@ -52,7 +52,7 @@ function plugin_datainjection_install()
 
     include_once Plugin::getPhpDir('datainjection') . "/inc/profile.class.php";
 
-    $migration = new Migration("");
+    $migration = new Migration(PLUGIN_DATAINJECTION_VERSION);
 
     $default_charset = DBConnection::getDefaultCharset();
     $default_collation = DBConnection::getDefaultCollation();
