@@ -52,7 +52,7 @@ class PluginDatainjectionProfile extends Profile
     /**
     * Clean profiles_id from plugin's profile table
     *
-    * @param $ID
+    * @param int $ID
    **/
     public function cleanProfiles($ID)
     {
@@ -61,16 +61,14 @@ class PluginDatainjectionProfile extends Profile
         $query = "DELETE FROM `glpi_profiles`
                 WHERE `profiles_id`='$ID'
                    AND `name` LIKE '%plugin_datainjection%'";
-        /** @phpstan-ignore-next-line */
-        $DB->query($query); // phpcs:ignore
+        $DB->doQuery($query);
     }
 
     public function getTabNameForItem(CommonGLPI $item, $withtemplate = 0)
     {
 
         if ($item->getType() == 'Profile') {
-            /** @phpstan-ignore-next-line */
-            if ($item->getField('interface') == 'central') {
+            if ($item->getField('interface') == 'central') { /** @phpstan-ignore-line */
                 return __('Data injection', 'datainjection');
             }
             return '';
@@ -84,12 +82,10 @@ class PluginDatainjectionProfile extends Profile
 
         if ($item->getType() == 'Profile') {
             $profile = new self();
-            /** @phpstan-ignore-next-line */
-            $ID   = $item->getField('id');
+            $ID   = $item->getField('id'); /** @phpstan-ignore-line */
            //In case there's no right datainjection for this profile, create it
             self::addDefaultProfileInfos(
-                /** @phpstan-ignore-next-line */
-                $item->getID(),
+                $item->getID(), /** @phpstan-ignore-line */
                 ['plugin_datainjection_model' => 0]
             );
             $profile->showForm($ID);
@@ -98,7 +94,8 @@ class PluginDatainjectionProfile extends Profile
     }
 
     /**
-    * @param $profile
+    * @param int $profiles_id
+    * @param mixed $rights
    **/
     public static function addDefaultProfileInfos($profiles_id, $rights)
     {
@@ -123,7 +120,7 @@ class PluginDatainjectionProfile extends Profile
     }
 
     /**
-    * @param $ID  integer
+    * @param int $profiles_id  integer
     */
     public static function createFirstAccess($profiles_id)
     {
@@ -150,8 +147,7 @@ class PluginDatainjectionProfile extends Profile
         $profiles = getAllDataFromTable('glpi_plugin_datainjection_profiles');
         foreach ($profiles as $id => $profile) {
             $query = "SELECT `id` FROM `glpi_profiles` WHERE `name`='" . $profile['name'] . "'";
-            /** @phpstan-ignore-next-line */
-            $result = $DB->query($query); // phpcs:ignore
+            $result = $DB->doQuery($query);
             if ($DB->numrows($result) == 1) {
                 $id = $DB->result($result, 0, 'id');
                 switch ($profile['model']) {

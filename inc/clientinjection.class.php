@@ -39,13 +39,6 @@ class PluginDatainjectionClientInjection
     //Injection results
     private $results = [];
 
-    //Model used for injection
-    private $model; /** @phpstan-ignore-line */
-
-    //Overall injection results
-    private $global_results; /** @phpstan-ignore-line */
-
-
     /**
     * Print a good title for group pages
     *
@@ -140,7 +133,7 @@ class PluginDatainjectionClientInjection
 
 
     /**
-    * @param $options   array
+    * @param array $options
    **/
     public static function showUploadFileForm($options = [])
     {
@@ -197,8 +190,8 @@ class PluginDatainjectionClientInjection
 
 
     /**
-    * @param $model        PluginDatainjectionModel object
-    * @param $entities_id
+    * @param PluginDatainjectionModel $model PluginDatainjectionModel object
+    * @param integer $entities_id
    **/
     public static function showInjectionForm(PluginDatainjectionModel $model, $entities_id)
     {
@@ -228,8 +221,8 @@ class PluginDatainjectionClientInjection
 
 
     /**
-    * @param $model        PluginDatainjectionModel object
-    * @param $entities_id
+    * @param PluginDatainjectionModel $model
+    * @param integer $entities_id
    **/
     public static function processInjection(PluginDatainjectionModel $model, $entities_id)
     {
@@ -340,7 +333,7 @@ class PluginDatainjectionClientInjection
     * to be used instead of Toolbox::stripslashes_deep to reduce memory usage
     * execute stripslashes in place (no copy)
     *
-    * @param $value array of value
+    * @param array|null $value array of value
     */
     public static function stripslashes_array(&$value) // phpcs:ignore
     {
@@ -356,7 +349,7 @@ class PluginDatainjectionClientInjection
 
 
     /**
-    * @param $model  PluginDatainjectionModel object
+    * @param PluginDatainjectionModel $model  PluginDatainjectionModel object
    **/
     public static function showResultsForm(PluginDatainjectionModel $model)
     {

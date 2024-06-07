@@ -43,7 +43,7 @@ class PluginDatainjectionMappingCollection
     /**
     * Load all the mappings for a specified model
     *
-    * @param $model_ids the model ID
+    * @param int $models_id the model ID
    **/
     public function load($models_id)
     {
@@ -82,7 +82,7 @@ class PluginDatainjectionMappingCollection
     /**
     * Get a PluginDatainjectionMapping by giving the mapping name
     *
-    * @param $name
+    * @param string $name
     *
     * @return PluginDatainjectionMapping the PluginDatainjectionMapping object associated or null
    **/
@@ -96,7 +96,7 @@ class PluginDatainjectionMappingCollection
     /**
     * Get a PluginDatainjectionMapping by giving the mapping rank
     *
-    * @param $rank
+    * @param int $rank
     *
     * @return PluginDatainjectionMapping the PluginDatainjectionMapping object associated or null
    **/
@@ -110,8 +110,8 @@ class PluginDatainjectionMappingCollection
     /**
     * Find a mapping by looking for a specific field
     *
-    * @param $field the field to look for
-    * @param $value the value of the field
+    * @param string $field the field to look for
+    * @param mixed $value the value of the field
     *
     * @return PluginDatainjectionMapping|null the PluginDatainjectionMapping object associated or null
    **/
@@ -160,7 +160,7 @@ class PluginDatainjectionMappingCollection
     /**
     * Add a new mapping to this model (don't write in to DB)
     *
-    * @param $mapping the new PluginDatainjectionMapping to add
+    * @param mixed $mapping the new PluginDatainjectionMapping to add
    **/
     public function addNewMapping($mapping)
     {
@@ -172,7 +172,7 @@ class PluginDatainjectionMappingCollection
     /**
     * Replace all the mappings for a model
     *
-    * @param $mappins the array of PluginDatainjectionMapping objects
+    * @param array $mappings the array of PluginDatainjectionMapping objects
    **/
     public function replaceMappings($mappings)
     {

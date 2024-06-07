@@ -88,8 +88,8 @@ class PluginDatainjectionNetworkport_VlanInjection extends NetworkPort_Vlan impl
 
 
     /**
-    * @param $primary_type
-    * @param $values
+    * @param mixed $primary_type
+    * @param mixed $values
    **/
     public function addSpecificNeededFields($primary_type, $values)
     {

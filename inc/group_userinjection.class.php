@@ -103,8 +103,8 @@ class PluginDatainjectionGroup_UserInjection extends Group_User implements Plugi
 
 
     /**
-    * @param $primary_type
-    * @param $values
+    * @param mixed $primary_type
+    * @param mixed $values
    **/
     public function addSpecificNeededFields($primary_type, $values)
     {

@@ -47,12 +47,12 @@ abstract class PluginDatainjectionBackend
     /**
     * Get header of the file
     *
-    * @param $injectionData
-    * @param $header_present
+    * @param PluginDatainjectionData|null $injectionData
+    * @param boolean $header_present
     *
     * @return array with the data from the header
    **/
-    public static function getHeader(PluginDatainjectionData $injectionData, $header_present)
+    public static function getHeader($injectionData, $header_present)
     {
 
         if ($header_present) {
@@ -71,7 +71,7 @@ abstract class PluginDatainjectionBackend
     /**
     * Get the backend implementation by type
     *
-    * @param $type
+    * @param string $type
    **/
     public static function getInstance($type)
     {

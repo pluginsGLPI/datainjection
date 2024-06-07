@@ -97,8 +97,8 @@ class PluginDatainjectionProfile_UserInjection extends Profile_User implements P
 
 
     /**
-    * @param $primary_type
-    * @param $values
+    * @param mixed $primary_type
+    * @param mixed $values
    **/
     public function addSpecificNeededFields($primary_type, $values)
     {

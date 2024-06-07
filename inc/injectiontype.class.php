@@ -36,7 +36,7 @@ class PluginDatainjectionInjectionType
     /**
     * Return all injectable types
     *
-    * @param $only_primary    return only primary types (false by default)
+    * @param boolean $only_primary    return only primary types (false by default)
     *
     * @return array which contains array(itemtype => itemtype name)
    **/
@@ -50,14 +50,14 @@ class PluginDatainjectionInjectionType
         $plugin = new Plugin();
         $values = [];
         foreach ($INJECTABLE_TYPES as $type => $from) {
-            $injectionclass = new $type();
+            $injectionclass = (object) new $type();
 
             if (
                 class_exists($type)
                 && (!$only_primary
-                || ($only_primary && $injectionclass->isPrimaryType()))/** @phpstan-ignore-line */
+                || ($injectionclass->isPrimaryType()))
             ) {
-                $instance = new $type();
+                $instance = (object) new $type();
                 //If user has no right to create an object of this type, do not display type in the list
                 if (!$instance->canCreate()) {
                     continue;
@@ -80,8 +80,8 @@ class PluginDatainjectionInjectionType
     /**
     * Display a list of all importable types using datainjection plugin
     *
-    * @param $value           the selected value (default '')
-    * @param $only_primary    (false by default)
+    * @param mixed $value           the selected value (default '')
+    * @param boolean $only_primary    (false by default)
    **/
     public static function dropdown($value = '', $only_primary = false)
     {
@@ -97,12 +97,12 @@ class PluginDatainjectionInjectionType
     /**
     * Get all types linked with a primary type
     *
-    * @param $mapping_or_info
-    * @param $options            array
+    * @param mixed $mapping_or_info
+    * @param array $options            array
    **/
     public static function dropdownLinkedTypes($mapping_or_info, $options = [])
     {
-        /** @var array $INJECTABLE_TYPES */
+        /** @var array[mixed] $INJECTABLE_TYPES */
         /** @var array $CFG_GLPI */
         global $INJECTABLE_TYPES, $CFG_GLPI;
 
@@ -167,7 +167,7 @@ class PluginDatainjectionInjectionType
 
 
     /**
-    * @param $options   array
+    * @param array $options   array
    **/
     public static function dropdownFields($options = [])
     {
@@ -258,8 +258,8 @@ class PluginDatainjectionInjectionType
     /**
     * Incidates if the name given corresponds to the current searchOption
     *
-    * @param $option    array the current searchOption (field definition)
-    * @param $mapping
+    * @param array $option    array the current searchOption (field definition)
+    * @param array $mapping
     *
     * @return boolean the value matches the searchOption or not
    **/
@@ -287,8 +287,8 @@ class PluginDatainjectionInjectionType
 
 
     /**
-    * @param $name
-    * @param $option    array
+    * @param string $name
+    * @param array $option    array
    **/
     public static function testBasicEqual($name, $option = [])
     {
@@ -306,7 +306,7 @@ class PluginDatainjectionInjectionType
 
 
     /**
-    * @param $options   array
+    * @param array $options   array
    **/
     public static function showMandatoryCheckbox($options = [])
     {
@@ -340,7 +340,7 @@ class PluginDatainjectionInjectionType
 
 
     /**
-    * @param $options   array
+    * @param array $options   array
    **/
     public static function getUsedMappingsOrInfos($options = [])
     {

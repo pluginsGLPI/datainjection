@@ -70,7 +70,7 @@ class PluginDatainjectionDropdown
 
 
     /**
-    * @param $format
+    * @param string $format
    **/
     public static function getFloatFormat($format)
     {
@@ -157,7 +157,7 @@ class PluginDatainjectionDropdown
 
 
     /**
-    * @param $value
+    * @param mixed $value
    **/
     public static function getPortUnicityValues($value)
     {

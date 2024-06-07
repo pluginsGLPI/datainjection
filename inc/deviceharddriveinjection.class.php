@@ -78,9 +78,9 @@ class PluginDatainjectionDeviceHardDriveInjection extends DeviceHardDrive implem
 
 
     /**
-    * @param $values
-    * @param $add             (true by default)
-    * @param $rights    array
+    * @param mixed $values
+    * @param boolean $add             (true by default)
+    * @param array|null $rights    array
     */
     public function processAfterInsertOrUpdate($values, $add = true, $rights = [])
     {

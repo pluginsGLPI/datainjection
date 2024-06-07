@@ -86,7 +86,7 @@ class PluginDatainjectionSoftwareInjection extends Software implements PluginDat
     /**
     * Play software dictionnary
     *
-    * @param $values
+    * @param mixed $values
    **/
     public function processDictionnariesIfNeeded(&$values)
     {

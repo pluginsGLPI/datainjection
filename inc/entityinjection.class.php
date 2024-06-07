@@ -101,9 +101,9 @@ class PluginDatainjectionEntityInjection extends Entity implements PluginDatainj
 
 
     /**
-    * @param $input     array
-    * @param $add                (true by default)
-    * @param $rights    array
+    * @param array $input     array
+    * @param boolean $add                (true by default)
+    * @param array|null $rights    array
    **/
     public function customimport($input = [], $add = true, $rights = [])
     {
@@ -203,9 +203,9 @@ class PluginDatainjectionEntityInjection extends Entity implements PluginDatainj
 
 
     /**
-    * @param $injectionClass
-    * @param $values
-    * @param $options
+    * @param PluginDatainjectionInjectionInterface $injectionClass
+    * @param mixed $values
+    * @param array $options
    **/
     public function customDataAlreadyInDB($injectionClass, $values, $options)
     {

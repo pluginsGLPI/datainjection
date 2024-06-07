@@ -1921,8 +1921,8 @@ function plugin_datainjection_update220_230()
 
 
 /**
- * @param $hook_name
- * @param $params       array
+ * @param string $hook_name
+ * @param array $params
 **/
 function plugin_datainjection_loadHook($hook_name, $params = [])
 {
@@ -1968,7 +1968,7 @@ function plugin_datainjection_needUpdateOrInstall()
 /**
  * Used for filter list of models
  *
- * @param $itemtype
+ * @param string $itemtype
 **/
 function plugin_datainjection_addDefaultWhere($itemtype)
 {

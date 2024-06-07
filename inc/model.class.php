@@ -270,7 +270,7 @@ class PluginDatainjectionModel extends CommonDBTM
 
 
     /**
-    * @param $options   array
+    * @param array $options   array
     *
     * @return boolean
    **/
@@ -342,10 +342,10 @@ class PluginDatainjectionModel extends CommonDBTM
 
 
     /**
-    * @param $user_id
-    * @param $order        (default 'name')
-    * @param $entity       (default -1)
-    * @param $all          (false by default)
+    * @param int $user_id
+    * @param string $order        (default 'name')
+    * @param mixed $entity       (default -1)
+    * @param boolean $all          (false by default)
    **/
     public static function getModels($user_id, $order = "name", $entity = -1, $all = false)
     {
@@ -529,9 +529,9 @@ class PluginDatainjectionModel extends CommonDBTM
     /**
     * @since version 2.3.0
     *
-    * @param $field
-    * @param $values
-    * @param $options   array
+    * @param string $field
+    * @param mixed $values
+    * @param array $options   array
    **/
     public static function getSpecificValueToDisplay($field, $values, array $options = [])
     {
@@ -559,10 +559,10 @@ class PluginDatainjectionModel extends CommonDBTM
     /**
     * @since version 2.3.0
     *
-    * @param $field
-    * @param $name               (default '')
-    * @param $values             (defaut '')
-    * @param $options   array
+    * @param string $field
+    * @param string $name               (default '')
+    * @param mixed $values             (defaut '')
+    * @param array $options   array
    **/
     public static function getSpecificValueToSelect($field, $name = '', $values = '', array $options = [])
     {
@@ -816,8 +816,7 @@ class PluginDatainjectionModel extends CommonDBTM
                             $tabs[3] = __('File to inject', 'datainjection');
                         }
                         $tabs[4] = __('Mappings', 'datainjection');
-                        /** @phpstan-ignore-next-line */
-                        if ($item->fields['step'] > self::MAPPING_STEP) {
+                        if ($item->fields['step'] > self::MAPPING_STEP) { /** @phpstan-ignore-line */
                             $tabs[5] = __('Additional Information', 'datainjection');
                             if ($canedit && $item->fields['step'] != self::READY_TO_USE_STEP) { /** @phpstan-ignore-line */
                                 $tabs[6] = __('Validation');
@@ -890,7 +889,7 @@ class PluginDatainjectionModel extends CommonDBTM
     /**
     * Clean all model which match some criteria
     *
-    * @param $crit array of criteria (ex array('itemtype'=>'PluginAppliancesAppliance'))
+    * @param array $crit array of criteria (ex array('itemtype'=>'PluginAppliancesAppliance'))
    **/
     public static function clean($crit = [])
     {
@@ -909,8 +908,8 @@ class PluginDatainjectionModel extends CommonDBTM
 
 
     /**
-    * @param $models_id
-    * @param $step
+    * @param int $models_id
+    * @param mixed $step
    **/
     public static function changeStep($models_id, $step)
     {
@@ -983,7 +982,7 @@ class PluginDatainjectionModel extends CommonDBTM
     /**
     * Get the backend implementation by type
     *
-    * @param $type
+    * @param string $type
    **/
     public static function getInstance($type)
     {
@@ -1008,7 +1007,7 @@ class PluginDatainjectionModel extends CommonDBTM
 
 
     /**
-    * @param $options   array
+    * @param array $options   array
    **/
     public function readUploadedFile($options = [])
     {
@@ -1098,7 +1097,7 @@ class PluginDatainjectionModel extends CommonDBTM
     /**
     * Once file is uploaded, process it
     *
-    * @param $options   array of possible options:
+    * @param array $options   array of possible options:
     *   - file_encoding
     *   - mode
     *
@@ -1284,7 +1283,7 @@ class PluginDatainjectionModel extends CommonDBTM
 
 
     /**
-    * @param $fields
+    * @param array $fields
    **/
     public function checkMandatoryFields($fields)
     {
@@ -1337,7 +1336,7 @@ class PluginDatainjectionModel extends CommonDBTM
 
 
     /**
-    * @param $models_id
+    * @param int $models_id
    **/
     public static function checkRightOnModel($models_id)
     {
@@ -1385,7 +1384,7 @@ class PluginDatainjectionModel extends CommonDBTM
 
 
     /**
-    * @param $models_id
+    * @param int $models_id
    **/
     public static function showPreviewMappings($models_id)
     {
@@ -1427,7 +1426,7 @@ class PluginDatainjectionModel extends CommonDBTM
 
 
     /**
-    * @param $models_id
+    * @param int $models_id
    **/
     public static function prepareLogResults($models_id)
     {
@@ -1512,7 +1511,7 @@ class PluginDatainjectionModel extends CommonDBTM
 
 
     /**
-    * @param $models_id
+    * @param int $models_id
    **/
     public static function showLogResults($models_id)
     {

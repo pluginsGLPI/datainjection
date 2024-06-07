@@ -45,7 +45,7 @@ class PluginDatainjectionInfoCollection
     /**
     * Load all the mappings for a specified model
     *
-    * @param $model_id the model ID
+    * @param integer $models_id the model ID
    **/
     public function load($models_id)
     {
