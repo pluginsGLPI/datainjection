@@ -54,18 +54,18 @@ class PluginDatainjectionModel extends CommonDBTM
     public $severaltimes_mapped = [];
 
     //Private or public model
-    const MODEL_PRIVATE  = 1;
-    const MODEL_PUBLIC   = 0;
+    public const MODEL_PRIVATE  = 1;
+    public const MODEL_PUBLIC   = 0;
 
     //Step constants
-    const INITIAL_STEP      = 1;
-    const FILE_STEP         = 2;
-    const MAPPING_STEP      = 3;
-    const OTHERS_STEP       = 4;
-    const READY_TO_USE_STEP = 5;
+    public const INITIAL_STEP      = 1;
+    public const FILE_STEP         = 2;
+    public const MAPPING_STEP      = 3;
+    public const OTHERS_STEP       = 4;
+    public const READY_TO_USE_STEP = 5;
 
-    const PROCESS  = 0;
-    const CREATION = 1;
+    public const PROCESS  = 0;
+    public const CREATION = 1;
 
 
 
@@ -807,27 +807,21 @@ class PluginDatainjectionModel extends CommonDBTM
 
         $canedit = Session::haveRight('plugin_datainjection_model', UPDATE);
 
-        if (!$withtemplate) {
-            switch ($item->getType()) {
-                case __CLASS__:
-                    $tabs[1] = __('Model');
-                    if (!$this->isNewID($item->fields['id']) ?? -1) { /** @phpstan-ignore-line */
-                        if ($canedit) {
-                            $tabs[3] = __('File to inject', 'datainjection');
-                        }
-                        $tabs[4] = __('Mappings', 'datainjection');
-                        if ($item->fields['step'] > self::MAPPING_STEP) { /** @phpstan-ignore-line */
-                            $tabs[5] = __('Additional Information', 'datainjection');
-                            if ($canedit && $item->fields['step'] != self::READY_TO_USE_STEP) { /** @phpstan-ignore-line */
-                                $tabs[6] = __('Validation');
-                            }
-                        }
+        if (!$withtemplate && $item->getType() == __CLASS__) {
+            $tabs[1] = __('Model');
+            if (!$this->isNewID($item->fields['id']) ?? -1) {
+                if ($canedit) {
+                    $tabs[3] = __('File to inject', 'datainjection');
+                }
+                $tabs[4] = __('Mappings', 'datainjection');
+                if ($item->fields['step'] > self::MAPPING_STEP) { /** @phpstan-ignore-line */
+                    $tabs[5] = __('Additional Information', 'datainjection');
+                    if ($canedit && $item->fields['step'] != self::READY_TO_USE_STEP) { /** @phpstan-ignore-line */
+                        $tabs[6] = __('Validation');
                     }
-                    return $tabs;
-
-                default:
-                    return '';
+                }
             }
+            return $tabs;
         }
 
         return '';
