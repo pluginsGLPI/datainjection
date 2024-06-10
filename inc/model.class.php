@@ -831,7 +831,7 @@ class PluginDatainjectionModel extends CommonDBTM
     public static function displayTabContentForItem(CommonGLPI $item, $tabnum = 1, $withtemplate = 0)
     {
 
-        if ($item->getType() == __CLASS__) {
+        if ($item->getType() == __CLASS__ && $item instanceof self) {
             switch ($tabnum) {
                 case 1:
                     $item->showAdvancedForm($item->getID()); /** @phpstan-ignore-line */
