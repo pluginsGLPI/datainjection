@@ -67,8 +67,8 @@ class PluginDatainjectionProfile extends Profile
     public function getTabNameForItem(CommonGLPI $item, $withtemplate = 0)
     {
 
-        if ($item->getType() == 'Profile') {
-            if ($item->getField('interface') == 'central') { /** @phpstan-ignore-line */
+        if ($item->getType() == 'Profile' && $item instanceof CommonDBTM) {
+            if ($item->fields['interface'] == 'central') {
                 return __('Data injection', 'datainjection');
             }
             return '';
@@ -80,12 +80,12 @@ class PluginDatainjectionProfile extends Profile
     public static function displayTabContentForItem(CommonGLPI $item, $tabnum = 1, $withtemplate = 0)
     {
 
-        if ($item->getType() == 'Profile') {
+        if ($item->getType() == 'Profile' && $item instanceof CommonDBTM) {
             $profile = new self();
-            $ID   = $item->getField('id'); /** @phpstan-ignore-line */
+            $ID   = $item->fields['id'];
            //In case there's no right datainjection for this profile, create it
             self::addDefaultProfileInfos(
-                $item->getID(), /** @phpstan-ignore-line */
+                $item->getID(),
                 ['plugin_datainjection_model' => 0]
             );
             $profile->showForm($ID);
