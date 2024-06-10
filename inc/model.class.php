@@ -807,16 +807,16 @@ class PluginDatainjectionModel extends CommonDBTM
 
         $canedit = Session::haveRight('plugin_datainjection_model', UPDATE);
 
-        if (!$withtemplate && $item->getType() == __CLASS__) {
+        if (!$withtemplate && $item->getType() == __CLASS__ && $item instanceof CommonDBTM) {
             $tabs[1] = __('Model');
-            if (!$this->isNewID($item->fields['id']) ?? -1) {
+            if (!$this->isNewID($item->fields['id'])) {
                 if ($canedit) {
                     $tabs[3] = __('File to inject', 'datainjection');
                 }
                 $tabs[4] = __('Mappings', 'datainjection');
-                if ($item->fields['step'] > self::MAPPING_STEP) { /** @phpstan-ignore-line */
+                if ($item->fields['step'] > self::MAPPING_STEP) {
                     $tabs[5] = __('Additional Information', 'datainjection');
-                    if ($canedit && $item->fields['step'] != self::READY_TO_USE_STEP) { /** @phpstan-ignore-line */
+                    if ($canedit && $item->fields['step'] != self::READY_TO_USE_STEP) {
                         $tabs[6] = __('Validation');
                     }
                 }
