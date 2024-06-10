@@ -50,14 +50,14 @@ class PluginDatainjectionInjectionType
         $plugin = new Plugin();
         $values = [];
         foreach ($INJECTABLE_TYPES as $type => $from) {
-            $injectionclass = (object) new $type();
+            $injectionclass = new $type();
 
             if (
                 class_exists($type)
                 && (!$only_primary
                 || ($injectionclass->isPrimaryType()))
             ) {
-                $instance = (object) new $type();
+                $instance = new $type();
                 //If user has no right to create an object of this type, do not display type in the list
                 if (!$instance->canCreate()) {
                     continue;

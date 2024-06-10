@@ -470,20 +470,6 @@ class PluginDatainjectionCommonInjectionLib
     }
 
 
-
-    /**
-    * Get itemtype associated to the injectionClass
-    *
-    * @return string an itemtype
-   **/
-    /*private function getItemtype()
-    {
-
-        $classname = get_class($this->injectionClass);
-        return self::getItemtypeByInjection($classname);
-    }*/
-
-
     /**
     * Get itemtype associated to the injectionClass
     *

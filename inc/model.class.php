@@ -811,7 +811,7 @@ class PluginDatainjectionModel extends CommonDBTM
             switch ($item->getType()) {
                 case __CLASS__:
                     $tabs[1] = __('Model');
-                    if (!$this->isNewID($item->fields['id'])) { /** @phpstan-ignore-line */
+                    if (!$this->isNewID($item->fields['id']) ?? -1) { /** @phpstan-ignore-line */
                         if ($canedit) {
                             $tabs[3] = __('File to inject', 'datainjection');
                         }
