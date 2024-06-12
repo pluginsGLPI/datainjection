@@ -834,30 +834,30 @@ class PluginDatainjectionModel extends CommonDBTM
         if ($item->getType() == __CLASS__ && $item instanceof self) {
             switch ($tabnum) {
                 case 1:
-                    $item->showAdvancedForm($item->getID()); /** @phpstan-ignore-line */
+                    $item->showAdvancedForm($item->getID());
                     break;
 
                 case 3:
                     $options['confirm']   = 'creation';
-                    $options['models_id'] = $item->fields['id']; /** @phpstan-ignore-line */
+                    $options['models_id'] = $item->fields['id'];
                     $options['add_form']  = true;
                     $options['submit']    = __('Load this file', 'datainjection');
                     PluginDatainjectionClientInjection::showUploadFileForm($options);
                     break;
 
                 case 4:
-                    PluginDatainjectionMapping::showFormMappings($item);/** @phpstan-ignore-line */
+                    PluginDatainjectionMapping::showFormMappings($item);
                     break;
 
                 case 5:
-                    if ($item->fields['step'] > self::MAPPING_STEP) { /** @phpstan-ignore-line */
-                        PluginDatainjectionInfo::showFormInfos($item);/** @phpstan-ignore-line */
+                    if ($item->fields['step'] > self::MAPPING_STEP) {
+                        PluginDatainjectionInfo::showFormInfos($item);
                     }
                     break;
 
                 case 6:
-                    if ($item->fields['step'] > self::MAPPING_STEP) { /** @phpstan-ignore-line */
-                        $item->showValidationForm(); /** @phpstan-ignore-line */
+                    if ($item->fields['step'] > self::MAPPING_STEP) {
+                        $item->showValidationForm();
                     }
                     break;
             }
