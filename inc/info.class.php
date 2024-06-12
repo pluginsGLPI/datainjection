@@ -68,8 +68,8 @@ class PluginDatainjectionInfo extends CommonDBTM
     }
 
     /**
-    * @param $model     PluginDatainjectionModel object
-    * @param $canedit   (false by default)
+    * @param PluginDatainjectionModel $model     PluginDatainjectionModel object
+    * @param boolean $canedit   (false by default)
    **/
     public static function showAddInfo(PluginDatainjectionModel $model, $canedit = false)
     {
@@ -199,8 +199,8 @@ class PluginDatainjectionInfo extends CommonDBTM
 
 
     /**
-    * @param $models_id
-    * @param $infos        array
+    * @param int $models_id
+    * @param array $infos        array
    **/
     public static function manageInfos($models_id, $infos = [])
     {
@@ -240,7 +240,7 @@ class PluginDatainjectionInfo extends CommonDBTM
 
 
     /**
-    * @param $model     PluginDatainjectionModel object
+    * @param PluginDatainjectionModel $model     PluginDatainjectionModel object
    **/
     public static function showAdditionalInformationsForm(PluginDatainjectionModel $model)
     {
@@ -308,8 +308,8 @@ class PluginDatainjectionInfo extends CommonDBTM
 
 
     /**
-    * @param $info               PluginDatainjectionInfo object
-    * @param $values    array
+    * @param PluginDatainjectionInfo $info               PluginDatainjectionInfo object
+    * @param mixed $values    array
     */
     public static function displayAdditionalInformation(PluginDatainjectionInfo $info, $values = [])
     {
@@ -332,9 +332,9 @@ class PluginDatainjectionInfo extends CommonDBTM
     /**
      * Display command additional informations
      *
-     * @param $info
-     * @param $option
-     * @param $injectionClass
+     * @param PluginDatainjectionInfo $info
+     * @param array $option
+     * @param PluginDatainjectionInjectionInterface $injectionClass
      *
      * @return void
      */
@@ -443,8 +443,8 @@ class PluginDatainjectionInfo extends CommonDBTM
 
 
     /**
-    * @param $info      PluginDatainjectionInfo object
-    * @param $value
+    * @param PluginDatainjectionInfo $info      PluginDatainjectionInfo object
+    * @param mixed $value
    **/
     public static function keepInfo(PluginDatainjectionInfo $info, $value)
     {
@@ -480,8 +480,8 @@ class PluginDatainjectionInfo extends CommonDBTM
 
 
     /**
-    * @param $name
-    * @param $table
+    * @param string $name
+    * @param string $table
    **/
     public static function dropdownTemplates($name, $table)
     {

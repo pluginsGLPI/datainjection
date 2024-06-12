@@ -115,8 +115,8 @@ class PluginDatainjectionComputer_ItemInjection extends Computer_Item implements
 
 
     /**
-    * @param $primary_type
-    * @param $values
+    * @param mixed $primary_type
+    * @param mixed $values
    **/
     public function addSpecificNeededFields($primary_type, $values)
     {

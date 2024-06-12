@@ -101,8 +101,8 @@ class PluginDatainjectionNotepadInjection extends Notepad implements PluginDatai
 
 
    /**
-    * @param $primary_type
-    * @param $values
+    * @param mixed $primary_type
+    * @param mixed $values
    **/
     public function addSpecificNeededFields($primary_type, $values)
     {

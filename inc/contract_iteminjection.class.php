@@ -104,8 +104,8 @@ class PluginDatainjectionContract_ItemInjection extends Contract_Item implements
 
 
     /**
-    * @param $primary_type
-    * @param $values
+    * @param mixed $primary_type
+    * @param mixed $values
    **/
     public function addSpecificNeededFields($primary_type, $values)
     {

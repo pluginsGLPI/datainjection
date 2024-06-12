@@ -41,7 +41,7 @@ class PluginDatainjectionData
 
 
     /**
-    * @param $newData
+    * @param mixed $newData
    **/
     public function addToData($newData)
     {
@@ -58,7 +58,7 @@ class PluginDatainjectionData
 
 
     /**
-    * @param $line_id
+    * @param integer $line_id
    **/
     public function getDataAtLine($line_id)
     {

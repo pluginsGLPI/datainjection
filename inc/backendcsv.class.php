@@ -57,7 +57,7 @@ class PluginDatainjectionBackendcsv extends PluginDatainjectionBackend implement
 
 
     /**
-    * @param $delimiter
+    * @param string $delimiter
    **/
     public function setDelimiter($delimiter)
     {
@@ -67,7 +67,7 @@ class PluginDatainjectionBackendcsv extends PluginDatainjectionBackend implement
 
 
     /**
-    * @param $present (true by default)
+    * @param boolean $present (true by default)
    **/
     public function setHeaderPresent($present = true)
     {
@@ -79,9 +79,9 @@ class PluginDatainjectionBackendcsv extends PluginDatainjectionBackend implement
     /**
     * CSV File parsing methods
     *
-    * @param $fic
-    * @param $data
-    * @param $encoding  (default 1)
+    * @param mixed $fic
+    * @param mixed $data
+    * @param integer $encoding  (default 1)
    **/
     public static function parseLine($fic, $data, $encoding = 1)
     {
@@ -124,8 +124,8 @@ class PluginDatainjectionBackendcsv extends PluginDatainjectionBackend implement
 
 
     /**
-    * @param $newfile
-    * @param $encoding
+    * @param string $newfile
+    * @param string $encoding
    **/
     public function init($newfile, $encoding)
     {
@@ -138,7 +138,7 @@ class PluginDatainjectionBackendcsv extends PluginDatainjectionBackend implement
     /**
     * Read a CSV file and store data in an array
     *
-    * @param $numberOfLines inumber of lines to be read (-1 means all file) (default 1)
+    * @param integer $numberOfLines inumber of lines to be read (-1 means all file) (default 1)
    **/
     public function read($numberOfLines = 1)
     {

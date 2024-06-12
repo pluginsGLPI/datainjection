@@ -96,8 +96,8 @@ class PluginDatainjectionPhoneInjection extends Phone implements PluginDatainjec
 
 
     /**
-    * @param $primary_type
-    * @param $values
+    * @param mixed $primary_type
+    * @param mixed $values
    **/
     public function addSpecificNeededFields($primary_type, $values)
     {
