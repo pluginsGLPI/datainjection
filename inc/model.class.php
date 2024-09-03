@@ -746,6 +746,14 @@ class PluginDatainjectionModel extends CommonDBTM
         );
         echo "</td></tr>";
 
+        echo "<td>" . __('Port unicity criteria', 'datainjection') . "</td>";
+        echo "<td>";
+        Dropdown::showFromArray(
+            'port_unicity',
+            PluginDatainjectionDropdown::portUnicityValues(),
+            ['value' => $this->fields['port_unicity']]
+        );
+        echo "</td></tr>";
         if ($ID > 0) {
             $tmp = self::getInstance('csv');
             $tmp->showAdditionnalForm($this);
