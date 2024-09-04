@@ -13,6 +13,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Fixed
 
+- Fix network port unicity
 - Fix visibility of injection models
 - Fix ```CommonDBRelation``` import
 
