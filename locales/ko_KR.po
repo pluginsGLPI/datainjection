@@ -4,16 +4,16 @@
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 # 
 # Translators:
-# 조성현 (jaymz9634) <jaymz9634@gmail.com>, 2021
+# 조성현 (jaymz9634) <jaymz9634@gmail.com>, 2024
 # 
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-05-25 11:40+0000\n"
+"POT-Creation-Date: 2024-09-11 07:18+0000\n"
 "PO-Revision-Date: 2018-06-21 12:57+0000\n"
-"Last-Translator: 조성현 (jaymz9634) <jaymz9634@gmail.com>, 2021\n"
+"Last-Translator: 조성현 (jaymz9634) <jaymz9634@gmail.com>, 2024\n"
 "Language-Team: Korean (Korea) (https://app.transifex.com/teclib/teams/28042/ko_KR/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -21,63 +21,63 @@ msgstr ""
 "Language: ko_KR\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
-#: inc/model.class.php:1127
+#: inc/model.class.php:1210
 #, php-format
 msgid "%d awaited column"
 msgid_plural "%d awaited columns"
 msgstr[0] "%d개의 대기 열"
 
-#: inc/model.class.php:1132
+#: inc/model.class.php:1215
 #, php-format
 msgid "%d found column"
 msgid_plural "%d found columns"
 msgstr[0] "%d개의 찾은 열"
 
-#: inc/injectiontype.class.php:193
+#: inc/injectiontype.class.php:201
 msgid "-------Choose a field-------"
 msgstr "-------항목 선택-------"
 
-#: inc/injectiontype.class.php:131
+#: inc/injectiontype.class.php:137
 msgid "-------Choose a table-------"
 msgstr "-------테이블 선택-------"
 
-#: inc/dropdown.class.php:62
+#: inc/dropdown.class.php:64
 msgid "1 234,56"
 msgstr "1 234,56"
 
-#: inc/dropdown.class.php:60
+#: inc/dropdown.class.php:62
 msgid "1 234.56"
 msgstr "1 234.56"
 
-#: inc/dropdown.class.php:64
+#: inc/dropdown.class.php:66
 msgid "1,234.56"
 msgstr "1,234.56"
 
-#: inc/commoninjectionlib.class.php:1896
+#: inc/commoninjectionlib.class.php:2009
 msgid "Add from CSV file"
 msgstr "CSV 파일에서 추가"
 
-#: inc/dropdown.class.php:90 inc/model.class.php:756
+#: inc/dropdown.class.php:94 inc/model.class.php:815
 msgid "Additional Information"
 msgstr "추가 정보"
 
-#: inc/model.class.php:672
+#: inc/model.class.php:718
 msgid "Advanced options"
 msgstr "고급 옵션"
 
-#: inc/model.class.php:412 inc/model.class.php:676
+#: inc/model.class.php:449 inc/model.class.php:722
 msgid "Allow creation of dropdowns"
 msgstr "드롭다운 생성 허용"
 
-#: inc/model.class.php:384 inc/model.class.php:664
+#: inc/model.class.php:421 inc/model.class.php:710
 msgid "Allow lines creation"
 msgstr "줄 생성 허용"
 
-#: inc/model.class.php:393 inc/model.class.php:667
+#: inc/model.class.php:430 inc/model.class.php:713
 msgid "Allow lines update"
 msgstr "줄 갱신 허용"
 
-#: inc/model.class.php:689
+#: inc/model.class.php:736
 msgid "Allow update of existing fields"
 msgstr "기존 항목 갱신 허용"
 
@@ -85,223 +85,223 @@ msgstr "기존 항목 갱신 허용"
 msgid "Antivirus name"
 msgstr "안티바이러스 이름"
 
-#: inc/model.class.php:1427 inc/model.class.php:1564
+#: inc/model.class.php:1527 inc/model.class.php:1665
 msgid "Array of successful injections"
 msgstr "성공적인 삽입의 배열"
 
-#: inc/model.class.php:1462 inc/model.class.php:1584
+#: inc/model.class.php:1562 inc/model.class.php:1687
 msgid "Array of unsuccessful injections"
 msgstr "실패한 삽입의 배열"
 
-#: inc/model.class.php:1172
+#: inc/model.class.php:1259
 msgid "At least one column is incorrect"
 msgstr "최소 한개의 열이 잘못되었습니다"
 
-#: inc/commoninjectionlib.class.php:1959
+#: inc/commoninjectionlib.class.php:2075
 msgid "At least one mandatory field is not present"
 msgstr "하나 이상의 필수 항목이 없습니다"
 
-#: inc/dropdown.class.php:119
+#: inc/dropdown.class.php:125
 msgid "Automatic detection"
 msgstr "자동 감지"
 
-#: hook.php:128 hook.php:145 setup.php:63
+#: hook.php:133 hook.php:151 setup.php:66
 msgid "Can't create folder"
 msgstr "폴더를 생성할 수 없습니다"
 
-#: inc/info.class.php:262 inc/clientinjection.class.php:156
+#: inc/clientinjection.class.php:161 inc/info.class.php:266
 msgid "Choose a file"
 msgstr "파일 선택"
 
-#: inc/info.class.php:261
+#: inc/info.class.php:265
 msgid "Complementary information"
 msgstr "보완 정보"
 
-#: inc/model.class.php:1510
+#: inc/model.class.php:1610
 msgid "Counter"
-msgstr ""
+msgstr "카운터"
 
-#: inc/model.class.php:1435 inc/model.class.php:1471 inc/model.class.php:1508
-#: inc/model.class.php:1568 inc/model.class.php:1589
+#: inc/model.class.php:1535 inc/model.class.php:1571 inc/model.class.php:1608
+#: inc/model.class.php:1669 inc/model.class.php:1692
 msgid "Data Import"
 msgstr "데이터 불러오기"
 
-#: inc/model.class.php:1470 inc/model.class.php:1588 inc/model.class.php:1605
+#: inc/model.class.php:1570 inc/model.class.php:1691 inc/model.class.php:1711
 msgid "Data check"
 msgstr "데이터 확인"
 
-#: inc/profile.class.php:67 inc/menu.class.php:38
-#: front/clientinjection.form.php:36 setup.php:94
+#: inc/menu.class.php:38 inc/profile.class.php:73 setup.php:97
+#: front/clientinjection.form.php:36
 msgid "Data injection"
 msgstr "데이터 삽입"
 
-#: inc/model.class.php:1555 front/popup.php:43
+#: inc/model.class.php:1656 front/popup.php:43
 msgid "Data injection report"
 msgstr "데이터 삽입 보고서"
 
-#: inc/commoninjectionlib.class.php:1975
+#: inc/commoninjectionlib.class.php:2091
 msgid "Data not found"
 msgstr "데이터 없음"
 
-#: inc/commoninjectionlib.class.php:1963
+#: inc/commoninjectionlib.class.php:2079
 msgid "Data to insert are correct"
 msgstr "삽입할 데이터가 정확합니다"
 
-#: inc/model.class.php:420 inc/model.class.php:680
+#: inc/model.class.php:457 inc/model.class.php:726
 msgid "Dates format"
 msgstr "날짜 형식"
 
-#: inc/phoneinjection.class.php:67
+#: inc/phoneinjection.class.php:68
 msgid "Domain name"
-msgstr ""
+msgstr "도메인 이름"
 
-#: inc/info.class.php:271
+#: inc/info.class.php:275
 msgid "Download file sample"
 msgstr "파일 예제 다운로드"
 
-#: inc/webservice.class.php:115
+#: inc/webservice.class.php:119
 msgid "Entity unknown"
 msgstr "개체 불명"
 
-#: inc/clientinjection.class.php:393
+#: inc/clientinjection.class.php:407
 msgid "Export rapport in PDF"
 msgstr "PDF로 보고서 내보내기"
 
-#: inc/clientinjection.class.php:399
+#: inc/clientinjection.class.php:413
 msgid "Export the log"
 msgstr "기록 내보내기"
 
-#: inc/model.class.php:963
+#: inc/model.class.php:1043
 msgid "Extension csv required"
 msgstr "csv 확장자가 필요합니다"
 
-#: inc/info.class.php:142
+#: inc/info.class.php:141
 msgid "Fields"
 msgstr "항목"
 
-#: inc/modelcsv.class.php:167
+#: inc/modelcsv.class.php:177
 msgid "File delimitor"
 msgstr "파일 구분자"
 
-#: inc/clientinjection.class.php:162
+#: inc/clientinjection.class.php:167
 msgid "File encoding"
 msgstr "파일 인코딩"
 
-#: inc/model.class.php:962
+#: inc/model.class.php:1042
 msgid "File format is wrong"
 msgstr "파일 형식이 잘못되었습니다"
 
-#: inc/dropdown.class.php:87 inc/model.class.php:751
-#: inc/clientinjection.class.php:153
+#: inc/dropdown.class.php:91 inc/clientinjection.class.php:157
+#: inc/model.class.php:810
 msgid "File to inject"
 msgstr "삽입 할 파일"
 
-#: inc/clientinjection.class.php:407
+#: inc/clientinjection.class.php:421
 msgid "Finish"
 msgstr "마치기"
 
-#: inc/model.class.php:429 inc/model.class.php:693
+#: inc/model.class.php:466 inc/model.class.php:740
 msgid "Float format"
 msgstr "부동 소숫점 형식"
 
-#: inc/model.class.php:1185
+#: inc/model.class.php:1272
 msgid "From the model"
 msgstr "모델에서"
 
-#: inc/model.class.php:1500
+#: inc/model.class.php:1600
 msgid "Global report"
-msgstr ""
+msgstr "전역 보고서"
 
-#: inc/mapping.class.php:123
+#: inc/mapping.class.php:130
 msgid "Header of the file"
 msgstr "파일 헤더"
 
-#: inc/modelcsv.class.php:163
+#: inc/modelcsv.class.php:173
 msgid "Header's presence"
 msgstr "헤더의 존재"
 
-#: inc/dropdown.class.php:123
+#: inc/dropdown.class.php:129
 msgid "ISO8859-1"
 msgstr "ISO8859-1"
 
-#: inc/commoninjectionlib.class.php:1955
+#: inc/commoninjectionlib.class.php:2071
 msgid "Import failed"
 msgstr "불러오기 실패함"
 
-#: inc/commoninjectionlib.class.php:1951
+#: inc/commoninjectionlib.class.php:2067
 msgid "Import not allowed"
 msgstr "불러오기 허용안됨"
 
-#: inc/clientinjection.class.php:210
+#: inc/clientinjection.class.php:217
 msgid "Import progress"
 msgstr "불러오기 진행"
 
-#: inc/model.class.php:954
+#: inc/model.class.php:1033
 #, php-format
 msgid "Impossible to copy the file in %s"
 msgstr "%s의 파일을 복사할 수 없습니다"
 
-#: inc/clientinjection.class.php:378
+#: inc/clientinjection.class.php:392
 msgid "Injection encounters errors"
 msgstr "삽입 오류 발생"
 
-#: inc/clientinjection.class.php:297
+#: inc/clientinjection.class.php:309
 msgid "Injection finished"
 msgstr "삽입 종료됨"
 
-#: inc/profile.class.php:43 inc/menu.class.php:56 inc/menu.class.php:57
-#: inc/menu.class.php:61 inc/clientinjection.class.php:214
+#: inc/menu.class.php:56 inc/menu.class.php:57 inc/menu.class.php:61
+#: inc/clientinjection.class.php:221 inc/profile.class.php:44
 msgid "Injection of the file"
 msgstr "파일 삽입"
 
-#: inc/clientinjection.class.php:280
+#: inc/clientinjection.class.php:290
 #, php-format
 msgid "Injection of the file... %d%%"
 msgstr "파일 삽입... %d %%"
 
-#: inc/clientinjection.class.php:375
+#: inc/clientinjection.class.php:389
 msgid "Injection successful"
 msgstr "삽입 성공함"
 
-#: inc/model.class.php:1436 inc/model.class.php:1472 inc/model.class.php:1509
-#: inc/model.class.php:1569 inc/model.class.php:1590
+#: inc/model.class.php:1536 inc/model.class.php:1572 inc/model.class.php:1609
+#: inc/model.class.php:1670 inc/model.class.php:1693
 msgid "Injection type"
 msgstr "삽입 유형"
 
-#: inc/clientinjection.class.php:370
+#: inc/clientinjection.class.php:384
 msgid "Injection's results"
 msgstr "삽입 결과"
 
-#: inc/model.class.php:1180
+#: inc/model.class.php:1267
 msgid "Into the file"
 msgstr "파일 내"
 
-#: inc/clientinjection.class.php:180
+#: inc/clientinjection.class.php:186
 msgid "Launch the import"
 msgstr "불러오기 시작"
 
-#: inc/model.class.php:1434 inc/model.class.php:1469 inc/model.class.php:1567
-#: inc/model.class.php:1587
+#: inc/model.class.php:1534 inc/model.class.php:1569 inc/model.class.php:1668
+#: inc/model.class.php:1690
 msgid "Line"
 msgstr "줄"
 
-#: inc/mapping.class.php:126
+#: inc/mapping.class.php:133
 msgid "Link field"
 msgstr "링크 항목"
 
-#: inc/model.class.php:784
+#: inc/model.class.php:846
 msgid "Load this file"
 msgstr "이 파일 불러오기"
 
-#: inc/info.class.php:86 inc/info.class.php:143
+#: inc/info.class.php:84 inc/info.class.php:142
 msgid "Mandatory information"
 msgstr "필수 정보"
 
-#: inc/dropdown.class.php:88 inc/model.class.php:753
+#: inc/dropdown.class.php:92 inc/model.class.php:812
 msgid "Mappings"
 msgstr "매핑"
 
-#: inc/dropdown.class.php:94
+#: inc/dropdown.class.php:98
 msgid "Model available for use"
 msgstr "사용 가능한 모델"
 
@@ -309,159 +309,160 @@ msgstr "사용 가능한 모델"
 msgid "Model management"
 msgstr "모델 관리"
 
-#: inc/webservice.class.php:78
+#: inc/webservice.class.php:80
 msgid "Model unknown"
 msgstr "모델 불명"
 
-#: inc/clientinjection.class.php:96
+#: inc/clientinjection.class.php:100
 msgid "No model currently available"
 msgstr "현재 사용 가능한 모델 없음"
 
-#: inc/commoninjectionlib.class.php:1939
+#: inc/commoninjectionlib.class.php:2055
 msgid "No right to import data"
 msgstr "데이터 불러오기 권한 없음"
 
-#: inc/commoninjectionlib.class.php:1943
+#: inc/commoninjectionlib.class.php:2059
 msgid "No right to update data"
 msgstr "데이터 갱신 권한 없음"
 
-#: inc/model.class.php:1040
+#: inc/model.class.php:1122
 msgid "Not data to import"
 msgstr "불러올 데이터 없음"
 
-#: inc/model.class.php:1501
+#: inc/model.class.php:1601
 msgid "Number of lines processed"
-msgstr ""
+msgstr "처리된 줄 수"
 
-#: inc/networkequipmentinjection.class.php:72
+#: inc/networkequipmentinjection.class.php:73
 msgid "Number of ports"
 msgstr "포트 숫자"
 
-#: inc/model.class.php:1437 inc/model.class.php:1473 inc/model.class.php:1570
-#: inc/model.class.php:1591
+#: inc/model.class.php:1537 inc/model.class.php:1573 inc/model.class.php:1671
+#: inc/model.class.php:1694
 msgid "Object Identifier"
 msgstr "객체 확인자"
 
-#: inc/commoninjectionlib.class.php:1967
+#: inc/commoninjectionlib.class.php:2083
 msgid "One data is not the good type"
 msgstr "하나의 데이터가 바른 유형이 아닙니다"
 
-#: front/mapping.form.php:60
+#: front/mapping.form.php:59
 msgid ""
 "One link field must be selected: it will be used to check if data already "
 "exists"
 msgstr "하나의 링크 항목이 선택되야 합니다: 데이터가 이미 존재하는지 확인하는 용도로 쓰이게 됩니다"
 
-#: front/clientinjection.form.php:52
+#: front/clientinjection.form.php:54
 msgid "One mandatory field is not filled"
 msgstr "하나의 필수 항목이 비었습니다"
 
-#: inc/model.class.php:863
+#: inc/model.class.php:930
 msgid "Please enter a name for the model"
 msgstr "모델 이름을 입력하세요"
 
-#: inc/networkportinjection.class.php:89
+#: inc/networkportinjection.class.php:91
 msgid "Port MAC address"
 msgstr "포트 MAC 주소"
 
-#: inc/model.class.php:438
+#: inc/model.class.php:475 inc/model.class.php:749
 msgid "Port unicity criteria"
 msgstr "포트 단일성 기준"
 
-#: inc/mapping.class.php:117 front/popup.php:37
+#: inc/mapping.class.php:124 front/popup.php:37
 msgid "See the file"
 msgstr "파일 보기"
 
-#: inc/clientinjection.class.php:387
+#: inc/clientinjection.class.php:401
 msgid "See the log"
 msgstr "기록 보기"
 
-#: inc/commoninjectionlib.class.php:1947
+#: inc/commoninjectionlib.class.php:2063
 msgid "Size of the inserted value is to expansive"
 msgstr "삽입된 값의 크기가 너무 큽니다"
 
-#: inc/modelcsv.class.php:160
+#: inc/modelcsv.class.php:170
 msgid "Specific file format options"
 msgstr "특정 파일 형식 옵션"
 
-#: inc/mapping.class.php:124 inc/info.class.php:84 inc/info.class.php:141
+#: inc/mapping.class.php:131 inc/info.class.php:82 inc/info.class.php:140
 msgid "Tables"
 msgstr "테이블"
 
-#: front/model.form.php:88 front/clientinjection.form.php:85
-msgid "The file could not be found"
-msgstr "파일을 찾을 수 없습니다"
+#: front/clientinjection.form.php:88 front/model.form.php:86
+msgid ""
+"The file could not be found (Maybe it exceeds the maximum size allowed)"
+msgstr ""
 
-#: inc/model.class.php:1100
+#: inc/model.class.php:1182
 msgid "The file is ok."
 msgstr "파일이 정상입니다."
 
-#: inc/model.class.php:1125
+#: inc/model.class.php:1208
 msgid "The number of columns of the file is incorrect."
 msgstr "파일의 열 수가 잘못되었습니다."
 
-#: front/mapping.form.php:76
+#: front/mapping.form.php:78
 msgid ""
 "This step allows you to add informations not present in the file. You'll be "
 "asked for theses informations while using the model."
 msgstr "이 단계는 파일 내에 존재하지 않는 정보를 추가할 수 있습니다. 모델 사용 중에는 이 정보를 묻는 메시지가 표시됩니다."
 
-#: inc/model.class.php:402 inc/model.class.php:652
+#: inc/model.class.php:439 inc/model.class.php:698
 msgid "Type of data to import"
 msgstr "불러올 데이터 유형"
 
-#: inc/dropdown.class.php:122
+#: inc/dropdown.class.php:128
 msgid "UTF-8"
 msgstr "UTF-8"
 
-#: inc/model.class.php:1352 inc/commoninjectionlib.class.php:1979
+#: inc/commoninjectionlib.class.php:2095 inc/model.class.php:1447
 msgid "Undetermined"
 msgstr "미결됨"
 
-#: inc/commoninjectionlib.class.php:1898
+#: inc/commoninjectionlib.class.php:2011
 msgid "Update from CSV file"
 msgstr "CSV 파일에서 갱신"
 
-#: inc/clientinjection.class.php:88
+#: inc/clientinjection.class.php:93
 msgid "Use an existing model"
 msgstr "기존 모델 사용"
 
-#: inc/model.class.php:719
+#: inc/model.class.php:776
 msgctxt "button"
 msgid "Validate the model"
 msgstr "모델 검증"
 
-#: inc/commoninjectionlib.class.php:1971
+#: inc/commoninjectionlib.class.php:2087
 msgid "Warning"
 msgstr "경고"
 
-#: inc/clientinjection.class.php:170
+#: inc/clientinjection.class.php:176
 msgid "Warning : existing mapped column will be overridden"
 msgstr "경고 : 기존 매핑된 열을 덮어쓰게 됩니다"
 
-#: inc/clientinjection.class.php:173
+#: inc/clientinjection.class.php:179
 msgid ""
 "Watch out, you're about to inject data into GLPI. Are you sure you want to "
 "do it ?"
 msgstr "주의하세요, GLPI에 데이터를 삽입하려고 합니다. 정말로 하시겠습니까?"
 
-#: inc/model.class.php:891
+#: inc/model.class.php:964
 msgid "You are not the initial creator of this model"
 msgstr "당신은 이 모델의 초기 생성자가 아닙니다"
 
-#: inc/clientinjection.class.php:105
+#: inc/clientinjection.class.php:109
 msgid "You can start the model creation by hitting the button"
 msgstr "버튼을 클릭하여 모델 생성을 시작할 수 있습니다"
 
-#: inc/webservice.class.php:123
+#: inc/webservice.class.php:127
 msgid "You cannot access this entity"
 msgstr "이 개체에 접근할 수 없습니다"
 
-#: inc/webservice.class.php:86 inc/webservice.class.php:95
+#: inc/webservice.class.php:88 inc/webservice.class.php:98
 msgid "You cannot access this model"
 msgstr "이 모델에 접근할 수 없습니다"
 
-#: inc/model.class.php:872
+#: inc/model.class.php:941
 msgid "Your model should allow import and/or update of data"
 msgstr "모델은 불러오기 그리고/또는 데이터 갱신을 허용해야 합니다"
 
