@@ -1656,7 +1656,7 @@ class PluginDatainjectionCommonInjectionLib
                // allow to update locked fields from datainjection
                // for dynamic item if needed
                 if ($item->maybeDynamic()) {
-                    $toinject['is_dynamic'] = 0;
+                    unset($toinject['is_dynamic']);
                 }
                 if ($item->update($toinject)) {
                     $newID = $toinject['id'];
