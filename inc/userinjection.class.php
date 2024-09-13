@@ -99,7 +99,7 @@ class PluginDatainjectionUserInjection extends User implements PluginDatainjecti
 
        //Remove some options because some fields cannot be imported
         $blacklist     = PluginDatainjectionCommonInjectionLib::getBlacklistedOptions(get_parent_class($this));
-        $notimportable = [13, 14, 15, 17, 20, 23, 30, 31, 60, 61, 77, 91, 92, 93];
+        $notimportable = [13, 14, 15, 17, 20, 23, 30, 31, 60, 61, 91, 92, 93];
 
         $options['ignore_fields']  = array_merge($blacklist, $notimportable);
 
