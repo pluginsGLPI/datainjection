@@ -36,7 +36,7 @@ class PluginDatainjectionCertificateInjection extends Certificate implements Plu
 {
     public static function getTable($classname = null)
     {
-        $parenttype = get_parent_class();
+        $parenttype = get_parent_class(__CLASS__);
         return $parenttype::getTable();
     }
 
