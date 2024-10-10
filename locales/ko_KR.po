@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-09-11 07:18+0000\n"
+"POT-Creation-Date: 2024-10-10 01:02+0000\n"
 "PO-Revision-Date: 2018-06-21 12:57+0000\n"
 "Last-Translator: 조성현 (jaymz9634) <jaymz9634@gmail.com>, 2024\n"
 "Language-Team: Korean (Korea) (https://app.transifex.com/teclib/teams/28042/ko_KR/)\n"
@@ -105,7 +105,7 @@ msgstr "하나 이상의 필수 항목이 없습니다"
 msgid "Automatic detection"
 msgstr "자동 감지"
 
-#: hook.php:133 hook.php:151 setup.php:66
+#: setup.php:66 hook.php:133 hook.php:151
 msgid "Can't create folder"
 msgstr "폴더를 생성할 수 없습니다"
 
@@ -130,12 +130,12 @@ msgstr "데이터 불러오기"
 msgid "Data check"
 msgstr "데이터 확인"
 
-#: inc/menu.class.php:38 inc/profile.class.php:73 setup.php:97
-#: front/clientinjection.form.php:36
+#: setup.php:97 front/clientinjection.form.php:36 inc/profile.class.php:73
+#: inc/menu.class.php:38
 msgid "Data injection"
 msgstr "데이터 삽입"
 
-#: inc/model.class.php:1656 front/popup.php:43
+#: front/popup.php:43 inc/model.class.php:1656
 msgid "Data injection report"
 msgstr "데이터 삽입 보고서"
 
@@ -191,7 +191,7 @@ msgstr "파일 인코딩"
 msgid "File format is wrong"
 msgstr "파일 형식이 잘못되었습니다"
 
-#: inc/dropdown.class.php:91 inc/clientinjection.class.php:157
+#: inc/clientinjection.class.php:157 inc/dropdown.class.php:91
 #: inc/model.class.php:810
 msgid "File to inject"
 msgstr "삽입 할 파일"
@@ -249,8 +249,8 @@ msgstr "삽입 오류 발생"
 msgid "Injection finished"
 msgstr "삽입 종료됨"
 
-#: inc/menu.class.php:56 inc/menu.class.php:57 inc/menu.class.php:61
 #: inc/clientinjection.class.php:221 inc/profile.class.php:44
+#: inc/menu.class.php:56 inc/menu.class.php:57 inc/menu.class.php:61
 msgid "Injection of the file"
 msgstr "파일 삽입"
 
@@ -368,7 +368,7 @@ msgstr "포트 MAC 주소"
 msgid "Port unicity criteria"
 msgstr "포트 단일성 기준"
 
-#: inc/mapping.class.php:124 front/popup.php:37
+#: front/popup.php:37 inc/mapping.class.php:124
 msgid "See the file"
 msgstr "파일 보기"
 

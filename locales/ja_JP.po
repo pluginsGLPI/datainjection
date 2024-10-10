@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-09-11 07:18+0000\n"
+"POT-Creation-Date: 2024-10-10 01:02+0000\n"
 "PO-Revision-Date: 2018-06-21 12:57+0000\n"
 "Last-Translator: INOUE Daisuke, 2023\n"
 "Language-Team: Japanese (Japan) (https://app.transifex.com/teclib/teams/28042/ja_JP/)\n"
@@ -106,7 +106,7 @@ msgstr "存在していない必須フィールドがあります"
 msgid "Automatic detection"
 msgstr "自動検出"
 
-#: hook.php:133 hook.php:151 setup.php:66
+#: setup.php:66 hook.php:133 hook.php:151
 msgid "Can't create folder"
 msgstr "フォルダを作成できません"
 
@@ -131,12 +131,12 @@ msgstr "データ インポート"
 msgid "Data check"
 msgstr "データ チェック"
 
-#: inc/menu.class.php:38 inc/profile.class.php:73 setup.php:97
-#: front/clientinjection.form.php:36
+#: setup.php:97 front/clientinjection.form.php:36 inc/profile.class.php:73
+#: inc/menu.class.php:38
 msgid "Data injection"
 msgstr "インジェクション"
 
-#: inc/model.class.php:1656 front/popup.php:43
+#: front/popup.php:43 inc/model.class.php:1656
 msgid "Data injection report"
 msgstr "インジェクション レポート"
 
@@ -192,7 +192,7 @@ msgstr "ファイルの文字コード"
 msgid "File format is wrong"
 msgstr "ファイル形式が不正"
 
-#: inc/dropdown.class.php:91 inc/clientinjection.class.php:157
+#: inc/clientinjection.class.php:157 inc/dropdown.class.php:91
 #: inc/model.class.php:810
 msgid "File to inject"
 msgstr "インジェクションするファイル"
@@ -250,8 +250,8 @@ msgstr "インジェクションでエラーが発生"
 msgid "Injection finished"
 msgstr "インジェクション完了"
 
-#: inc/menu.class.php:56 inc/menu.class.php:57 inc/menu.class.php:61
 #: inc/clientinjection.class.php:221 inc/profile.class.php:44
+#: inc/menu.class.php:56 inc/menu.class.php:57 inc/menu.class.php:61
 msgid "Injection of the file"
 msgstr "ファイルをインジェクション"
 
@@ -369,7 +369,7 @@ msgstr "ポート MAC アドレス"
 msgid "Port unicity criteria"
 msgstr "ポートユニティ基準"
 
-#: inc/mapping.class.php:124 front/popup.php:37
+#: front/popup.php:37 inc/mapping.class.php:124
 msgid "See the file"
 msgstr "ファイルを表示する"
 

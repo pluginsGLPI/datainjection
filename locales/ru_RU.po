@@ -15,7 +15,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-09-11 07:18+0000\n"
+"POT-Creation-Date: 2024-10-10 01:02+0000\n"
 "PO-Revision-Date: 2018-06-21 12:57+0000\n"
 "Last-Translator: Alexander Chervonenko, 2024\n"
 "Language-Team: Russian (Russia) (https://app.transifex.com/teclib/teams/28042/ru_RU/)\n"
@@ -115,7 +115,7 @@ msgstr "По крайней мере одно обязательное поле 
 msgid "Automatic detection"
 msgstr "Автоматическое определение"
 
-#: hook.php:133 hook.php:151 setup.php:66
+#: setup.php:66 hook.php:133 hook.php:151
 msgid "Can't create folder"
 msgstr "Невозможно создать папку"
 
@@ -140,12 +140,12 @@ msgstr "Импорт данных"
 msgid "Data check"
 msgstr "Проверка данных"
 
-#: inc/menu.class.php:38 inc/profile.class.php:73 setup.php:97
-#: front/clientinjection.form.php:36
+#: setup.php:97 front/clientinjection.form.php:36 inc/profile.class.php:73
+#: inc/menu.class.php:38
 msgid "Data injection"
 msgstr "Добавление данных"
 
-#: inc/model.class.php:1656 front/popup.php:43
+#: front/popup.php:43 inc/model.class.php:1656
 msgid "Data injection report"
 msgstr "Отчет добавления данных"
 
@@ -201,7 +201,7 @@ msgstr "Кодировка файла"
 msgid "File format is wrong"
 msgstr "Формат файла неверный"
 
-#: inc/dropdown.class.php:91 inc/clientinjection.class.php:157
+#: inc/clientinjection.class.php:157 inc/dropdown.class.php:91
 #: inc/model.class.php:810
 msgid "File to inject"
 msgstr "Файл для добавления"
@@ -259,8 +259,8 @@ msgstr "Добавление столкнулось с ошибками"
 msgid "Injection finished"
 msgstr "Добавление завершено"
 
-#: inc/menu.class.php:56 inc/menu.class.php:57 inc/menu.class.php:61
 #: inc/clientinjection.class.php:221 inc/profile.class.php:44
+#: inc/menu.class.php:56 inc/menu.class.php:57 inc/menu.class.php:61
 msgid "Injection of the file"
 msgstr "Добавление файла"
 
@@ -380,7 +380,7 @@ msgstr "MAC адрес порта"
 msgid "Port unicity criteria"
 msgstr "Критерий уникальности порта"
 
-#: inc/mapping.class.php:124 front/popup.php:37
+#: front/popup.php:37 inc/mapping.class.php:124
 msgid "See the file"
 msgstr "Посмотреть файл"
 
