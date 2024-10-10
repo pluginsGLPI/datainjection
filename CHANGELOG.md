@@ -16,6 +16,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Fix network port unicity
 - Fix visibility of injection models
 - Fix ```CommonDBRelation``` import
+- Fix ```IPAddress``` import which adds a ```lock``` on ```last_update``` field
+
 
 ## [2.13.5] - 2024-02-22
 

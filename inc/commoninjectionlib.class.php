@@ -1540,9 +1540,14 @@ class PluginDatainjectionCommonInjectionLib
 
                   //change order of items if needed
                     if (isset($this->values['NetworkPort']) && isset($this->values['NetworkName'])) {
-                        $np = $this->values['NetworkPort'];
+                        $nw = $this->values['NetworkPort'];
                         unset($this->values['NetworkPort']);
-                        $this->values = array('NetworkPort' => $np) + $this->values;
+                        $networkNameIndex = array_search('NetworkName', array_keys($this->values));
+                        $this->values = array_merge(
+                            array_slice($this->values, 0, $networkNameIndex),
+                            array('NetworkPort' => $nw),
+                            array_slice($this->values, $networkNameIndex)
+                        );
                     }
 
                     foreach ($this->values as $itemtype => $data) {
