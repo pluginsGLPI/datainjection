@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Added
 
 - Display max upload size
+- Add ```default_entity``` to ```User``` injection mapping
 
 ### Fixed
 
