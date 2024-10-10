@@ -17,7 +17,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Fix visibility of injection models
 - Fix ```CommonDBRelation``` import
 - Fix ```IPAddress``` import which adds a ```lock``` on ```last_update``` field
-
+- Fix ```Agent``` lost when update dynamic asset
 
 ## [2.13.5] - 2024-02-22
 
