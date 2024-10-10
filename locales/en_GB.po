@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-09-16 01:04+0000\n"
-"PO-Revision-Date: 2024-09-16 01:04+0000\n"
+"POT-Creation-Date: 2024-10-10 01:02+0000\n"
+"PO-Revision-Date: 2024-10-10 01:02+0000\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
 "Language: en_GB\n"
@@ -103,7 +103,7 @@ msgstr "At least one mandatory field is not present"
 msgid "Automatic detection"
 msgstr "Automatic detection"
 
-#: hook.php:133 hook.php:151 setup.php:66
+#: setup.php:66 hook.php:133 hook.php:151
 msgid "Can't create folder"
 msgstr "Can't create folder"
 
@@ -128,12 +128,12 @@ msgstr "Data Import"
 msgid "Data check"
 msgstr "Data check"
 
-#: inc/menu.class.php:38 inc/profile.class.php:73 setup.php:97
-#: front/clientinjection.form.php:36
+#: setup.php:97 front/clientinjection.form.php:36 inc/profile.class.php:73
+#: inc/menu.class.php:38
 msgid "Data injection"
 msgstr "Data injection"
 
-#: inc/model.class.php:1656 front/popup.php:43
+#: front/popup.php:43 inc/model.class.php:1656
 msgid "Data injection report"
 msgstr "Data injection report"
 
@@ -189,7 +189,7 @@ msgstr "File encoding"
 msgid "File format is wrong"
 msgstr "File format is wrong"
 
-#: inc/dropdown.class.php:91 inc/clientinjection.class.php:157
+#: inc/clientinjection.class.php:157 inc/dropdown.class.php:91
 #: inc/model.class.php:810
 msgid "File to inject"
 msgstr "File to inject"
@@ -247,8 +247,8 @@ msgstr "Injection encounters errors"
 msgid "Injection finished"
 msgstr "Injection finished"
 
-#: inc/menu.class.php:56 inc/menu.class.php:57 inc/menu.class.php:61
 #: inc/clientinjection.class.php:221 inc/profile.class.php:44
+#: inc/menu.class.php:56 inc/menu.class.php:57 inc/menu.class.php:61
 msgid "Injection of the file"
 msgstr "Injection of the file"
 
@@ -368,7 +368,7 @@ msgstr "Port MAC address"
 msgid "Port unicity criteria"
 msgstr "Port unicity criteria"
 
-#: inc/mapping.class.php:124 front/popup.php:37
+#: front/popup.php:37 inc/mapping.class.php:124
 msgid "See the file"
 msgstr "See the file"
 

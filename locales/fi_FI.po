@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-09-11 07:18+0000\n"
+"POT-Creation-Date: 2024-10-10 01:02+0000\n"
 "PO-Revision-Date: 2018-06-21 12:57+0000\n"
 "Last-Translator: Cédric Anne, 2018\n"
 "Language-Team: Finnish (Finland) (https://app.transifex.com/teclib/teams/28042/fi_FI/)\n"
@@ -107,7 +107,7 @@ msgstr "Ainakin yksi pakollinen kenttä puuttuu"
 msgid "Automatic detection"
 msgstr "Automaattinen tunnistus"
 
-#: hook.php:133 hook.php:151 setup.php:66
+#: setup.php:66 hook.php:133 hook.php:151
 msgid "Can't create folder"
 msgstr "Kansioa ei voi luoda"
 
@@ -132,12 +132,12 @@ msgstr "Tuo tiedot"
 msgid "Data check"
 msgstr "Tietojen tarkistus"
 
-#: inc/menu.class.php:38 inc/profile.class.php:73 setup.php:97
-#: front/clientinjection.form.php:36
+#: setup.php:97 front/clientinjection.form.php:36 inc/profile.class.php:73
+#: inc/menu.class.php:38
 msgid "Data injection"
 msgstr ""
 
-#: inc/model.class.php:1656 front/popup.php:43
+#: front/popup.php:43 inc/model.class.php:1656
 msgid "Data injection report"
 msgstr ""
 
@@ -193,7 +193,7 @@ msgstr "Tiedoston koodaus"
 msgid "File format is wrong"
 msgstr "Tiedostomuoto on väärä"
 
-#: inc/dropdown.class.php:91 inc/clientinjection.class.php:157
+#: inc/clientinjection.class.php:157 inc/dropdown.class.php:91
 #: inc/model.class.php:810
 msgid "File to inject"
 msgstr "Tuotava tiedosto"
@@ -251,8 +251,8 @@ msgstr "Tuonti sisälsi virheitä"
 msgid "Injection finished"
 msgstr "Tuonti suoritettu loppuun"
 
-#: inc/menu.class.php:56 inc/menu.class.php:57 inc/menu.class.php:61
 #: inc/clientinjection.class.php:221 inc/profile.class.php:44
+#: inc/menu.class.php:56 inc/menu.class.php:57 inc/menu.class.php:61
 msgid "Injection of the file"
 msgstr "Tiedoston tuonti"
 
@@ -372,7 +372,7 @@ msgstr "Portin MAC-osoite"
 msgid "Port unicity criteria"
 msgstr "Porttiyhtenäisyyden kriteerit"
 
-#: inc/mapping.class.php:124 front/popup.php:37
+#: front/popup.php:37 inc/mapping.class.php:124
 msgid "See the file"
 msgstr "Katso tiedosto"
 

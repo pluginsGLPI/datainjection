@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-09-11 07:18+0000\n"
+"POT-Creation-Date: 2024-10-10 01:02+0000\n"
 "PO-Revision-Date: 2018-06-21 12:57+0000\n"
 "Last-Translator: Nicolás Gaviola, 2023\n"
 "Language-Team: Spanish (Argentina) (https://app.transifex.com/teclib/teams/28042/es_AR/)\n"
@@ -109,7 +109,7 @@ msgstr "Al menos un campo obligatorio no está presente"
 msgid "Automatic detection"
 msgstr "Detección automática"
 
-#: hook.php:133 hook.php:151 setup.php:66
+#: setup.php:66 hook.php:133 hook.php:151
 msgid "Can't create folder"
 msgstr "No se puede crear la carpeta"
 
@@ -134,12 +134,12 @@ msgstr "Importación de datos"
 msgid "Data check"
 msgstr "Comprobación de datos"
 
-#: inc/menu.class.php:38 inc/profile.class.php:73 setup.php:97
-#: front/clientinjection.form.php:36
+#: setup.php:97 front/clientinjection.form.php:36 inc/profile.class.php:73
+#: inc/menu.class.php:38
 msgid "Data injection"
 msgstr "Inyección de datos"
 
-#: inc/model.class.php:1656 front/popup.php:43
+#: front/popup.php:43 inc/model.class.php:1656
 msgid "Data injection report"
 msgstr "Informe de inyección de datos"
 
@@ -195,7 +195,7 @@ msgstr "Codificación de archivos"
 msgid "File format is wrong"
 msgstr "El formato de archivo es incorrecto"
 
-#: inc/dropdown.class.php:91 inc/clientinjection.class.php:157
+#: inc/clientinjection.class.php:157 inc/dropdown.class.php:91
 #: inc/model.class.php:810
 msgid "File to inject"
 msgstr "Archivo para inyectar"
@@ -253,8 +253,8 @@ msgstr "Se encontraron errores en la inyección"
 msgid "Injection finished"
 msgstr "Inyección terminada"
 
-#: inc/menu.class.php:56 inc/menu.class.php:57 inc/menu.class.php:61
 #: inc/clientinjection.class.php:221 inc/profile.class.php:44
+#: inc/menu.class.php:56 inc/menu.class.php:57 inc/menu.class.php:61
 msgid "Injection of the file"
 msgstr "Inyección del archivo"
 
@@ -374,7 +374,7 @@ msgstr "Dirección MAC del puerto"
 msgid "Port unicity criteria"
 msgstr "Criterios de unicidad del puerto"
 
-#: inc/mapping.class.php:124 front/popup.php:37
+#: front/popup.php:37 inc/mapping.class.php:124
 msgid "See the file"
 msgstr "Ver el archivo"
 

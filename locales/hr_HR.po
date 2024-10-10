@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-09-11 07:18+0000\n"
+"POT-Creation-Date: 2024-10-10 01:02+0000\n"
 "PO-Revision-Date: 2018-06-21 12:57+0000\n"
 "Last-Translator: Milo Ivir <mail@milotype.de>, 2023\n"
 "Language-Team: Croatian (Croatia) (https://app.transifex.com/teclib/teams/28042/hr_HR/)\n"
@@ -109,7 +109,7 @@ msgstr "Barem jedno obavezno polje nedostaje"
 msgid "Automatic detection"
 msgstr "Automatsko prepoznavanje"
 
-#: hook.php:133 hook.php:151 setup.php:66
+#: setup.php:66 hook.php:133 hook.php:151
 msgid "Can't create folder"
 msgstr "Nije moguće stvori mapu"
 
@@ -134,12 +134,12 @@ msgstr "Uvoz podataka"
 msgid "Data check"
 msgstr "Provjera podataka"
 
-#: inc/menu.class.php:38 inc/profile.class.php:73 setup.php:97
-#: front/clientinjection.form.php:36
+#: setup.php:97 front/clientinjection.form.php:36 inc/profile.class.php:73
+#: inc/menu.class.php:38
 msgid "Data injection"
 msgstr "Umetanje podataka"
 
-#: inc/model.class.php:1656 front/popup.php:43
+#: front/popup.php:43 inc/model.class.php:1656
 msgid "Data injection report"
 msgstr "Izvještaj o umetanju podataka"
 
@@ -195,7 +195,7 @@ msgstr "Datotečno kodiranje"
 msgid "File format is wrong"
 msgstr "Nepodržani format datoteke"
 
-#: inc/dropdown.class.php:91 inc/clientinjection.class.php:157
+#: inc/clientinjection.class.php:157 inc/dropdown.class.php:91
 #: inc/model.class.php:810
 msgid "File to inject"
 msgstr "Datoteka za umetanje"
@@ -253,8 +253,8 @@ msgstr "Greške pri umetanju podataka"
 msgid "Injection finished"
 msgstr "Umetanje završeno"
 
-#: inc/menu.class.php:56 inc/menu.class.php:57 inc/menu.class.php:61
 #: inc/clientinjection.class.php:221 inc/profile.class.php:44
+#: inc/menu.class.php:56 inc/menu.class.php:57 inc/menu.class.php:61
 msgid "Injection of the file"
 msgstr "Umetanje datoteke"
 
@@ -374,7 +374,7 @@ msgstr "MAC adresa priključka"
 msgid "Port unicity criteria"
 msgstr "Kriterij jedinstvenosti priključka"
 
-#: inc/mapping.class.php:124 front/popup.php:37
+#: front/popup.php:37 inc/mapping.class.php:124
 msgid "See the file"
 msgstr "Pogledaj datoteku"
 
