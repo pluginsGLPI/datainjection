@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+## [2.13.6] - 2024-10-10
+
 ### Added
 
 - Display max upload size
