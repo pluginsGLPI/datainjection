@@ -31,7 +31,7 @@
       <version>
           <num>2.14.0</num>
           <compatibility>~10.0.11</compatibility>
-          <download_url>https://github.com/pluginsGLPI/datainjection/releases/download/2.13.5/glpi-datainjection-2.14.0.tar.bz2</download_url>
+          <download_url>https://github.com/pluginsGLPI/datainjection/releases/download/2.14.0/glpi-datainjection-2.14.0.tar.bz2</download_url>
       </version>
       <version>
           <num>2.13.5</num>
