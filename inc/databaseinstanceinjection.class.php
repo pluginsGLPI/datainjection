@@ -95,6 +95,7 @@ class PluginDatainjectionDatabaseinstanceInjection extends DatabaseInstance impl
         $blacklist = PluginDatainjectionCommonInjectionLib::getBlacklistedOptions(get_parent_class($this));
         $notimportable            = [];
         $options['ignore_fields'] = array_merge($blacklist, $notimportable);
+        $options['displaytype']   = ["dropdown"       => [40]];
 
 
         return PluginDatainjectionCommonInjectionLib::addToSearchOptions($tab, $options, $this);
