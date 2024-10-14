@@ -66,30 +66,7 @@ class PluginDatainjectionDatabaseinstanceInjection extends DatabaseInstance impl
     {
 
         $tab                 = Search::getOptions(get_parent_class($this));
-
-        $tab[251]['name']          = __('Itemtype');
-        $tab[251]['field']         = 'itemtype';
-        $tab[251]['table']         = DatabaseInstance::getTable();
-        $tab[251]['linkfield']     = "itemtype";
-        $tab[251]['injectable']    = true;
-        $tab[251]['displaytype']   = 'text';
-        $tab[251]['checktype']     = 'text';
-
-        $tab[252]['name']          = __('Item');
-        $tab[252]['field']         = 'name';
-        $tab[252]['table']         = DatabaseInstance::getTable();
-        $tab[252]['linkfield']     = "items_name";
-        $tab[252]['injectable']    = true;
-        $tab[252]['displaytype']   = 'text';
-        $tab[252]['checktype']     = 'text';
-
-        $tab[253]['name']          = __('Path');
-        $tab[253]['field']         = 'path';
-        $tab[253]['table']         = DatabaseInstance::getTable();
-        $tab[253]['linkfield']     = "path";
-        $tab[253]['injectable']    = true;
-        $tab[253]['displaytype']   = 'text';
-        $tab[253]['checktype']     = 'text';
+        $tab[5]['linkfield']    = 'items_id';
 
        //Remove some options because some fields cannot be imported
         $blacklist = PluginDatainjectionCommonInjectionLib::getBlacklistedOptions(get_parent_class($this));
@@ -111,38 +88,5 @@ class PluginDatainjectionDatabaseinstanceInjection extends DatabaseInstance impl
         $lib = new PluginDatainjectionCommonInjectionLib($this, $values, $options);
         $lib->processAddOrUpdate();
         return $lib->getInjectionResults();
-    }
-
-    /**
-    * @param $values
-    * @param $add                (true by default)
-    * @param $rights    array
-    **/
-    public function processAfterInsertOrUpdate($values, $add = true, $rights = [])
-    {
-        /** @var DBmysql $DB */
-        global $DB;
-
-        //Should the port be connected to another one ?
-        $use_itemtype    = (isset($values['DatabaseInstance']["itemtype"])
-                            || !empty($values['DatabaseInstance']["itemtype"]));
-        $use_items_name   = (isset($values['DatabaseInstance']["items_name"])
-                            || !empty($values['DatabaseInstance']["items_name"]));
-
-        if (!$use_itemtype || !$use_items_name) {
-            return false;
-        }
-
-        $itemtype = new $values['DatabaseInstance']["itemtype"]();
-        if ($itemtype->getFromDBByCrit(['name' => $values['DatabaseInstance']["items_name"], 'entities_id' => $values['DatabaseInstance']["entities_id"]])) {
-            $dbinstance = new DatabaseInstance();
-            $success = $dbinstance->update(
-                [
-                    'id'          => $values['DatabaseInstance']['id'],
-                    'entities_id' => $values['DatabaseInstance']['entities_id'],
-                    'items_id'    => $itemtype->getID()
-                ]
-            );
-        }
     }
 }
