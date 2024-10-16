@@ -1359,7 +1359,9 @@ class PluginDatainjectionCommonInjectionLib
     private function addNecessaryFields()
     {
 
-        $this->setValueForItemtype($this->primary_type, 'entities_id', $this->entity);
+        if (!isset($this->values[$this->primary_type]['entities_id'])) {
+            $this->setValueForItemtype($this->primary_type, 'entities_id', $this->entity);
+        }
         if (method_exists($this->injectionClass, 'addSpecificNeededFields')) {
             $specific_fields = $this->injectionClass->addSpecificNeededFields(
                 $this->primary_type,

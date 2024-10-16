@@ -104,7 +104,7 @@ class PluginDatainjectionUserInjection extends User implements PluginDatainjecti
         $options['ignore_fields']  = array_merge($blacklist, $notimportable);
 
        //Add displaytype value
-        $options['displaytype']    = ["dropdown"       => [3, 79, 81, 82],
+        $options['displaytype']    = ["dropdown"       => [3, 77, 79, 81, 82],
             "multiline_text" => [16],
             "bool"           => [8],
             "password"       => [4]
