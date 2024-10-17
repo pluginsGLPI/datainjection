@@ -53,7 +53,7 @@ class PluginDatainjectionDatabaseinstanceInjection extends DatabaseInstance impl
     public function connectedTo()
     {
 
-        return [Computer::class];
+        return [\Glpi\Inventory\Asset\Computer::class];
     }
 
 
