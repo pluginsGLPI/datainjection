@@ -610,10 +610,29 @@ class PluginDatainjectionCommonInjectionLib
                         'entities_id'  => $this->entity
                     ];
 
-                    if ($item->canCreate() && $this->rights['add_dropdown']) {
-                        $id = $item->import($input);
+                    if ($item->getType() == 'Entity') {
+                        $entity = new Entity();
+                        $result = $entity->getFromDBByCrit(
+                            [
+                                'name' => $input['completename'],
+                                'entities_id'  => $input['entities_id'],
+                            ]
+                        );
+                        if ($item->canCreate() && $this->rights['add_dropdown']) {
+                            if ($result !== false) {
+                                $id = $entity->fields['id'];
+                            } else {
+                                $id = $entity->add($input);
+                            }
+                        } else {
+                            $id = $entity->fields['id'];
+                        }
                     } else {
-                        $id = $item->findID($input);
+                        if ($item->canCreate() && $this->rights['add_dropdown']) {
+                            $id = $item->import($input);
+                        } else {
+                            $id = $item->findID($input);
+                        }
                     }
                 } else if ($item instanceof CommonDropdown) {
                     if ($item->canCreate() && $this->rights['add_dropdown']) {
