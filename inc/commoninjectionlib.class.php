@@ -618,6 +618,14 @@ class PluginDatainjectionCommonInjectionLib
                                 'entities_id'  => $input['entities_id'],
                             ]
                         );
+                        if ($result === false) {
+                            $result = $entity->getFromDBByCrit(
+                                [
+                                    'completename' => $input['completename'],
+                                    'entities_id'  => $input['entities_id'],
+                                ]
+                            );
+                        }
                         if ($item->canCreate() && $this->rights['add_dropdown']) {
                             if ($result !== false) {
                                 $id = $entity->fields['id'];
