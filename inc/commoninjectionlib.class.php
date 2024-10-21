@@ -606,26 +606,41 @@ class PluginDatainjectionCommonInjectionLib
                 $item    = new $tmptype();
                 if ($item instanceof CommonTreeDropdown) {
                    // use findID instead of getID
-                    $input =  ['completename' => $value,
+                    $input =  [
+                        'completename' => $value,
                         'entities_id'  => $this->entity
                     ];
 
                     if ($item->getType() == 'Entity') {
                         $entity = new Entity();
+                        $sons = getSonsOf('glpi_entities', $input['entities_id']);
+                        if (strpos($value, '>')) {
+                            $critname = 'completename';
+                        } else {
+                            $critname = 'name';
+                        }
+
                         $result = $entity->getFromDBByCrit(
                             [
-                                'name' => $input['completename'],
+                                $critname => $input['completename'],
                                 'entities_id'  => $input['entities_id'],
                             ]
                         );
-                        if ($result === false) {
-                            $result = $entity->getFromDBByCrit(
-                                [
-                                    'completename' => $input['completename'],
-                                    'entities_id'  => $input['entities_id'],
-                                ]
-                            );
+
+                        if ($result === false && !empty($sons)) {
+                            foreach ($sons as $son_id) {
+                                $result = $entity->getFromDBByCrit(
+                                    [
+                                        $critname => $input['completename'],
+                                        'entities_id'  => $son_id,
+                                    ]
+                                );
+                                if ($result !== false) {
+                                    break;
+                                }
+                            }
                         }
+
                         if ($item->canCreate() && $this->rights['add_dropdown']) {
                             if ($result !== false) {
                                 $id = $entity->fields['id'];
