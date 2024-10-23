@@ -607,60 +607,44 @@ class PluginDatainjectionCommonInjectionLib
                 if ($item instanceof CommonTreeDropdown) {
                    // use findID instead of getID
                     $input =  [
-                        'name' => $value,
+                        'completename' => $value,
                         'entities_id'  => $this->entity
                     ];
 
                     if ($item->getType() == 'Entity') {
+                        $crit = 'name';
+                        if (strpos($input['completename'], '>')) {
+                            $crit = 'completename';
+                        }
                         $entity = new Entity();
-                        $sons = getSonsOf('glpi_entities', $input['entities_id']);
-
                         $result = $entity->getFromDBByCrit(
                             [
-                                'name' => $input['name'],
-                                'entities_id'  => $input['entities_id'],
+                                $crit => $input['completename'],
+                                'entities_id' => $input['entities_id']
                             ]
                         );
-                        if ($result === false) {
-                            $result = $entity->getFromDBByCrit(
-                                [
-                                    'completename' => $input['name'],
-                                    'entities_id'  => $input['entities_id'],
-                                ]
-                            );
+
+                        if ($result !== false) {
+                            $input['entities_id'] = $entity->fields['id'];
                         }
 
+                        $sons = getSonsOf('glpi_entities', $input['entities_id']);
                         if ($result === false && !empty($sons)) {
                             foreach ($sons as $son_id) {
                                 $result = $entity->getFromDBByCrit(
                                     [
-                                        'name' => $input['name'],
-                                        'entities_id'  => $son_id,
+                                        $crit => $input['completename'],
+                                        'entities_id' => $son_id
                                     ]
                                 );
-                                if ($result === false) {
-                                    $result = $entity->getFromDBByCrit(
-                                        [
-                                            'completename' => $input['name'],
-                                            'entities_id'  => $input['entities_id'],
-                                        ]
-                                    );
-                                }
                                 if ($result !== false) {
+                                    $input['entities_id'] = $entity->fields['id'];
                                     break;
                                 }
                             }
                         }
 
-                        if ($item->canCreate() && $this->rights['add_dropdown']) {
-                            if ($result !== false) {
-                                $id = $entity->fields['id'];
-                            } else {
-                                $id = $entity->add($input);
-                            }
-                        } else {
-                            $id = $entity->fields['id'];
-                        }
+                        $id = $input['entities_id'];
                     } else {
                         if ($item->canCreate() && $this->rights['add_dropdown']) {
                             $id = $item->import($input);
