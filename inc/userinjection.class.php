@@ -191,7 +191,7 @@ class PluginDatainjectionUserInjection extends User implements PluginDatainjecti
             $profile_user->getFromDBByCrit([
                 'users_id' => $values['User']['id'],
                 'entities_id' => $values['User']['entities_id'],
-                'prodiles_id' => $values['User']['profiles_id']
+                'profiles_id' => $values['User']['profiles_id']
             ]);
             if (!in_array('id', $profile_user->fields)) {
                 $profile_user->add([
