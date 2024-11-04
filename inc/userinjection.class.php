@@ -185,6 +185,33 @@ class PluginDatainjectionUserInjection extends User implements PluginDatainjecti
             /** @phpstan-ignore-next-line */
             $DB->query($query); // phpcs:ignore
         }
+
+        if (isset($values['User']['profiles_id'])) {
+            $profile_user = new Profile_User();
+            $profile_user_item = $profile_user->getFromDBByCrit([
+                'users_id' => $values['User']['id'],
+                'entities_id' => $values['User']['entities_id'],
+                'profiles_id' => $values['User']['profiles_id']
+            ]);
+            if ($profile_user_item === false) {
+                $profile_user->add([
+                    'users_id'    => $values['User']['id'],
+                    'profiles_id' => $values['User']['profiles_id'],
+                    'entities_id' => $values['User']['entities_id'],
+                    'is_default_profile'  => 1,
+                ]);
+            } else {
+                $profile_user->update([
+                    'id' => $profile_user->fields['id'],
+                    'is_default_profile' => 1
+                ]);
+            }
+            $user = new User();
+            $user->update([
+                'id' => $values['User']['id'],
+                'profiles_id' => $values['User']['profiles_id'],
+            ]);
+        }
     }
 
 
