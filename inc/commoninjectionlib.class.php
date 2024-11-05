@@ -611,7 +611,7 @@ class PluginDatainjectionCommonInjectionLib
                         'entities_id'  => $this->entity
                     ];
 
-                    if ($item->getType() == 'Entity') {
+                    if ($item->getType() == 'Entity') { // This will block the creation of entities
                         $crit = 'name';
                         if (strpos($input['completename'], '>')) {
                             $crit = 'completename';
