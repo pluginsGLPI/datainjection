@@ -611,7 +611,7 @@ class PluginDatainjectionCommonInjectionLib
                         'entities_id'  => $this->entity
                     ];
 
-                    if ($item->getType() == 'Entity') { // This will block the creation of entities
+                    if ($item->getType() == 'Entity') { // This will block the creation of entities. In addition, the findID method only searches for an entity if it is directly a sub-entity of the root entity, and this does not work for sub-sub entities.
                         $crit = 'name';
                         if (strpos($input['completename'], '>')) {
                             $crit = 'completename';
