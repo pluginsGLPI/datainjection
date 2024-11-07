@@ -173,7 +173,9 @@ class PluginDatainjectionEngine
     public function addRequiredFields($itemtype, &$fields_toinject = []): void
     {
         //Add entity to the primary type
-        $fields_toinject[$itemtype]['entities_id'] = $this->entity;
+        if (!isset($fields_toinject[$itemtype]['entities_id'])) {
+            $fields_toinject[$itemtype]['entities_id'] = $this->entity;
+        }
     }
 
 
