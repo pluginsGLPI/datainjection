@@ -446,7 +446,7 @@ class PluginDatainjectionModel extends CommonDBTM
             'id'            => 6,
             'table'         => $this->getTable(),
             'field'         => 'can_add_dropdown',
-            'name'          => __('Allow creation of dropdowns', 'datainjection'),
+            'name'          => __('Allow creation of dropdowns (Except Entity)', 'datainjection'),
             'datatype'      => 'bool',
         ];
 
@@ -719,7 +719,7 @@ class PluginDatainjectionModel extends CommonDBTM
          "</th></tr>";
 
         echo "<tr class='tab_bg_1'>";
-        echo "<td>" . __('Allow creation of dropdowns', 'datainjection') . "</td>";
+        echo "<td>" . __('Allow creation of dropdowns (Except Entity)', 'datainjection') . "</td>";
         echo "<td>";
         Dropdown::showYesNo("can_add_dropdown", $this->fields['can_add_dropdown']);
         echo "</td>";
