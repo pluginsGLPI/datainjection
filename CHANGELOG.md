@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+### Added
+
+- Add injection of the ```Itemtype```, ```Item``` and ```Path``` for the database instance
+
 ### Fixed
 
 - Fix default entity insertion for a user
