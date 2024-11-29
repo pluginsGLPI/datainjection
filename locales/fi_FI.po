@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-10-10 01:02+0000\n"
+"POT-Creation-Date: 2024-11-29 01:08+0000\n"
 "PO-Revision-Date: 2018-06-21 12:57+0000\n"
 "Last-Translator: Cédric Anne, 2018\n"
 "Language-Team: Finnish (Finland) (https://app.transifex.com/teclib/teams/28042/fi_FI/)\n"
@@ -55,7 +55,7 @@ msgstr "1 234.56"
 msgid "1,234.56"
 msgstr "1,234.56"
 
-#: inc/commoninjectionlib.class.php:2009
+#: inc/commoninjectionlib.class.php:2053
 msgid "Add from CSV file"
 msgstr "Lisää CSV-tiedostosta"
 
@@ -68,8 +68,8 @@ msgid "Advanced options"
 msgstr "Edistyneet asetukset"
 
 #: inc/model.class.php:449 inc/model.class.php:722
-msgid "Allow creation of dropdowns"
-msgstr "Salli alasvetovalikoiden luominen"
+msgid "Allow creation of dropdowns (Except Entity)"
+msgstr ""
 
 #: inc/model.class.php:421 inc/model.class.php:710
 msgid "Allow lines creation"
@@ -99,7 +99,7 @@ msgstr "Tuonti epäonnistui"
 msgid "At least one column is incorrect"
 msgstr "Ainakin yksi sarake on väärä"
 
-#: inc/commoninjectionlib.class.php:2075
+#: inc/commoninjectionlib.class.php:2119
 msgid "At least one mandatory field is not present"
 msgstr "Ainakin yksi pakollinen kenttä puuttuu"
 
@@ -141,11 +141,11 @@ msgstr ""
 msgid "Data injection report"
 msgstr ""
 
-#: inc/commoninjectionlib.class.php:2091
+#: inc/commoninjectionlib.class.php:2135
 msgid "Data not found"
 msgstr "Tietoja ei löytynyt"
 
-#: inc/commoninjectionlib.class.php:2079
+#: inc/commoninjectionlib.class.php:2123
 msgid "Data to insert are correct"
 msgstr "Syötetyt tiedot ovat oikeita"
 
@@ -226,11 +226,11 @@ msgstr "Otsikko on olemassa"
 msgid "ISO8859-1"
 msgstr "ISO8859-1"
 
-#: inc/commoninjectionlib.class.php:2071
+#: inc/commoninjectionlib.class.php:2115
 msgid "Import failed"
 msgstr "Tuonti epäonnistui"
 
-#: inc/commoninjectionlib.class.php:2067
+#: inc/commoninjectionlib.class.php:2111
 msgid "Import not allowed"
 msgstr "Tuonti ei sallittu"
 
@@ -319,11 +319,11 @@ msgstr "Malli tuntematon"
 msgid "No model currently available"
 msgstr "Ei saatavilla olevaa mallia"
 
-#: inc/commoninjectionlib.class.php:2055
+#: inc/commoninjectionlib.class.php:2099
 msgid "No right to import data"
 msgstr "Ei oikeutta tuoda tietoja"
 
-#: inc/commoninjectionlib.class.php:2059
+#: inc/commoninjectionlib.class.php:2103
 msgid "No right to update data"
 msgstr "Ei oikeutta päivittää tietoja"
 
@@ -344,7 +344,7 @@ msgstr "Porttien lukumäärä"
 msgid "Object Identifier"
 msgstr "Kohteen tunniste"
 
-#: inc/commoninjectionlib.class.php:2083
+#: inc/commoninjectionlib.class.php:2127
 msgid "One data is not the good type"
 msgstr "Yksi tieto ei ole oikeaa tyyppiä"
 
@@ -380,7 +380,7 @@ msgstr "Katso tiedosto"
 msgid "See the log"
 msgstr "Katso loki"
 
-#: inc/commoninjectionlib.class.php:2063
+#: inc/commoninjectionlib.class.php:2107
 msgid "Size of the inserted value is to expansive"
 msgstr "Syötetyn arvo koko laajeneva"
 
@@ -421,11 +421,11 @@ msgstr "Tuotavan tiedon tyyppi"
 msgid "UTF-8"
 msgstr "UTF-8"
 
-#: inc/commoninjectionlib.class.php:2095 inc/model.class.php:1447
+#: inc/commoninjectionlib.class.php:2139 inc/model.class.php:1447
 msgid "Undetermined"
 msgstr "Määrittelemätön"
 
-#: inc/commoninjectionlib.class.php:2011
+#: inc/commoninjectionlib.class.php:2055
 msgid "Update from CSV file"
 msgstr "Päivitä CSV-tiedostosta"
 
@@ -438,7 +438,7 @@ msgctxt "button"
 msgid "Validate the model"
 msgstr "Vahvista malli"
 
-#: inc/commoninjectionlib.class.php:2087
+#: inc/commoninjectionlib.class.php:2131
 msgid "Warning"
 msgstr "Varoitus"
 
