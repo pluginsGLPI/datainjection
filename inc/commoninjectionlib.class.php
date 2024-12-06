@@ -1645,7 +1645,7 @@ class PluginDatainjectionCommonInjectionLib
             //CommonDBRelation are managed separately, so related field should be ignored
             // Ex : User -> groups_id -> Group_User
             // groups_id should not be injected in User (field contains group name (string))
-            if ($option !== false && isset($option['displaytype']) && $option['displaytype'] == 'relation') {
+            if ($option !== false && isset($option['displaytype']) && $option['displaytype'] == 'relation' && !($item instanceof CommonDBRelation)) {
                 continue;
             }
 
