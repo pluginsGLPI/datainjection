@@ -104,7 +104,7 @@ class PluginDatainjectionBackendcsv extends PluginDatainjectionBackend implement
                   //If file is ISO8859-1 : encode the data in utf8
                     case PluginDatainjectionBackend::ENCODING_ISO8859_1:
                         if (!Toolbox::seems_utf8($tmp)) {
-                            $csv[0][] = utf8_encode($tmp);
+                            $csv[0][] = Toolbox::encodeInUtf8($tmp);
                         } else {
                             $csv[0][] = $tmp;
                         }
