@@ -105,7 +105,7 @@ abstract class PluginDatainjectionBackend
     {
 
         if (!self::is_utf8($string)) {
-            return utf8_encode($string);
+            return Toolbox::encodeInUtf8($string);
         }
         return $string;
     }
