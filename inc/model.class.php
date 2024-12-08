@@ -1345,6 +1345,10 @@ class PluginDatainjectionModel extends CommonDBTM
 
         $continue = true;
 
+        if(empty($models_id)){
+            $models_id = '-1';
+        }
+
         $query = "(SELECT `itemtype`
                  FROM `glpi_plugin_datainjection_models`
                  WHERE `id` = '" . $models_id . "')
