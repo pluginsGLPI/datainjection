@@ -1340,29 +1340,29 @@ class PluginDatainjectionModel extends CommonDBTM
         /** @var DBmysql $DB */
         global $DB;
 
-        $model = new self();
-        $model->getFromDB($models_id);
-
         $continue = true;
 
-        $query = "(SELECT `itemtype`
-                 FROM `glpi_plugin_datainjection_models`
-                 WHERE `id` = '" . $models_id . "')
-                UNION (SELECT DISTINCT `itemtype`
-                       FROM `glpi_plugin_datainjection_mappings`
-                       WHERE `models_id` = '" . $models_id . "')
-                UNION (SELECT DISTINCT `itemtype`
-                       FROM `glpi_plugin_datainjection_infos`
-                       WHERE `models_id` = '" . $models_id . "')";
-        foreach ($DB->request($query) as $data) {
-            if ($data['itemtype'] != PluginDatainjectionInjectionType::NO_VALUE) {
-                if (class_exists($data['itemtype'])) {
-                    $item                     = new $data['itemtype']();
-                    $item->fields['itemtype'] = $model->fields['itemtype'];
+        $model = new self();
+        if ($model->getFromDB($models_id)) {
+            $query = "(SELECT `itemtype`
+                    FROM `glpi_plugin_datainjection_models`
+                    WHERE `id` = '" . $models_id . "')
+                    UNION (SELECT DISTINCT `itemtype`
+                        FROM `glpi_plugin_datainjection_mappings`
+                        WHERE `models_id` = '" . $models_id . "')
+                    UNION (SELECT DISTINCT `itemtype`
+                        FROM `glpi_plugin_datainjection_infos`
+                        WHERE `models_id` = '" . $models_id . "')";
+            foreach ($DB->request($query) as $data) {
+                if ($data['itemtype'] != PluginDatainjectionInjectionType::NO_VALUE) {
+                    if (class_exists($data['itemtype'])) {
+                        $item                     = new $data['itemtype']();
+                        $item->fields['itemtype'] = $model->fields['itemtype'];
 
-                    if (!($item instanceof CommonDBRelation) && !$item->canCreate()) {
-                        $continue = false;
-                        break;
+                        if (!($item instanceof CommonDBRelation) && !$item->canCreate()) {
+                            $continue = false;
+                            break;
+                        }
                     }
                 }
             }
