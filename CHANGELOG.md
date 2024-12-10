@@ -14,6 +14,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Fixed
 
 - Fix default entity insertion for a user
+- Fixed `SQL` error when creating new injection model
 
 ## [2.14.0] - 2024-10-10
 
