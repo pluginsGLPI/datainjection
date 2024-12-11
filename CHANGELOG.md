@@ -9,7 +9,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Fixed
 
-- Fix common db relation insertion
+- Fix relation (`CommonDBRelation`) insertion
 
 ## [2.14.0] - 2024-10-10
 
