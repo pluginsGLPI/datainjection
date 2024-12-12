@@ -53,7 +53,7 @@ class PluginDatainjectionDatabaseinstanceInjection extends DatabaseInstance impl
     public function connectedTo()
     {
 
-        return [];
+        return [\Glpi\Inventory\Asset\Computer::class];
     }
 
 
@@ -64,11 +64,13 @@ class PluginDatainjectionDatabaseinstanceInjection extends DatabaseInstance impl
     {
 
         $tab                 = Search::getOptions(get_parent_class($this));
+        $tab[5]['linkfield']    = 'items_id'; // 5 = databaseinstance items_id Search option
 
        //Remove some options because some fields cannot be imported
         $blacklist = PluginDatainjectionCommonInjectionLib::getBlacklistedOptions(get_parent_class($this));
         $notimportable            = [];
         $options['ignore_fields'] = array_merge($blacklist, $notimportable);
+        $options['displaytype']   = ["dropdown"       => [40]];
 
 
         return PluginDatainjectionCommonInjectionLib::addToSearchOptions($tab, $options, $this);
