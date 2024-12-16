@@ -2177,7 +2177,7 @@ class PluginDatainjectionCommonInjectionLib
 
                     //Some injection.class files are missing dropdown options. Set displaytype as dropdown if datatype is dropdown
                     //$tmp['displaytype'] is still empty. Set to prevent overwriting on next IF
-                    if (isset($tmp['datatype']) && $tmp['datatype'] == 'dropdown') {
+                    if ((isset($tmp['datatype']) && $tmp['datatype'] == 'dropdown') && !isset($tmp['displaytype'])) {
                         $type_searchOptions[$id]['displaytype'] = 'dropdown';
                         $tmp['displaytype'] = 'dropdown';
                     }
