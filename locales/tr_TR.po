@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-11-29 01:08+0000\n"
+"POT-Creation-Date: 2024-12-16 01:13+0000\n"
 "PO-Revision-Date: 2018-06-21 12:57+0000\n"
 "Last-Translator: Kaya Zeren <kayazeren@gmail.com>, 2024\n"
 "Language-Team: Turkish (Turkey) (https://app.transifex.com/teclib/teams/28042/tr_TR/)\n"
@@ -70,7 +70,7 @@ msgstr "Gelişmiş ayarlar"
 
 #: inc/model.class.php:449 inc/model.class.php:722
 msgid "Allow creation of dropdowns (Except Entity)"
-msgstr ""
+msgstr "Açılan kutu oluşturulabilsin (varlık dışında)"
 
 #: inc/model.class.php:421 inc/model.class.php:710
 msgid "Allow lines creation"
