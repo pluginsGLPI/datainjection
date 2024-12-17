@@ -13,6 +13,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Fixed
 
+- Fix relation (`CommonDBRelation`) insertion
 - Fix default entity insertion for a user
 - Fixed `SQL` error when creating new injection model
 - Fixed issue with missing dropdown options
