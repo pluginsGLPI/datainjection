@@ -5,16 +5,16 @@
 # 
 # Translators:
 # 青海K, 2020
-# INOUE Daisuke, 2023
+# INOUE Daisuke, 2024
 # 
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-11-29 01:08+0000\n"
+"POT-Creation-Date: 2024-12-26 01:03+0000\n"
 "PO-Revision-Date: 2018-06-21 12:57+0000\n"
-"Last-Translator: INOUE Daisuke, 2023\n"
+"Last-Translator: INOUE Daisuke, 2024\n"
 "Language-Team: Japanese (Japan) (https://app.transifex.com/teclib/teams/28042/ja_JP/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -68,7 +68,7 @@ msgstr "高度なオプション"
 
 #: inc/model.class.php:449 inc/model.class.php:722
 msgid "Allow creation of dropdowns (Except Entity)"
-msgstr ""
+msgstr "( エンティティー以外の )ドロップダウンの作成を許可"
 
 #: inc/model.class.php:421 inc/model.class.php:710
 msgid "Allow lines creation"
@@ -392,7 +392,7 @@ msgstr "テーブル"
 #: front/clientinjection.form.php:88 front/model.form.php:86
 msgid ""
 "The file could not be found (Maybe it exceeds the maximum size allowed)"
-msgstr ""
+msgstr "ファイルが見つかりません ( 許可されている最大ファイルサイズを超えていると思われます )"
 
 #: inc/model.class.php:1182
 msgid "The file is ok."
