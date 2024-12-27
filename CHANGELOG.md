@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+## [2.14.1] - 2024-12-27
+
 ### Added
 
 - Add injection of the ```Itemtype```, ```Item``` and ```Path``` for the database instance
