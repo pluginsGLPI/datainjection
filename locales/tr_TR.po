@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-12-16 01:13+0000\n"
+"POT-Creation-Date: 2024-12-27 01:04+0000\n"
 "PO-Revision-Date: 2018-06-21 12:57+0000\n"
 "Last-Translator: Kaya Zeren <kayazeren@gmail.com>, 2024\n"
 "Language-Team: Turkish (Turkey) (https://app.transifex.com/teclib/teams/28042/tr_TR/)\n"
@@ -74,7 +74,7 @@ msgstr "Açılan kutu oluşturulabilsin (varlık dışında)"
 
 #: inc/model.class.php:421 inc/model.class.php:710
 msgid "Allow lines creation"
-msgstr "Satırlar oluşturulabilsin"
+msgstr "Satırlar eklenebilsin"
 
 #: inc/model.class.php:430 inc/model.class.php:713
 msgid "Allow lines update"
@@ -217,11 +217,11 @@ msgstr "Genel rapor"
 
 #: inc/mapping.class.php:130
 msgid "Header of the file"
-msgstr "Dosya üst bilgisi"
+msgstr "Dosyanın başlığı"
 
 #: inc/modelcsv.class.php:173
 msgid "Header's presence"
-msgstr "Üst bilginin varlığı"
+msgstr "Başlığın varlığı"
 
 #: inc/dropdown.class.php:129
 msgid "ISO8859-1"
