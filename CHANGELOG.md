@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+### Fixed
+
+- Fixed missing binding issue for injections
+
 ## [2.14.1] - 2024-12-27
 
 ### Added
