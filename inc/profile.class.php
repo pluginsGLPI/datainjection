@@ -67,7 +67,7 @@ class PluginDatainjectionProfile extends Profile
     public function getTabNameForItem(CommonGLPI $item, $withtemplate = 0)
     {
 
-        if ($item->getType() == 'Profile' && $item instanceof CommonDBTM) {
+        if ($item instanceof Profile) {
             if ($item->fields['interface'] == 'central') {
                 return __('Data injection', 'datainjection');
             }
