@@ -992,14 +992,14 @@ class PluginDatainjectionCommonInjectionLib
            //Get search options associated with the injectionClass
             $searchOptions = $injectionClass->getOptions($itemtype);
 
-            foreach ($data as $field => $value) {
-                if ($value && $value == "NULL") {
-                    // TODO: fix this code 
-                    if (false) { // @phpstan-ignore-line
-                        $this->values[$itemtype][$field] = self::EMPTY_VALUE;
-                    }
-                }
-            }
+            // TODO: fix this code
+            // foreach ($data as $field => $value) {
+            //     if ($value && $value == "NULL") {
+            //         if (false) {
+            //             $this->values[$itemtype][$field] = self::EMPTY_VALUE;
+            //         }
+            //     }
+            // }
         }
     }
 
