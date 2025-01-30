@@ -10,17 +10,13 @@
         {
             "name": "glpi-project/tools",
             "version": "0.7.4",
-            "version": "0.7.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/glpi-project/tools.git",
                 "reference": "65a09a93350da6fa67d423dd94e4cb4023a17e20"
-                "reference": "65a09a93350da6fa67d423dd94e4cb4023a17e20"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/glpi-project/tools/zipball/65a09a93350da6fa67d423dd94e4cb4023a17e20",
-                "reference": "65a09a93350da6fa67d423dd94e4cb4023a17e20",
                 "url": "https://api.github.com/repos/glpi-project/tools/zipball/65a09a93350da6fa67d423dd94e4cb4023a17e20",
                 "reference": "65a09a93350da6fa67d423dd94e4cb4023a17e20",
                 "shasum": ""
@@ -65,7 +61,6 @@
                 "issues": "https://github.com/glpi-project/tools/issues",
                 "source": "https://github.com/glpi-project/tools"
             },
-            "time": "2024-09-18T06:58:02+00:00"
             "time": "2024-09-18T06:58:02+00:00"
         },
         {
@@ -132,17 +127,13 @@
         {
             "name": "phpstan/extension-installer",
             "version": "1.4.3",
-            "version": "1.4.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpstan/extension-installer.git",
                 "reference": "85e90b3942d06b2326fba0403ec24fe912372936"
-                "reference": "85e90b3942d06b2326fba0403ec24fe912372936"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpstan/extension-installer/zipball/85e90b3942d06b2326fba0403ec24fe912372936",
-                "reference": "85e90b3942d06b2326fba0403ec24fe912372936",
                 "url": "https://api.github.com/repos/phpstan/extension-installer/zipball/85e90b3942d06b2326fba0403ec24fe912372936",
                 "reference": "85e90b3942d06b2326fba0403ec24fe912372936",
                 "shasum": ""
@@ -150,7 +141,6 @@
             "require": {
                 "composer-plugin-api": "^2.0",
                 "php": "^7.2 || ^8.0",
-                "phpstan/phpstan": "^1.9.0 || ^2.0"
                 "phpstan/phpstan": "^1.9.0 || ^2.0"
             },
             "require-dev": {
@@ -176,16 +166,10 @@
                 "dev",
                 "static analysis"
             ],
-            "keywords": [
-                "dev",
-                "static analysis"
-            ],
             "support": {
                 "issues": "https://github.com/phpstan/extension-installer/issues",
                 "source": "https://github.com/phpstan/extension-installer/tree/1.4.3"
-                "source": "https://github.com/phpstan/extension-installer/tree/1.4.3"
             },
-            "time": "2024-09-04T20:21:43+00:00"
             "time": "2024-09-04T20:21:43+00:00"
         },
         {
@@ -594,23 +578,18 @@
         {
             "name": "symfony/polyfill-ctype",
             "version": "v1.31.0",
-            "version": "v1.31.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/polyfill-ctype.git",
-                "reference": "a3cc8b044a6ea513310cbd48ef7333b384945638"
                 "reference": "a3cc8b044a6ea513310cbd48ef7333b384945638"
             },
             "dist": {
                 "type": "zip",
                 "url": "https://api.github.com/repos/symfony/polyfill-ctype/zipball/a3cc8b044a6ea513310cbd48ef7333b384945638",
                 "reference": "a3cc8b044a6ea513310cbd48ef7333b384945638",
-                "url": "https://api.github.com/repos/symfony/polyfill-ctype/zipball/a3cc8b044a6ea513310cbd48ef7333b384945638",
-                "reference": "a3cc8b044a6ea513310cbd48ef7333b384945638",
                 "shasum": ""
             },
             "require": {
-                "php": ">=7.2"
                 "php": ">=7.2"
             },
             "provide": {
@@ -658,7 +637,6 @@
             ],
             "support": {
                 "source": "https://github.com/symfony/polyfill-ctype/tree/v1.31.0"
-                "source": "https://github.com/symfony/polyfill-ctype/tree/v1.31.0"
             },
             "funding": [
                 {
@@ -675,28 +653,22 @@
                 }
             ],
             "time": "2024-09-09T11:45:10+00:00"
-            "time": "2024-09-09T11:45:10+00:00"
         },
         {
             "name": "symfony/polyfill-intl-grapheme",
             "version": "v1.31.0",
-            "version": "v1.31.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/polyfill-intl-grapheme.git",
-                "reference": "b9123926e3b7bc2f98c02ad54f6a4b02b91a8abe"
                 "reference": "b9123926e3b7bc2f98c02ad54f6a4b02b91a8abe"
             },
             "dist": {
                 "type": "zip",
                 "url": "https://api.github.com/repos/symfony/polyfill-intl-grapheme/zipball/b9123926e3b7bc2f98c02ad54f6a4b02b91a8abe",
                 "reference": "b9123926e3b7bc2f98c02ad54f6a4b02b91a8abe",
-                "url": "https://api.github.com/repos/symfony/polyfill-intl-grapheme/zipball/b9123926e3b7bc2f98c02ad54f6a4b02b91a8abe",
-                "reference": "b9123926e3b7bc2f98c02ad54f6a4b02b91a8abe",
                 "shasum": ""
             },
             "require": {
-                "php": ">=7.2"
                 "php": ">=7.2"
             },
             "suggest": {
@@ -743,7 +715,6 @@
             ],
             "support": {
                 "source": "https://github.com/symfony/polyfill-intl-grapheme/tree/v1.31.0"
-                "source": "https://github.com/symfony/polyfill-intl-grapheme/tree/v1.31.0"
             },
             "funding": [
                 {
@@ -760,28 +731,22 @@
                 }
             ],
             "time": "2024-09-09T11:45:10+00:00"
-            "time": "2024-09-09T11:45:10+00:00"
         },
         {
             "name": "symfony/polyfill-intl-normalizer",
             "version": "v1.31.0",
-            "version": "v1.31.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/polyfill-intl-normalizer.git",
-                "reference": "3833d7255cc303546435cb650316bff708a1c75c"
                 "reference": "3833d7255cc303546435cb650316bff708a1c75c"
             },
             "dist": {
                 "type": "zip",
                 "url": "https://api.github.com/repos/symfony/polyfill-intl-normalizer/zipball/3833d7255cc303546435cb650316bff708a1c75c",
                 "reference": "3833d7255cc303546435cb650316bff708a1c75c",
-                "url": "https://api.github.com/repos/symfony/polyfill-intl-normalizer/zipball/3833d7255cc303546435cb650316bff708a1c75c",
-                "reference": "3833d7255cc303546435cb650316bff708a1c75c",
                 "shasum": ""
             },
             "require": {
-                "php": ">=7.2"
                 "php": ">=7.2"
             },
             "suggest": {
@@ -831,7 +796,6 @@
             ],
             "support": {
                 "source": "https://github.com/symfony/polyfill-intl-normalizer/tree/v1.31.0"
-                "source": "https://github.com/symfony/polyfill-intl-normalizer/tree/v1.31.0"
             },
             "funding": [
                 {
@@ -848,28 +812,22 @@
                 }
             ],
             "time": "2024-09-09T11:45:10+00:00"
-            "time": "2024-09-09T11:45:10+00:00"
         },
         {
             "name": "symfony/polyfill-mbstring",
             "version": "v1.31.0",
-            "version": "v1.31.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/polyfill-mbstring.git",
-                "reference": "85181ba99b2345b0ef10ce42ecac37612d9fd341"
                 "reference": "85181ba99b2345b0ef10ce42ecac37612d9fd341"
             },
             "dist": {
                 "type": "zip",
                 "url": "https://api.github.com/repos/symfony/polyfill-mbstring/zipball/85181ba99b2345b0ef10ce42ecac37612d9fd341",
                 "reference": "85181ba99b2345b0ef10ce42ecac37612d9fd341",
-                "url": "https://api.github.com/repos/symfony/polyfill-mbstring/zipball/85181ba99b2345b0ef10ce42ecac37612d9fd341",
-                "reference": "85181ba99b2345b0ef10ce42ecac37612d9fd341",
                 "shasum": ""
             },
             "require": {
-                "php": ">=7.2"
                 "php": ">=7.2"
             },
             "provide": {
@@ -918,7 +876,6 @@
             ],
             "support": {
                 "source": "https://github.com/symfony/polyfill-mbstring/tree/v1.31.0"
-                "source": "https://github.com/symfony/polyfill-mbstring/tree/v1.31.0"
             },
             "funding": [
                 {
@@ -935,28 +892,22 @@
                 }
             ],
             "time": "2024-09-09T11:45:10+00:00"
-            "time": "2024-09-09T11:45:10+00:00"
         },
         {
             "name": "symfony/polyfill-php73",
             "version": "v1.31.0",
-            "version": "v1.31.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/polyfill-php73.git",
-                "reference": "0f68c03565dcaaf25a890667542e8bd75fe7e5bb"
                 "reference": "0f68c03565dcaaf25a890667542e8bd75fe7e5bb"
             },
             "dist": {
                 "type": "zip",
                 "url": "https://api.github.com/repos/symfony/polyfill-php73/zipball/0f68c03565dcaaf25a890667542e8bd75fe7e5bb",
                 "reference": "0f68c03565dcaaf25a890667542e8bd75fe7e5bb",
-                "url": "https://api.github.com/repos/symfony/polyfill-php73/zipball/0f68c03565dcaaf25a890667542e8bd75fe7e5bb",
-                "reference": "0f68c03565dcaaf25a890667542e8bd75fe7e5bb",
                 "shasum": ""
             },
             "require": {
-                "php": ">=7.2"
                 "php": ">=7.2"
             },
             "type": "library",
@@ -1001,7 +952,6 @@
             ],
             "support": {
                 "source": "https://github.com/symfony/polyfill-php73/tree/v1.31.0"
-                "source": "https://github.com/symfony/polyfill-php73/tree/v1.31.0"
             },
             "funding": [
                 {
@@ -1018,28 +968,22 @@
                 }
             ],
             "time": "2024-09-09T11:45:10+00:00"
-            "time": "2024-09-09T11:45:10+00:00"
         },
         {
             "name": "symfony/polyfill-php80",
             "version": "v1.31.0",
-            "version": "v1.31.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/polyfill-php80.git",
-                "reference": "60328e362d4c2c802a54fcbf04f9d3fb892b4cf8"
                 "reference": "60328e362d4c2c802a54fcbf04f9d3fb892b4cf8"
             },
             "dist": {
                 "type": "zip",
                 "url": "https://api.github.com/repos/symfony/polyfill-php80/zipball/60328e362d4c2c802a54fcbf04f9d3fb892b4cf8",
                 "reference": "60328e362d4c2c802a54fcbf04f9d3fb892b4cf8",
-                "url": "https://api.github.com/repos/symfony/polyfill-php80/zipball/60328e362d4c2c802a54fcbf04f9d3fb892b4cf8",
-                "reference": "60328e362d4c2c802a54fcbf04f9d3fb892b4cf8",
                 "shasum": ""
             },
             "require": {
-                "php": ">=7.2"
                 "php": ">=7.2"
             },
             "type": "library",
@@ -1087,7 +1031,6 @@
                 "shim"
             ],
             "support": {
-                "source": "https://github.com/symfony/polyfill-php80/tree/v1.31.0"
                 "source": "https://github.com/symfony/polyfill-php80/tree/v1.31.0"
             },
             "funding": [
@@ -1370,8 +1313,6 @@
                 "symfony/deprecation-contracts": "^2.5|^3",
                 "symfony/polyfill-ctype": "^1.8",
                 "symfony/polyfill-mbstring": "^1.3",
-                "symfony/polyfill-php80": "^1.22",
-                "symfony/polyfill-php81": "^1.29"
                 "symfony/polyfill-php80": "^1.22",
                 "symfony/polyfill-php81": "^1.29"
             },
