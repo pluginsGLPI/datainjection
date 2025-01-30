@@ -51,8 +51,10 @@ class PluginDatainjectionDeviceMemoryInjection extends DeviceMemory implements P
 
     public function connectedTo()
     {
+        /** @var array $CFG_GLPI */
+        global $CFG_GLPI;
 
-        return ["Computer"];
+        return $CFG_GLPI['itemdevicememory_types'];
     }
 
 

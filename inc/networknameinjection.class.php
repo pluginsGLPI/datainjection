@@ -53,6 +53,7 @@ class PluginDatainjectionNetworkNameInjection extends NetworkName implements Plu
     {
         /** @var array $CFG_GLPI */
         global $CFG_GLPI;
+
         return $CFG_GLPI["networkport_types"];
     }
 
