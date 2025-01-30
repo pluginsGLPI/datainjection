@@ -333,7 +333,7 @@ class PluginDatainjectionClientInjection
     * to be used instead of Toolbox::stripslashes_deep to reduce memory usage
     * execute stripslashes in place (no copy)
     *
-    * @param array|null $value array of value
+    * @param array|string|null $value array of value
     */
     public static function stripslashes_array(&$value) // phpcs:ignore
     {

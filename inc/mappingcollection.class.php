@@ -137,7 +137,7 @@ class PluginDatainjectionMappingCollection
 
         foreach ($this->mappingCollection as $mapping) {
             if (isset($mapping->fields["id"])) {
-                $mapping->update($mapping->fields); /** @phpstan-ignore-line */
+                $mapping->update($mapping->fields);
             } else {
                 $mapping->fields["id"] = $mapping->add($mapping->fields);
             }

@@ -892,7 +892,7 @@ class PluginDatainjectionModel extends CommonDBTM
 
         $model = new self();
 
-        if (is_array($crit) && (count($crit) > 0)) {
+        if ((count($crit) > 0)) {
             $crit['FIELDS'] = 'id';
             foreach ($DB->request($model->getTable(), $crit) as $row) {
                 $model->delete($row);

@@ -134,8 +134,8 @@ interface PluginDatainjectionInjectionInterface
     * Add specific values to the object to inject
     * This method is optionnal ! Implement it if the itemtype need special reformat
     *
-    * @param primary_type     the primary_type to inject
-    * @param fields_toinject  all the fields that need to be injected
+    * @param string $primary_type     the primary_type to inject
+    * @param array $fields_toinject  all the fields that need to be injected
    **/
     //function addSpecificNeededFields($primary_type, $fields_toinject);
 }
