@@ -9,7 +9,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Fixed
 
-- Fixed missing binding issue for injections
+- Addition of missing links for injections
 
 ## [2.14.1] - 2024-12-27
 
