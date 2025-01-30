@@ -77,7 +77,7 @@ class PluginDatainjectionInterfaceTypeInjection extends InterfaceType implements
     /**
     * Standard method to add an object into glpi
     *
-    * @param mixed $values    array fields to add into glpi
+    * @param array $values    array fields to add into glpi
     * @param array $options   array options used during creation
     *
     * @return array of IDs of newly created objects:

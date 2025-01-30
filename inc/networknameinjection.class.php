@@ -89,8 +89,8 @@ class PluginDatainjectionNetworkNameInjection extends NetworkName implements Plu
 
 
     /**
-    * @param mixed $primary_type
-    * @param mixed $values
+    * @param string $primary_type
+    * @param array $values
    **/
     public function addSpecificNeededFields($primary_type, $values)
     {
@@ -103,7 +103,7 @@ class PluginDatainjectionNetworkNameInjection extends NetworkName implements Plu
 
 
     /**
-    * @param mixed $values
+    * @param array $values
     * @param boolean $add                   (true by default)
     * @param array|null $rights    array
     */

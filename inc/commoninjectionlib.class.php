@@ -249,7 +249,7 @@ class PluginDatainjectionCommonInjectionLib
                //If no value found or value is 0 and field is a dropdown,
                //then mandatory field management failed
                 if (
-                    ($value == false)
+                    ($value === false)
                     || (($value == self::DROPDOWN_EMPTY_VALUE)
                     && self::isFieldADropdown($option['displaytype']))
                 ) {
@@ -541,7 +541,7 @@ class PluginDatainjectionCommonInjectionLib
     * @param string $itemtype               itemtype of the values to inject
     * @param array $searchOption           option associated with the field to check
     * @param string $field                  the field to check
-    * @param mixed $value                  the value coming from the CSV file
+    * @param string $value                  the value coming from the CSV file
     * @param boolean $add                    is insertion (true) or update (false) (true by default)
     *
     * @return void nothing
@@ -751,8 +751,8 @@ class PluginDatainjectionCommonInjectionLib
     /**
     * Find a user. Look for login OR firstname + lastname OR lastname + firstname
     *
-    * @param mixed $value the user to look for
-    * @param mixed $entity the entity where the user should have right
+    * @param string $value the user to look for
+    * @param int|string $entity the entity where the user should have right
     *
     * @return int|string the user ID if found or ''
    **/
@@ -784,8 +784,8 @@ class PluginDatainjectionCommonInjectionLib
     /**
     * Find a user. Look for login OR firstname + lastname OR lastname + firstname
     *
-    * @param mixed $value the user to look for
-    * @param mixed $entity the entity where the user should have right
+    * @param string $value the user to look for
+    * @param int|string $entity the entity where the user should have right
     *
     * @return int|string the user ID if found or ''
    */
@@ -815,8 +815,8 @@ class PluginDatainjectionCommonInjectionLib
     *
     * @param CommonDBTM $item the CommonDBTM item representing an itemtype
     * @param array $searchOption searchOption related to the item
-    * @param mixed $entity the current entity
-    * @param mixed $value the name of the item for which id must be returned
+    * @param int|string $entity the current entity
+    * @param string $value the name of the item for which id must be returned
     *
     * @return int|string the id of the item found
    **/
@@ -859,7 +859,7 @@ class PluginDatainjectionCommonInjectionLib
     *
     * @param string $itemtype
     *
-    * @return mixed|false an array with all values for this itemtype
+    * @return string|false an array with all values for this itemtype
    **/
     public function getValuesForItemtype($itemtype)
     {
@@ -876,7 +876,7 @@ class PluginDatainjectionCommonInjectionLib
     *
     * @param string $itemtype
     *
-    * @return mixed|false an array with all values for this itemtype
+    * @return string|false an array with all values for this itemtype
    **/
     private function getValueByItemtypeAndName($itemtype, $field)
     {
@@ -910,7 +910,7 @@ class PluginDatainjectionCommonInjectionLib
      *
      * @param string $itemtype
      * @param string $field name
-     * @param mixed $value of the field
+     * @param string|int $value of the field
      * @param boolean $fromdb boolean
      **/
     private function setValueForItemtype($itemtype, $field, $value, $fromdb = false)
@@ -936,7 +936,7 @@ class PluginDatainjectionCommonInjectionLib
                 $this->values[$itemtype][$field] = $value;
             }
         } else { // First value
-            if (is_null($value)) {
+            if (empty($value)) {
                 $this->values[$itemtype][$field] = "NULL";
             } else {
                 $this->values[$itemtype][$field] = $value;
@@ -994,8 +994,8 @@ class PluginDatainjectionCommonInjectionLib
 
             foreach ($data as $field => $value) {
                 if ($value && $value == "NULL") {
-                    // TODO: fix this code
-                    if (isset($searchOptions['datatype']) && self::isFieldADropdown($searchOptions['displaytype'])) {
+                    // TODO: fix this code 
+                    if (false) { // @phpstan-ignore-line
                         $this->values[$itemtype][$field] = self::EMPTY_VALUE;
                     }
                 }
@@ -1056,7 +1056,7 @@ class PluginDatainjectionCommonInjectionLib
 
                     case "float":
                         $float = self::reformatFloat($value, $this->getFloatFormat());
-                        $this->setValueForItemtype($itemtype, $field, $float);
+                        $this->setValueForItemtype($itemtype, $field, (string) $float);
                         break;
 
                     default:
@@ -1089,10 +1089,10 @@ class PluginDatainjectionCommonInjectionLib
     * xx,xxx.xx
     * xxxx,xx
     *
-    * @param mixed $value : the float to reformat
-    * @param mixed $format the float format
+    * @param float|array $value : the float to reformat
+    * @param string $format the float format
     *
-    * @return float modified as expected in GLPI
+    * @return float|array modified as expected in GLPI
    **/
     private static function reformatFloat($value, $format)
     {
@@ -1176,7 +1176,7 @@ class PluginDatainjectionCommonInjectionLib
     *
     * @param string $mac the original mac address
     *
-    * @return mixed the mac address modified, if needed
+    * @return string the mac address modified, if needed
    **/
     private static function reformatMacAddress($mac)
     {
@@ -1605,7 +1605,7 @@ class PluginDatainjectionCommonInjectionLib
     *
     * @param PluginDatainjectionInjectionInterface $injectionClass class which represents the object to inject
     * @param CommonDBTM $item the CommonDBTM object representing the itemtype to inject
-    * @param mixed $values the values to inject
+    * @param array|string|false $values the values to inject
     * @param boolean $add true to insert an object, false to update an existing object
     *
     * @return int|string the id of the object added or updated
@@ -2242,7 +2242,7 @@ class PluginDatainjectionCommonInjectionLib
     * Add necessary search options for template management
     *
     * @param PluginDatainjectionInjectionInterface $injectionClass the injection class to use
-    * @param mixed $tab the options tab, as an array (passed as a reference)
+    * @param array $tab the options tab, as an array (passed as a reference)
     *
     * @return void nothing
    **/

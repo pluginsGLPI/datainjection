@@ -157,7 +157,7 @@ class PluginDatainjectionDropdown
 
 
     /**
-    * @param mixed $value
+    * @param array $value
    **/
     public static function getPortUnicityValues($value)
     {

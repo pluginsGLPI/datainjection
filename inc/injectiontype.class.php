@@ -80,7 +80,7 @@ class PluginDatainjectionInjectionType
     /**
     * Display a list of all importable types using datainjection plugin
     *
-    * @param mixed $value           the selected value (default '')
+    * @param string $value           the selected value (default '')
     * @param boolean $only_primary    (false by default)
    **/
     public static function dropdown($value = '', $only_primary = false)

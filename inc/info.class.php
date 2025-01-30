@@ -309,7 +309,7 @@ class PluginDatainjectionInfo extends CommonDBTM
 
     /**
     * @param PluginDatainjectionInfo $info               PluginDatainjectionInfo object
-    * @param mixed $values    array
+    * @param array $values    array
     */
     public static function displayAdditionalInformation(PluginDatainjectionInfo $info, $values = [])
     {
@@ -444,7 +444,7 @@ class PluginDatainjectionInfo extends CommonDBTM
 
     /**
     * @param PluginDatainjectionInfo $info      PluginDatainjectionInfo object
-    * @param mixed $value
+    * @param string $value
    **/
     public static function keepInfo(PluginDatainjectionInfo $info, $value)
     {

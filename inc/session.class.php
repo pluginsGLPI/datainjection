@@ -33,7 +33,7 @@ class PluginDatainjectionSession
     /**
     * Get a parameter from the HTTP session
     *
-    * @param mixed $param  the parameter to get
+    * @param string $param  the parameter to get
     *
     * @return mixed the param's value
    **/
@@ -54,8 +54,8 @@ class PluginDatainjectionSession
     /**
     * Set a parameter in the HTTP session
     *
-    * @param mixed $param     the parameter
-    * @param mixed $results   the value to store
+    * @param string $param     the parameter
+    * @param array|string|false $results   the value to store
     *
     * @return void
    **/

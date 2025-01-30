@@ -56,7 +56,7 @@ interface PluginDatainjectionInjectionInterface
     /**
     * Function which calls getSearchOptions and add more parameters specific to display
     *
-    * @param mixed $primary_type    (default '')
+    * @param string $primary_type    (default '')
     *
     * @return array of search options, as defined in each commondbtm object
    **/
@@ -76,7 +76,7 @@ interface PluginDatainjectionInjectionInterface
     /**
     * Standard method to add an object into glpi
     *
-    * @param mixed $values    array fields to add into glpi
+    * @param array $values    array fields to add into glpi
     * @param array $options   array options used during creation
     *
     * @return array of IDs of newly created objects:
@@ -103,7 +103,7 @@ interface PluginDatainjectionInjectionInterface
     * Reformat data if itemtypes needs it
     * This method is optionnal ! Implement it if the itemtype need special reformat
     *
-    * @param mixed $values array
+    * @param array $values array
    **/
     //function reformat(&$values=[]);
 
@@ -125,7 +125,7 @@ interface PluginDatainjectionInjectionInterface
     * @param string $itemtype
     * @param array $searchOption
     * @pram  $field
-    * @param mixed $value
+    * @param array $value
    **/
     //function getSpecificFieldValue($itemtype, $searchOption, $field, $value);
 

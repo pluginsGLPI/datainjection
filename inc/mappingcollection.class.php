@@ -111,7 +111,7 @@ class PluginDatainjectionMappingCollection
     * Find a mapping by looking for a specific field
     *
     * @param string $field the field to look for
-    * @param mixed $value the value of the field
+    * @param string|int $value the value of the field
     *
     * @return PluginDatainjectionMapping|null the PluginDatainjectionMapping object associated or null
    **/
@@ -160,7 +160,7 @@ class PluginDatainjectionMappingCollection
     /**
     * Add a new mapping to this model (don't write in to DB)
     *
-    * @param mixed $mapping the new PluginDatainjectionMapping to add
+    * @param PluginDatainjectionMapping $mapping the new PluginDatainjectionMapping to add
    **/
     public function addNewMapping($mapping)
     {

@@ -41,7 +41,7 @@ class PluginDatainjectionData
 
 
     /**
-    * @param mixed $newData
+    * @param array $newData
    **/
     public function addToData($newData)
     {

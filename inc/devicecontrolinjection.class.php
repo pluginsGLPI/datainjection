@@ -79,7 +79,7 @@ class PluginDatainjectionDeviceControlInjection extends DeviceControl implements
 
 
     /**
-    * @param mixed $values
+    * @param array $values
     * @param boolean $add             (true by default)
     * @param array|null $rights    array
    **/

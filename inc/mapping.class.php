@@ -34,7 +34,7 @@ class PluginDatainjectionMapping extends CommonDBTM
 
     /**
     * @param string $field
-    * @param mixed $value
+    * @param array $value
    **/
     public function equal($field, $value)
     {

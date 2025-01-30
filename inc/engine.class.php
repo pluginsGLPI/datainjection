@@ -46,7 +46,7 @@ class PluginDatainjectionEngine
     /**
     * @param mixed $model
     * @param array $infos     array
-    * @param mixed $entity             (default 0)
+    * @param int|string $entity             (default 0)
     */
     public function __construct($model, $infos = [], $entity = 0)
     {
@@ -66,7 +66,7 @@ class PluginDatainjectionEngine
     /**
     * Inject one line of data
     *
-    * @param mixed $line   one line of data to import
+    * @param array $line   one line of data to import
     * @param int $index  the line number is the file
    **/
     public function injectLine($line, $index)

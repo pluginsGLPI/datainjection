@@ -344,7 +344,7 @@ class PluginDatainjectionModel extends CommonDBTM
     /**
     * @param int $user_id
     * @param string $order        (default 'name')
-    * @param mixed $entity       (default -1)
+    * @param int|string $entity       (default -1)
     * @param boolean $all          (false by default)
    **/
     public static function getModels($user_id, $order = "name", $entity = -1, $all = false)
@@ -530,7 +530,7 @@ class PluginDatainjectionModel extends CommonDBTM
     * @since version 2.3.0
     *
     * @param string $field
-    * @param mixed $values
+    * @param array|string $values
     * @param array $options   array
    **/
     public static function getSpecificValueToDisplay($field, $values, array $options = [])
@@ -561,7 +561,7 @@ class PluginDatainjectionModel extends CommonDBTM
     *
     * @param string $field
     * @param string $name               (default '')
-    * @param mixed $values             (defaut '')
+    * @param string|array $values             (defaut '')
     * @param array $options   array
    **/
     public static function getSpecificValueToSelect($field, $name = '', $values = '', array $options = [])
@@ -903,7 +903,7 @@ class PluginDatainjectionModel extends CommonDBTM
 
     /**
     * @param int $models_id
-    * @param mixed $step
+    * @param int $step
    **/
     public static function changeStep($models_id, $step)
     {

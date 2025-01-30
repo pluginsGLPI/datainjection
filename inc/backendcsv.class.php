@@ -80,7 +80,7 @@ class PluginDatainjectionBackendcsv extends PluginDatainjectionBackend implement
     * CSV File parsing methods
     *
     * @param mixed $fic
-    * @param mixed $data
+    * @param array $data
     * @param integer $encoding  (default 1)
    **/
     public static function parseLine($fic, $data, $encoding = 1)

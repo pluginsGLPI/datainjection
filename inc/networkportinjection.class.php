@@ -121,8 +121,8 @@ class PluginDatainjectionNetworkportInjection extends NetworkPort implements Plu
 
 
     /**
-    * @param mixed $primary_type
-    * @param mixed $values
+    * @param string $primary_type
+    * @param array $values
    **/
     public function addSpecificNeededFields($primary_type, $values)
     {
@@ -298,7 +298,7 @@ class PluginDatainjectionNetworkportInjection extends NetworkPort implements Plu
     /**
     * Check if at least mac or ip is defined otherwise block import
     *
-    * @param mixed $values    array    the values to inject
+    * @param array $values    array    the values to inject
     *
     * @return boolean true if check ok, false if not ok
    **/
@@ -318,7 +318,7 @@ class PluginDatainjectionNetworkportInjection extends NetworkPort implements Plu
 
 
     /**
-    * @param mixed $values
+    * @param array $values
     * @param boolean $add                (true by default)
     * @param array|null $rights    array
    **/

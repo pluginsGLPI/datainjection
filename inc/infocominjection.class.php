@@ -148,7 +148,7 @@ class PluginDatainjectionInfocomInjection extends Infocom implements PluginDatai
 
 
     /**
-    * @param mixed $values    array
+    * @param array $values    array
    **/
     public function reformat(&$values = [])
     {

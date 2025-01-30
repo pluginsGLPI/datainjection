@@ -134,8 +134,8 @@ class PluginDatainjectionUserInjection extends User implements PluginDatainjecti
 
 
     /**
-    * @param mixed $primary_type
-    * @param mixed $values
+    * @param string $primary_type
+    * @param array $values
    **/
     public function addSpecificNeededFields($primary_type, $values)
     {
@@ -150,7 +150,7 @@ class PluginDatainjectionUserInjection extends User implements PluginDatainjecti
 
 
     /**
-    * @param mixed $values
+    * @param array $values
     * @param boolean $add                (true by default)
     * @param array|null $rights    array
     */
@@ -197,7 +197,7 @@ class PluginDatainjectionUserInjection extends User implements PluginDatainjecti
     /**
      * @param string $itemtype
      * @param string $field
-     * @param mixed $value
+     * @param array $value
      **/
     protected function addSpecificOptionalInfos($itemtype, $field, $value)
     {

@@ -129,8 +129,8 @@ class PluginDatainjectionItem_SoftwareLicenseInjection extends Item_SoftwareLice
 
 
     /**
-    * @param mixed $primary_type
-    * @param mixed $values
+    * @param string $primary_type
+    * @param array $values
    **/
     public function addSpecificNeededFields($primary_type, $values)
     {

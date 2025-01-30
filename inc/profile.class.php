@@ -95,7 +95,7 @@ class PluginDatainjectionProfile extends Profile
 
     /**
     * @param int $profiles_id
-    * @param mixed $rights
+    * @param array $rights
    **/
     public static function addDefaultProfileInfos($profiles_id, $rights)
     {

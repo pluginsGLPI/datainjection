@@ -78,7 +78,7 @@ class PluginDatainjectionDeviceMemoryInjection extends DeviceMemory implements P
 
 
     /**
-    * @param mixed $values
+    * @param array $values
     * @param boolean $add                (true by default)
     * @param array|null $rights    array
    **/

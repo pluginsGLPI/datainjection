@@ -204,7 +204,7 @@ class PluginDatainjectionEntityInjection extends Entity implements PluginDatainj
 
     /**
     * @param PluginDatainjectionInjectionInterface $injectionClass
-    * @param mixed $values
+    * @param array $values
     * @param array $options
    **/
     public function customDataAlreadyInDB($injectionClass, $values, $options)

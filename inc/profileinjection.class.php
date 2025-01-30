@@ -68,7 +68,7 @@ class PluginDatainjectionProfileInjection extends Profile implements PluginDatai
 
     /**
     * @param string $field_name
-    * @param mixed $data
+    * @param string $data
     * @param mixed $mandatory
    **/
     public function checkType($field_name, $data, $mandatory)
