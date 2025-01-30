@@ -807,7 +807,7 @@ class PluginDatainjectionModel extends CommonDBTM
 
         $canedit = Session::haveRight('plugin_datainjection_model', UPDATE);
 
-        if (!$withtemplate && $item->getType() == __CLASS__ && $item instanceof CommonDBTM) {
+        if (!$withtemplate && $item instanceof self) {
             $tabs[1] = __('Model');
             if (!$this->isNewID($item->fields['id'])) {
                 if ($canedit) {
