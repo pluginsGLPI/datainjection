@@ -80,7 +80,7 @@ class PluginDatainjectionProfile extends Profile
     public static function displayTabContentForItem(CommonGLPI $item, $tabnum = 1, $withtemplate = 0)
     {
 
-        if ($item->getType() == 'Profile' && $item instanceof CommonDBTM) {
+        if ($item instanceof Profile) {
             $profile = new self();
             $ID   = $item->fields['id'];
            //In case there's no right datainjection for this profile, create it
