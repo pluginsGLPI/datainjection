@@ -60,7 +60,10 @@ class PluginDatainjectionItem_SoftwareLicenseInjection extends Item_SoftwareLice
 
     public function connectedTo()
     {
-        return ['SoftwareLicense', 'Software'];
+        /** @var array $CFG_GLPI */
+        global $CFG_GLPI;
+
+        return $CFG_GLPI['software_types'];
     }
 
 

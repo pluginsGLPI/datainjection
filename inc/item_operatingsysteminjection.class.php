@@ -78,8 +78,10 @@ class PluginDatainjectionItem_OperatingsystemInjection extends Item_OperatingSys
 
     public function connectedTo()
     {
+        /** @var array $CFG_GLPI */
+        global $CFG_GLPI;
 
-        return ['Computer', 'NetworkEquipment'];
+        return $CFG_GLPI['operatingsystem_types'];
     }
 
 

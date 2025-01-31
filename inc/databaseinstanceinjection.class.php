@@ -52,8 +52,10 @@ class PluginDatainjectionDatabaseinstanceInjection extends DatabaseInstance impl
 
     public function connectedTo()
     {
+        /** @var array $CFG_GLPI */
+        global $CFG_GLPI;
 
-        return [\Glpi\Inventory\Asset\Computer::class];
+        return $CFG_GLPI["databaseinstance_types"];
     }
 
 

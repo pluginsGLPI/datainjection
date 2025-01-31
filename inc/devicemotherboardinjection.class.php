@@ -51,8 +51,10 @@ class PluginDatainjectionDeviceMotherboardInjection extends DeviceMotherboard im
 
     public function connectedTo()
     {
+        /** @var array $CFG_GLPI */
+        global $CFG_GLPI;
 
-        return ["Computer"];
+        return $CFG_GLPI['itemdevicemotherboard_types'];
     }
 
 

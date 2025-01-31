@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+### Fixed
+
+- Use `global`  configuration for injection links
+
 ## [2.14.1] - 2024-12-27
 
 ### Added
