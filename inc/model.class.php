@@ -54,18 +54,18 @@ class PluginDatainjectionModel extends CommonDBTM
     public $severaltimes_mapped = [];
 
     //Private or public model
-    const MODEL_PRIVATE  = 1;
-    const MODEL_PUBLIC   = 0;
+    public const MODEL_PRIVATE  = 1;
+    public const MODEL_PUBLIC   = 0;
 
     //Step constants
-    const INITIAL_STEP      = 1;
-    const FILE_STEP         = 2;
-    const MAPPING_STEP      = 3;
-    const OTHERS_STEP       = 4;
-    const READY_TO_USE_STEP = 5;
+    public const INITIAL_STEP      = 1;
+    public const FILE_STEP         = 2;
+    public const MAPPING_STEP      = 3;
+    public const OTHERS_STEP       = 4;
+    public const READY_TO_USE_STEP = 5;
 
-    const PROCESS  = 0;
-    const CREATION = 1;
+    public const PROCESS  = 0;
+    public const CREATION = 1;
 
 
 
@@ -270,7 +270,9 @@ class PluginDatainjectionModel extends CommonDBTM
 
 
     /**
-    * @param $options   array
+    * @param array $options   array
+    *
+    * @return boolean
    **/
     public static function dropdown($options = [])
     {
@@ -340,10 +342,10 @@ class PluginDatainjectionModel extends CommonDBTM
 
 
     /**
-    * @param $user_id
-    * @param $order        (default 'name')
-    * @param $entity       (default -1)
-    * @param $all          (false by default)
+    * @param int $user_id
+    * @param string $order        (default 'name')
+    * @param int|string $entity       (default -1)
+    * @param boolean $all          (false by default)
    **/
     public static function getModels($user_id, $order = "name", $entity = -1, $all = false)
     {
@@ -527,9 +529,9 @@ class PluginDatainjectionModel extends CommonDBTM
     /**
     * @since version 2.3.0
     *
-    * @param $field
-    * @param $values
-    * @param $options   array
+    * @param string $field
+    * @param array|string $values
+    * @param array $options   array
    **/
     public static function getSpecificValueToDisplay($field, $values, array $options = [])
     {
@@ -557,10 +559,10 @@ class PluginDatainjectionModel extends CommonDBTM
     /**
     * @since version 2.3.0
     *
-    * @param $field
-    * @param $name               (default '')
-    * @param $values             (defaut '')
-    * @param $options   array
+    * @param string $field
+    * @param string $name               (default '')
+    * @param string|array $values             (defaut '')
+    * @param array $options   array
    **/
     public static function getSpecificValueToSelect($field, $name = '', $values = '', array $options = [])
     {
@@ -795,35 +797,31 @@ class PluginDatainjectionModel extends CommonDBTM
     }
 
 
-    //Tabs management
+    /**
+    * Tabs management
+    *
+    * @return array|string
+   **/
     public function getTabNameForItem(CommonGLPI $item, $withtemplate = 0)
     {
 
         $canedit = Session::haveRight('plugin_datainjection_model', UPDATE);
 
-        if (!$withtemplate) {
-            switch ($item->getType()) {
-                case __CLASS__:
-                    $tabs[1] = __('Model');
-                    if (!$this->isNewID($item->fields['id'])) {
-                        if ($canedit) {
-                            $tabs[3] = __('File to inject', 'datainjection');
-                        }
-                        $tabs[4] = __('Mappings', 'datainjection');
-
-                        if ($item->fields['step'] > self::MAPPING_STEP) {
-                            $tabs[5] = __('Additional Information', 'datainjection');
-
-                            if ($canedit && $item->fields['step'] != self::READY_TO_USE_STEP) {
-                                $tabs[6] = __('Validation');
-                            }
-                        }
+        if (!$withtemplate && $item instanceof self) {
+            $tabs[1] = __('Model');
+            if (!$this->isNewID($item->fields['id'])) {
+                if ($canedit) {
+                    $tabs[3] = __('File to inject', 'datainjection');
+                }
+                $tabs[4] = __('Mappings', 'datainjection');
+                if ($item->fields['step'] > self::MAPPING_STEP) {
+                    $tabs[5] = __('Additional Information', 'datainjection');
+                    if ($canedit && $item->fields['step'] != self::READY_TO_USE_STEP) {
+                        $tabs[6] = __('Validation');
                     }
-                    return $tabs;
-
-                default:
-                    return '';
+                }
             }
+            return $tabs;
         }
 
         return '';
@@ -833,7 +831,7 @@ class PluginDatainjectionModel extends CommonDBTM
     public static function displayTabContentForItem(CommonGLPI $item, $tabnum = 1, $withtemplate = 0)
     {
 
-        if ($item->getType() == __CLASS__) {
+        if ($item instanceof self) {
             switch ($tabnum) {
                 case 1:
                     $item->showAdvancedForm($item->getID());
@@ -885,7 +883,7 @@ class PluginDatainjectionModel extends CommonDBTM
     /**
     * Clean all model which match some criteria
     *
-    * @param $crit array of criteria (ex array('itemtype'=>'PluginAppliancesAppliance'))
+    * @param array $crit array of criteria (ex array('itemtype'=>'PluginAppliancesAppliance'))
    **/
     public static function clean($crit = [])
     {
@@ -894,7 +892,7 @@ class PluginDatainjectionModel extends CommonDBTM
 
         $model = new self();
 
-        if (is_array($crit) && (count($crit) > 0)) {
+        if ((count($crit) > 0)) {
             $crit['FIELDS'] = 'id';
             foreach ($DB->request($model->getTable(), $crit) as $row) {
                 $model->delete($row);
@@ -904,8 +902,8 @@ class PluginDatainjectionModel extends CommonDBTM
 
 
     /**
-    * @param $models_id
-    * @param $step
+    * @param int $models_id
+    * @param int $step
    **/
     public static function changeStep($models_id, $step)
     {
@@ -978,7 +976,7 @@ class PluginDatainjectionModel extends CommonDBTM
     /**
     * Get the backend implementation by type
     *
-    * @param $type
+    * @param string $type
    **/
     public static function getInstance($type)
     {
@@ -998,13 +996,12 @@ class PluginDatainjectionModel extends CommonDBTM
         $model->getFromDB($models_id);
         $specific = self::getInstance($model->getFiletype());
         $specific->getFromDBByModelID($models_id);
-        $model->setSpecificModel($specific);
         return $model;
     }
 
 
     /**
-    * @param $options   array
+    * @param array $options   array
    **/
     public function readUploadedFile($options = [])
     {
@@ -1094,7 +1091,7 @@ class PluginDatainjectionModel extends CommonDBTM
     /**
     * Once file is uploaded, process it
     *
-    * @param $options   array of possible options:
+    * @param array $options   array of possible options:
     *   - file_encoding
     *   - mode
     *
@@ -1114,16 +1111,18 @@ class PluginDatainjectionModel extends CommonDBTM
             if (!isset($options['webservice'])) {
                 return false;
             }
-            return PluginWebservicesMethodCommon::Error( /** @phpstan-ignore-line */
-                $options['protocol'],
-                WEBSERVICES_ERROR_FAILED, /** @phpstan-ignore-line */
-                sprintf(
-                    __(
-                        'Not data to import',
-                        'datainjection'
+            if (class_exists('PluginWebservicesMethodCommon')) {
+                return PluginWebservicesMethodCommon::Error(
+                    $options['protocol'],
+                    WEBSERVICES_ERROR_FAILED, /** @phpstan-ignore-line */
+                    sprintf(
+                        __(
+                            'Not data to import',
+                            'datainjection'
+                        )
                     )
-                )
-            );
+                );
+            }
         }
 
         if ($mode == self::PROCESS) {
@@ -1139,11 +1138,13 @@ class PluginDatainjectionModel extends CommonDBTM
                     Session::addMessageAfterRedirect($check['error_message'], true, ERROR);
                     return false;
                 }
-                return PluginWebservicesMethodCommon::Error( /** @phpstan-ignore-line */
-                    $options['protocol'],
-                    WEBSERVICES_ERROR_FAILED, /** @phpstan-ignore-line */
-                    $check['error_message']
-                );
+                if (class_exists('PluginWebservicesMethodCommon')) {
+                    return PluginWebservicesMethodCommon::Error(
+                        $options['protocol'],
+                        WEBSERVICES_ERROR_FAILED, /** @phpstan-ignore-line */
+                        $check['error_message']
+                    );
+                }
             }
         }
 
@@ -1189,7 +1190,7 @@ class PluginDatainjectionModel extends CommonDBTM
     /**
     * Try to parse an input file
     *
-    * @return true if the file is a CSV file
+    * @return array true if the file is a CSV file
    **/
     public function isFileCorrect()
     {
@@ -1280,7 +1281,7 @@ class PluginDatainjectionModel extends CommonDBTM
 
 
     /**
-    * @param $fields
+    * @param array $fields
    **/
     public function checkMandatoryFields($fields)
     {
@@ -1333,7 +1334,7 @@ class PluginDatainjectionModel extends CommonDBTM
 
 
     /**
-    * @param $models_id
+    * @param int $models_id
    **/
     public static function checkRightOnModel($models_id)
     {
@@ -1381,7 +1382,7 @@ class PluginDatainjectionModel extends CommonDBTM
 
 
     /**
-    * @param $models_id
+    * @param int $models_id
    **/
     public static function showPreviewMappings($models_id)
     {
@@ -1423,7 +1424,7 @@ class PluginDatainjectionModel extends CommonDBTM
 
 
     /**
-    * @param $models_id
+    * @param int $models_id
    **/
     public static function prepareLogResults($models_id)
     {
@@ -1486,8 +1487,9 @@ class PluginDatainjectionModel extends CommonDBTM
                    //redefine genericobject url of needed
                     $plugin = new Plugin();
                     if (
-                        $plugin->isActivated('genericobject')
-                        && array_key_exists($model->fields['itemtype'], PluginGenericobjectType::getTypes()) /** @phpstan-ignore-line */
+                        class_exists('PluginGenericobjectType')
+                        && $plugin->isActivated('genericobject')
+                        && array_key_exists($model->fields['itemtype'], PluginGenericobjectType::getTypes())
                     ) {
                         $url = Plugin::getWebDir('datainjection') . "/front/object.form.php" .
                         "?itemtype=" . $model->fields['itemtype'] . "&id=" . $result[$model->fields['itemtype']];
@@ -1508,7 +1510,7 @@ class PluginDatainjectionModel extends CommonDBTM
 
 
     /**
-    * @param $models_id
+    * @param int $models_id
    **/
     public static function showLogResults($models_id)
     {
@@ -1640,7 +1642,6 @@ class PluginDatainjectionModel extends CommonDBTM
         echo "</div>";
     }
 
-
     public static function exportAsPDF($models_id)
     {
 
@@ -1648,8 +1649,8 @@ class PluginDatainjectionModel extends CommonDBTM
         $model      = new self();
         $model->getFromDB($models_id);
 
-        if (!empty($logresults)) {
-            $pdf = new PluginPdfSimplePDF('a4', 'landscape'); /** @phpstan-ignore-line */
+        if (!empty($logresults) && class_exists('PluginPdfSimplePDF')) {
+            $pdf = new PluginPdfSimplePDF('a4', 'landscape');
             $pdf->setHeader(
                 sprintf(
                     __('%1$s (%2$s)'),

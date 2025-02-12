@@ -121,8 +121,8 @@ class PluginDatainjectionNetworkportInjection extends NetworkPort implements Plu
 
 
     /**
-    * @param $primary_type
-    * @param $values
+    * @param string $primary_type
+    * @param array $values
    **/
     public function addSpecificNeededFields($primary_type, $values)
     {
@@ -137,8 +137,8 @@ class PluginDatainjectionNetworkportInjection extends NetworkPort implements Plu
 
 
     /**
-    * @param $info      array
-    * @param $option    array
+    * @param array $info      array
+    * @param array $option    array
    **/
     public function showAdditionalInformation($info = [], $option = [])
     {
@@ -180,8 +180,8 @@ class PluginDatainjectionNetworkportInjection extends NetworkPort implements Plu
 
 
     /**
-    * @param $fields_toinject    array
-    * @param $options            array
+    * @param array $fields_toinject    array
+    * @param array $options            array
    **/
     public function checkPresent($fields_toinject = [], $options = [])
     {
@@ -191,8 +191,8 @@ class PluginDatainjectionNetworkportInjection extends NetworkPort implements Plu
 
 
     /**
-    * @param $fields_toinject
-    * @param $options
+    * @param array $fields_toinject
+    * @param array $options
    **/
     public function checkParameters($fields_toinject, $options)
     {
@@ -241,10 +241,10 @@ class PluginDatainjectionNetworkportInjection extends NetworkPort implements Plu
     /**
     * Build where sql request to look for a network port
     *
-    * @param $fields_toinject    array    the fields to insert into DB
-    * @param $options            array
+    * @param array $fields_toinject    array    the fields to insert into DB
+    * @param array $options            array
     *
-    * @return the sql where clause
+    * @return string the sql where clause
    **/
     public function getUnicityRequest($fields_toinject = [], $options = [])
     {
@@ -298,9 +298,9 @@ class PluginDatainjectionNetworkportInjection extends NetworkPort implements Plu
     /**
     * Check if at least mac or ip is defined otherwise block import
     *
-    * @param $values    array    the values to inject
+    * @param array $values    array    the values to inject
     *
-    * @return true if check ok, false if not ok
+    * @return boolean true if check ok, false if not ok
    **/
     public function lastCheck($values = [])
     {
@@ -318,9 +318,9 @@ class PluginDatainjectionNetworkportInjection extends NetworkPort implements Plu
 
 
     /**
-    * @param $values
-    * @param $add                (true by default)
-    * @param $rights    array
+    * @param array $values
+    * @param boolean $add                (true by default)
+    * @param array|null $rights    array
    **/
     public function processAfterInsertOrUpdate($values, $add = true, $rights = [])
     {
@@ -356,8 +356,7 @@ class PluginDatainjectionNetworkportInjection extends NetworkPort implements Plu
         if ($use_mac) {
             $sql .= " AND `glpi_networkports`.`mac` = '" . $values['NetworkPort']["netmac"] . "'";
         }
-        /** @phpstan-ignore-next-line */
-        $res = $DB->query($sql); // phpcs:ignore
+        $res = $DB->doQuery($sql);
 
        //if at least one parameter is given
         $nb = $DB->numrows($res);
@@ -366,7 +365,7 @@ class PluginDatainjectionNetworkportInjection extends NetworkPort implements Plu
             $netport         = $DB->fetchArray($res);
             $netport_netport = new NetworkPort_NetworkPort();
            //If this port already connected to another one ?
-            if (!$netport_netport->getOppositeContact($netport['id'])) {
+            if (!$netport_netport->getOppositeContact((int) $netport['id'])) {
                //No, add a new port to port connection
                 $tmp['networkports_id_1'] = $values['NetworkPort']['id'];
                 $tmp['networkports_id_2'] = $netport['id'];

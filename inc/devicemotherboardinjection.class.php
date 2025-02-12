@@ -80,9 +80,9 @@ class PluginDatainjectionDeviceMotherboardInjection extends DeviceMotherboard im
 
 
     /**
-    * @param $values
-    * @param $add                (true by default)
-    * @param $rights    array
+    * @param array $values
+    * @param boolean $add                (true by default)
+    * @param array|null $rights    array
     */
     public function processAfterInsertOrUpdate($values, $add = true, $rights = [])
     {

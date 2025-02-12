@@ -36,7 +36,7 @@ interface PluginDatainjectionBackendInterface
     /**
     * Read from file
     *
-    * @param $numberOfLines (default 1)
+    * @param integer $numberOfLines (default 1)
    **/
     public function read($numberOfLines = 1);
 

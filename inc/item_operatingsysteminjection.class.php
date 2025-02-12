@@ -125,8 +125,8 @@ class PluginDatainjectionItem_OperatingsystemInjection extends Item_OperatingSys
 
 
    /**
-    * @param $primary_type
-    * @param $values
+    * @param string $primary_type
+    * @param array $values
    **/
     public function addSpecificNeededFields($primary_type, $values)
     {
