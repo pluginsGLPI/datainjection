@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Fixed
 
 - Use `global`  configuration for injection links
+- Escape  data when check if already exist
 
 ## [2.14.1] - 2024-12-27
 

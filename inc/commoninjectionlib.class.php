@@ -1932,7 +1932,7 @@ class PluginDatainjectionCommonInjectionLib
                                     $where .= " AND `id` IN (SELECT `users_id` FROM glpi_useremails WHERE `email` = '$email') ";
                                 } else {
                                     $where .= " AND `" . $field . "`='" .
-                                    $this->getValueByItemtypeAndName($itemtype, $field) . "'";
+                                    Sanitizer::dbEscape((string) $this->getValueByItemtypeAndName($itemtype, $field)) . "'";
                                 }
                             }
                         }
