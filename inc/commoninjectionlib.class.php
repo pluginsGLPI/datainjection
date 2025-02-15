@@ -943,10 +943,16 @@ class PluginDatainjectionCommonInjectionLib
             $option = self::findSearchOption($injectionClass->getOptions($itemtype), $field);
 
             if (isset($option['displaytype']) && $option['displaytype'] == 'multiline_text') {
-                if ($fromdb) {
-                    $this->values[$itemtype][$field] = $value . "\n" . $this->values[$itemtype][$field];
+                // If the new value starts with "#replace", the old value is replaced with the new value
+                if (str_starts_with($this->values[$itemtype][$field], '#replace')) {
+                    // The "#replace" tag is removed
+                    $this->values[$itemtype][$field] = trim(str_replace('#replace', '', $this->values[$itemtype][$field]));
                 } else {
-                    $this->values[$itemtype][$field] = $this->values[$itemtype][$field] . "\n" . $value;
+                    if ($fromdb) {
+                        $this->values[$itemtype][$field] = $value . "\n" . $this->values[$itemtype][$field];
+                    } else {
+                        $this->values[$itemtype][$field] = $this->values[$itemtype][$field] . "\n" . $value;
+                    }
                 }
             } else if (
                 ($fromdb && $value && !$this->rights['overwrite_notempty_fields'])
