@@ -139,7 +139,8 @@ class PluginDatainjectionCommonInjectionLib
             'overwrite_notempty_fields' => false,
             'can_add'                   => false,
             'can_update'                => false,
-            'can_delete'                => false
+            'can_delete'                => false,
+            'multiline_value_replace'   => false,
         ];
 
        //Field format options
@@ -943,11 +944,9 @@ class PluginDatainjectionCommonInjectionLib
             $option = self::findSearchOption($injectionClass->getOptions($itemtype), $field);
 
             if (isset($option['displaytype']) && $option['displaytype'] == 'multiline_text') {
-                // If the new value starts with "#replace", the old value is replaced with the new value
-                if (str_starts_with($this->values[$itemtype][$field], '#replace')) {
-                    // The "#replace" tag is removed
-                    $this->values[$itemtype][$field] = trim(str_replace('#replace', '', $this->values[$itemtype][$field]));
-                } else {
+                // If multiline_value_replace is true, the old value is replaced with the new value
+                // else, the new value is added to the old value
+                if (!$this->rights['multiline_value_replace']) {
                     if ($fromdb) {
                         $this->values[$itemtype][$field] = $value . "\n" . $this->values[$itemtype][$field];
                     } else {

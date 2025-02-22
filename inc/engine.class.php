@@ -131,6 +131,7 @@ class PluginDatainjectionEngine
        //Rights options
         $rights = ['add_dropdown'              => $this->getModel()->getCanAddDropdown(),
             'overwrite_notempty_fields' => $this->getModel()->getCanOverwriteIfNotEmpty(),
+            'multiline_value_replace'   => $this->getModel()->getMultilineValueReplace(),
             'can_add'                   => $this->model->getBehaviorAdd(),
             'can_update'                => $this->model->getBehaviorUpdate(),
             'can_delete'                => false
