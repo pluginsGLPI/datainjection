@@ -240,10 +240,10 @@ function plugin_datainjection_migration_2141_2150(Migration $migration)
 {
     $migration->setVersion('2.15.0');
 
-    $migration->addPostQuery(
-        "ALTER TABLE `glpi_plugin_datainjection_models`
-         ADD `multiline_value_replace` tinyint NOT NULL DEFAULT '0'",
-        'Adding multiline_value_replace field to models'
+    $migration->addField(
+        'glpi_plugin_datainjection_models',
+        'multiline_value_replace',
+        'bool'
     );
 
     $migration->executeMigration();    

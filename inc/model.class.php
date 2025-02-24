@@ -531,7 +531,7 @@ class PluginDatainjectionModel extends CommonDBTM
             'id'            => 87,
             'table'         => $this->getTable(),
             'field'         => 'multiline_value_replace',
-            'name'          => __('Multiline field value replace', 'datainjection'),
+            'name'          => __('Replacing the value of multiline text fields', 'datainjection'),
             'datatype'      => 'bool',
         ];
 
