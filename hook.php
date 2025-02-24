@@ -92,7 +92,7 @@ function plugin_datainjection_install()
                      `float_format` tinyint NOT NULL DEFAULT '0',
                      `port_unicity` tinyint NOT NULL DEFAULT '0',
                      `step` int NOT NULL DEFAULT '0',
-                     `multiline_value_replace` tinyint NOT NULL DEFAULT '0',
+                     `replace_multiline_value` tinyint NOT NULL DEFAULT '0',
                      PRIMARY KEY  (`id`)
                    ) ENGINE=InnoDB DEFAULT CHARSET={$default_charset} COLLATE={$default_collation} ROW_FORMAT=DYNAMIC;";
             $DB->doQueryOrDie($query, $DB->error());
@@ -242,7 +242,7 @@ function plugin_datainjection_migration_2141_2150(Migration $migration)
 
     $migration->addField(
         'glpi_plugin_datainjection_models',
-        'multiline_value_replace',
+        'replace_multiline_value',
         'bool'
     );
 

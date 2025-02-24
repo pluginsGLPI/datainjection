@@ -140,7 +140,7 @@ class PluginDatainjectionCommonInjectionLib
             'can_add'                   => false,
             'can_update'                => false,
             'can_delete'                => false,
-            'multiline_value_replace'   => false,
+            'replace_multiline_value'   => false,
         ];
 
        //Field format options
@@ -944,9 +944,9 @@ class PluginDatainjectionCommonInjectionLib
             $option = self::findSearchOption($injectionClass->getOptions($itemtype), $field);
 
             if (isset($option['displaytype']) && $option['displaytype'] == 'multiline_text') {
-                // If multiline_value_replace is true, the old value is replaced with the new value
+                // If replace_multiline_value is true, the old value is replaced with the new value
                 // else, the new value is added to the old value
-                if (!$this->rights['multiline_value_replace']) {
+                if (!$this->rights['replace_multiline_value']) {
                     if ($fromdb) {
                         $this->values[$itemtype][$field] = $value . "\n" . $this->values[$itemtype][$field];
                     } else {

@@ -252,10 +252,10 @@ class PluginDatainjectionModel extends CommonDBTM
     }
 
     
-    public function getMultilineValueReplace()
+    public function getReplaceMultilineValue()
     {
 
-        return $this->fields["multiline_value_replace"];
+        return $this->fields["replace_multiline_value"];
     }
 
 
@@ -530,7 +530,7 @@ class PluginDatainjectionModel extends CommonDBTM
         $tab[] = [
             'id'            => 87,
             'table'         => $this->getTable(),
-            'field'         => 'multiline_value_replace',
+            'field'         => 'replace_multiline_value',
             'name'          => __('Replacing the value of multiline text fields', 'datainjection'),
             'datatype'      => 'bool',
         ];
@@ -771,7 +771,7 @@ class PluginDatainjectionModel extends CommonDBTM
         echo "</td>";
         echo "<td>" . __('Replacing the value of multiline text fields', 'datainjection') . "</td>";
         echo "<td>";
-        Dropdown::showYesNo("multiline_value_replace", $this->fields['multiline_value_replace']);
+        Dropdown::showYesNo("replace_multiline_value", $this->fields['replace_multiline_value']);
         echo "</td>";
         echo "</td></tr>";
         if ($ID > 0) {
