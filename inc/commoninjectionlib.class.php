@@ -139,7 +139,8 @@ class PluginDatainjectionCommonInjectionLib
             'overwrite_notempty_fields' => false,
             'can_add'                   => false,
             'can_update'                => false,
-            'can_delete'                => false
+            'can_delete'                => false,
+            'replace_multiline_value'   => false,
         ];
 
        //Field format options
@@ -943,10 +944,14 @@ class PluginDatainjectionCommonInjectionLib
             $option = self::findSearchOption($injectionClass->getOptions($itemtype), $field);
 
             if (isset($option['displaytype']) && $option['displaytype'] == 'multiline_text') {
-                if ($fromdb) {
-                    $this->values[$itemtype][$field] = $value . "\n" . $this->values[$itemtype][$field];
-                } else {
-                    $this->values[$itemtype][$field] = $this->values[$itemtype][$field] . "\n" . $value;
+                // If replace_multiline_value is true, the old value is replaced with the new value
+                // else, the new value is added to the old value
+                if (!$this->rights['replace_multiline_value']) {
+                    if ($fromdb) {
+                        $this->values[$itemtype][$field] = $value . "\n" . $this->values[$itemtype][$field];
+                    } else {
+                        $this->values[$itemtype][$field] = $this->values[$itemtype][$field] . "\n" . $value;
+                    }
                 }
             } else if (
                 ($fromdb && $value && !$this->rights['overwrite_notempty_fields'])

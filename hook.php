@@ -67,6 +67,7 @@ function plugin_datainjection_install()
             plugin_datainjection_migration_251_252($migration);
             plugin_datainjection_migration_264_270($migration);
             plugin_datainjection_migration_2121_2122($migration);
+            plugin_datainjection_migration_2141_2150($migration);
             break;
 
         case 0:
@@ -91,6 +92,7 @@ function plugin_datainjection_install()
                      `float_format` tinyint NOT NULL DEFAULT '0',
                      `port_unicity` tinyint NOT NULL DEFAULT '0',
                      `step` int NOT NULL DEFAULT '0',
+                     `replace_multiline_value` tinyint NOT NULL DEFAULT '0',
                      PRIMARY KEY  (`id`)
                    ) ENGINE=InnoDB DEFAULT CHARSET={$default_charset} COLLATE={$default_collation} ROW_FORMAT=DYNAMIC;";
             $DB->doQueryOrDie($query, $DB->error());
@@ -196,6 +198,7 @@ function plugin_datainjection_install()
             plugin_datainjection_migration_264_270($migration);
             plugin_datainjection_migration_290_2100($migration);
             plugin_datainjection_migration_2121_2122($migration);
+            plugin_datainjection_migration_2141_2150($migration);
             break;
 
         default:
@@ -231,6 +234,19 @@ function plugin_datainjection_uninstall()
 
     plugin_init_datainjection();
     return true;
+}
+
+function plugin_datainjection_migration_2141_2150(Migration $migration)
+{
+    $migration->setVersion('2.15.0');
+
+    $migration->addField(
+        'glpi_plugin_datainjection_models',
+        'replace_multiline_value',
+        'bool'
+    );
+
+    $migration->executeMigration();
 }
 
 function plugin_datainjection_migration_2121_2122(Migration $migration)

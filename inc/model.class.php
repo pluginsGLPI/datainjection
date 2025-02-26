@@ -252,6 +252,13 @@ class PluginDatainjectionModel extends CommonDBTM
     }
 
 
+    public function getReplaceMultilineValue()
+    {
+
+        return $this->fields["replace_multiline_value"];
+    }
+
+
     public function getNumberOfMappings()
     {
 
@@ -520,6 +527,14 @@ class PluginDatainjectionModel extends CommonDBTM
             'datatype'      => 'bool',
         ];
 
+        $tab[] = [
+            'id'            => 87,
+            'table'         => $this->getTable(),
+            'field'         => 'replace_multiline_value',
+            'name'          => __('Replacing the value of multiline text fields', 'datainjection'),
+            'datatype'      => 'bool',
+        ];
+
         return $tab;
     }
 
@@ -753,6 +768,11 @@ class PluginDatainjectionModel extends CommonDBTM
             PluginDatainjectionDropdown::portUnicityValues(),
             ['value' => $this->fields['port_unicity']]
         );
+        echo "</td>";
+        echo "<td>" . __('Replacing the value of multiline text fields', 'datainjection') . "</td>";
+        echo "<td>";
+        Dropdown::showYesNo("replace_multiline_value", $this->fields['replace_multiline_value']);
+        echo "</td>";
         echo "</td></tr>";
         if ($ID > 0) {
             $tmp = self::getInstance('csv');
