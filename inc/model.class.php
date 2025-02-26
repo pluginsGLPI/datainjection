@@ -251,7 +251,7 @@ class PluginDatainjectionModel extends CommonDBTM
         return $this->fields["port_unicity"];
     }
 
-    
+
     public function getReplaceMultilineValue()
     {
 

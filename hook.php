@@ -246,7 +246,7 @@ function plugin_datainjection_migration_2141_2150(Migration $migration)
         'bool'
     );
 
-    $migration->executeMigration();    
+    $migration->executeMigration();
 }
 
 function plugin_datainjection_migration_2121_2122(Migration $migration)
