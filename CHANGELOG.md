@@ -12,11 +12,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Use `global`  configuration for injection links
 - Escape  data when check if already exist
 
-## [2.15.0] - 2025-02-26
+## [Unreleased]
 
 ### Added
 
-- Add option to replace the value of multiline text fields
+- Add option to `replace` (instead of `append`)  the value of multiline text fields (e.g. `comment`)
 
 ## [2.14.1] - 2024-12-27
 
