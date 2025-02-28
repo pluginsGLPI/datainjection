@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-12-20 01:04+0000\n"
+"POT-Creation-Date: 2025-02-27 01:05+0000\n"
 "PO-Revision-Date: 2018-06-21 12:57+0000\n"
 "Last-Translator: 조성현 (jaymz9634) <jaymz9634@gmail.com>, 2024\n"
 "Language-Team: Korean (Korea) (https://app.transifex.com/teclib/teams/28042/ko_KR/)\n"
@@ -21,13 +21,13 @@ msgstr ""
 "Language: ko_KR\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
-#: inc/model.class.php:1210
+#: inc/model.class.php:1230
 #, php-format
 msgid "%d awaited column"
 msgid_plural "%d awaited columns"
 msgstr[0] "%d개의 대기 열"
 
-#: inc/model.class.php:1215
+#: inc/model.class.php:1235
 #, php-format
 msgid "%d found column"
 msgid_plural "%d found columns"
@@ -53,31 +53,31 @@ msgstr "1 234.56"
 msgid "1,234.56"
 msgstr "1,234.56"
 
-#: inc/commoninjectionlib.class.php:2053
+#: inc/commoninjectionlib.class.php:2058
 msgid "Add from CSV file"
 msgstr "CSV 파일에서 추가"
 
-#: inc/dropdown.class.php:94 inc/model.class.php:815
+#: inc/dropdown.class.php:94 inc/model.class.php:835
 msgid "Additional Information"
 msgstr "추가 정보"
 
-#: inc/model.class.php:718
+#: inc/model.class.php:733
 msgid "Advanced options"
 msgstr "고급 옵션"
 
-#: inc/model.class.php:449 inc/model.class.php:722
+#: inc/model.class.php:456 inc/model.class.php:737
 msgid "Allow creation of dropdowns (Except Entity)"
 msgstr ""
 
-#: inc/model.class.php:421 inc/model.class.php:710
+#: inc/model.class.php:428 inc/model.class.php:725
 msgid "Allow lines creation"
 msgstr "줄 생성 허용"
 
-#: inc/model.class.php:430 inc/model.class.php:713
+#: inc/model.class.php:437 inc/model.class.php:728
 msgid "Allow lines update"
 msgstr "줄 갱신 허용"
 
-#: inc/model.class.php:736
+#: inc/model.class.php:751
 msgid "Allow update of existing fields"
 msgstr "기존 항목 갱신 허용"
 
@@ -85,19 +85,19 @@ msgstr "기존 항목 갱신 허용"
 msgid "Antivirus name"
 msgstr "안티바이러스 이름"
 
-#: inc/model.class.php:1527 inc/model.class.php:1665
+#: inc/model.class.php:1547 inc/model.class.php:1685
 msgid "Array of successful injections"
 msgstr "성공적인 삽입의 배열"
 
-#: inc/model.class.php:1562 inc/model.class.php:1687
+#: inc/model.class.php:1582 inc/model.class.php:1707
 msgid "Array of unsuccessful injections"
 msgstr "실패한 삽입의 배열"
 
-#: inc/model.class.php:1259
+#: inc/model.class.php:1279
 msgid "At least one column is incorrect"
 msgstr "최소 한개의 열이 잘못되었습니다"
 
-#: inc/commoninjectionlib.class.php:2119
+#: inc/commoninjectionlib.class.php:2124
 msgid "At least one mandatory field is not present"
 msgstr "하나 이상의 필수 항목이 없습니다"
 
@@ -105,11 +105,11 @@ msgstr "하나 이상의 필수 항목이 없습니다"
 msgid "Automatic detection"
 msgstr "자동 감지"
 
-#: setup.php:66 hook.php:133 hook.php:151
+#: setup.php:66 hook.php:135 hook.php:153
 msgid "Can't create folder"
 msgstr "폴더를 생성할 수 없습니다"
 
-#: inc/clientinjection.class.php:161 inc/info.class.php:266
+#: inc/info.class.php:266 inc/clientinjection.class.php:161
 msgid "Choose a file"
 msgstr "파일 선택"
 
@@ -117,37 +117,37 @@ msgstr "파일 선택"
 msgid "Complementary information"
 msgstr "보완 정보"
 
-#: inc/model.class.php:1610
+#: inc/model.class.php:1630
 msgid "Counter"
 msgstr "카운터"
 
-#: inc/model.class.php:1535 inc/model.class.php:1571 inc/model.class.php:1608
-#: inc/model.class.php:1669 inc/model.class.php:1692
+#: inc/model.class.php:1555 inc/model.class.php:1591 inc/model.class.php:1628
+#: inc/model.class.php:1689 inc/model.class.php:1712
 msgid "Data Import"
 msgstr "데이터 불러오기"
 
-#: inc/model.class.php:1570 inc/model.class.php:1691 inc/model.class.php:1711
+#: inc/model.class.php:1590 inc/model.class.php:1711 inc/model.class.php:1731
 msgid "Data check"
 msgstr "데이터 확인"
 
-#: setup.php:97 front/clientinjection.form.php:36 inc/profile.class.php:73
-#: inc/menu.class.php:38
+#: inc/profile.class.php:73 inc/menu.class.php:38 setup.php:97
+#: front/clientinjection.form.php:36
 msgid "Data injection"
 msgstr "데이터 삽입"
 
-#: front/popup.php:43 inc/model.class.php:1656
+#: inc/model.class.php:1676 front/popup.php:43
 msgid "Data injection report"
 msgstr "데이터 삽입 보고서"
 
-#: inc/commoninjectionlib.class.php:2135
+#: inc/commoninjectionlib.class.php:2140
 msgid "Data not found"
 msgstr "데이터 없음"
 
-#: inc/commoninjectionlib.class.php:2123
+#: inc/commoninjectionlib.class.php:2128
 msgid "Data to insert are correct"
 msgstr "삽입할 데이터가 정확합니다"
 
-#: inc/model.class.php:457 inc/model.class.php:726
+#: inc/model.class.php:464 inc/model.class.php:741
 msgid "Dates format"
 msgstr "날짜 형식"
 
@@ -171,7 +171,7 @@ msgstr "PDF로 보고서 내보내기"
 msgid "Export the log"
 msgstr "기록 내보내기"
 
-#: inc/model.class.php:1043
+#: inc/model.class.php:1063
 msgid "Extension csv required"
 msgstr "csv 확장자가 필요합니다"
 
@@ -187,12 +187,12 @@ msgstr "파일 구분자"
 msgid "File encoding"
 msgstr "파일 인코딩"
 
-#: inc/model.class.php:1042
+#: inc/model.class.php:1062
 msgid "File format is wrong"
 msgstr "파일 형식이 잘못되었습니다"
 
 #: inc/clientinjection.class.php:157 inc/dropdown.class.php:91
-#: inc/model.class.php:810
+#: inc/model.class.php:830
 msgid "File to inject"
 msgstr "삽입 할 파일"
 
@@ -200,15 +200,15 @@ msgstr "삽입 할 파일"
 msgid "Finish"
 msgstr "마치기"
 
-#: inc/model.class.php:466 inc/model.class.php:740
+#: inc/model.class.php:473 inc/model.class.php:755
 msgid "Float format"
 msgstr "부동 소숫점 형식"
 
-#: inc/model.class.php:1272
+#: inc/model.class.php:1292
 msgid "From the model"
 msgstr "모델에서"
 
-#: inc/model.class.php:1600
+#: inc/model.class.php:1620
 msgid "Global report"
 msgstr "전역 보고서"
 
@@ -224,11 +224,11 @@ msgstr "헤더의 존재"
 msgid "ISO8859-1"
 msgstr "ISO8859-1"
 
-#: inc/commoninjectionlib.class.php:2115
+#: inc/commoninjectionlib.class.php:2120
 msgid "Import failed"
 msgstr "불러오기 실패함"
 
-#: inc/commoninjectionlib.class.php:2111
+#: inc/commoninjectionlib.class.php:2116
 msgid "Import not allowed"
 msgstr "불러오기 허용안됨"
 
@@ -236,7 +236,7 @@ msgstr "불러오기 허용안됨"
 msgid "Import progress"
 msgstr "불러오기 진행"
 
-#: inc/model.class.php:1033
+#: inc/model.class.php:1053
 #, php-format
 msgid "Impossible to copy the file in %s"
 msgstr "%s의 파일을 복사할 수 없습니다"
@@ -263,8 +263,8 @@ msgstr "파일 삽입... %d %%"
 msgid "Injection successful"
 msgstr "삽입 성공함"
 
-#: inc/model.class.php:1536 inc/model.class.php:1572 inc/model.class.php:1609
-#: inc/model.class.php:1670 inc/model.class.php:1693
+#: inc/model.class.php:1556 inc/model.class.php:1592 inc/model.class.php:1629
+#: inc/model.class.php:1690 inc/model.class.php:1713
 msgid "Injection type"
 msgstr "삽입 유형"
 
@@ -272,7 +272,7 @@ msgstr "삽입 유형"
 msgid "Injection's results"
 msgstr "삽입 결과"
 
-#: inc/model.class.php:1267
+#: inc/model.class.php:1287
 msgid "Into the file"
 msgstr "파일 내"
 
@@ -280,8 +280,8 @@ msgstr "파일 내"
 msgid "Launch the import"
 msgstr "불러오기 시작"
 
-#: inc/model.class.php:1534 inc/model.class.php:1569 inc/model.class.php:1668
-#: inc/model.class.php:1690
+#: inc/model.class.php:1554 inc/model.class.php:1589 inc/model.class.php:1688
+#: inc/model.class.php:1710
 msgid "Line"
 msgstr "줄"
 
@@ -289,7 +289,7 @@ msgstr "줄"
 msgid "Link field"
 msgstr "링크 항목"
 
-#: inc/model.class.php:846
+#: inc/model.class.php:866
 msgid "Load this file"
 msgstr "이 파일 불러오기"
 
@@ -297,7 +297,7 @@ msgstr "이 파일 불러오기"
 msgid "Mandatory information"
 msgstr "필수 정보"
 
-#: inc/dropdown.class.php:92 inc/model.class.php:812
+#: inc/dropdown.class.php:92 inc/model.class.php:832
 msgid "Mappings"
 msgstr "매핑"
 
@@ -317,19 +317,19 @@ msgstr "모델 불명"
 msgid "No model currently available"
 msgstr "현재 사용 가능한 모델 없음"
 
-#: inc/commoninjectionlib.class.php:2099
+#: inc/commoninjectionlib.class.php:2104
 msgid "No right to import data"
 msgstr "데이터 불러오기 권한 없음"
 
-#: inc/commoninjectionlib.class.php:2103
+#: inc/commoninjectionlib.class.php:2108
 msgid "No right to update data"
 msgstr "데이터 갱신 권한 없음"
 
-#: inc/model.class.php:1122
+#: inc/model.class.php:1142
 msgid "Not data to import"
 msgstr "불러올 데이터 없음"
 
-#: inc/model.class.php:1601
+#: inc/model.class.php:1621
 msgid "Number of lines processed"
 msgstr "처리된 줄 수"
 
@@ -337,12 +337,12 @@ msgstr "처리된 줄 수"
 msgid "Number of ports"
 msgstr "포트 숫자"
 
-#: inc/model.class.php:1537 inc/model.class.php:1573 inc/model.class.php:1671
-#: inc/model.class.php:1694
+#: inc/model.class.php:1557 inc/model.class.php:1593 inc/model.class.php:1691
+#: inc/model.class.php:1714
 msgid "Object Identifier"
 msgstr "객체 확인자"
 
-#: inc/commoninjectionlib.class.php:2127
+#: inc/commoninjectionlib.class.php:2132
 msgid "One data is not the good type"
 msgstr "하나의 데이터가 바른 유형이 아닙니다"
 
@@ -356,7 +356,7 @@ msgstr "하나의 링크 항목이 선택되야 합니다: 데이터가 이미 �
 msgid "One mandatory field is not filled"
 msgstr "하나의 필수 항목이 비었습니다"
 
-#: inc/model.class.php:930
+#: inc/model.class.php:950
 msgid "Please enter a name for the model"
 msgstr "모델 이름을 입력하세요"
 
@@ -364,11 +364,15 @@ msgstr "모델 이름을 입력하세요"
 msgid "Port MAC address"
 msgstr "포트 MAC 주소"
 
-#: inc/model.class.php:475 inc/model.class.php:749
+#: inc/model.class.php:482 inc/model.class.php:764
 msgid "Port unicity criteria"
 msgstr "포트 단일성 기준"
 
-#: front/popup.php:37 inc/mapping.class.php:124
+#: inc/model.class.php:534 inc/model.class.php:772
+msgid "Replacing the value of multiline text fields"
+msgstr ""
+
+#: inc/mapping.class.php:124 front/popup.php:37
 msgid "See the file"
 msgstr "파일 보기"
 
@@ -376,7 +380,7 @@ msgstr "파일 보기"
 msgid "See the log"
 msgstr "기록 보기"
 
-#: inc/commoninjectionlib.class.php:2107
+#: inc/commoninjectionlib.class.php:2112
 msgid "Size of the inserted value is to expansive"
 msgstr "삽입된 값의 크기가 너무 큽니다"
 
@@ -384,7 +388,7 @@ msgstr "삽입된 값의 크기가 너무 큽니다"
 msgid "Specific file format options"
 msgstr "특정 파일 형식 옵션"
 
-#: inc/mapping.class.php:131 inc/info.class.php:82 inc/info.class.php:140
+#: inc/info.class.php:82 inc/info.class.php:140 inc/mapping.class.php:131
 msgid "Tables"
 msgstr "테이블"
 
@@ -393,11 +397,11 @@ msgid ""
 "The file could not be found (Maybe it exceeds the maximum size allowed)"
 msgstr ""
 
-#: inc/model.class.php:1182
+#: inc/model.class.php:1202
 msgid "The file is ok."
 msgstr "파일이 정상입니다."
 
-#: inc/model.class.php:1208
+#: inc/model.class.php:1228
 msgid "The number of columns of the file is incorrect."
 msgstr "파일의 열 수가 잘못되었습니다."
 
@@ -407,7 +411,7 @@ msgid ""
 "asked for theses informations while using the model."
 msgstr "이 단계는 파일 내에 존재하지 않는 정보를 추가할 수 있습니다. 모델 사용 중에는 이 정보를 묻는 메시지가 표시됩니다."
 
-#: inc/model.class.php:439 inc/model.class.php:698
+#: inc/model.class.php:446 inc/model.class.php:713
 msgid "Type of data to import"
 msgstr "불러올 데이터 유형"
 
@@ -415,11 +419,11 @@ msgstr "불러올 데이터 유형"
 msgid "UTF-8"
 msgstr "UTF-8"
 
-#: inc/commoninjectionlib.class.php:2139 inc/model.class.php:1447
+#: inc/commoninjectionlib.class.php:2144 inc/model.class.php:1467
 msgid "Undetermined"
 msgstr "미결됨"
 
-#: inc/commoninjectionlib.class.php:2055
+#: inc/commoninjectionlib.class.php:2060
 msgid "Update from CSV file"
 msgstr "CSV 파일에서 갱신"
 
@@ -427,12 +431,12 @@ msgstr "CSV 파일에서 갱신"
 msgid "Use an existing model"
 msgstr "기존 모델 사용"
 
-#: inc/model.class.php:776
+#: inc/model.class.php:796
 msgctxt "button"
 msgid "Validate the model"
 msgstr "모델 검증"
 
-#: inc/commoninjectionlib.class.php:2131
+#: inc/commoninjectionlib.class.php:2136
 msgid "Warning"
 msgstr "경고"
 
@@ -446,7 +450,7 @@ msgid ""
 "do it ?"
 msgstr "주의하세요, GLPI에 데이터를 삽입하려고 합니다. 정말로 하시겠습니까?"
 
-#: inc/model.class.php:964
+#: inc/model.class.php:984
 msgid "You are not the initial creator of this model"
 msgstr "당신은 이 모델의 초기 생성자가 아닙니다"
 
@@ -462,7 +466,7 @@ msgstr "이 개체에 접근할 수 없습니다"
 msgid "You cannot access this model"
 msgstr "이 모델에 접근할 수 없습니다"
 
-#: inc/model.class.php:941
+#: inc/model.class.php:961
 msgid "Your model should allow import and/or update of data"
 msgstr "모델은 불러오기 그리고/또는 데이터 갱신을 허용해야 합니다"
 
