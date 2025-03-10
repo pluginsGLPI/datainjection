@@ -96,8 +96,8 @@ class PluginDatainjectionNetpointInjection extends Socket implements PluginDatai
 
 
     /**
-    * @param $primary_type
-    * @param $values
+    * @param string $primary_type
+    * @param array $values
    **/
     public function addSpecificNeededFields($primary_type, $values)
     {

@@ -131,8 +131,8 @@ class PluginDatainjectionItem_SoftwareVersionInjection extends Item_SoftwareVers
 
 
     /**
-    * @param $primary_type
-    * @param $values
+    * @param string $primary_type
+    * @param array $values
    **/
 
     public function addSpecificNeededFields($primary_type, $values)

@@ -134,8 +134,8 @@ class PluginDatainjectionUserInjection extends User implements PluginDatainjecti
 
 
     /**
-    * @param $primary_type
-    * @param $values
+    * @param string $primary_type
+    * @param array $values
    **/
     public function addSpecificNeededFields($primary_type, $values)
     {
@@ -150,9 +150,9 @@ class PluginDatainjectionUserInjection extends User implements PluginDatainjecti
 
 
     /**
-    * @param $values
-    * @param $add                (true by default)
-    * @param $rights    array
+    * @param array $values
+    * @param boolean $add                (true by default)
+    * @param array|null $rights    array
     */
     public function processAfterInsertOrUpdate($values, $add = true, $rights = [])
     {
@@ -189,16 +189,15 @@ class PluginDatainjectionUserInjection extends User implements PluginDatainjecti
             $query = "UPDATE `glpi_users`
                    SET `password` = '" . $password . "'
                    WHERE `id` = '" . $values['User']['id'] . "'";
-            /** @phpstan-ignore-next-line */
-            $DB->query($query); // phpcs:ignore
+            $DB->doQuery($query);
         }
     }
 
 
     /**
-     * @param $itemtype
-     * @param $field
-     * @param $value
+     * @param string $itemtype
+     * @param string $field
+     * @param array $value
      **/
     protected function addSpecificOptionalInfos($itemtype, $field, $value)
     {

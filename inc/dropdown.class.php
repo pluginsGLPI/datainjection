@@ -70,7 +70,7 @@ class PluginDatainjectionDropdown
 
 
     /**
-    * @param $format
+    * @param string $format
    **/
     public static function getFloatFormat($format)
     {
@@ -105,7 +105,7 @@ class PluginDatainjectionDropdown
     /**
     * Return current status of the model
     *
-    * @return nothing
+    * @return string
    **/
     public static function getStatusLabel($step)
     {
@@ -157,7 +157,7 @@ class PluginDatainjectionDropdown
 
 
     /**
-    * @param $value
+    * @param array $value
    **/
     public static function getPortUnicityValues($value)
     {

@@ -91,8 +91,8 @@ class PluginDatainjectionContract_SupplierInjection extends Contract_Supplier im
 
 
     /**
-    * @param $primary_type
-    * @param $values
+    * @param string $primary_type
+    * @param array $values
    **/
     public function addSpecificNeededFields($primary_type, $values)
     {

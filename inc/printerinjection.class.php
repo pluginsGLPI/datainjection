@@ -98,8 +98,8 @@ class PluginDatainjectionPrinterInjection extends Printer implements PluginDatai
 
 
     /**
-    * @param $primary_type
-    * @param $values
+    * @param string $primary_type
+    * @param array $values
    **/
     public function addSpecificNeededFields($primary_type, $values)
     {
@@ -119,7 +119,7 @@ class PluginDatainjectionPrinterInjection extends Printer implements PluginDatai
     /**
     * Play printers dictionnary
     *
-    * @param $values
+    * @param array $values
    **/
     public function processDictionnariesIfNeeded(&$values)
     {

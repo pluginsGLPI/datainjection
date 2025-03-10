@@ -44,9 +44,9 @@ class PluginDatainjectionEngine
 
 
     /**
-    * @param $model
-    * @param $infos     array
-    * @param $entity             (default 0)
+    * @param mixed $model
+    * @param array $infos     array
+    * @param int|string $entity             (default 0)
     */
     public function __construct($model, $infos = [], $entity = 0)
     {
@@ -66,8 +66,8 @@ class PluginDatainjectionEngine
     /**
     * Inject one line of data
     *
-    * @param $line   one line of data to import
-    * @param $index  the line number is the file
+    * @param array $line   one line of data to import
+    * @param int $index  the line number is the file
    **/
     public function injectLine($line, $index)
     {
@@ -166,8 +166,8 @@ class PluginDatainjectionEngine
     /**
      * Add fields needed for injection
      *
-     * @param $itemtype                    the itemtype to inject
-     * @param $fields_toinject    array    the list of fields representing the object
+     * @param string $itemtype                    the itemtype to inject
+     * @param array $fields_toinject    array    the list of fields representing the object
      *
      * @return void nothing
      */
@@ -207,7 +207,7 @@ class PluginDatainjectionEngine
         $return_value = $value;
 
         if (
-            $option !== false && ($option['displaytype'] == 'multiline_text')
+            !empty($option) && ($option['displaytype'] == 'multiline_text')
             && in_array($mapping->getValue(), $several)
             && ($value != PluginDatainjectionCommonInjectionLib::EMPTY_VALUE)
         ) {
@@ -225,7 +225,7 @@ class PluginDatainjectionEngine
     /**
     * Add additonal informations, as selected by the user which performs the CSV file import
     *
-    * @return additional informations to inject
+    * @return array additional informations to inject
    **/
     public function addAdditionalInformations()
     {
