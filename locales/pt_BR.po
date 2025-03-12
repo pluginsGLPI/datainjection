@@ -6,15 +6,16 @@
 # Translators:
 # Cédric Anne, 2018
 # Matheus Rafael, 2023
+# Diego Nobre <diego@koruma.com.br>, 2025
 # 
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-02-27 01:05+0000\n"
+"POT-Creation-Date: 2025-03-12 01:09+0000\n"
 "PO-Revision-Date: 2018-06-21 12:57+0000\n"
-"Last-Translator: Matheus Rafael, 2023\n"
+"Last-Translator: Diego Nobre <diego@koruma.com.br>, 2025\n"
 "Language-Team: Portuguese (Brazil) (https://app.transifex.com/teclib/teams/28042/pt_BR/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -72,7 +73,7 @@ msgstr "Opções avançadas"
 
 #: inc/model.class.php:456 inc/model.class.php:737
 msgid "Allow creation of dropdowns (Except Entity)"
-msgstr ""
+msgstr "Permitir criação de menus suspensos (Exceto Entidade)"
 
 #: inc/model.class.php:428 inc/model.class.php:725
 msgid "Allow lines creation"
@@ -377,7 +378,7 @@ msgstr "Critério de unicidade de porta"
 
 #: inc/model.class.php:534 inc/model.class.php:772
 msgid "Replacing the value of multiline text fields"
-msgstr ""
+msgstr "Substituindo o valor de campos de texto multilinha"
 
 #: inc/mapping.class.php:124 front/popup.php:37
 msgid "See the file"
@@ -403,10 +404,12 @@ msgstr "Tabelas"
 msgid ""
 "The file could not be found (Maybe it exceeds the maximum size allowed)"
 msgstr ""
+"O arquivo não pôde ser encontrado (talvez ele exceda o tamanho máximo "
+"permitido)"
 
 #: inc/model.class.php:1202
 msgid "The file is ok."
-msgstr "The arquivo está OK."
+msgstr "O arquivo está OK."
 
 #: inc/model.class.php:1228
 msgid "The number of columns of the file is incorrect."
@@ -431,7 +434,7 @@ msgstr "UTF-8"
 
 #: inc/commoninjectionlib.class.php:2144 inc/model.class.php:1467
 msgid "Undetermined"
-msgstr "Impossível determinar"
+msgstr "Indeterminado"
 
 #: inc/commoninjectionlib.class.php:2060
 msgid "Update from CSV file"
@@ -484,12 +487,12 @@ msgstr "Seu modelo deve permitir a importação e/ou a atualização de dados"
 
 #: inc/dropdown.class.php:37
 msgid "dd-mm-yyyy"
-msgstr "dd-mm-yyyy"
+msgstr "dd-mm-aaaa"
 
 #: inc/dropdown.class.php:39
 msgid "mm-dd-yyyy"
-msgstr "mm-dd-yyyy"
+msgstr "mm-dd-aaaa"
 
 #: inc/dropdown.class.php:41
 msgid "yyyy-mm-dd"
-msgstr "yyyy-mm-dd"
+msgstr "aaaa-mm-dd"
