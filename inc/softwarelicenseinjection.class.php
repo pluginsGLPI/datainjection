@@ -97,8 +97,8 @@ class PluginDatainjectionSoftwareLicenseInjection extends SoftwareLicense implem
 
 
     /**
-    * @param $info      array
-    * @param $option    array
+    * @param array $info      array
+    * @param array $option    array
    **/
     public function showAdditionalInformation($info = [], $option = [])
     {
@@ -143,7 +143,7 @@ class PluginDatainjectionSoftwareLicenseInjection extends SoftwareLicense implem
 
 
     /**
-    * @param $fields_toinject    array
+    * @param array $fields_toinject    array
    **/
     public function getValueForAdditionalMandatoryFields($fields_toinject = [])
     {
@@ -164,8 +164,7 @@ class PluginDatainjectionSoftwareLicenseInjection extends SoftwareLicense implem
                         $fields_toinject['SoftwareLicense']['entities_id'],
                         true
                     );
-        /** @phpstan-ignore-next-line */
-        $result = $DB->query($query); // phpcs:ignore
+        $result = $DB->doQuery($query);
 
         if ($DB->numrows($result) > 0) {
             $id = $DB->result($result, 0, 'id');
@@ -181,8 +180,8 @@ class PluginDatainjectionSoftwareLicenseInjection extends SoftwareLicense implem
 
 
     /**
-    * @param $primary_type
-    * @param $values
+    * @param string $primary_type
+    * @param array $values
    **/
     public function addSpecificNeededFields($primary_type, $values)
     {
@@ -196,8 +195,8 @@ class PluginDatainjectionSoftwareLicenseInjection extends SoftwareLicense implem
 
 
     /**
-    * @param $fields_toinject    array
-    * @param $options            array
+    * @param array $fields_toinject    array
+    * @param array $options            array
    **/
     public function checkPresent($fields_toinject = [], $options = [])
     {

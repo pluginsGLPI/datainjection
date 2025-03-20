@@ -87,8 +87,8 @@ class PluginDatainjectionContact_SupplierInjection extends Contact_Supplier impl
 
 
     /**
-    * @param $primary_type
-    * @param $values
+    * @param string $primary_type
+    * @param array $values
    **/
     public function addSpecificNeededFields($primary_type, $values)
     {

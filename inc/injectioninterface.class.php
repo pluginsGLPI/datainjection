@@ -40,7 +40,7 @@ interface PluginDatainjectionInjectionInterface
     /**
     * Tells datainjection is the type is a primary type or not
     *
-    * @return a boolean
+    * @return boolean a boolean
    **/
     public function isPrimaryType();
 
@@ -48,7 +48,7 @@ interface PluginDatainjectionInjectionInterface
     /**
     * Indicates to with other types it can be connected
     *
-    * @return an array of GLPI types
+    * @return array of GLPI types
    **/
     public function connectedTo();
 
@@ -56,9 +56,9 @@ interface PluginDatainjectionInjectionInterface
     /**
     * Function which calls getSearchOptions and add more parameters specific to display
     *
-    * @param $primary_type    (default '')
+    * @param string $primary_type    (default '')
     *
-    * @return an array of search options, as defined in each commondbtm object
+    * @return array of search options, as defined in each commondbtm object
    **/
     public function getOptions($primary_type = '');
 
@@ -66,7 +66,7 @@ interface PluginDatainjectionInjectionInterface
     /**
     * Manage display of additional informations
     *
-    * @param $info   array    which contains the additional information values
+    * @param array $info   array    which contains the additional information values
     *
     * This method is optionnal ! Implement it if the itemtype to display special information
    **/
@@ -76,10 +76,10 @@ interface PluginDatainjectionInjectionInterface
     /**
     * Standard method to add an object into glpi
     *
-    * @param $values    array fields to add into glpi
-    * @param $options   array options used during creation
+    * @param array $values    array fields to add into glpi
+    * @param array $options   array options used during creation
     *
-    * @return an array of IDs of newly created objects:
+    * @return array of IDs of newly created objects:
     * for example array(Computer=>1, Networkport=>10)
    **/
     public function addOrUpdateObject($values = [], $options = []);
@@ -90,11 +90,11 @@ interface PluginDatainjectionInjectionInterface
     * Check values to inject
     * This method is optionnal ! Implement it if the itemtype need special checks
     *
-    * @param $fields_name  field to add to glpi
+    * @param array $fields_name  field to add to glpi
     * @param $data         value to add
     * @param $mandatory    is this value mandatory or not ?
     *
-    * @return an array which indicates check status & errors
+    * @return array which indicates check status & errors
    **/
     //function checkType($field_name, $data, $mandatory);
 
@@ -103,7 +103,7 @@ interface PluginDatainjectionInjectionInterface
     * Reformat data if itemtypes needs it
     * This method is optionnal ! Implement it if the itemtype need special reformat
     *
-    * @param $values array
+    * @param array $values array
    **/
     //function reformat(&$values=[]);
 
@@ -111,10 +111,9 @@ interface PluginDatainjectionInjectionInterface
     /**
     * Add itemtype specific checks to see if object is already in DB or not
     *
-    * @param $fields_toinject    array   the fields to be injected into GLPI DB
-    * @param $options            array   more informations needed
+    * @param array $fields_toinject    array   the fields to be injected into GLPI DB
+    * @param array $options            array   more informations needed
     *
-    * @return nothing
    **/
     //function checkPresent($fields_toinject=[], $options=[]);
 
@@ -123,10 +122,10 @@ interface PluginDatainjectionInjectionInterface
     * Get value for a field (for example specific dropdowns for an itemtype)
     * This method is optionnal ! Implement it if the itemtype need special field values
     *
-    * @param $itemtype
-    * @param $searchOption
+    * @param string $itemtype
+    * @param array $searchOption
     * @pram  $field
-    * @param $value
+    * @param array $value
    **/
     //function getSpecificFieldValue($itemtype, $searchOption, $field, $value);
 
@@ -135,8 +134,8 @@ interface PluginDatainjectionInjectionInterface
     * Add specific values to the object to inject
     * This method is optionnal ! Implement it if the itemtype need special reformat
     *
-    * @param primary_type     the primary_type to inject
-    * @param fields_toinject  all the fields that need to be injected
+    * @param string $primary_type     the primary_type to inject
+    * @param array $fields_toinject  all the fields that need to be injected
    **/
     //function addSpecificNeededFields($primary_type, $fields_toinject);
 }

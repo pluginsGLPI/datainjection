@@ -33,8 +33,8 @@ class PluginDatainjectionMapping extends CommonDBTM
     public static $rightname = "plugin_datainjection_model";
 
     /**
-    * @param $field
-    * @param $value
+    * @param string $field
+    * @param array $value
    **/
     public function equal($field, $value)
     {
@@ -94,7 +94,7 @@ class PluginDatainjectionMapping extends CommonDBTM
 
 
     /**
-    * @param $model  PluginDatainjectionModel object
+    * @param PluginDatainjectionModel $model  PluginDatainjectionModel object
    **/
     public static function showFormMappings(PluginDatainjectionModel $model)
     {
@@ -163,9 +163,9 @@ class PluginDatainjectionMapping extends CommonDBTM
     /**
     * For multitext only ! Check it there's more than one value to inject in a field
     *
-    * @param $models_id the model ID
+    * @param int $models_id the model ID
     *
-    * @return true if more than one value to inject, false if not
+    * @return array true if more than one value to inject, false if not
    **/
     public static function getSeveralMappedField($models_id)
     {
@@ -189,7 +189,7 @@ class PluginDatainjectionMapping extends CommonDBTM
 
 
     /**
-    * @param $models_id
+    * @param int $models_id
    **/
     public static function getMappingsSortedByRank($models_id)
     {

@@ -82,7 +82,7 @@ class PluginDatainjectionModelcsv extends CommonDBChild
     /**
     * Display Sample
     *
-    * @param $model     PluginDatainjectionModel object
+    * @param PluginDatainjectionModel $model     PluginDatainjectionModel object
    **/
     public function showSample(PluginDatainjectionModel $model)
     {
@@ -110,7 +110,7 @@ class PluginDatainjectionModelcsv extends CommonDBChild
     /**
     * Check if filename ends with .csv
     *
-    * @param $filename  the filename
+    * @param string $filename  the filename
     *
     * @return boolean true if name is correct, false is not
    **/
@@ -125,7 +125,7 @@ class PluginDatainjectionModelcsv extends CommonDBChild
     * Get CSV's specific ID for a model
     * If row doesn't exists, it creates it
     *
-    * @param $models_id the model ID
+    * @param int $models_id the model ID
     *
     * @return int the ID of the row in glpi_plugin_datainjection_modelcsv
    **/
@@ -138,8 +138,7 @@ class PluginDatainjectionModelcsv extends CommonDBChild
                 FROM `" . $this->getTable() . "`
                 WHERE `models_id` = '" . $models_id . "'";
 
-        /** @phpstan-ignore-next-line */
-        $results = $DB->query($query); // phpcs:ignore
+        $results = $DB->doQuery($query);
         $id = 0;
 
         if ($DB->numrows($results) > 0) {
@@ -158,8 +157,8 @@ class PluginDatainjectionModelcsv extends CommonDBChild
 
 
     /**
-    * @param $model              PluginDatainjectionModel object
-    * @param $options   array
+    * @param PluginDatainjectionModel $model              PluginDatainjectionModel object
+    * @param array $options   array
    **/
     public function showAdditionnalForm(PluginDatainjectionModel $model, $options = [])
     {
@@ -182,7 +181,7 @@ class PluginDatainjectionModelcsv extends CommonDBChild
 
 
     /**
-    * @param $fields
+    * @param array $fields
    **/
     public function saveFields($fields)
     {

@@ -124,8 +124,8 @@ class PluginDatainjectionInfocomInjection extends Infocom implements PluginDatai
 
 
     /**
-    * @param $info      array
-    * @param $option    array
+    * @param array $info      array
+    * @param array $option    array
    **/
     public function showAdditionalInformation($info = [], $option = [])
     {
@@ -148,7 +148,7 @@ class PluginDatainjectionInfocomInjection extends Infocom implements PluginDatai
 
 
     /**
-    * @param $values    array
+    * @param array $values    array
    **/
     public function reformat(&$values = [])
     {

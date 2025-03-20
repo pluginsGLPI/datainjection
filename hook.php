@@ -52,7 +52,7 @@ function plugin_datainjection_install()
 
     include_once Plugin::getPhpDir('datainjection') . "/inc/profile.class.php";
 
-    $migration = new Migration(null);
+    $migration = new Migration(PLUGIN_DATAINJECTION_VERSION);
 
     $default_charset = DBConnection::getDefaultCharset();
     $default_collation = DBConnection::getDefaultCollation();
@@ -1937,8 +1937,8 @@ function plugin_datainjection_update220_230()
 
 
 /**
- * @param $hook_name
- * @param $params       array
+ * @param string $hook_name
+ * @param array $params
 **/
 function plugin_datainjection_loadHook($hook_name, $params = [])
 {
@@ -1984,7 +1984,7 @@ function plugin_datainjection_needUpdateOrInstall()
 /**
  * Used for filter list of models
  *
- * @param $itemtype
+ * @param string $itemtype
 **/
 function plugin_datainjection_addDefaultWhere($itemtype)
 {
@@ -2006,7 +2006,6 @@ function plugin_datainjection_addDefaultWhere($itemtype)
             } else {
                 return "1 = 0"; //no model available -> force WHERE clause to get no result
             }
-            return false;
         default:
             break;
     }
