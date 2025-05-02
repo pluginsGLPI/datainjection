@@ -29,5 +29,6 @@
  */
 
 require '../../../inc/includes.php';
+Session::checkLoginUser();
 
 PluginDatainjectionClientInjection::exportErrorsInCSV();

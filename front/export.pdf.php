@@ -29,5 +29,6 @@
  */
 
 require '../../../inc/includes.php';
+Session::checkLoginUser();
 
 PluginDatainjectionModel::exportAsPDF($_GET['models_id']);
