@@ -29,6 +29,7 @@
  */
 
 require '../../../inc/includes.php';
-Session::checkLoginUser();
+
+Session::checkRight(PluginDatainjectionClientInjection::$rightname, READ);
 
 PluginDatainjectionClientInjection::exportErrorsInCSV();

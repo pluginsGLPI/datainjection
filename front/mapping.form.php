@@ -29,7 +29,8 @@
  */
 
 require '../../../inc/includes.php';
-Session::checkLoginUser();
+
+Session::checkRight('plugin_datainjection_model', UPDATE);
 
 /* Update mappings */
 if (isset($_POST["update"])) {
