@@ -29,6 +29,7 @@
  */
 
 require '../../../inc/includes.php';
+Session::checkLoginUser();
 
 Html::header(
     PluginDatainjectionModel::getTypeName(),

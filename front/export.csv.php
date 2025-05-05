@@ -30,4 +30,6 @@
 
 require '../../../inc/includes.php';
 
+Session::checkRight(PluginDatainjectionClientInjection::$rightname, READ);
+
 PluginDatainjectionClientInjection::exportErrorsInCSV();

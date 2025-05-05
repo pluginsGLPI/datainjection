@@ -29,6 +29,7 @@
  */
 
 require '../../../inc/includes.php';
+Session::checkLoginUser();
 
 /* Update mappings */
 if (isset($_POST["update"])) {

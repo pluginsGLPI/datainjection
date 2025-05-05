@@ -30,6 +30,8 @@
 
 require '../../../inc/includes.php';
 
+Session::checkRight('plugin_datainjection_model', UPDATE);
+
 /* Update mappings */
 if (isset($_POST["update"])) {
     $at_least_one_mandatory = false;
