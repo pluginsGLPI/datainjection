@@ -28,11 +28,13 @@
  * -------------------------------------------------------------------------
  */
 
+use Glpi\Asset\Asset_PeripheralAsset;
+
 if (!defined('GLPI_ROOT')) {
     die("Sorry. You can't access directly to this file");
 }
 
-class PluginDatainjectionComputer_ItemInjection extends Computer_Item implements PluginDatainjectionInjectionInterface
+class PluginDatainjectionComputer_ItemInjection implements PluginDatainjectionInjectionInterface
 {
     public static function getTable($classname = null)
     {
@@ -120,9 +122,11 @@ class PluginDatainjectionComputer_ItemInjection extends Computer_Item implements
    **/
     public function addSpecificNeededFields($primary_type, $values)
     {
+        $fields['items_id_asset'] = $values['id'];
+        $fields['itemtype_asset'] = Computer::class;
 
-        $fields['items_id'] = $values[$primary_type]['id'];
-        $fields['itemtype'] = $primary_type;
+        $fields['items_id_peripheral'] = $values[$primary_type]['id'];
+        $fields['itemtype_peripheral'] = $primary_type;
         return $fields;
     }
 }

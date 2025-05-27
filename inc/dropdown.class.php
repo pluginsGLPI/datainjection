@@ -117,22 +117,29 @@ class PluginDatainjectionDropdown
         return "";
     }
 
+    public static function getStatusColor($step)
+    {
+        switch ($step) {
+            case PluginDatainjectionModel::MAPPING_STEP:
+            case PluginDatainjectionModel::OTHERS_STEP:
+                return "#ffb832";
+            case PluginDatainjectionModel::READY_TO_USE_STEP:
+                return "#45ff32";
+            default:
+                return "#ff4e4e";
+        }
+        return "";
+    }
 
-    public static function dropdownFileEncoding()
+
+    public static function getFileEncodingValue()
     {
 
-        $values[PluginDatainjectionBackend::ENCODING_AUTO]      = __(
-            'Automatic detection',
-            'datainjection'
-        );
+        $values[PluginDatainjectionBackend::ENCODING_AUTO]      = __('Automatic detection', 'datainjection');
         $values[PluginDatainjectionBackend::ENCODING_UFT8]      = __('UTF-8', 'datainjection');
         $values[PluginDatainjectionBackend::ENCODING_ISO8859_1] = __('ISO8859-1', 'datainjection');
 
-        Dropdown::showFromArray(
-            'file_encoding',
-            $values,
-            ['value' => PluginDatainjectionBackend::ENCODING_AUTO]
-        );
+        return $values;
     }
 
 
