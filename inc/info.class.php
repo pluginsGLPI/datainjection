@@ -1,5 +1,7 @@
 <?php
 
+use Glpi\Application\View\TemplateRenderer;
+
 /**
  * -------------------------------------------------------------------------
  * DataInjection plugin for GLPI
@@ -143,7 +145,6 @@ class PluginDatainjectionInfo extends CommonDBTM
             echo "</tr>";
 
             foreach ($model->getInfos() as $info) {
-                $info->fields = Toolbox::stripslashes_deep($info->fields);
                 $infos_id     = $info->fields['id'];
                 echo "<tr class='tab_bg_1'>";
                 if ($canedit) {
@@ -244,66 +245,33 @@ class PluginDatainjectionInfo extends CommonDBTM
    **/
     public static function showAdditionalInformationsForm(PluginDatainjectionModel $model)
     {
-
         $infos = getAllDataFromTable(
             'glpi_plugin_datainjection_infos',
             ['models_id' => $model->getField('id')]
         );
 
-        $table     = false;
         $modeltype = PluginDatainjectionModel::getInstance($model->getField('filetype'));
         $modeltype->getFromDBByModelID($model->getField('id'));
 
-        if (
-            count($infos)
-            || $modeltype->haveSample()
-            || $model->fields['comment']
-        ) {
-            echo "<table class='tab_cadre_fixe'>";
-            echo "<tr><th colspan='2'>" . sprintf(
-                __('%1$s (%2$s)'),
-                __('Complementary information', 'datainjection'),
-                __('Choose a file', 'datainjection')
-            );
-            echo "</th></tr>\n";
-            $table = true;
-        }
-        if ($modeltype->haveSample()) {
-            echo "<tr class='tab_bg_1'>";
-            echo "<td colspan='2' class='center'>";
-            echo "<a href='" . $model->getFormURL() . "?sample=";
-            echo $model->getField('id') . "' class='vsubmit'>" . __('Download file sample', 'datainjection');
-            echo "</a></td></tr>\n";
-        }
-        if ($model->fields['comment']) {
-            echo "<tr class='tab_bg_2'>";
-            echo "<td colspan='2' class='center'>" . nl2br($model->fields['comment']) . "</td></tr>\n";
-        }
-        if (count($infos)) {
-            $info = new PluginDatainjectionInfo();
+        $data = [
+            'infos' => $infos,
+            'model' => $model,
+            'modeltype' => $modeltype,
+            'has_sample' => $modeltype->haveSample(),
+            'comment' => $model->fields['comment'],
+            'session_infos' => $_SESSION['datainjection']['infos'] ?? [],
+        ];
 
-            foreach ($infos as $tmp) {
-                $info->fields = $tmp;
-                echo "<tr class='tab_bg_1'>";
-                self::displayAdditionalInformation(
-                    $info,
-                    (isset($_SESSION['datainjection']['infos'])
-                                             ? $_SESSION['datainjection']['infos']
-                    : [])
-                );
-                echo "</tr>";
-            }
-        }
-        if ($table) {
-            echo "</table><br>";
-        }
+        // Store models_id in session for future usage
+        $_SESSION['datainjection']['models_id'] = $model->getField('id');
 
-         $options['models_id'] = $model->getField('id');
-         $options['confirm']   = 'process';
-         PluginDatainjectionClientInjection::showUploadFileForm($options);
+        // Render the Twig template
+        TemplateRenderer::getInstance()->display('@datainjection/infoadditionnalinfo.html.twig', $data);
 
-         //Store models_id in session for future usage
-         $_SESSION['datainjection']['models_id'] = $model->getField('id');
+        // Show the upload file form
+        $options['models_id'] = $model->getField('id');
+        $options['confirm'] = 'process';
+        PluginDatainjectionClientInjection::showUploadFileForm($options);
     }
 
 
@@ -496,7 +464,7 @@ class PluginDatainjectionInfo extends CommonDBTM
                   getEntitiesRestrictRequest(' AND ', $table) .
            "ORDER BY `template_name`";
 
-        foreach ($DB->request($sql) as $data) {
+        foreach ($DB->doQuery($sql) as $data) {
             $values[$data['id']] = $data['template_name'];
         }
         Dropdown::showFromArray($name, $values);

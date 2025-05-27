@@ -57,7 +57,7 @@ class PluginDatainjectionMappingCollection
 
         $this->mappingCollection = [];
 
-        foreach ($data = $DB->request($sql) as $data) {
+        foreach ($data = $DB->doQuery($sql) as $data) {
            // Addslashes to conform to value return by PluginDatainjectionBackendcsv::parseLine
             $data["name"]              = addslashes($data["name"]);
             $mapping                   = new PluginDatainjectionMapping();
