@@ -1469,7 +1469,6 @@ class PluginDatainjectionCommonInjectionLib
         $add      = true;
         $accepted = false;
 
-        $this->values = Sanitizer::dbUnescapeRecursive($this->values);
        //Toolbox::logDebug("processAddOrUpdate(), start with", $this->values);
 
        // Initial value, will be change when problem
@@ -1659,8 +1658,6 @@ class PluginDatainjectionCommonInjectionLib
                 $toinject[$key] = $value;
             }
         }
-
-        $toinject = Sanitizer::dbEscapeRecursive($toinject);
 
         $newID = null;
         if (method_exists($injectionClass, 'customimport')) {
@@ -1917,8 +1914,7 @@ class PluginDatainjectionCommonInjectionLib
                                     $email = $DB->escape($this->getValueByItemtypeAndName($itemtype, $field));
                                     $where .= " AND `id` IN (SELECT `users_id` FROM glpi_useremails WHERE `email` = '$email') ";
                                 } else {
-                                    $where .= " AND `" . $field . "`='" .
-                                    Sanitizer::dbEscape((string) $this->getValueByItemtypeAndName($itemtype, $field)) . "'";
+                                    $where .= " AND `" . $field . "`='" . (string) $this->getValueByItemtypeAndName($itemtype, $field) . "'";
                                 }
                             }
                         }
