@@ -1,5 +1,7 @@
 <?php
 
+use Glpi\Application\View\TemplateRenderer;
+
 /**
  * -------------------------------------------------------------------------
  * DataInjection plugin for GLPI
@@ -162,21 +164,16 @@ class PluginDatainjectionModelcsv extends CommonDBChild
    **/
     public function showAdditionnalForm(PluginDatainjectionModel $model, $options = [])
     {
-
-        $id      = $this->getFromDBByModelID($model->fields['id']);
+        $id = $this->getFromDBByModelID($model->fields['id']);
         $canedit = $this->can($id, UPDATE);
 
-        echo "<tr><th colspan='4'>" . __('Specific file format options', 'datainjection') . "</th></tr>";
+        $data = [
+            'canedit' => $canedit,
+            'is_header_present' => $this->isHeaderPresent(),
+            'delimiter' => $this->getDelimiter(),
+        ];
 
-        echo "<tr class='tab_bg_1'>";
-        echo "<td>" . __("Header's presence", 'datainjection') . "</td>";
-        echo "<td>";
-        Dropdown::showYesNo('is_header_present', $this->isHeaderPresent());
-        echo "</td>";
-        echo "<td>" . __('File delimitor', 'datainjection') . "</td>";
-        echo "<td>";
-        echo "<input type='text' size='1' name='delimiter' value='" . $this->getDelimiter() . "'";
-        echo "</td></tr>";
+        TemplateRenderer::getInstance()->display('@datainjection/modelcsv_additional_form.html.twig', $data);
     }
 
 

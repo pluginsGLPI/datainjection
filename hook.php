@@ -1838,7 +1838,7 @@ function plugin_datainjection_update170_20()
             WHERE `itemtype` NOT IN ('none')
             GROUP BY `itemtype`,`value`";
 
-    foreach ($DB->request($query) as $data) {
+    foreach ($DB->doQuery($query) as $data) {
         if (isset($foreignkeys[$data['value']])) {
             foreach ($foreignkeys[$data['value']] as $field_info) {
                 $table = getTableForItemType($data['itemtype']);

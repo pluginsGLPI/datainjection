@@ -188,7 +188,7 @@ class PluginDatainjectionInjectionType
 
         if ($p['need_decode']) {
             $mapping_or_info = json_decode(
-                Toolbox::stripslashes_deep($options['mapping_or_info']),
+                $options['mapping_or_info'],
                 true
             );
         } else {
@@ -312,12 +312,11 @@ class PluginDatainjectionInjectionType
     {
 
        // Received data has been slashed.
-        $options = Toolbox::stripslashes_deep($options);
 
         if ($options['need_decode']) {
            // JSON data has been slashed twice, stripslashes has to be done a second time.
             $mapping_or_info = json_decode(
-                Toolbox::stripslashes_deep($options['mapping_or_info']),
+                $options['mapping_or_info'],
                 true
             );
         } else {
@@ -359,7 +358,7 @@ class PluginDatainjectionInjectionType
 
         if ($p['need_decode']) {
             $mapping_or_info = json_decode(
-                Toolbox::stripslashes_deep($options['mapping_or_info']),
+                $options['mapping_or_info'],
                 true
             );
         } else {

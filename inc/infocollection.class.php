@@ -57,7 +57,7 @@ class PluginDatainjectionInfoCollection
                 WHERE `models_id` = '" . $models_id . "'
                 ORDER BY `itemtype` ASC";
 
-        foreach ($DB->request($query) as $data) {
+        foreach ($DB->doQuery($query) as $data) {
             $infos = new PluginDatainjectionInfo();
             $infos->fields = $data;
             $this->infosCollection[] = $infos;

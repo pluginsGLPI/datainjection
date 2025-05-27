@@ -112,7 +112,7 @@ class PluginDatainjectionItem_OperatingsystemInjection extends Item_OperatingSys
         /** @var DBmysql $DB */
         global $DB;
         $item_operatingsystem = new \Item_OperatingSystem();
-        $matching_os = $DB->request([
+        $matching_os = $DB->doQuery([
             'FROM' => $item_operatingsystem->getTable(),
             'WHERE' => [
                 'itemtype' => $values['itemtype'],
