@@ -1,0 +1,41 @@
+  <form method="post" action={{ from_url }}>
+    <input type="hidden" name="_glpi_csrf_token" value="{{ csrf_token() }}" />
+    <div class="hr-text mt-5 mb-5">
+        <i class="fa-2x ti ti-chart-bar"></i>
+        <span>{{ __("Injection's results", 'datainjection') }}</span>
+    </div>
+    <div class="center">
+      {% if ok %}
+        <i class="ti ti-check" style="color: #28a745;"></i>
+        {{ __('Injection successful', 'datainjection') }}
+      {% else %}
+        <i class="ti ti-x" style="color: #dc3545;"></i>
+        {{ __('Injection encounters errors', 'datainjection') }}
+      {% endif %}
+    </div>
+
+    <div class="center mt-2">
+      <div class="d-flex justify-content-center gap-3">
+        <a href="#" onclick="var w = window.open('{{ popup_url }}', 'glpipopup', 'height=400, width=1000, top=100, left=100, scrollbars=yes');w.focus();" title="{{ __('See the log', 'datainjection') }}">
+          <h2><i class="fa-2x ti ti-file-search"></i></h2>
+        </a>
+
+        {% if has_pdf %}
+          <a href="#" onclick="location.href='export.pdf.php?models_id={{ model_id }}'" title="{{ __('Export rapport in PDF', 'datainjection') }}">
+            <h2><i class="fa-2x ti ti-file-type-pdf"></i></h2>
+          </a>
+        {% endif %}
+
+        {% if has_errors %}
+          <a href="#" onclick="location.href='export.csv.php'" title="{{ __('Export the log', 'datainjection') }}">
+            <h2><i class="fa-2x ti ti-file-type-csv" style="color: #dc3545;"></i></h2>
+          </a>
+        {% endif %}
+      </div>
+    </div>
+
+    <div class="d-flex justify-content-end">
+      <input class="btn btn-primary" type="submit" name="finish" value="{{ __('Finish', 'datainjection') }}">
+    </div>
+  </div>
+</form>

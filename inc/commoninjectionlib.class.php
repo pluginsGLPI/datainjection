@@ -1640,6 +1640,9 @@ class PluginDatainjectionCommonInjectionLib
         $options  = $injectionClass->getOptions();
 
         foreach ($values as $key => $value) {
+            if ($value == 'NULL') {
+                continue;
+            }
             $option = self::findSearchOption($options, $key);
             if (!empty($option) && isset($option['checktype']) && $option['checktype'] == self::FIELD_VIRTUAL) {
                 break;
@@ -1654,7 +1657,7 @@ class PluginDatainjectionCommonInjectionLib
 
             if (!empty($option) && self::isFieldADropdown($option['displaytype']) && $value == self::EMPTY_VALUE) {
                 //If field is a dropdown and value is '', then replace it by 0
-                $toinject[$key] = self::DROPDOWN_EMPTY_VALUE;
+                continue;
             } else {
                 $toinject[$key] = $value;
             }

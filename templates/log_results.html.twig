@@ -1,0 +1,118 @@
+<div class="log-results">
+
+  {% if logresults[SUCCESS] is defined %}
+    <div>
+      <div class="hr-text mt-5 mb-5">
+          <i class="fa-2x ti ti-progress-check"></i>
+          <span>{{ __('Array of successful injections', 'datainjection') }}</span>
+      </div>
+      <table class="table table-striped card-table table-hover">
+        <thead>
+          <tr>
+            <th></th>
+            <th>{{ __('Line', 'datainjection') }}</th>
+            <th>{{ __('Data Import', 'datainjection') }}</th>
+            <th>{{ __('Injection type', 'datainjection') }}</th>
+            <th>{{ __('Object Identifier', 'datainjection') }}</th>
+          </tr>
+        </thead>
+        <tbody>
+        {% for result in logresults[SUCCESS] %}
+          <tr>
+            <td><i class="ti ti-circle-check" style="color: #28a745;"></i></td>
+            <td>{{ result.line }}</td>
+            <td>{{ result.status_message|nl2br }}</td>
+            <td>{{ result.type }}</td>
+            <td>{{ result.url|raw }}</td>
+          </tr>
+        {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  {% endif %}
+
+  {% if logresults[FAILED] is defined %}
+    <div>
+      <div class="hr-text mt-5 mb-5">
+          <i class="fa-2x ti ti-progress-x"></i>
+          <span>{{ __('Array of failed injections', 'datainjection') }}</span>
+      </div>
+      <table class="table table-striped card-table table-hover">
+        <thead>
+          <tr>
+            <th></th>
+            <th>{{ __('Line', 'datainjection') }}</th>
+            <th>{{ __('Data check', 'datainjection') }}</th>
+            <th>{{ __('Data Import', 'datainjection') }}</th>
+            <th>{{ __('Injection type', 'datainjection') }}</th>
+            <th>{{ __('Object Identifier', 'datainjection') }}</th>
+          </tr>
+        </thead>
+        <tbody>
+        {% for result in logresults[FAILED] %}
+          <tr>
+            <td><i class="ti ti-circle-x" style="color: #dc3545;"></i></td>
+            <td>{{ result.line }}</td>
+            <td>{{ result.check_message|nl2br }}</td>
+            <td>{{ result.status_message|nl2br }}</td>
+            <td>{{ result.type }}</td>
+            <td>{{ result.url|raw }}</td>
+          </tr>
+        {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  {% endif %}
+
+  {% if resume is not empty %}
+    <div>
+      <div class="hr-text mt-5 mb-5">
+          <i class="fa-2x ti ti-report"></i>
+          <span>{{ __('Global report', 'datainjection') }}</span>
+      </div>
+      <p><em>{{ __('Number of lines processed', 'datainjection') }} : {{ nblines }}</em></p>
+      <table class="table table-striped card-table table-hover">
+        <thead>
+          <tr>
+            <th></th>
+            <th>{{ __('Data Import', 'datainjection') }}</th>
+            <th>{{ __('Injection type', 'datainjection') }}</th>
+            <th>{{ __('Counter', 'datainjection') }}</th>
+          </tr>
+        </thead>
+        <tbody>
+        {% for status, types in resume %}
+          {% set rowspan = types|length %}
+          <tr>
+            <td rowspan="{{ rowspan }}">
+              {% if status == SUCCESS %}
+                <i class="ti ti-circle-check" style="color: #28a745;"></i>
+              {% else %}
+                <i class="ti ti-circle-x" style="color: #dc3545;"></i>
+              {% endif %}
+            </td>
+            <td rowspan="{{ rowspan }}">
+              {% set label = call('PluginDatainjectionCommonInjectionLib::getLogLabel', [status])|raw %}
+              {{ label }}
+            </td>
+            {% for type, value in types %}
+              {% if not loop.first %}
+                <tr>
+              {% endif %}
+              <td>{{ type }}</td>
+              <td>{{ value }}</td>
+              {% if not loop.last %}
+                </tr>
+              {% endif %}
+            {% endfor %}
+          </tr>
+        {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  {% endif %}
+
+  <div class="mt-4 text-center">
+    <a href="javascript:window.close()" class="btn btn-outline-danger">{{ __('Close') }}</a>
+  </div>
+</div>
