@@ -1,0 +1,18 @@
+{% import 'components/form/fields_macros.html.twig' as fields %}
+
+{% set field_options = {
+    'field_class': 'col-6 col-sm-6',
+    'label_class': 'col-6 col-sm-6',
+    'input_class': 'col-6 col-sm-6',
+} %}
+
+<div class="hr-text mt-5 mb-5">
+    <i class="fa-2x ti ti-file-type-csv"></i>
+    <span>{{ __('Specific file format options', 'datainjection') }}</span>
+</div>
+
+<div class="row">
+    {{ fields.dropdownYesNo('is_header_present', is_header_present, __("Header's presence", 'datainjection'), field_options) }}
+
+    {{ fields.textField('delimiter', delimiter, __('File delimitor', 'datainjection'), field_options) }}
+</div>

@@ -1,0 +1,27 @@
+{% if infos|length > 0 or has_sample or comment %}
+    <div class="hr-text mt-2 mb-5">
+        <i class="fa-2x ti ti-file-download"></i>
+        <span>{{ __('Complementary information', 'datainjection') ~ ' (' ~ __('Choose a file', 'datainjection') ~ ')' }}</span>
+    </div>
+
+    {% if has_sample %}
+        <div class="text-center mt-3">
+            <a href="{{ model.getFormURL() }}?sample={{ model.getField('id') }}" class="btn btn-primary">
+                <i class="ti ti-download"></i> &nbsp;
+                {{ __('Download file sample', 'datainjection') }}
+            </a>
+        </div>
+    {% endif %}
+
+    {% if comment %}
+        <div class="text-center mt-3">
+            <p>{{ comment|nl2br }}</p>
+        </div>
+    {% endif %}
+
+    {% for info in infos %}
+        <div class="text-center mt-3">
+            {{ self.displayAdditionalInformation(info, session_infos)|raw }}
+        </div>
+    {% endfor %}
+{% endif %}
