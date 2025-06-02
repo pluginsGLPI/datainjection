@@ -1,0 +1,13 @@
+<form method="post" name="form" action="{{ url }}">
+    <input type="hidden" name="_glpi_csrf_token" value="{{ csrf_token() }}" />
+    <div class="hr-text mt-5 mb-5">
+        <i class="fa-2x ti ti-square-check"></i>
+        <span>{{ __('Validation', 'datainjection') }}</span>
+    </div>
+    <div class="tab_cadre_fixe">
+        <div class="tab_bg_1 text-center">
+            <input type="submit" class="btn btn-primary" name="validate" value="{{ _x('button', 'Validate the model', 'datainjection') }}">
+            <input type="hidden" name="id" value="{{ id }}">
+        </div>
+    </div>
+</form>

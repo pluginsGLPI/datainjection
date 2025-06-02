@@ -1,0 +1,69 @@
+{% import 'components/form/fields_macros.html.twig' as fields %}
+{% import 'components/alerts_macros.html.twig' as alerts %}
+
+{% set rand = random() %}
+<div class="firstbloc">
+    <form name="clientinjection_form{{ rand }}" id="clientinjection_form{{ rand }}" method="post" action="{{ form_action }}" enctype="multipart/form-data">
+        <input type="hidden" name="_glpi_csrf_token" value="{{ csrf_token() }}" />
+        <div class="card p-3 m-5">
+            <div class="row">
+                <div class="hr-text mt-2 mb-5">
+                    <i class="fa-2x ti ti-adjustments-alt"></i>
+                    <span>{{ __('Client Injection Configuration', 'datainjection') }}</span>
+                </div>
+                <div class="col-12">
+                    {% if models|length > 0 %}
+                        {{ fields.dropdownField(
+                            'PluginDatainjectionModel',
+                            'dropdown_models',
+                            0,
+                            __('Model', 'datainjection'),
+                            {
+                                'add_field_class'   : 'col-sm-12',
+                                'input_class'       : 'col-6 col-sm-6',
+                                'label_class'       : 'col-6 col-sm-6',
+                            }
+                        ) }}
+                    {% else %}
+                        {% set text = __('No model currently available', 'datainjection') %}
+                        {% if can_create_model %}
+                            {% set text = text ~ '. ' ~ __('You can start the model creation by hitting the button', 'datainjection') ~ ': ' ~ model_type_name %}
+                        {% endif %}
+                        {{ alerts.alert_info(text) }}
+                    {% endif %}
+                </div>
+            </div>
+
+            <div class="row mt-3">
+                <div class="col-12">
+                    <span id="span_injection" name="span_injection"></span>
+                </div>
+            </div>
+
+            {% if models_id %}
+                <div class="row mt-3">
+                    <div class="col-12">
+                        {% if step == upload_step %}
+                            <script>
+                                Ajax.updateItem("span_injection", "{{ upload_url }}", {{ params|json_encode|raw }});
+                            </script>
+                        {% elseif step == result_step %}
+                            <script>
+                                Ajax.updateItem("span_injection", "{{ result_url }}", {{ params|json_encode|raw }});
+                            </script>
+                        {% endif %}
+                    </div>
+                </div>
+            {% endif %}
+
+            <div class="hstack gap-1 mt-4">
+                <div class="pe-5 ms-auto mb-2">
+                    <button class="btn btn-primary" type="submit" name="save" value="1">
+                        <i class="ti ti-device-floppy"></i>
+                        <span>{{ _x('button', 'Save') }}</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>

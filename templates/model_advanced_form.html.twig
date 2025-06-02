@@ -1,0 +1,60 @@
+{% import 'components/form/fields_macros.html.twig' as fields %}
+
+{% set field_options = {
+    'field_class': 'col-6 col-sm-6',
+    'label_class': 'col-6 col-sm-6',
+    'input_class': 'col-6 col-sm-6',
+} %}
+
+<form name="form" method="post" action="{{ url }}">
+    <div id="tabsbody">
+        <div class="row">
+            <div class="hr-text mt-5 mb-5">
+                <i class="fa-2x ti ti-template"></i>
+                <span>{{ type_name }}</span>
+            </div>
+            {# Status Fields #}
+            {{ fields.htmlField('', status_label, __('Model status', 'datainjection'), field_options) }}
+
+            {{ fields.hiddenField('users_id', session_user_id, '', field_options)}}
+
+            {# Forms fields #}
+            {{ fields.textField('name', values['name'], __('Name'), field_options) }}
+
+            {{ fields.dropdownYesNo('is_private', values['is_private'], __('Visibility'), field_options) }}
+
+            {{ fields.dropdownField('Entity', 'entities_id', values['entities_id'], __('Entity'), field_options) }}
+
+            {{ fields.dropdownYesNo('is_recursive', values['is_recursive'], __('Child entities'), field_options) }}
+
+            {% if values['step'] == '' or values['step'] == initial_step %}
+                {{ fields.dropdownArrayField('itemtype', values['itemtype'], injection_types, __('Type of data to import', 'datainjection'), field_options) }}
+            {% else %}
+                {{ fields.htmlField('itemtype', values['itemtype'], __('Type of data to import', 'datainjection'), field_options) }}
+            {% endif %}
+
+            {{ fields.textareaField('comment', values['comment'], __('Comments'), field_options) }}
+
+            {{ fields.dropdownYesNo('behavior_add', values['behavior_add'], __('Allow lines creation', 'datainjection'), field_options) }}
+
+            {{ fields.dropdownYesNo('behavior_update', values['behavior_update'], __('Allow lines update', 'datainjection'), field_options) }}
+
+            {# Advanced options part #}
+            <div class="hr-text mt-5 mb-5">
+                <i class="fa-2x ti ti-adjustments-cog"></i>
+                <span>{{ __('Advanced options', 'datainjection') }}</span>
+            </div>
+
+            {{ fields.dropdownYesNo('can_add_dropdown', values['can_add_dropdown'], __('Allow creation of dropdowns (Except Entity)', 'datainjection'), field_options) }}
+
+            {{ fields.dropdownArrayField('date_format', values['date_format'], date_formats, __('Dates format', 'datainjection'), field_options) }}
+
+            {{ fields.dropdownYesNo('can_overwrite_if_not_empty', values['can_overwrite_if_not_empty'], __('Allow update of existing fields', 'datainjection'), field_options) }}
+
+            {{ fields.dropdownArrayField('float_format', values['float_format'], float_formats, __('Float format', 'datainjection'), field_options) }}
+
+            {{ fields.dropdownArrayField('port_unicity', values['port_unicity'], port_unicity_values, __('Port unicity criteria', 'datainjection'), field_options) }}
+
+            {{ fields.dropdownYesNo('replace_multiline_value', replace_multiline_value, __('Replacing the value of multiline text fields', 'datainjection'), field_options) }}
+        </div>
+    </div>

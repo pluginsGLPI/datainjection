@@ -118,26 +118,15 @@ class PluginDatainjectionClientInjection
    **/
     public static function showInjectionForm(PluginDatainjectionModel $model, $entities_id)
     {
-
         if (!PluginDatainjectionSession::getParam('infos')) {
             PluginDatainjectionSession::setParam('infos', []);
         }
-        echo "<table class='tab_cadre_fixe'>";
-        echo "<tr class='tab_bg_1'>";
-        echo "<th colspan='2'>" . sprintf(__('%1$s: %2$s'), __('Model'), $model->fields['name']) . "</th>";
-        echo "</tr>";
-        echo "</table><br>";
 
-        echo "<table class='tab_cadre_fixe'>";
-        echo "<tr class='tab_bg_1'>";
-        echo "<th colspan='2'>" . __('Import progress', 'datainjection') . "</th>";
-        echo "</tr>";
+        TemplateRenderer::getInstance()->display('@datainjection/clientinjection_injection.html.twig', [
+            'model_name' => $model->fields['name'],
+        ]);
 
-        echo "<tr class='tab_bg_1'><td>";
-        Html::createProgressBar(__('Injection of the file', 'datainjection'));
-        echo "</td></tr>";
-        echo "</table><br>";
-
+        // L'injection réelle reste côté PHP, mais tu peux déclencher l'appel Ajax ici si besoin
         echo "<span id='span_injection' name='span_injection'></span>";
         self::processInjection($model, $entities_id);
     }
@@ -216,39 +205,42 @@ class PluginDatainjectionClientInjection
             $index++;
         }
 
-         //EOF : change progressbar to 100% !
-         Html::changeProgressBarPosition(
-             100,
-             100,
-             sprintf(
-                 __('%1$s (%2$s)'),
-                 __('Injection finished', 'datainjection'),
-                 Html::timestampToString(time() - $deb, true)
-             )
-         );
+        $js = <<<JAVASCRIPT
+            $(function() {
+                const progress = document.querySelector('.progress');
+                const progressBar = document.querySelector('.progress-bar');
+                if (progressBar && progress) {
+                    progressBar.style.width = '100%';
+                    progress.setAttribute('aria-valuenow', '100');
+                }
+            });
+        JAVASCRIPT;
 
-         // Restore
-         $CFG_GLPI["debug_sql"] = 1;
+        //EOF : change progressbar to 100% !
+        echo Html::scriptBlock($js);
 
-         //Close CSV file
-         $backend->closeFile();
+        // Restore
+        $CFG_GLPI["debug_sql"] = 1;
 
-         //Delete CSV file
-         $backend->deleteFile();
+        //Close CSV file
+        $backend->closeFile();
 
-         //Change step
-         $_SESSION['datainjection']['step'] = self::STEP_RESULT;
+        //Delete CSV file
+        $backend->deleteFile();
 
-         //Display results form
-         PluginDatainjectionSession::setParam('results', json_encode($clientinjection->results));
-         PluginDatainjectionSession::setParam('error_lines', json_encode($engine->getLinesInError()));
-         $p['models_id'] = $model->fields['id'];
-         $p['nblines']   = $nblines;
+        //Change step
+        $_SESSION['datainjection']['step'] = self::STEP_RESULT;
 
-         unset($_SESSION['datainjection']['go']);
+        //Display results form
+        PluginDatainjectionSession::setParam('results', json_encode($clientinjection->results));
+        PluginDatainjectionSession::setParam('error_lines', json_encode($engine->getLinesInError()));
+        $p['models_id'] = $model->fields['id'];
+        $p['nblines']   = $nblines;
 
-         $url = Plugin::getWebDir('datainjection') . "/ajax/results.php";
-         Ajax::updateItem("span_injection", $url, $p);
+        unset($_SESSION['datainjection']['go']);
+
+        $url = $CFG_GLPI['root_doc'] . "/plugins/datainjection//ajax/results.php";
+        Ajax::updateItem("span_injection", $url, $p);
     }
 
 
@@ -291,15 +283,16 @@ class PluginDatainjectionClientInjection
             }
         }
 
-        $di_base_url = Plugin::getWebDir('datainjection');
+        $from_url = $CFG_GLPI['root_doc'] . "/plugins/datainjection/front/clientinjection.form.php";
         $plugin      = new Plugin();
 
         $data = [
-            'ok'           => $ok,
-            'di_base_url'  => $di_base_url,
-            'model_id'     => $model->fields['id'],
-            'has_pdf'      => $plugin->isActivated('pdf'),
-            'has_errors'   => !empty($error_lines),
+            'ok'            => $ok,
+            'from_url'      => $from_url,
+            'popup_url'     => $CFG_GLPI['root_doc'] . "/plugins/datainjection/front/popup.php?popup=log&amp;models_id=" . $model->fields['id'],
+            'model_id'      => $model->fields['id'],
+            'has_pdf'       => $plugin->isActivated('pdf'),
+            'has_errors'    => !empty($error_lines),
         ];
 
         TemplateRenderer::getInstance()->display('@datainjection/clientinjection_result.html.twig', $data);
