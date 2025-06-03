@@ -13,8 +13,8 @@ parameters:
     scanDirectories:
         - ../../inc
         - ../../src
-        - ../../vendor/symfony/http-kernel/Exception
-    stubFiles:
+    bootstrapFiles:
         - ../../stubs/glpi_constants.php
+        - ../../vendor/autoload.php
 rules:
     - GlpiProject\Tools\PHPStan\Rules\GlobalVarTypeRule
