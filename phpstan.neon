@@ -11,6 +11,7 @@ parameters:
     scanDirectories:
         - ../../inc
         - ../../src
+        - ../../vendor/symfony/http-kernel/Exception
     stubFiles:
         - ../../stubs/glpi_constants.php
 rules:
