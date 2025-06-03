@@ -77,7 +77,7 @@ function plugin_datainjection_install()
                      `replace_multiline_value` tinyint NOT NULL DEFAULT '0',
                      PRIMARY KEY  (`id`)
                    ) ENGINE=InnoDB DEFAULT CHARSET={$default_charset} COLLATE={$default_collation} ROW_FORMAT=DYNAMIC;";
-            $DB->doQueryOrDie($query, $DB->error());
+            $DB->doQuery($query);
 
             $query = "CREATE TABLE IF NOT EXISTS `glpi_plugin_datainjection_modelcsvs` (
                      `id` int {$default_key_sign} NOT NULL auto_increment,
@@ -87,7 +87,7 @@ function plugin_datainjection_install()
                      `is_header_present` tinyint NOT NULL default '1',
                      PRIMARY KEY  (`ID`)
                    ) ENGINE=InnoDB DEFAULT CHARSET={$default_charset} COLLATE={$default_collation} ROW_FORMAT=DYNAMIC;";
-            $DB->doQueryOrDie($query, $DB->error());
+            $DB->doQuery($query);
 
             $query = "CREATE TABLE IF NOT EXISTS `glpi_plugin_datainjection_mappings` (
                      `id` INT {$default_key_sign} NOT NULL AUTO_INCREMENT PRIMARY KEY ,
@@ -98,7 +98,7 @@ function plugin_datainjection_install()
                      `value` VARCHAR( 255 ) NOT NULL ,
                      `is_mandatory` TINYINT NOT NULL DEFAULT '0'
                    ) ENGINE=InnoDB DEFAULT CHARSET={$default_charset} COLLATE={$default_collation} ROW_FORMAT=DYNAMIC;";
-            $DB->doQueryOrDie($query, $DB->error());
+            $DB->doQuery($query);
 
             $query = "CREATE TABLE IF NOT EXISTS `glpi_plugin_datainjection_infos` (
                      `id` INT {$default_key_sign} NOT NULL AUTO_INCREMENT PRIMARY KEY ,
@@ -107,7 +107,7 @@ function plugin_datainjection_install()
                      `value` VARCHAR( 255 ) NOT NULL ,
                      `is_mandatory` TINYINT NOT NULL DEFAULT '0'
                    ) ENGINE=InnoDB DEFAULT CHARSET={$default_charset} COLLATE={$default_collation} ROW_FORMAT=DYNAMIC;";
-            $DB->doQueryOrDie($query, $DB->error());
+            $DB->doQuery($query);
 
             if (!is_dir(PLUGIN_DATAINJECTION_UPLOAD_DIR)) {
                 @ mkdir(PLUGIN_DATAINJECTION_UPLOAD_DIR)
@@ -206,7 +206,7 @@ function plugin_datainjection_uninstall()
 
     foreach ($tables as $table) {
         if ($DB->tableExists($table)) {
-            $DB->doQueryOrDie("DROP TABLE IF EXISTS `" . $table . "`", $DB->error());
+            $DB->doQuery("DROP TABLE IF EXISTS `" . $table . "`");
         }
     }
 
@@ -525,7 +525,7 @@ function plugin_datainjection_update170_20()
 
     $query = "UPDATE `glpi_plugin_datainjection_models`
               SET `filetype` = 'csv'";
-    $DB->doQueryOrDie($query, "update filetype of glpi_plugin_datainjection_models");
+    $DB->doQuery($query);
 
     $migration->dropTable('glpi_plugin_datainjection_filetype');
 
@@ -615,19 +615,18 @@ function plugin_datainjection_update170_20()
         'glpi_plugin_datainjection_infos',
         'glpi_plugin_datainjection_modelcsvs'
     ];
-    Plugin::migrateItemType([], [], $glpitables);
 
     $query = "UPDATE `glpi_plugin_datainjection_mappings`
              SET `itemtype` = 'none' ,
                  `value`='none'
              WHERE `itemtype` = '-1'";
-    $DB->doQueryOrDie($query, "Datainjection mappings tables : error updating not mapped fields");
+    $DB->doQuery($query);
 
     $migration->migrationOneTable('glpi_plugin_datainjection_infos');
     $query = "UPDATE `glpi_plugin_datainjection_infos`
              SET `itemtype` = 'none', `value` = 'none'
              WHERE `itemtype` = '-1'";
-    $DB->doQueryOrDie($query, "Datainjection infos table : error updating not mapped fields");
+    $DB->doQuery($query);
 
     $foreignkeys = [
         'assign' => [
@@ -1862,12 +1861,12 @@ function plugin_datainjection_update170_20()
                          SET `value` = '" . $field_info['to'] . "'
                          WHERE `itemtype` = '" . $data['itemtype'] . "'
                            AND `value` = '" . $data['value'] . "'";
-                    $DB->doQueryOrDie($query, "Datainjection : error converting mapping fields");
+                    $DB->doQuery($query);
                     $query = "UPDATE `glpi_plugin_datainjection_infos`
                          SET `value` = '" . $field_info['to'] . "'
                          WHERE `itemtype` = '" . $data['itemtype'] . "'
                           AND `value` = '" . $data['value'] . "'";
-                    $DB->doQueryOrDie($query, "Datainjection : error converting infos fields");
+                    $DB->doQuery($query);
                 }
             }
         }

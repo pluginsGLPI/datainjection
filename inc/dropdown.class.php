@@ -128,7 +128,6 @@ class PluginDatainjectionDropdown
             default:
                 return "#ff4e4e";
         }
-        return "";
     }
 
 

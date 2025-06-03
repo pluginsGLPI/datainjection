@@ -116,8 +116,8 @@ class PluginDatainjectionMapping extends CommonDBTM
             $nblines = $_SESSION['datainjection']['nblines'];
             echo "<table class='tab_cadre_fixe'>";
             echo "<tr class='tab_bg_1'><td class='center'>";
-            $url = Plugin::getWebDir('datainjection') .
-             "/front/popup.php?popup=preview&amp;models_id=" .
+            $url = plugin_datainjection_geturl() .
+             "front/popup.php?popup=preview&amp;models_id=" .
              $model->getID();
             echo "<a href=#  onClick=\"var w = window.open('$url' , 'glpipopup', " .
              "'height=400, width=600, top=100, left=100, scrollbars=yes' );w.focus();\"/>";
