@@ -408,7 +408,7 @@ class PluginDatainjectionCommonInjectionLib
         if (in_array($itemtype, $CFG_GLPI["networkport_types"])) {
             $raw_options_to_blacklist = array_merge(
                 $raw_options_to_blacklist,
-                NetworkPort::rawSearchOptionsToAdd($itemtype)
+                NetworkPort::rawSearchOptionsToAdd($itemtype) /* @phpstan-ignore-line */
             );
         }
 

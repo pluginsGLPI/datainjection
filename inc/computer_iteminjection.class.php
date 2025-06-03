@@ -40,6 +40,9 @@ class PluginDatainjectionComputer_ItemInjection implements PluginDatainjectionIn
     {
 
         $parenttype = get_parent_class();
+        if ($parenttype === false) {
+            return 'glpi_plugin_datainjection_computer_iteminjections';
+        }
         return $parenttype::getTable();
     }
 
