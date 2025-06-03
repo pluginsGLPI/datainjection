@@ -87,7 +87,7 @@ class PluginDatainjectionClientInjection
             $buttons[$url] = PluginDatainjectionModel::getTypeName();
             $title         = "";
             Html::displayTitle(
-                Plugin::getWebDir('datainjection') . "/pics/datainjection.png",
+                plugin_datainjection_geturl() . "pics/datainjection.png",
                 PluginDatainjectionModel::getTypeName(),
                 $title,
                 $buttons
@@ -212,22 +212,6 @@ class PluginDatainjectionClientInjection
             if ($pos != $prev) {
                 $prev = $pos;
                 $fin  = time() - $deb;
-                //TODO yllen
-                Html::changeProgressBarPosition(
-                    $index,
-                    $nblines,
-                    sprintf(
-                        __('%1$s (%2$s)'),
-                        sprintf(
-                            __(
-                                'Injection of the file... %d%%',
-                                'datainjection'
-                            ),
-                            $pos
-                        ),
-                        Html::timestampToString(time() - $deb, true)
-                    )
-                );
             }
             $line = $backend->getNextLine();
             $index++;
@@ -296,6 +280,7 @@ class PluginDatainjectionClientInjection
    **/
     public static function showResultsForm(PluginDatainjectionModel $model)
     {
+        /** @var array $CFG_GLPI */
         global $CFG_GLPI;
 
         $results     = json_decode(PluginDatainjectionSession::getParam('results'), true);

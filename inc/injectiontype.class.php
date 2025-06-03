@@ -155,9 +155,9 @@ class PluginDatainjectionInjectionType
         );
 
         $p['itemtype'] = '__VALUE__';
-        $di_base_url   = Plugin::getWebDir('datainjection');
-        $url_field     = "$di_base_url/ajax/dropdownChooseField.php";
-        $url_mandatory = "$di_base_url/ajax/dropdownMandatory.php";
+        $di_base_url   = plugin_datainjection_geturl();
+        $url_field     = $di_base_url . "ajax/dropdownChooseField.php";
+        $url_mandatory = $di_base_url . "ajax/dropdownMandatory.php";
         $toobserve     = "dropdown_data[" . $mapping_or_info->getID() . "][itemtype]$rand";
         $toupdate      = "span_field_" . $mappings_id;
         Ajax::updateItem($toupdate, $url_field, $p, $toobserve);
@@ -239,7 +239,7 @@ class PluginDatainjectionInjectionType
             ]
         );
 
-        $url = Plugin::getWebDir('datainjection') . "/ajax/dropdownMandatory.php";
+        $url = plugin_datainjection_geturl() . "ajax/dropdownMandatory.php";
         Ajax::updateItem(
             "span_mandatory_" . $mapping_or_info['id'],
             $url,
