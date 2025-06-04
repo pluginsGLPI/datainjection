@@ -28,6 +28,36 @@
  * -------------------------------------------------------------------------
  */
 
+use Glpi\Application\View\TemplateRenderer;
+
+/**
+ * -------------------------------------------------------------------------
+ * DataInjection plugin for GLPI
+ * -------------------------------------------------------------------------
+ *
+ * LICENSE
+ *
+ * This file is part of DataInjection.
+ *
+ * DataInjection is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * DataInjection is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with DataInjection. If not, see <http://www.gnu.org/licenses/>.
+ * -------------------------------------------------------------------------
+ * @copyright Copyright (C) 2007-2023 by DataInjection plugin team.
+ * @license   GPLv2 https://www.gnu.org/licenses/gpl-2.0.html
+ * @link      https://github.com/pluginsGLPI/datainjection
+ * -------------------------------------------------------------------------
+ */
+
 class PluginDatainjectionModel extends CommonDBTM
 {
     public static $rightname = "plugin_datainjection_model";
@@ -83,7 +113,7 @@ class PluginDatainjectionModel extends CommonDBTM
         $this->infos    = new PluginDatainjectionInfoCollection();
     }
 
-    public function canViewItem()
+    public function canViewItem(): bool
     {
 
         if ($this->isPrivate() && $this->fields['users_id'] != Session::getLoginUserID()) {
@@ -101,7 +131,7 @@ class PluginDatainjectionModel extends CommonDBTM
     }
 
 
-    public function canCreateItem()
+    public function canCreateItem(): bool
     {
 
         if (
@@ -341,7 +371,7 @@ class PluginDatainjectionModel extends CommonDBTM
         }
         echo "</select>";
 
-        $url = Plugin::getWebDir('datainjection') . "/ajax/dropdownSelectModel.php";
+        $url = $CFG_GLPI['root_doc'] . "/plugins/datainjection/ajax/dropdownSelectModel.php";
         Ajax::updateItemOnSelectEvent("dropdown_models$rand", "span_injection", $url, $p);
 
         return true;
@@ -382,7 +412,7 @@ class PluginDatainjectionModel extends CommonDBTM
                  ORDER BY `is_private` DESC,
                           `entities_id`, " . ($order == "`name`" ? "`name`" : $order);
 
-        foreach ($DB->request($query) as $data) {
+        foreach ($DB->doQuery($query) as $data) {
             if (
                 self::checkRightOnModel($data['id'])
                 && class_exists($data['itemtype'])
@@ -643,164 +673,65 @@ class PluginDatainjectionModel extends CommonDBTM
         return true;
     }
 
-
     public function showAdvancedForm($ID, $options = [])
     {
-
         if ($ID > 0) {
             $this->check($ID, READ);
         } else {
-           // Create item
+            // Create item
             $this->check(-1, UPDATE);
             $this->getEmpty();
-            echo Html::hidden('step', ['value' => 1]);
+            $options['step'] = 1;
         }
-
-        echo "<form name='form' method='post' action='" . Toolbox::getItemTypeFormURL(__CLASS__) . "'>";
-        echo "<div class='center' id='tabsbody'>";
-        echo "<table class='tab_cadre_fixe'>";
-
-        echo "<tr><th colspan='2'>" . self::getTypeName() . "</th>";
-        echo "<th colspan='2'>" . PluginDatainjectionDropdown::getStatusLabel($this->fields['step']) .
-         "</th></tr>";
-
-        echo "<tr class='tab_bg_1'>";
-        echo "<td><input type='hidden' name='users_id' value='" . Session::getLoginUserID() . "'>" .
-               __('Name') . "</td>";
-        echo "<td>";
-        echo Html::input(
-            'name',
-            [
-                'value' => $this->fields["name"],
-            ]
-        );
-        echo "</td>";
-        echo "<td colspan='2'></td></tr>";
 
         $rand = mt_rand();
-        echo "<tr class='tab_bg_1'>";
-        echo "<td><label for='dropdown_is_private$rand'>" . __('Visibility') . "</label></td>";
-        echo "<td colspan='3'>";
-        Dropdown::showFromArray(
-            'is_private',
-            [
-                1  => __('Private'),
-                0  => __('Public')
-            ],
-            [
-                'value'  => $this->fields['is_private'],
-                'rand'   => $rand
-            ]
-        );
-        echo "</td>";
-        echo "</tr>";
-        echo "<tr class='tab_bg_2'>";
-        echo "<td>" . __('Entity') . "</td>";
-        echo "<td>";
-        Entity::dropdown(['value' => $this->fields["entities_id"]]);
-        echo "</td>";
-        echo "<td>" . __('Child entities') . "</td>";
-        echo "<td>";
-        Dropdown::showYesNo('is_recursive', $this->fields["is_recursive"]);
-        echo "</td>";
-        echo "</tr>";
 
-        echo "<tr class='tab_bg_1'>";
-        echo "<td>" . __('Comments') . "</td>";
-        echo "<td colspan='3' class='middle'>";
-        echo "<textarea cols='45' rows='5' name='comment' >" . $this->fields["comment"] . "</textarea>";
-        echo "</td></tr>";
-
-        echo "<tr class='tab_bg_1'>";
-        echo "<td>" . __('Type of data to import', 'datainjection') . "</td>";
-        echo "<td>";
-
-        if (($this->fields['step'] == '') || ($this->fields['step'] == self::INITIAL_STEP)) {
-            //Get only the primary types
-            PluginDatainjectionInjectionType::dropdown($this->fields['itemtype'], true);
-        } else {
-            $itemtype = new $this->fields['itemtype']();
-            echo $itemtype->getTypeName();
+        $status = PluginDatainjectionDropdown::getStatusLabel($this->fields['step']);
+        if (!empty($status)) {
+            $status_color = PluginDatainjectionDropdown::getStatusColor($this->fields['step']);
+            $status_label = '<span class="badge" style="background-color: ' . $status_color . ';">' . $status . '</span>';
         }
-        echo "</td><td colspan='2'></tr>";
-        echo "<tr class='tab_bg_1'>";
-        echo "<td>" . __('Allow lines creation', 'datainjection') . "</td>";
-        echo "<td>";
-        Dropdown::showYesNo("behavior_add", $this->fields['behavior_add']);
-        echo "</td><td>" . __('Allow lines update', 'datainjection') . "</td>";
-        echo "<td>";
-        Dropdown::showYesNo("behavior_update", $this->fields['behavior_update']);
-        echo "</td></tr>";
 
-        echo "<tr class='tab_bg_1'><th colspan='4'>" . __('Advanced options', 'datainjection') .
-         "</th></tr>";
+        $data = [
+            'id' => $ID,
+            'url' => Toolbox::getItemTypeFormURL(__CLASS__),
+            'type_name' => self::getTypeName(),
+            'status_label' => $status_label ?? $status,
+            'values' => $this->fields,
+            'replace_multiline_value' => $this->fields['replace_multiline_value'],
+            'rand' => $rand,
+            'date_formats' => PluginDatainjectionDropdown::dateFormats(),
+            'float_formats' => PluginDatainjectionDropdown::floatFormats(),
+            'port_unicity_values' => PluginDatainjectionDropdown::portUnicityValues(),
+            'can_overwrite_if_not_empty' => $this->fields['can_overwrite_if_not_empty'] ?? 0,
+            'visibility_options' => [1 => __('Private'), 0 => __('Public')],
+            'options' => $options,
+            'initial_step' => self::INITIAL_STEP,
+            'session_user_id' => Session::getLoginUserID(),
+            'injection_types' => PluginDatainjectionInjectionType::getItemtypes(),
+        ];
 
-        echo "<tr class='tab_bg_1'>";
-        echo "<td>" . __('Allow creation of dropdowns (Except Entity)', 'datainjection') . "</td>";
-        echo "<td>";
-        Dropdown::showYesNo("can_add_dropdown", $this->fields['can_add_dropdown']);
-        echo "</td>";
-        echo "<td>" . __('Dates format', 'datainjection') . "</td>";
-        echo "<td>";
-        Dropdown::showFromArray(
-            'date_format',
-            PluginDatainjectionDropdown::dateFormats(),
-            ['value' => $this->fields['date_format']]
-        );
-        echo "</td></tr>";
+        TemplateRenderer::getInstance()->display('@datainjection/model_advanced_form.html.twig', $data);
 
-        echo "<tr class='tab_bg_1'>";
-        echo "<td>" . __('Allow update of existing fields', 'datainjection') . "</td>";
-        echo "<td>";
-        Dropdown::showYesNo("can_overwrite_if_not_empty", $this->fields['can_overwrite_if_not_empty']);
-        echo "</td>";
-        echo "<td>" . __('Float format', 'datainjection') . "</td>";
-        echo "<td>";
-        Dropdown::showFromArray(
-            'float_format',
-            PluginDatainjectionDropdown::floatFormats(),
-            ['value' => $this->fields['float_format']]
-        );
-        echo "</td></tr>";
-
-        echo "<td>" . __('Port unicity criteria', 'datainjection') . "</td>";
-        echo "<td>";
-        Dropdown::showFromArray(
-            'port_unicity',
-            PluginDatainjectionDropdown::portUnicityValues(),
-            ['value' => $this->fields['port_unicity']]
-        );
-        echo "</td>";
-        echo "<td>" . __('Replacing the value of multiline text fields', 'datainjection') . "</td>";
-        echo "<td>";
-        Dropdown::showYesNo("replace_multiline_value", $this->fields['replace_multiline_value']);
-        echo "</td>";
-        echo "</td></tr>";
         if ($ID > 0) {
             $tmp = self::getInstance('csv');
             $tmp->showAdditionnalForm($this);
         }
 
         $this->showFormButtons($options);
+        echo "</form>";
         return true;
     }
 
 
     public function showValidationForm()
     {
+        $data = [
+            'url' => Toolbox::getItemTypeFormURL(__CLASS__),
+            'id' => $this->fields['id'],
+        ];
 
-        echo "<form method='post' name=form action='" . Toolbox::getItemTypeFormURL(__CLASS__) . "'>";
-        echo "<table class='tab_cadre_fixe'>";
-        echo "<tr class='tab_bg_1'><th colspan='4'>" . __('Validation') . "</th></tr>";
-        echo "<tr class='tab_bg_1'>";
-        echo "<td class='center'>";
-        echo "<input type='submit' class='submit' name='validate' value='" .
-           _sx('button', 'Validate the model', 'datainjection') . "'>";
-        echo "<input type='hidden' name='id' value='" . $this->fields['id'] . "'>";
-        echo "</td>";
-        echo "</tr>";
-        echo "</table>";
-        Html::closeForm();
+        TemplateRenderer::getInstance()->display('@datainjection/model_validation_form.html.twig', $data);
 
         return true;
     }
@@ -914,7 +845,7 @@ class PluginDatainjectionModel extends CommonDBTM
 
         if ((count($crit) > 0)) {
             $crit['FIELDS'] = 'id';
-            foreach ($DB->request($model->getTable(), $crit) as $row) {
+            foreach ($DB->doQuery($model->getTable()) as $row) {
                 $model->delete($row);
             }
         }
@@ -1340,7 +1271,6 @@ class PluginDatainjectionModel extends CommonDBTM
 
         $tmp         = $this->fields;
         $tmp['step'] = self::READY_TO_USE_STEP;
-        $tmp = Toolbox::addslashes_deep($tmp);
         $this->update($tmp);
     }
 
@@ -1374,7 +1304,7 @@ class PluginDatainjectionModel extends CommonDBTM
                     UNION (SELECT DISTINCT `itemtype`
                         FROM `glpi_plugin_datainjection_infos`
                         WHERE `models_id` = '" . $models_id . "')";
-            foreach ($DB->request($query) as $data) {
+            foreach ($DB->doQuery($query) as $data) {
                 if ($data['itemtype'] != PluginDatainjectionInjectionType::NO_VALUE) {
                     if (class_exists($data['itemtype'])) {
                         $item                     = new $data['itemtype']();
@@ -1448,12 +1378,12 @@ class PluginDatainjectionModel extends CommonDBTM
    **/
     public static function prepareLogResults($models_id)
     {
+        /** @var array $CFG_GLPI */
+        global $CFG_GLPI;
 
-        $results   = Toolbox::stripslashes_deep(
-            json_decode(
-                PluginDatainjectionSession::getParam('results'),
-                true
-            )
+        $results   = json_decode(
+            PluginDatainjectionSession::getParam('results'),
+            true
         );
         $todisplay = [];
         $model     = new self();
@@ -1511,7 +1441,7 @@ class PluginDatainjectionModel extends CommonDBTM
                         && $plugin->isActivated('genericobject')
                         && array_key_exists($model->fields['itemtype'], PluginGenericobjectType::getTypes())
                     ) {
-                        $url = Plugin::getWebDir('datainjection') . "/front/object.form.php" .
+                        $url = $CFG_GLPI['root_doc'] . "/plugins/datainjection/front/object.form.php" .
                         "?itemtype=" . $model->fields['itemtype'] . "&id=" . $result[$model->fields['itemtype']];
                     }
 
@@ -1534,132 +1464,30 @@ class PluginDatainjectionModel extends CommonDBTM
    **/
     public static function showLogResults($models_id)
     {
-
         $logresults = self::prepareLogResults($models_id);
         $resume = [];
         $nblines = 0;
-        if (!empty($logresults)) {
-            if (!empty($logresults[PluginDatainjectionCommonInjectionLib::SUCCESS])) {
-                echo "<table>\n";
-                echo "<tr>";
-                echo "<td style='width:30px'>";
-                echo "<a href=\"javascript:show_log('1')\"><img src='../pics/plus.png' alt='plus' id='log1'>";
-                echo "</a></td>";
-                echo "<td style='width: 900px;font-size: 14px;font-weight: bold;padding-left: 20px'>" .
-                 __('Array of successful injections', 'datainjection') . "</td>";
-                echo "</tr>\n";
-                echo "</table>\n";
 
-                echo "<div id='log1_table'>";
-                echo "<table class='tab_cadre_fixe'>\n";
-                echo "<tr><th></th>"; //Icone
-                echo "<th>" . __('Line', 'datainjection') . "</th>"; //Ligne
-                echo "<th>" . __('Data Import', 'datainjection') . "</th>"; //Import des données
-                echo "<th>" . __('Injection type', 'datainjection') . "</th>"; //Type d'injection
-                echo "<th>" . __('Object Identifier', 'datainjection') . "</th></tr>\n"; //Identifiant de l'objet
-
-                foreach ($logresults[PluginDatainjectionCommonInjectionLib::SUCCESS] as $result) {
-                    echo "<tr class='tab_bg_1'>";
-                    echo "<td style='height:30px;width:30px'><img src='../pics/ok.png' alt='success'></td>";
-                    echo "<td>" . $result['line'] . "</td>";
-                    echo "<td>" . nl2br($result['status_message']) . "</td>";
-                    echo "<td>" . $result['type'] . "</td>";
-                    echo "<td>" . $result['url'] . "</td><tr>\n";
-                    if (!isset($resume[$result['status']][$result['type']])) {
-                        $resume[$result['status']][$result['type']] = 0;
-                    }
-                    $resume[$result['status']][$result['type']]++;
-                    $nblines++;
+        // Prépare le résumé
+        foreach ($logresults as $status => $results) {
+            foreach ($results as $result) {
+                if (!isset($resume[$result['status']][$result['type']])) {
+                    $resume[$result['status']][$result['type']] = 0;
                 }
-                echo "</table></div>\n";
-            }
-
-            if (!empty($logresults[PluginDatainjectionCommonInjectionLib::FAILED])) {
-                echo "<table>\n";
-                echo "<tr>";
-                echo "<td style='width:30px'>";
-                echo "<a href=\"javascript:show_log('2')\"><img src='../pics/minus.png' alt='minus' id='log2'>";
-                echo "</a></td>";
-                echo "<td style='width: 900px;font-size: 14px;font-weight: bold;padding-left: 20px'>" .
-                __('Array of unsuccessful injections', 'datainjection') . "</td>";
-                echo "</tr>\n";
-                echo "</table>\n";
-
-                echo "<div id='log2_table'>";
-                echo "<table class='tab_cadre_fixe center'>\n";
-                echo "<th></th>"; //Icone
-                echo "<th>" . __('Line', 'datainjection') . "</th>"; //Ligne
-                echo "<th>" . __('Data check', 'datainjection') . "</th>"; //Vérification des données
-                echo "<th>" . __('Data Import', 'datainjection') . "</th>"; //Import des données
-                echo "<th>" . __('Injection type', 'datainjection') . "</th>"; //Type d'injection
-                echo "<th>" . __('Object Identifier', 'datainjection') . "</th></tr>\n"; //Identifiant de l'objet
-
-                foreach ($logresults[PluginDatainjectionCommonInjectionLib::FAILED] as $result) {
-                    echo "<tr class='tab_bg_1'>";
-                    echo "<td style='height:30px;width:30px'><img src='../pics/notok.png' alt='success'></td>";
-                    echo "<td>" . $result['line'] . "</td>";
-                    echo "<td>" . nl2br($result['check_message']) . "</td>";
-                    echo "<td>" . nl2br($result['status_message']) . "</td>";
-                    echo "<td>" . $result['type'] . "</td>";
-                    echo "<td>" . $result['url'] . "</td><tr>\n";
-                    if (!isset($resume[$result['status']][$result['type']])) {
-                        $resume[$result['status']][$result['type']] = 0;
-                    }
-                    $resume[$result['status']][$result['type']]++;
-                    $nblines++;
-                }
-                echo "</table></div>\n";
-                echo "<script type='text/javascript'>document.getElementById('log1_table').style.display='none'</script>";
-            }
-
-            if (!empty($resume)) {
-                echo "<table>";
-                echo "<tr>";
-                echo "<td style='width:30px'>";
-                echo "<a href=\"javascript:show_log('3')\"><img src='../pics/minus.png' alt='minus' id='log3'>";
-                echo "</a></td>";
-                echo "<td style='width: 450px;font-size: 14px;font-weight: bold;padding-left: 20px'>" .
-                __('Global report', 'datainjection') . "</td>";
-                echo "<td style='width: 450px;font-style:italic'>" . __('Number of lines processed', 'datainjection') . " : " . $nblines . "</td>";
-                echo "</tr>\n";
-                echo "</table>\n";
-
-                echo "<div id='log2_table'>";
-                echo "<table class='tab_cadre_fixe center'>\n";
-                echo "<th></th>";
-                echo "<th>" . __('Data Import', 'datainjection') . "</th>";
-                echo "<th>" . __('Injection type', 'datainjection') . "</th>";
-                echo "<th>" . __('Counter', 'datainjection') . "</th>";
-                echo "</tr>";
-                foreach ($resume as $status => $types) {
-                    echo "<tr>";
-                    $html = '';
-                    $rowspan = 0;
-                    foreach ($types as $type => $value) {
-                        $html .= "<td>" . $type .  "</td>";
-                        $html .= "<td>" . $value . "</td>";
-                        $rowspan++;
-                    }
-                    echo "<td rowspan=" . $rowspan . ">";
-                    if ($status == PluginDatainjectionCommonInjectionLib::SUCCESS) {
-                        echo "<img src='../pics/ok.png'> ";
-                    } else {
-                        echo "<img src='../pics/notok.png'> ";
-                    }
-                    echo "</td>";
-                    echo "<td rowspan=" . $rowspan . ">";
-                    echo PluginDatainjectionCommonInjectionLib::getLogLabel($status);
-                    echo "</td>";
-                    echo $html;
-                    echo "</tr>";
-                }
-                echo "</table></div>\n";
+                $resume[$result['status']][$result['type']]++;
+                $nblines++;
             }
         }
 
-        echo "<div style='margin-top:15px;text-align:center'>";
-        echo "<a href='javascript:window.close()'>" . __('Close') . "</a>";
-        echo "</div>";
+        $data = [
+            'logresults' => $logresults,
+            'resume'     => $resume,
+            'nblines'    => $nblines,
+            'SUCCESS'    => PluginDatainjectionCommonInjectionLib::SUCCESS,
+            'FAILED'     => PluginDatainjectionCommonInjectionLib::FAILED,
+        ];
+
+        TemplateRenderer::getInstance()->display('@datainjection/log_results.html.twig', $data);
     }
 
     public static function exportAsPDF($models_id)

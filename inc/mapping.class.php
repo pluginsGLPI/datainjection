@@ -116,8 +116,8 @@ class PluginDatainjectionMapping extends CommonDBTM
             $nblines = $_SESSION['datainjection']['nblines'];
             echo "<table class='tab_cadre_fixe'>";
             echo "<tr class='tab_bg_1'><td class='center'>";
-            $url = Plugin::getWebDir('datainjection') .
-             "/front/popup.php?popup=preview&amp;models_id=" .
+            $url = plugin_datainjection_geturl() .
+             "front/popup.php?popup=preview&amp;models_id=" .
              $model->getID();
             echo "<a href=#  onClick=\"var w = window.open('$url' , 'glpipopup', " .
              "'height=400, width=600, top=100, left=100, scrollbars=yes' );w.focus();\"/>";
@@ -136,7 +136,6 @@ class PluginDatainjectionMapping extends CommonDBTM
         $model->loadMappings();
 
         foreach ($model->getMappings() as $mapping) {
-            $mapping->fields = Toolbox::stripslashes_deep($mapping->fields);
             $mappings_id     = $mapping->getID();
             echo "<tr class='tab_bg_1'>";
             echo "<td class='center'>" . $mapping->fields['name'] . "</td>";
@@ -181,7 +180,7 @@ class PluginDatainjectionMapping extends CommonDBTM
                  GROUP BY `value`
                  HAVING `counter` > 1";
 
-        foreach ($DB->request($query) as $mapping) {
+        foreach ($DB->doQuery($query) as $mapping) {
             $several[] = $mapping['value'];
         }
         return $several;
@@ -201,7 +200,7 @@ class PluginDatainjectionMapping extends CommonDBTM
                    FROM `glpi_plugin_datainjection_mappings`
                    WHERE `models_id` = '" . $models_id . "'
                    ORDER BY `rank` ASC";
-        foreach ($DB->request($query) as $data) {
+        foreach ($DB->doQuery($query) as $data) {
             $mappings[] = $data['name'];
         }
         return $mappings;
