@@ -954,6 +954,13 @@ class PluginDatainjectionCommonInjectionLib
                 $this->values[$itemtype][$field] = $value;
             }
         } else { // First value
+            $booleanFields = [
+                'is_dynamic',
+                'is_recursive',
+                'is_template',
+                'is_deleted',
+                'is_active',
+            ];
             if (empty($value)) {
                 if (isForeignKeyField($field) || (strpos($field, 'is_') !== false) || (method_exists($injectionClass, 'isNullable') && !$injectionClass->isNullable($field))) {
                     // If the field is an id, we set it to 0
@@ -1640,9 +1647,6 @@ class PluginDatainjectionCommonInjectionLib
         $options  = $injectionClass->getOptions();
 
         foreach ($values as $key => $value) {
-            if ($value == 'NULL') {
-                continue;
-            }
             $option = self::findSearchOption($options, $key);
             if (!empty($option) && isset($option['checktype']) && $option['checktype'] == self::FIELD_VIRTUAL) {
                 break;
