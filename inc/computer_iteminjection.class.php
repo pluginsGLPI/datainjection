@@ -34,15 +34,12 @@ if (!defined('GLPI_ROOT')) {
     die("Sorry. You can't access directly to this file");
 }
 
-class PluginDatainjectionComputer_ItemInjection implements PluginDatainjectionInjectionInterface
+class PluginDatainjectionComputer_ItemInjection extends Asset_PeripheralAsset implements PluginDatainjectionInjectionInterface
 {
     public static function getTable($classname = null)
     {
 
         $parenttype = get_parent_class();
-        if ($parenttype === false) {
-            return 'glpi_plugin_datainjection_computer_iteminjections';
-        }
         return $parenttype::getTable();
     }
 
