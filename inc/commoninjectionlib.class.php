@@ -954,8 +954,21 @@ class PluginDatainjectionCommonInjectionLib
                 $this->values[$itemtype][$field] = $value;
             }
         } else { // First value
+            $booleanFields = [
+                'is_dynamic',
+                'is_recursive',
+                'is_template',
+                'is_deleted',
+                'is_active',
+            ];
             if (empty($value)) {
-                $this->values[$itemtype][$field] = "NULL";
+                if (strpos($field, 'id') || in_array($field, $booleanFields)) {
+                    // If the field is an id, we set it to 0
+                    $this->values[$itemtype][$field] = self::DROPDOWN_EMPTY_VALUE;
+                } else {
+                    // Else we set it to NULL
+                    $this->values[$itemtype][$field] = self::EMPTY_VALUE;
+                }
             } else {
                 $this->values[$itemtype][$field] = $value;
             }
@@ -1635,9 +1648,6 @@ class PluginDatainjectionCommonInjectionLib
         $options  = $injectionClass->getOptions();
 
         foreach ($values as $key => $value) {
-            if ($value == 'NULL') {
-                continue;
-            }
             $option = self::findSearchOption($options, $key);
             if (!empty($option) && isset($option['checktype']) && $option['checktype'] == self::FIELD_VIRTUAL) {
                 break;
