@@ -366,7 +366,17 @@ class PluginDatainjectionCommonInjectionLib
        // 80 : entity
        // 121 : date_creation
        // 200 : notepad
-        $blacklist = [2, 19, 80, 121, 200, 201, 202, 203, 204];
+        $blacklist = [
+            2,   // id
+            19,  // last update
+            80,  // completename
+            121, // creation date
+            200, // notepad - content
+            201, // notepad - creation date
+            202, // notepad - writer
+            203, // notepad - last update
+            204, // notepad - last updater
+        ];
 
         $raw_options_to_blacklist = [];
 
