@@ -361,11 +361,22 @@ class PluginDatainjectionCommonInjectionLib
         /** @var array $CFG_GLPI */
         global $CFG_GLPI;
 
-       //2 : id
+       // 2 : id
        // 19 : date_mod
        // 80 : entity
        // 121 : date_creation
-        $blacklist = [2, 19, 80, 121, 201, 202, 203, 204];
+       // 200 : notepad
+        $blacklist = [
+            2,   // id
+            19,  // last update
+            80,  // completename
+            121, // creation date
+            200, // notepad - content
+            201, // notepad - creation date
+            202, // notepad - writer
+            203, // notepad - last update
+            204, // notepad - last updater
+        ];
 
         $raw_options_to_blacklist = [];
 

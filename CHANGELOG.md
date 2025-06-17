@@ -18,6 +18,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 - Add option to `replace` (instead of `append`)  the value of multiline text fields (e.g. `comment`)
 
+### Fixed
+
+- Move `Notepads` search options to the Black List option
+
 ## [2.14.1] - 2024-12-27
 
 ### Added
