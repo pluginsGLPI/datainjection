@@ -48,7 +48,7 @@ class PluginDatainjectionMenu extends CommonGLPI
         $menu = [
             'title' => self::getMenuName(),
             'page'  => $injectionFormUrl,
-            'icon'  => 'fas fa-file-import',
+            'icon'  => 'ti ti-download',
         ];
 
         if (Session::haveRight(static::$rightname, READ)) {
