@@ -184,7 +184,7 @@ class PluginDatainjectionUserInjection extends User implements PluginDatainjecti
         if (isset($values['User']['password']) && ($values['User']['password'] != '')) {
            //We use an SQL request because updating the password is unesasy
            //(self reset password process in $user->prepareInputForUpdate())
-            $password = sha1(Sanitizer::unsanitize($values['User']["password"]));
+            $password = sha1($values['User']["password"]);
 
             $query = "UPDATE `glpi_users`
                    SET `password` = '" . $password . "'
