@@ -124,7 +124,7 @@ class PluginDatainjectionDropdown
             case PluginDatainjectionModel::OTHERS_STEP:
                 return "#ffb832";
             case PluginDatainjectionModel::READY_TO_USE_STEP:
-                return "#45ff32";
+                return "#2ec41f";
             default:
                 return "#ff4e4e";
         }
