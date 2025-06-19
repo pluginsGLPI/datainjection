@@ -689,7 +689,7 @@ class PluginDatainjectionModel extends CommonDBTM
         $status = PluginDatainjectionDropdown::getStatusLabel($this->fields['step']);
         if (!empty($status)) {
             $status_color = PluginDatainjectionDropdown::getStatusColor($this->fields['step']);
-            $status_label = '<span class="badge" style="background-color: ' . $status_color . ';">' . $status . '</span>';
+            $status_label = '<span class="badge" style="background-color: ' . $status_color . '; color:white;">' . $status . '</span>';
         }
 
         $data = [
@@ -709,6 +709,7 @@ class PluginDatainjectionModel extends CommonDBTM
             'initial_step' => self::INITIAL_STEP,
             'session_user_id' => Session::getLoginUserID(),
             'injection_types' => PluginDatainjectionInjectionType::getItemtypes(),
+            'item' => $this,
         ];
 
         TemplateRenderer::getInstance()->display('@datainjection/model_advanced_form.html.twig', $data);
@@ -759,16 +760,16 @@ class PluginDatainjectionModel extends CommonDBTM
         $canedit = Session::haveRight('plugin_datainjection_model', UPDATE);
 
         if (!$withtemplate && $item instanceof self) {
-            $tabs[1] = __('Model');
+            $tabs[1] = self::createTabEntry(__('Model'), 0, $item::getType(), self::getIcon());
             if (!$this->isNewID($item->fields['id'])) {
                 if ($canedit) {
-                    $tabs[3] = __('File to inject', 'datainjection');
+                    $tabs[3] = self::createTabEntry(__('File to inject', 'datainjection'), 0, $item::getType(), 'ti ti-file-download');
                 }
-                $tabs[4] = __('Mappings', 'datainjection');
+                $tabs[4] = self::createTabEntry(__('Mappings', 'datainjection'), 0, $item::getType(), 'ti ti-columns');
                 if ($item->fields['step'] > self::MAPPING_STEP) {
-                    $tabs[5] = __('Additional Information', 'datainjection');
+                    $tabs[5] = self::createTabEntry(__('Additional Information', 'datainjection'), 0, $item::getType(), 'ti ti-code-variable-plus');
                     if ($canedit && $item->fields['step'] != self::READY_TO_USE_STEP) {
-                        $tabs[6] = __('Validation');
+                        $tabs[6] = self::createTabEntry(__('Validation'), 0, $item::getType(), 'ti ti-checklist');
                     }
                 }
             }
@@ -1550,5 +1551,10 @@ class PluginDatainjectionModel extends CommonDBTM
     {
 
         $this->injectionData = [];
+    }
+
+    public static function getIcon()
+    {
+        return "ti ti-stack-2";
     }
 }

@@ -42,7 +42,11 @@
                 <span>{{ type_name }}</span>
             </div>
             {# Status Fields #}
-            {{ fields.htmlField('', status_label, __('Model status', 'datainjection'), field_options) }}
+            {% if item.isNewItem() %}
+                {{ fields.nullField() }}
+            {% else %}
+                {{ fields.htmlField('', status_label, __('Model status', 'datainjection'), field_options) }}
+            {% endif %}
 
             {{ fields.hiddenField('users_id', session_user_id, '', field_options)}}
 
