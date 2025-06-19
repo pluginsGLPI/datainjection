@@ -296,13 +296,13 @@ class PluginDatainjectionClientInjection
             }
         }
 
-        $from_url = $CFG_GLPI['root_doc'] . "/plugins/datainjection/front/clientinjection.form.php";
+        $from_url = plugin_datainjection_geturl() . "front/clientinjection.form.php";
         $plugin      = new Plugin();
 
         $data = [
             'ok'            => $ok,
             'from_url'      => $from_url,
-            'popup_url'     => $CFG_GLPI['root_doc'] . "/plugins/datainjection/front/popup.php?popup=log&amp;models_id=" . $model->fields['id'],
+            'popup_url'     => plugin_datainjection_geturl() . "front/popup.php?popup=log&amp;models_id=" . $model->fields['id'],
             'model_id'      => $model->fields['id'],
             'has_pdf'       => $plugin->isActivated('pdf'),
             'has_errors'    => !empty($error_lines),

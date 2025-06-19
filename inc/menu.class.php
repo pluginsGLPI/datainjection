@@ -43,7 +43,7 @@ class PluginDatainjectionMenu extends CommonGLPI
         /** @var array $CFG_GLPI */
         global $CFG_GLPI;
 
-        $injectionFormUrl = "/" . plugin_datainjection_geturl() . 'front/clientinjection.form.php';
+        $injectionFormUrl = 'plugins/datainjection/front/clientinjection.form.php';
 
         $menu = [
             'title' => self::getMenuName(),
