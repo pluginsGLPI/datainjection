@@ -60,10 +60,10 @@ class PluginDatainjectionMenu extends CommonGLPI
                 'client' => [
                     'title' => __s('Injection of the file', 'datainjection'),
                     'page'  => $injectionFormUrl,
-                    'icon'  => 'fas fa-upload',
+                    'icon'  => 'ti ti-file-download',
                 ],
                 'model' => [
-                    'icon'  => 'fas fa-layer-group',
+                    'icon'  => PluginDatainjectionModel::getIcon(),
                     'links' => [
                         $image_import => $injectionFormUrl
                     ]
@@ -71,7 +71,7 @@ class PluginDatainjectionMenu extends CommonGLPI
             ];
 
             $model_name  = PluginDatainjectionModel::getTypeName(Session::getPluralNumber());
-            $image_model = "<i class='fas fa-layer-group' title='$model_name' alt='$model_name'></i>";
+            $image_model = "<i class='" . PluginDatainjectionModel::getIcon() . "' title='$model_name' alt='$model_name'></i>";
 
             if (Session::haveRight('plugin_datainjection_model', READ)) {
                 $menu['options']['model']['title'] = $model_name;
