@@ -87,6 +87,9 @@ class PluginDatainjectionEntityInjection extends Entity implements PluginDatainj
 
         $lib = new PluginDatainjectionCommonInjectionLib($this, $values, $options);
         $lib->processAddOrUpdate();
+        if (count(array_diff_key($values, array_flip(['name', 'entities_id', 'comment']))) > 0) {
+            $lib->processAddOrUpdate();
+        }
         return $lib->getInjectionResults();
     }
 
