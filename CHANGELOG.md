@@ -11,6 +11,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 - Use `global`  configuration for injection links
 - Escape  data when check if already exist
+- Fix `pdffont` field error for users
 
 ## [Unreleased]
 
