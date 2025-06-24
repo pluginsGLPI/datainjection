@@ -916,7 +916,9 @@ class PluginDatainjectionCommonInjectionLib
      **/
     private function setValueForItemtype($itemtype, $field, $value, $fromdb = false)
     {
-
+        if ($itemtype === User::class && $field === "pdffont" && $fromdb) {
+            return;
+        }
        // TODO awfull hack, text ftom CSV set more than once, so check if "another" value
         if (isset($this->values[$itemtype][$field]) && $this->values[$itemtype][$field] != $value) {
            // Data set twice (probably CSV + Additional info)
