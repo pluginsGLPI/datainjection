@@ -12,6 +12,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Use `global`  configuration for injection links
 - Escape  data when check if already exist
 
+### Removed
+
+- Integration of the WebService plugin (plugin is no longer maintained)
+
 ## [Unreleased]
 
 ### Added

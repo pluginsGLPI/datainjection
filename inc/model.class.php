@@ -1128,21 +1128,7 @@ class PluginDatainjectionModel extends CommonDBTM
         $this->loadSpecificModel();
         $response = $this->readUploadedFile($options);
         if (!$this->injectionData) {
-            if (!isset($options['webservice'])) {
-                return false;
-            }
-            if (class_exists('PluginWebservicesMethodCommon')) {
-                return PluginWebservicesMethodCommon::Error(
-                    $options['protocol'],
-                    WEBSERVICES_ERROR_FAILED, /** @phpstan-ignore-line */
-                    sprintf(
-                        __(
-                            'Not data to import',
-                            'datainjection'
-                        )
-                    )
-                );
-            }
+            return false;
         }
 
         if ($mode == self::PROCESS) {
@@ -1154,17 +1140,8 @@ class PluginDatainjectionModel extends CommonDBTM
        //There's an error
         if ($check['status'] != PluginDatainjectionCommonInjectionLib::SUCCESS) {
             if ($mode == self::PROCESS) {
-                if (!isset($options['webservice'])) {
-                    Session::addMessageAfterRedirect($check['error_message'], true, ERROR);
-                    return false;
-                }
-                if (class_exists('PluginWebservicesMethodCommon')) {
-                    return PluginWebservicesMethodCommon::Error(
-                        $options['protocol'],
-                        WEBSERVICES_ERROR_FAILED, /** @phpstan-ignore-line */
-                        $check['error_message']
-                    );
-                }
+                Session::addMessageAfterRedirect($check['error_message'], true, ERROR);
+                return false;
             }
         }
 
