@@ -13,14 +13,18 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Escape  data when check if already exist
 - Fix injection of `values in entity tabs` when injecting an `entity`
 - Fix `pdffont` field error for users
+- Move `Notepads` search options to the Black List option
+
 
 ### Added
 
 - Add option to `replace` (instead of `append`)  the value of multiline text fields (e.g. `comment`)
 
-### Fixed
 
-- Move `Notepads` search options to the Black List option
+### Removed
+
+- Integration of the WebService plugin (plugin is no longer maintained)
+
 
 ## [2.14.1] - 2024-12-27
 
