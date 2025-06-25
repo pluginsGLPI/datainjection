@@ -13,6 +13,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Escape  data when check if already exist
 - Fix `pdffont` field error for users
 
+### Removed
+
+- Integration of the WebService plugin (plugin is no longer maintained)
+
 ## [Unreleased]
 
 ### Added

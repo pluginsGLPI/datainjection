@@ -27,24 +27,6 @@
  * @link      https://github.com/pluginsGLPI/datainjection
  * -------------------------------------------------------------------------
  */
-
-function plugin_datainjection_registerMethods()
-{
-    /** @var array $WEBSERVICES_METHOD */
-    global $WEBSERVICES_METHOD;
-
-    $methods = ['getModel'      => 'methodGetModel',
-        'listModels'    => 'methodListModels',
-        'inject'        => 'methodInject',
-        'listItemtypes' => 'methodListItemtypes'
-    ];
-
-    foreach ($methods as $code => $method) {
-        $WEBSERVICES_METHOD['datainjection.' . $code] = ['PluginDatainjectionWebservice', $method];
-    }
-}
-
-
 function plugin_datainjection_install()
 {
     /** @var DBmysql $DB */
