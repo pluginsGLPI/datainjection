@@ -10,8 +10,6 @@ parameters:
         - inc
         - hook.php
         - setup.php
-    excludePaths:
-        - inc/webservice.class.php
     scanDirectories:
         - ../../inc
         - ../../src
