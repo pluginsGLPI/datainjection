@@ -172,8 +172,8 @@ class PluginDatainjectionClientInjection
        // To prevent problem of execution time during injection
         ini_set("max_execution_time", "0");
 
-       // Disable recording each SQL request in $_SESSION
-        $CFG_GLPI["debug_sql"] = 0;
+        // Disable recording each SQL request in $_SESSION
+        \Glpi\Debug\Profile::getCurrent()->disable();
 
         $nblines         = PluginDatainjectionSession::getParam('nblines');
         $clientinjection = new PluginDatainjectionClientInjection();
@@ -232,7 +232,7 @@ class PluginDatainjectionClientInjection
         echo Html::scriptBlock($js);
 
         // Restore
-        $CFG_GLPI["debug_sql"] = 1;
+        \Glpi\Debug\Profile::getCurrent()->enable();
 
         //Close CSV file
         $backend->closeFile();
