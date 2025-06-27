@@ -11,9 +11,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 - Use `global`  configuration for injection links
 - Escape  data when check if already exist
+- Fix injection of `values in entity tabs` when injecting an `entity`
 - Fix `pdffont` field error for users
-
-## [Unreleased]
 
 ### Added
 

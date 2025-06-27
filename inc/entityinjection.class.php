@@ -86,7 +86,15 @@ class PluginDatainjectionEntityInjection extends Entity implements PluginDatainj
     {
 
         $lib = new PluginDatainjectionCommonInjectionLib($this, $values, $options);
-        $lib->processAddOrUpdate();
+        $data = $lib->processAddOrUpdate();
+        // Only the `name`, `entities_id`, and `comment` fields are taken into account when creating an entity.
+        // The IF forces an update of the entity to insert the other fields.
+        if (
+            count(array_diff_key($values, array_flip(['name', 'entities_id', 'comment']))) > 0
+            && $data['type'] === PluginDatainjectionCommonInjectionLib::IMPORT_ADD
+        ) {
+            $lib->processAddOrUpdate();
+        }
         return $lib->getInjectionResults();
     }
 
