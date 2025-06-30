@@ -70,12 +70,12 @@
             {% else %}
                 {% set message = __("Watch out, you're about to inject data into GLPI. Are you sure you want to do it ?", 'datainjection') %}
             {% endif %}
-            <input type="submit" class="submit" name="upload" value="{{ submit_label }}" onclick="return window.confirm('{{ message }}');">
+            <input type="submit" class="btn btn-primary" name="upload" value="{{ submit_label }}" onclick="return window.confirm('{{ message }}');">
         {% else %}
-            <input type="submit" class="submit" name="upload" value="{{ submit_label }}">
+            <input type="submit" class="btn btn-primary" name="upload" value="{{ submit_label }}">
         {% endif %}
         &nbsp;&nbsp;
-        <input type="submit" class="submit" name="cancel" value="{{ _x('button', 'Cancel') }}">
+        <input type="submit" class="btn btn-outline-danger" name="cancel" value="{{ _x('button', 'Cancel') }}">
     </div>
 {% if add_form %}
     </form>
