@@ -68,7 +68,7 @@ class PluginDatainjectionInjectionType
                     $plugin->getFromDBbyDir($from);
                     $name = $plugin->getName() . ': ';
                 }
-                $name .= call_user_func([$type, 'getTypeName']);
+                $name .= call_user_func([$type, 'getTypeName']) . ' -- '. $type;
                 $values[$typename] = $name;
             }
         }
