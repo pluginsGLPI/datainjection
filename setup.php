@@ -68,6 +68,10 @@ function plugin_init_datainjection()
                 )
             );
         }
+        $PLUGIN_HOOKS["config_page"]['datainjection'] = "front/clientinjection.form.php";
+
+
+
         if (Session::haveRight('plugin_datainjection_use', READ)) {
             $PLUGIN_HOOKS["menu_toadd"]['datainjection'] = ['tools'  => 'PluginDatainjectionMenu'];
         }
