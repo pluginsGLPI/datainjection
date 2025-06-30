@@ -34,7 +34,7 @@
 
     {% if has_sample %}
         <div class="text-center mt-3">
-            <a href="{{ model.getFormURL() }}?sample={{ model.getField('id') }}" class="btn btn-primary">
+            <a href="{{ model.getFormURL() }}?sample={{ model.getField('id') }}" class="btn btn-outline-secondary">
                 <i class="ti ti-download"></i> &nbsp;
                 {{ __('Download file sample', 'datainjection') }}
             </a>
