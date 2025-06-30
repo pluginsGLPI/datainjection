@@ -155,8 +155,6 @@ function getTypesToInject(): void
         'PluginDatainjectionProfileInjection'                     => 'datainjection',
         'PluginDatainjectionProfile_UserInjection'                => 'datainjection',
         'PluginDatainjectionSoftwareInjection'                    => 'datainjection',
-        'PluginDatainjectionItem_SoftwareVersionInjection'        => 'datainjection',
-        'PluginDatainjectionItem_SoftwareLicenseInjection'        => 'datainjection',
         'PluginDatainjectionSoftwareLicenseInjection'             => 'datainjection',
         'PluginDatainjectionSoftwareVersionInjection'             => 'datainjection',
         'PluginDatainjectionSupplierInjection'                    => 'datainjection',

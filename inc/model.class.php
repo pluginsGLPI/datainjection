@@ -309,7 +309,7 @@ class PluginDatainjectionModel extends CommonDBTM
     /**
     * @param array $options   array
     *
-    * @return boolean
+    * @return void
    **/
     public static function dropdown($options = [])
     {
@@ -374,7 +374,7 @@ class PluginDatainjectionModel extends CommonDBTM
         $url = $CFG_GLPI['root_doc'] . "/plugins/datainjection/ajax/dropdownSelectModel.php";
         Ajax::updateItemOnSelectEvent("dropdown_models$rand", "span_injection", $url, $p);
 
-        return true;
+        return;
     }
 
 

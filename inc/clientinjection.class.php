@@ -251,7 +251,7 @@ class PluginDatainjectionClientInjection
 
         unset($_SESSION['datainjection']['go']);
 
-        $url = $CFG_GLPI['root_doc'] . "/plugins/datainjection//ajax/results.php";
+        $url = $CFG_GLPI['root_doc'] . "/plugins/datainjection/ajax/results.php";
         Ajax::updateItem("span_injection", $url, $p);
     }
 
