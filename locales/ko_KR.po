@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-06-12 01:16+0000\n"
+"POT-Creation-Date: 2025-07-01 01:25+0000\n"
 "PO-Revision-Date: 2018-06-21 12:57+0000\n"
 "Last-Translator: 조성현 (jaymz9634) <jaymz9634@gmail.com>, 2024\n"
 "Language-Team: Korean (Korea) (https://app.transifex.com/teclib/teams/28042/ko_KR/)\n"
@@ -25,12 +25,12 @@ msgstr ""
 msgid "See the file"
 msgstr "파일 보기"
 
-#: front/popup.php:43 inc/model.class.php:1677
+#: front/popup.php:43 inc/model.class.php:1654
 msgid "Data injection report"
 msgstr "데이터 삽입 보고서"
 
 #: front/clientinjection.form.php:36 inc/profile.class.php:72
-#: inc/menu.class.php:38 setup.php:97
+#: inc/menu.class.php:38 setup.php:95
 msgid "Data injection"
 msgstr "데이터 삽입"
 
@@ -54,22 +54,6 @@ msgid ""
 "This step allows you to add informations not present in the file. You'll be "
 "asked for theses informations while using the model."
 msgstr "이 단계는 파일 내에 존재하지 않는 정보를 추가할 수 있습니다. 모델 사용 중에는 이 정보를 묻는 메시지가 표시됩니다."
-
-#: inc/webservice.class.php:80
-msgid "Model unknown"
-msgstr "모델 불명"
-
-#: inc/webservice.class.php:88 inc/webservice.class.php:98
-msgid "You cannot access this model"
-msgstr "이 모델에 접근할 수 없습니다"
-
-#: inc/webservice.class.php:119
-msgid "Entity unknown"
-msgstr "개체 불명"
-
-#: inc/webservice.class.php:127
-msgid "You cannot access this entity"
-msgstr "이 개체에 접근할 수 없습니다"
 
 #: inc/model.class.php:430 inc/model.class.php:727
 msgid "Allow lines creation"
@@ -158,135 +142,131 @@ msgstr "파일 형식이 잘못되었습니다"
 msgid "Extension csv required"
 msgstr "csv 확장자가 필요합니다"
 
-#: inc/model.class.php:1140
-msgid "Not data to import"
-msgstr "불러올 데이터 없음"
-
-#: inc/model.class.php:1203
+#: inc/model.class.php:1180
 msgid "The file is ok."
 msgstr "파일이 정상입니다."
 
-#: inc/model.class.php:1229
+#: inc/model.class.php:1206
 msgid "The number of columns of the file is incorrect."
 msgstr "파일의 열 수가 잘못되었습니다."
 
-#: inc/model.class.php:1231
+#: inc/model.class.php:1208
 #, php-format
 msgid "%d awaited column"
 msgid_plural "%d awaited columns"
 msgstr[0] "%d개의 대기 열"
 
-#: inc/model.class.php:1236
+#: inc/model.class.php:1213
 #, php-format
 msgid "%d found column"
 msgid_plural "%d found columns"
 msgstr[0] "%d개의 찾은 열"
 
-#: inc/model.class.php:1280
+#: inc/model.class.php:1257
 msgid "At least one column is incorrect"
 msgstr "최소 한개의 열이 잘못되었습니다"
 
-#: inc/model.class.php:1288
+#: inc/model.class.php:1265
 msgid "Into the file"
 msgstr "파일 내"
 
-#: inc/model.class.php:1293
+#: inc/model.class.php:1270
 msgid "From the model"
 msgstr "모델에서"
 
-#: inc/model.class.php:1468 inc/commoninjectionlib.class.php:2122
+#: inc/model.class.php:1445 inc/commoninjectionlib.class.php:2135
 msgid "Undetermined"
 msgstr "미결됨"
 
-#: inc/model.class.php:1549 inc/model.class.php:1686
+#: inc/model.class.php:1526 inc/model.class.php:1663
 msgid "Array of successful injections"
 msgstr "성공적인 삽입의 배열"
 
-#: inc/model.class.php:1556 inc/model.class.php:1591 inc/model.class.php:1689
-#: inc/model.class.php:1711
+#: inc/model.class.php:1533 inc/model.class.php:1568 inc/model.class.php:1666
+#: inc/model.class.php:1688
 msgid "Line"
 msgstr "줄"
 
-#: inc/model.class.php:1557 inc/model.class.php:1593 inc/model.class.php:1630
-#: inc/model.class.php:1690 inc/model.class.php:1713
+#: inc/model.class.php:1534 inc/model.class.php:1570 inc/model.class.php:1607
+#: inc/model.class.php:1667 inc/model.class.php:1690
 msgid "Data Import"
 msgstr "데이터 불러오기"
 
-#: inc/model.class.php:1558 inc/model.class.php:1594 inc/model.class.php:1631
-#: inc/model.class.php:1691 inc/model.class.php:1714
+#: inc/model.class.php:1535 inc/model.class.php:1571 inc/model.class.php:1608
+#: inc/model.class.php:1668 inc/model.class.php:1691
 msgid "Injection type"
 msgstr "삽입 유형"
 
-#: inc/model.class.php:1559 inc/model.class.php:1595 inc/model.class.php:1692
-#: inc/model.class.php:1715
+#: inc/model.class.php:1536 inc/model.class.php:1572 inc/model.class.php:1669
+#: inc/model.class.php:1692
 msgid "Object Identifier"
 msgstr "객체 확인자"
 
-#: inc/model.class.php:1584 inc/model.class.php:1708
+#: inc/model.class.php:1561 inc/model.class.php:1685
 msgid "Array of unsuccessful injections"
 msgstr "실패한 삽입의 배열"
 
-#: inc/model.class.php:1592 inc/model.class.php:1712 inc/model.class.php:1732
+#: inc/model.class.php:1569 inc/model.class.php:1689 inc/model.class.php:1709
 msgid "Data check"
 msgstr "데이터 확인"
 
-#: inc/model.class.php:1622
+#: inc/model.class.php:1599
 msgid "Global report"
 msgstr "전역 보고서"
 
-#: inc/model.class.php:1623
+#: inc/model.class.php:1600
 msgid "Number of lines processed"
 msgstr "처리된 줄 수"
 
-#: inc/model.class.php:1632
+#: inc/model.class.php:1609
 msgid "Counter"
 msgstr "카운터"
 
-#: inc/commoninjectionlib.class.php:2036
+#: inc/commoninjectionlib.class.php:2049
 msgid "Add from CSV file"
 msgstr "CSV 파일에서 추가"
 
-#: inc/commoninjectionlib.class.php:2038
+#: inc/commoninjectionlib.class.php:2051
 msgid "Update from CSV file"
 msgstr "CSV 파일에서 갱신"
 
-#: inc/commoninjectionlib.class.php:2082
+#: inc/commoninjectionlib.class.php:2095
 msgid "No right to import data"
 msgstr "데이터 불러오기 권한 없음"
 
-#: inc/commoninjectionlib.class.php:2086
+#: inc/commoninjectionlib.class.php:2099
 msgid "No right to update data"
 msgstr "데이터 갱신 권한 없음"
 
-#: inc/commoninjectionlib.class.php:2090
+#: inc/commoninjectionlib.class.php:2103
 msgid "Size of the inserted value is to expansive"
 msgstr "삽입된 값의 크기가 너무 큽니다"
 
-#: inc/commoninjectionlib.class.php:2094
+#: inc/commoninjectionlib.class.php:2107
 msgid "Import not allowed"
 msgstr "불러오기 허용안됨"
 
-#: inc/commoninjectionlib.class.php:2098
+#: inc/commoninjectionlib.class.php:2111
 msgid "Import failed"
 msgstr "불러오기 실패함"
 
-#: inc/commoninjectionlib.class.php:2102
+#: inc/commoninjectionlib.class.php:2115
 msgid "At least one mandatory field is not present"
 msgstr "하나 이상의 필수 항목이 없습니다"
 
-#: inc/commoninjectionlib.class.php:2106
+#: inc/commoninjectionlib.class.php:2119
 msgid "Data to insert are correct"
 msgstr "삽입할 데이터가 정확합니다"
 
-#: inc/commoninjectionlib.class.php:2110
+#: inc/commoninjectionlib.class.php:2123
 msgid "One data is not the good type"
 msgstr "하나의 데이터가 바른 유형이 아닙니다"
 
-#: inc/commoninjectionlib.class.php:2114
+#: inc/commoninjectionlib.class.php:2127
 msgid "Warning"
 msgstr "경고"
 
-#: inc/commoninjectionlib.class.php:2118
+#: inc/commoninjectionlib.class.php:2131
 msgid "Data not found"
 msgstr "데이터 없음"
 
@@ -478,6 +458,6 @@ msgstr "마치기"
 msgid "Domain name"
 msgstr "도메인 이름"
 
-#: hook.php:135 hook.php:153 setup.php:66
+#: hook.php:117 hook.php:135 setup.php:66
 msgid "Can't create folder"
 msgstr "폴더를 생성할 수 없습니다"
