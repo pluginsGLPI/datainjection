@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-07-01 01:25+0000\n"
+"POT-Creation-Date: 2025-07-14 01:22+0000\n"
 "PO-Revision-Date: 2018-06-21 12:57+0000\n"
 "Last-Translator: Milo Ivir <mail@milotype.de>, 2023\n"
 "Language-Team: Croatian (Croatia) (https://app.transifex.com/teclib/teams/28042/hr_HR/)\n"
@@ -21,16 +21,12 @@ msgstr ""
 "Language: hr_HR\n"
 "Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
 
-#: front/popup.php:37 inc/mapping.class.php:124
-msgid "See the file"
-msgstr "Pogledaj datoteku"
+#: hook.php:117 hook.php:135 setup.php:66
+msgid "Can't create folder"
+msgstr "Nije moguće stvori mapu"
 
-#: front/popup.php:43 inc/model.class.php:1654
-msgid "Data injection report"
-msgstr "Izvještaj o umetanju podataka"
-
-#: front/clientinjection.form.php:36 inc/profile.class.php:72
-#: inc/menu.class.php:38 setup.php:95
+#: setup.php:95 front/clientinjection.form.php:36 inc/menu.class.php:38
+#: inc/profile.class.php:72
 msgid "Data injection"
 msgstr "Umetanje podataka"
 
@@ -59,176 +55,135 @@ msgstr ""
 "Ovaj korak omogućuje dodavanje informacija koje nisu prisutne u datoteci. "
 "Ove informacije ćeš trebati prilikom korištenja modela."
 
-#: inc/model.class.php:430 inc/model.class.php:727
-msgid "Allow lines creation"
-msgstr "Dozvoli izradu redaka"
+#: front/popup.php:37 inc/mapping.class.php:124
+msgid "See the file"
+msgstr "Pogledaj datoteku"
 
-#: inc/model.class.php:439 inc/model.class.php:730
-msgid "Allow lines update"
-msgstr "Dozvoli aktualiziranje redaka"
+#: front/popup.php:43 inc/model.class.php:1654
+msgid "Data injection report"
+msgstr "Izvještaj o umetanju podataka"
 
-#: inc/model.class.php:448 inc/model.class.php:715
-msgid "Type of data to import"
-msgstr "Vrsta podataka za uvoz"
+#: inc/injectiontype.class.php:135
+msgid "-------Choose a table-------"
+msgstr "------ Odaberi tablicu ------"
 
-#: inc/model.class.php:458 inc/model.class.php:739
-msgid "Allow creation of dropdowns (Except Entity)"
-msgstr ""
+#: inc/injectiontype.class.php:199
+msgid "-------Choose a field-------"
+msgstr "------ Odaberi polje ------"
 
-#: inc/model.class.php:466 inc/model.class.php:743
-msgid "Dates format"
-msgstr "Format datuma"
+#: inc/networkequipmentinjection.class.php:73
+msgid "Number of ports"
+msgstr "Broj priključaka"
 
-#: inc/model.class.php:475 inc/model.class.php:757
-msgid "Float format"
-msgstr "Format decimalnog broja"
+#: inc/computerinjection.class.php:72
+msgid "Antivirus name"
+msgstr "Ime antivirusa"
 
-#: inc/model.class.php:484 inc/model.class.php:766
-msgid "Port unicity criteria"
-msgstr "Kriterij jedinstvenosti priključka"
+#: inc/dropdown.class.php:37
+msgid "dd-mm-yyyy"
+msgstr "dd-mm-gggg"
 
-#: inc/model.class.php:536 inc/model.class.php:774
-msgid "Replacing the value of multiline text fields"
-msgstr ""
+#: inc/dropdown.class.php:39
+msgid "mm-dd-yyyy"
+msgstr "mm-dd-gggg"
 
-#: inc/model.class.php:735
-msgid "Advanced options"
-msgstr "Napredne opcije"
+#: inc/dropdown.class.php:41
+msgid "yyyy-mm-dd"
+msgstr "gggg-mm-dd"
 
-#: inc/model.class.php:753
-msgid "Allow update of existing fields"
-msgstr "Dozvoli aktualiziranje postojećih polja"
+#: inc/dropdown.class.php:62
+msgid "1 234.56"
+msgstr "1 234.56"
 
-#: inc/model.class.php:798
-msgctxt "button"
-msgid "Validate the model"
-msgstr "Provjeri model"
+#: inc/dropdown.class.php:64
+msgid "1 234,56"
+msgstr "1 234,56"
 
-#: inc/model.class.php:834 inc/dropdown.class.php:91
-#: inc/clientinjection.class.php:150
+#: inc/dropdown.class.php:66
+msgid "1,234.56"
+msgstr "1,234.56"
+
+#: inc/dropdown.class.php:91 inc/clientinjection.class.php:150
+#: inc/model.class.php:834
 msgid "File to inject"
 msgstr "Datoteka za umetanje"
 
-#: inc/model.class.php:836 inc/dropdown.class.php:92
+#: inc/dropdown.class.php:92 inc/model.class.php:836
 msgid "Mappings"
 msgstr "Mapiranja"
 
-#: inc/model.class.php:838 inc/dropdown.class.php:94
+#: inc/dropdown.class.php:94 inc/model.class.php:838
 msgid "Additional Information"
 msgstr "Dodatne informacije"
 
-#: inc/model.class.php:864
-msgid "Load this file"
-msgstr "Učitaj ovu datoteku"
+#: inc/dropdown.class.php:98
+msgid "Model available for use"
+msgstr "Model dostupan za upotrebu"
 
-#: inc/model.class.php:948
-msgid "Please enter a name for the model"
-msgstr "Upiši ime za ovaj model"
+#: inc/dropdown.class.php:125
+msgid "Automatic detection"
+msgstr "Automatsko prepoznavanje"
 
-#: inc/model.class.php:959
-msgid "Your model should allow import and/or update of data"
-msgstr "Tvoj model bi trebao omogućiti uvoz i/ili aktualiziranje podataka"
+#: inc/dropdown.class.php:128
+msgid "UTF-8"
+msgstr "UTF-8"
 
-#: inc/model.class.php:982
-msgid "You are not the initial creator of this model"
-msgstr "Nisi stvaralac ovog modela"
+#: inc/dropdown.class.php:129
+msgid "ISO8859-1"
+msgstr "ISO8859-1"
 
-#: inc/model.class.php:1050
-#, php-format
-msgid "Impossible to copy the file in %s"
-msgstr "Nije moguće kopirati datoteku u %s"
+#: inc/mapping.class.php:130
+msgid "Header of the file"
+msgstr "Zaglavlje datoteke"
 
-#: inc/model.class.php:1059
-msgid "File format is wrong"
-msgstr "Nepodržani format datoteke"
+#: inc/mapping.class.php:131 inc/info.class.php:82 inc/info.class.php:140
+msgid "Tables"
+msgstr "Tablice"
 
-#: inc/model.class.php:1060
-msgid "Extension csv required"
-msgstr "Potreban je csv nastavak"
+#: inc/mapping.class.php:133
+msgid "Link field"
+msgstr "Poveži polje"
 
-#: inc/model.class.php:1180
-msgid "The file is ok."
-msgstr "Datoteka je u redu."
+#: inc/menu.class.php:56 inc/menu.class.php:57 inc/menu.class.php:61
+#: inc/clientinjection.class.php:214 inc/profile.class.php:44
+msgid "Injection of the file"
+msgstr "Umetanje datoteke"
 
-#: inc/model.class.php:1206
-msgid "The number of columns of the file is incorrect."
-msgstr "Broj stupaca u datoteci nije ispravan."
+#: inc/info.class.php:84 inc/info.class.php:142
+msgid "Mandatory information"
+msgstr "Obavezne informacije"
 
-#: inc/model.class.php:1208
-#, php-format
-msgid "%d awaited column"
-msgid_plural "%d awaited columns"
-msgstr[0] "očekuje se %d stupac"
-msgstr[1] "očekuju se %d stupca"
-msgstr[2] "očekuju se %d stupaca"
+#: inc/info.class.php:141
+msgid "Fields"
+msgstr "Polja"
 
-#: inc/model.class.php:1213
-#, php-format
-msgid "%d found column"
-msgid_plural "%d found columns"
-msgstr[0] "pronađen je %d stupac"
-msgstr[1] "pronađena su %d stupca"
-msgstr[2] "pronađeno je %d stupaca"
+#: inc/info.class.php:265
+msgid "Complementary information"
+msgstr "Dodatne informacije"
 
-#: inc/model.class.php:1257
-msgid "At least one column is incorrect"
-msgstr "Barem jedan stupac je neispravan"
+#: inc/info.class.php:266 inc/clientinjection.class.php:154
+msgid "Choose a file"
+msgstr "Odaberi datoteku"
 
-#: inc/model.class.php:1265
-msgid "Into the file"
-msgstr "U datoteku"
+#: inc/info.class.php:275
+msgid "Download file sample"
+msgstr "Preuzmi uzorak datoteke"
 
-#: inc/model.class.php:1270
-msgid "From the model"
-msgstr "Od modela"
+#: inc/modelcsv.class.php:169
+msgid "Specific file format options"
+msgstr "Opcije za određeni datotečni format"
 
-#: inc/model.class.php:1445 inc/commoninjectionlib.class.php:2135
-msgid "Undetermined"
-msgstr "Neodređeno"
+#: inc/modelcsv.class.php:172
+msgid "Header's presence"
+msgstr "Postojanje zaglavlja"
 
-#: inc/model.class.php:1526 inc/model.class.php:1663
-msgid "Array of successful injections"
-msgstr "Niz uspješnih umetanja"
+#: inc/modelcsv.class.php:176
+msgid "File delimitor"
+msgstr "Znak rastavljanja"
 
-#: inc/model.class.php:1533 inc/model.class.php:1568 inc/model.class.php:1666
-#: inc/model.class.php:1688
-msgid "Line"
-msgstr "Redak"
-
-#: inc/model.class.php:1534 inc/model.class.php:1570 inc/model.class.php:1607
-#: inc/model.class.php:1667 inc/model.class.php:1690
-msgid "Data Import"
-msgstr "Uvoz podataka"
-
-#: inc/model.class.php:1535 inc/model.class.php:1571 inc/model.class.php:1608
-#: inc/model.class.php:1668 inc/model.class.php:1691
-msgid "Injection type"
-msgstr "Vrsta umetanja"
-
-#: inc/model.class.php:1536 inc/model.class.php:1572 inc/model.class.php:1669
-#: inc/model.class.php:1692
-msgid "Object Identifier"
-msgstr "Identifikator objekta"
-
-#: inc/model.class.php:1561 inc/model.class.php:1685
-msgid "Array of unsuccessful injections"
-msgstr "Niz neuspješnih umetanja"
-
-#: inc/model.class.php:1569 inc/model.class.php:1689 inc/model.class.php:1709
-msgid "Data check"
-msgstr "Provjera podataka"
-
-#: inc/model.class.php:1599
-msgid "Global report"
-msgstr "Globalni izvještaj"
-
-#: inc/model.class.php:1600
-msgid "Number of lines processed"
-msgstr "Broj obrađenih redaka"
-
-#: inc/model.class.php:1609
-msgid "Counter"
-msgstr "Brojač"
+#: inc/phoneinjection.class.php:68
+msgid "Domain name"
+msgstr "Ime domene"
 
 #: inc/commoninjectionlib.class.php:2049
 msgid "Add from CSV file"
@@ -278,118 +233,13 @@ msgstr "Upozorenje"
 msgid "Data not found"
 msgstr "Podaci nisu pronađeni"
 
-#: inc/networkequipmentinjection.class.php:73
-msgid "Number of ports"
-msgstr "Broj priključaka"
-
-#: inc/mapping.class.php:130
-msgid "Header of the file"
-msgstr "Zaglavlje datoteke"
-
-#: inc/mapping.class.php:131 inc/info.class.php:82 inc/info.class.php:140
-msgid "Tables"
-msgstr "Tablice"
-
-#: inc/mapping.class.php:133
-msgid "Link field"
-msgstr "Poveži polje"
-
-#: inc/computerinjection.class.php:72
-msgid "Antivirus name"
-msgstr "Ime antivirusa"
+#: inc/commoninjectionlib.class.php:2135 inc/model.class.php:1445
+msgid "Undetermined"
+msgstr "Neodređeno"
 
 #: inc/networkportinjection.class.php:91
 msgid "Port MAC address"
 msgstr "MAC adresa priključka"
-
-#: inc/info.class.php:84 inc/info.class.php:142
-msgid "Mandatory information"
-msgstr "Obavezne informacije"
-
-#: inc/info.class.php:141
-msgid "Fields"
-msgstr "Polja"
-
-#: inc/info.class.php:265
-msgid "Complementary information"
-msgstr "Dodatne informacije"
-
-#: inc/info.class.php:266 inc/clientinjection.class.php:154
-msgid "Choose a file"
-msgstr "Odaberi datoteku"
-
-#: inc/info.class.php:275
-msgid "Download file sample"
-msgstr "Preuzmi uzorak datoteke"
-
-#: inc/profile.class.php:40
-msgid "Model management"
-msgstr "Upravljanje modelima"
-
-#: inc/profile.class.php:44 inc/clientinjection.class.php:214
-#: inc/menu.class.php:56 inc/menu.class.php:57 inc/menu.class.php:61
-msgid "Injection of the file"
-msgstr "Umetanje datoteke"
-
-#: inc/modelcsv.class.php:169
-msgid "Specific file format options"
-msgstr "Opcije za određeni datotečni format"
-
-#: inc/modelcsv.class.php:172
-msgid "Header's presence"
-msgstr "Postojanje zaglavlja"
-
-#: inc/modelcsv.class.php:176
-msgid "File delimitor"
-msgstr "Znak rastavljanja"
-
-#: inc/injectiontype.class.php:135
-msgid "-------Choose a table-------"
-msgstr "------ Odaberi tablicu ------"
-
-#: inc/injectiontype.class.php:199
-msgid "-------Choose a field-------"
-msgstr "------ Odaberi polje ------"
-
-#: inc/dropdown.class.php:37
-msgid "dd-mm-yyyy"
-msgstr "dd-mm-gggg"
-
-#: inc/dropdown.class.php:39
-msgid "mm-dd-yyyy"
-msgstr "mm-dd-gggg"
-
-#: inc/dropdown.class.php:41
-msgid "yyyy-mm-dd"
-msgstr "gggg-mm-dd"
-
-#: inc/dropdown.class.php:62
-msgid "1 234.56"
-msgstr "1 234.56"
-
-#: inc/dropdown.class.php:64
-msgid "1 234,56"
-msgstr "1 234,56"
-
-#: inc/dropdown.class.php:66
-msgid "1,234.56"
-msgstr "1,234.56"
-
-#: inc/dropdown.class.php:98
-msgid "Model available for use"
-msgstr "Model dostupan za upotrebu"
-
-#: inc/dropdown.class.php:125
-msgid "Automatic detection"
-msgstr "Automatsko prepoznavanje"
-
-#: inc/dropdown.class.php:128
-msgid "UTF-8"
-msgstr "UTF-8"
-
-#: inc/dropdown.class.php:129
-msgid "ISO8859-1"
-msgstr "ISO8859-1"
 
 #: inc/clientinjection.class.php:86
 msgid "Use an existing model"
@@ -462,10 +312,160 @@ msgstr "Izvezi log-zapis"
 msgid "Finish"
 msgstr "Završi"
 
-#: inc/phoneinjection.class.php:68
-msgid "Domain name"
-msgstr "Ime domene"
+#: inc/model.class.php:430 inc/model.class.php:727
+msgid "Allow lines creation"
+msgstr "Dozvoli izradu redaka"
 
-#: hook.php:117 hook.php:135 setup.php:66
-msgid "Can't create folder"
-msgstr "Nije moguće stvori mapu"
+#: inc/model.class.php:439 inc/model.class.php:730
+msgid "Allow lines update"
+msgstr "Dozvoli aktualiziranje redaka"
+
+#: inc/model.class.php:448 inc/model.class.php:715
+msgid "Type of data to import"
+msgstr "Vrsta podataka za uvoz"
+
+#: inc/model.class.php:458 inc/model.class.php:739
+msgid "Allow creation of dropdowns (Except Entity)"
+msgstr ""
+
+#: inc/model.class.php:466 inc/model.class.php:743
+msgid "Dates format"
+msgstr "Format datuma"
+
+#: inc/model.class.php:475 inc/model.class.php:757
+msgid "Float format"
+msgstr "Format decimalnog broja"
+
+#: inc/model.class.php:484 inc/model.class.php:766
+msgid "Port unicity criteria"
+msgstr "Kriterij jedinstvenosti priključka"
+
+#: inc/model.class.php:536 inc/model.class.php:774
+msgid "Replacing the value of multiline text fields"
+msgstr ""
+
+#: inc/model.class.php:735
+msgid "Advanced options"
+msgstr "Napredne opcije"
+
+#: inc/model.class.php:753
+msgid "Allow update of existing fields"
+msgstr "Dozvoli aktualiziranje postojećih polja"
+
+#: inc/model.class.php:798
+msgctxt "button"
+msgid "Validate the model"
+msgstr "Provjeri model"
+
+#: inc/model.class.php:864
+msgid "Load this file"
+msgstr "Učitaj ovu datoteku"
+
+#: inc/model.class.php:948
+msgid "Please enter a name for the model"
+msgstr "Upiši ime za ovaj model"
+
+#: inc/model.class.php:959
+msgid "Your model should allow import and/or update of data"
+msgstr "Tvoj model bi trebao omogućiti uvoz i/ili aktualiziranje podataka"
+
+#: inc/model.class.php:982
+msgid "You are not the initial creator of this model"
+msgstr "Nisi stvaralac ovog modela"
+
+#: inc/model.class.php:1050
+#, php-format
+msgid "Impossible to copy the file in %s"
+msgstr "Nije moguće kopirati datoteku u %s"
+
+#: inc/model.class.php:1059
+msgid "File format is wrong"
+msgstr "Nepodržani format datoteke"
+
+#: inc/model.class.php:1060
+msgid "Extension csv required"
+msgstr "Potreban je csv nastavak"
+
+#: inc/model.class.php:1180
+msgid "The file is ok."
+msgstr "Datoteka je u redu."
+
+#: inc/model.class.php:1206
+msgid "The number of columns of the file is incorrect."
+msgstr "Broj stupaca u datoteci nije ispravan."
+
+#: inc/model.class.php:1208
+#, php-format
+msgid "%d awaited column"
+msgid_plural "%d awaited columns"
+msgstr[0] "očekuje se %d stupac"
+msgstr[1] "očekuju se %d stupca"
+msgstr[2] "očekuju se %d stupaca"
+
+#: inc/model.class.php:1213
+#, php-format
+msgid "%d found column"
+msgid_plural "%d found columns"
+msgstr[0] "pronađen je %d stupac"
+msgstr[1] "pronađena su %d stupca"
+msgstr[2] "pronađeno je %d stupaca"
+
+#: inc/model.class.php:1257
+msgid "At least one column is incorrect"
+msgstr "Barem jedan stupac je neispravan"
+
+#: inc/model.class.php:1265
+msgid "Into the file"
+msgstr "U datoteku"
+
+#: inc/model.class.php:1270
+msgid "From the model"
+msgstr "Od modela"
+
+#: inc/model.class.php:1526 inc/model.class.php:1663
+msgid "Array of successful injections"
+msgstr "Niz uspješnih umetanja"
+
+#: inc/model.class.php:1533 inc/model.class.php:1568 inc/model.class.php:1666
+#: inc/model.class.php:1688
+msgid "Line"
+msgstr "Redak"
+
+#: inc/model.class.php:1534 inc/model.class.php:1570 inc/model.class.php:1607
+#: inc/model.class.php:1667 inc/model.class.php:1690
+msgid "Data Import"
+msgstr "Uvoz podataka"
+
+#: inc/model.class.php:1535 inc/model.class.php:1571 inc/model.class.php:1608
+#: inc/model.class.php:1668 inc/model.class.php:1691
+msgid "Injection type"
+msgstr "Vrsta umetanja"
+
+#: inc/model.class.php:1536 inc/model.class.php:1572 inc/model.class.php:1669
+#: inc/model.class.php:1692
+msgid "Object Identifier"
+msgstr "Identifikator objekta"
+
+#: inc/model.class.php:1561 inc/model.class.php:1685
+msgid "Array of unsuccessful injections"
+msgstr "Niz neuspješnih umetanja"
+
+#: inc/model.class.php:1569 inc/model.class.php:1689 inc/model.class.php:1709
+msgid "Data check"
+msgstr "Provjera podataka"
+
+#: inc/model.class.php:1599
+msgid "Global report"
+msgstr "Globalni izvještaj"
+
+#: inc/model.class.php:1600
+msgid "Number of lines processed"
+msgstr "Broj obrađenih redaka"
+
+#: inc/model.class.php:1609
+msgid "Counter"
+msgstr "Brojač"
+
+#: inc/profile.class.php:40
+msgid "Model management"
+msgstr "Upravljanje modelima"
