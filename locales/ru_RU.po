@@ -15,7 +15,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-07-01 01:25+0000\n"
+"POT-Creation-Date: 2025-07-14 01:22+0000\n"
 "PO-Revision-Date: 2018-06-21 12:57+0000\n"
 "Last-Translator: Alexander Chervonenko, 2024\n"
 "Language-Team: Russian (Russia) (https://app.transifex.com/teclib/teams/28042/ru_RU/)\n"
@@ -25,16 +25,12 @@ msgstr ""
 "Language: ru_RU\n"
 "Plural-Forms: nplurals=4; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || (n%100>=11 && n%100<=14)? 2 : 3);\n"
 
-#: front/popup.php:37 inc/mapping.class.php:124
-msgid "See the file"
-msgstr "Посмотреть файл"
+#: hook.php:117 hook.php:135 setup.php:66
+msgid "Can't create folder"
+msgstr "Невозможно создать папку"
 
-#: front/popup.php:43 inc/model.class.php:1654
-msgid "Data injection report"
-msgstr "Отчет добавления данных"
-
-#: front/clientinjection.form.php:36 inc/profile.class.php:72
-#: inc/menu.class.php:38 setup.php:95
+#: setup.php:95 front/clientinjection.form.php:36 inc/menu.class.php:38
+#: inc/profile.class.php:72
 msgid "Data injection"
 msgstr "Добавление данных"
 
@@ -63,178 +59,135 @@ msgstr ""
 "Этот шаг позволяет вам добавить информацию, не представленную в файле. Вас "
 "попросят предоставить эту информацию во время использования модели"
 
-#: inc/model.class.php:430 inc/model.class.php:727
-msgid "Allow lines creation"
-msgstr "Разрешить создание новый значений"
+#: front/popup.php:37 inc/mapping.class.php:124
+msgid "See the file"
+msgstr "Посмотреть файл"
 
-#: inc/model.class.php:439 inc/model.class.php:730
-msgid "Allow lines update"
-msgstr "Разрешить обновление значений"
+#: front/popup.php:43 inc/model.class.php:1654
+msgid "Data injection report"
+msgstr "Отчет добавления данных"
 
-#: inc/model.class.php:448 inc/model.class.php:715
-msgid "Type of data to import"
-msgstr "Тип данных для импорта"
+#: inc/injectiontype.class.php:135
+msgid "-------Choose a table-------"
+msgstr "-------Выберите таблицу-------"
 
-#: inc/model.class.php:458 inc/model.class.php:739
-msgid "Allow creation of dropdowns (Except Entity)"
-msgstr ""
+#: inc/injectiontype.class.php:199
+msgid "-------Choose a field-------"
+msgstr "-------Выберите поле-------"
 
-#: inc/model.class.php:466 inc/model.class.php:743
-msgid "Dates format"
-msgstr "Формат дат"
+#: inc/networkequipmentinjection.class.php:73
+msgid "Number of ports"
+msgstr "Количество портов"
 
-#: inc/model.class.php:475 inc/model.class.php:757
-msgid "Float format"
-msgstr "Формат с плавающей запятой"
+#: inc/computerinjection.class.php:72
+msgid "Antivirus name"
+msgstr "Название антивируса"
 
-#: inc/model.class.php:484 inc/model.class.php:766
-msgid "Port unicity criteria"
-msgstr "Критерий уникальности порта"
+#: inc/dropdown.class.php:37
+msgid "dd-mm-yyyy"
+msgstr "дд-мм-гггг"
 
-#: inc/model.class.php:536 inc/model.class.php:774
-msgid "Replacing the value of multiline text fields"
-msgstr ""
+#: inc/dropdown.class.php:39
+msgid "mm-dd-yyyy"
+msgstr "мм-дд-гггг"
 
-#: inc/model.class.php:735
-msgid "Advanced options"
-msgstr "Расширенные настройки"
+#: inc/dropdown.class.php:41
+msgid "yyyy-mm-dd"
+msgstr "гггг-мм-дд"
 
-#: inc/model.class.php:753
-msgid "Allow update of existing fields"
-msgstr "Разрешить обновление существующий полей"
+#: inc/dropdown.class.php:62
+msgid "1 234.56"
+msgstr "1 234.56"
 
-#: inc/model.class.php:798
-msgctxt "button"
-msgid "Validate the model"
-msgstr "Подтвердить модель"
+#: inc/dropdown.class.php:64
+msgid "1 234,56"
+msgstr "1 234,56"
 
-#: inc/model.class.php:834 inc/dropdown.class.php:91
-#: inc/clientinjection.class.php:150
+#: inc/dropdown.class.php:66
+msgid "1,234.56"
+msgstr "1 234,56"
+
+#: inc/dropdown.class.php:91 inc/clientinjection.class.php:150
+#: inc/model.class.php:834
 msgid "File to inject"
 msgstr "Файл для добавления"
 
-#: inc/model.class.php:836 inc/dropdown.class.php:92
+#: inc/dropdown.class.php:92 inc/model.class.php:836
 msgid "Mappings"
 msgstr "Соответствия"
 
-#: inc/model.class.php:838 inc/dropdown.class.php:94
+#: inc/dropdown.class.php:94 inc/model.class.php:838
 msgid "Additional Information"
 msgstr "Дополнительная информация"
 
-#: inc/model.class.php:864
-msgid "Load this file"
-msgstr "Загрузить это файл"
+#: inc/dropdown.class.php:98
+msgid "Model available for use"
+msgstr "Доступные модели"
 
-#: inc/model.class.php:948
-msgid "Please enter a name for the model"
-msgstr "Пожалуйста, введите название модели"
+#: inc/dropdown.class.php:125
+msgid "Automatic detection"
+msgstr "Автоматическое определение"
 
-#: inc/model.class.php:959
-msgid "Your model should allow import and/or update of data"
-msgstr "Ваша модель должна разрешать импорт и/или обновление данных"
+#: inc/dropdown.class.php:128
+msgid "UTF-8"
+msgstr "UTF-8"
 
-#: inc/model.class.php:982
-msgid "You are not the initial creator of this model"
-msgstr "Вы не первоначальный создатель этой модели"
+#: inc/dropdown.class.php:129
+msgid "ISO8859-1"
+msgstr "ISO8859-1"
 
-#: inc/model.class.php:1050
-#, php-format
-msgid "Impossible to copy the file in %s"
-msgstr "Невозможно копировать файл в %s"
+#: inc/mapping.class.php:130
+msgid "Header of the file"
+msgstr "Заголовок файла"
 
-#: inc/model.class.php:1059
-msgid "File format is wrong"
-msgstr "Формат файла неверный"
+#: inc/mapping.class.php:131 inc/info.class.php:82 inc/info.class.php:140
+msgid "Tables"
+msgstr "Таблицы"
 
-#: inc/model.class.php:1060
-msgid "Extension csv required"
-msgstr "Требуется указать расширение csv"
+#: inc/mapping.class.php:133
+msgid "Link field"
+msgstr "Поле связи"
 
-#: inc/model.class.php:1180
-msgid "The file is ok."
-msgstr "Файл без ошибок."
+#: inc/menu.class.php:56 inc/menu.class.php:57 inc/menu.class.php:61
+#: inc/clientinjection.class.php:214 inc/profile.class.php:44
+msgid "Injection of the file"
+msgstr "Добавление файла"
 
-#: inc/model.class.php:1206
-msgid "The number of columns of the file is incorrect."
-msgstr "Неправильное количество столбцов в файле."
+#: inc/info.class.php:84 inc/info.class.php:142
+msgid "Mandatory information"
+msgstr "Обязательная информация"
 
-#: inc/model.class.php:1208
-#, php-format
-msgid "%d awaited column"
-msgid_plural "%d awaited columns"
-msgstr[0] "%d колонка ожидается"
-msgstr[1] "%d ожидается колонок"
-msgstr[2] "%d ожидается колонок"
-msgstr[3] "%d ожидается колонок"
+#: inc/info.class.php:141
+msgid "Fields"
+msgstr "Поля"
 
-#: inc/model.class.php:1213
-#, php-format
-msgid "%d found column"
-msgid_plural "%d found columns"
-msgstr[0] "%d колонка найдена"
-msgstr[1] "%d  найденных колонок"
-msgstr[2] "%d  найденных колонок"
-msgstr[3] "%d найденных колонок"
+#: inc/info.class.php:265
+msgid "Complementary information"
+msgstr "Дополнительная информация"
 
-#: inc/model.class.php:1257
-msgid "At least one column is incorrect"
-msgstr "По крайней мере, один столбец содержит ошибки"
+#: inc/info.class.php:266 inc/clientinjection.class.php:154
+msgid "Choose a file"
+msgstr "Выбрать файл"
 
-#: inc/model.class.php:1265
-msgid "Into the file"
-msgstr "В файл"
+#: inc/info.class.php:275
+msgid "Download file sample"
+msgstr "Скачать файл-пример"
 
-#: inc/model.class.php:1270
-msgid "From the model"
-msgstr "Из модели"
+#: inc/modelcsv.class.php:169
+msgid "Specific file format options"
+msgstr "Конкретные параметры формата файла"
 
-#: inc/model.class.php:1445 inc/commoninjectionlib.class.php:2135
-msgid "Undetermined"
-msgstr "Неопределенный"
+#: inc/modelcsv.class.php:172
+msgid "Header's presence"
+msgstr "Наличие заголовка"
 
-#: inc/model.class.php:1526 inc/model.class.php:1663
-msgid "Array of successful injections"
-msgstr "Массив успешных добавлений"
+#: inc/modelcsv.class.php:176
+msgid "File delimitor"
+msgstr "Разделитель"
 
-#: inc/model.class.php:1533 inc/model.class.php:1568 inc/model.class.php:1666
-#: inc/model.class.php:1688
-msgid "Line"
-msgstr "Линия"
-
-#: inc/model.class.php:1534 inc/model.class.php:1570 inc/model.class.php:1607
-#: inc/model.class.php:1667 inc/model.class.php:1690
-msgid "Data Import"
-msgstr "Импорт данных"
-
-#: inc/model.class.php:1535 inc/model.class.php:1571 inc/model.class.php:1608
-#: inc/model.class.php:1668 inc/model.class.php:1691
-msgid "Injection type"
-msgstr "Тип добавления"
-
-#: inc/model.class.php:1536 inc/model.class.php:1572 inc/model.class.php:1669
-#: inc/model.class.php:1692
-msgid "Object Identifier"
-msgstr "Идентификатор объекта"
-
-#: inc/model.class.php:1561 inc/model.class.php:1685
-msgid "Array of unsuccessful injections"
-msgstr "Массив неуспешных добавлений"
-
-#: inc/model.class.php:1569 inc/model.class.php:1689 inc/model.class.php:1709
-msgid "Data check"
-msgstr "Проверка данных"
-
-#: inc/model.class.php:1599
-msgid "Global report"
-msgstr "Глобальный отчёт"
-
-#: inc/model.class.php:1600
-msgid "Number of lines processed"
-msgstr "Количество обработанных строк"
-
-#: inc/model.class.php:1609
-msgid "Counter"
-msgstr "Счетчик"
+#: inc/phoneinjection.class.php:68
+msgid "Domain name"
+msgstr "Доменное имя"
 
 #: inc/commoninjectionlib.class.php:2049
 msgid "Add from CSV file"
@@ -284,118 +237,13 @@ msgstr "Предупреждение"
 msgid "Data not found"
 msgstr "Данные не найдены"
 
-#: inc/networkequipmentinjection.class.php:73
-msgid "Number of ports"
-msgstr "Количество портов"
-
-#: inc/mapping.class.php:130
-msgid "Header of the file"
-msgstr "Заголовок файла"
-
-#: inc/mapping.class.php:131 inc/info.class.php:82 inc/info.class.php:140
-msgid "Tables"
-msgstr "Таблицы"
-
-#: inc/mapping.class.php:133
-msgid "Link field"
-msgstr "Поле связи"
-
-#: inc/computerinjection.class.php:72
-msgid "Antivirus name"
-msgstr "Название антивируса"
+#: inc/commoninjectionlib.class.php:2135 inc/model.class.php:1445
+msgid "Undetermined"
+msgstr "Неопределенный"
 
 #: inc/networkportinjection.class.php:91
 msgid "Port MAC address"
 msgstr "MAC адрес порта"
-
-#: inc/info.class.php:84 inc/info.class.php:142
-msgid "Mandatory information"
-msgstr "Обязательная информация"
-
-#: inc/info.class.php:141
-msgid "Fields"
-msgstr "Поля"
-
-#: inc/info.class.php:265
-msgid "Complementary information"
-msgstr "Дополнительная информация"
-
-#: inc/info.class.php:266 inc/clientinjection.class.php:154
-msgid "Choose a file"
-msgstr "Выбрать файл"
-
-#: inc/info.class.php:275
-msgid "Download file sample"
-msgstr "Скачать файл-пример"
-
-#: inc/profile.class.php:40
-msgid "Model management"
-msgstr "Управление моделями"
-
-#: inc/profile.class.php:44 inc/clientinjection.class.php:214
-#: inc/menu.class.php:56 inc/menu.class.php:57 inc/menu.class.php:61
-msgid "Injection of the file"
-msgstr "Добавление файла"
-
-#: inc/modelcsv.class.php:169
-msgid "Specific file format options"
-msgstr "Конкретные параметры формата файла"
-
-#: inc/modelcsv.class.php:172
-msgid "Header's presence"
-msgstr "Наличие заголовка"
-
-#: inc/modelcsv.class.php:176
-msgid "File delimitor"
-msgstr "Разделитель"
-
-#: inc/injectiontype.class.php:135
-msgid "-------Choose a table-------"
-msgstr "-------Выберите таблицу-------"
-
-#: inc/injectiontype.class.php:199
-msgid "-------Choose a field-------"
-msgstr "-------Выберите поле-------"
-
-#: inc/dropdown.class.php:37
-msgid "dd-mm-yyyy"
-msgstr "дд-мм-гггг"
-
-#: inc/dropdown.class.php:39
-msgid "mm-dd-yyyy"
-msgstr "мм-дд-гггг"
-
-#: inc/dropdown.class.php:41
-msgid "yyyy-mm-dd"
-msgstr "гггг-мм-дд"
-
-#: inc/dropdown.class.php:62
-msgid "1 234.56"
-msgstr "1 234.56"
-
-#: inc/dropdown.class.php:64
-msgid "1 234,56"
-msgstr "1 234,56"
-
-#: inc/dropdown.class.php:66
-msgid "1,234.56"
-msgstr "1 234,56"
-
-#: inc/dropdown.class.php:98
-msgid "Model available for use"
-msgstr "Доступные модели"
-
-#: inc/dropdown.class.php:125
-msgid "Automatic detection"
-msgstr "Автоматическое определение"
-
-#: inc/dropdown.class.php:128
-msgid "UTF-8"
-msgstr "UTF-8"
-
-#: inc/dropdown.class.php:129
-msgid "ISO8859-1"
-msgstr "ISO8859-1"
 
 #: inc/clientinjection.class.php:86
 msgid "Use an existing model"
@@ -470,10 +318,162 @@ msgstr "Экспорт лога"
 msgid "Finish"
 msgstr "Завершено"
 
-#: inc/phoneinjection.class.php:68
-msgid "Domain name"
-msgstr "Доменное имя"
+#: inc/model.class.php:430 inc/model.class.php:727
+msgid "Allow lines creation"
+msgstr "Разрешить создание новый значений"
 
-#: hook.php:117 hook.php:135 setup.php:66
-msgid "Can't create folder"
-msgstr "Невозможно создать папку"
+#: inc/model.class.php:439 inc/model.class.php:730
+msgid "Allow lines update"
+msgstr "Разрешить обновление значений"
+
+#: inc/model.class.php:448 inc/model.class.php:715
+msgid "Type of data to import"
+msgstr "Тип данных для импорта"
+
+#: inc/model.class.php:458 inc/model.class.php:739
+msgid "Allow creation of dropdowns (Except Entity)"
+msgstr ""
+
+#: inc/model.class.php:466 inc/model.class.php:743
+msgid "Dates format"
+msgstr "Формат дат"
+
+#: inc/model.class.php:475 inc/model.class.php:757
+msgid "Float format"
+msgstr "Формат с плавающей запятой"
+
+#: inc/model.class.php:484 inc/model.class.php:766
+msgid "Port unicity criteria"
+msgstr "Критерий уникальности порта"
+
+#: inc/model.class.php:536 inc/model.class.php:774
+msgid "Replacing the value of multiline text fields"
+msgstr ""
+
+#: inc/model.class.php:735
+msgid "Advanced options"
+msgstr "Расширенные настройки"
+
+#: inc/model.class.php:753
+msgid "Allow update of existing fields"
+msgstr "Разрешить обновление существующий полей"
+
+#: inc/model.class.php:798
+msgctxt "button"
+msgid "Validate the model"
+msgstr "Подтвердить модель"
+
+#: inc/model.class.php:864
+msgid "Load this file"
+msgstr "Загрузить это файл"
+
+#: inc/model.class.php:948
+msgid "Please enter a name for the model"
+msgstr "Пожалуйста, введите название модели"
+
+#: inc/model.class.php:959
+msgid "Your model should allow import and/or update of data"
+msgstr "Ваша модель должна разрешать импорт и/или обновление данных"
+
+#: inc/model.class.php:982
+msgid "You are not the initial creator of this model"
+msgstr "Вы не первоначальный создатель этой модели"
+
+#: inc/model.class.php:1050
+#, php-format
+msgid "Impossible to copy the file in %s"
+msgstr "Невозможно копировать файл в %s"
+
+#: inc/model.class.php:1059
+msgid "File format is wrong"
+msgstr "Формат файла неверный"
+
+#: inc/model.class.php:1060
+msgid "Extension csv required"
+msgstr "Требуется указать расширение csv"
+
+#: inc/model.class.php:1180
+msgid "The file is ok."
+msgstr "Файл без ошибок."
+
+#: inc/model.class.php:1206
+msgid "The number of columns of the file is incorrect."
+msgstr "Неправильное количество столбцов в файле."
+
+#: inc/model.class.php:1208
+#, php-format
+msgid "%d awaited column"
+msgid_plural "%d awaited columns"
+msgstr[0] "%d колонка ожидается"
+msgstr[1] "%d ожидается колонок"
+msgstr[2] "%d ожидается колонок"
+msgstr[3] "%d ожидается колонок"
+
+#: inc/model.class.php:1213
+#, php-format
+msgid "%d found column"
+msgid_plural "%d found columns"
+msgstr[0] "%d колонка найдена"
+msgstr[1] "%d  найденных колонок"
+msgstr[2] "%d  найденных колонок"
+msgstr[3] "%d найденных колонок"
+
+#: inc/model.class.php:1257
+msgid "At least one column is incorrect"
+msgstr "По крайней мере, один столбец содержит ошибки"
+
+#: inc/model.class.php:1265
+msgid "Into the file"
+msgstr "В файл"
+
+#: inc/model.class.php:1270
+msgid "From the model"
+msgstr "Из модели"
+
+#: inc/model.class.php:1526 inc/model.class.php:1663
+msgid "Array of successful injections"
+msgstr "Массив успешных добавлений"
+
+#: inc/model.class.php:1533 inc/model.class.php:1568 inc/model.class.php:1666
+#: inc/model.class.php:1688
+msgid "Line"
+msgstr "Линия"
+
+#: inc/model.class.php:1534 inc/model.class.php:1570 inc/model.class.php:1607
+#: inc/model.class.php:1667 inc/model.class.php:1690
+msgid "Data Import"
+msgstr "Импорт данных"
+
+#: inc/model.class.php:1535 inc/model.class.php:1571 inc/model.class.php:1608
+#: inc/model.class.php:1668 inc/model.class.php:1691
+msgid "Injection type"
+msgstr "Тип добавления"
+
+#: inc/model.class.php:1536 inc/model.class.php:1572 inc/model.class.php:1669
+#: inc/model.class.php:1692
+msgid "Object Identifier"
+msgstr "Идентификатор объекта"
+
+#: inc/model.class.php:1561 inc/model.class.php:1685
+msgid "Array of unsuccessful injections"
+msgstr "Массив неуспешных добавлений"
+
+#: inc/model.class.php:1569 inc/model.class.php:1689 inc/model.class.php:1709
+msgid "Data check"
+msgstr "Проверка данных"
+
+#: inc/model.class.php:1599
+msgid "Global report"
+msgstr "Глобальный отчёт"
+
+#: inc/model.class.php:1600
+msgid "Number of lines processed"
+msgstr "Количество обработанных строк"
+
+#: inc/model.class.php:1609
+msgid "Counter"
+msgstr "Счетчик"
+
+#: inc/profile.class.php:40
+msgid "Model management"
+msgstr "Управление моделями"
