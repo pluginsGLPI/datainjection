@@ -28,12 +28,12 @@
  * -------------------------------------------------------------------------
  */
 
-define('PLUGIN_DATAINJECTION_VERSION', '2.14.1');
+define('PLUGIN_DATAINJECTION_VERSION', '2.15.0-beta1');
 
 // Minimal GLPI version, inclusive
-define("PLUGIN_DATAINJECTION_MIN_GLPI", "10.0.11");
+define("PLUGIN_DATAINJECTION_MIN_GLPI", "11.0.0");
 // Maximum GLPI version, exclusive
-define("PLUGIN_DATAINJECTION_MAX_GLPI", "10.0.99");
+define("PLUGIN_DATAINJECTION_MAX_GLPI", "11.0.99");
 
 if (!defined("PLUGIN_DATAINJECTION_UPLOAD_DIR")) {
     define("PLUGIN_DATAINJECTION_UPLOAD_DIR", GLPI_PLUGIN_DOC_DIR . "/datainjection/");
@@ -68,6 +68,10 @@ function plugin_init_datainjection()
                 )
             );
         }
+        $PLUGIN_HOOKS["config_page"]['datainjection'] = "front/clientinjection.form.php";
+
+
+
         if (Session::haveRight('plugin_datainjection_use', READ)) {
             $PLUGIN_HOOKS["menu_toadd"]['datainjection'] = ['tools'  => 'PluginDatainjectionMenu'];
         }
@@ -129,7 +133,7 @@ function getTypesToInject(): void
         'PluginDatainjectionDatabaseInjection'                    => 'datainjection',
         'PluginDatainjectionDatabaseInstanceInjection'            => 'datainjection',
         'PluginDatainjectionNotepadInjection'                     => 'datainjection',
-        'PluginDatainjectionComputer_ItemInjection'               => 'datainjection',
+        //'PluginDatainjectionComputer_ItemInjection'               => 'datainjection',
         'PluginDatainjectionConsumableItemInjection'              => 'datainjection',
         'PluginDatainjectionContactInjection'                     => 'datainjection',
         'PluginDatainjectionContact_SupplierInjection'            => 'datainjection',
@@ -151,8 +155,6 @@ function getTypesToInject(): void
         'PluginDatainjectionProfileInjection'                     => 'datainjection',
         'PluginDatainjectionProfile_UserInjection'                => 'datainjection',
         'PluginDatainjectionSoftwareInjection'                    => 'datainjection',
-        'PluginDatainjectionItem_SoftwareVersionInjection'        => 'datainjection',
-        'PluginDatainjectionItem_SoftwareLicenseInjection'        => 'datainjection',
         'PluginDatainjectionSoftwareLicenseInjection'             => 'datainjection',
         'PluginDatainjectionSoftwareVersionInjection'             => 'datainjection',
         'PluginDatainjectionSupplierInjection'                    => 'datainjection',
@@ -240,4 +242,11 @@ function plugin_datainjection_checkDirectories()
         return false;
     }
     return true;
+}
+
+function plugin_datainjection_geturl(): string
+{
+    /** @var array $CFG_GLPI */
+    global $CFG_GLPI;
+    return sprintf('%s/plugins/datainjection/', $CFG_GLPI['url_base']);
 }
