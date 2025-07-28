@@ -248,5 +248,5 @@ function plugin_datainjection_geturl(): string
 {
     /** @var array $CFG_GLPI */
     global $CFG_GLPI;
-    return sprintf('%s/plugins/datainjection/', $CFG_GLPI['url_base']);
+    return sprintf('%s/plugins/datainjection/', $CFG_GLPI['root_doc']);
 }
