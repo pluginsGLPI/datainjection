@@ -954,15 +954,11 @@ class PluginDatainjectionCommonInjectionLib
                 $this->values[$itemtype][$field] = $value;
             }
         } else { // First value
-            $booleanFields = [
-                'is_dynamic',
-                'is_recursive',
-                'is_template',
-                'is_deleted',
-                'is_active',
+            $notnull_value = [
+                'cpu',
             ];
             if (empty($value)) {
-                if ((strpos($field, 'id') && $field != 'uuid') || (strpos($field, 'is_')) {
+                if ((strpos($field, 'id') && $field != 'uuid') || (strpos($field, 'is_')) || in_array($field, $notnull_value)) {
                     // If the field is an id, we set it to 0
                     $this->values[$itemtype][$field] = self::DROPDOWN_EMPTY_VALUE;
                 } else {
