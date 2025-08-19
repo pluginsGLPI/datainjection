@@ -960,7 +960,6 @@ class PluginDatainjectionCommonInjectionLib
                 'is_template',
                 'is_deleted',
                 'is_active',
-                'cpu',
             ];
             if (empty($value)) {
                 if ((strpos($field, 'id') && $field != 'uuid') || (strpos($field, 'is_')) {
