@@ -963,7 +963,7 @@ class PluginDatainjectionCommonInjectionLib
                 'cpu',
             ];
             if (empty($value)) {
-                if ((strpos($field, 'id') && $field != 'uuid') || in_array($field, $booleanFields)) {
+                if ((strpos($field, 'id') && $field != 'uuid') || (strpos($field, 'is_')) {
                     // If the field is an id, we set it to 0
                     $this->values[$itemtype][$field] = self::DROPDOWN_EMPTY_VALUE;
                 } else {
