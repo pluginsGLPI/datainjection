@@ -954,8 +954,21 @@ class PluginDatainjectionCommonInjectionLib
                 $this->values[$itemtype][$field] = $value;
             }
         } else { // First value
+            $booleanFields = [
+                'is_dynamic',
+                'is_recursive',
+                'is_template',
+                'is_deleted',
+                'is_active',
+            ];
             if (empty($value)) {
-                $this->values[$itemtype][$field] = "NULL";
+                if (strpos($field, 'id') || in_array($field, $booleanFields)) {
+                    // If the field is an id, we set it to 0
+                    $this->values[$itemtype][$field] = self::DROPDOWN_EMPTY_VALUE;
+                } else {
+                    // Else we set it to NULL
+                    $this->values[$itemtype][$field] = self::EMPTY_VALUE;
+                }
             } else {
                 $this->values[$itemtype][$field] = $value;
             }
@@ -1482,7 +1495,6 @@ class PluginDatainjectionCommonInjectionLib
         $add      = true;
         $accepted = false;
 
-        $this->values = Sanitizer::dbUnescapeRecursive($this->values);
        //Toolbox::logDebug("processAddOrUpdate(), start with", $this->values);
 
        // Initial value, will be change when problem
@@ -1650,7 +1662,7 @@ class PluginDatainjectionCommonInjectionLib
 
             if (!empty($option) && self::isFieldADropdown($option['displaytype']) && $value == self::EMPTY_VALUE) {
                 //If field is a dropdown and value is '', then replace it by 0
-                $toinject[$key] = self::DROPDOWN_EMPTY_VALUE;
+                continue;
             } else {
                 $toinject[$key] = $value;
             }
@@ -1672,8 +1684,6 @@ class PluginDatainjectionCommonInjectionLib
                 $toinject[$key] = $value;
             }
         }
-
-        $toinject = Sanitizer::dbEscapeRecursive($toinject);
 
         $newID = null;
         if (method_exists($injectionClass, 'customimport')) {
@@ -1930,8 +1940,7 @@ class PluginDatainjectionCommonInjectionLib
                                     $email = $DB->escape($this->getValueByItemtypeAndName($itemtype, $field));
                                     $where .= " AND `id` IN (SELECT `users_id` FROM glpi_useremails WHERE `email` = '$email') ";
                                 } else {
-                                    $where .= " AND `" . $field . "`='" .
-                                    Sanitizer::dbEscape((string) $this->getValueByItemtypeAndName($itemtype, $field)) . "'";
+                                    $where .= " AND `" . $field . "`='" . (string) $this->getValueByItemtypeAndName($itemtype, $field) . "'";
                                 }
                             }
                         }
