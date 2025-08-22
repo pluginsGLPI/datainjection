@@ -14,6 +14,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Fix injection of `values in entity tabs` when injecting an `entity`
 - Fix `pdffont` field error for users
 - Move `Notepads` search options to the Black List option
+- Fix the SQL error: `Column ‘...’ cannot be null in the query`
 
 
 ### Added
