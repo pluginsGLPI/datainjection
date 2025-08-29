@@ -30,7 +30,8 @@
 
 // Direct access to file
 if (strpos($_SERVER['PHP_SELF'], "dropdownSelectModel.php")) {
-    include '../../../inc/includes.php';
+    defined('GLPI_ROOT') || define('GLPI_ROOT', '../../..');
+    require GLPI_ROOT . '/inc/includes.php';
     header("Content-Type: text/html; charset=UTF-8");
     Html::header_nocache();
 }
