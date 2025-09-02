@@ -78,8 +78,14 @@ class PluginDatainjectionCertificateInjection extends Certificate implements Plu
    **/
     public function addOrUpdateObject($values = [], $options = [])
     {
-        $lib = new PluginDatainjectionCommonInjectionLib($this, $values, $options);
-        $lib->processAddOrUpdate();
-        return $lib->getInjectionResults();
+    if (isset($values['Certificate']['date_expiration'])) {
+        // Convert date to yyyy-mm-dd format
+        $date = $values['Certificate']['date_expiration'];
+        $dateTime = new DateTime($date);
+        $values['Certificate']['date_expiration'] = $dateTime->format('Y-m-d');
     }
+    $lib = new PluginDatainjectionCommonInjectionLib($this, $values, $options);
+    $lib->processAddOrUpdate();
+    return $lib->getInjectionResults();
+}
 }
