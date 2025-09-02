@@ -3,7 +3,7 @@
         "php": ">=7.4"
     },
     "require-dev": {
-        "glpi-project/tools": "^0.7.6",
+        "glpi-project/tools": "^0.8.0",
         "php-parallel-lint/php-parallel-lint": "^1.4",
         "phpstan/extension-installer": "^1.4",
         "phpstan/phpstan": "^2.1",
