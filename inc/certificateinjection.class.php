@@ -70,6 +70,9 @@ class PluginDatainjectionCertificateInjection extends Certificate implements Plu
             "bool"           => [9, 86]
         ];
 
+        // Add date check type to Expiration date Search Option
+        $tab[10]['checktype']    = 'date';
+
         return PluginDatainjectionCommonInjectionLib::addToSearchOptions($tab, $options, $this);
     }
 
@@ -78,12 +81,6 @@ class PluginDatainjectionCertificateInjection extends Certificate implements Plu
    **/
     public function addOrUpdateObject($values = [], $options = [])
     {
-        if (isset($values['Certificate']['date_expiration'])) {
-            // Convert date to yyyy-mm-dd format
-            $date = $values['Certificate']['date_expiration'];
-            $dateTime = new DateTime($date);
-            $values['Certificate']['date_expiration'] = $dateTime->format('Y-m-d');
-        }
         $lib = new PluginDatainjectionCommonInjectionLib($this, $values, $options);
         $lib->processAddOrUpdate();
         return $lib->getInjectionResults();
