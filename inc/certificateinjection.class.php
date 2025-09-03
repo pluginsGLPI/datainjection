@@ -70,6 +70,9 @@ class PluginDatainjectionCertificateInjection extends Certificate implements Plu
             "bool"           => [9, 86]
         ];
 
+        // Add date check type to Expiration date Search Option
+        $tab[10]['checktype']    = 'date';
+
         return PluginDatainjectionCommonInjectionLib::addToSearchOptions($tab, $options, $this);
     }
 
