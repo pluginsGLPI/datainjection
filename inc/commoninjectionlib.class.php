@@ -1596,7 +1596,6 @@ class PluginDatainjectionCommonInjectionLib
 
                     foreach ($this->values as $itemtype => $data) {
                        //Do not process primary_type
-
                         if ($itemtype != get_class($item)) {
 
                             $injectionClass = self::getInjectionClassInstance($itemtype);
