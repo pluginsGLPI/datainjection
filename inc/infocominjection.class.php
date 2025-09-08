@@ -101,6 +101,9 @@ class PluginDatainjectionInfocomInjection extends Infocom implements PluginDatai
         $tab[28]['checktype']   = 'date';
         $tab[159]['checktype']  = 'date';
 
+        // Sink coeff
+        $tab[58]['checktype']   = 'decimal';
+
        //Remove some options because some fields cannot be imported
         $blacklist     = PluginDatainjectionCommonInjectionLib::getBlacklistedOptions(get_parent_class($this));
         $notimportable = [20, 21, 86];
@@ -113,7 +116,7 @@ class PluginDatainjectionInfocomInjection extends Infocom implements PluginDatai
         $options['displaytype']   = ["date"           => [4, 5, 23, 24, 25, 27, 28, 159],
             "dropdown"         => [6, 9, 19, 123, 173],
             "dropdown_integer" => [6, 14],
-            "decimal"          => [8, 13, 17],
+            "decimal"          => [8, 13, 17, 58],
             "sink_type"        => [15],
             "alert"            => [22],
             "multiline_text"   => [16]
@@ -167,13 +170,31 @@ class PluginDatainjectionInfocomInjection extends Infocom implements PluginDatai
         }
     }
 
+    public function isNullable($field) {
+        return in_array($field, [
+            'buy_date',
+            'use_date',
+            'warranty_info',
+            'order_number',
+            'delivery_number',
+            'immo_number',
+            'comment',
+            'bill',
+            'order_date',
+            'delivery_date',
+            'inventory_date',
+            'warranty_date',
+            'date_mod',
+            'date_creation',
+            'decommission_date'
+        ]);
+    }
 
     /**
     * @see plugins/datainjection/inc/PluginDatainjectionInjectionInterface::addOrUpdateObject()
    **/
     public function addOrUpdateObject($values = [], $options = [])
     {
-
         $lib = new PluginDatainjectionCommonInjectionLib($this, $values, $options);
         $lib->processAddOrUpdate();
         return $lib->getInjectionResults();
