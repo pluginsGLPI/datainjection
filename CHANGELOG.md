@@ -5,11 +5,18 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [Unreleased]
+
+### Fixed
+
+- Fix the `Task completed` message during plugin update
+
 ## [2.14.3] - 2025-09-16
 
 ### Fixed
 
 - Fix `License` injection
+
 
 ## [2.14.2] - 2025-08-22
 
