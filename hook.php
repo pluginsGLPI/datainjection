@@ -220,8 +220,6 @@ function plugin_datainjection_uninstall()
 
 function plugin_datainjection_migration_2141_2150(Migration $migration)
 {
-    $migration->setVersion('2.15.0');
-
     $migration->addField(
         'glpi_plugin_datainjection_models',
         'replace_multiline_value',
@@ -233,9 +231,6 @@ function plugin_datainjection_migration_2141_2150(Migration $migration)
 
 function plugin_datainjection_migration_2121_2122(Migration $migration)
 {
-
-    $migration->setVersion('2.12.2');
-
    //remove useless field
     $migration->dropField("glpi_plugin_datainjection_models", "perform_network_connection");
 
@@ -248,8 +243,6 @@ function plugin_datainjection_migration_290_2100(Migration $migration)
 {
     /** @var DBmysql $DB */
     global $DB;
-
-    $migration->setVersion('2.10.0');
 
     $migration->addPostQuery(
         $DB->buildUpdate(
@@ -274,8 +267,6 @@ function plugin_datainjection_migration_264_270(Migration $migration)
     /** @var DBmysql $DB */
     global $DB;
 
-    $migration->setVersion('2.7.0');
-
     $migration->addPostQuery(
         $DB->buildUpdate(
             'glpi_plugin_datainjection_mappings',
@@ -299,8 +290,6 @@ function plugin_datainjection_migration_251_252(Migration $migration)
     /** @var DBmysql $DB */
     global $DB;
 
-    $migration->setVersion('2.5.2');
-
     if (
         $DB->tableExists('glpi_plugin_datainjection_models')
         && $DB->fieldExists('glpi_plugin_datainjection_models', 'date_mod')
@@ -321,8 +310,6 @@ function plugin_datainjection_migration_24_250(Migration $migration)
 {
     /** @var DBmysql $DB */
     global $DB;
-
-    $migration->setVersion('2.5.0');
 
     if (
         $DB->tableExists('glpi_plugin_datainjection_models')
@@ -353,8 +340,6 @@ function plugin_datainjection_upgrade23_240(Migration $migration)
 {
     /** @var DBmysql $DB */
     global $DB;
-
-    $migration->setVersion('2.4.0');
 
     if ($DB->tableExists('glpi_plugin_datainjection_profiles')) {
         if ($DB->fieldExists('glpi_plugin_datainjection_profiles', 'ID')) {
