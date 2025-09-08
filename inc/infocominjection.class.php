@@ -170,7 +170,8 @@ class PluginDatainjectionInfocomInjection extends Infocom implements PluginDatai
         }
     }
 
-    public function isNullable($field) {
+    public function isNullable($field)
+    {
         return in_array($field, [
             'buy_date',
             'use_date',
