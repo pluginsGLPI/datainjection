@@ -55,6 +55,11 @@ class PluginDatainjectionAutoUpdateSystemInjection extends AutoUpdateSystem impl
         return [];
     }
 
+    public function isNullable($field)
+    {
+        return true; // By default, all fields can be null
+    }
+
 
     public function getOptions($primary_type = '')
     {

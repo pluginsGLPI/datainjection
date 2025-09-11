@@ -55,6 +55,11 @@ class PluginDatainjectionContact_SupplierInjection extends Contact_Supplier impl
         return ['Contact', 'Supplier'];
     }
 
+    public function isNullable($field)
+    {
+        return true; // By default, all fields can be null
+    }
+
 
     /**
     * @see plugins/datainjection/inc/PluginDatainjectionInjectionInterface::getOptions()

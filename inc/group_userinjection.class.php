@@ -62,6 +62,11 @@ class PluginDatainjectionGroup_UserInjection extends Group_User implements Plugi
         return ['Group'];
     }
 
+    public function isNullable($field)
+    {
+        return true; // By default, all fields can be null
+    }
+
 
     /**
     * @see plugins/datainjection/inc/PluginDatainjectionInjectionInterface::getOptions()
