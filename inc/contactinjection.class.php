@@ -55,6 +55,11 @@ class PluginDatainjectionContactInjection extends Contact implements PluginDatai
         return ['Supplier'];
     }
 
+    public function isNullable($field)
+    {
+        return true; // By default, all fields can be null
+    }
+
 
     /**
     * @see plugins/datainjection/inc/PluginDatainjectionInjectionInterface::getOptions()

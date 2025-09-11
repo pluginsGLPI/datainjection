@@ -63,6 +63,11 @@ class PluginDatainjectionItem_SoftwareLicenseInjection extends Item_SoftwareLice
         return ['SoftwareLicense', 'Software'];
     }
 
+    public function isNullable($field)
+    {
+        return true; // By default, all fields can be null
+    }
+
 
     /**
     * @see plugins/datainjection/inc/PluginDatainjectionInjectionInterface::getOptions()

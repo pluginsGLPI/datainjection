@@ -55,6 +55,11 @@ class PluginDatainjectionNetworkInterfaceInjection extends NetworkInterface impl
         return [];
     }
 
+    public function isNullable($field)
+    {
+        return true; // By default, all fields can be null
+    }
+
 
     /**
     * @see plugins/datainjection/inc/PluginDatainjectionInjectionInterface::getOptions()

@@ -50,6 +50,11 @@ class PluginDatainjectionCertificateInjection extends Certificate implements Plu
         return [];
     }
 
+    public function isNullable($field)
+    {
+        return true; // By default, all fields can be null
+    }
+
    /**
     * @see plugins/datainjection/inc/PluginDatainjectionInjectionInterface::getOptions()
    **/

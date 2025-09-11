@@ -57,6 +57,11 @@ class PluginDatainjectionNetpointInjection extends Socket implements PluginDatai
         return ['Computer', 'NetworkEquipment', 'Peripheral', 'Phone'];
     }
 
+    public function isNullable($field)
+    {
+        return true; // By default, all fields can be null
+    }
+
 
     /**
     * @see plugins/datainjection/inc/PluginDatainjectionInjectionInterface::getOptions()

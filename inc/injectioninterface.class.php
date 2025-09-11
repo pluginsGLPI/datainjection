@@ -84,6 +84,13 @@ interface PluginDatainjectionInjectionInterface
    **/
     public function addOrUpdateObject($values = [], $options = []);
 
+    /**
+    * Tells if a field can be null or not
+    * @param string $field
+    *
+    * @return boolean
+   **/
+    public function isNullable($field);
 
 
     /**
