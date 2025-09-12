@@ -28,7 +28,8 @@
  * -------------------------------------------------------------------------
  */
 
-require '../../../inc/includes.php';
+defined('GLPI_ROOT') || define('GLPI_ROOT', '../../..');
+require GLPI_ROOT . '/inc/includes.php';
 
 Session::checkRight("plugin_datainjection_use", READ);
 
