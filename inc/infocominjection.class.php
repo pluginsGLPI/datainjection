@@ -101,7 +101,7 @@ class PluginDatainjectionInfocomInjection extends Infocom implements PluginDatai
         $tab[28]['checktype']   = 'date';
         $tab[159]['checktype']  = 'date';
 
-        // Sink coeff
+        // field: sink_coeff
         $tab[58]['checktype']   = 'decimal';
 
        //Remove some options because some fields cannot be imported
