@@ -955,7 +955,7 @@ class PluginDatainjectionCommonInjectionLib
             }
         } else { // First value
             if (empty($value)) {
-                if (isForeignKeyField($field) || (strpos($field, 'is_') !== false) || !$injectionClass->isNullable($field)) {
+                if (isForeignKeyField($field) || (strpos($field, 'is_') !== false) || (method_exists($injectionClass, 'isNullable') && !$injectionClass->isNullable($field))) {
                     // If the field is an id, we set it to 0
                     $this->values[$itemtype][$field] = self::DROPDOWN_EMPTY_VALUE;
                 } else {
