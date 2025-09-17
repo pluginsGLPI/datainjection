@@ -84,8 +84,6 @@ interface PluginDatainjectionInjectionInterface
    **/
     public function addOrUpdateObject($values = [], $options = []);
 
-
-
     /**
     * Check values to inject
     * This method is optionnal ! Implement it if the itemtype need special checks

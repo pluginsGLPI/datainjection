@@ -57,6 +57,11 @@ class PluginDatainjectionDeviceMotherboardInjection extends DeviceMotherboard im
         return $CFG_GLPI['itemdevicemotherboard_types'];
     }
 
+    public function isNullable($field)
+    {
+        return true; // By default, all fields can be null
+    }
+
 
     /**
     * @see plugins/datainjection/inc/PluginDatainjectionInjectionInterface::getOptions()

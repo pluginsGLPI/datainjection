@@ -52,6 +52,11 @@ class PluginDatainjectionNotepadInjection extends Notepad implements PluginDatai
         return ['Computer', 'NetworkEquipment', 'Printer'];
     }
 
+    public function isNullable($field)
+    {
+        return true; // By default, all fields can be null
+    }
+
     public function customDataAlreadyInDB($injectionClass, $values, $options)
     {
        //Do not manage updating notes: only creation
