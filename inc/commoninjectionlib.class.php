@@ -1689,7 +1689,7 @@ class PluginDatainjectionCommonInjectionLib
                 $add,
                 $this->rights
             );
-        } elseif ($item instanceof CommonDropdown && $add) {
+        } elseif ($item instanceof CommonDropdown && $add && !($item instanceof SoftwareLicense)) {
             $newID = $item->import($toinject);
         } else {
             if ($add) {
