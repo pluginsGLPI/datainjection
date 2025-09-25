@@ -11,6 +11,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 - Fix `NetworkName` ip adresses injection
 
+## [2.14.3] - 2025-09-16
+
+### Fixed
+
+- Fix `License` injection
+
 ## [2.14.2] - 2025-08-22
 
 ### Fixed
