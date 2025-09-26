@@ -13,7 +13,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-07-14 01:22+0000\n"
+"POT-Creation-Date: 2025-09-26 01:10+0000\n"
 "PO-Revision-Date: 2018-06-21 12:57+0000\n"
 "Last-Translator: David Stepan <stepand@tiscali.cz>, 2024\n"
 "Language-Team: Czech (Czech Republic) (https://app.transifex.com/teclib/teams/28042/cs_CZ/)\n"
@@ -23,63 +23,248 @@ msgstr ""
 "Language: cs_CZ\n"
 "Plural-Forms: nplurals=4; plural=(n == 1 && n % 1 == 0) ? 0 : (n >= 2 && n <= 4 && n % 1 == 0) ? 1: (n % 1 != 0 ) ? 2 : 3;\n"
 
-#: hook.php:117 hook.php:135 setup.php:66
+#: setup.php:66 hook.php:117 hook.php:135
 msgid "Can't create folder"
 msgstr "Složku není možné vytvořit"
 
-#: setup.php:95 front/clientinjection.form.php:36 inc/menu.class.php:38
-#: inc/profile.class.php:72
+#: setup.php:95 inc/profile.class.php:72 inc/menu.class.php:38
+#: front/clientinjection.form.php:36
 msgid "Data injection"
 msgstr "Vpravení dat"
 
-#: front/clientinjection.form.php:54
-msgid "One mandatory field is not filled"
-msgstr "Povinná kolonka není vyplněná"
+#: inc/profile.class.php:40
+msgid "Model management"
+msgstr "Správa šablon"
 
-#: front/clientinjection.form.php:88 front/model.form.php:87
-msgid ""
-"The file could not be found (Maybe it exceeds the maximum size allowed)"
-msgstr ""
-
-#: front/mapping.form.php:61
-msgid ""
-"One link field must be selected: it will be used to check if data already "
-"exists"
-msgstr ""
-"Je třeba vybrat jednu kolonku odkazu: bude použito pro kontrolu zda data už "
-"existují"
-
-#: front/mapping.form.php:80
-msgid ""
-"This step allows you to add informations not present in the file. You'll be "
-"asked for theses informations while using the model."
-msgstr ""
-"V tomto kroku je možné přidat informace které se nenacházejí v souboru. O "
-"tyto informace budete požádáni při používání modelu."
-
-#: front/popup.php:37 inc/mapping.class.php:124
-msgid "See the file"
-msgstr "Zobrazit soubor"
-
-#: front/popup.php:43 inc/model.class.php:1654
-msgid "Data injection report"
-msgstr "Výkaz o vpravení dat"
-
-#: inc/injectiontype.class.php:135
-msgid "-------Choose a table-------"
-msgstr "-------Zvolte tabulku-------"
-
-#: inc/injectiontype.class.php:199
-msgid "-------Choose a field-------"
-msgstr "-------Zvolte kolonku-------"
-
-#: inc/networkequipmentinjection.class.php:73
-msgid "Number of ports"
-msgstr "Počet portů"
+#: inc/profile.class.php:44 inc/menu.class.php:56 inc/menu.class.php:57
+#: inc/menu.class.php:61 inc/clientinjection.class.php:214
+msgid "Injection of the file"
+msgstr "Import souboru"
 
 #: inc/computerinjection.class.php:72
 msgid "Antivirus name"
 msgstr "Název antiviru"
+
+#: inc/modelcsv.class.php:169
+msgid "Specific file format options"
+msgstr "Předvolby konkrétního souborového formátu"
+
+#: inc/modelcsv.class.php:172
+msgid "Header's presence"
+msgstr "Přítomnost hlavičky"
+
+#: inc/modelcsv.class.php:176
+msgid "File delimitor"
+msgstr "Oddělovač souboru"
+
+#: inc/phoneinjection.class.php:68
+msgid "Domain name"
+msgstr "Název domény"
+
+#: inc/info.class.php:82 inc/info.class.php:140 inc/mapping.class.php:131
+msgid "Tables"
+msgstr "Tabulky"
+
+#: inc/info.class.php:84 inc/info.class.php:142
+msgid "Mandatory information"
+msgstr "Povinné informace"
+
+#: inc/info.class.php:141
+msgid "Fields"
+msgstr "Kolonky"
+
+#: inc/info.class.php:265
+msgid "Complementary information"
+msgstr "Doplňující informace"
+
+#: inc/info.class.php:266 inc/clientinjection.class.php:154
+msgid "Choose a file"
+msgstr "Zvolte soubor"
+
+#: inc/info.class.php:275
+msgid "Download file sample"
+msgstr "Stáhnout ukázku souboru"
+
+#: inc/networkportinjection.class.php:91
+msgid "Port MAC address"
+msgstr "MAC adresa portu"
+
+#: inc/model.class.php:430 inc/model.class.php:727
+msgid "Allow lines creation"
+msgstr "Umožnit vytváření řádků"
+
+#: inc/model.class.php:439 inc/model.class.php:730
+msgid "Allow lines update"
+msgstr "Umožnit aktualizaci řádků"
+
+#: inc/model.class.php:448 inc/model.class.php:715
+msgid "Type of data to import"
+msgstr "Typ dat k importu"
+
+#: inc/model.class.php:458 inc/model.class.php:739
+msgid "Allow creation of dropdowns (Except Entity)"
+msgstr ""
+
+#: inc/model.class.php:466 inc/model.class.php:743
+msgid "Dates format"
+msgstr "Formát data"
+
+#: inc/model.class.php:475 inc/model.class.php:757
+msgid "Float format"
+msgstr "Formát desetinné čárky"
+
+#: inc/model.class.php:484 inc/model.class.php:766
+msgid "Port unicity criteria"
+msgstr "Kritérium jednoznačnosti portu"
+
+#: inc/model.class.php:536 inc/model.class.php:774
+msgid "Replacing the value of multiline text fields"
+msgstr ""
+
+#: inc/model.class.php:735
+msgid "Advanced options"
+msgstr "Pokročilé předvolby"
+
+#: inc/model.class.php:753
+msgid "Allow update of existing fields"
+msgstr "Umožnit aktualizovat existující kolonky"
+
+#: inc/model.class.php:798
+msgctxt "button"
+msgid "Validate the model"
+msgstr "Ověřit šablonu"
+
+#: inc/model.class.php:834 inc/dropdown.class.php:91
+#: inc/clientinjection.class.php:150
+msgid "File to inject"
+msgstr "Soubor k importu"
+
+#: inc/model.class.php:836 inc/dropdown.class.php:92
+msgid "Mappings"
+msgstr "Mapování"
+
+#: inc/model.class.php:838 inc/dropdown.class.php:94
+msgid "Additional Information"
+msgstr "Další informace"
+
+#: inc/model.class.php:864
+msgid "Load this file"
+msgstr "Načíst tento soubor"
+
+#: inc/model.class.php:948
+msgid "Please enter a name for the model"
+msgstr "Zadejte název pro šablonu"
+
+#: inc/model.class.php:959
+msgid "Your model should allow import and/or update of data"
+msgstr "Vaše šablona by měl umožnit import a/nebo aktualizaci dat"
+
+#: inc/model.class.php:982
+msgid "You are not the initial creator of this model"
+msgstr "Nejste tvůrcem této šablony"
+
+#: inc/model.class.php:1050
+#, php-format
+msgid "Impossible to copy the file in %s"
+msgstr "Není možné kopírovat soubor v %s"
+
+#: inc/model.class.php:1059
+msgid "File format is wrong"
+msgstr "Formát souboru není správný"
+
+#: inc/model.class.php:1060
+msgid "Extension csv required"
+msgstr "Je třeba rozšíření csv"
+
+#: inc/model.class.php:1180
+msgid "The file is ok."
+msgstr "Soubor je v pořádku."
+
+#: inc/model.class.php:1206
+msgid "The number of columns of the file is incorrect."
+msgstr "Počet sloupců v souboru není správný."
+
+#: inc/model.class.php:1208
+#, php-format
+msgid "%d awaited column"
+msgid_plural "%d awaited columns"
+msgstr[0] "očekáván %d sloupec"
+msgstr[1] "očekávány %d sloupce"
+msgstr[2] "očekáváno %d sloupců"
+msgstr[3] "očekávány %d sloupce"
+
+#: inc/model.class.php:1213
+#, php-format
+msgid "%d found column"
+msgid_plural "%d found columns"
+msgstr[0] "nalezen %d sloupec"
+msgstr[1] "nalezeny %d sloupce"
+msgstr[2] "nalezeno %d sloupců"
+msgstr[3] "nalezeny %d sloupce"
+
+#: inc/model.class.php:1257
+msgid "At least one column is incorrect"
+msgstr "Přinejmenším jeden sloupec není správný"
+
+#: inc/model.class.php:1265
+msgid "Into the file"
+msgstr "Do souboru"
+
+#: inc/model.class.php:1270
+msgid "From the model"
+msgstr "Ze šablony"
+
+#: inc/model.class.php:1445 inc/commoninjectionlib.class.php:2141
+msgid "Undetermined"
+msgstr "Nespecifikováno"
+
+#: inc/model.class.php:1526 inc/model.class.php:1663
+msgid "Array of successful injections"
+msgstr "Pole úspěšných importů"
+
+#: inc/model.class.php:1533 inc/model.class.php:1568 inc/model.class.php:1666
+#: inc/model.class.php:1688
+msgid "Line"
+msgstr "Řádek"
+
+#: inc/model.class.php:1534 inc/model.class.php:1570 inc/model.class.php:1607
+#: inc/model.class.php:1667 inc/model.class.php:1690
+msgid "Data Import"
+msgstr "Import dat"
+
+#: inc/model.class.php:1535 inc/model.class.php:1571 inc/model.class.php:1608
+#: inc/model.class.php:1668 inc/model.class.php:1691
+msgid "Injection type"
+msgstr "Typ importu"
+
+#: inc/model.class.php:1536 inc/model.class.php:1572 inc/model.class.php:1669
+#: inc/model.class.php:1692
+msgid "Object Identifier"
+msgstr "Identifikátor objektu"
+
+#: inc/model.class.php:1561 inc/model.class.php:1685
+msgid "Array of unsuccessful injections"
+msgstr "Pole neúspěšných importů"
+
+#: inc/model.class.php:1569 inc/model.class.php:1689 inc/model.class.php:1709
+msgid "Data check"
+msgstr "Kontrola dat"
+
+#: inc/model.class.php:1599
+msgid "Global report"
+msgstr "Globální zpráva"
+
+#: inc/model.class.php:1600
+msgid "Number of lines processed"
+msgstr "Počet zpracovaných řádků"
+
+#: inc/model.class.php:1609
+msgid "Counter"
+msgstr "Počítadlo"
+
+#: inc/model.class.php:1654 front/popup.php:43
+msgid "Data injection report"
+msgstr "Výkaz o vpravení dat"
 
 #: inc/dropdown.class.php:37
 msgid "dd-mm-yyyy"
@@ -105,19 +290,6 @@ msgstr "1 234,56"
 msgid "1,234.56"
 msgstr "1 234,56"
 
-#: inc/dropdown.class.php:91 inc/clientinjection.class.php:150
-#: inc/model.class.php:834
-msgid "File to inject"
-msgstr "Soubor k importu"
-
-#: inc/dropdown.class.php:92 inc/model.class.php:836
-msgid "Mappings"
-msgstr "Mapování"
-
-#: inc/dropdown.class.php:94 inc/model.class.php:838
-msgid "Additional Information"
-msgstr "Další informace"
-
 #: inc/dropdown.class.php:98
 msgid "Model available for use"
 msgstr "Šablona kterou je možné použít"
@@ -134,114 +306,65 @@ msgstr "UTF-8"
 msgid "ISO8859-1"
 msgstr "ISO8859-1"
 
-#: inc/mapping.class.php:130
-msgid "Header of the file"
-msgstr "Hlavička souboru"
-
-#: inc/mapping.class.php:131 inc/info.class.php:82 inc/info.class.php:140
-msgid "Tables"
-msgstr "Tabulky"
-
-#: inc/mapping.class.php:133
-msgid "Link field"
-msgstr "Propojená kolonka"
-
-#: inc/menu.class.php:56 inc/menu.class.php:57 inc/menu.class.php:61
-#: inc/clientinjection.class.php:214 inc/profile.class.php:44
-msgid "Injection of the file"
-msgstr "Import souboru"
-
-#: inc/info.class.php:84 inc/info.class.php:142
-msgid "Mandatory information"
-msgstr "Povinné informace"
-
-#: inc/info.class.php:141
-msgid "Fields"
-msgstr "Kolonky"
-
-#: inc/info.class.php:265
-msgid "Complementary information"
-msgstr "Doplňující informace"
-
-#: inc/info.class.php:266 inc/clientinjection.class.php:154
-msgid "Choose a file"
-msgstr "Zvolte soubor"
-
-#: inc/info.class.php:275
-msgid "Download file sample"
-msgstr "Stáhnout ukázku souboru"
-
-#: inc/modelcsv.class.php:169
-msgid "Specific file format options"
-msgstr "Předvolby konkrétního souborového formátu"
-
-#: inc/modelcsv.class.php:172
-msgid "Header's presence"
-msgstr "Přítomnost hlavičky"
-
-#: inc/modelcsv.class.php:176
-msgid "File delimitor"
-msgstr "Oddělovač souboru"
-
-#: inc/phoneinjection.class.php:68
-msgid "Domain name"
-msgstr "Název domény"
-
-#: inc/commoninjectionlib.class.php:2049
+#: inc/commoninjectionlib.class.php:2055
 msgid "Add from CSV file"
 msgstr "Přidat z CSV souboru"
 
-#: inc/commoninjectionlib.class.php:2051
+#: inc/commoninjectionlib.class.php:2057
 msgid "Update from CSV file"
 msgstr "Aktualizovat z CSV souboru"
 
-#: inc/commoninjectionlib.class.php:2095
+#: inc/commoninjectionlib.class.php:2101
 msgid "No right to import data"
 msgstr "Nemáte oprávnění importovat data"
 
-#: inc/commoninjectionlib.class.php:2099
+#: inc/commoninjectionlib.class.php:2105
 msgid "No right to update data"
 msgstr "Nemáte oprávnění aktualizovat data"
 
-#: inc/commoninjectionlib.class.php:2103
+#: inc/commoninjectionlib.class.php:2109
 msgid "Size of the inserted value is to expansive"
 msgstr "Velikost vkládané hodnoty je příliš obsáhlá"
 
-#: inc/commoninjectionlib.class.php:2107
+#: inc/commoninjectionlib.class.php:2113
 msgid "Import not allowed"
 msgstr "Import není dovolen"
 
-#: inc/commoninjectionlib.class.php:2111
+#: inc/commoninjectionlib.class.php:2117
 msgid "Import failed"
 msgstr "Import se nezdařil"
 
-#: inc/commoninjectionlib.class.php:2115
+#: inc/commoninjectionlib.class.php:2121
 msgid "At least one mandatory field is not present"
 msgstr "Přinejmenším jedna povinná kolonka není vyplněná"
 
-#: inc/commoninjectionlib.class.php:2119
+#: inc/commoninjectionlib.class.php:2125
 msgid "Data to insert are correct"
 msgstr "Data pro vložení jsou v pořádku"
 
-#: inc/commoninjectionlib.class.php:2123
+#: inc/commoninjectionlib.class.php:2129
 msgid "One data is not the good type"
 msgstr "Jedna data nejsou správného typu"
 
-#: inc/commoninjectionlib.class.php:2127
+#: inc/commoninjectionlib.class.php:2133
 msgid "Warning"
 msgstr "Varování"
 
-#: inc/commoninjectionlib.class.php:2131
+#: inc/commoninjectionlib.class.php:2137
 msgid "Data not found"
 msgstr "Data nebyla nalezena"
 
-#: inc/commoninjectionlib.class.php:2135 inc/model.class.php:1445
-msgid "Undetermined"
-msgstr "Nespecifikováno"
+#: inc/networkequipmentinjection.class.php:73
+msgid "Number of ports"
+msgstr "Počet portů"
 
-#: inc/networkportinjection.class.php:91
-msgid "Port MAC address"
-msgstr "MAC adresa portu"
+#: inc/injectiontype.class.php:135
+msgid "-------Choose a table-------"
+msgstr "-------Zvolte tabulku-------"
+
+#: inc/injectiontype.class.php:199
+msgid "-------Choose a field-------"
+msgstr "-------Zvolte kolonku-------"
 
 #: inc/clientinjection.class.php:86
 msgid "Use an existing model"
@@ -314,162 +437,39 @@ msgstr "Exportovat záznam událostí"
 msgid "Finish"
 msgstr "Dokončit"
 
-#: inc/model.class.php:430 inc/model.class.php:727
-msgid "Allow lines creation"
-msgstr "Umožnit vytváření řádků"
+#: inc/mapping.class.php:124 front/popup.php:37
+msgid "See the file"
+msgstr "Zobrazit soubor"
 
-#: inc/model.class.php:439 inc/model.class.php:730
-msgid "Allow lines update"
-msgstr "Umožnit aktualizaci řádků"
+#: inc/mapping.class.php:130
+msgid "Header of the file"
+msgstr "Hlavička souboru"
 
-#: inc/model.class.php:448 inc/model.class.php:715
-msgid "Type of data to import"
-msgstr "Typ dat k importu"
+#: inc/mapping.class.php:133
+msgid "Link field"
+msgstr "Propojená kolonka"
 
-#: inc/model.class.php:458 inc/model.class.php:739
-msgid "Allow creation of dropdowns (Except Entity)"
+#: front/clientinjection.form.php:54
+msgid "One mandatory field is not filled"
+msgstr "Povinná kolonka není vyplněná"
+
+#: front/clientinjection.form.php:88 front/model.form.php:87
+msgid ""
+"The file could not be found (Maybe it exceeds the maximum size allowed)"
 msgstr ""
 
-#: inc/model.class.php:466 inc/model.class.php:743
-msgid "Dates format"
-msgstr "Formát data"
-
-#: inc/model.class.php:475 inc/model.class.php:757
-msgid "Float format"
-msgstr "Formát desetinné čárky"
-
-#: inc/model.class.php:484 inc/model.class.php:766
-msgid "Port unicity criteria"
-msgstr "Kritérium jednoznačnosti portu"
-
-#: inc/model.class.php:536 inc/model.class.php:774
-msgid "Replacing the value of multiline text fields"
+#: front/mapping.form.php:61
+msgid ""
+"One link field must be selected: it will be used to check if data already "
+"exists"
 msgstr ""
+"Je třeba vybrat jednu kolonku odkazu: bude použito pro kontrolu zda data už "
+"existují"
 
-#: inc/model.class.php:735
-msgid "Advanced options"
-msgstr "Pokročilé předvolby"
-
-#: inc/model.class.php:753
-msgid "Allow update of existing fields"
-msgstr "Umožnit aktualizovat existující kolonky"
-
-#: inc/model.class.php:798
-msgctxt "button"
-msgid "Validate the model"
-msgstr "Ověřit šablonu"
-
-#: inc/model.class.php:864
-msgid "Load this file"
-msgstr "Načíst tento soubor"
-
-#: inc/model.class.php:948
-msgid "Please enter a name for the model"
-msgstr "Zadejte název pro šablonu"
-
-#: inc/model.class.php:959
-msgid "Your model should allow import and/or update of data"
-msgstr "Vaše šablona by měl umožnit import a/nebo aktualizaci dat"
-
-#: inc/model.class.php:982
-msgid "You are not the initial creator of this model"
-msgstr "Nejste tvůrcem této šablony"
-
-#: inc/model.class.php:1050
-#, php-format
-msgid "Impossible to copy the file in %s"
-msgstr "Není možné kopírovat soubor v %s"
-
-#: inc/model.class.php:1059
-msgid "File format is wrong"
-msgstr "Formát souboru není správný"
-
-#: inc/model.class.php:1060
-msgid "Extension csv required"
-msgstr "Je třeba rozšíření csv"
-
-#: inc/model.class.php:1180
-msgid "The file is ok."
-msgstr "Soubor je v pořádku."
-
-#: inc/model.class.php:1206
-msgid "The number of columns of the file is incorrect."
-msgstr "Počet sloupců v souboru není správný."
-
-#: inc/model.class.php:1208
-#, php-format
-msgid "%d awaited column"
-msgid_plural "%d awaited columns"
-msgstr[0] "očekáván %d sloupec"
-msgstr[1] "očekávány %d sloupce"
-msgstr[2] "očekáváno %d sloupců"
-msgstr[3] "očekávány %d sloupce"
-
-#: inc/model.class.php:1213
-#, php-format
-msgid "%d found column"
-msgid_plural "%d found columns"
-msgstr[0] "nalezen %d sloupec"
-msgstr[1] "nalezeny %d sloupce"
-msgstr[2] "nalezeno %d sloupců"
-msgstr[3] "nalezeny %d sloupce"
-
-#: inc/model.class.php:1257
-msgid "At least one column is incorrect"
-msgstr "Přinejmenším jeden sloupec není správný"
-
-#: inc/model.class.php:1265
-msgid "Into the file"
-msgstr "Do souboru"
-
-#: inc/model.class.php:1270
-msgid "From the model"
-msgstr "Ze šablony"
-
-#: inc/model.class.php:1526 inc/model.class.php:1663
-msgid "Array of successful injections"
-msgstr "Pole úspěšných importů"
-
-#: inc/model.class.php:1533 inc/model.class.php:1568 inc/model.class.php:1666
-#: inc/model.class.php:1688
-msgid "Line"
-msgstr "Řádek"
-
-#: inc/model.class.php:1534 inc/model.class.php:1570 inc/model.class.php:1607
-#: inc/model.class.php:1667 inc/model.class.php:1690
-msgid "Data Import"
-msgstr "Import dat"
-
-#: inc/model.class.php:1535 inc/model.class.php:1571 inc/model.class.php:1608
-#: inc/model.class.php:1668 inc/model.class.php:1691
-msgid "Injection type"
-msgstr "Typ importu"
-
-#: inc/model.class.php:1536 inc/model.class.php:1572 inc/model.class.php:1669
-#: inc/model.class.php:1692
-msgid "Object Identifier"
-msgstr "Identifikátor objektu"
-
-#: inc/model.class.php:1561 inc/model.class.php:1685
-msgid "Array of unsuccessful injections"
-msgstr "Pole neúspěšných importů"
-
-#: inc/model.class.php:1569 inc/model.class.php:1689 inc/model.class.php:1709
-msgid "Data check"
-msgstr "Kontrola dat"
-
-#: inc/model.class.php:1599
-msgid "Global report"
-msgstr "Globální zpráva"
-
-#: inc/model.class.php:1600
-msgid "Number of lines processed"
-msgstr "Počet zpracovaných řádků"
-
-#: inc/model.class.php:1609
-msgid "Counter"
-msgstr "Počítadlo"
-
-#: inc/profile.class.php:40
-msgid "Model management"
-msgstr "Správa šablon"
+#: front/mapping.form.php:80
+msgid ""
+"This step allows you to add informations not present in the file. You'll be "
+"asked for theses informations while using the model."
+msgstr ""
+"V tomto kroku je možné přidat informace které se nenacházejí v souboru. O "
+"tyto informace budete požádáni při používání modelu."
