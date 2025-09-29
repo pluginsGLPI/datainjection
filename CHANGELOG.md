@@ -10,6 +10,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Fixed
 - Fix injection to the `date_expiration` of certificates
 
+## [2.14.3] - 2025-09-16
+
+### Fixed
+
+- Fix `License` injection
+
 ## [2.14.2] - 2025-08-22
 
 ### Fixed
