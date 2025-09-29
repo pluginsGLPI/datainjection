@@ -27,8 +27,18 @@
  * @link      https://github.com/pluginsGLPI/datainjection
  * -------------------------------------------------------------------------
  */
-
 use Glpi\Application\View\TemplateRenderer;
+use Glpi\Debug\Profile;
+
+use function Safe\fclose;
+use function Safe\filesize;
+use function Safe\fopen;
+use function Safe\fputcsv;
+use function Safe\ini_set;
+use function Safe\json_decode;
+use function Safe\json_encode;
+use function Safe\readfile;
+use function Safe\unlink;
 
 /**
  * -------------------------------------------------------------------------
@@ -62,9 +72,9 @@ class PluginDatainjectionClientInjection
 {
     public static $rightname = "plugin_datainjection_use";
 
-    const STEP_UPLOAD  = 0;
-    const STEP_PROCESS = 1;
-    const STEP_RESULT  = 2;
+    public const STEP_UPLOAD  = 0;
+    public const STEP_PROCESS = 1;
+    public const STEP_RESULT  = 2;
 
     //Injection results
     private $results = [];
@@ -90,7 +100,7 @@ class PluginDatainjectionClientInjection
                 plugin_datainjection_geturl() . "pics/datainjection.png",
                 PluginDatainjectionModel::getTypeName(),
                 $title,
-                $buttons
+                $buttons,
             );
         }
     }
@@ -102,7 +112,7 @@ class PluginDatainjectionClientInjection
         global $CFG_GLPI;
 
         TemplateRenderer::getInstance()->display('@datainjection/clientinjection.html.twig', [
-            'form_action' => Toolbox::getItemTypeFormURL(__CLASS__),
+            'form_action' => Toolbox::getItemTypeFormURL(self::class),
             'models' => PluginDatainjectionModel::getModels(Session::getLoginUserID(), 'name', $_SESSION['glpiactive_entity'], false),
             'can_create_model' => Session::haveRight('plugin_datainjection_model', CREATE),
             'model_type_name' => PluginDatainjectionModel::getTypeName(),
@@ -123,16 +133,16 @@ class PluginDatainjectionClientInjection
     public static function showUploadFileForm($options = [])
     {
         $add_form = (isset($options['add_form']) && $options['add_form']);
-        $confirm  = (isset($options['confirm']) ? $options['confirm'] : false);
+        $confirm  = ($options['confirm'] ?? false);
         $url      = (($confirm == 'creation') ? Toolbox::getItemTypeFormURL('PluginDatainjectionModel')
-                                                : Toolbox::getItemTypeFormURL(__CLASS__));
+                                                : Toolbox::getItemTypeFormURL(self::class));
 
         $data = [
             'add_form' => $add_form,
             'url' => $url,
             'models_id' => $options['models_id'] ?? null,
             'confirm' => $confirm,
-            'submit_label' => $options['submit'] ?? __('Launch the import', 'datainjection'),
+            'submit_label' => $options['submit'] ?? __s('Launch the import', 'datainjection'),
             'file_encoding_values' => PluginDatainjectionDropdown::getFileEncodingValue(),
         ];
 
@@ -169,38 +179,38 @@ class PluginDatainjectionClientInjection
         /** @var array $CFG_GLPI */
         global $CFG_GLPI;
 
-       // To prevent problem of execution time during injection
+        // To prevent problem of execution time during injection
         ini_set("max_execution_time", "0");
 
         // Disable recording each SQL request in $_SESSION
-        \Glpi\Debug\Profile::getCurrent()->disable();
+        Profile::getCurrent()->disable();
 
         $nblines         = PluginDatainjectionSession::getParam('nblines');
         $clientinjection = new PluginDatainjectionClientInjection();
 
-       //New injection engine
+        //New injection engine
         $engine = new PluginDatainjectionEngine(
             $model,
             PluginDatainjectionSession::getParam('infos'),
-            $entities_id
+            $entities_id,
         );
         $backend = $model->getBackend();
         $model->loadSpecificModel();
 
-       //Open CSV file
+        //Open CSV file
         $backend->openFile();
 
         $index = 0;
 
-       //Read CSV file
+        //Read CSV file
         $line = $backend->getNextLine();
 
-       //If header is present, then get the second line
+        //If header is present, then get the second line
         if ($model->getSpecificModel()->isHeaderPresent()) {
             $line = $backend->getNextLine();
         }
 
-       //While CSV file is not EOF
+        //While CSV file is not EOF
         $prev = '';
         $deb  = time();
         while ($line != null) {
@@ -232,7 +242,7 @@ class PluginDatainjectionClientInjection
         echo Html::scriptBlock($js);
 
         // Restore
-        \Glpi\Debug\Profile::getCurrent()->enable();
+        Profile::getCurrent()->enable();
 
         //Close CSV file
         $backend->closeFile();
@@ -266,10 +276,10 @@ class PluginDatainjectionClientInjection
     {
 
         if (is_array($value)) {
-            foreach ($value as $key => $val) {
+            foreach (array_keys($value) as $key) {
                 self::stripslashes_array($value[$key]);
             }
-        } else if (!is_null($value)) {
+        } elseif (!is_null($value)) {
             $value = stripslashes($value);
         }
     }
@@ -324,13 +334,13 @@ class PluginDatainjectionClientInjection
             $mappings = $model->getMappings();
             $tmpfile  = fopen($file, 'w');
 
-           //If headers present
+            //If headers present
             if ($model->getBackend()->isHeaderPresent()) {
                 $headers = PluginDatainjectionMapping::getMappingsSortedByRank($model->fields['id']);
                 fputcsv($tmpfile, $headers, $model->getBackend()->getDelimiter());
             }
 
-           //Write lines
+            //Write lines
             foreach ($error_lines as $line) {
                 fputcsv($tmpfile, $line, $model->getBackend()->getDelimiter());
             }

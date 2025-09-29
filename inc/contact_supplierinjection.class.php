@@ -28,16 +28,14 @@
  * -------------------------------------------------------------------------
  */
 
-if (!defined('GLPI_ROOT')) {
-    die("Sorry. You can't access directly to this file");
-}
+
 
 class PluginDatainjectionContact_SupplierInjection extends Contact_Supplier implements PluginDatainjectionInjectionInterface
 {
     public static function getTable($classname = null)
     {
 
-        $parenttype = get_parent_class(__CLASS__);
+        $parenttype = get_parent_class(self::class);
         return $parenttype::getTable();
     }
 
@@ -70,7 +68,7 @@ class PluginDatainjectionContact_SupplierInjection extends Contact_Supplier impl
         $tab[100]['table']         = 'glpi_suppliers';
         $tab[100]['field']         = 'name';
         $tab[100]['linkfield']     = 'suppliers_id';
-        $tab[100]['name']          = __('Associated suppliers');
+        $tab[100]['name']          = __s('Associated suppliers');
         $tab[100]['displaytype']   = 'relation';
         $tab[100]['relationclass'] = 'Contact_Supplier';
         $tab[100]['injectable']    = true;

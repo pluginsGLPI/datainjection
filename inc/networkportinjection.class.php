@@ -28,16 +28,14 @@
  * -------------------------------------------------------------------------
  */
 
-if (!defined('GLPI_ROOT')) {
-    die("Sorry. You can't access directly to this file");
-}
+
 
 class PluginDatainjectionNetworkportInjection extends NetworkPort implements PluginDatainjectionInjectionInterface
 {
     public static function getTable($classname = null)
     {
 
-        $parenttype = get_parent_class(__CLASS__);
+        $parenttype = get_parent_class(self::class);
         return $parenttype::getTable();
     }
 
@@ -73,8 +71,8 @@ class PluginDatainjectionNetworkportInjection extends NetworkPort implements Plu
 
         $tab[4]['checktype']      = 'mac';
 
-       //To manage vlans : relies on a CommonDBRelation object !
-        $tab[51]['name']          = sprintf(__('%1$s: %2$s'), __('Connected to'), __('Device name'));
+        //To manage vlans : relies on a CommonDBRelation object !
+        $tab[51]['name']          = sprintf(__s('%1$s: %2$s'), __s('Connected to'), __s('Device name'));
         $tab[51]['field']         = 'netname';
         $tab[51]['table']         = getTableForItemType('NetworkPort');
         $tab[51]['linkfield']     = "netname";
@@ -82,7 +80,7 @@ class PluginDatainjectionNetworkportInjection extends NetworkPort implements Plu
         $tab[51]['displaytype']   = 'text';
         $tab[51]['checktype']     = 'text';
 
-        $tab[52]['name']          = sprintf(__('%1$s: %2$s'), __('Connected to'), __('Port number'));
+        $tab[52]['name']          = sprintf(__s('%1$s: %2$s'), __s('Connected to'), __s('Port number'));
         $tab[52]['field']         = 'netport';
         $tab[52]['table']         = getTableForItemType('NetworkPort');
         $tab[52]['linkfield']     = "netport";
@@ -91,9 +89,9 @@ class PluginDatainjectionNetworkportInjection extends NetworkPort implements Plu
         $tab[52]['checktype']     = 'text';
 
         $tab[53]['name']          = sprintf(
-            __('%1$s: %2$s'),
-            __('Connected to'),
-            __('Port MAC address', 'datainjection')
+            __s('%1$s: %2$s'),
+            __s('Connected to'),
+            __s('Port MAC address', 'datainjection'),
         );
         $tab[53]['field']         = 'netmac';
         $tab[53]['table']         = getTableForItemType('NetworkPort');
@@ -102,8 +100,8 @@ class PluginDatainjectionNetworkportInjection extends NetworkPort implements Plu
         $tab[53]['displaytype']   = 'text';
         $tab[53]['checktype']     = 'text';
 
-       //To manage vlans : relies on a CommonDBRelation object !
-        $tab[100]['name']          = __('VLAN');
+        //To manage vlans : relies on a CommonDBRelation object !
+        $tab[100]['name']          = __s('VLAN');
         $tab[100]['field']         = 'name';
         $tab[100]['table']         = getTableForItemType('Vlan');
         $tab[100]['linkfield']     = getForeignKeyFieldForTable($tab[100]['table']);
@@ -118,7 +116,7 @@ class PluginDatainjectionNetworkportInjection extends NetworkPort implements Plu
 
         $options['displaytype']   = ["dropdown"           => [9],
             "multiline_text"     => [16],
-            "instantiation_type" => [87]
+            "instantiation_type" => [87],
         ];
 
         return PluginDatainjectionCommonInjectionLib::addToSearchOptions($tab, $options, $this);
@@ -148,8 +146,6 @@ class PluginDatainjectionNetworkportInjection extends NetworkPort implements Plu
     public function showAdditionalInformation($info = [], $option = [])
     {
 
-        $name = "info[" . $option['linkfield'] . "]";
-
         switch ($option['displaytype']) {
             case 'instantiation_type':
                 $instantiations = [];
@@ -162,7 +158,7 @@ class PluginDatainjectionNetworkportInjection extends NetworkPort implements Plu
                 Dropdown::showFromArray(
                     'instantiation_type',
                     $instantiations,
-                    ['value' => 'NetworkPortEthernet']
+                    ['value' => 'NetworkPortEthernet'],
                 );
                 break;
 
@@ -258,41 +254,31 @@ class PluginDatainjectionNetworkportInjection extends NetworkPort implements Plu
 
         switch ($options['port_unicity']) {
             case PluginDatainjectionCommonInjectionLib::UNICITY_NETPORT_LOGICAL_NUMBER:
-                $where .= " AND `logical_number` = '" . (isset($fields_toinject["logical_number"])
-                                                 ? $fields_toinject["logical_number"] : '') . "'";
+                $where .= " AND `logical_number` = '" . ($fields_toinject["logical_number"] ?? '') . "'";
                 break;
 
             case PluginDatainjectionCommonInjectionLib::UNICITY_NETPORT_LOGICAL_NUMBER_MAC:
-                $where .= " AND `logical_number` = '" . (isset($fields_toinject["logical_number"])
-                                                 ? $fields_toinject["logical_number"] : '') . "'
-                        AND `mac` = '" . (isset($fields_toinject["mac"])
-                                      ? $fields_toinject["mac"] : '') . "'";
+                $where .= " AND `logical_number` = '" . ($fields_toinject["logical_number"] ?? '') . "'
+                        AND `mac` = '" . ($fields_toinject["mac"] ?? '') . "'";
                 break;
 
             case PluginDatainjectionCommonInjectionLib::UNICITY_NETPORT_LOGICAL_NUMBER_NAME:
-                $where .= " AND `logical_number` = '" . (isset($fields_toinject["logical_number"])
-                                                 ? $fields_toinject["logical_number"] : '') . "'
-                        AND `name` = '" . (isset($fields_toinject["name"])
-                                       ? $fields_toinject["name"] : '') . "'";
+                $where .= " AND `logical_number` = '" . ($fields_toinject["logical_number"] ?? '') . "'
+                        AND `name` = '" . ($fields_toinject["name"] ?? '') . "'";
                 break;
 
             case PluginDatainjectionCommonInjectionLib::UNICITY_NETPORT_LOGICAL_NUMBER_NAME_MAC:
-                $where .= " AND `logical_number` = '" . (isset($fields_toinject["logical_number"])
-                                                 ? $fields_toinject["logical_number"] : '') . "'
-                        AND `name` = '" . (isset($fields_toinject["name"])
-                                       ? $fields_toinject["name"] : '') . "'
-                        AND `mac` = '" . (isset($fields_toinject["mac"])
-                                      ? $fields_toinject["mac"] : '') . "'";
+                $where .= " AND `logical_number` = '" . ($fields_toinject["logical_number"] ?? '') . "'
+                        AND `name` = '" . ($fields_toinject["name"] ?? '') . "'
+                        AND `mac` = '" . ($fields_toinject["mac"] ?? '') . "'";
                 break;
 
             case PluginDatainjectionCommonInjectionLib::UNICITY_NETPORT_MACADDRESS:
-                $where .= " AND `mac` = '" . (isset($fields_toinject["mac"])
-                                      ? $fields_toinject["mac"] : '') . "'";
+                $where .= " AND `mac` = '" . ($fields_toinject["mac"] ?? '') . "'";
                 break;
 
             case PluginDatainjectionCommonInjectionLib::UNICITY_NETPORT_NAME:
-                $where .= " AND `name` = '" . (isset($fields_toinject["name"])
-                                       ? $fields_toinject["name"] : '') . "'";
+                $where .= " AND `name` = '" . ($fields_toinject["name"] ?? '') . "'";
                 break;
         }
 
@@ -309,16 +295,7 @@ class PluginDatainjectionNetworkportInjection extends NetworkPort implements Plu
    **/
     public function lastCheck($values = [])
     {
-
-        if (
-            (!isset($values['NetworkPort']['name']) || empty($values['NetworkPort']['name']))
-            && (!isset($values['NetworkPort']['mac']) || empty($values['NetworkPort']['mac']))
-            && (!isset($values['NetworkPort']['instantiation_type'])
-            || empty($values['NetworkPort']['instantiation_type']))
-        ) {
-            return false;
-        }
-        return true;
+        return !((!isset($values['NetworkPort']['name']) || empty($values['NetworkPort']['name'])) && (!isset($values['NetworkPort']['mac']) || empty($values['NetworkPort']['mac'])) && (!isset($values['NetworkPort']['instantiation_type']) || empty($values['NetworkPort']['instantiation_type'])));
     }
 
 
@@ -332,7 +309,7 @@ class PluginDatainjectionNetworkportInjection extends NetworkPort implements Plu
         /** @var DBmysql $DB */
         global $DB;
 
-       //Should the port be connected to another one ?
+        //Should the port be connected to another one ?
         $use_name            = (isset($values['NetworkPort']["netname"])
                             || !empty($values['NetworkPort']["netname"]));
         $use_logical_number  = (isset($values['NetworkPort']["netport"])
@@ -344,7 +321,7 @@ class PluginDatainjectionNetworkportInjection extends NetworkPort implements Plu
             return false;
         }
 
-       // Find port in database
+        // Find port in database
         $sql = "SELECT `glpi_networkports`.`id`
               FROM `glpi_networkports`, `glpi_networkequipments`
               WHERE `glpi_networkports`.`itemtype`='NetworkEquipment'
@@ -363,15 +340,15 @@ class PluginDatainjectionNetworkportInjection extends NetworkPort implements Plu
         }
         $res = $DB->doQuery($sql);
 
-       //if at least one parameter is given
+        //if at least one parameter is given
         $nb = $DB->numrows($res);
         if ($nb == 1) {
-           //Get data for this port
+            //Get data for this port
             $netport         = $DB->fetchArray($res);
             $netport_netport = new NetworkPort_NetworkPort();
-           //If this port already connected to another one ?
+            //If this port already connected to another one ?
             if (!$netport_netport->getOppositeContact((int) $netport['id'])) {
-               //No, add a new port to port connection
+                //No, add a new port to port connection
                 $tmp['networkports_id_1'] = $values['NetworkPort']['id'];
                 $tmp['networkports_id_2'] = $netport['id'];
                 $netport_netport->add($tmp);

@@ -42,12 +42,7 @@ class PluginDatainjectionMapping extends CommonDBTM
         if (!isset($this->fields[$field])) {
             return false;
         }
-
-        if ($this->fields[$field] == $value) {
-            return true;
-        }
-
-        return false;
+        return $this->fields[$field] == $value;
     }
 
 
@@ -103,15 +98,11 @@ class PluginDatainjectionMapping extends CommonDBTM
 
         $canedit = $model->can($model->fields['id'], UPDATE);
 
-        if (isset($_SESSION['datainjection']['lines'])) {
-            $lines = unserialize($_SESSION['datainjection']['lines']);
-        } else {
-            $lines = [];
-        }
+        $lines = isset($_SESSION['datainjection']['lines']) ? unserialize($_SESSION['datainjection']['lines']) : [];
 
-        echo "<form method='post' name=form action='" . Toolbox::getItemTypeFormURL(__CLASS__) . "'>";
+        echo "<form method='post' name=form action='" . Toolbox::getItemTypeFormURL(self::class) . "'>";
 
-       //Display link to the preview popup
+        //Display link to the preview popup
         if (isset($_SESSION['datainjection']['lines']) && !empty($lines)) {
             $nblines = $_SESSION['datainjection']['nblines'];
             echo "<table class='tab_cadre_fixe'>";
@@ -121,16 +112,16 @@ class PluginDatainjectionMapping extends CommonDBTM
              $model->getID();
             echo "<a href=#  onClick=\"var w = window.open('$url' , 'glpipopup', " .
              "'height=400, width=600, top=100, left=100, scrollbars=yes' );w.focus();\"/>";
-            echo __('See the file', 'datainjection') . "</a>";
+            echo __s('See the file', 'datainjection') . "</a>";
             echo "</td></tr>";
         }
 
         echo "<table class='tab_cadre_fixe'>";
         echo "<tr>";
-        echo "<th>" . __('Header of the file', 'datainjection') . "</th>";
-        echo "<th>" . __('Tables', 'datainjection') . "</th>";
-        echo "<th>" . _n('Field', 'Fields', 2) . "</th>";
-        echo "<th>" . __('Link field', 'datainjection') . "</th>";
+        echo "<th>" . __s('Header of the file', 'datainjection') . "</th>";
+        echo "<th>" . __s('Tables', 'datainjection') . "</th>";
+        echo "<th>" . _sn('Field', 'Fields', 2) . "</th>";
+        echo "<th>" . __s('Link field', 'datainjection') . "</th>";
         echo "</tr>";
 
         $model->loadMappings();

@@ -28,6 +28,9 @@
  * -------------------------------------------------------------------------
  */
 
+use function Safe\define;
+use function Safe\mkdir;
+
 define('PLUGIN_DATAINJECTION_VERSION', '2.15.0-beta2');
 
 // Minimal GLPI version, inclusive
@@ -53,18 +56,17 @@ function plugin_init_datainjection()
     if ($plugin->isActivated("datainjection")) {
         Plugin::registerClass(
             'PluginDatainjectionProfile',
-            ['addtabon' => ['Profile']
-            ]
+            ['addtabon' => ['Profile'],
+            ],
         );
 
-       //If directory doesn't exists, create it
+        //If directory doesn't exists, create it
         if (!plugin_datainjection_checkDirectories()) {
-            @ mkdir(PLUGIN_DATAINJECTION_UPLOAD_DIR)
-            or die(
+            @ mkdir(PLUGIN_DATAINJECTION_UPLOAD_DIR) || die(
                 sprintf(
-                    __('%1$s %2$s'),
-                    __("Can't create folder", 'datainjection'),
-                    PLUGIN_DATAINJECTION_UPLOAD_DIR
+                    __s('%1$s %2$s'),
+                    __s("Can't create folder", 'datainjection'),
+                    PLUGIN_DATAINJECTION_UPLOAD_DIR,
                 )
             );
         }
@@ -79,12 +81,12 @@ function plugin_init_datainjection()
         $PLUGIN_HOOKS['pre_item_purge']['datainjection']
           = ['Profile' => ['PluginDatainjectionProfile', 'purgeProfiles']];
 
-         // Css file
-        if (strpos($_SERVER['REQUEST_URI'] ?? '', Plugin::getPhpDir('datainjection', false)) !== false) {
+        // Css file
+        if (str_contains($_SERVER['REQUEST_URI'] ?? '', Plugin::getPhpDir('datainjection', false))) {
             $PLUGIN_HOOKS['add_css']['datainjection'] = 'css/datainjection.css';
         }
 
-       // Javascript file
+        // Javascript file
         $PLUGIN_HOOKS['add_javascript']['datainjection'] = 'js/datainjection.js';
 
         $INJECTABLE_TYPES = [];
@@ -96,7 +98,7 @@ function plugin_version_datainjection()
 {
 
     return [
-        'name'         => __('Data injection', 'datainjection'),
+        'name'         => __s('Data injection', 'datainjection'),
         'author'       => 'Walid Nouh, Remi Collet, Nelly Mahu-Lasson, Xavier Caillaud',
         'homepage'     => 'https://github.com/pluginsGLPI/datainjection',
         'license'      => 'GPLv2+',
@@ -105,8 +107,8 @@ function plugin_version_datainjection()
             'glpi' => [
                 'min' => PLUGIN_DATAINJECTION_MIN_GLPI,
                 'max' => PLUGIN_DATAINJECTION_MAX_GLPI,
-            ]
-        ]
+            ],
+        ],
     ];
 }
 
@@ -123,7 +125,7 @@ function getTypesToInject(): void
     global $INJECTABLE_TYPES,$PLUGIN_HOOKS;
 
     if (count($INJECTABLE_TYPES)) {
-       // already populated
+        // already populated
         return;
     }
 
@@ -193,7 +195,7 @@ function getTypesToInject(): void
         'PluginDatainjectionPrinterModelInjection'                => 'datainjection',
         'PluginDatainjectionPeripheralModelInjection'             => 'datainjection',
         'PluginDatainjectionNetworkEquipmentModelInjection'       => 'datainjection',
-                        //'PluginDatainjectionNetworkEquipmentFirmwareInjection'    => 'datainjection',
+        //'PluginDatainjectionNetworkEquipmentFirmwareInjection'    => 'datainjection',
         'PluginDatainjectionVirtualMachineTypeInjection'          => 'datainjection',
         'PluginDatainjectionVirtualMachineSystemInjection'        => 'datainjection',
         'PluginDatainjectionVirtualMachineStateInjection'         => 'datainjection',
@@ -219,9 +221,9 @@ function getTypesToInject(): void
         'PluginDatainjectionDeviceDriveInjection'                 => 'datainjection',
         'PluginDatainjectionDeviceNetworkCardInjection'           => 'datainjection',
         'PluginDatainjectionApplianceInjection'                   => 'datainjection',
-        'PluginDatainjectionCertificateInjection'                 => 'datainjection'
+        'PluginDatainjectionCertificateInjection'                 => 'datainjection',
     ];
-   //Add plugins
+    //Add plugins
     Plugin::doHook('plugin_datainjection_populate');
 }
 
@@ -237,11 +239,7 @@ function plugin_datainjection_migratetypes_datainjection($types)
 
 function plugin_datainjection_checkDirectories()
 {
-
-    if (!file_exists(PLUGIN_DATAINJECTION_UPLOAD_DIR) || !is_writable(PLUGIN_DATAINJECTION_UPLOAD_DIR)) {
-        return false;
-    }
-    return true;
+    return !(!file_exists(PLUGIN_DATAINJECTION_UPLOAD_DIR) || !is_writable(PLUGIN_DATAINJECTION_UPLOAD_DIR));
 }
 
 function plugin_datainjection_geturl(): string

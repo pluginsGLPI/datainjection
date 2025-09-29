@@ -35,7 +35,7 @@ class PluginDatainjectionMenu extends CommonGLPI
     public static function getMenuName()
     {
 
-        return __('Data injection', 'datainjection');
+        return __s('Data injection', 'datainjection');
     }
 
     public static function getMenuContent()
@@ -65,9 +65,9 @@ class PluginDatainjectionMenu extends CommonGLPI
                 'model' => [
                     'icon'  => PluginDatainjectionModel::getIcon(),
                     'links' => [
-                        $image_import => $injectionFormUrl
-                    ]
-                ]
+                        $image_import => $injectionFormUrl,
+                    ],
+                ],
             ];
 
             $model_name  = PluginDatainjectionModel::getTypeName(Session::getPluralNumber());

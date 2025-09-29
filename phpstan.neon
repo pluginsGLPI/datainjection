@@ -1,6 +1,9 @@
+includes:
+    - ../../vendor/glpi-project/phpstan-glpi/extension.neon
+    - ../../vendor/phpstan/phpstan-deprecation-rules/rules.neon
+    - ../../vendor/thecodingmachine/phpstan-safe-rule/phpstan-safe-rule.neon
+
 parameters:
-    parallel:
-        maximumNumberOfProcesses: 2
     level: 5
     paths:
         - ajax
@@ -9,10 +12,9 @@ parameters:
         - hook.php
         - setup.php
     scanDirectories:
-        - ../../inc
         - ../../src
     bootstrapFiles:
         - ../../stubs/glpi_constants.php
         - ../../vendor/autoload.php
-rules:
-    - GlpiProject\Tools\PHPStan\Rules\GlobalVarTypeRule
+        - setup.php
+    treatPhpDocTypesAsCertain: false

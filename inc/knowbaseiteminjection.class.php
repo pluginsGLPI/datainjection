@@ -28,16 +28,14 @@
  * -------------------------------------------------------------------------
  */
 
-if (!defined('GLPI_ROOT')) {
-    die("Sorry. You can't access directly to this file");
-}
+
 
 class PluginDatainjectionKnowbaseItemInjection extends KnowbaseItem implements PluginDatainjectionInjectionInterface
 {
     public static function getTable($classname = null)
     {
 
-        $parenttype = get_parent_class(__CLASS__);
+        $parenttype = get_parent_class(self::class);
         return $parenttype::getTable();
     }
 
@@ -71,7 +69,7 @@ class PluginDatainjectionKnowbaseItemInjection extends KnowbaseItem implements P
 
         $tab[121]['checktype'] = 'datetime';
 
-       //Remove some options because some fields cannot be imported
+        //Remove some options because some fields cannot be imported
         $blacklist     = PluginDatainjectionCommonInjectionLib::getBlacklistedOptions(get_parent_class($this));
         $notimportable = [];
 
@@ -81,7 +79,7 @@ class PluginDatainjectionKnowbaseItemInjection extends KnowbaseItem implements P
             "date"           => [121],
             "multiline_text" => [6,7],
             "bool"           => [8, 9, 86],
-            "user"           => [70]
+            "user"           => [70],
         ];
 
         return PluginDatainjectionCommonInjectionLib::addToSearchOptions($tab, $options, $this);

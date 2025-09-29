@@ -28,16 +28,14 @@
  * -------------------------------------------------------------------------
  */
 
-if (!defined('GLPI_ROOT')) {
-    die("Sorry. You can't access directly to this file");
-}
+
 
 class PluginDatainjectionDeviceProcessorInjection extends DeviceProcessor implements PluginDatainjectionInjectionInterface
 {
     public static function getTable($classname = null)
     {
 
-        $parenttype = get_parent_class(__CLASS__);
+        $parenttype = get_parent_class(self::class);
         return $parenttype::getTable();
     }
 
@@ -71,13 +69,13 @@ class PluginDatainjectionDeviceProcessorInjection extends DeviceProcessor implem
 
         $tab           = Search::getOptions(get_parent_class($this));
 
-       //Remove some options because some fields cannot be imported
+        //Remove some options because some fields cannot be imported
         $blacklist     = PluginDatainjectionCommonInjectionLib::getBlacklistedOptions(get_parent_class($this));
         $notimportable = [];
 
         $options['ignore_fields'] = array_merge($blacklist, $notimportable);
         $options['displaytype']   = ["multiline_text" => [16],
-            "dropdown"       => [23]
+            "dropdown"       => [23],
         ];
 
         return PluginDatainjectionCommonInjectionLib::addToSearchOptions($tab, $options, $this);
@@ -104,13 +102,13 @@ class PluginDatainjectionDeviceProcessorInjection extends DeviceProcessor implem
             ];
 
             if (!countElementsInTable($item->getTable(), $where)) {
-               //try first frequency, then default_frequency
+                //try first frequency, then default_frequency
                 if (
                     isset($values[get_parent_class($this)]['frequency'])
                     && ($values[get_parent_class($this)]['frequency'] > 0)
                 ) {
                     $tmp['frequency'] = $values[get_parent_class($this)]['frequency'];
-                } else if (
+                } elseif (
                     isset($values[get_parent_class($this)]['frequency_default'])
                     && ($values[get_parent_class($this)]['frequency_default'] > 0)
                 ) {

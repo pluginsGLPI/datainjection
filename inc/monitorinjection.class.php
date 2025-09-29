@@ -28,16 +28,14 @@
  * -------------------------------------------------------------------------
  */
 
-if (!defined('GLPI_ROOT')) {
-    die("Sorry. You can't access directly to this file");
-}
+
 
 class PluginDatainjectionMonitorInjection extends Monitor implements PluginDatainjectionInjectionInterface
 {
     public static function getTable($classname = null)
     {
 
-        $parenttype = get_parent_class(__CLASS__);
+        $parenttype = get_parent_class(self::class);
         return $parenttype::getTable();
     }
 
@@ -69,10 +67,10 @@ class PluginDatainjectionMonitorInjection extends Monitor implements PluginDatai
 
         $tab                 = Search::getOptions(get_parent_class($this));
 
-       //Specific to location
+        //Specific to location
         $tab[3]['linkfield'] = 'locations_id';
 
-       //Remove some options because some fields cannot be imported
+        //Remove some options because some fields cannot be imported
         $blacklist     = PluginDatainjectionCommonInjectionLib::getBlacklistedOptions(get_parent_class($this));
         $notimportable = [91, 92, 93];
 
@@ -82,7 +80,7 @@ class PluginDatainjectionMonitorInjection extends Monitor implements PluginDatai
             "user"           => [24, 70],
             "float"          => [11],
             "bool"           => [41, 42, 43, 44, 45, 46, 47, 48],
-            "multiline_text" => [16, 90]
+            "multiline_text" => [16, 90],
         ];
 
         return PluginDatainjectionCommonInjectionLib::addToSearchOptions($tab, $options, $this);
@@ -110,11 +108,7 @@ class PluginDatainjectionMonitorInjection extends Monitor implements PluginDatai
 
         $fields = [];
         if (isset($values[$primary_type]['is_global'])) {
-            if (empty($values[$primary_type]['is_global'])) {
-                $fields['is_global'] = 0;
-            } else {
-                $fields['is_global'] = $values[$primary_type]['is_global'];
-            }
+            $fields['is_global'] = empty($values[$primary_type]['is_global']) ? 0 : $values[$primary_type]['is_global'];
         }
         return $fields;
     }

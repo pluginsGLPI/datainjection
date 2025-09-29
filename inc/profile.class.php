@@ -37,14 +37,14 @@ class PluginDatainjectionProfile extends Profile
 
         $rights = [
             ['itemtype'  => 'PluginDatainjectionModel',
-                'label'     => __('Model management', 'datainjection'),
-                'field'     => 'plugin_datainjection_model'
+                'label'     => __s('Model management', 'datainjection'),
+                'field'     => 'plugin_datainjection_model',
             ],
             ['itemtype'  => 'PluginDatainjectionModel',
-                'label'     => __('Injection of the file', 'datainjection'),
+                'label'     => __s('Injection of the file', 'datainjection'),
                 'field'     => 'plugin_datainjection_use',
-                'rights'    => [READ => __('Read')]
-            ]
+                'rights'    => [READ => __s('Read')],
+            ],
         ];
         return $rights;
     }
@@ -69,7 +69,7 @@ class PluginDatainjectionProfile extends Profile
 
         if ($item instanceof Profile) {
             if ($item->fields['interface'] == 'central') {
-                return self::createTabEntry(__('Data injection', 'datainjection'), 0, $item::getType(), 'ti ti-download');
+                return self::createTabEntry(__s('Data injection', 'datainjection'), 0, $item::getType(), 'ti ti-download');
             }
             return '';
         }
@@ -83,10 +83,10 @@ class PluginDatainjectionProfile extends Profile
         if ($item instanceof Profile) {
             $profile = new self();
             $ID   = $item->fields['id'];
-           //In case there's no right datainjection for this profile, create it
+            //In case there's no right datainjection for this profile, create it
             self::addDefaultProfileInfos(
                 $item->getID(),
-                ['plugin_datainjection_model' => 0]
+                ['plugin_datainjection_model' => 0],
             );
             $profile->showForm($ID);
         }
@@ -105,7 +105,7 @@ class PluginDatainjectionProfile extends Profile
             if (
                 !countElementsInTable(
                     'glpi_profilerights',
-                    ['profiles_id' => $profiles_id, 'name' => $right]
+                    ['profiles_id' => $profiles_id, 'name' => $right],
                 )
             ) {
                 $myright['profiles_id'] = $profiles_id;
@@ -130,8 +130,8 @@ class PluginDatainjectionProfile extends Profile
             self::addDefaultProfileInfos(
                 $profiles_id,
                 ['plugin_datainjection_model' => ALLSTANDARDRIGHT,
-                    'plugin_datainjection_use' => READ
-                ]
+                    'plugin_datainjection_use' => READ,
+                ],
             );
         }
     }
@@ -190,8 +190,8 @@ class PluginDatainjectionProfile extends Profile
             [
                 'canedit'       => $canedit,
                 'default_class' => 'tab_bg_2',
-                'title'         => __('General')
-            ]
+                'title'         => __s('General'),
+            ],
         );
         if ($canedit) {
             echo "<div class='center'>";

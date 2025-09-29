@@ -28,16 +28,14 @@
  * -------------------------------------------------------------------------
  */
 
-if (!defined('GLPI_ROOT')) {
-    die("Sorry. You can't access directly to this file");
-}
+
 
 class PluginDatainjectionDeviceCaseInjection extends DeviceCase implements PluginDatainjectionInjectionInterface
 {
     public static function getTable($classname = null)
     {
 
-        $parenttype = get_parent_class(__CLASS__);
+        $parenttype = get_parent_class(self::class);
         return $parenttype::getTable();
     }
 
@@ -69,13 +67,13 @@ class PluginDatainjectionDeviceCaseInjection extends DeviceCase implements Plugi
 
         $tab           = Search::getOptions(get_parent_class($this));
 
-       //Remove some options because some fields cannot be imported
+        //Remove some options because some fields cannot be imported
         $blacklist     = PluginDatainjectionCommonInjectionLib::getBlacklistedOptions(get_parent_class($this));
         $notimportable = [];
 
         $options['ignore_fields'] = array_merge($blacklist, $notimportable);
         $options['displaytype']   = ["multiline_text" => [16],
-            "dropdown"       => [12, 23]
+            "dropdown"       => [12, 23],
         ];
 
         return PluginDatainjectionCommonInjectionLib::addToSearchOptions($tab, $options, $this);
@@ -102,7 +100,7 @@ class PluginDatainjectionDeviceCaseInjection extends DeviceCase implements Plugi
                         $foreign   => $values[get_parent_class($this)]['id'],
                         'itemtype' => 'Computer',
                         'items_id' => $values['Computer']['id'],
-                    ]
+                    ],
                 )
             ) {
                 $tmp[$foreign]   = $values[get_parent_class($this)]['id'];

@@ -28,9 +28,7 @@
  * -------------------------------------------------------------------------
  */
 
-if (!defined('GLPI_ROOT')) {
-    die("Sorry. You can't access directly to this file");
-}
+
 
 /// SoftwareLicense class
 class PluginDatainjectionSoftwareLicenseInjection extends SoftwareLicense implements PluginDatainjectionInjectionInterface
@@ -38,7 +36,7 @@ class PluginDatainjectionSoftwareLicenseInjection extends SoftwareLicense implem
     public static function getTable($classname = null)
     {
 
-        $parenttype = get_parent_class(__CLASS__);
+        $parenttype = get_parent_class(self::class);
         return $parenttype::getTable();
     }
 
@@ -73,7 +71,7 @@ class PluginDatainjectionSoftwareLicenseInjection extends SoftwareLicense implem
         $tab[8]['checktype'] = 'date';
 
         if ($primary_type == 'SoftwareLicense') {
-            $tab[100]['name']          = _n('Software', 'Software', 1);
+            $tab[100]['name']          = _sn('Software', 'Software', 1);
             $tab[100]['field']         = 'name';
             $tab[100]['table']         = getTableForItemType('Software');
             $tab[100]['linkfield']     = 'softwares_id';
@@ -82,7 +80,7 @@ class PluginDatainjectionSoftwareLicenseInjection extends SoftwareLicense implem
             $tab[100]['injectable']    = true;
         }
 
-       //Remove some options because some fields cannot be imported
+        //Remove some options because some fields cannot be imported
         $blacklist     = PluginDatainjectionCommonInjectionLib::getBlacklistedOptions(get_parent_class($this));
         $notimportable = [];
 
@@ -94,7 +92,7 @@ class PluginDatainjectionSoftwareLicenseInjection extends SoftwareLicense implem
         $options['displaytype']   = ["dropdown"       => [5, 6, 7, 110],
             "date"           => [8],
             "multiline_text" => [16],
-            "software" => [100]
+            "software" => [100],
         ];
 
         return PluginDatainjectionCommonInjectionLib::addToSearchOptions($tab, $options, $this);
@@ -115,8 +113,8 @@ class PluginDatainjectionSoftwareLicenseInjection extends SoftwareLicense implem
                 Computer::dropdown(
                     ['name'        => $name,
                         'entity'      => $_SESSION['glpiactive_entity'],
-                        'entity_sons' => false
-                    ]
+                        'entity_sons' => false,
+                    ],
                 );
                 break;
 
@@ -124,8 +122,8 @@ class PluginDatainjectionSoftwareLicenseInjection extends SoftwareLicense implem
                 Software::dropdown(
                     ['name'        => $name,
                         'entity'      => $_SESSION['glpiactive_entity'],
-                        'entity_sons' => false
-                    ]
+                        'entity_sons' => false,
+                    ],
                 );
                 break;
 
@@ -167,7 +165,7 @@ class PluginDatainjectionSoftwareLicenseInjection extends SoftwareLicense implem
                         "glpi_softwares",
                         "entities_id",
                         $fields_toinject['SoftwareLicense']['entities_id'],
-                        true
+                        true,
                     );
         $result = $DB->doQuery($query);
 

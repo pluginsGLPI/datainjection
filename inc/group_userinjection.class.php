@@ -28,23 +28,21 @@
  * -------------------------------------------------------------------------
  */
 
-if (!defined('GLPI_ROOT')) {
-    die("Sorry. You can't access directly to this file");
-}
+
 
 class PluginDatainjectionGroup_UserInjection extends Group_User implements PluginDatainjectionInjectionInterface
 {
     public static function getTypeName($nb = 0)
     {
 
-        return sprintf(__('%1$s - %2$s'), __('Group'), __('User'));
+        return sprintf(__s('%1$s - %2$s'), __s('Group'), __s('User'));
     }
 
 
     public static function getTable($classname = null)
     {
 
-        $parenttype = get_parent_class(__CLASS__);
+        $parenttype = get_parent_class(self::class);
         return $parenttype::getTable();
     }
 
@@ -58,7 +56,7 @@ class PluginDatainjectionGroup_UserInjection extends Group_User implements Plugi
     public function connectedTo()
     {
 
-       //return [];
+        //return [];
         return ['Group'];
     }
 
@@ -82,13 +80,13 @@ class PluginDatainjectionGroup_UserInjection extends Group_User implements Plugi
         $tab[4]['checktype']    = 'text';
         $tab[4]['displaytype']  = 'dropdown';
 
-       //Remove some options because some fields cannot be imported
+        //Remove some options because some fields cannot be imported
         $blacklist     = PluginDatainjectionCommonInjectionLib::getBlacklistedOptions(get_parent_class($this));
         $notimportable = [4];
 
         $options['ignore_fields'] = array_merge($blacklist, $notimportable);
         $options['displaytype']   = ["bool"    => [3, 6, 7],
-            "dropdown" => [4]
+            "dropdown" => [4],
         ];
 
         return PluginDatainjectionCommonInjectionLib::addToSearchOptions($tab, $options, $this);
@@ -117,7 +115,7 @@ class PluginDatainjectionGroup_UserInjection extends Group_User implements Plugi
 
         if ($primary_type == "User") {
             $fields['users_id'] = $values['User']['id'];
-        } else if ($primary_type == "Group") {
+        } elseif ($primary_type == "Group") {
             $fields['users_id']  = $values['Group_User']['users_id'];
             $fields['groups_id'] = $values['Group']['id'];
         }

@@ -78,9 +78,7 @@ class PluginDatainjectionModelcsv extends CommonDBChild
         return true;
     }
 
-    public function init()
-    {
-    }
+    public function init() {}
 
 
     //---- Getters -----//
@@ -124,8 +122,8 @@ class PluginDatainjectionModelcsv extends CommonDBChild
             'Content-disposition: attachment; filename="' . str_replace(
                 ' ',
                 '_',
-                $model->getName()
-            ) . '.csv"'
+                $model->getName(),
+            ) . '.csv"',
         );
         header('Content-Type: text/comma-separated-values');
         header('Content-Transfer-Encoding: UTF-8');
@@ -147,7 +145,7 @@ class PluginDatainjectionModelcsv extends CommonDBChild
     public function checkFileName($filename)
     {
 
-        return ( !strstr(strtolower(substr($filename, strlen($filename) - 4)), '.csv'));
+        return (!strstr(strtolower(substr($filename, strlen($filename) - 4)), '.csv'));
     }
 
 

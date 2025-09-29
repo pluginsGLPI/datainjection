@@ -28,15 +28,13 @@
  * -------------------------------------------------------------------------
  */
 
-if (!defined('GLPI_ROOT')) {
-    die("Sorry. You can't access directly to this file");
-}
+
 
 class PluginDatainjectionApplianceInjection extends Appliance implements PluginDatainjectionInjectionInterface
 {
     public static function getTable($classname = null)
     {
-        $parenttype = get_parent_class(__CLASS__);
+        $parenttype = get_parent_class(self::class);
         return $parenttype::getTable();
     }
 
@@ -55,15 +53,15 @@ class PluginDatainjectionApplianceInjection extends Appliance implements PluginD
         return true; // By default, all fields can be null
     }
 
-   /**
-    * @see plugins/datainjection/inc/PluginDatainjectionInjectionInterface::getOptions()
-   **/
+    /**
+     * @see plugins/datainjection/inc/PluginDatainjectionInjectionInterface::getOptions()
+    **/
     public function getOptions($primary_type = '')
     {
 
         $tab           = Search::getOptions(get_parent_class($this));
 
-       //Remove some options because some fields cannot be imported
+        //Remove some options because some fields cannot be imported
         $blacklist     = PluginDatainjectionCommonInjectionLib::getBlacklistedOptions(get_parent_class($this));
         $notimportable = [5, 9, 31];
 
@@ -72,15 +70,15 @@ class PluginDatainjectionApplianceInjection extends Appliance implements PluginD
             "multiline_text" => [4],
             "dropdown"       => [8, 10, 11, 32, 49],
             "user"           => [6, 24],
-            "bool"           => [7, 61]
+            "bool"           => [7, 61],
         ];
 
         return PluginDatainjectionCommonInjectionLib::addToSearchOptions($tab, $options, $this);
     }
 
-   /**
-    * @see plugins/datainjection/inc/PluginDatainjectionInjectionInterface::addOrUpdateObject()
-   **/
+    /**
+     * @see plugins/datainjection/inc/PluginDatainjectionInjectionInterface::addOrUpdateObject()
+    **/
     public function addOrUpdateObject($values = [], $options = [])
     {
         $lib = new PluginDatainjectionCommonInjectionLib($this, $values, $options);
