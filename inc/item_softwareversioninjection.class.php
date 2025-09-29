@@ -63,6 +63,11 @@ class PluginDatainjectionItem_SoftwareVersionInjection extends Item_SoftwareVers
         return ['Software', 'SoftwareVersion'];
     }
 
+    public function isNullable($field)
+    {
+        return true; // By default, all fields can be null
+    }
+
 
     /**
     * @see plugins/datainjection/inc/PluginDatainjectionInjectionInterface::getOptions()

@@ -58,6 +58,11 @@ class PluginDatainjectionDatabaseinstanceInjection extends DatabaseInstance impl
         return $CFG_GLPI["databaseinstance_types"];
     }
 
+    public function isNullable($field)
+    {
+        return true; // By default, all fields can be null
+    }
+
 
     /**
     * @see plugins/datainjection/inc/PluginDatainjectionInjectionInterface::getOptions()
