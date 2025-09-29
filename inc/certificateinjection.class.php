@@ -50,6 +50,11 @@ class PluginDatainjectionCertificateInjection extends Certificate implements Plu
         return [];
     }
 
+    public function isNullable($field)
+    {
+        return true; // By default, all fields can be null
+    }
+
    /**
     * @see plugins/datainjection/inc/PluginDatainjectionInjectionInterface::getOptions()
    **/
@@ -69,6 +74,9 @@ class PluginDatainjectionCertificateInjection extends Certificate implements Plu
             "user"           => [24, 70],
             "bool"           => [9, 86]
         ];
+
+        // Add date check type to Expiration date Search Option
+        $tab[10]['checktype']    = 'date';
 
         return PluginDatainjectionCommonInjectionLib::addToSearchOptions($tab, $options, $this);
     }

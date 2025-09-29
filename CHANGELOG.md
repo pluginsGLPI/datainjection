@@ -5,10 +5,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-## [Unreleased]
+## [unreleased] - 
 
 ### Fixed
-
+- Fix injection to the `date_expiration` of certificates
 - Fix the `Task completed` message during plugin update
 
 ## [2.14.3] - 2025-09-16

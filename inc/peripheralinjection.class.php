@@ -54,6 +54,11 @@ class PluginDatainjectionPeripheralInjection extends Peripheral implements Plugi
         return ['Computer', 'Document'];
     }
 
+    public function isNullable($field)
+    {
+        return true; // By default, all fields can be null
+    }
+
 
     /**
     * @see plugins/datainjection/inc/PluginDatainjectionInjectionInterface::getOptions()

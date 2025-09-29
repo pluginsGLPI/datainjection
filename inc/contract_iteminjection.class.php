@@ -60,6 +60,11 @@ class PluginDatainjectionContract_ItemInjection extends Contract_Item implements
         return $CFG_GLPI["contract_types"];
     }
 
+    public function isNullable($field)
+    {
+        return true; // By default, all fields can be null
+    }
+
 
     /**
     * @see plugins/datainjection/inc/PluginDatainjectionInjectionInterface::getOptions()

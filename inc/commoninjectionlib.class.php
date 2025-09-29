@@ -930,10 +930,10 @@ class PluginDatainjectionCommonInjectionLib
         if ($itemtype === User::class && $field === "pdffont" && $fromdb) {
             return;
         }
+        $injectionClass = self::getInjectionClassInstance($itemtype);
        // TODO awfull hack, text ftom CSV set more than once, so check if "another" value
         if (isset($this->values[$itemtype][$field]) && $this->values[$itemtype][$field] != $value) {
            // Data set twice (probably CSV + Additional info)
-            $injectionClass = self::getInjectionClassInstance($itemtype);
             $option = self::findSearchOption($injectionClass->getOptions($itemtype), $field);
 
             if (isset($option['displaytype']) && $option['displaytype'] == 'multiline_text') {
@@ -955,7 +955,7 @@ class PluginDatainjectionCommonInjectionLib
             }
         } else { // First value
             if (empty($value)) {
-                if (isForeignKeyField($field) || (strpos($field, 'is_') !== false)) {
+                if (isForeignKeyField($field) || (strpos($field, 'is_') !== false) || (method_exists($injectionClass, 'isNullable') && !$injectionClass->isNullable($field))) {
                     // If the field is an id, we set it to 0
                     $this->values[$itemtype][$field] = self::DROPDOWN_EMPTY_VALUE;
                 } else {
@@ -1596,7 +1596,6 @@ class PluginDatainjectionCommonInjectionLib
 
                     foreach ($this->values as $itemtype => $data) {
                        //Do not process primary_type
-
                         if ($itemtype != get_class($item)) {
                             $injectionClass = self::getInjectionClassInstance($itemtype);
                             $item           = new $itemtype();
