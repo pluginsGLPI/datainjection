@@ -76,7 +76,10 @@ class PluginDatainjectionNetworkNameInjection extends NetworkName implements Plu
         $notimportable = [20, 21];
 
         $options['ignore_fields'] = array_merge($blacklist, $notimportable);
-        $options['displaytype']   = ["dropdown" => [12]];
+        $options['displaytype']   = [
+            "dropdown" => [12],
+            "text"     => [13],
+        ];
 
         return PluginDatainjectionCommonInjectionLib::addToSearchOptions($tab, $options, $this);
     }

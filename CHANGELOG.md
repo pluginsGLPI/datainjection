@@ -5,9 +5,11 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-## [unreleased] - 
+## [unreleased]
 
 ### Fixed
+
+- Fix `NetworkName` ip adresses injection
 - Fix injection to the `date_expiration` of certificates
 - Fix the `Task completed` message during plugin update
 
@@ -16,7 +18,6 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Fixed
 
 - Fix `License` injection
-
 
 ## [2.14.2] - 2025-08-22
 
