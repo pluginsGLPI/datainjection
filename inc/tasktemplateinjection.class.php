@@ -28,16 +28,14 @@
  * -------------------------------------------------------------------------
  */
 
-if (!defined('GLPI_ROOT')) {
-    die("Sorry. You can't access directly to this file");
-}
+
 
 class PluginDatainjectionTaskTemplateInjection extends TaskTemplate implements PluginDatainjectionInjectionInterface
 {
     public static function getTable($classname = null)
     {
 
-        $parenttype = get_parent_class(__CLASS__);
+        $parenttype = get_parent_class(self::class);
         return $parenttype::getTable();
     }
 
@@ -69,7 +67,7 @@ class PluginDatainjectionTaskTemplateInjection extends TaskTemplate implements P
 
         $tab           = Search::getOptions(get_parent_class($this));
 
-       //Remove some options because some fields cannot be imported
+        //Remove some options because some fields cannot be imported
         $blacklist     = PluginDatainjectionCommonInjectionLib::getBlacklistedOptions(get_parent_class($this));
         $notimportable = [];
 
@@ -77,7 +75,7 @@ class PluginDatainjectionTaskTemplateInjection extends TaskTemplate implements P
 
         $options['displaytype']   = ["bool"           => [86],
             "dropdown" => [3],
-            "multiline_text" => [4, 16]
+            "multiline_text" => [4, 16],
         ];
 
         return PluginDatainjectionCommonInjectionLib::addToSearchOptions($tab, $options, $this);

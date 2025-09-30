@@ -28,9 +28,7 @@
  * -------------------------------------------------------------------------
  */
 
-if (!defined('GLPI_ROOT')) {
-    die("Sorry. You can't access directly to this file");
-}
+
 
 
 class PluginDatainjectionBudgetInjection extends Budget implements PluginDatainjectionInjectionInterface
@@ -38,7 +36,7 @@ class PluginDatainjectionBudgetInjection extends Budget implements PluginDatainj
     public static function getTable($classname = null)
     {
 
-        $parenttype = get_parent_class(__CLASS__);
+        $parenttype = get_parent_class(self::class);
         return $parenttype::getTable();
     }
 
@@ -74,7 +72,7 @@ class PluginDatainjectionBudgetInjection extends Budget implements PluginDatainj
         $tab[6]['checktype'] = 'date'; // end date
         $tab[7]['checktype'] = 'float'; // amount
 
-       //Remove some options because some fields cannot be imported
+        //Remove some options because some fields cannot be imported
         $blacklist = PluginDatainjectionCommonInjectionLib::getBlacklistedOptions(get_parent_class($this));
         $notimportable            = [];
         $options['ignore_fields'] = array_merge($blacklist, $notimportable);
@@ -82,7 +80,7 @@ class PluginDatainjectionBudgetInjection extends Budget implements PluginDatainj
         $options['displaytype']   = ["date"           => [5,6],
             "yesno"          => [86],
             "multiline_text" => [16, 90],
-            "decimal"        => [7]
+            "decimal"        => [7],
         ];
 
         return PluginDatainjectionCommonInjectionLib::addToSearchOptions($tab, $options, $this);

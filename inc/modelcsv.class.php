@@ -28,6 +28,36 @@
  * -------------------------------------------------------------------------
  */
 
+use Glpi\Application\View\TemplateRenderer;
+
+/**
+ * -------------------------------------------------------------------------
+ * DataInjection plugin for GLPI
+ * -------------------------------------------------------------------------
+ *
+ * LICENSE
+ *
+ * This file is part of DataInjection.
+ *
+ * DataInjection is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * DataInjection is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with DataInjection. If not, see <http://www.gnu.org/licenses/>.
+ * -------------------------------------------------------------------------
+ * @copyright Copyright (C) 2007-2023 by DataInjection plugin team.
+ * @license   GPLv2 https://www.gnu.org/licenses/gpl-2.0.html
+ * @link      https://github.com/pluginsGLPI/datainjection
+ * -------------------------------------------------------------------------
+ */
+
 class PluginDatainjectionModelcsv extends CommonDBChild
 {
     public static $rightname = "plugin_datainjection_model";
@@ -48,9 +78,7 @@ class PluginDatainjectionModelcsv extends CommonDBChild
         return true;
     }
 
-    public function init()
-    {
-    }
+    public function init() {}
 
 
     //---- Getters -----//
@@ -94,8 +122,8 @@ class PluginDatainjectionModelcsv extends CommonDBChild
             'Content-disposition: attachment; filename="' . str_replace(
                 ' ',
                 '_',
-                $model->getName()
-            ) . '.csv"'
+                $model->getName(),
+            ) . '.csv"',
         );
         header('Content-Type: text/comma-separated-values');
         header('Content-Transfer-Encoding: UTF-8');
@@ -117,7 +145,7 @@ class PluginDatainjectionModelcsv extends CommonDBChild
     public function checkFileName($filename)
     {
 
-        return ( !strstr(strtolower(substr($filename, strlen($filename) - 4)), '.csv'));
+        return (!strstr(strtolower(substr($filename, strlen($filename) - 4)), '.csv'));
     }
 
 
@@ -162,21 +190,16 @@ class PluginDatainjectionModelcsv extends CommonDBChild
    **/
     public function showAdditionnalForm(PluginDatainjectionModel $model, $options = [])
     {
-
-        $id      = $this->getFromDBByModelID($model->fields['id']);
+        $id = $this->getFromDBByModelID($model->fields['id']);
         $canedit = $this->can($id, UPDATE);
 
-        echo "<tr><th colspan='4'>" . __('Specific file format options', 'datainjection') . "</th></tr>";
+        $data = [
+            'canedit' => $canedit,
+            'is_header_present' => $this->isHeaderPresent(),
+            'delimiter' => $this->getDelimiter(),
+        ];
 
-        echo "<tr class='tab_bg_1'>";
-        echo "<td>" . __("Header's presence", 'datainjection') . "</td>";
-        echo "<td>";
-        Dropdown::showYesNo('is_header_present', $this->isHeaderPresent());
-        echo "</td>";
-        echo "<td>" . __('File delimitor', 'datainjection') . "</td>";
-        echo "<td>";
-        echo "<input type='text' size='1' name='delimiter' value='" . $this->getDelimiter() . "'";
-        echo "</td></tr>";
+        TemplateRenderer::getInstance()->display('@datainjection/modelcsv_additional_form.html.twig', $data);
     }
 
 

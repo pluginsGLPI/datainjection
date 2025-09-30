@@ -33,11 +33,7 @@ class PluginDatainjectionData
     private $injectionData;
 
 
-    public function __construct()
-    {
-
-        $injectionData = [];
-    }
+    public function __construct() {}
 
 
     /**

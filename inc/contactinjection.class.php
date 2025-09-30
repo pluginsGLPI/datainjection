@@ -28,16 +28,14 @@
  * -------------------------------------------------------------------------
  */
 
-if (!defined('GLPI_ROOT')) {
-    die("Sorry. You can't access directly to this file");
-}
+
 
 class PluginDatainjectionContactInjection extends Contact implements PluginDatainjectionInjectionInterface
 {
     public static function getTable($classname = null)
     {
 
-        $parenttype = get_parent_class(__CLASS__);
+        $parenttype = get_parent_class(self::class);
         return $parenttype::getTable();
     }
 
@@ -69,7 +67,7 @@ class PluginDatainjectionContactInjection extends Contact implements PluginDatai
 
         $tab           = Search::getOptions(get_parent_class($this));
 
-       //Remove some options because some fields cannot be imported
+        //Remove some options because some fields cannot be imported
         $blacklist     = PluginDatainjectionCommonInjectionLib::getBlacklistedOptions(get_parent_class($this));
         $notimportable = [8];
 
@@ -77,7 +75,7 @@ class PluginDatainjectionContactInjection extends Contact implements PluginDatai
 
         $options['displaytype']   = ["dropdown"       => [8, 9],
             "bool"           => [86],
-            "multiline_text" => [16, 82, 90]
+            "multiline_text" => [16, 82, 90],
         ];
 
         return PluginDatainjectionCommonInjectionLib::addToSearchOptions($tab, $options, $this);

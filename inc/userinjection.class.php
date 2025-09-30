@@ -28,18 +28,14 @@
  * -------------------------------------------------------------------------
  */
 
-if (!defined('GLPI_ROOT')) {
-    die("Sorry. You can't access directly to this file");
-}
 
-use Glpi\Toolbox\Sanitizer;
 
 class PluginDatainjectionUserInjection extends User implements PluginDatainjectionInjectionInterface
 {
     public static function getTable($classname = null)
     {
 
-        $parenttype = get_parent_class(__CLASS__);
+        $parenttype = get_parent_class(self::class);
         return $parenttype::getTable();
     }
 
@@ -71,21 +67,21 @@ class PluginDatainjectionUserInjection extends User implements PluginDatainjecti
 
         $tab                       = Search::getOptions(get_parent_class($this));
 
-       //Specific to location
+        //Specific to location
         $tab[1]['linkfield']       = 'name';
         $tab[3]['linkfield']       = 'locations_id';
 
-       //Manage password
-        $tab[4]['table']           = $this->getTable();
+        //Manage password
+        $tab[4]['table']           = static::getTable();
         $tab[4]['field']           = 'password';
         $tab[4]['linkfield']       = 'password';
-        $tab[4]['name']            = __('Password');
+        $tab[4]['name']            = __s('Password');
         $tab[4]['displaytype']     = 'password';
 
         $tab[5]['displaytype']     = 'text';
 
-       //To manage groups : relies on a CommonDBRelation object !
-        $tab[100]['name']          = __('Group');
+        //To manage groups : relies on a CommonDBRelation object !
+        $tab[100]['name']          = __s('Group');
         $tab[100]['field']         = 'name';
         $tab[100]['table']         = getTableForItemType('Group');
         $tab[100]['linkfield']     = getForeignKeyFieldForTable($tab[100]['table']);
@@ -93,8 +89,8 @@ class PluginDatainjectionUserInjection extends User implements PluginDatainjecti
         $tab[100]['relationclass'] = 'Group_User';
         $tab[100]['relationfield'] = $tab[100]['linkfield'];
 
-       //To manage groups : relies on a CommonDBRelation object !
-        $tab[101]['name']          = __('Profile');
+        //To manage groups : relies on a CommonDBRelation object !
+        $tab[101]['name']          = __s('Profile');
         $tab[101]['field']         = 'name';
         $tab[101]['table']         = getTableForItemType('Profile');
         $tab[101]['linkfield']     = getForeignKeyFieldForTable($tab[101]['table']);
@@ -102,24 +98,24 @@ class PluginDatainjectionUserInjection extends User implements PluginDatainjecti
         $tab[101]['relationclass'] = 'Profile_User';
         $tab[101]['relationfield'] = $tab[101]['linkfield'];
 
-       //Remove some options because some fields cannot be imported
+        //Remove some options because some fields cannot be imported
         $blacklist     = PluginDatainjectionCommonInjectionLib::getBlacklistedOptions(get_parent_class($this));
         $notimportable = [13, 14, 15, 17, 20, 23, 30, 31, 60, 61, 91, 92, 93];
 
         $options['ignore_fields']  = array_merge($blacklist, $notimportable);
 
-       //Add displaytype value
+        //Add displaytype value
         $options['displaytype']    = [
             "dropdown"       => [
                 3, // location
                 77, // default entity
                 79, // default profile
                 81, // title
-                82 // category
+                82, // category
             ],
             "multiline_text" => [16],
             "bool"           => [8],
-            "password"       => [4]
+            "password"       => [4],
         ];
 
         return PluginDatainjectionCommonInjectionLib::addToSearchOptions($tab, $options, $this);
@@ -145,11 +141,7 @@ class PluginDatainjectionUserInjection extends User implements PluginDatainjecti
     public function addSpecificNeededFields($primary_type, $values)
     {
 
-        if (isset($values[$primary_type]['name'])) {
-            $fields['name'] = $values[$primary_type]['name'];
-        } else {
-            $fields['name'] = "none";
-        }
+        $fields['name'] = $values[$primary_type]['name'] ?? "none";
         return $fields;
     }
 
@@ -164,32 +156,24 @@ class PluginDatainjectionUserInjection extends User implements PluginDatainjecti
         /** @var DBmysql $DB */
         global $DB;
 
-       //Manage user emails
-        if (
-            isset($values['User']['useremails_id'])
-            && $rights['add_dropdown']
-            && Session::haveRight('user', UPDATE)
-        ) {
-            if (
-                !countElementsInTable(
-                    "glpi_useremails",
-                    [
-                        'users_id' => $values['User']['id'],
-                        'email'    => $values['User']['useremails_id'],
-                    ]
-                )
-            ) {
-                $useremail       = new UserEmail();
-                $tmp['users_id'] = $values['User']['id'];
-                $tmp['email']    = $values['User']['useremails_id'];
-                $useremail->add($tmp);
-            }
+        //Manage user emails
+        if (isset($values['User']['useremails_id']) && $rights['add_dropdown'] && Session::haveRight('user', UPDATE) && !countElementsInTable(
+            "glpi_useremails",
+            [
+                'users_id' => $values['User']['id'],
+                'email'    => $values['User']['useremails_id'],
+            ],
+        )) {
+            $useremail       = new UserEmail();
+            $tmp['users_id'] = $values['User']['id'];
+            $tmp['email']    = $values['User']['useremails_id'];
+            $useremail->add($tmp);
         }
 
         if (isset($values['User']['password']) && ($values['User']['password'] != '')) {
-           //We use an SQL request because updating the password is unesasy
-           //(self reset password process in $user->prepareInputForUpdate())
-            $password = sha1(Sanitizer::unsanitize($values['User']["password"]));
+            //We use an SQL request because updating the password is unesasy
+            //(self reset password process in $user->prepareInputForUpdate())
+            $password = sha1($values['User']["password"]);
 
             $query = "UPDATE `glpi_users`
                    SET `password` = '" . $password . "'

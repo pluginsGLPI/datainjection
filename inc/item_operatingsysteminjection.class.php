@@ -28,16 +28,14 @@
  * -------------------------------------------------------------------------
  */
 
-if (!defined('GLPI_ROOT')) {
-    die("Sorry. You can't access directly to this file");
-}
+
 
 class PluginDatainjectionItem_OperatingsystemInjection extends Item_OperatingSystem implements PluginDatainjectionInjectionInterface
 {
     public static function getTable($classname = null)
     {
 
-        $parenttype = get_parent_class(__CLASS__);
+        $parenttype = get_parent_class(self::class);
         return $parenttype::getTable();
     }
 
@@ -52,8 +50,8 @@ class PluginDatainjectionItem_OperatingsystemInjection extends Item_OperatingSys
         return true; // By default, all fields can be null
     }
 
-   /**
-   * @see plugins/datainjection/inc/PluginDatainjectionInjectionInterface::getOptions()
+    /**
+    * @see plugins/datainjection/inc/PluginDatainjectionInjectionInterface::getOptions()
   **/
     public function getOptions($primary_type = '')
     {
@@ -74,9 +72,9 @@ class PluginDatainjectionItem_OperatingsystemInjection extends Item_OperatingSys
         $options['ignore_fields'] = [];
         $options['displaytype'] = [
             "dropdown" => [
-                41, 45, 46, 48, 61, 63, 64
+                41, 45, 46, 48, 61, 63, 64,
             ],
-            "text" => [43, 44]
+            "text" => [43, 44],
         ];
         return PluginDatainjectionCommonInjectionLib::addToSearchOptions($searchoptions, $options, $this);
     }
@@ -102,16 +100,16 @@ class PluginDatainjectionItem_OperatingsystemInjection extends Item_OperatingSys
     }
 
 
-   /**
-    * @param PluginDatainjectionInjectionInterface $injectionClass
-    * @param array $values
-    * @param array $options
-   **/
+    /**
+     * @param PluginDatainjectionInjectionInterface $injectionClass
+     * @param array $values
+     * @param array $options
+    **/
     public function customDataAlreadyInDB($injectionClass, $values, $options)
     {
         /** @var DBmysql $DB */
         global $DB;
-        $item_operatingsystem = new \Item_OperatingSystem();
+        $item_operatingsystem = new Item_OperatingSystem();
         $matching_os = $DB->request([
             'FROM' => $item_operatingsystem->getTable(),
             'WHERE' => [
@@ -129,10 +127,10 @@ class PluginDatainjectionItem_OperatingsystemInjection extends Item_OperatingSys
     }
 
 
-   /**
-    * @param string $primary_type
-    * @param array $values
-   **/
+    /**
+     * @param string $primary_type
+     * @param array $values
+    **/
     public function addSpecificNeededFields($primary_type, $values)
     {
         $fields['items_id'] = $values[$primary_type]['id'];

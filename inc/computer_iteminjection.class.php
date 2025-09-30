@@ -28,24 +28,20 @@
  * -------------------------------------------------------------------------
  */
 
-if (!defined('GLPI_ROOT')) {
-    die("Sorry. You can't access directly to this file");
-}
+use Glpi\Asset\Asset_PeripheralAsset;
 
-class PluginDatainjectionComputer_ItemInjection extends Computer_Item implements PluginDatainjectionInjectionInterface
+class PluginDatainjectionComputer_ItemInjection implements PluginDatainjectionInjectionInterface
 {
     public static function getTable($classname = null)
     {
-
-        $parenttype = get_parent_class();
-        return $parenttype::getTable();
+        return Asset_PeripheralAsset::getTable();
     }
 
 
     public static function getTypeName($nb = 0)
     {
 
-        return __('Direct connections');
+        return __s('Direct connections');
     }
 
 
@@ -79,7 +75,7 @@ class PluginDatainjectionComputer_ItemInjection extends Computer_Item implements
         $tab[110]['table']        = 'glpi_computers';
         $tab[110]['field']        = 'name';
         $tab[110]['linkfield']    = 'name';
-        $tab[110]['name']         = __('Name');
+        $tab[110]['name']         = __s('Name');
         $tab[110]['injectable']   = true;
         $tab[110]['displaytype']  = 'dropdown';
         $tab[110]['checktype']    = 'text';
@@ -88,7 +84,7 @@ class PluginDatainjectionComputer_ItemInjection extends Computer_Item implements
         $tab[111]['table']        = 'glpi_computers';
         $tab[111]['field']        = 'serial';
         $tab[111]['linkfield']    = 'serial';
-        $tab[111]['name']         = __('Serial number');
+        $tab[111]['name']         = __s('Serial number');
         $tab[111]['injectable']   = true;
         $tab[111]['displaytype']  = 'dropdown';
         $tab[111]['checktype']    = 'text';
@@ -97,7 +93,7 @@ class PluginDatainjectionComputer_ItemInjection extends Computer_Item implements
         $tab[112]['table']        = 'glpi_computers';
         $tab[112]['field']        = 'otherserial';
         $tab[112]['linkfield']    = 'otherserial';
-        $tab[112]['name']         = __('Inventory number');
+        $tab[112]['name']         = __s('Inventory number');
         $tab[112]['injectable']   = true;
         $tab[112]['displaytype']  = 'dropdown';
         $tab[112]['checktype']    = 'text';
@@ -125,9 +121,11 @@ class PluginDatainjectionComputer_ItemInjection extends Computer_Item implements
    **/
     public function addSpecificNeededFields($primary_type, $values)
     {
+        $fields['items_id_asset'] = $values['id'];
+        $fields['itemtype_asset'] = Computer::class;
 
-        $fields['items_id'] = $values[$primary_type]['id'];
-        $fields['itemtype'] = $primary_type;
+        $fields['items_id_peripheral'] = $values[$primary_type]['id'];
+        $fields['itemtype_peripheral'] = $primary_type;
         return $fields;
     }
 }

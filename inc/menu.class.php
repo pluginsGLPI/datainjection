@@ -35,7 +35,7 @@ class PluginDatainjectionMenu extends CommonGLPI
     public static function getMenuName()
     {
 
-        return __('Data injection', 'datainjection');
+        return __s('Data injection', 'datainjection');
     }
 
     public static function getMenuContent()
@@ -43,12 +43,12 @@ class PluginDatainjectionMenu extends CommonGLPI
         /** @var array $CFG_GLPI */
         global $CFG_GLPI;
 
-        $injectionFormUrl = "/" . Plugin::getWebDir('datainjection', false) . '/front/clientinjection.form.php';
+        $injectionFormUrl = 'plugins/datainjection/front/clientinjection.form.php';
 
         $menu = [
             'title' => self::getMenuName(),
             'page'  => $injectionFormUrl,
-            'icon'  => 'fas fa-file-import',
+            'icon'  => 'ti ti-download',
         ];
 
         if (Session::haveRight(static::$rightname, READ)) {
@@ -60,18 +60,18 @@ class PluginDatainjectionMenu extends CommonGLPI
                 'client' => [
                     'title' => __s('Injection of the file', 'datainjection'),
                     'page'  => $injectionFormUrl,
-                    'icon'  => 'fas fa-upload',
+                    'icon'  => 'ti ti-file-download',
                 ],
                 'model' => [
-                    'icon'  => 'fas fa-layer-group',
+                    'icon'  => PluginDatainjectionModel::getIcon(),
                     'links' => [
-                        $image_import => $injectionFormUrl
-                    ]
-                ]
+                        $image_import => $injectionFormUrl,
+                    ],
+                ],
             ];
 
             $model_name  = PluginDatainjectionModel::getTypeName(Session::getPluralNumber());
-            $image_model = "<i class='fas fa-layer-group' title='$model_name' alt='$model_name'></i>";
+            $image_model = "<i class='" . PluginDatainjectionModel::getIcon() . "' title='$model_name' alt='$model_name'></i>";
 
             if (Session::haveRight('plugin_datainjection_model', READ)) {
                 $menu['options']['model']['title'] = $model_name;

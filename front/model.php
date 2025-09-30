@@ -28,7 +28,6 @@
  * -------------------------------------------------------------------------
  */
 
-require '../../../inc/includes.php';
 Session::checkLoginUser();
 
 Html::header(
@@ -36,7 +35,7 @@ Html::header(
     '',
     "tools",
     "plugindatainjectionmenu",
-    "model"
+    "model",
 );
 
 $model = new PluginDatainjectionModel();

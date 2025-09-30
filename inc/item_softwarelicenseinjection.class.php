@@ -28,21 +28,19 @@
  * -------------------------------------------------------------------------
  */
 
-if (!defined('GLPI_ROOT')) {
-    die("Sorry. You can't access directly to this file");
-}
+
 
 class PluginDatainjectionItem_SoftwareLicenseInjection extends Item_SoftwareLicense implements PluginDatainjectionInjectionInterface
 {
     public static function getTypeName($nb = 0)
     {
-        return __('Computer');
+        return __s('Computer');
     }
 
 
     public static function getTable($classname = null)
     {
-        $parenttype = get_parent_class(__CLASS__);
+        $parenttype = get_parent_class(self::class);
         return $parenttype::getTable();
     }
 
@@ -77,7 +75,7 @@ class PluginDatainjectionItem_SoftwareLicenseInjection extends Item_SoftwareLice
         $tab[110]['table']        = 'glpi_computers';
         $tab[110]['field']        = 'name';
         $tab[110]['linkfield']    = 'name';
-        $tab[110]['name']         = sprintf(__('%1$s - %2$s'), self::getTypeName(), __('Name'));
+        $tab[110]['name']         = sprintf(__s('%1$s - %2$s'), self::getTypeName(), __s('Name'));
         $tab[110]['injectable']   = true;
         $tab[110]['displaytype']  = 'dropdown';
         $tab[110]['checktype']    = 'text';
@@ -87,9 +85,9 @@ class PluginDatainjectionItem_SoftwareLicenseInjection extends Item_SoftwareLice
         $tab[111]['field']        = 'serial';
         $tab[111]['linkfield']    = 'serial';
         $tab[111]['name']         = sprintf(
-            __('%1$s - %2$s'),
+            __s('%1$s - %2$s'),
             self::getTypeName(),
-            __('Serial number')
+            __s('Serial number'),
         );
         $tab[111]['injectable']   = true;
         $tab[111]['displaytype']  = 'dropdown';
@@ -100,9 +98,9 @@ class PluginDatainjectionItem_SoftwareLicenseInjection extends Item_SoftwareLice
         $tab[112]['field']        = 'otherserial';
         $tab[112]['linkfield']    = 'otherserial';
         $tab[112]['name']         = sprintf(
-            __('%1$s - %2$s'),
+            __s('%1$s - %2$s'),
             self::getTypeName(),
-            __('Inventory number')
+            __s('Inventory number'),
         );
         $tab[112]['injectable']   = true;
         $tab[112]['displaytype']  = 'dropdown';
@@ -128,7 +126,7 @@ class PluginDatainjectionItem_SoftwareLicenseInjection extends Item_SoftwareLice
     {
         return [
             'computers_id'        => 1,
-            'softwarelicenses_id' => 1
+            'softwarelicenses_id' => 1,
         ];
     }
 

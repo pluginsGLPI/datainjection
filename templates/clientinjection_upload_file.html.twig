@@ -1,0 +1,81 @@
+{#
+ # -------------------------------------------------------------------------
+ # DataInjection plugin for GLPI
+ # -------------------------------------------------------------------------
+ #
+ # LICENSE
+ #
+ # This file is part of DataInjection.
+ #
+ # DataInjection is free software; you can redistribute it and/or modify
+ # it under the terms of the GNU General Public License as published by
+ # the Free Software Foundation; either version 2 of the License, or
+ # (at your option) any later version.
+ #
+ # DataInjection is distributed in the hope that it will be useful,
+ # but WITHOUT ANY WARRANTY; without even the implied warranty of
+ # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ # GNU General Public License for more details.
+ #
+ # You should have received a copy of the GNU General Public License
+ # along with DataInjection. If not, see <http://www.gnu.org/licenses/>.
+ # -------------------------------------------------------------------------
+ # @copyright Copyright (C) 2007-2023 by DataInjection plugin team.
+ # @license   GPLv2 https://www.gnu.org/licenses/gpl-2.0.html
+ # @link      https://github.com/pluginsGLPI/datainjection
+ # -------------------------------------------------------------------------
+ #}
+
+{% import 'components/form/fields_macros.html.twig' as fields %}
+
+{% if add_form %}
+    <form method="post" name="form" action="{{ url }}" enctype="multipart/form-data">
+    <input type="hidden" name="_glpi_csrf_token" value="{{ csrf_token() }}" />
+{% endif %}
+    <div class="hr-text mt-5 mb-5">
+        <i class="fa-2x ti ti-file-arrow-left"></i>
+        <span>{{ __('File to inject', 'datainjection') }}</span>
+    </div>
+
+    <input type="hidden" name="id" value="{{ models_id }}">
+
+    {{ fields.htmlField(
+        'filename',
+        '<input type="file" name="filename">',
+        __('Choose a file', 'datainjection'),
+        {
+            'add_field_class'   : 'col-sm-12',
+            'label_class'       : 'col-5 col-sm-5',
+            'input_class'       : 'col-6 col-sm-6',
+        }
+    ) }}
+    {{ fields.dropdownArrayField(
+        'file_encoding',
+        2,
+        file_encoding_values,
+        __('File encoding', 'datainjection'),
+        {
+            'add_field_class'   : 'col-sm-12',
+            'label_class'       : 'col-5 col-sm-5',
+            'input_class'       : 'col-6 col-sm-6',
+            'width': '325px',
+        }
+    ) }}
+
+    <div class="center pt-2">
+        {% if confirm %}
+            {% if confirm == 'creation' %}
+                {% set message = __('Warning : existing mapped column will be overridden', 'datainjection') %}
+            {% else %}
+                {% set message = __("Watch out, you're about to inject data into GLPI. Are you sure you want to do it ?", 'datainjection') %}
+            {% endif %}
+            <input type="submit" class="btn btn-primary" name="upload" value="{{ submit_label }}" onclick="return window.confirm('{{ message }}');">
+        {% else %}
+            <input type="submit" class="btn btn-primary" name="upload" value="{{ submit_label }}">
+        {% endif %}
+        &nbsp;&nbsp;
+        <input type="submit" class="btn btn-outline-danger" name="cancel" value="{{ _x('button', 'Cancel') }}">
+    </div>
+{% if add_form %}
+    </form>
+{% endif %}

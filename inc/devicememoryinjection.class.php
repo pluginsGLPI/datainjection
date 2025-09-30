@@ -28,16 +28,14 @@
  * -------------------------------------------------------------------------
  */
 
-if (!defined('GLPI_ROOT')) {
-    die("Sorry. You can't access directly to this file");
-}
+use Glpi\Exception\Http\HttpException;
 
 class PluginDatainjectionDeviceMemoryInjection extends DeviceMemory implements PluginDatainjectionInjectionInterface
 {
     public static function getTable($classname = null)
     {
 
-        $parenttype = get_parent_class(__CLASS__);
+        $parenttype = get_parent_class(self::class);
         return $parenttype::getTable();
     }
 
@@ -71,13 +69,13 @@ class PluginDatainjectionDeviceMemoryInjection extends DeviceMemory implements P
 
         $tab           = Search::getOptions(get_parent_class($this));
 
-       //Remove some options because some fields cannot be imported
+        //Remove some options because some fields cannot be imported
         $blacklist     = PluginDatainjectionCommonInjectionLib::getBlacklistedOptions(get_parent_class($this));
         $notimportable = [];
 
         $options['ignore_fields'] = array_merge($blacklist, $notimportable);
         $options['displaytype']   = ["multiline_text" => [16],
-            "dropdown"       => [13, 23]
+            "dropdown"       => [13, 23],
         ];
 
         return PluginDatainjectionCommonInjectionLib::addToSearchOptions($tab, $options, $this);
@@ -94,6 +92,9 @@ class PluginDatainjectionDeviceMemoryInjection extends DeviceMemory implements P
 
         if (isset($values['Computer']['id'])) {
             $class   = "Item_" . get_parent_class($this);
+            if (!is_a($class, CommonDBTM::class, true)) {
+                throw new HttpException(500, 'Class ' . $class . ' is not a valid class');
+            }
             $item    = new $class();
             $foreign = getForeignKeyFieldForTable(getTableForItemType(get_parent_class($this)));
 

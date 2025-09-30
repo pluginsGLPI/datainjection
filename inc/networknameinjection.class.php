@@ -28,16 +28,14 @@
  * -------------------------------------------------------------------------
  */
 
-if (!defined('GLPI_ROOT')) {
-    die("Sorry. You can't access directly to this file");
-}
+
 
 class PluginDatainjectionNetworkNameInjection extends NetworkName implements PluginDatainjectionInjectionInterface
 {
     public static function getTable($classname = null)
     {
 
-        $parenttype = get_parent_class(__CLASS__);
+        $parenttype = get_parent_class(self::class);
         return $parenttype::getTable();
     }
 
@@ -71,7 +69,7 @@ class PluginDatainjectionNetworkNameInjection extends NetworkName implements Plu
 
         $tab           = Search::getOptions(get_parent_class($this));
 
-       //Remove some options because some fields cannot be imported
+        //Remove some options because some fields cannot be imported
         $blacklist     = PluginDatainjectionCommonInjectionLib::getBlacklistedOptions(get_parent_class($this));
         $notimportable = [20, 21];
 
@@ -121,26 +119,22 @@ class PluginDatainjectionNetworkNameInjection extends NetworkName implements Plu
         /** @var DBmysql $DB */
         global $DB;
 
-       //Manage ip adresses
-        if (isset($values['NetworkName']['ipaddresses_id'])) {
-            if (
-                !countElementsInTable(
-                    "glpi_ipaddresses",
-                    [
-                        'items_id' => $values['NetworkName']['id'],
-                        'itemtype' => 'NetworkName',
-                        'name'     => $values['NetworkName']['ipaddresses_id'],
-                    ]
-                )
-            ) {
-                $ip                  = new IPAddress($values['NetworkName']['ipaddresses_id']);
-                $tmp['items_id']     = $values['NetworkName']['id'];
-                $tmp['itemtype']     = "NetworkName";
-                $tmp['name']         =  $ip->getTextual();
-                $tmp['is_dynamic']   = 0;
-                if (!$ip->getFromDBByCrit($tmp)) {
-                    $ip->add($tmp);
-                }
+        //Manage ip adresses
+        if (isset($values['NetworkName']['ipaddresses_id']) && !countElementsInTable(
+            "glpi_ipaddresses",
+            [
+                'items_id' => $values['NetworkName']['id'],
+                'itemtype' => 'NetworkName',
+                'name'     => $values['NetworkName']['ipaddresses_id'],
+            ],
+        )) {
+            $ip                  = new IPAddress($values['NetworkName']['ipaddresses_id']);
+            $tmp['items_id']     = $values['NetworkName']['id'];
+            $tmp['itemtype']     = "NetworkName";
+            $tmp['name']         =  $ip->getTextual();
+            $tmp['is_dynamic']   = 0;
+            if (!$ip->getFromDBByCrit($tmp)) {
+                $ip->add($tmp);
             }
         }
     }

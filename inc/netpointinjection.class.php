@@ -28,18 +28,14 @@
  * -------------------------------------------------------------------------
  */
 
- use Glpi\Socket;
-
-if (!defined('GLPI_ROOT')) {
-    die("Sorry. You can't access directly to this file");
-}
+use Glpi\Socket;
 
 class PluginDatainjectionNetpointInjection extends Socket implements PluginDatainjectionInjectionInterface
 {
     public static function getTable($classname = null)
     {
 
-        $parenttype = get_parent_class(__CLASS__);
+        $parenttype = get_parent_class(self::class);
         return $parenttype::getTable();
     }
 
@@ -71,17 +67,17 @@ class PluginDatainjectionNetpointInjection extends Socket implements PluginDatai
 
         $tab                 = Search::getOptions(get_parent_class($this));
 
-       //Specific to location
+        //Specific to location
         $tab[3]['linkfield'] = 'locations_id';
 
-       //Remove some options because some fields cannot be imported
+        //Remove some options because some fields cannot be imported
         $blacklist     = PluginDatainjectionCommonInjectionLib::getBlacklistedOptions(get_parent_class($this));
         $notimportable = [91, 92, 93];
 
         $options['ignore_fields'] = array_merge($blacklist, $notimportable);
 
         $options['displaytype']   = ["dropdown"       => [3],
-            "multiline_text" => [16]
+            "multiline_text" => [16],
         ];
 
         return PluginDatainjectionCommonInjectionLib::addToSearchOptions($tab, $options, $this);
@@ -107,14 +103,10 @@ class PluginDatainjectionNetpointInjection extends Socket implements PluginDatai
     public function addSpecificNeededFields($primary_type, $values)
     {
 
-       //If netpoint is not the primary type to inject, then get the locations_id from the primary_type
+        //If netpoint is not the primary type to inject, then get the locations_id from the primary_type
         $fields['locations_id'] = $values[$primary_type]['locations_id'];
         if ($primary_type != 'Netpoint') {
-            if (isset($values[$primary_type]['locations_id'])) {
-                $fields['locations_id'] = $values[$primary_type]['locations_id'];
-            } else {
-                $fields['locations_id'] = 0;
-            }
+            $fields['locations_id'] = $values[$primary_type]['locations_id'] ?? 0;
         }
 
         return $fields;

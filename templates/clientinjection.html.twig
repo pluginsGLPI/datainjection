@@ -1,0 +1,88 @@
+{#
+ # -------------------------------------------------------------------------
+ # DataInjection plugin for GLPI
+ # -------------------------------------------------------------------------
+ #
+ # LICENSE
+ #
+ # This file is part of DataInjection.
+ #
+ # DataInjection is free software; you can redistribute it and/or modify
+ # it under the terms of the GNU General Public License as published by
+ # the Free Software Foundation; either version 2 of the License, or
+ # (at your option) any later version.
+ #
+ # DataInjection is distributed in the hope that it will be useful,
+ # but WITHOUT ANY WARRANTY; without even the implied warranty of
+ # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ # GNU General Public License for more details.
+ #
+ # You should have received a copy of the GNU General Public License
+ # along with DataInjection. If not, see <http://www.gnu.org/licenses/>.
+ # -------------------------------------------------------------------------
+ # @copyright Copyright (C) 2007-2023 by DataInjection plugin team.
+ # @license   GPLv2 https://www.gnu.org/licenses/gpl-2.0.html
+ # @link      https://github.com/pluginsGLPI/datainjection
+ # -------------------------------------------------------------------------
+ #}
+
+{% import 'components/form/fields_macros.html.twig' as fields %}
+{% import 'components/alerts_macros.html.twig' as alerts %}
+
+{% set rand = random() %}
+<div class="firstbloc">
+    <form name="clientinjection_form{{ rand }}" id="clientinjection_form{{ rand }}" method="post" action="{{ form_action }}" enctype="multipart/form-data">
+        <input type="hidden" name="_glpi_csrf_token" value="{{ csrf_token() }}" />
+        <div class="card p-3 m-5">
+            <div class="row">
+                <div class="hr-text mt-2 mb-5">
+                    <i class="fa-2x ti ti-adjustments-alt"></i>
+                    <span>{{ __('Client Injection Configuration', 'datainjection') }}</span>
+                </div>
+                <div class="col-12">
+                    {% if models|length > 0 %}
+                        {{ fields.dropdownField(
+                            'PluginDatainjectionModel',
+                            'dropdown_models',
+                            0,
+                            __('Model', 'datainjection'),
+                            {
+                                'add_field_class'   : 'col-sm-12',
+                                'input_class'       : 'col-6 col-sm-6',
+                                'label_class'       : 'col-6 col-sm-6',
+                            }
+                        ) }}
+                    {% else %}
+                        {% set text = __('No model currently available', 'datainjection') %}
+                        {% if can_create_model %}
+                            {% set text = text ~ '. ' ~ __('You can start the model creation by hitting the button', 'datainjection') ~ ': ' ~ model_type_name %}
+                        {% endif %}
+                        {{ alerts.alert_info(text) }}
+                    {% endif %}
+                </div>
+            </div>
+
+            <div class="row mt-3">
+                <div class="col-12">
+                    <span id="span_injection" name="span_injection"></span>
+                </div>
+            </div>
+
+            {% if models_id %}
+                <div class="row mt-3">
+                    <div class="col-12">
+                        {% if step == upload_step %}
+                            <script>
+                                Ajax.updateItem("span_injection", "{{ upload_url }}", {{ params|json_encode|raw }});
+                            </script>
+                        {% elseif step == result_step %}
+                            <script>
+                                Ajax.updateItem("span_injection", "{{ result_url }}", {{ params|json_encode|raw }});
+                            </script>
+                        {% endif %}
+                    </div>
+                </div>
+            {% endif %}
+        </div>
+    </form>
+</div>

@@ -1,0 +1,46 @@
+{#
+ # -------------------------------------------------------------------------
+ # DataInjection plugin for GLPI
+ # -------------------------------------------------------------------------
+ #
+ # LICENSE
+ #
+ # This file is part of DataInjection.
+ #
+ # DataInjection is free software; you can redistribute it and/or modify
+ # it under the terms of the GNU General Public License as published by
+ # the Free Software Foundation; either version 2 of the License, or
+ # (at your option) any later version.
+ #
+ # DataInjection is distributed in the hope that it will be useful,
+ # but WITHOUT ANY WARRANTY; without even the implied warranty of
+ # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ # GNU General Public License for more details.
+ #
+ # You should have received a copy of the GNU General Public License
+ # along with DataInjection. If not, see <http://www.gnu.org/licenses/>.
+ # -------------------------------------------------------------------------
+ # @copyright Copyright (C) 2007-2023 by DataInjection plugin team.
+ # @license   GPLv2 https://www.gnu.org/licenses/gpl-2.0.html
+ # @link      https://github.com/pluginsGLPI/datainjection
+ # -------------------------------------------------------------------------
+ #}
+
+<div class="card-header mx-5 mb-2">
+    <h3 class="card-title d-flex align-items-center ">
+        <span class="status rounded-1 me-1">
+            <i class="ti ti-device-laptop"></i>
+            {{ __('Model', 'datainjection') }} - {{ model_name }}
+        </span>
+        </h3>
+</div>
+<div class="card p-3 my-5">
+    <div class="hr-text mt-5 mb-5">
+        <i class="fa-2x ti ti-chart-bar"></i>
+        <span>{{ __('Import progress', 'datainjection') }}</span>
+    </div>
+    <div class="progress" role="progressbar" aria-label={{ __('Injection of the file', 'datainjection') }} aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="height: 20px;">
+        <div class="progress-bar progress-bar-striped bg-info" style="width: 0%; height: 20px;">
+            {{ __('Injection of the file', 'datainjection') }}
+        </div>
+    </div>

@@ -28,16 +28,14 @@
  * -------------------------------------------------------------------------
  */
 
-if (!defined('GLPI_ROOT')) {
-    die("Sorry. You can't access directly to this file");
-}
+
 
 class PluginDatainjectionPrinterInjection extends Printer implements PluginDatainjectionInjectionInterface
 {
     public static function getTable($classname = null)
     {
 
-        $parenttype = get_parent_class(__CLASS__);
+        $parenttype = get_parent_class(self::class);
         return $parenttype::getTable();
     }
 
@@ -69,10 +67,10 @@ class PluginDatainjectionPrinterInjection extends Printer implements PluginDatai
 
         $tab                 = Search::getOptions(get_parent_class($this));
 
-       //Specific to location
+        //Specific to location
         $tab[3]['linkfield'] = 'locations_id';
 
-       //Remove some options because some fields cannot be imported
+        //Remove some options because some fields cannot be imported
         $blacklist     = PluginDatainjectionCommonInjectionLib::getBlacklistedOptions(get_parent_class($this));
         $notimportable = [91, 92, 93];
 
@@ -81,7 +79,7 @@ class PluginDatainjectionPrinterInjection extends Printer implements PluginDatai
         $options['displaytype']   = ["dropdown"       => [3, 4, 23, 31, 32, 33, 40, 49, 71],
             "bool"           => [42, 43, 44, 45, 46, 86],
             "user"           => [24, 70],
-            "multiline_text" => [16, 90]
+            "multiline_text" => [16, 90],
         ];
 
         $options['checktype']     = ["bool" => [42, 43, 44, 45, 46, 86]];
@@ -111,11 +109,7 @@ class PluginDatainjectionPrinterInjection extends Printer implements PluginDatai
 
         $fields = [];
         if (isset($values[$primary_type]['is_global'])) {
-            if (empty($values[$primary_type]['is_global'])) {
-                $fields['is_global'] = 0;
-            } else {
-                $fields['is_global'] = $values[$primary_type]['is_global'];
-            }
+            $fields['is_global'] = empty($values[$primary_type]['is_global']) ? 0 : $values[$primary_type]['is_global'];
         }
         return $fields;
     }
@@ -131,14 +125,10 @@ class PluginDatainjectionPrinterInjection extends Printer implements PluginDatai
 
         $matchings = ['name'         => 'name',
             'manufacturer' => 'manufacturers_id',
-            'comment'      => 'comment'
+            'comment'      => 'comment',
         ];
         foreach ($matchings as $name => $value) {
-            if (isset($values['Printer'][$value])) {
-                $params[$name] = $values['Printer'][$value];
-            } else {
-                $params[$name] = '';
-            }
+            $params[$name] = $values['Printer'][$value] ?? '';
         }
 
         $rulecollection = new RuleDictionnaryPrinterCollection();
@@ -157,13 +147,11 @@ class PluginDatainjectionPrinterInjection extends Printer implements PluginDatai
                 $values['Printer']['name'] = $res_rule['name'];
             }
 
-            if (isset($res_rule['supplier'])) {
-                if (isset($values['supplier'])) {
-                    $values['Printer']['manufacturers_id']
-                    = Dropdown::getDropdownName('glpi_suppliers', $res_rule['supplier']);
-                }
+            if (isset($res_rule['supplier']) && isset($values['supplier'])) {
+                $values['Printer']['manufacturers_id']
+                = Dropdown::getDropdownName('glpi_suppliers', $res_rule['supplier']);
             }
         }
-         return true;
+        return true;
     }
 }

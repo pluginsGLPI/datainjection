@@ -28,16 +28,14 @@
  * -------------------------------------------------------------------------
  */
 
-if (!defined('GLPI_ROOT')) {
-    die("Sorry. You can't access directly to this file");
-}
+use Glpi\Exception\Http\HttpException;
 
 class PluginDatainjectionDeviceDriveInjection extends DeviceDrive implements PluginDatainjectionInjectionInterface
 {
     public static function getTable($classname = null)
     {
 
-        $parenttype = get_parent_class(__CLASS__);
+        $parenttype = get_parent_class(self::class);
         return $parenttype::getTable();
     }
 
@@ -69,14 +67,14 @@ class PluginDatainjectionDeviceDriveInjection extends DeviceDrive implements Plu
 
         $tab           = Search::getOptions(get_parent_class($this));
 
-       //Remove some options because some fields cannot be imported
+        //Remove some options because some fields cannot be imported
         $blacklist     = PluginDatainjectionCommonInjectionLib::getBlacklistedOptions(get_parent_class($this));
         $notimportable = [];
 
         $options['ignore_fields'] = array_merge($blacklist, $notimportable);
         $options['displaytype']   = ["multiline_text" => [16],
             "dropdown"       => [14, 23],
-            "bool"           => [12]
+            "bool"           => [12],
         ];
 
         return PluginDatainjectionCommonInjectionLib::addToSearchOptions($tab, $options, $this);
@@ -93,6 +91,9 @@ class PluginDatainjectionDeviceDriveInjection extends DeviceDrive implements Plu
 
         if (isset($values['Computer']['id'])) {
             $class   = "Item_" . get_parent_class($this);
+            if (!is_a($class, CommonDBTM::class, true)) {
+                throw new HttpException(500, 'Class ' . $class . ' is not a valid class');
+            }
             $item    = new $class();
             $foreign = getForeignKeyFieldForTable(getTableForItemType(get_parent_class($this)));
 
@@ -103,7 +104,7 @@ class PluginDatainjectionDeviceDriveInjection extends DeviceDrive implements Plu
                         $foreign   => $values[get_parent_class($this)]['id'],
                         'itemtype' => 'Computer',
                         'items_id' => $values['Computer']['id'],
-                    ]
+                    ],
                 )
             ) {
                 $tmp[$foreign]   = $values[get_parent_class($this)]['id'];

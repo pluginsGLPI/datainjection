@@ -28,16 +28,14 @@
  * -------------------------------------------------------------------------
  */
 
-if (!defined('GLPI_ROOT')) {
-    die("Sorry. You can't access directly to this file");
-}
+
 
 class PluginDatainjectionNotepadInjection extends Notepad implements PluginDatainjectionInjectionInterface
 {
     public static function getTable($classname = null)
     {
 
-        $parenttype = get_parent_class(__CLASS__);
+        $parenttype = get_parent_class(self::class);
         return $parenttype::getTable();
     }
 
@@ -59,13 +57,13 @@ class PluginDatainjectionNotepadInjection extends Notepad implements PluginDatai
 
     public function customDataAlreadyInDB($injectionClass, $values, $options)
     {
-       //Do not manage updating notes: only creation
+        //Do not manage updating notes: only creation
         return false;
     }
 
-   /**
-    * @see plugins/datainjection/inc/PluginDatainjectionInjectionInterface::getOptions()
-   **/
+    /**
+     * @see plugins/datainjection/inc/PluginDatainjectionInjectionInterface::getOptions()
+    **/
     public function getOptions($primary_type = '')
     {
 
@@ -85,7 +83,7 @@ class PluginDatainjectionNotepadInjection extends Notepad implements PluginDatai
         $options['ignore_fields'] = [201, 203, 204];
         $options['displaytype'] = [
             "multiline_text" => [200],
-            "dropdown"       => [202]
+            "dropdown"       => [202],
 
         ];
 
@@ -93,9 +91,9 @@ class PluginDatainjectionNotepadInjection extends Notepad implements PluginDatai
     }
 
 
-   /**
-    * @see plugins/datainjection/inc/PluginDatainjectionInjectionInterface::addOrUpdateObject()
-   **/
+    /**
+     * @see plugins/datainjection/inc/PluginDatainjectionInjectionInterface::addOrUpdateObject()
+    **/
     public function addOrUpdateObject($values = [], $options = [])
     {
 
@@ -105,10 +103,10 @@ class PluginDatainjectionNotepadInjection extends Notepad implements PluginDatai
     }
 
 
-   /**
-    * @param string $primary_type
-    * @param array $values
-   **/
+    /**
+     * @param string $primary_type
+     * @param array $values
+    **/
     public function addSpecificNeededFields($primary_type, $values)
     {
 

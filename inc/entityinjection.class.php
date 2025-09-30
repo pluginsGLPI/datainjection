@@ -28,16 +28,14 @@
  * -------------------------------------------------------------------------
  */
 
-if (!defined('GLPI_ROOT')) {
-    die("Sorry. You can't access directly to this file");
-}
+
 
 class PluginDatainjectionEntityInjection extends Entity implements PluginDatainjectionInjectionInterface
 {
     public static function getTable($classname = null)
     {
 
-        $parenttype = get_parent_class(__CLASS__);
+        $parenttype = get_parent_class(self::class);
         return $parenttype::getTable();
     }
 
@@ -69,15 +67,15 @@ class PluginDatainjectionEntityInjection extends Entity implements PluginDatainj
 
         $tab           = Search::getOptions(get_parent_class($this));
 
-       //Remove some options because some fields cannot be imported
+        //Remove some options because some fields cannot be imported
         $blacklist     = PluginDatainjectionCommonInjectionLib::getBlacklistedOptions(get_parent_class($this));
         $notimportable = [14, 26, 27, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41,
-            42, 43, 44, 45, 47, 48, 49,50, 51, 52, 53, 54, 55, 91, 92, 93
+            42, 43, 44, 45, 47, 48, 49,50, 51, 52, 53, 54, 55, 91, 92, 93,
         ];
 
         $options['ignore_fields'] = array_merge($blacklist, $notimportable);
         $options['displaytype']   = ["multiline_text" => [3, 16, 17, 24],
-            "dropdown"       => [9]
+            "dropdown"       => [9],
         ];
 
         return PluginDatainjectionCommonInjectionLib::addToSearchOptions($tab, $options, $this);
@@ -126,12 +124,12 @@ class PluginDatainjectionEntityInjection extends Entity implements PluginDatainj
 
         $em = new Entity();
 
-       // Search for exisiting entity
+        // Search for exisiting entity
         $search = $input['completename'];
 
-       // Check if search start by root entity
+        // Check if search start by root entity
         $root = self::getRootEntityName();
-        if (strpos($search, $root) !== 0) {
+        if (!str_starts_with($search, $root)) {
             $search = "$root > $search";
         }
 
@@ -149,13 +147,13 @@ class PluginDatainjectionEntityInjection extends Entity implements PluginDatainj
     {
         $em = new Entity();
 
-       // Import a full tree from completename
+        // Import a full tree from completename
         $names  = explode('>', $input['completename']);
         $i      = count($names);
         $parent = 0;
         $level  = 0;
 
-       // Remove root entity if specified
+        // Remove root entity if specified
         if (strcmp(trim($names[0]), trim(self::getRootEntityName())) === 0) {
             unset($names[0]);
         }
@@ -166,13 +164,13 @@ class PluginDatainjectionEntityInjection extends Entity implements PluginDatainj
             $i--;
             $level++;
             if (empty($name)) {
-               // Skip empty name (completename starting/endind with >, double >, ...)
+                // Skip empty name (completename starting/endind with >, double >, ...)
                 continue;
             }
             $tmp['name'] = $name;
 
-            if (!$i) {
-               // Other fields (comment, ...) only for last node of the tree
+            if ($i === 0) {
+                // Other fields (comment, ...) only for last node of the tree
                 foreach ($input as $key => $val) {
                     if ($key != 'completename') {
                         $tmp[$key] = $val;
@@ -182,17 +180,17 @@ class PluginDatainjectionEntityInjection extends Entity implements PluginDatainj
             $tmp['level']       = $level;
             $tmp['entities_id'] = $parent;
 
-           // Does the entity alread exists ?
+            // Does the entity alread exists ?
             $results = getAllDataFromTable(
                 'glpi_entities',
-                ['name' => $name, 'entities_id' => $parent]
+                ['name' => $name, 'entities_id' => $parent],
             );
 
-           // Entity doesn't exists => create it
+            // Entity doesn't exists => create it
             if (empty($results)) {
                 $parent = $em->import($tmp);
             } else {
-               // Entity already exists, use the ID as parent
+                // Entity already exists, use the ID as parent
                 $ent    = array_pop($results);
                 $parent = $ent['id'];
             }
@@ -205,7 +203,7 @@ class PluginDatainjectionEntityInjection extends Entity implements PluginDatainj
     {
         $em = new Entity();
 
-       // Update entity
+        // Update entity
         $input['id'] = $id;
         unset($input['completename']);
         unset($input['entities_id']);
@@ -228,7 +226,7 @@ class PluginDatainjectionEntityInjection extends Entity implements PluginDatainj
         }
         $results = getAllDataFromTable(
             'glpi_entities',
-            ['completename' => $values['completename']]
+            ['completename' => $values['completename']],
         );
 
         if (empty($results)) {
