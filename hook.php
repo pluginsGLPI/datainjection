@@ -113,13 +113,7 @@ function plugin_datainjection_install()
             $DB->doQuery($query);
 
             if (!is_dir(PLUGIN_DATAINJECTION_UPLOAD_DIR)) {
-                @ mkdir(PLUGIN_DATAINJECTION_UPLOAD_DIR) || die(
-                    sprintf(
-                        __s('%1$s %2$s'),
-                        __s("Can't create folder", 'datainjection'),
-                        PLUGIN_DATAINJECTION_UPLOAD_DIR,
-                    )
-                );
+                @ mkdir(PLUGIN_DATAINJECTION_UPLOAD_DIR);
 
                 PluginDatainjectionProfile::createFirstAccess($_SESSION["glpiactiveprofile"]["id"]);
             }
@@ -130,13 +124,7 @@ function plugin_datainjection_install()
 
             //When updating, check if the upload folder is already present
             if (!is_dir(PLUGIN_DATAINJECTION_UPLOAD_DIR)) {
-                @ mkdir(PLUGIN_DATAINJECTION_UPLOAD_DIR) || die(
-                    sprintf(
-                        __s('%1$s %2$s'),
-                        __s("Can't create folder", 'datainjection'),
-                        PLUGIN_DATAINJECTION_UPLOAD_DIR,
-                    )
-                );
+                @ mkdir(PLUGIN_DATAINJECTION_UPLOAD_DIR);
             }
 
             //Old temporary directory, needs to be removed !

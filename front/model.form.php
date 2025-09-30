@@ -96,7 +96,7 @@ if (isset($_POST["add"])) {
     $modeltype = PluginDatainjectionModel::getInstance($model->getField('filetype'));
     $modeltype->getFromDBByModelID($model->getField('id'));
     $modeltype->showSample($model);
-    exit(0);
+    return;
 }
 
 Html::header(

@@ -924,7 +924,7 @@ class PluginDatainjectionModel extends CommonDBTM
     {
 
         $class = 'PluginDatainjectionModel' . $type;
-        if (class_exists($class)) {
+        if (is_a($class, CommonDBTM::class, true)) {
             return new $class();
         }
         return false;
@@ -1205,17 +1205,19 @@ class PluginDatainjectionModel extends CommonDBTM
             if ($info->isMandatory()) {
                 //Get search option (need to check dropdown default value)
                 $itemtype = $info->getInfosType();
-                $item     = new $itemtype();
-                $option   = $item->getSearchOptionByField('field', $info->getValue());
-                $tocheck  = (!isset($option['datatype']) || ($option['datatype'] != 'bool'));
-                if (
-                    !isset($fields[$info->getValue()])
-                    //Check if no value defined only when it's not a yes/no
-                    || ($tocheck && !$fields[$info->getValue()])
-                    || ($fields[$info->getValue()] == 'NULL')
-                ) {
-                    $check = false;
-                    break;
+                if (is_a($itemtype, CommonDBTM::class, true)) {
+                    $item     = new $itemtype();
+                    $option   = $item->getSearchOptionByField('field', $info->getValue());
+                    $tocheck  = (!isset($option['datatype']) || ($option['datatype'] != 'bool'));
+                    if (
+                        !isset($fields[$info->getValue()])
+                        //Check if no value defined only when it's not a yes/no
+                        || ($tocheck && !$fields[$info->getValue()])
+                        || ($fields[$info->getValue()] == 'NULL')
+                    ) {
+                        $check = false;
+                        break;
+                    }
                 }
             }
         }
@@ -1265,7 +1267,7 @@ class PluginDatainjectionModel extends CommonDBTM
                         FROM `glpi_plugin_datainjection_infos`
                         WHERE `models_id` = '" . $models_id . "')";
             foreach ($DB->doQuery($query) as $data) {
-                if ($data['itemtype'] != PluginDatainjectionInjectionType::NO_VALUE && class_exists($data['itemtype'])) {
+                if ($data['itemtype'] != PluginDatainjectionInjectionType::NO_VALUE && is_a($data['itemtype'], CommonDBTM::class, true)) {
                     $item                     = new $data['itemtype']();
                     $item->fields['itemtype'] = $model->fields['itemtype'];
                     if (!($item instanceof CommonDBRelation) && !$item->canCreate()) {

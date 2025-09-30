@@ -28,7 +28,7 @@
  * -------------------------------------------------------------------------
  */
 
-
+use Glpi\Exception\Http\HttpException;
 
 class PluginDatainjectionDeviceProcessorInjection extends DeviceProcessor implements PluginDatainjectionInjectionInterface
 {
@@ -92,6 +92,9 @@ class PluginDatainjectionDeviceProcessorInjection extends DeviceProcessor implem
 
         if (isset($values['Computer']['id'])) {
             $class   = "Item_" . get_parent_class($this);
+            if (!is_a($class, CommonDBTM::class, true)) {
+                throw new HttpException(500, 'Class ' . $class . ' is not a valid class');
+            }
             $item    = new $class();
             $foreign = getForeignKeyFieldForTable(getTableForItemType(get_parent_class($this)));
 

@@ -62,13 +62,7 @@ function plugin_init_datainjection()
 
         //If directory doesn't exists, create it
         if (!plugin_datainjection_checkDirectories()) {
-            @ mkdir(PLUGIN_DATAINJECTION_UPLOAD_DIR) || die(
-                sprintf(
-                    __s('%1$s %2$s'),
-                    __s("Can't create folder", 'datainjection'),
-                    PLUGIN_DATAINJECTION_UPLOAD_DIR,
-                )
-            );
+            @ mkdir(PLUGIN_DATAINJECTION_UPLOAD_DIR);
         }
         $PLUGIN_HOOKS["config_page"]['datainjection'] = "front/clientinjection.form.php";
 

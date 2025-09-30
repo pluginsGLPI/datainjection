@@ -27,8 +27,7 @@
  * @link      https://github.com/pluginsGLPI/datainjection
  * -------------------------------------------------------------------------
  */
-
-
+use Glpi\Exception\Http\HttpException;
 
 use function Safe\preg_match;
 use function Safe\preg_replace;
@@ -290,7 +289,13 @@ class PluginDatainjectionCommonInjectionLib
     public static function getItemtypeInstanceByInjection($injectionClassName)
     {
 
+        if (!is_a($injectionClassName, PluginDatainjectionInjectionInterface::class, true)) {
+            throw new HttpException(500, 'Class ' . $injectionClassName . ' is not a valid class');
+        }
         $injection = self::getItemtypeByInjectionClass(new $injectionClassName());
+        if (!is_a($injection, CommonDBTM::class, true)) {
+            throw new HttpException(500, 'Class ' . $injection . ' is not a valid class');
+        }
         return new $injection();
     }
 
@@ -304,7 +309,9 @@ class PluginDatainjectionCommonInjectionLib
     */
     public static function getItemtypeByInjection($injectionClassName)
     {
-
+        if (!is_a($injectionClassName, CommonDBTM::class, true)) {
+            throw new HttpException(500, 'Class ' . $injectionClassName . ' is not a valid class');
+        }
         return self::getItemtypeByInjectionClass(new $injectionClassName());
     }
 
@@ -337,6 +344,9 @@ class PluginDatainjectionCommonInjectionLib
             $injectionClass = 'PluginDatainjection' . ucfirst($itemtype) . 'Injection';
         } else {
             $injectionClass = ucfirst($itemtype) . 'Injection';
+        }
+        if (!is_a($injectionClass, PluginDatainjectionInjectionInterface::class, true)) {
+            throw new HttpException(500, 'Class ' . $injectionClass . ' is not a valid class');
         }
         return new $injectionClass();
     }
@@ -587,6 +597,9 @@ class PluginDatainjectionCommonInjectionLib
             case 'dropdown':
             case 'relation':
                 $tmptype = getItemTypeForTable($searchOption['table']);
+                if (!is_a($tmptype, CommonDBTM::class, true)) {
+                    return;
+                }
                 $item    = new $tmptype();
                 if ($item instanceof CommonTreeDropdown) {
                     // use findID instead of getID
@@ -958,6 +971,9 @@ class PluginDatainjectionCommonInjectionLib
     {
         /** @var DBmysql $DB */
         global $DB;
+        if (!is_a($itemtype, CommonDBTM::class, true)) {
+            throw new HttpException(500, 'Class ' . $itemtype . ' is not a valid class');
+        }
         new $itemtype();
         $query = "SELECT `id`
                 FROM `" . getTableForItemType($itemtype) . "`
@@ -1573,21 +1589,23 @@ class PluginDatainjectionCommonInjectionLib
                         //Do not process primary_type
                         if ($itemtype != get_class($item)) {
                             $injectionClass = self::getInjectionClassInstance($itemtype);
-                            $item           = new $itemtype();
+                            if (is_a($itemtype, CommonDBTM::class, true)) {
+                                $item           = new $itemtype();
 
-                            $this->addNeededFields($injectionClass, $itemtype);
-                            $this->dataAlreadyInDB($injectionClass, $itemtype);
+                                $this->addNeededFields($injectionClass, $itemtype);
+                                $this->dataAlreadyInDB($injectionClass, $itemtype);
 
-                            if ($this->getValueByItemtypeAndName($itemtype, 'id') == self::ITEM_NOT_FOUND) {
-                                $add = true;
-                                $this->unsetValue($itemtype, 'id');
-                            } else {
-                                $add = false;
-                            }
-                            $values = $this->getValuesForItemtype($itemtype);
-                            if ($this->lastCheckBeforeProcess($injectionClass, $values)) {
-                                $tmpID  = $this->effectiveAddOrUpdate($injectionClass, $item, $values, $add);
-                                $this->processAfterInsertOrUpdate($injectionClass, $add);
+                                if ($this->getValueByItemtypeAndName($itemtype, 'id') == self::ITEM_NOT_FOUND) {
+                                    $add = true;
+                                    $this->unsetValue($itemtype, 'id');
+                                } else {
+                                    $add = false;
+                                }
+                                $values = $this->getValuesForItemtype($itemtype);
+                                if ($this->lastCheckBeforeProcess($injectionClass, $values)) {
+                                    $tmpID  = $this->effectiveAddOrUpdate($injectionClass, $item, $values, $add);
+                                    $this->processAfterInsertOrUpdate($injectionClass, $add);
+                                }
                             }
                         }
                     }
@@ -1696,14 +1714,16 @@ class PluginDatainjectionCommonInjectionLib
                 //Exception for template management
                 //We've got the template id, not let's add the template name
                 if ($field == 'templates_id') {
-                    $item = new $itemtype();
-                    if ($item->getFromDB($value)) {
-                        $this->setValueForItemtype(
-                            $itemtype,
-                            'template_name',
-                            $item->fields['template_name'],
-                        );
-                        $this->setValueForItemtype($itemtype, '_oldID', $value);
+                    if (is_a($itemtype, CommonDBTM::class, true)) {
+                        $item = new $itemtype();
+                        if ($item->getFromDB($value)) {
+                            $this->setValueForItemtype(
+                                $itemtype,
+                                'template_name',
+                                $item->fields['template_name'],
+                            );
+                            $this->setValueForItemtype($itemtype, '_oldID', $value);
+                        }
                     }
                 } else {
                     $this->setValueForItemtype($itemtype, $field, $value);
@@ -1822,6 +1842,9 @@ class PluginDatainjectionCommonInjectionLib
                 $sql = "SELECT *
                     FROM `" . $injectionClass->getTable() . "`";
 
+                if (!is_a($itemtype, CommonDBTM::class, true)) {
+                    throw new HttpException(500, 'Class ' . $itemtype . ' is not a valid class');
+                }
                 $item = new $itemtype();
                 //If it's a computer device
                 if ($item instanceof CommonDevice) {
@@ -1950,6 +1973,9 @@ class PluginDatainjectionCommonInjectionLib
 
         //If data inserted is not a template
         if (!$this->getValueByItemtypeAndName($itemtype, 'is_template')) {
+            if (!is_a($itemtype, CommonDBTM::class, true)) {
+                throw new HttpException(500, 'Class ' . $itemtype . ' is not a valid class');
+            }
             $template    = new $itemtype();
             $template_id = $this->getValueByItemtypeAndName($itemtype, '_oldID');
 
@@ -2215,6 +2241,9 @@ class PluginDatainjectionCommonInjectionLib
     {
 
         $itemtype = self::getItemtypeByInjectionClass($injectionClass);
+        if (!is_a($itemtype, CommonDBTM::class, true)) {
+            throw new HttpException(500, 'Class ' . $itemtype . ' is not a valid class');
+        }
         $item     = new $itemtype();
 
         if ($item->maybeTemplate()) {

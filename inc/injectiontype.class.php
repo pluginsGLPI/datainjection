@@ -27,6 +27,7 @@
  * @link      https://github.com/pluginsGLPI/datainjection
  * -------------------------------------------------------------------------
  */
+use Glpi\Exception\Http\HttpException;
 
 use function Safe\json_decode;
 use function Safe\json_encode;
@@ -54,26 +55,27 @@ class PluginDatainjectionInjectionType
         $plugin = new Plugin();
         $values = [];
         foreach ($INJECTABLE_TYPES as $type => $from) {
-            $injectionclass = new $type();
+            if (is_a($type, CommonDBTM::class, true)) {
+                $injectionClass = new $type();
 
-            if (
-                class_exists($type)
-                && (!$only_primary
-                || ($injectionclass->isPrimaryType()))
-            ) {
-                $instance = new $type();
-                //If user has no right to create an object of this type, do not display type in the list
-                if (!$instance->canCreate()) {
-                    continue;
+                if (
+                    !$only_primary
+                    || (method_exists($injectionClass, 'isPrimaryType') && $injectionClass->isPrimaryType())
+                ) {
+                    $instance = new $type();
+                    //If user has no right to create an object of this type, do not display type in the list
+                    if (!$instance->canCreate()) {
+                        continue;
+                    }
+                    $typename = get_parent_class($type);
+                    $name     = '';
+                    if ($from != 'datainjection') {
+                        $plugin->getFromDBbyDir($from);
+                        $name = $plugin->getName() . ': ';
+                    }
+                    $name .= call_user_func([$type, 'getTypeName']);
+                    $values[$typename] = $name;
                 }
-                $typename = get_parent_class($type);
-                $name     = '';
-                if ($from != 'datainjection') {
-                    $plugin->getFromDBbyDir($from);
-                    $name = $plugin->getName() . ': ';
-                }
-                $name .= call_user_func([$type, 'getTypeName']);
-                $values[$typename] = $name;
             }
         }
         asort($values);
@@ -139,15 +141,22 @@ class PluginDatainjectionInjectionType
         $values[self::NO_VALUE] = __s('-------Choose a table-------', 'datainjection');
 
         //Add primary_type to the list of availables types
+        if (!is_a($p['primary_type'], CommonDBTM::class, true)) {
+            throw new HttpException(500, 'Class ' . $p['primary_type'] . ' is not a valid class');
+        }
         $type                       = new $p['primary_type']();
         $values[$p['primary_type']] = $type->getTypeName();
 
         foreach ($INJECTABLE_TYPES as $type => $plugin) {
-            $injectionClass = new $type();
-            $connected_to   = $injectionClass->connectedTo();
-            if (in_array($p['primary_type'], $connected_to)) {
-                $typename          = getItemTypeForTable($injectionClass->getTable());
-                $values[$typename] = call_user_func([$type, 'getTypeName']);
+            if (is_a($type, CommonDBTM::class, true)) {
+                $injectionClass = new $type();
+                if (method_exists($injectionClass, 'connectedTo')) {
+                    $connected_to   = $injectionClass->connectedTo();
+                    if (in_array($p['primary_type'], $connected_to)) {
+                        $typename          = getItemTypeForTable($injectionClass->getTable());
+                        $values[$typename] = call_user_func([$type, 'getTypeName']);
+                    }
+                }
             }
         }
         asort($values);
