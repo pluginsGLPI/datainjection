@@ -34,9 +34,9 @@
           <download_url>https://github.com/pluginsGLPI/datainjection/releases/download/2.14.2/glpi-datainjection-2.14.2.tar.bz2</download_url>
       </version>
       <version>
-          <num>2.15.0-beta2</num>
+          <num>2.15.0</num>
           <compatibility>~11.0.0</compatibility>
-          <download_url>https://github.com/pluginsGLPI/datainjection/releases/download/2.15.0-beta2/glpi-datainjection-2.15.0-beta2.tar.bz2</download_url>
+          <download_url>https://github.com/pluginsGLPI/datainjection/releases/download/2.15.0/glpi-datainjection-2.15.0.tar.bz2</download_url>
       </version>
       <version>
           <num>2.14.1</num>
