@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-09-26 01:10+0000\n"
+"POT-Creation-Date: 2025-09-30 01:10+0000\n"
 "PO-Revision-Date: 2018-06-21 12:57+0000\n"
 "Last-Translator: Davide <spam@habilitas.it>, 2025\n"
 "Language-Team: Italian (Italy) (https://app.transifex.com/teclib/teams/28042/it_IT/)\n"
@@ -40,7 +40,7 @@ msgstr "Gestione dei modelli"
 msgid "Injection of the file"
 msgstr "Inserimento del file"
 
-#: inc/computerinjection.class.php:72
+#: inc/computerinjection.class.php:77
 msgid "Antivirus name"
 msgstr "Antivirus (nome)"
 
@@ -56,7 +56,7 @@ msgstr "Intestazione presente"
 msgid "File delimitor"
 msgstr "Delimitatore"
 
-#: inc/phoneinjection.class.php:68
+#: inc/phoneinjection.class.php:73
 msgid "Domain name"
 msgstr "Nome dominio"
 
@@ -84,7 +84,7 @@ msgstr "Scelta del file"
 msgid "Download file sample"
 msgstr "Download file di esempio"
 
-#: inc/networkportinjection.class.php:91
+#: inc/networkportinjection.class.php:96
 msgid "Port MAC address"
 msgstr "MAC address della porta"
 
@@ -212,7 +212,7 @@ msgstr "Nel file"
 msgid "From the model"
 msgstr "Dal modello"
 
-#: inc/model.class.php:1445 inc/commoninjectionlib.class.php:2141
+#: inc/model.class.php:1445 inc/commoninjectionlib.class.php:2140
 msgid "Undetermined"
 msgstr "Indeterminato"
 
@@ -304,55 +304,55 @@ msgstr "UTF-8"
 msgid "ISO8859-1"
 msgstr "ISO8859-1"
 
-#: inc/commoninjectionlib.class.php:2055
+#: inc/commoninjectionlib.class.php:2054
 msgid "Add from CSV file"
 msgstr "Aggiungi da file CSV"
 
-#: inc/commoninjectionlib.class.php:2057
+#: inc/commoninjectionlib.class.php:2056
 msgid "Update from CSV file"
 msgstr "Aggiorna da file CSV"
 
-#: inc/commoninjectionlib.class.php:2101
+#: inc/commoninjectionlib.class.php:2100
 msgid "No right to import data"
 msgstr "Non hai i diritti per importare dati"
 
-#: inc/commoninjectionlib.class.php:2105
+#: inc/commoninjectionlib.class.php:2104
 msgid "No right to update data"
 msgstr "Non hai i diritti per aggiornare dati"
 
-#: inc/commoninjectionlib.class.php:2109
+#: inc/commoninjectionlib.class.php:2108
 msgid "Size of the inserted value is to expansive"
 msgstr "Numero di valori inseriti troppo vasto"
 
-#: inc/commoninjectionlib.class.php:2113
+#: inc/commoninjectionlib.class.php:2112
 msgid "Import not allowed"
 msgstr "Importazione non ammessa"
 
-#: inc/commoninjectionlib.class.php:2117
+#: inc/commoninjectionlib.class.php:2116
 msgid "Import failed"
 msgstr "Importazione fallita"
 
-#: inc/commoninjectionlib.class.php:2121
+#: inc/commoninjectionlib.class.php:2120
 msgid "At least one mandatory field is not present"
 msgstr "Almeno un campo obbligatorio è assente"
 
-#: inc/commoninjectionlib.class.php:2125
+#: inc/commoninjectionlib.class.php:2124
 msgid "Data to insert are correct"
 msgstr "I dati da inserire sono corretti"
 
-#: inc/commoninjectionlib.class.php:2129
+#: inc/commoninjectionlib.class.php:2128
 msgid "One data is not the good type"
 msgstr "Un dato non è del tipo previsto"
 
-#: inc/commoninjectionlib.class.php:2133
+#: inc/commoninjectionlib.class.php:2132
 msgid "Warning"
 msgstr "Attenzione"
 
-#: inc/commoninjectionlib.class.php:2137
+#: inc/commoninjectionlib.class.php:2136
 msgid "Data not found"
 msgstr "Dati non trovati"
 
-#: inc/networkequipmentinjection.class.php:73
+#: inc/networkequipmentinjection.class.php:78
 msgid "Number of ports"
 msgstr "Numero di porte"
 

@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-09-26 01:10+0000\n"
+"POT-Creation-Date: 2025-09-30 01:10+0000\n"
 "PO-Revision-Date: 2018-06-21 12:57+0000\n"
 "Last-Translator: Kaya Zeren <kayazeren@gmail.com>, 2025\n"
 "Language-Team: Turkish (Turkey) (https://app.transifex.com/teclib/teams/28042/tr_TR/)\n"
@@ -40,7 +40,7 @@ msgstr "Model yönetimi"
 msgid "Injection of the file"
 msgstr "Dosya aktarımı"
 
-#: inc/computerinjection.class.php:72
+#: inc/computerinjection.class.php:77
 msgid "Antivirus name"
 msgstr "Antivirus adı"
 
@@ -56,7 +56,7 @@ msgstr "Başlığın varlığı"
 msgid "File delimitor"
 msgstr "Dosya ayracı"
 
-#: inc/phoneinjection.class.php:68
+#: inc/phoneinjection.class.php:73
 msgid "Domain name"
 msgstr "Etki alanı adı"
 
@@ -84,7 +84,7 @@ msgstr "Bir dosya seçin"
 msgid "Download file sample"
 msgstr "Örnek dosyayı indir"
 
-#: inc/networkportinjection.class.php:91
+#: inc/networkportinjection.class.php:96
 msgid "Port MAC address"
 msgstr "Bağlantı noktası MAC adresi"
 
@@ -209,7 +209,7 @@ msgstr "Dosya içine"
 msgid "From the model"
 msgstr "Modelden"
 
-#: inc/model.class.php:1445 inc/commoninjectionlib.class.php:2141
+#: inc/model.class.php:1445 inc/commoninjectionlib.class.php:2140
 msgid "Undetermined"
 msgstr "Belirlenmemiş"
 
@@ -301,55 +301,55 @@ msgstr "UTF-8"
 msgid "ISO8859-1"
 msgstr "ISO8859-1"
 
-#: inc/commoninjectionlib.class.php:2055
+#: inc/commoninjectionlib.class.php:2054
 msgid "Add from CSV file"
 msgstr "CSV dosyasından ekle"
 
-#: inc/commoninjectionlib.class.php:2057
+#: inc/commoninjectionlib.class.php:2056
 msgid "Update from CSV file"
 msgstr "CSV dosyasından güncelle"
 
-#: inc/commoninjectionlib.class.php:2101
+#: inc/commoninjectionlib.class.php:2100
 msgid "No right to import data"
 msgstr "Veri alma izni yok"
 
-#: inc/commoninjectionlib.class.php:2105
+#: inc/commoninjectionlib.class.php:2104
 msgid "No right to update data"
 msgstr "Veri güncelleme izni yok"
 
-#: inc/commoninjectionlib.class.php:2109
+#: inc/commoninjectionlib.class.php:2108
 msgid "Size of the inserted value is to expansive"
 msgstr "Eklenen değerin boyutu çok genişleyebilir"
 
-#: inc/commoninjectionlib.class.php:2113
+#: inc/commoninjectionlib.class.php:2112
 msgid "Import not allowed"
 msgstr "İçe aktarıma izin verilmiyor"
 
-#: inc/commoninjectionlib.class.php:2117
+#: inc/commoninjectionlib.class.php:2116
 msgid "Import failed"
 msgstr "İçe aktarılamadı"
 
-#: inc/commoninjectionlib.class.php:2121
+#: inc/commoninjectionlib.class.php:2120
 msgid "At least one mandatory field is not present"
 msgstr "En az bir zorunlu alan bulunamadı"
 
-#: inc/commoninjectionlib.class.php:2125
+#: inc/commoninjectionlib.class.php:2124
 msgid "Data to insert are correct"
 msgstr "Eklenecek veri doğru"
 
-#: inc/commoninjectionlib.class.php:2129
+#: inc/commoninjectionlib.class.php:2128
 msgid "One data is not the good type"
 msgstr "Bir verinin türü iyi değil"
 
-#: inc/commoninjectionlib.class.php:2133
+#: inc/commoninjectionlib.class.php:2132
 msgid "Warning"
 msgstr "Uyarı"
 
-#: inc/commoninjectionlib.class.php:2137
+#: inc/commoninjectionlib.class.php:2136
 msgid "Data not found"
 msgstr "Veri bulunamadı"
 
-#: inc/networkequipmentinjection.class.php:73
+#: inc/networkequipmentinjection.class.php:78
 msgid "Number of ports"
 msgstr "Bağlantı noktası sayısı"
 

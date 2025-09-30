@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-09-26 01:10+0000\n"
+"POT-Creation-Date: 2025-09-30 01:10+0000\n"
 "PO-Revision-Date: 2018-06-21 12:57+0000\n"
 "Last-Translator: 조성현 (jaymz9634) <jaymz9634@gmail.com>, 2024\n"
 "Language-Team: Korean (Korea) (https://app.transifex.com/teclib/teams/28042/ko_KR/)\n"
@@ -39,7 +39,7 @@ msgstr "모델 관리"
 msgid "Injection of the file"
 msgstr "파일 삽입"
 
-#: inc/computerinjection.class.php:72
+#: inc/computerinjection.class.php:77
 msgid "Antivirus name"
 msgstr "안티바이러스 이름"
 
@@ -55,7 +55,7 @@ msgstr "헤더의 존재"
 msgid "File delimitor"
 msgstr "파일 구분자"
 
-#: inc/phoneinjection.class.php:68
+#: inc/phoneinjection.class.php:73
 msgid "Domain name"
 msgstr "도메인 이름"
 
@@ -83,7 +83,7 @@ msgstr "파일 선택"
 msgid "Download file sample"
 msgstr "파일 예제 다운로드"
 
-#: inc/networkportinjection.class.php:91
+#: inc/networkportinjection.class.php:96
 msgid "Port MAC address"
 msgstr "포트 MAC 주소"
 
@@ -206,7 +206,7 @@ msgstr "파일 내"
 msgid "From the model"
 msgstr "모델에서"
 
-#: inc/model.class.php:1445 inc/commoninjectionlib.class.php:2141
+#: inc/model.class.php:1445 inc/commoninjectionlib.class.php:2140
 msgid "Undetermined"
 msgstr "미결됨"
 
@@ -298,55 +298,55 @@ msgstr "UTF-8"
 msgid "ISO8859-1"
 msgstr "ISO8859-1"
 
-#: inc/commoninjectionlib.class.php:2055
+#: inc/commoninjectionlib.class.php:2054
 msgid "Add from CSV file"
 msgstr "CSV 파일에서 추가"
 
-#: inc/commoninjectionlib.class.php:2057
+#: inc/commoninjectionlib.class.php:2056
 msgid "Update from CSV file"
 msgstr "CSV 파일에서 갱신"
 
-#: inc/commoninjectionlib.class.php:2101
+#: inc/commoninjectionlib.class.php:2100
 msgid "No right to import data"
 msgstr "데이터 불러오기 권한 없음"
 
-#: inc/commoninjectionlib.class.php:2105
+#: inc/commoninjectionlib.class.php:2104
 msgid "No right to update data"
 msgstr "데이터 갱신 권한 없음"
 
-#: inc/commoninjectionlib.class.php:2109
+#: inc/commoninjectionlib.class.php:2108
 msgid "Size of the inserted value is to expansive"
 msgstr "삽입된 값의 크기가 너무 큽니다"
 
-#: inc/commoninjectionlib.class.php:2113
+#: inc/commoninjectionlib.class.php:2112
 msgid "Import not allowed"
 msgstr "불러오기 허용안됨"
 
-#: inc/commoninjectionlib.class.php:2117
+#: inc/commoninjectionlib.class.php:2116
 msgid "Import failed"
 msgstr "불러오기 실패함"
 
-#: inc/commoninjectionlib.class.php:2121
+#: inc/commoninjectionlib.class.php:2120
 msgid "At least one mandatory field is not present"
 msgstr "하나 이상의 필수 항목이 없습니다"
 
-#: inc/commoninjectionlib.class.php:2125
+#: inc/commoninjectionlib.class.php:2124
 msgid "Data to insert are correct"
 msgstr "삽입할 데이터가 정확합니다"
 
-#: inc/commoninjectionlib.class.php:2129
+#: inc/commoninjectionlib.class.php:2128
 msgid "One data is not the good type"
 msgstr "하나의 데이터가 바른 유형이 아닙니다"
 
-#: inc/commoninjectionlib.class.php:2133
+#: inc/commoninjectionlib.class.php:2132
 msgid "Warning"
 msgstr "경고"
 
-#: inc/commoninjectionlib.class.php:2137
+#: inc/commoninjectionlib.class.php:2136
 msgid "Data not found"
 msgstr "데이터 없음"
 
-#: inc/networkequipmentinjection.class.php:73
+#: inc/networkequipmentinjection.class.php:78
 msgid "Number of ports"
 msgstr "포트 숫자"
 
