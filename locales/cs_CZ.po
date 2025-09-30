@@ -6,16 +6,16 @@
 # Translators:
 # Cédric Anne, 2018
 # Pavel Borecki <pavel.borecki@gmail.com>, 2019
-# David Stepan <stepand@tiscali.cz>, 2024
+# David Stepan <stepand@tiscali.cz>, 2025
 # 
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-09-26 01:10+0000\n"
+"POT-Creation-Date: 2025-09-30 01:10+0000\n"
 "PO-Revision-Date: 2018-06-21 12:57+0000\n"
-"Last-Translator: David Stepan <stepand@tiscali.cz>, 2024\n"
+"Last-Translator: David Stepan <stepand@tiscali.cz>, 2025\n"
 "Language-Team: Czech (Czech Republic) (https://app.transifex.com/teclib/teams/28042/cs_CZ/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -41,7 +41,7 @@ msgstr "Správa šablon"
 msgid "Injection of the file"
 msgstr "Import souboru"
 
-#: inc/computerinjection.class.php:72
+#: inc/computerinjection.class.php:77
 msgid "Antivirus name"
 msgstr "Název antiviru"
 
@@ -57,7 +57,7 @@ msgstr "Přítomnost hlavičky"
 msgid "File delimitor"
 msgstr "Oddělovač souboru"
 
-#: inc/phoneinjection.class.php:68
+#: inc/phoneinjection.class.php:73
 msgid "Domain name"
 msgstr "Název domény"
 
@@ -85,7 +85,7 @@ msgstr "Zvolte soubor"
 msgid "Download file sample"
 msgstr "Stáhnout ukázku souboru"
 
-#: inc/networkportinjection.class.php:91
+#: inc/networkportinjection.class.php:96
 msgid "Port MAC address"
 msgstr "MAC adresa portu"
 
@@ -103,7 +103,7 @@ msgstr "Typ dat k importu"
 
 #: inc/model.class.php:458 inc/model.class.php:739
 msgid "Allow creation of dropdowns (Except Entity)"
-msgstr ""
+msgstr "Povolit vytváření rozbalovacích nabídek (kromě entity)"
 
 #: inc/model.class.php:466 inc/model.class.php:743
 msgid "Dates format"
@@ -119,7 +119,7 @@ msgstr "Kritérium jednoznačnosti portu"
 
 #: inc/model.class.php:536 inc/model.class.php:774
 msgid "Replacing the value of multiline text fields"
-msgstr ""
+msgstr "Nahrazení hodnoty víceřádkových textových polí"
 
 #: inc/model.class.php:735
 msgid "Advanced options"
@@ -214,7 +214,7 @@ msgstr "Do souboru"
 msgid "From the model"
 msgstr "Ze šablony"
 
-#: inc/model.class.php:1445 inc/commoninjectionlib.class.php:2141
+#: inc/model.class.php:1445 inc/commoninjectionlib.class.php:2140
 msgid "Undetermined"
 msgstr "Nespecifikováno"
 
@@ -306,55 +306,55 @@ msgstr "UTF-8"
 msgid "ISO8859-1"
 msgstr "ISO8859-1"
 
-#: inc/commoninjectionlib.class.php:2055
+#: inc/commoninjectionlib.class.php:2054
 msgid "Add from CSV file"
 msgstr "Přidat z CSV souboru"
 
-#: inc/commoninjectionlib.class.php:2057
+#: inc/commoninjectionlib.class.php:2056
 msgid "Update from CSV file"
 msgstr "Aktualizovat z CSV souboru"
 
-#: inc/commoninjectionlib.class.php:2101
+#: inc/commoninjectionlib.class.php:2100
 msgid "No right to import data"
 msgstr "Nemáte oprávnění importovat data"
 
-#: inc/commoninjectionlib.class.php:2105
+#: inc/commoninjectionlib.class.php:2104
 msgid "No right to update data"
 msgstr "Nemáte oprávnění aktualizovat data"
 
-#: inc/commoninjectionlib.class.php:2109
+#: inc/commoninjectionlib.class.php:2108
 msgid "Size of the inserted value is to expansive"
 msgstr "Velikost vkládané hodnoty je příliš obsáhlá"
 
-#: inc/commoninjectionlib.class.php:2113
+#: inc/commoninjectionlib.class.php:2112
 msgid "Import not allowed"
 msgstr "Import není dovolen"
 
-#: inc/commoninjectionlib.class.php:2117
+#: inc/commoninjectionlib.class.php:2116
 msgid "Import failed"
 msgstr "Import se nezdařil"
 
-#: inc/commoninjectionlib.class.php:2121
+#: inc/commoninjectionlib.class.php:2120
 msgid "At least one mandatory field is not present"
 msgstr "Přinejmenším jedna povinná kolonka není vyplněná"
 
-#: inc/commoninjectionlib.class.php:2125
+#: inc/commoninjectionlib.class.php:2124
 msgid "Data to insert are correct"
 msgstr "Data pro vložení jsou v pořádku"
 
-#: inc/commoninjectionlib.class.php:2129
+#: inc/commoninjectionlib.class.php:2128
 msgid "One data is not the good type"
 msgstr "Jedna data nejsou správného typu"
 
-#: inc/commoninjectionlib.class.php:2133
+#: inc/commoninjectionlib.class.php:2132
 msgid "Warning"
 msgstr "Varování"
 
-#: inc/commoninjectionlib.class.php:2137
+#: inc/commoninjectionlib.class.php:2136
 msgid "Data not found"
 msgstr "Data nebyla nalezena"
 
-#: inc/networkequipmentinjection.class.php:73
+#: inc/networkequipmentinjection.class.php:78
 msgid "Number of ports"
 msgstr "Počet portů"
 
@@ -457,6 +457,7 @@ msgstr "Povinná kolonka není vyplněná"
 msgid ""
 "The file could not be found (Maybe it exceeds the maximum size allowed)"
 msgstr ""
+"Soubor se nepodařilo nalézt (možná překračuje maximální povolenou velikost)"
 
 #: front/mapping.form.php:61
 msgid ""
