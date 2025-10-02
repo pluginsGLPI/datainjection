@@ -83,7 +83,7 @@ abstract class PluginDatainjectionBackend
         ];
 
         if (!isset($allowedBackends[$type])) {
-            throw new \InvalidArgumentException("Unknown backend type: $type");
+            throw new InvalidArgumentException("Unknown backend type: $type");
         }
 
         return new $allowedBackends[$type]();
