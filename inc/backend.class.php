@@ -78,11 +78,7 @@ abstract class PluginDatainjectionBackend
    **/
     public static function getInstance($type)
     {
-
         $class = 'PluginDatainjectionBackend' . $type;
-        if (!is_a($class, CommonDBTM::class, true)) {
-            throw new HttpException(500, 'Class ' . $class . ' is not a valid class');
-        }
         return new $class();
     }
 
