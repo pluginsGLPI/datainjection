@@ -42,10 +42,7 @@
                 <span>{{ type_name }}</span>
             </div>
             {# Status Fields #}
-            {% if item.isNewItem() %}
-                {{ fields.nullField() }}
-                {{ fields.nullField() }}
-            {% else %}
+            {% if not item.isNewItem() %}
                 {{ fields.htmlField('', status_label, __('Model status', 'datainjection'), field_options) }}
                 {{ fields.nullField() }}
             {% endif %}
