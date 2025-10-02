@@ -27,7 +27,7 @@
  * @link      https://github.com/pluginsGLPI/datainjection
  * -------------------------------------------------------------------------
  */
-use Glpi\Exception\Http\HttpException;
+
 
 use function Safe\preg_match;
 
@@ -78,12 +78,17 @@ abstract class PluginDatainjectionBackend
    **/
     public static function getInstance($type)
     {
+        $allowedBackends = [
+            'csv' => PluginDatainjectionBackendcsv::class,
+        ];
 
-        $class = 'PluginDatainjectionBackend' . $type;
-        if (!is_a($class, CommonDBTM::class, true)) {
-            throw new HttpException(500, 'Class ' . $class . ' is not a valid class');
+        if (!isset($allowedBackends[$type])) {
+            throw new InvalidArgumentException("Unknown backend type: $type");
         }
-        return new $class();
+
+        return new $allowedBackends[$type]();
+
+
     }
 
 
