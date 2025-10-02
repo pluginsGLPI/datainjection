@@ -44,8 +44,10 @@
             {# Status Fields #}
             {% if item.isNewItem() %}
                 {{ fields.nullField() }}
+                {{ fields.nullField() }}
             {% else %}
                 {{ fields.htmlField('', status_label, __('Model status', 'datainjection'), field_options) }}
+                {{ fields.nullField() }}
             {% endif %}
 
             {{ fields.hiddenField('users_id', session_user_id, '', field_options) }}
