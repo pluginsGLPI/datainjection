@@ -27,7 +27,7 @@
  * @link      https://github.com/pluginsGLPI/datainjection
  * -------------------------------------------------------------------------
  */
-use Glpi\Exception\Http\HttpException;
+
 
 use function Safe\preg_match;
 
