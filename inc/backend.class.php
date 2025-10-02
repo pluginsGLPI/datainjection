@@ -78,8 +78,17 @@ abstract class PluginDatainjectionBackend
    **/
     public static function getInstance($type)
     {
-        $class = 'PluginDatainjectionBackend' . $type;
-        return new $class();
+        $allowedBackends = [
+            'csv' => PluginDatainjectionBackendcsv::class,
+        ];
+
+        if (!isset($allowedBackends[$type])) {
+            throw new \InvalidArgumentException("Unknown backend type: $type");
+        }
+
+        return new $allowedBackends[$type]();
+
+
     }
 
 
