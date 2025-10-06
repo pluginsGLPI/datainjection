@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-10-01 01:19+0000\n"
+"POT-Creation-Date: 2025-10-06 01:10+0000\n"
 "PO-Revision-Date: 2018-06-21 12:57+0000\n"
 "Last-Translator: Kaya Zeren <kayazeren@gmail.com>, 2025\n"
 "Language-Team: Turkish (Turkey) (https://app.transifex.com/teclib/teams/28042/tr_TR/)\n"
@@ -62,7 +62,7 @@ msgstr "Dosya ayracı"
 
 #: templates/model_advanced_form.html.twig
 msgid "Model status"
-msgstr ""
+msgstr "Model durumu"
 
 #: templates/model_advanced_form.html.twig inc/model.class.php:470
 msgid "Type of data to import"
@@ -134,12 +134,12 @@ msgstr "Bitti"
 
 #: templates/clientinjection.html.twig
 msgid "Client Injection Configuration"
-msgstr ""
+msgstr "İstemci aktarım yapılandırması"
 
 #: templates/clientinjection.html.twig
 #: templates/clientinjection_injection.html.twig
 msgid "Model"
-msgstr ""
+msgstr "Model"
 
 #: templates/clientinjection.html.twig
 msgid "No model currently available"
@@ -160,7 +160,7 @@ msgstr "Dosya aktarımı"
 
 #: templates/model_validation_form.html.twig
 msgid "Validation"
-msgstr ""
+msgstr "Doğrulama"
 
 #: templates/model_validation_form.html.twig
 msgctxt "button"
@@ -201,7 +201,7 @@ msgstr "Nesne belirteci"
 
 #: templates/log_results.html.twig
 msgid "Array of failed injections"
-msgstr ""
+msgstr "Başarısız olan aktarımların dizisi"
 
 #: templates/log_results.html.twig inc/model.class.php:1499
 #: inc/model.class.php:1519
@@ -238,8 +238,8 @@ msgstr "Antivirus adı"
 #, php-format
 msgid "%d month"
 msgid_plural "%d months"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%d ay"
+msgstr[1] "%d ay"
 
 #: inc/phoneinjection.class.php:71
 msgid "Domain name"
