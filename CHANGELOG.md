@@ -7,10 +7,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [UNRELEASED]
 
+## [2.15.1] - 2025-10-14
+
 ### Fixed
 
 - Fix file upload
-
 
 ## [2.15.0] - 2025-09-30
 
@@ -28,6 +29,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Fixed
 
+- Fix `NetworkName` ip adresses injection
+- Fix injection to the `date_expiration` of certificates
+- Fix the `Task completed` message during plugin update
 - Fix `License` injection
 
 ## [2.14.2] - 2025-08-22
