@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-10-01 01:19+0000\n"
+"POT-Creation-Date: 2025-10-20 01:17+0000\n"
 "PO-Revision-Date: 2018-06-21 12:57+0000\n"
 "Last-Translator: Cédric Anne, 2018\n"
 "Language-Team: Finnish (Finland) (https://app.transifex.com/teclib/teams/28042/fi_FI/)\n"
@@ -21,41 +21,19 @@ msgstr ""
 "Language: fi_FI\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: templates/clientinjection_upload_file.html.twig inc/model.class.php:758
-#: inc/dropdown.class.php:85
-msgid "File to inject"
-msgstr "Tuotava tiedosto"
-
-#: templates/clientinjection_upload_file.html.twig
-#: templates/infoadditionnalinfo.html.twig
-msgid "Choose a file"
-msgstr "Valitse tiedosto"
-
-#: templates/clientinjection_upload_file.html.twig
-msgid "File encoding"
-msgstr "Tiedoston koodaus"
-
-#: templates/clientinjection_upload_file.html.twig
-msgid "Warning : existing mapped column will be overridden"
+#: templates/clientinjection_injection.html.twig
+#: templates/clientinjection.html.twig
+msgid "Model"
 msgstr ""
 
-#: templates/clientinjection_upload_file.html.twig
-msgid ""
-"Watch out, you're about to inject data into GLPI. Are you sure you want to "
-"do it ?"
-msgstr "Huomio! Olet tuomassa tietoja GLPI:hen. Haluatko varmasti tehdä sen?"
+#: templates/clientinjection_injection.html.twig
+msgid "Import progress"
+msgstr "Tuonnin edistyminen"
 
-#: templates/modelcsv_additional_form.html.twig
-msgid "Specific file format options"
-msgstr "Erityiset tiedostomuotoasetukset"
-
-#: templates/modelcsv_additional_form.html.twig
-msgid "Header's presence"
-msgstr "Otsikko on olemassa"
-
-#: templates/modelcsv_additional_form.html.twig
-msgid "File delimitor"
-msgstr "Tietojen erotinmerkki"
+#: templates/clientinjection_injection.html.twig inc/menu.class.php:56
+#: inc/menu.class.php:57 inc/menu.class.php:61 inc/profile.class.php:44
+msgid "Injection of the file"
+msgstr "Tiedoston tuonti"
 
 #: templates/model_advanced_form.html.twig
 msgid "Model status"
@@ -129,44 +107,14 @@ msgstr "Vie loki"
 msgid "Finish"
 msgstr "Lopeta"
 
-#: templates/clientinjection.html.twig
-msgid "Client Injection Configuration"
-msgstr ""
-
-#: templates/clientinjection.html.twig
-#: templates/clientinjection_injection.html.twig
-msgid "Model"
-msgstr ""
-
-#: templates/clientinjection.html.twig
-msgid "No model currently available"
-msgstr "Ei saatavilla olevaa mallia"
-
-#: templates/clientinjection.html.twig
-msgid "You can start the model creation by hitting the button"
-msgstr "Voit aloittaa mallin luomisen napsauttamalla painiketta"
-
-#: templates/clientinjection_injection.html.twig
-msgid "Import progress"
-msgstr "Tuonnin edistyminen"
-
-#: templates/clientinjection_injection.html.twig inc/profile.class.php:44
-#: inc/menu.class.php:56 inc/menu.class.php:57 inc/menu.class.php:61
-msgid "Injection of the file"
-msgstr "Tiedoston tuonti"
-
-#: templates/model_validation_form.html.twig
-msgid "Validation"
-msgstr ""
-
-#: templates/model_validation_form.html.twig
-msgctxt "button"
-msgid "Validate the model"
-msgstr "Vahvista malli"
-
 #: templates/infoadditionnalinfo.html.twig
 msgid "Complementary information"
 msgstr "Täydentävät tiedot"
+
+#: templates/infoadditionnalinfo.html.twig
+#: templates/clientinjection_upload_file.html.twig
+msgid "Choose a file"
+msgstr "Valitse tiedosto"
 
 #: templates/infoadditionnalinfo.html.twig
 msgid "Download file sample"
@@ -217,18 +165,122 @@ msgstr ""
 msgid "Counter"
 msgstr ""
 
-#: setup.php:95 inc/profile.class.php:72 inc/menu.class.php:38
+#: templates/clientinjection.html.twig
+msgid "Client Injection Configuration"
+msgstr ""
+
+#: templates/clientinjection.html.twig
+msgid "No model currently available"
+msgstr "Ei saatavilla olevaa mallia"
+
+#: templates/clientinjection.html.twig
+msgid "You can start the model creation by hitting the button"
+msgstr "Voit aloittaa mallin luomisen napsauttamalla painiketta"
+
+#: templates/modelcsv_additional_form.html.twig
+msgid "Specific file format options"
+msgstr "Erityiset tiedostomuotoasetukset"
+
+#: templates/modelcsv_additional_form.html.twig
+msgid "Header's presence"
+msgstr "Otsikko on olemassa"
+
+#: templates/modelcsv_additional_form.html.twig
+msgid "File delimitor"
+msgstr "Tietojen erotinmerkki"
+
+#: templates/model_validation_form.html.twig
+msgid "Validation"
+msgstr ""
+
+#: templates/model_validation_form.html.twig
+msgctxt "button"
+msgid "Validate the model"
+msgstr "Vahvista malli"
+
+#: templates/clientinjection_upload_file.html.twig inc/dropdown.class.php:85
+#: inc/model.class.php:758
+msgid "File to inject"
+msgstr "Tuotava tiedosto"
+
+#: templates/clientinjection_upload_file.html.twig
+msgid "File encoding"
+msgstr "Tiedoston koodaus"
+
+#: templates/clientinjection_upload_file.html.twig
+msgid "Warning : existing mapped column will be overridden"
+msgstr ""
+
+#: templates/clientinjection_upload_file.html.twig
+msgid ""
+"Watch out, you're about to inject data into GLPI. Are you sure you want to "
+"do it ?"
+msgstr "Huomio! Olet tuomassa tietoja GLPI:hen. Haluatko varmasti tehdä sen?"
+
+#: inc/menu.class.php:38 inc/profile.class.php:72 setup.php:95
 #: front/clientinjection.form.php:34
 msgid "Data injection"
 msgstr ""
 
+#: inc/clientinjection.class.php:145
+msgid "Launch the import"
+msgstr "Käynnistä tuonti"
+
+#: inc/injectiontype.class.php:141
+msgid "-------Choose a table-------"
+msgstr "-------Valitse taulukko-------"
+
+#: inc/injectiontype.class.php:211
+msgid "-------Choose a field-------"
+msgstr "-------Valitse kenttä-------"
+
+#: inc/dropdown.class.php:37
+msgid "dd-mm-yyyy"
+msgstr "pp-kk-vvvv"
+
+#: inc/dropdown.class.php:39
+msgid "mm-dd-yyyy"
+msgstr "kk-pp-vvvv"
+
+#: inc/dropdown.class.php:41
+msgid "yyyy-mm-dd"
+msgstr "vvvv-kk-pp"
+
+#: inc/dropdown.class.php:59
+msgid "1 234.56"
+msgstr "1 234.56"
+
+#: inc/dropdown.class.php:61
+msgid "1 234,56"
+msgstr "1 234,56"
+
+#: inc/dropdown.class.php:63
+msgid "1,234.56"
+msgstr "1,234.56"
+
+#: inc/dropdown.class.php:86 inc/model.class.php:760
+msgid "Mappings"
+msgstr "Linkitykset"
+
+#: inc/dropdown.class.php:128
+msgid "Automatic detection"
+msgstr "Automaattinen tunnistus"
+
+#: inc/dropdown.class.php:129
+msgid "UTF-8"
+msgstr "UTF-8"
+
+#: inc/dropdown.class.php:130
+msgid "ISO8859-1"
+msgstr "ISO8859-1"
+
+#: inc/networkequipmentinjection.class.php:76
+msgid "Number of ports"
+msgstr "Porttien lukumäärä"
+
 #: inc/profile.class.php:40
 msgid "Model management"
 msgstr "Mallinhallinta"
-
-#: inc/computerinjection.class.php:75
-msgid "Antivirus name"
-msgstr ""
 
 #: inc/contractinjection.class.php:154 inc/contractinjection.class.php:162
 #: inc/contractinjection.class.php:170 inc/contractinjection.class.php:178
@@ -238,13 +290,29 @@ msgid_plural "%d months"
 msgstr[0] ""
 msgstr[1] ""
 
+#: inc/mapping.class.php:115 front/popup.php:35
+msgid "See the file"
+msgstr "Katso tiedosto"
+
+#: inc/mapping.class.php:121
+msgid "Header of the file"
+msgstr "Tiedoston otsikko"
+
+#: inc/mapping.class.php:122 inc/info.class.php:112 inc/info.class.php:170
+msgid "Tables"
+msgstr "Taulukot"
+
+#: inc/mapping.class.php:124
+msgid "Link field"
+msgstr "Linkkikenttä"
+
 #: inc/phoneinjection.class.php:71
 msgid "Domain name"
 msgstr ""
 
-#: inc/info.class.php:112 inc/info.class.php:170 inc/mapping.class.php:122
-msgid "Tables"
-msgstr "Taulukot"
+#: inc/computerinjection.class.php:75
+msgid "Antivirus name"
+msgstr ""
 
 #: inc/info.class.php:114 inc/info.class.php:172
 msgid "Mandatory information"
@@ -257,10 +325,6 @@ msgstr "Kentät"
 #: inc/networkportinjection.class.php:94
 msgid "Port MAC address"
 msgstr "Portin MAC-osoite"
-
-#: inc/model.class.php:760 inc/dropdown.class.php:86
-msgid "Mappings"
-msgstr "Linkitykset"
 
 #: inc/model.class.php:762
 msgid "Additional Information"
@@ -326,42 +390,6 @@ msgstr ""
 msgid "Array of unsuccessful injections"
 msgstr "Tuonti epäonnistui"
 
-#: inc/dropdown.class.php:37
-msgid "dd-mm-yyyy"
-msgstr "pp-kk-vvvv"
-
-#: inc/dropdown.class.php:39
-msgid "mm-dd-yyyy"
-msgstr "kk-pp-vvvv"
-
-#: inc/dropdown.class.php:41
-msgid "yyyy-mm-dd"
-msgstr "vvvv-kk-pp"
-
-#: inc/dropdown.class.php:59
-msgid "1 234.56"
-msgstr "1 234.56"
-
-#: inc/dropdown.class.php:61
-msgid "1 234,56"
-msgstr "1 234,56"
-
-#: inc/dropdown.class.php:63
-msgid "1,234.56"
-msgstr "1,234.56"
-
-#: inc/dropdown.class.php:128
-msgid "Automatic detection"
-msgstr "Automaattinen tunnistus"
-
-#: inc/dropdown.class.php:129
-msgid "UTF-8"
-msgstr "UTF-8"
-
-#: inc/dropdown.class.php:130
-msgid "ISO8859-1"
-msgstr "ISO8859-1"
-
 #: inc/commoninjectionlib.class.php:2038
 msgid "Add from CSV file"
 msgstr "Lisää CSV-tiedostosta"
@@ -410,39 +438,11 @@ msgstr "Varoitus"
 msgid "Data not found"
 msgstr "Tietoja ei löytynyt"
 
-#: inc/networkequipmentinjection.class.php:76
-msgid "Number of ports"
-msgstr "Porttien lukumäärä"
-
-#: inc/injectiontype.class.php:141
-msgid "-------Choose a table-------"
-msgstr "-------Valitse taulukko-------"
-
-#: inc/injectiontype.class.php:211
-msgid "-------Choose a field-------"
-msgstr "-------Valitse kenttä-------"
-
-#: inc/clientinjection.class.php:145
-msgid "Launch the import"
-msgstr "Käynnistä tuonti"
-
-#: inc/mapping.class.php:115 front/popup.php:35
-msgid "See the file"
-msgstr "Katso tiedosto"
-
-#: inc/mapping.class.php:121
-msgid "Header of the file"
-msgstr "Tiedoston otsikko"
-
-#: inc/mapping.class.php:124
-msgid "Link field"
-msgstr "Linkkikenttä"
+#: front/model.form.php:86 front/clientinjection.form.php:86
+msgid ""
+"The file could not be found (Maybe it exceeds the maximum size allowed)"
+msgstr ""
 
 #: front/clientinjection.form.php:52
 msgid "One mandatory field is not filled"
 msgstr "Pakollista kenttää ei ole täytetty"
-
-#: front/clientinjection.form.php:86 front/model.form.php:86
-msgid ""
-"The file could not be found (Maybe it exceeds the maximum size allowed)"
-msgstr ""
