@@ -164,9 +164,11 @@ class PluginDatainjectionUserInjection extends User implements PluginDatainjecti
         /** @var DBmysql $DB */
         global $DB;
 
-       //Manage user emails
+       //Manage user emails (both for add and update)
         if (
             isset($values['User']['useremails_id'])
+            && !empty($values['User']['useremails_id'])
+            && isset($values['User']['id'])
             && $rights['add_dropdown']
             && Session::haveRight('user', UPDATE)
         ) {
