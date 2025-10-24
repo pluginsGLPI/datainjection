@@ -954,7 +954,7 @@ class PluginDatainjectionCommonInjectionLib
                 $this->values[$itemtype][$field] = $value;
             }
         } else { // First value
-            if (empty($value)) {
+            if (empty($value) && $value !== 0 && $value !== '0') {
                 if (isForeignKeyField($field) || (strpos($field, 'is_') !== false) || (method_exists($injectionClass, 'isNullable') && !$injectionClass->isNullable($field))) {
                     // If the field is an id, we set it to 0
                     $this->values[$itemtype][$field] = self::DROPDOWN_EMPTY_VALUE;
@@ -1657,6 +1657,14 @@ class PluginDatainjectionCommonInjectionLib
                 //If field is a dropdown and value is '', then replace it by 0
                 $toinject[$key] = self::DROPDOWN_EMPTY_VALUE;
             } else {
+                // Skip empty values for fields that cannot accept empty strings during updates
+                if ($value === self::EMPTY_VALUE && !$add) {
+                    // Check if the field is nullable using the injection class method
+                    if (method_exists($injectionClass, 'isNullable') && !$injectionClass->isNullable($key)) {
+                        // Skip this field during update if value is empty and field is not nullable
+                        continue;
+                    }
+                }
                 $toinject[$key] = $value;
             }
 

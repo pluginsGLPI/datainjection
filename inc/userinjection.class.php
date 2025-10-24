@@ -59,7 +59,20 @@ class PluginDatainjectionUserInjection extends User implements PluginDatainjecti
 
     public function isNullable($field)
     {
-        return true; // By default, all fields can be null
+        // Fields that cannot accept empty string values and should use their default values instead
+        $non_nullable_fields = [
+            'use_mode',
+            'highcontrast_css',
+            'default_central_tab',
+            'entities_id',
+            'profiles_id',
+            'is_active',
+            'is_deleted',
+            'authtype',
+            'auths_id'
+        ];
+
+        return !in_array($field, $non_nullable_fields);
     }
 
 
@@ -101,6 +114,9 @@ class PluginDatainjectionUserInjection extends User implements PluginDatainjecti
         $tab[101]['displaytype']   = 'relation';
         $tab[101]['relationclass'] = 'Profile_User';
         $tab[101]['relationfield'] = $tab[101]['linkfield'];
+
+        // Add email option to make it importable with the correct linkfield
+        $tab[5]['linkfield'] = 'useremails_id';  // Map email field to useremails_id for injection
 
        //Remove some options because some fields cannot be imported
         $blacklist     = PluginDatainjectionCommonInjectionLib::getBlacklistedOptions(get_parent_class($this));
@@ -164,25 +180,42 @@ class PluginDatainjectionUserInjection extends User implements PluginDatainjecti
         /** @var DBmysql $DB */
         global $DB;
 
-       //Manage user emails
+       //Manage user emails (both for add and update)
         if (
             isset($values['User']['useremails_id'])
+            && !empty($values['User']['useremails_id'])
+            && isset($values['User']['id'])
             && $rights['add_dropdown']
             && Session::haveRight('user', UPDATE)
         ) {
-            if (
-                !countElementsInTable(
-                    "glpi_useremails",
-                    [
-                        'users_id' => $values['User']['id'],
-                        'email'    => $values['User']['useremails_id'],
-                    ]
-                )
-            ) {
-                $useremail       = new UserEmail();
-                $tmp['users_id'] = $values['User']['id'];
-                $tmp['email']    = $values['User']['useremails_id'];
-                $useremail->add($tmp);
+            $email = trim($values['User']['useremails_id']);
+
+            // Validate email format
+            if (filter_var($email, FILTER_VALIDATE_EMAIL)) {
+                // Check if this email doesn't already exist for this user
+                if (
+                    !countElementsInTable(
+                        "glpi_useremails",
+                        [
+                            'users_id' => $values['User']['id'],
+                            'email'    => $email,
+                        ]
+                    )
+                ) {
+                    $useremail = new UserEmail();
+                    $tmp = [
+                        'users_id'   => $values['User']['id'],
+                        'email'      => $email,
+                        'is_default' => 1  // Set as default email if it's the first one
+                    ];
+
+                    // Check if user already has emails, if so don't set as default
+                    if (countElementsInTable("glpi_useremails", ['users_id' => $values['User']['id']])) {
+                        $tmp['is_default'] = 0;
+                    }
+
+                    $useremail->add($tmp);
+                }
             }
         }
 
