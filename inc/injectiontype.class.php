@@ -309,8 +309,35 @@ class PluginDatainjectionInjectionType
 
 
     /**
+     * Check if a field can be set as mandatory
+     *
+     * @param array $options
+     * @param array $mapping_or_info
+     * @return bool
+     */
+    private static function canFieldBeMandatory($options, $mapping_or_info)
+    {
+        // Info types can always be mandatory
+        if ($options['called_by'] == 'PluginDatainjectionInfo') {
+            return true;
+        }
+
+        // For mapping types, only primary type fields can be mandatory
+        if ($options['primary_type'] != $options['itemtype']) {
+            return false;
+        }
+
+        // Specific fields that cannot be mandatory (fallback)
+        $non_mandatory_fields = [
+            'groups_id',  // Groups removed because they have become multiple fields for assets
+        ];
+
+        return !in_array($mapping_or_info['value'], $non_mandatory_fields);
+    }
+
+    /**
     * @param array $options   array
-   **/
+    **/
     public static function showMandatoryCheckbox($options = [])
     {
 
@@ -332,10 +359,7 @@ class PluginDatainjectionInjectionType
             $checked = 'checked';
         }
 
-        if (
-            ($options['called_by'] == 'PluginDatainjectionInfo')
-            || ($options['primary_type'] == $options['itemtype'])
-        ) {
+        if (self::canFieldBeMandatory($options, $mapping_or_info)) {
             echo "<input type='checkbox' name='data[" . htmlspecialchars($mapping_or_info['id']) . "][is_mandatory]' $checked>";
         }
     }
