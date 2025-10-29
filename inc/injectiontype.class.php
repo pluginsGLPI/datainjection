@@ -312,34 +312,6 @@ class PluginDatainjectionInjectionType
         || (strtolower($option['linkfield']) == $name);
     }
 
-
-    /**
-     * Check if a field can be set as mandatory
-     *
-     * @param array $options
-     * @param array $mapping_or_info
-     * @return bool
-     */
-    private static function canFieldBeMandatory($options, $mapping_or_info)
-    {
-        // Info types can always be mandatory
-        if ($options['called_by'] == 'PluginDatainjectionInfo') {
-            return true;
-        }
-
-        // For mapping types, only primary type fields can be mandatory
-        if ($options['primary_type'] != $options['itemtype']) {
-            return false;
-        }
-
-        // Specific fields that cannot be mandatory (fallback)
-        $non_mandatory_fields = [
-            'groups_id',  // Groups removed because they have become multiple fields for assets
-        ];
-
-        return !in_array($mapping_or_info['value'], self::NON_MANDATORY_FIELDS);
-    }
-
     /**
     * @param array $options   array
     **/
