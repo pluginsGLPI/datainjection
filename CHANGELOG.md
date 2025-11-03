@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [UNRELEASED]
 
+### Fixed
+
+- Remove groups as import link field
+
 ## [2.15.1] - 2025-10-14
 
 ### Fixed
