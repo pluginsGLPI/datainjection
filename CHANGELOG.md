@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [UNRELEASED]
 
+### Fixed
+
+- Fix user fields nullability to prevent SQL errors during injection
+
+
 ## [2.15.1] - 2025-10-14
 
 ### Fixed
