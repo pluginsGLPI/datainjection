@@ -37,6 +37,10 @@ class PluginDatainjectionInjectionType
 {
     public const NO_VALUE = 'none';
 
+    public const NON_MANDATORY_FIELDS = [
+        'groups_id',  // Groups removed because they have become multiple fields for assets
+    ];
+
 
     /**
     * Return all injectable types
@@ -251,6 +255,7 @@ class PluginDatainjectionInjectionType
             ],
         );
 
+        $p['value'] = '__VALUE__';
         $url = plugin_datainjection_geturl() . "ajax/dropdownMandatory.php";
         Ajax::updateItem(
             "span_mandatory_" . $mapping_or_info['id'],
@@ -307,10 +312,9 @@ class PluginDatainjectionInjectionType
         || (strtolower($option['linkfield']) == $name);
     }
 
-
     /**
     * @param array $options   array
-   **/
+    **/
     public static function showMandatoryCheckbox($options = [])
     {
 
@@ -333,8 +337,10 @@ class PluginDatainjectionInjectionType
         }
 
         if (
-            ($options['called_by'] == 'PluginDatainjectionInfo')
-            || ($options['primary_type'] == $options['itemtype'])
+            $options['called_by'] == 'PluginDatainjectionInfo' || (
+                $options['primary_type'] == $options['itemtype']
+                && !in_array($options['value'], self::NON_MANDATORY_FIELDS)
+            )
         ) {
             echo "<input type='checkbox' name='data[" . htmlspecialchars($mapping_or_info['id']) . "][is_mandatory]' $checked>";
         }
