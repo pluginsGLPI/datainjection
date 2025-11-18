@@ -55,7 +55,14 @@ class PluginDatainjectionUserInjection extends User implements PluginDatainjecti
 
     public function isNullable($field)
     {
-        return true; // By default, all fields can be null
+        return in_array($field, [
+            'begin_date',
+            'date_sync',
+            'end_date',
+            'last_login',
+            'substitution_end_date',
+            'substitution_start_date',
+        ]);
     }
 
 
