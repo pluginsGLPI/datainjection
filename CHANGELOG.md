@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [unreleased]
 
+### Fixed
+
+- Fix missing `purge` action
+
 ## [2.14.3] - 2025-10-14
 
 ### Fixed
