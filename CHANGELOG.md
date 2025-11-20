@@ -9,6 +9,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Fixed
 
+- Fix missing `purge` action
+
+### Fixed
+
 - Fix user fields nullability to prevent SQL errors during injection
 - Remove groups as import link field
 - Fix `clean` function
