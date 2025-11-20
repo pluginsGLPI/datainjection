@@ -398,7 +398,7 @@ class PluginDatainjectionModel extends CommonDBTM
                     "glpi_plugin_datainjection_models",
                     "entities_id",
                     $entity,
-                    true,
+                    false,
                 ) . ")
                   OR (`is_private` = '" . self::MODEL_PRIVATE . "' AND `users_id` = '$user_id'))
                  ORDER BY `is_private` DESC,
