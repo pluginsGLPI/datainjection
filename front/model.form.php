@@ -63,6 +63,11 @@ if (isset($_POST["add"])) {
     $specific_model = PluginDatainjectionModel::getInstance('csv');
     $specific_model->saveFields($_POST);
     Html::back();
+} elseif (isset($_POST["purge"])) {
+    $model->check($_POST['id'], PURGE);
+    $model->delete($_POST, true);
+
+    $model->redirectToList();
 } elseif (isset($_POST["validate"])) {
     /* update order */
     $model->check($_POST['id'], UPDATE);
