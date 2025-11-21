@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-11-17 01:15+0000\n"
+"POT-Creation-Date: 2025-11-21 01:13+0000\n"
 "PO-Revision-Date: 2018-06-21 12:57+0000\n"
 "Last-Translator: Peter Rundqvist, 2025\n"
 "Language-Team: Swedish (Sweden) (https://app.transifex.com/teclib/teams/28042/sv_SE/)\n"
@@ -444,7 +444,7 @@ msgstr "Länka fält"
 msgid "One mandatory field is not filled"
 msgstr "Ett obligatoriskt fält är ej ifyllt"
 
-#: front/clientinjection.form.php:86 front/model.form.php:86
+#: front/clientinjection.form.php:86 front/model.form.php:91
 msgid ""
 "The file could not be found (Maybe it exceeds the maximum size allowed)"
 msgstr "Hittade inte filen (den kanske är för stor)"
