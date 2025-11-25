@@ -9,6 +9,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Fixed
 
+- Fix truncated CSV export
 - Fix missing `purge` action
 
 ## [2.14.3] - 2025-10-14

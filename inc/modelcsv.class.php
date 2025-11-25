@@ -99,7 +99,7 @@ class PluginDatainjectionModelcsv extends CommonDBChild
         );
         header('Content-Type: text/comma-separated-values');
         header('Content-Transfer-Encoding: UTF-8');
-        header('Content-Length: ' . mb_strlen($sample, 'UTF-8'));
+        header('Content-Length: ' . strlen($sample));
         header('Pragma: no-cache');
         header('Cache-Control: no-store, no-cache, must-revalidate, post-check=0, pre-check=0');
         header('Expires: 0');
