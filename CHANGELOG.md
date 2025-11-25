@@ -5,7 +5,7 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-## [UNRELEASED]
+## [2.15.2] - 2025-11-25
 
 ### Fixed
 
@@ -16,6 +16,13 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Fix user fields nullability to prevent SQL errors during injection
 - Remove groups as import link field
 - Fix `clean` function
+
+## [2.14.4] - 2025-11-25
+
+### Fixed
+
+- Fix truncated CSV export
+- Fix missing `purge` action
 
 ## [2.15.1] - 2025-10-14
 
