@@ -17,6 +17,13 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Remove groups as import link field
 - Fix `clean` function
 
+## [2.14.4] - 2025-11-25
+
+### Fixed
+
+- Fix truncated CSV export
+- Fix missing `purge` action
+
 ## [2.15.1] - 2025-10-14
 
 ### Fixed
