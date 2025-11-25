@@ -12,6 +12,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Fix truncated CSV export
 - Fix injection for `groups_id` and `groups_id_tech` fields
 - Fix missing `purge` action
+- Fix `Model` visibilty criteria
 - Fix user fields nullability to prevent SQL errors during injection
 - Remove groups as import link field
 - Fix `clean` function
