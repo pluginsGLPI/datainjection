@@ -1665,6 +1665,20 @@ class PluginDatainjectionCommonInjectionLib
                 $toinject[$key] = $value;
             }
 
+            // handle new format for group type specification
+            // restricting to group_item relations only
+            if (($key === "groups_id_tech" || $key === "groups_id") && $option['table'] == getTableForItemType(Group::class) && !empty($option) && isset($option['joinparams']['beforejoin']['table']) && $option['joinparams']['beforejoin']['table'] === getTableForItemType(Group_Item::class) && isset($option['joinparams']['beforejoin']['joinparams']['condition']['NEWTABLE.type'])) {
+                $value = $option['joinparams']['beforejoin']['joinparams']['condition']['NEWTABLE.type'];
+                // depending on the type, set the correct field (_groups_id_tech => array or _groups_id => array)
+                // and unset the old one (groups_id_tech => int or groups_id => int)
+                if ($value == Group_Item::GROUP_TYPE_TECH) {
+                    $toinject["_groups_id_tech"] = [$value];
+                } else {
+                    $toinject["_groups"] = [$value];
+                }
+                unset($toinject[$key]);
+            }
+
             //keep id in case of update
             if (!$add && $key === 'id') {
                 $toinject[$key] = $value;

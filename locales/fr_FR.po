@@ -14,7 +14,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-11-10 01:17+0000\n"
+"POT-Creation-Date: 2025-11-21 01:13+0000\n"
 "PO-Revision-Date: 2018-06-21 12:57+0000\n"
 "Last-Translator: EpicIT33, 2025\n"
 "Language-Team: French (France) (https://app.transifex.com/teclib/teams/28042/fr_FR/)\n"
@@ -449,7 +449,7 @@ msgstr "Champs de liaison"
 msgid "One mandatory field is not filled"
 msgstr "Un champ obligatoire n'est pas rempli"
 
-#: front/clientinjection.form.php:86 front/model.form.php:86
+#: front/clientinjection.form.php:86 front/model.form.php:91
 msgid ""
 "The file could not be found (Maybe it exceeds the maximum size allowed)"
 msgstr ""
