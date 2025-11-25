@@ -9,6 +9,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Fixed
 
+- Fix truncated CSV export
 - Fix injection for `groups_id` and `groups_id_tech` fields
 - Fix missing `purge` action
 - Fix user fields nullability to prevent SQL errors during injection
