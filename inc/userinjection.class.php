@@ -55,14 +55,20 @@ class PluginDatainjectionUserInjection extends User implements PluginDatainjecti
 
     public function isNullable($field)
     {
-        return in_array($field, [
-            'begin_date',
-            'date_sync',
-            'end_date',
-            'last_login',
-            'substitution_end_date',
-            'substitution_start_date',
-        ]);
+        // Fields that cannot accept empty string values and should use their default values instead
+        $non_nullable_fields = [
+            'use_mode',
+            'highcontrast_css',
+            'default_central_tab',
+            'entities_id',
+            'profiles_id',
+            'is_active',
+            'is_deleted',
+            'authtype',
+            'auths_id'
+        ];
+
+        return !in_array($field, $non_nullable_fields);
     }
 
 
@@ -86,6 +92,8 @@ class PluginDatainjectionUserInjection extends User implements PluginDatainjecti
         $tab[4]['displaytype']     = 'password';
 
         $tab[5]['displaytype']     = 'text';
+        // Add email option to make it importable with the correct linkfield
+        $tab[5]['linkfield'] = 'useremails_id';  // Map email field to useremails_id for injection
 
         //To manage groups : relies on a CommonDBRelation object !
         $tab[100]['name']          = __s('Group');
@@ -154,6 +162,20 @@ class PluginDatainjectionUserInjection extends User implements PluginDatainjecti
 
 
     /**
+     * @param array $values
+     */
+    public function reformat(&$values)
+    {
+        // Remove token fields to avoid double encryption and length issues
+        $tokens = ['password_forget_token', 'personal_token', 'api_token', 'cookie_token'];
+        foreach ($tokens as $token) {
+            if (isset($values['User'][$token])) {
+                unset($values['User'][$token]);
+            }
+        }
+    }
+
+    /**
     * @param array $values
     * @param boolean $add                (true by default)
     * @param array|null $rights    array
@@ -164,17 +186,34 @@ class PluginDatainjectionUserInjection extends User implements PluginDatainjecti
         global $DB;
 
         //Manage user emails
-        if (isset($values['User']['useremails_id']) && $rights['add_dropdown'] && Session::haveRight('user', UPDATE) && !countElementsInTable(
-            "glpi_useremails",
-            [
-                'users_id' => $values['User']['id'],
-                'email'    => $values['User']['useremails_id'],
-            ],
-        )) {
-            $useremail       = new UserEmail();
-            $tmp['users_id'] = $values['User']['id'];
-            $tmp['email']    = $values['User']['useremails_id'];
-            $useremail->add($tmp);
+        if (isset($values['User']['useremails_id']) && $rights['add_dropdown'] && Session::haveRight('user', UPDATE)) {
+            $emails = preg_split('/[\s,;]+/', $values['User']['useremails_id'], -1, PREG_SPLIT_NO_EMPTY);
+            foreach ($emails as $email) {
+                $email = trim($email);
+                if (filter_var($email, FILTER_VALIDATE_EMAIL)) {
+                    if (!countElementsInTable(
+                        "glpi_useremails",
+                        [
+                            'users_id' => $values['User']['id'],
+                            'email'    => $email,
+                        ],
+                    )) {
+                        $useremail       = new UserEmail();
+                        $tmp = [
+                            'users_id'   => $values['User']['id'],
+                            'email'      => $email,
+                            'is_default' => 0
+                        ];
+
+                        // If user has no emails, set this one as default
+                        if (!countElementsInTable("glpi_useremails", ['users_id' => $values['User']['id']])) {
+                            $tmp['is_default'] = 1;
+                        }
+
+                        $useremail->add($tmp);
+                    }
+                }
+            }
         }
 
         if (isset($values['User']['password']) && ($values['User']['password'] != '')) {
