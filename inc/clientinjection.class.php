@@ -312,7 +312,7 @@ class PluginDatainjectionClientInjection
         $data = [
             'ok'            => $ok,
             'from_url'      => $from_url,
-            'popup_url'     => plugin_datainjection_geturl() . "front/popup.php?popup=log&amp;models_id=" . $model->fields['id'],
+            'popup_url'     => plugin_datainjection_geturl() . "front/popup.php?popup=log&models_id=" . $model->fields['id'],
             'model_id'      => $model->fields['id'],
             'has_pdf'       => $plugin->isActivated('pdf'),
             'has_errors'    => !empty($error_lines),
