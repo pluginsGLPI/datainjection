@@ -1,5 +1,7 @@
 <?php
 
+use Laminas\Validator\Sitemap\Loc;
+
 /**
  * -------------------------------------------------------------------------
  * DataInjection plugin for GLPI
@@ -83,9 +85,21 @@ class PluginDatainjectionLocationInjection extends Location implements PluginDat
    **/
     public function addOrUpdateObject($values = [], $options = [])
     {
-
+        $values = $this->fixLocationTreeStructure($values);
         $lib = new PluginDatainjectionCommonInjectionLib($this, $values, $options);
         $lib->processAddOrUpdate();
         return $lib->getInjectionResults();
+    }
+
+    public function fixLocationTreeStructure($values)
+    {
+        if (isset($values['Location']['completename']) && !isset($values['Location']['name']) && strpos($values['Location']['completename'], '>') === false)
+        {
+            $values['Location']['name'] = trim($values['Location']['completename']);
+            $values['Location']['locations_id'] = '0';
+            $values['Location']['ancestors_cache'] = '[]';
+        }
+
+        return $values;
     }
 }

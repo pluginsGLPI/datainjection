@@ -1648,7 +1648,7 @@ class PluginDatainjectionCommonInjectionLib
 
             if (!empty($option) && self::isFieldADropdown($option['displaytype']) && $value == self::EMPTY_VALUE) {
                 //If field is a dropdown and value is '', then replace it by 0
-                continue;
+                $toinject[$key] = 0;
             } else {
                 // Skip empty values for fields that cannot accept empty strings during updates
                 // Check if the field is nullable using the injection class method
