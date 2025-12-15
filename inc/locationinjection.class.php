@@ -28,7 +28,7 @@
  * -------------------------------------------------------------------------
  */
 
-use Laminas\Validator\Sitemap\Loc;
+
 
 /**
  * -------------------------------------------------------------------------
@@ -121,8 +121,7 @@ class PluginDatainjectionLocationInjection extends Location implements PluginDat
 
     public function fixLocationTreeStructure($values)
     {
-        if (isset($values['Location']['completename']) && !isset($values['Location']['name']) && strpos($values['Location']['completename'], '>') === false)
-        {
+        if (isset($values['Location']['completename']) && !isset($values['Location']['name']) && !str_contains($values['Location']['completename'], '>')) {
             $values['Location']['name'] = trim($values['Location']['completename']);
             $values['Location']['locations_id'] = '0';
             $values['Location']['ancestors_cache'] = '[]';
