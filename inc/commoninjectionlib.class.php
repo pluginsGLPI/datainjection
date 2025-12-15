@@ -1651,12 +1651,10 @@ class PluginDatainjectionCommonInjectionLib
                 continue;
             } else {
                 // Skip empty values for fields that cannot accept empty strings during updates
-                if ($value === self::EMPTY_VALUE && !$add) {
-                    // Check if the field is nullable using the injection class method
-                    if (method_exists($injectionClass, 'isNullable') && !$injectionClass->isNullable($key)) {
-                        // Skip this field during update if value is empty and field is not nullable
-                        continue;
-                    }
+                // Check if the field is nullable using the injection class method
+                if ($value === self::EMPTY_VALUE && !$add && (method_exists($injectionClass, 'isNullable') && !$injectionClass->isNullable($key))) {
+                    // Skip this field during update if value is empty and field is not nullable
+                    continue;
                 }
                 $toinject[$key] = $value;
             }

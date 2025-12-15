@@ -28,7 +28,7 @@
  * -------------------------------------------------------------------------
  */
 
-
+use function Safe\preg_split;
 
 class PluginDatainjectionUserInjection extends User implements PluginDatainjectionInjectionInterface
 {
@@ -65,7 +65,7 @@ class PluginDatainjectionUserInjection extends User implements PluginDatainjecti
             'is_active',
             'is_deleted',
             'authtype',
-            'auths_id'
+            'auths_id',
         ];
 
         return !in_array($field, $non_nullable_fields);
@@ -190,28 +190,24 @@ class PluginDatainjectionUserInjection extends User implements PluginDatainjecti
             $emails = preg_split('/[\s,;]+/', $values['User']['useremails_id'], -1, PREG_SPLIT_NO_EMPTY);
             foreach ($emails as $email) {
                 $email = trim($email);
-                if (filter_var($email, FILTER_VALIDATE_EMAIL)) {
-                    if (!countElementsInTable(
-                        "glpi_useremails",
-                        [
-                            'users_id' => $values['User']['id'],
-                            'email'    => $email,
-                        ],
-                    )) {
-                        $useremail       = new UserEmail();
-                        $tmp = [
-                            'users_id'   => $values['User']['id'],
-                            'email'      => $email,
-                            'is_default' => 0
-                        ];
-
-                        // If user has no emails, set this one as default
-                        if (!countElementsInTable("glpi_useremails", ['users_id' => $values['User']['id']])) {
-                            $tmp['is_default'] = 1;
-                        }
-
-                        $useremail->add($tmp);
+                if (filter_var($email, FILTER_VALIDATE_EMAIL) && !countElementsInTable(
+                    "glpi_useremails",
+                    [
+                        'users_id' => $values['User']['id'],
+                        'email'    => $email,
+                    ],
+                )) {
+                    $useremail       = new UserEmail();
+                    $tmp = [
+                        'users_id'   => $values['User']['id'],
+                        'email'      => $email,
+                        'is_default' => 0,
+                    ];
+                    // If user has no emails, set this one as default
+                    if (!countElementsInTable("glpi_useremails", ['users_id' => $values['User']['id']])) {
+                        $tmp['is_default'] = 1;
                     }
+                    $useremail->add($tmp);
                 }
             }
         }
