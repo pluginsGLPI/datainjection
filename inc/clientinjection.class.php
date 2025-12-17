@@ -29,6 +29,8 @@
  */
 use Glpi\Application\View\TemplateRenderer;
 use Glpi\Debug\Profile;
+use Glpi\Error\ErrorHandler;
+use Safe\Exceptions\InfoException;
 
 use function Safe\fclose;
 use function Safe\filesize;
@@ -179,8 +181,12 @@ class PluginDatainjectionClientInjection
         /** @var array $CFG_GLPI */
         global $CFG_GLPI;
 
-        // To prevent problem of execution time during injection
-        ini_set("max_execution_time", "0");
+        try {
+            ini_set("max_execution_time", "0");
+        } catch (InfoException $e) {
+            //empty catch -- but keep trace of issue
+            ErrorHandler::logCaughtException($e);
+        }
 
         // Disable recording each SQL request in $_SESSION
         Profile::getCurrent()->disable();

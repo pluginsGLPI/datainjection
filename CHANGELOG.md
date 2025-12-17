@@ -23,6 +23,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Fix user fields nullability to prevent SQL errors during injection
 - Remove groups as import link field
 - Fix `clean` function
+- Prevent fatal error with `Safe\ini_set()`
 
 ## [2.14.4] - 2025-11-25
 
