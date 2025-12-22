@@ -13,7 +13,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-12-15 01:20+0000\n"
+"POT-Creation-Date: 2025-12-18 01:15+0000\n"
 "PO-Revision-Date: 2018-06-21 12:57+0000\n"
 "Last-Translator: David Stepan <stepand@tiscali.cz>, 2025\n"
 "Language-Team: Czech (Czech Republic) (https://app.transifex.com/teclib/teams/28042/cs_CZ/)\n"
@@ -320,7 +320,7 @@ msgstr "Do souboru"
 msgid "From the model"
 msgstr "Ze šablony"
 
-#: inc/model.class.php:1354 inc/commoninjectionlib.class.php:2131
+#: inc/model.class.php:1354 inc/commoninjectionlib.class.php:2137
 msgid "Undetermined"
 msgstr "Nespecifikováno"
 
@@ -368,51 +368,51 @@ msgstr "UTF-8"
 msgid "ISO8859-1"
 msgstr "ISO8859-1"
 
-#: inc/commoninjectionlib.class.php:2052
+#: inc/commoninjectionlib.class.php:2058
 msgid "Add from CSV file"
 msgstr "Přidat z CSV souboru"
 
-#: inc/commoninjectionlib.class.php:2052
+#: inc/commoninjectionlib.class.php:2058
 msgid "Update from CSV file"
 msgstr "Aktualizovat z CSV souboru"
 
-#: inc/commoninjectionlib.class.php:2091
+#: inc/commoninjectionlib.class.php:2097
 msgid "No right to import data"
 msgstr "Nemáte oprávnění importovat data"
 
-#: inc/commoninjectionlib.class.php:2095
+#: inc/commoninjectionlib.class.php:2101
 msgid "No right to update data"
 msgstr "Nemáte oprávnění aktualizovat data"
 
-#: inc/commoninjectionlib.class.php:2099
+#: inc/commoninjectionlib.class.php:2105
 msgid "Size of the inserted value is to expansive"
 msgstr "Velikost vkládané hodnoty je příliš obsáhlá"
 
-#: inc/commoninjectionlib.class.php:2103
+#: inc/commoninjectionlib.class.php:2109
 msgid "Import not allowed"
 msgstr "Import není dovolen"
 
-#: inc/commoninjectionlib.class.php:2107
+#: inc/commoninjectionlib.class.php:2113
 msgid "Import failed"
 msgstr "Import se nezdařil"
 
-#: inc/commoninjectionlib.class.php:2111
+#: inc/commoninjectionlib.class.php:2117
 msgid "At least one mandatory field is not present"
 msgstr "Přinejmenším jedna povinná kolonka není vyplněná"
 
-#: inc/commoninjectionlib.class.php:2115
+#: inc/commoninjectionlib.class.php:2121
 msgid "Data to insert are correct"
 msgstr "Data pro vložení jsou v pořádku"
 
-#: inc/commoninjectionlib.class.php:2119
+#: inc/commoninjectionlib.class.php:2125
 msgid "One data is not the good type"
 msgstr "Jedna data nejsou správného typu"
 
-#: inc/commoninjectionlib.class.php:2123
+#: inc/commoninjectionlib.class.php:2129
 msgid "Warning"
 msgstr "Varování"
 
-#: inc/commoninjectionlib.class.php:2127
+#: inc/commoninjectionlib.class.php:2133
 msgid "Data not found"
 msgstr "Data nebyla nalezena"
 
@@ -428,7 +428,7 @@ msgstr "-------Zvolte tabulku-------"
 msgid "-------Choose a field-------"
 msgstr "-------Zvolte kolonku-------"
 
-#: inc/clientinjection.class.php:145
+#: inc/clientinjection.class.php:147
 msgid "Launch the import"
 msgstr "Spustit import"
 
