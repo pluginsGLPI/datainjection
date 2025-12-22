@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-12-15 01:20+0000\n"
+"POT-Creation-Date: 2025-12-22 01:22+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -311,7 +311,7 @@ msgstr ""
 msgid "From the model"
 msgstr ""
 
-#: inc/model.class.php:1354 inc/commoninjectionlib.class.php:2131
+#: inc/model.class.php:1354 inc/commoninjectionlib.class.php:2137
 msgid "Undetermined"
 msgstr ""
 
@@ -359,51 +359,51 @@ msgstr ""
 msgid "ISO8859-1"
 msgstr ""
 
-#: inc/commoninjectionlib.class.php:2052
+#: inc/commoninjectionlib.class.php:2058
 msgid "Add from CSV file"
 msgstr ""
 
-#: inc/commoninjectionlib.class.php:2052
+#: inc/commoninjectionlib.class.php:2058
 msgid "Update from CSV file"
 msgstr ""
 
-#: inc/commoninjectionlib.class.php:2091
+#: inc/commoninjectionlib.class.php:2097
 msgid "No right to import data"
 msgstr ""
 
-#: inc/commoninjectionlib.class.php:2095
+#: inc/commoninjectionlib.class.php:2101
 msgid "No right to update data"
 msgstr ""
 
-#: inc/commoninjectionlib.class.php:2099
+#: inc/commoninjectionlib.class.php:2105
 msgid "Size of the inserted value is to expansive"
 msgstr ""
 
-#: inc/commoninjectionlib.class.php:2103
+#: inc/commoninjectionlib.class.php:2109
 msgid "Import not allowed"
 msgstr ""
 
-#: inc/commoninjectionlib.class.php:2107
+#: inc/commoninjectionlib.class.php:2113
 msgid "Import failed"
 msgstr ""
 
-#: inc/commoninjectionlib.class.php:2111
+#: inc/commoninjectionlib.class.php:2117
 msgid "At least one mandatory field is not present"
 msgstr ""
 
-#: inc/commoninjectionlib.class.php:2115
+#: inc/commoninjectionlib.class.php:2121
 msgid "Data to insert are correct"
 msgstr ""
 
-#: inc/commoninjectionlib.class.php:2119
+#: inc/commoninjectionlib.class.php:2125
 msgid "One data is not the good type"
 msgstr ""
 
-#: inc/commoninjectionlib.class.php:2123
+#: inc/commoninjectionlib.class.php:2129
 msgid "Warning"
 msgstr ""
 
-#: inc/commoninjectionlib.class.php:2127
+#: inc/commoninjectionlib.class.php:2133
 msgid "Data not found"
 msgstr ""
 
@@ -419,7 +419,7 @@ msgstr ""
 msgid "-------Choose a field-------"
 msgstr ""
 
-#: inc/clientinjection.class.php:145
+#: inc/clientinjection.class.php:147
 msgid "Launch the import"
 msgstr ""
 
