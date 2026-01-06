@@ -52,7 +52,10 @@
             {# Forms fields #}
             {{ fields.textField('name', values['name'], __('Name'), field_options) }}
 
-            {{ fields.dropdownYesNo('is_private', values['is_private'], __('Visibility'), field_options) }}
+            {{ fields.dropdownArrayField('is_private', values['is_private'], {
+                0: __('Public'),
+                1: __('Private')
+            }, __('Visibility'), field_options) }}
 
             {{ fields.dropdownField('Entity', 'entities_id', values['entities_id'], __('Entity'), field_options) }}
 
