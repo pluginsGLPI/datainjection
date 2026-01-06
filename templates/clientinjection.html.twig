@@ -68,21 +68,33 @@
                 </div>
             </div>
 
-            {% if models_id %}
-                <div class="row mt-3">
-                    <div class="col-12">
-                        {% if step == upload_step %}
-                            <script>
-                                Ajax.updateItem("span_injection", "{{ upload_url }}", {{ params|json_encode|raw }});
-                            </script>
-                        {% elseif step == result_step %}
-                            <script>
-                                Ajax.updateItem("span_injection", "{{ result_url }}", {{ params|json_encode|raw }});
-                            </script>
-                        {% endif %}
-                    </div>
-                </div>
-            {% endif %}
+            <script>
+                $(function() {
+                    const rand = '{{ rand }}';
+                    const uploadUrl = "{{ upload_url }}";
+                    const resultUrl = "{{ result_url }}";
+                    const modelId = {{ models_id }};
+                    const step = {{ step }};
+                    const resultStep = {{ result_step }};
+
+                    function loadFormForModel(modelId) {
+                        if (modelId > 0) {
+                            const url = (step === resultStep) ? resultUrl : uploadUrl;
+                            $('#span_injection').load(url, { models_id: modelId });
+                        }
+                    }
+
+                    // On model change
+                    $('#clientinjection_form' + rand + ' select[name="dropdown_models"]').on('change select2:select', function() {
+                        loadFormForModel($(this).val());
+                    });
+
+                    // Initial load
+                    if (modelId > 0) {
+                        loadFormForModel(modelId);
+                    }
+                });
+            </script>
         </div>
     </form>
 </div>
