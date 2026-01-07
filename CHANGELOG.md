@@ -10,7 +10,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Fixed
 
 - Fix model subform not displayed after page reload
-- Restore visibility dropdown for model (Public / Private)
+- Rename visibility field label to "Is Private"
 
 ## [2.15.3] - 2025-12-22
 
