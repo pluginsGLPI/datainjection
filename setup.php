@@ -34,7 +34,7 @@ use function Safe\mkdir;
 define('PLUGIN_DATAINJECTION_VERSION', '2.15.2');
 
 // Minimal GLPI version, inclusive
-define("PLUGIN_DATAINJECTION_MIN_GLPI", "11.0.0");
+define("PLUGIN_DATAINJECTION_MIN_GLPI", "11.0.5");
 // Maximum GLPI version, exclusive
 define("PLUGIN_DATAINJECTION_MAX_GLPI", "11.0.99");
 
@@ -141,6 +141,7 @@ function getTypesToInject(): void
         'PluginDatainjectionGroup_UserInjection'                  => 'datainjection',
         'PluginDatainjectionInfocomInjection'                     => 'datainjection',
         'PluginDatainjectionLocationInjection'                    => 'datainjection',
+        'PluginDatainjectionCategoryInjection'                    => 'datainjection',
         'PluginDatainjectionStateInjection'                       => 'datainjection',
         'PluginDatainjectionManufacturerInjection'                => 'datainjection',
         'PluginDatainjectionMonitorInjection'                     => 'datainjection',
