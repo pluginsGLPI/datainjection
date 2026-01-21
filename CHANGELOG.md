@@ -12,6 +12,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Fix `name` and `locations_id` when updating the `completename`
 - Fix user field updates and email import
 
+### Added
+
+- Handle `Service catalog category`
+
 ## [2.15.2] - 2025-11-25
 
 ### Fixed
