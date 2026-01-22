@@ -55,7 +55,7 @@ if (isset($_POST["update"])) {
 
     if (!$at_least_one_mandatory) {
         Session::addMessageAfterRedirect(
-            __(
+            __s(
                 'One link field must be selected: it will be used to check if data already exists',
                 'datainjection',
             ),
@@ -74,7 +74,7 @@ if (isset($_POST["update"])) {
             );
             Session::setActiveTab('PluginDatainjectionModel', 'PluginDatainjectionModel$5');
             Session::addMessageAfterRedirect(
-                __(
+                __s(
                     "This step allows you to add informations not present in the file. You'll be asked for theses informations while using the model.",
                     'datainjection',
                 ),

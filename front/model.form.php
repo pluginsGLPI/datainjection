@@ -88,7 +88,7 @@ if (isset($_POST["add"])) {
             Session::setActiveTab('PluginDatainjectionModel', 'PluginDatainjectionModel$4');
         } else {
             Session::addMessageAfterRedirect(
-                __('The file could not be found (Maybe it exceeds the maximum size allowed)', 'datainjection'),
+                __s('The file could not be found (Maybe it exceeds the maximum size allowed)', 'datainjection'),
                 true,
                 ERROR,
                 true,

@@ -49,7 +49,7 @@ if (isset($_SESSION['datainjection']['go'])) {
     //If additional informations provided : check if mandatory infos are present
     if (!$model->checkMandatoryFields($_SESSION['datainjection']['infos'])) {
         Session::addMessageAfterRedirect(
-            __('One mandatory field is not filled', 'datainjection'),
+            __s('One mandatory field is not filled', 'datainjection'),
             true,
             ERROR,
             true,
@@ -83,7 +83,7 @@ if (isset($_SESSION['datainjection']['go'])) {
         }
     } else {
         Session::addMessageAfterRedirect(
-            __('The file could not be found (Maybe it exceeds the maximum size allowed)', 'datainjection'),
+            __s('The file could not be found (Maybe it exceeds the maximum size allowed)', 'datainjection'),
             true,
             ERROR,
             true,

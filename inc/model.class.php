@@ -342,7 +342,7 @@ class PluginDatainjectionModel extends CommonDBTM
                 }
 
                 if ($model['entities_id'] == -1) {
-                    echo "\n<optgroup label='" . __('Private') . "'>";
+                    echo "\n<optgroup label='" . __s('Private') . "'>";
                 } else {
                     echo "\n<optgroup label=\"" . Dropdown::getDropdownName(
                         "glpi_entities",
@@ -866,7 +866,7 @@ class PluginDatainjectionModel extends CommonDBTM
         //If no behavior selected
         if (!isset($input['name']) || ($input['name'] == '')) {
             Session::addMessageAfterRedirect(
-                __('Please enter a name for the model', 'datainjection'),
+                __s('Please enter a name for the model', 'datainjection'),
                 true,
                 ERROR,
                 true,
@@ -876,7 +876,7 @@ class PluginDatainjectionModel extends CommonDBTM
 
         if (!$input['behavior_add'] && !$input['behavior_update']) {
             Session::addMessageAfterRedirect(
-                __(
+                __s(
                     'Your model should allow import and/or update of data',
                     'datainjection',
                 ),
@@ -898,7 +898,7 @@ class PluginDatainjectionModel extends CommonDBTM
 
         if (isset($input['is_private']) && $input['is_private'] == 1 && (isset($input['users_id']) && $input['users_id'] != $this->fields['users_id'])) {
             Session::addMessageAfterRedirect(
-                __(
+                __s(
                     'You are not the initial creator of this model',
                     'datainjection',
                 ),
@@ -964,7 +964,7 @@ class PluginDatainjectionModel extends CommonDBTM
             if (!move_uploaded_file($temporary_uploaded_filename, $unique_filename)) {
                 return ['status'  => PluginDatainjectionCommonInjectionLib::FAILED,
                     'message' => sprintf(
-                        __('Impossible to copy the file in %s', 'datainjection'),
+                        __s('Impossible to copy the file in %s', 'datainjection'),
                         realpath(PLUGIN_DATAINJECTION_UPLOAD_DIR),
                     ),
                 ];
@@ -973,8 +973,8 @@ class PluginDatainjectionModel extends CommonDBTM
 
         //If file has not the right extension, reject it and delete if
         if ($this->specific_model->checkFileName($original_filename)) {
-            $message  = __('File format is wrong', 'datainjection');
-            $message .= "<br>" . __('Extension csv required', 'datainjection');
+            $message  = __s('File format is wrong', 'datainjection');
+            $message .= "<br>" . __s('Extension csv required', 'datainjection');
             if (!$webservice) {
                 Session::addMessageAfterRedirect($message, true, ERROR, false);
             }
@@ -1054,7 +1054,7 @@ class PluginDatainjectionModel extends CommonDBTM
         }
         //There's an error
         if ($check['status'] != PluginDatainjectionCommonInjectionLib::SUCCESS && $mode == self::PROCESS) {
-            Session::addMessageAfterRedirect($check['error_message'], true, ERROR);
+            Session::addMessageAfterRedirect(htmlspecialchars($check['error_message']), true, ERROR);
             return false;
         }
 
@@ -1090,7 +1090,7 @@ class PluginDatainjectionModel extends CommonDBTM
             self::changeStep($this->fields['id'], self::MAPPING_STEP);
 
             //Add redirect message
-            Session::addMessageAfterRedirect(__('The file is ok.', 'datainjection'), true, INFO);
+            Session::addMessageAfterRedirect(__s('The file is ok.', 'datainjection'), true, INFO);
         }
 
         return true;
@@ -1324,7 +1324,7 @@ class PluginDatainjectionModel extends CommonDBTM
         }
         Html::closeForm();
         echo "<div style='margin-top:15px;text-align:center'>";
-        echo "<a href='javascript:window.close()'>" . __('Close') . "</a>";
+        echo "<a href='javascript:window.close()'>" . __s('Close') . "</a>";
         echo "</div>";
     }
 

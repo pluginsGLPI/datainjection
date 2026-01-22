@@ -109,9 +109,9 @@ class PluginDatainjectionInfo extends CommonDBTM
              Toolbox::getItemTypeFormURL(self::class) . "'>";
             echo "<table class='tab_cadre_fixe'>";
             echo "<tr>";
-            echo "<th>" . __('Tables', 'datainjection') . "</th>";
-            echo "<th>" . _n('Field', 'Fields', 2) . "</th>";
-            echo "<th>" . __('Mandatory information', 'datainjection') . "</th>";
+            echo "<th>" . __s('Tables', 'datainjection') . "</th>";
+            echo "<th>" . _sn('Field', 'Fields', 2) . "</th>";
+            echo "<th>" . __s('Mandatory information', 'datainjection') . "</th>";
             echo "</tr>";
 
             echo "<tr class='tab_bg_1'>";
@@ -167,9 +167,9 @@ class PluginDatainjectionInfo extends CommonDBTM
             if ($canedit) {
                 echo "<th>&nbsp;</th>";
             }
-            echo "<th>" . __('Tables', 'datainjection') . "</th>";
-            echo "<th>" . __('Fields', 'datainjection') . "</th>";
-            echo "<th>" . __('Mandatory information', 'datainjection') . "</th>";
+            echo "<th>" . __s('Tables', 'datainjection') . "</th>";
+            echo "<th>" . __s('Fields', 'datainjection') . "</th>";
+            echo "<th>" . __s('Mandatory information', 'datainjection') . "</th>";
             echo "</tr>";
 
             foreach ($model->getInfos() as $info) {
@@ -210,10 +210,10 @@ class PluginDatainjectionInfo extends CommonDBTM
                 echo "<tr>";
                 echo "<td><i class='$arrow fa-flip-horizontal fa-lg mx-2'></i></td>";
                 echo "<td class='center' style='white-space:nowrap;'>";
-                echo "<a onclick= \"if ( markCheckboxes('$formname') ) return false;\" href='#'>" . __('Check all') . "</a></td>";
+                echo "<a onclick= \"if ( markCheckboxes('$formname') ) return false;\" href='#'>" . __s('Check all') . "</a></td>";
                 echo "<td>/</td>";
                 echo "<td class='center' style='white-space:nowrap;'>";
-                echo "<a onclick= \"if ( unMarkCheckboxes('$formname') ) return false;\" href='#'>" . __('Uncheck all') . "</a></td>";
+                echo "<a onclick= \"if ( unMarkCheckboxes('$formname') ) return false;\" href='#'>" . __s('Uncheck all') . "</a></td>";
                 echo "<td class='left' width='80%'>";
 
                 echo "<input type='submit' name='delete' ";
