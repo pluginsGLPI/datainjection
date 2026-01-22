@@ -35,7 +35,7 @@ class PluginDatainjectionMenu extends CommonGLPI
     public static function getMenuName()
     {
 
-        return __s('Data injection', 'datainjection');
+        return __('Data injection', 'datainjection');
     }
 
     public static function getMenuContent()
@@ -53,12 +53,12 @@ class PluginDatainjectionMenu extends CommonGLPI
 
         if (Session::haveRight(static::$rightname, READ)) {
             $image_import  = "<i class='fas fa-upload' title='";
-            $image_import .= __s('Injection of the file', 'datainjection');
-            $image_import .= "' alt='" . __s('Injection of the file', 'datainjection') . "'></i>";
+            $image_import .= __('Injection of the file', 'datainjection');
+            $image_import .= "' alt='" . __('Injection of the file', 'datainjection') . "'></i>";
 
             $menu['options'] = [
                 'client' => [
-                    'title' => __s('Injection of the file', 'datainjection'),
+                    'title' => __('Injection of the file', 'datainjection'),
                     'page'  => $injectionFormUrl,
                     'icon'  => 'ti ti-file-download',
                 ],

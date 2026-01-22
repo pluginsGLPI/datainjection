@@ -2055,7 +2055,7 @@ class PluginDatainjectionCommonInjectionLib
         if ($item->dohistory) {
             $changes[0] = 0;
 
-            $changes[2] = $add ? __s('Add from CSV file', 'datainjection') : __s('Update from CSV file', 'datainjection');
+            $changes[2] = $add ? __('Add from CSV file', 'datainjection') : __('Update from CSV file', 'datainjection');
             $changes[1] = "";
             Log::history($item->fields['id'], get_class($item), $changes);
         }
@@ -2072,9 +2072,9 @@ class PluginDatainjectionCommonInjectionLib
     public static function getActionLabel($action)
     {
 
-        $actions = [self::IMPORT_ADD    => __s('Add'),
-            self::IMPORT_UPDATE => __s('Update'),
-            self::IMPORT_DELETE => __s('Delete'),
+        $actions = [self::IMPORT_ADD    => __('Add'),
+            self::IMPORT_UPDATE => __('Update'),
+            self::IMPORT_DELETE => __('Delete'),
         ];
         return $actions[$action] ?? "";
     }
@@ -2094,47 +2094,47 @@ class PluginDatainjectionCommonInjectionLib
 
         switch ($type) {
             case self::ERROR_CANNOT_IMPORT:
-                $message = __s('No right to import data', 'datainjection');
+                $message = __('No right to import data', 'datainjection');
                 break;
 
             case self::ERROR_CANNOT_UPDATE:
-                $message = __s('No right to update data', 'datainjection');
+                $message = __('No right to update data', 'datainjection');
                 break;
 
             case self::ERROR_FIELDSIZE_EXCEEDED:
-                $message = __s('Size of the inserted value is to expansive', 'datainjection');
+                $message = __('Size of the inserted value is to expansive', 'datainjection');
                 break;
 
             case self::ERROR_IMPORT_REFUSED:
-                $message = __s('Import not allowed', 'datainjection');
+                $message = __('Import not allowed', 'datainjection');
                 break;
 
             case self::FAILED:
-                $message = __s('Import failed', 'datainjection');
+                $message = __('Import failed', 'datainjection');
                 break;
 
             case self::MANDATORY:
-                $message = __s('At least one mandatory field is not present', 'datainjection');
+                $message = __('At least one mandatory field is not present', 'datainjection');
                 break;
 
             case self::SUCCESS:
-                $message = __s('Data to insert are correct', 'datainjection');
+                $message = __('Data to insert are correct', 'datainjection');
                 break;
 
             case self::TYPE_MISMATCH:
-                $message = __s('One data is not the good type', 'datainjection');
+                $message = __('One data is not the good type', 'datainjection');
                 break;
 
             case self::WARNING:
-                $message = __s('Warning', 'datainjection');
+                $message = __('Warning', 'datainjection');
                 break;
 
             case self::WARNING_NOTFOUND:
-                $message = __s('Data not found', 'datainjection');
+                $message = __('Data not found', 'datainjection');
                 break;
 
             default:
-                $message = __s('Undetermined', 'datainjection');
+                $message = __('Undetermined', 'datainjection');
                 break;
         }
 
@@ -2270,7 +2270,7 @@ class PluginDatainjectionCommonInjectionLib
             $tab[300]['table']       = $item->getTable();
             $tab[300]['field']       = 'is_template';
             $tab[300]['linkfield']   = 'is_template';
-            $tab[300]['name']        = __s('is') . " " . __s('Template') . " ?";
+            $tab[300]['name']        = __('is') . " " . __('Template') . " ?";
             $tab[300]['type']        = 'integer';
             $tab[300]['injectable']  = 1;
             $tab[300]['checktype']   = 'integer';
@@ -2278,7 +2278,7 @@ class PluginDatainjectionCommonInjectionLib
 
             $tab[301]['table']       = $item->getTable();
             $tab[301]['field']       = 'template_name';
-            $tab[301]['name']        = __s('Template');
+            $tab[301]['name']        = __('Template');
             $tab[301]['injectable']  = 1;
             $tab[301]['checktype']   = 'text';
             $tab[301]['displaytype'] = 'template';

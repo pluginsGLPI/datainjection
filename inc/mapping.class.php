@@ -112,16 +112,16 @@ class PluginDatainjectionMapping extends CommonDBTM
              $model->getID();
             echo "<a href=#  onClick=\"var w = window.open('$url' , 'glpipopup', " .
              "'height=400, width=600, top=100, left=100, scrollbars=yes' );w.focus();\"/>";
-            echo __s('See the file', 'datainjection') . "</a>";
+            echo __('See the file', 'datainjection') . "</a>";
             echo "</td></tr>";
         }
 
         echo "<table class='tab_cadre_fixe'>";
         echo "<tr>";
-        echo "<th>" . __s('Header of the file', 'datainjection') . "</th>";
-        echo "<th>" . __s('Tables', 'datainjection') . "</th>";
-        echo "<th>" . _sn('Field', 'Fields', 2) . "</th>";
-        echo "<th>" . __s('Link field', 'datainjection') . "</th>";
+        echo "<th>" . __('Header of the file', 'datainjection') . "</th>";
+        echo "<th>" . __('Tables', 'datainjection') . "</th>";
+        echo "<th>" . _n('Field', 'Fields', 2) . "</th>";
+        echo "<th>" . __('Link field', 'datainjection') . "</th>";
         echo "</tr>";
 
         $model->loadMappings();

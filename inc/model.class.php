@@ -106,7 +106,7 @@ class PluginDatainjectionModel extends CommonDBTM
     public static function getTypeName($nb = 0)
     {
 
-        return _sn('Model', 'Models', $nb);
+        return _n('Model', 'Models', $nb);
     }
 
 
@@ -342,7 +342,7 @@ class PluginDatainjectionModel extends CommonDBTM
                 }
 
                 if ($model['entities_id'] == -1) {
-                    echo "\n<optgroup label='" . __s('Private') . "'>";
+                    echo "\n<optgroup label='" . __('Private') . "'>";
                 } else {
                     echo "\n<optgroup label=\"" . Dropdown::getDropdownName(
                         "glpi_entities",
@@ -432,7 +432,7 @@ class PluginDatainjectionModel extends CommonDBTM
             'id'            => 1,
             'table'         => $this->getTable(),
             'field'         => 'name',
-            'name'          => __s('Name'),
+            'name'          => __('Name'),
             'datatype'      => 'itemlink',
             'itemlink_type' => $this->getType(),
             'autocomplete'  => true,
@@ -442,14 +442,14 @@ class PluginDatainjectionModel extends CommonDBTM
             'id'            => 2,
             'table'         => $this->getTable(),
             'field'         => 'id',
-            'name'          => __s('ID'),
+            'name'          => __('ID'),
         ];
 
         $tab[] = [
             'id'            => 3,
             'table'         => $this->getTable(),
             'field'         => 'behavior_add',
-            'name'          => __s('Allow lines creation', 'datainjection'),
+            'name'          => __('Allow lines creation', 'datainjection'),
             'datatype'      => 'bool',
             'massiveaction' => false,
         ];
@@ -458,7 +458,7 @@ class PluginDatainjectionModel extends CommonDBTM
             'id'            => 4,
             'table'         => $this->getTable(),
             'field'         => 'behavior_update',
-            'name'          => __s('Allow lines update', 'datainjection'),
+            'name'          => __('Allow lines update', 'datainjection'),
             'datatype'      => 'bool',
             'massiveaction' => false,
         ];
@@ -467,7 +467,7 @@ class PluginDatainjectionModel extends CommonDBTM
             'id'            => 5,
             'table'         => $this->getTable(),
             'field'         => 'itemtype',
-            'name'          => __s('Type of data to import', 'datainjection'),
+            'name'          => __('Type of data to import', 'datainjection'),
             'datatype'      => 'itemtypename',
             'nosearch'      => true,
             'massiveaction' => false,
@@ -477,7 +477,7 @@ class PluginDatainjectionModel extends CommonDBTM
             'id'            => 6,
             'table'         => $this->getTable(),
             'field'         => 'can_add_dropdown',
-            'name'          => __s('Allow creation of dropdowns (Except Entity)', 'datainjection'),
+            'name'          => __('Allow creation of dropdowns (Except Entity)', 'datainjection'),
             'datatype'      => 'bool',
         ];
 
@@ -485,7 +485,7 @@ class PluginDatainjectionModel extends CommonDBTM
             'id'            => 7,
             'table'         => $this->getTable(),
             'field'         => 'date_format',
-            'name'          => __s('Dates format', 'datainjection'),
+            'name'          => __('Dates format', 'datainjection'),
             'datatype'      => 'specific',
             'searchtype'    => 'equals',
         ];
@@ -494,7 +494,7 @@ class PluginDatainjectionModel extends CommonDBTM
             'id'            => 8,
             'table'         => $this->getTable(),
             'field'         => 'float_format',
-            'name'          => __s('Float format', 'datainjection'),
+            'name'          => __('Float format', 'datainjection'),
             'datatype'      => 'specific',
             'searchtype'    => 'equals',
         ];
@@ -503,7 +503,7 @@ class PluginDatainjectionModel extends CommonDBTM
             'id'            => 10,
             'table'         => $this->getTable(),
             'field'         => 'port_unicity',
-            'name'          => __s('Port unicity criteria', 'datainjection'),
+            'name'          => __('Port unicity criteria', 'datainjection'),
             'datatype'      => 'specific',
             'searchtype'    => 'equals',
         ];
@@ -512,7 +512,7 @@ class PluginDatainjectionModel extends CommonDBTM
             'id'            => 11,
             'table'         => $this->getTable(),
             'field'         => 'is_private',
-            'name'          => __s('Private'),
+            'name'          => __('Private'),
             'datatype'      => 'bool',
             'massiveaction' => false,
         ];
@@ -521,7 +521,7 @@ class PluginDatainjectionModel extends CommonDBTM
             'id'            => 12,
             'table'         => $this->getTable(),
             'field'         => 'step',
-            'name'          => __s('Status'),
+            'name'          => __('Status'),
             'datatype'      => 'specific',
             'searchtype'    => 'equals',
             'massiveaction' => false,
@@ -531,7 +531,7 @@ class PluginDatainjectionModel extends CommonDBTM
             'id'            => 16,
             'table'         => $this->getTable(),
             'field'         => 'comment',
-            'name'          => __s('Comments'),
+            'name'          => __('Comments'),
             'datatype'      => 'text',
         ];
 
@@ -539,7 +539,7 @@ class PluginDatainjectionModel extends CommonDBTM
             'id'            => 80,
             'table'         => 'glpi_entities',
             'field'         => 'completename',
-            'name'          => __s('Entity'),
+            'name'          => __('Entity'),
             'datatype'      => 'dropdown',
         ];
 
@@ -547,7 +547,7 @@ class PluginDatainjectionModel extends CommonDBTM
             'id'            => 86,
             'table'         => $this->getTable(),
             'field'         => 'is_recursive',
-            'name'          => __s('Child entities'),
+            'name'          => __('Child entities'),
             'datatype'      => 'bool',
         ];
 
@@ -555,7 +555,7 @@ class PluginDatainjectionModel extends CommonDBTM
             'id'            => 87,
             'table'         => $this->getTable(),
             'field'         => 'replace_multiline_value',
-            'name'          => __s('Replacing the value of multiline text fields', 'datainjection'),
+            'name'          => __('Replacing the value of multiline text fields', 'datainjection'),
             'datatype'      => 'bool',
         ];
 
@@ -696,7 +696,7 @@ class PluginDatainjectionModel extends CommonDBTM
             'float_formats' => PluginDatainjectionDropdown::floatFormats(),
             'port_unicity_values' => PluginDatainjectionDropdown::portUnicityValues(),
             'can_overwrite_if_not_empty' => $this->fields['can_overwrite_if_not_empty'] ?? 0,
-            'visibility_options' => [1 => __s('Private'), 0 => __s('Public')],
+            'visibility_options' => [1 => __('Private'), 0 => __('Public')],
             'options' => $options,
             'initial_step' => self::INITIAL_STEP,
             'session_user_id' => Session::getLoginUserID(),
@@ -752,16 +752,16 @@ class PluginDatainjectionModel extends CommonDBTM
         $canedit = Session::haveRight('plugin_datainjection_model', UPDATE);
 
         if (!$withtemplate && $item instanceof self) {
-            $tabs[1] = self::createTabEntry(__s('Model'), 0, $item::getType(), self::getIcon());
+            $tabs[1] = self::createTabEntry(__('Model'), 0, $item::getType(), self::getIcon());
             if (!$this->isNewID($item->fields['id'])) {
                 if ($canedit) {
-                    $tabs[3] = self::createTabEntry(__s('File to inject', 'datainjection'), 0, $item::getType(), 'ti ti-file-download');
+                    $tabs[3] = self::createTabEntry(__('File to inject', 'datainjection'), 0, $item::getType(), 'ti ti-file-download');
                 }
-                $tabs[4] = self::createTabEntry(__s('Mappings', 'datainjection'), 0, $item::getType(), 'ti ti-columns');
+                $tabs[4] = self::createTabEntry(__('Mappings', 'datainjection'), 0, $item::getType(), 'ti ti-columns');
                 if ($item->fields['step'] > self::MAPPING_STEP) {
-                    $tabs[5] = self::createTabEntry(__s('Additional Information', 'datainjection'), 0, $item::getType(), 'ti ti-code-variable-plus');
+                    $tabs[5] = self::createTabEntry(__('Additional Information', 'datainjection'), 0, $item::getType(), 'ti ti-code-variable-plus');
                     if ($canedit && $item->fields['step'] != self::READY_TO_USE_STEP) {
-                        $tabs[6] = self::createTabEntry(__s('Validation'), 0, $item::getType(), 'ti ti-checklist');
+                        $tabs[6] = self::createTabEntry(__('Validation'), 0, $item::getType(), 'ti ti-checklist');
                     }
                 }
             }
@@ -785,7 +785,7 @@ class PluginDatainjectionModel extends CommonDBTM
                     $options['confirm']   = 'creation';
                     $options['models_id'] = $item->fields['id'];
                     $options['add_form']  = true;
-                    $options['submit']    = __s('Load this file', 'datainjection');
+                    $options['submit']    = __('Load this file', 'datainjection');
                     PluginDatainjectionClientInjection::showUploadFileForm($options);
                     break;
 
@@ -866,7 +866,7 @@ class PluginDatainjectionModel extends CommonDBTM
         //If no behavior selected
         if (!isset($input['name']) || ($input['name'] == '')) {
             Session::addMessageAfterRedirect(
-                __s('Please enter a name for the model', 'datainjection'),
+                __('Please enter a name for the model', 'datainjection'),
                 true,
                 ERROR,
                 true,
@@ -876,7 +876,7 @@ class PluginDatainjectionModel extends CommonDBTM
 
         if (!$input['behavior_add'] && !$input['behavior_update']) {
             Session::addMessageAfterRedirect(
-                __s(
+                __(
                     'Your model should allow import and/or update of data',
                     'datainjection',
                 ),
@@ -898,7 +898,7 @@ class PluginDatainjectionModel extends CommonDBTM
 
         if (isset($input['is_private']) && $input['is_private'] == 1 && (isset($input['users_id']) && $input['users_id'] != $this->fields['users_id'])) {
             Session::addMessageAfterRedirect(
-                __s(
+                __(
                     'You are not the initial creator of this model',
                     'datainjection',
                 ),
@@ -964,7 +964,7 @@ class PluginDatainjectionModel extends CommonDBTM
             if (!move_uploaded_file($temporary_uploaded_filename, $unique_filename)) {
                 return ['status'  => PluginDatainjectionCommonInjectionLib::FAILED,
                     'message' => sprintf(
-                        __s('Impossible to copy the file in %s', 'datainjection'),
+                        __('Impossible to copy the file in %s', 'datainjection'),
                         realpath(PLUGIN_DATAINJECTION_UPLOAD_DIR),
                     ),
                 ];
@@ -973,8 +973,8 @@ class PluginDatainjectionModel extends CommonDBTM
 
         //If file has not the right extension, reject it and delete if
         if ($this->specific_model->checkFileName($original_filename)) {
-            $message  = __s('File format is wrong', 'datainjection');
-            $message .= "<br>" . __s('Extension csv required', 'datainjection');
+            $message  = __('File format is wrong', 'datainjection');
+            $message .= "<br>" . __('Extension csv required', 'datainjection');
             if (!$webservice) {
                 Session::addMessageAfterRedirect($message, true, ERROR, false);
             }
@@ -1090,7 +1090,7 @@ class PluginDatainjectionModel extends CommonDBTM
             self::changeStep($this->fields['id'], self::MAPPING_STEP);
 
             //Add redirect message
-            Session::addMessageAfterRedirect(__s('The file is ok.', 'datainjection'), true, INFO);
+            Session::addMessageAfterRedirect(__('The file is ok.', 'datainjection'), true, INFO);
         }
 
         return true;
@@ -1114,13 +1114,13 @@ class PluginDatainjectionModel extends CommonDBTM
         //If file columns don't match number of mappings in DB
         $nb = count($this->getMappings());
         if ($nb != count($header)) {
-            $error_message  = __s('The number of columns of the file is incorrect.', 'datainjection') . "\n";
+            $error_message  = __('The number of columns of the file is incorrect.', 'datainjection') . "\n";
             $error_message .= sprintf(
-                _sn('%d awaited column', '%d awaited columns', $nb, 'datainjection'),
+                _n('%d awaited column', '%d awaited columns', $nb, 'datainjection'),
                 $nb,
             ) . "\n";
             $error_message .= sprintf(
-                _sn(
+                _n(
                     '%d found column',
                     '%d found columns',
                     count($header),
@@ -1165,20 +1165,20 @@ class PluginDatainjectionModel extends CommonDBTM
 
                 if ($name_from_db != $name_from_file) {
                     if ($error['error_message'] == '') {
-                        $error['error_message'] = __s('At least one column is incorrect', 'datainjection');
+                        $error['error_message'] = __('At least one column is incorrect', 'datainjection');
                     }
 
                     $error['status']         = PluginDatainjectionCommonInjectionLib::FAILED;
                     $error['field_in_error'] = false;
 
                     $error['error_message'] .= "<br>" . sprintf(
-                        __s('%1$s: %2$s'),
-                        __s('Into the file', 'datainjection'),
+                        __('%1$s: %2$s'),
+                        __('Into the file', 'datainjection'),
                         $name_from_file,
                     ) . "\n";
                     $error['error_message'] .= sprintf(
-                        __s('%1$s: %2$s'),
-                        __s('From the model', 'datainjection'),
+                        __('%1$s: %2$s'),
+                        __('From the model', 'datainjection'),
                         $name_from_db,
                     );
                 }
@@ -1324,7 +1324,7 @@ class PluginDatainjectionModel extends CommonDBTM
         }
         Html::closeForm();
         echo "<div style='margin-top:15px;text-align:center'>";
-        echo "<a href='javascript:window.close()'>" . __s('Close') . "</a>";
+        echo "<a href='javascript:window.close()'>" . __('Close') . "</a>";
         echo "</div>";
     }
 
@@ -1351,7 +1351,7 @@ class PluginDatainjectionModel extends CommonDBTM
                     'status'         => $result['status'],
                     'check_sumnary'  => PluginDatainjectionCommonInjectionLib::getLogLabel(PluginDatainjectionCommonInjectionLib::SUCCESS),
                     'check_message'  => PluginDatainjectionCommonInjectionLib::getLogLabel(PluginDatainjectionCommonInjectionLib::SUCCESS),
-                    'type'           => __s('Undetermined', 'datainjection'),
+                    'type'           => __('Undetermined', 'datainjection'),
                     'status_message' => PluginDatainjectionCommonInjectionLib::getLogLabel($result['status']),
                     'itemtype'       => $model->fields['itemtype'],
                     'url'            => '',
@@ -1372,7 +1372,7 @@ class PluginDatainjectionModel extends CommonDBTM
                         ) {
                             $tmp['check_message'] .= ($first ? '' : "\n") .
                                       sprintf(
-                                          __s('%1$s (%2$s)'),
+                                          __('%1$s (%2$s)'),
                                           PluginDatainjectionCommonInjectionLib::getLogLabel($val[0]),
                                           $val[1],
                                       );
@@ -1457,8 +1457,8 @@ class PluginDatainjectionModel extends CommonDBTM
             $pdf = new PluginPdfSimplePDF('a4', 'landscape');
             $pdf->setHeader(
                 sprintf(
-                    __s('%1$s (%2$s)'),
-                    __s('Data injection report', 'datainjection') . ' - <b>' .
+                    __('%1$s (%2$s)'),
+                    __('Data injection report', 'datainjection') . ' - <b>' .
                                  PluginDatainjectionSession::getParam('file_name') . '</b>',
                     $model->getName(),
                 ),
@@ -1467,13 +1467,13 @@ class PluginDatainjectionModel extends CommonDBTM
 
             if (isset($logresults[PluginDatainjectionCommonInjectionLib::SUCCESS])) {
                 $pdf->setColumnsSize(100);
-                $pdf->displayTitle('<b>' . __s('Array of successful injections', 'datainjection') . '</b>');
+                $pdf->displayTitle('<b>' . __('Array of successful injections', 'datainjection') . '</b>');
                 $pdf->setColumnsSize(6, 54, 20, 20);
                 $pdf->setColumnsAlign('center', 'center', 'center', 'center');
-                $col0 = '<b>' . __s('Line', 'datainjection') . '</b>';
-                $col1 = '<b>' . __s('Data Import', 'datainjection') . '</b>';
-                $col2 = '<b>' . __s('Injection type', 'datainjection') . '</b>';
-                $col3 = '<b>' . __s('Object Identifier', 'datainjection') . '</b>';
+                $col0 = '<b>' . __('Line', 'datainjection') . '</b>';
+                $col1 = '<b>' . __('Data Import', 'datainjection') . '</b>';
+                $col2 = '<b>' . __('Injection type', 'datainjection') . '</b>';
+                $col3 = '<b>' . __('Object Identifier', 'datainjection') . '</b>';
                 $pdf->displayTitle($col0, $col1, $col2, $col3);
 
                 $index = 0;
@@ -1489,14 +1489,14 @@ class PluginDatainjectionModel extends CommonDBTM
 
             if (isset($logresults[PluginDatainjectionCommonInjectionLib::FAILED])) {
                 $pdf->setColumnsSize(100);
-                $pdf->displayTitle('<b>' . __s('Array of unsuccessful injections', 'datainjection') . '</b>');
+                $pdf->displayTitle('<b>' . __('Array of unsuccessful injections', 'datainjection') . '</b>');
                 $pdf->setColumnsSize(6, 16, 38, 20, 20);
                 $pdf->setColumnsAlign('center', 'center', 'center', 'center', 'center');
-                $col0 = '<b>' . __s('Line', 'datainjection') . '</b>';
-                $col1 = '<b>' . __s('Data check', 'datainjection') . '</b>';
-                $col2 = '<b>' . __s('Data Import', 'datainjection') . '</b>';
-                $col3 = '<b>' . __s('Injection type', 'datainjection') . '</b>';
-                $col4 = '<b>' . __s('Object Identifier', 'datainjection') . '</b>';
+                $col0 = '<b>' . __('Line', 'datainjection') . '</b>';
+                $col1 = '<b>' . __('Data check', 'datainjection') . '</b>';
+                $col2 = '<b>' . __('Data Import', 'datainjection') . '</b>';
+                $col3 = '<b>' . __('Injection type', 'datainjection') . '</b>';
+                $col4 = '<b>' . __('Object Identifier', 'datainjection') . '</b>';
                 $pdf->displayTitle($col0, $col1, $col2, $col3, $col4);
 
                 $index = 0;
@@ -1513,7 +1513,7 @@ class PluginDatainjectionModel extends CommonDBTM
 
                     if ($result['check_message']) {
                         $pdf->displayText(
-                            '<b>' . __s('Data check', 'datainjection') . '</b> :',
+                            '<b>' . __('Data check', 'datainjection') . '</b> :',
                             $result['check_message'],
                             1,
                         );

@@ -31,7 +31,7 @@
 Session::checkRight("plugin_datainjection_use", READ);
 
 Html::header(
-    __s('Data injection', 'datainjection'),
+    __('Data injection', 'datainjection'),
     $_SERVER["PHP_SELF"],
     "tools",
     "plugindatainjectionmenu",
@@ -49,7 +49,7 @@ if (isset($_SESSION['datainjection']['go'])) {
     //If additional informations provided : check if mandatory infos are present
     if (!$model->checkMandatoryFields($_SESSION['datainjection']['infos'])) {
         Session::addMessageAfterRedirect(
-            __s('One mandatory field is not filled', 'datainjection'),
+            __('One mandatory field is not filled', 'datainjection'),
             true,
             ERROR,
             true,
@@ -83,7 +83,7 @@ if (isset($_SESSION['datainjection']['go'])) {
         }
     } else {
         Session::addMessageAfterRedirect(
-            __s('The file could not be found (Maybe it exceeds the maximum size allowed)', 'datainjection'),
+            __('The file could not be found (Maybe it exceeds the maximum size allowed)', 'datainjection'),
             true,
             ERROR,
             true,

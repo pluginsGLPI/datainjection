@@ -88,7 +88,7 @@ class PluginDatainjectionUserInjection extends User implements PluginDatainjecti
         $tab[4]['table']           = static::getTable();
         $tab[4]['field']           = 'password';
         $tab[4]['linkfield']       = 'password';
-        $tab[4]['name']            = __s('Password');
+        $tab[4]['name']            = __('Password');
         $tab[4]['displaytype']     = 'password';
 
         $tab[5]['displaytype']     = 'text';
@@ -96,7 +96,7 @@ class PluginDatainjectionUserInjection extends User implements PluginDatainjecti
         $tab[5]['linkfield'] = 'useremails_id';  // Map email field to useremails_id for injection
 
         //To manage groups : relies on a CommonDBRelation object !
-        $tab[100]['name']          = __s('Group');
+        $tab[100]['name']          = __('Group');
         $tab[100]['field']         = 'name';
         $tab[100]['table']         = getTableForItemType('Group');
         $tab[100]['linkfield']     = getForeignKeyFieldForTable($tab[100]['table']);
@@ -105,7 +105,7 @@ class PluginDatainjectionUserInjection extends User implements PluginDatainjecti
         $tab[100]['relationfield'] = $tab[100]['linkfield'];
 
         //To manage groups : relies on a CommonDBRelation object !
-        $tab[101]['name']          = __s('Profile');
+        $tab[101]['name']          = __('Profile');
         $tab[101]['field']         = 'name';
         $tab[101]['table']         = getTableForItemType('Profile');
         $tab[101]['linkfield']     = getForeignKeyFieldForTable($tab[101]['table']);

@@ -142,7 +142,7 @@ class PluginDatainjectionInjectionType
         }
 
         //Add null value
-        $values[self::NO_VALUE] = __s('-------Choose a table-------', 'datainjection');
+        $values[self::NO_VALUE] = __('-------Choose a table-------', 'datainjection');
 
         //Add primary_type to the list of availables types
         if (!is_a($p['primary_type'], CommonDBTM::class, true)) {
@@ -212,7 +212,7 @@ class PluginDatainjectionInjectionType
         }
 
         $fields = [];
-        $fields[self::NO_VALUE] = __s('-------Choose a field-------', 'datainjection');
+        $fields[self::NO_VALUE] = __('-------Choose a field-------', 'datainjection');
 
         //By default field has no default value
         $mapping_value = self::NO_VALUE;
@@ -289,7 +289,7 @@ class PluginDatainjectionInjectionType
         }
 
         //Manage mappings begining with N° or n°
-        $new_name = preg_replace("/[n|N]°/", __s('Lifelong'), $name);
+        $new_name = preg_replace("/[n|N]°/", __('Lifelong'), $name);
         if (self::testBasicEqual(strtolower($new_name), $option)) {
             return true;
         }

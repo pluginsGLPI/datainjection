@@ -71,7 +71,7 @@ class PluginDatainjectionInfocomInjection extends Infocom implements PluginDatai
         $tab[6]['minvalue']     = 0;
         $tab[6]['maxvalue']     = 120;
         $tab[6]['step']         = 1;
-        $tab[6]['-1']           = __s('Lifelong');
+        $tab[6]['-1']           = __('Lifelong');
         $tab[6]['checktype']    = 'integer';
 
         $tab[8]['checktype']    = 'float';
