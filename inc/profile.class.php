@@ -37,13 +37,13 @@ class PluginDatainjectionProfile extends Profile
 
         $rights = [
             ['itemtype'  => 'PluginDatainjectionModel',
-                'label'     => __s('Model management', 'datainjection'),
+                'label'     => __('Model management', 'datainjection'),
                 'field'     => 'plugin_datainjection_model',
             ],
             ['itemtype'  => 'PluginDatainjectionModel',
-                'label'     => __s('Injection of the file', 'datainjection'),
+                'label'     => __('Injection of the file', 'datainjection'),
                 'field'     => 'plugin_datainjection_use',
-                'rights'    => [READ => __s('Read')],
+                'rights'    => [READ => __('Read')],
             ],
         ];
         return $rights;
@@ -69,7 +69,7 @@ class PluginDatainjectionProfile extends Profile
 
         if ($item instanceof Profile) {
             if ($item->fields['interface'] == 'central') {
-                return self::createTabEntry(__s('Data injection', 'datainjection'), 0, $item::getType(), 'ti ti-download');
+                return self::createTabEntry(__('Data injection', 'datainjection'), 0, $item::getType(), 'ti ti-download');
             }
             return '';
         }
@@ -190,7 +190,7 @@ class PluginDatainjectionProfile extends Profile
             [
                 'canedit'       => $canedit,
                 'default_class' => 'tab_bg_2',
-                'title'         => __s('General'),
+                'title'         => __('General'),
             ],
         );
         if ($canedit) {

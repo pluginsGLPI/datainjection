@@ -75,7 +75,7 @@ class PluginDatainjectionContract_ItemInjection extends Contract_Item implements
         $tab[100]['table']         = 'glpi_contracts';
         $tab[100]['field']         = 'name';
         $tab[100]['linkfield']     = 'name';
-        $tab[100]['name']          = __s('Name');
+        $tab[100]['name']          = __('Name');
         $tab[100]['injectable']    = true;
         $tab[100]['checktype']     = 'text';
         $tab[100]['displaytype']   = 'relation';
@@ -85,7 +85,7 @@ class PluginDatainjectionContract_ItemInjection extends Contract_Item implements
         $tab[101]['table']         = 'glpi_contracts';
         $tab[101]['field']         = 'num';
         $tab[101]['linkfield']     = 'num';
-        $tab[101]['name']          = __s('Serial number');
+        $tab[101]['name']          = __('Serial number');
         $tab[101]['injectable']    = true;
         $tab[101]['checktype']     = 'text';
         $tab[101]['displaytype']   = 'relation';

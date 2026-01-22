@@ -34,7 +34,7 @@ class PluginDatainjectionItem_SoftwareLicenseInjection extends Item_SoftwareLice
 {
     public static function getTypeName($nb = 0)
     {
-        return __s('Computer');
+        return __('Computer');
     }
 
 
@@ -75,7 +75,7 @@ class PluginDatainjectionItem_SoftwareLicenseInjection extends Item_SoftwareLice
         $tab[110]['table']        = 'glpi_computers';
         $tab[110]['field']        = 'name';
         $tab[110]['linkfield']    = 'name';
-        $tab[110]['name']         = sprintf(__s('%1$s - %2$s'), self::getTypeName(), __s('Name'));
+        $tab[110]['name']         = sprintf(__('%1$s - %2$s'), self::getTypeName(), __('Name'));
         $tab[110]['injectable']   = true;
         $tab[110]['displaytype']  = 'dropdown';
         $tab[110]['checktype']    = 'text';
@@ -85,9 +85,9 @@ class PluginDatainjectionItem_SoftwareLicenseInjection extends Item_SoftwareLice
         $tab[111]['field']        = 'serial';
         $tab[111]['linkfield']    = 'serial';
         $tab[111]['name']         = sprintf(
-            __s('%1$s - %2$s'),
+            __('%1$s - %2$s'),
             self::getTypeName(),
-            __s('Serial number'),
+            __('Serial number'),
         );
         $tab[111]['injectable']   = true;
         $tab[111]['displaytype']  = 'dropdown';
@@ -98,9 +98,9 @@ class PluginDatainjectionItem_SoftwareLicenseInjection extends Item_SoftwareLice
         $tab[112]['field']        = 'otherserial';
         $tab[112]['linkfield']    = 'otherserial';
         $tab[112]['name']         = sprintf(
-            __s('%1$s - %2$s'),
+            __('%1$s - %2$s'),
             self::getTypeName(),
-            __s('Inventory number'),
+            __('Inventory number'),
         );
         $tab[112]['injectable']   = true;
         $tab[112]['displaytype']  = 'dropdown';

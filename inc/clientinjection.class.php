@@ -144,7 +144,7 @@ class PluginDatainjectionClientInjection
             'url' => $url,
             'models_id' => $options['models_id'] ?? null,
             'confirm' => $confirm,
-            'submit_label' => $options['submit'] ?? __s('Launch the import', 'datainjection'),
+            'submit_label' => $options['submit'] ?? __('Launch the import', 'datainjection'),
             'file_encoding_values' => PluginDatainjectionDropdown::getFileEncodingValue(),
         ];
 

@@ -150,7 +150,7 @@ class PluginDatainjectionContractInjection extends Contract implements PluginDat
                     'step'  => 12,
                     'toadd' => [0 => Dropdown::EMPTY_VALUE,
                         1 => sprintf(
-                            _sn(
+                            _n(
                                 '%d month',
                                 '%d months',
                                 1,
@@ -158,7 +158,7 @@ class PluginDatainjectionContractInjection extends Contract implements PluginDat
                             1,
                         ),
                         2 => sprintf(
-                            _sn(
+                            _n(
                                 '%d month',
                                 '%d months',
                                 2,
@@ -166,7 +166,7 @@ class PluginDatainjectionContractInjection extends Contract implements PluginDat
                             2,
                         ),
                         3 => sprintf(
-                            _sn(
+                            _n(
                                 '%d month',
                                 '%d months',
                                 3,
@@ -174,7 +174,7 @@ class PluginDatainjectionContractInjection extends Contract implements PluginDat
                             3,
                         ),
                         6 => sprintf(
-                            _sn(
+                            _n(
                                 '%d month',
                                 '%d months',
                                 6,
