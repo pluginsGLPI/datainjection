@@ -68,7 +68,7 @@ class PluginDatainjectionSoftwareVersionInjection extends SoftwareVersion implem
         $tab = Search::getOptions(get_parent_class($this));
 
         if ($primary_type == 'SoftwareVersion') {
-            $tab[100]['name']        = _sn('Software', 'Software', 1);
+            $tab[100]['name']        = _n('Software', 'Software', 1);
             $tab[100]['field']       = 'name';
             $tab[100]['table']       = getTableForItemType('Software');
             $tab[100]['linkfield']   = 'softwares_id';

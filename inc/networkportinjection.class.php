@@ -72,7 +72,7 @@ class PluginDatainjectionNetworkportInjection extends NetworkPort implements Plu
         $tab[4]['checktype']      = 'mac';
 
         //To manage vlans : relies on a CommonDBRelation object !
-        $tab[51]['name']          = sprintf(__s('%1$s: %2$s'), __s('Connected to'), __s('Device name'));
+        $tab[51]['name']          = sprintf(__('%1$s: %2$s'), __('Connected to'), __('Device name'));
         $tab[51]['field']         = 'netname';
         $tab[51]['table']         = getTableForItemType('NetworkPort');
         $tab[51]['linkfield']     = "netname";
@@ -80,7 +80,7 @@ class PluginDatainjectionNetworkportInjection extends NetworkPort implements Plu
         $tab[51]['displaytype']   = 'text';
         $tab[51]['checktype']     = 'text';
 
-        $tab[52]['name']          = sprintf(__s('%1$s: %2$s'), __s('Connected to'), __s('Port number'));
+        $tab[52]['name']          = sprintf(__('%1$s: %2$s'), __('Connected to'), __('Port number'));
         $tab[52]['field']         = 'netport';
         $tab[52]['table']         = getTableForItemType('NetworkPort');
         $tab[52]['linkfield']     = "netport";
@@ -89,9 +89,9 @@ class PluginDatainjectionNetworkportInjection extends NetworkPort implements Plu
         $tab[52]['checktype']     = 'text';
 
         $tab[53]['name']          = sprintf(
-            __s('%1$s: %2$s'),
-            __s('Connected to'),
-            __s('Port MAC address', 'datainjection'),
+            __('%1$s: %2$s'),
+            __('Connected to'),
+            __('Port MAC address', 'datainjection'),
         );
         $tab[53]['field']         = 'netmac';
         $tab[53]['table']         = getTableForItemType('NetworkPort');
@@ -101,7 +101,7 @@ class PluginDatainjectionNetworkportInjection extends NetworkPort implements Plu
         $tab[53]['checktype']     = 'text';
 
         //To manage vlans : relies on a CommonDBRelation object !
-        $tab[100]['name']          = __s('VLAN');
+        $tab[100]['name']          = __('VLAN');
         $tab[100]['field']         = 'name';
         $tab[100]['table']         = getTableForItemType('Vlan');
         $tab[100]['linkfield']     = getForeignKeyFieldForTable($tab[100]['table']);

@@ -75,7 +75,7 @@ class PluginDatainjectionComputerInjection extends Computer implements PluginDat
         $tab[71]['linkfield'] = 'groups_id_normal';
 
         //specific for antiviruses
-        $tab[167]['name'] = __s('Antivirus name', 'datainjection');
+        $tab[167]['name'] = __('Antivirus name', 'datainjection');
 
         //Remove some options because some fields cannot be imported
         $blacklist     = PluginDatainjectionCommonInjectionLib::getBlacklistedOptions(get_parent_class($this));

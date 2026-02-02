@@ -73,7 +73,7 @@ class PluginDatainjectionNetworkEquipmentInjection extends NetworkEquipment impl
         //Virtual type : need to be processed at the end !
         $tab[200]['table']         = 'glpi_networkequipments';
         $tab[200]['field']         = 'nb_ports';
-        $tab[200]['name']          = __s('Number of ports', 'datainjection');
+        $tab[200]['name']          = __('Number of ports', 'datainjection');
         $tab[200]['checktype']     = 'integer';
         $tab[200]['displaytype']   = 'virtual';
         $tab[200]['linkfield']     = 'nb_ports';

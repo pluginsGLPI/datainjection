@@ -31,7 +31,7 @@
 Session::checkRight("plugin_datainjection_use", READ);
 
 Html::header(
-    __s('Data injection', 'datainjection'),
+    __('Data injection', 'datainjection'),
     $_SERVER["PHP_SELF"],
     "tools",
     "plugindatainjectionmenu",

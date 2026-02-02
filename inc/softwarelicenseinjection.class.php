@@ -71,7 +71,7 @@ class PluginDatainjectionSoftwareLicenseInjection extends SoftwareLicense implem
         $tab[8]['checktype'] = 'date';
 
         if ($primary_type == 'SoftwareLicense') {
-            $tab[100]['name']          = _sn('Software', 'Software', 1);
+            $tab[100]['name']          = _n('Software', 'Software', 1);
             $tab[100]['field']         = 'name';
             $tab[100]['table']         = getTableForItemType('Software');
             $tab[100]['linkfield']     = 'softwares_id';

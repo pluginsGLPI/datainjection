@@ -71,7 +71,7 @@ class PluginDatainjectionPhoneInjection extends Phone implements PluginDatainjec
         $tab[71]['linkfield'] = 'groups_id_normal';
 
         //specific for domain
-        $tab[205]['name'] = __s('Domain name', 'datainjection');
+        $tab[205]['name'] = __('Domain name', 'datainjection');
 
         //Remove some options because some fields cannot be imported
         $blacklist     = PluginDatainjectionCommonInjectionLib::getBlacklistedOptions(get_parent_class($this));

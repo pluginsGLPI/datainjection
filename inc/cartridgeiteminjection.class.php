@@ -73,7 +73,7 @@ class PluginDatainjectionCartridgeItemInjection extends CartridgeItem implements
         $tab[8]['minvalue']  = '1';
         $tab[8]['maxvalue']  = '100';
         $tab[8]['step']      = 1;
-        $tab[8]['-1']        = __s('Never');
+        $tab[8]['-1']        = __('Never');
 
         //Remove some options because some fields cannot be imported
         $blacklist = PluginDatainjectionCommonInjectionLib::getBlacklistedOptions(get_parent_class($this));

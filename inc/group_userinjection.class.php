@@ -35,7 +35,7 @@ class PluginDatainjectionGroup_UserInjection extends Group_User implements Plugi
     public static function getTypeName($nb = 0)
     {
 
-        return sprintf(__s('%1$s - %2$s'), __s('Group'), __s('User'));
+        return sprintf(__('%1$s - %2$s'), __('Group'), __('User'));
     }
 
 
