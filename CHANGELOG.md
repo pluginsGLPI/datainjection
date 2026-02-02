@@ -11,6 +11,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 - Fix model subform not displayed after page reload
 - Rename visibility field label to "Is Private"
+- Restored group selection in mappings
 
 ## [2.15.3] - 2025-12-22
 
