@@ -69,6 +69,9 @@ class PluginDatainjectionPeripheralInjection extends Peripheral implements Plugi
         //Specific to location
         $tab[3]['linkfield'] = 'locations_id';
 
+        //Specific to groups (simple group, not technical)
+        $tab[71]['linkfield'] = 'groups_id_normal';
+
         //Remove some options because some fields cannot be imported
         $blacklist     = PluginDatainjectionCommonInjectionLib::getBlacklistedOptions(get_parent_class($this));
         $notimportable = [91, 92, 93];

@@ -71,6 +71,9 @@ class PluginDatainjectionComputerInjection extends Computer implements PluginDat
         //Specific to location
         $tab[3]['linkfield'] = 'locations_id';
 
+        //Specific to groups (simple group, not technical)
+        $tab[71]['linkfield'] = 'groups_id_normal';
+
         //specific for antiviruses
         $tab[167]['name'] = __s('Antivirus name', 'datainjection');
 
