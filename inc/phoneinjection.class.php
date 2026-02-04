@@ -67,9 +67,6 @@ class PluginDatainjectionPhoneInjection extends Phone implements PluginDatainjec
 
         $tab           = Search::getOptions(get_parent_class($this));
 
-        //Specific to groups (simple group, not technical)
-        $tab[71]['linkfield'] = 'groups_id_normal';
-
         //specific for domain
         $tab[205]['name'] = __('Domain name', 'datainjection');
 

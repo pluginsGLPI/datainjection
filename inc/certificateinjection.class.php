@@ -61,9 +61,6 @@ class PluginDatainjectionCertificateInjection extends Certificate implements Plu
 
         $tab           = Search::getOptions(get_parent_class($this));
 
-        //Specific to groups (simple group, not technical)
-        $tab[71]['linkfield'] = 'groups_id_normal';
-
         //Remove some options because some fields cannot be imported
         $blacklist     = PluginDatainjectionCommonInjectionLib::getBlacklistedOptions(get_parent_class($this));
         $notimportable = [2, 14, 19, 61, 72, 121];

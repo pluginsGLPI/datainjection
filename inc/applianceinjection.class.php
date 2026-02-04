@@ -61,9 +61,6 @@ class PluginDatainjectionApplianceInjection extends Appliance implements PluginD
 
         $tab           = Search::getOptions(get_parent_class($this));
 
-        //Specific to groups (simple group, not technical)
-        $tab[71]['linkfield'] = 'groups_id_normal';
-
         //Remove some options because some fields cannot be imported
         $blacklist     = PluginDatainjectionCommonInjectionLib::getBlacklistedOptions(get_parent_class($this));
         $notimportable = [5, 9, 31];
@@ -71,7 +68,7 @@ class PluginDatainjectionApplianceInjection extends Appliance implements PluginD
         $options['ignore_fields'] = array_merge($blacklist, $notimportable);
         $options['displaytype']   = [
             "multiline_text" => [4],
-            "dropdown"       => [8, 10, 11, 32, 49, 71],
+            "dropdown"       => [8, 10, 11, 32, 49],
             "user"           => [6, 24],
             "bool"           => [7, 61],
         ];
