@@ -281,8 +281,19 @@ class PluginDatainjectionInfo extends CommonDBTM
         $modeltype = PluginDatainjectionModel::getInstance($model->getField('filetype'));
         $modeltype->getFromDBByModelID($model->getField('id'));
 
+        $rendered_infos = [];
+        foreach ($infos as $info_data) {
+            $info = new self();
+            $info->fields = $info_data;
+
+            ob_start();
+            self::displayAdditionalInformation($info, $_SESSION['datainjection']['infos'] ?? []);
+            $rendered_infos[] = ob_get_clean();
+        }
+
         $data = [
             'infos' => $infos,
+            'rendered_infos' => $rendered_infos,
             'model' => $model,
             'modeltype' => $modeltype,
             'has_sample' => $modeltype->haveSample(),
