@@ -341,10 +341,12 @@ class PluginDatainjectionCommonInjectionLib
     {
 
         if (!isPluginItemType($itemtype)) {
+            $itemtype = (new ReflectionClass($itemtype))->getShortName(); // get shortname of class when full namespaced class given (from GLPI)
             $injectionClass = 'PluginDatainjection' . ucfirst($itemtype) . 'Injection';
         } else {
             $injectionClass = ucfirst($itemtype) . 'Injection';
         }
+
         if (!is_a($injectionClass, PluginDatainjectionInjectionInterface::class, true)) {
             throw new HttpException(500, 'Class ' . $injectionClass . ' is not a valid class');
         }
