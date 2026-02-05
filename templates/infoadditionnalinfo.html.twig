@@ -48,16 +48,16 @@
     {% endif %}
 
     {% if rendered_infos|length > 0 %}
-    <div class="d-flex justify-content-center mt-3">
-        <table class="table table-borderless w-auto text-center">
-            <tbody>
-                {% for rendered_info in rendered_infos %}
-                    <tr>
-                        {{ rendered_info|raw }}
-                    </tr>
-                {% endfor %}
-            </tbody>
-        </table>
-    </div>
+        <div class="d-flex justify-content-center mt-3">
+            <table class="table table-borderless w-auto text-center">
+                <tbody>
+                    {% for rendered_info in rendered_infos %}
+                        <tr>
+                            {{ rendered_info|raw }}
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
     {% endif %}
 {% endif %}
