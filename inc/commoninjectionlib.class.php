@@ -602,7 +602,7 @@ class PluginDatainjectionCommonInjectionLib
                 if ($item instanceof CommonTreeDropdown) {
                    // use findID instead of getID
                     $input =  [
-                        'completename' => $value,
+                        'completename' => Sanitizer::sanitize($value),
                         'entities_id'  => $this->entity
                     ];
 
@@ -943,7 +943,7 @@ class PluginDatainjectionCommonInjectionLib
                     if ($fromdb) {
                         $this->values[$itemtype][$field] = $value . "\n" . $this->values[$itemtype][$field];
                     } else {
-                        $this->values[$itemtype][$field] = $this->values[$itemtype][$field] . "\n" . $value;
+                        $this->values[$itemtype][$field] = $this->values[$itemtype][$field] . "\n" . Sanitizer::sanitize($value);
                     }
                 }
             } elseif (
@@ -963,6 +963,13 @@ class PluginDatainjectionCommonInjectionLib
                     $this->values[$itemtype][$field] = self::EMPTY_VALUE;
                 }
             } else {
+                // Encode HTML special characters for multiline text fields coming from CSV
+                if (!$fromdb) {
+                    $option = self::findSearchOption($injectionClass->getOptions($itemtype), $field);
+                    if (isset($option['displaytype']) && $option['displaytype'] == 'multiline_text') {
+                        $value = Sanitizer::sanitize($value);
+                    }
+                }
                 $this->values[$itemtype][$field] = $value;
             }
         }
