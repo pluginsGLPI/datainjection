@@ -680,12 +680,20 @@ class PluginDatainjectionCommonInjectionLib
                 break;
 
             case 'contact':
-                $id = $value != Dropdown::EMPTY_VALUE ? self::findContact($value, $this->entity) : Dropdown::EMPTY_VALUE;
+                if ($value === self::EMPTY_VALUE || $value == self::DROPDOWN_EMPTY_VALUE || $value === Dropdown::EMPTY_VALUE) {
+                    $id = self::DROPDOWN_EMPTY_VALUE;
+                } else {
+                    $id = self::findContact($value, $this->entity);
+                }
                 $this->setValueForItemtype($itemtype, $linkfield, $id);
                 break;
 
             case 'user':
-                $id = $value != Dropdown::EMPTY_VALUE ? self::findUser($value, $this->entity) : Dropdown::EMPTY_VALUE;
+                if ($value === self::EMPTY_VALUE || $value == self::DROPDOWN_EMPTY_VALUE || $value === Dropdown::EMPTY_VALUE) {
+                    $id = self::DROPDOWN_EMPTY_VALUE;
+                } else {
+                    $id = self::findUser($value, $this->entity);
+                }
                 $this->setValueForItemtype($itemtype, $linkfield, $id);
                 break;
 
