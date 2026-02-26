@@ -98,27 +98,18 @@ class PluginDatainjectionBackendcsv extends PluginDatainjectionBackend implement
         $num = count($data);
 
         for ($c = 0; $c < $num; $c++) {
-            //If field is not the last, or if field is the last of the line and is not empty
+            $tmp = trim($DB->escape($data[$c]));
+            switch ($encoding) {
+                case PluginDatainjectionBackend::ENCODING_ISO8859_1:
+                    $csv[0][] = $tmp === '' || $tmp === '0' ? Toolbox::encodeInUtf8($tmp) : $tmp;
+                    break;
 
-            if (
-                ($c < ($num - 1))
-                || (($c == ($num - 1))
-                && ($data[$num - 1] != PluginDatainjectionCommonInjectionLib::EMPTY_VALUE))
-            ) {
-                $tmp = trim($DB->escape($data[$c]));
-                switch ($encoding) {
-                    //If file is ISO8859-1 : encode the data in utf8
-                    case PluginDatainjectionBackend::ENCODING_ISO8859_1:
-                        $csv[0][] = $tmp === '' || $tmp === '0' ? Toolbox::encodeInUtf8($tmp) : $tmp;
-                        break;
+                case PluginDatainjectionBackend::ENCODING_UFT8:
+                    $csv[0][] = $tmp;
+                    break;
 
-                    case PluginDatainjectionBackend::ENCODING_UFT8:
-                        $csv[0][] = $tmp;
-                        break;
-
-                    default: //PluginDatainjectionBackend :: ENCODING_AUTO :
-                        $csv[0][] = PluginDatainjectionBackend::toUTF8($tmp);
-                }
+                default:
+                    $csv[0][] = PluginDatainjectionBackend::toUTF8($tmp);
             }
         }
         return $csv;
