@@ -236,8 +236,9 @@ class PluginDatainjectionCommonInjectionLib
         }
 
         $status_check = true;
-        if (count($this->mandatory_fields[$itemtype]) > 0) {
-            foreach ($this->mandatory_fields[$itemtype] as $field => $value) {
+        $mandatory_fields = $this->mandatory_fields[$itemtype] ?? [];
+        if (count($mandatory_fields) > 0) {
+            foreach ($mandatory_fields as $field => $value) {
                 //Get value associated with the mandatory field
                 $value = $this->getValueByItemtypeAndName($itemtype, $field);
 
@@ -256,6 +257,12 @@ class PluginDatainjectionCommonInjectionLib
                     $this->results[self::ACTION_CHECK][] = [self::MANDATORY, $option['name']];
                 }
             }
+        } else {
+            $status_check = false;
+            $this->results[self::ACTION_CHECK][] = [
+                self::FAILED,
+                __('No mandatory field is defined for this model', 'datainjection'),
+            ];
         }
         return $status_check;
     }
