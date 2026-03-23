@@ -237,7 +237,7 @@ class PluginDatainjectionCommonInjectionLib
 
         $status_check = true;
         $mandatory_fields = $this->mandatory_fields[$itemtype] ?? [];
-        if (count($mandatory_fields) > 0) {
+        if ($mandatory_fields !== []) {
             foreach ($mandatory_fields as $field => $value) {
                 //Get value associated with the mandatory field
                 $value = $this->getValueByItemtypeAndName($itemtype, $field);
