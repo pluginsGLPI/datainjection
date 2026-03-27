@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-02-27 01:45+0000\n"
+"POT-Creation-Date: 2026-03-27 01:59+0000\n"
 "PO-Revision-Date: 2018-06-21 12:57+0000\n"
 "Last-Translator: Davide <spam@habilitas.it>, 2025\n"
 "Language-Team: Italian (Italy) (https://app.transifex.com/teclib/teams/28042/it_IT/)\n"
@@ -329,7 +329,7 @@ msgstr "Nel file"
 msgid "From the model"
 msgstr "Dal modello"
 
-#: inc/model.class.php:1354 inc/commoninjectionlib.class.php:2147
+#: inc/model.class.php:1354 inc/commoninjectionlib.class.php:2154
 msgid "Undetermined"
 msgstr "Indeterminato"
 
@@ -353,51 +353,55 @@ msgstr "Gestione dei modelli"
 msgid "Number of ports"
 msgstr "Numero di porte"
 
-#: inc/commoninjectionlib.class.php:2068
+#: inc/commoninjectionlib.class.php:264
+msgid "No mandatory field is defined for this model"
+msgstr ""
+
+#: inc/commoninjectionlib.class.php:2075
 msgid "Add from CSV file"
 msgstr "Aggiungi da file CSV"
 
-#: inc/commoninjectionlib.class.php:2068
+#: inc/commoninjectionlib.class.php:2075
 msgid "Update from CSV file"
 msgstr "Aggiorna da file CSV"
 
-#: inc/commoninjectionlib.class.php:2107
+#: inc/commoninjectionlib.class.php:2114
 msgid "No right to import data"
 msgstr "Non hai i diritti per importare dati"
 
-#: inc/commoninjectionlib.class.php:2111
+#: inc/commoninjectionlib.class.php:2118
 msgid "No right to update data"
 msgstr "Non hai i diritti per aggiornare dati"
 
-#: inc/commoninjectionlib.class.php:2115
+#: inc/commoninjectionlib.class.php:2122
 msgid "Size of the inserted value is to expansive"
 msgstr "Numero di valori inseriti troppo vasto"
 
-#: inc/commoninjectionlib.class.php:2119
+#: inc/commoninjectionlib.class.php:2126
 msgid "Import not allowed"
 msgstr "Importazione non ammessa"
 
-#: inc/commoninjectionlib.class.php:2123
+#: inc/commoninjectionlib.class.php:2130
 msgid "Import failed"
 msgstr "Importazione fallita"
 
-#: inc/commoninjectionlib.class.php:2127
+#: inc/commoninjectionlib.class.php:2134
 msgid "At least one mandatory field is not present"
 msgstr "Almeno un campo obbligatorio è assente"
 
-#: inc/commoninjectionlib.class.php:2131
+#: inc/commoninjectionlib.class.php:2138
 msgid "Data to insert are correct"
 msgstr "I dati da inserire sono corretti"
 
-#: inc/commoninjectionlib.class.php:2135
+#: inc/commoninjectionlib.class.php:2142
 msgid "One data is not the good type"
 msgstr "Un dato non è del tipo previsto"
 
-#: inc/commoninjectionlib.class.php:2139
+#: inc/commoninjectionlib.class.php:2146
 msgid "Warning"
 msgstr "Attenzione"
 
-#: inc/commoninjectionlib.class.php:2143
+#: inc/commoninjectionlib.class.php:2150
 msgid "Data not found"
 msgstr "Dati non trovati"
 
