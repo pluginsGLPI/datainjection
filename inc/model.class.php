@@ -383,11 +383,6 @@ class PluginDatainjectionModel extends CommonDBTM
 
         $models =  [];
 
-        $query = [
-            'SELECT' => ['id', 'name', 'is_private', 'entities_id', 'is_recursive', 'itemtype', 'step', 'comment'],
-            'FROM'   => 'glpi_plugin_datainjection_models',
-        ];
-
         $where = [];
         if (!$all) {
             $where['step'] = self::READY_TO_USE_STEP;
@@ -412,8 +407,25 @@ class PluginDatainjectionModel extends CommonDBTM
             ],
         ];
 
-        $query['WHERE'] = $where;
-        $query['ORDER'] = ['is_private DESC', 'entities_id', $order == "`name`" ? "name" : $order];
+        $query = [
+            'SELECT' => [
+                'id',
+                'name',
+                'is_private',
+                'entities_id',
+                'is_recursive',
+                'itemtype',
+                'step',
+                'comment',
+            ],
+            'FROM'   => 'glpi_plugin_datainjection_models',
+            'WHERE' => $where,
+            'ORDER' => [
+                'is_private DESC',
+                'entities_id',
+                $order == "`name`" ? "name" : $order,
+            ],
+        ];
 
         foreach ($DB->request($query) as $data) {
             if (
