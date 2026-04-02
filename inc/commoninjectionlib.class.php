@@ -28,6 +28,7 @@
  * -------------------------------------------------------------------------
  */
 use Glpi\Exception\Http\HttpException;
+use Glpi\Features\AssignableItem;
 
 use function Safe\preg_match;
 use function Safe\preg_replace;
@@ -965,7 +966,7 @@ class PluginDatainjectionCommonInjectionLib
                 if (isForeignKeyField($field) || (str_contains($field, 'is_')) || (method_exists($injectionClass, 'isNullable') && !$injectionClass->isNullable($field))) {
                     //If the field concernes groupds, unseting it instead of setting it to 0 in order to avoid associating the item to a non existing group (id 0)
                     $group_fields = ['groups_id_tech', 'groups_id', 'groups_id_normal'];
-                    if (in_array($field, $group_fields)) {
+                    if (in_array($field, $group_fields) && Toolbox::hasTrait($itemtype, AssignableItem::class)) {
                         unset($this->values[$itemtype][$field]);
                     } else {
                         // If the field is an id, we set it to 0
