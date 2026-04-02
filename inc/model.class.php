@@ -382,29 +382,40 @@ class PluginDatainjectionModel extends CommonDBTM
         global $DB;
 
         $models =  [];
-        $query = "SELECT `id`, `name`, `is_private`, `entities_id`, `is_recursive`, `itemtype`,
-                       `step`, `comment`
-                FROM `glpi_plugin_datainjection_models` ";
 
+        $query = [
+            'SELECT' => ['id', 'name', 'is_private', 'entities_id', 'is_recursive', 'itemtype', 'step', 'comment'],
+            'FROM'   => 'glpi_plugin_datainjection_models',
+        ];
+
+        $where = [];
         if (!$all) {
-            $query .= " WHERE `step` = '" . self::READY_TO_USE_STEP . "' AND (";
-        } else {
-            $query .= " WHERE (";
+            $where['step'] = self::READY_TO_USE_STEP;
         }
 
-        $query .= "(`is_private` = '" . self::MODEL_PUBLIC . "'" .
-                getEntitiesRestrictRequest(
-                    " AND",
-                    "glpi_plugin_datainjection_models",
-                    "entities_id",
-                    $entity,
-                    true,
-                ) . ")
-                  OR (`is_private` = '" . self::MODEL_PRIVATE . "' AND `users_id` = '$user_id'))
-                 ORDER BY `is_private` DESC,
-                          `entities_id`, " . ($order == "`name`" ? "`name`" : $order);
+        $restrict = getEntitiesRestrictCriteria(
+            'glpi_plugin_datainjection_models',
+            'entities_id',
+            $entity,
+            true,
+        );
 
-        foreach ($DB->doQuery($query) as $data) {
+        $where[] = [
+            'OR' => [
+                [
+                    'is_private' => self::MODEL_PUBLIC,
+                ] + $restrict,
+                [
+                    'is_private' => self::MODEL_PRIVATE,
+                    'users_id'   => $user_id,
+                ],
+            ],
+        ];
+
+        $query['WHERE'] = $where;
+        $query['ORDER'] = ['is_private DESC', 'entities_id', $order == "`name`" ? "name" : $order];
+
+        foreach ($DB->request($query) as $data) {
             if (
                 self::checkRightOnModel($data['id'])
                 && class_exists($data['itemtype'])
