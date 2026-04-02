@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Fixed
 
 - Fix crash when injection model has no mandatory fields defined
+- Fix models created on parent entities can't be used on child entites
 
 ## [2.15.4] - 2026-03-16
 
