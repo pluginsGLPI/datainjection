@@ -50,9 +50,6 @@ class PluginDatainjectionClientInjection
     public const STEP_PROCESS = 1;
     public const STEP_RESULT  = 2;
 
-    //Injection results
-    private $results = [];
-
     /**
     * Print a good title for group pages
     *
