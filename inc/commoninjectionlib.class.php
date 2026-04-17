@@ -1697,6 +1697,7 @@ class PluginDatainjectionCommonInjectionLib
                 && isset($option['table'])
                 && $option['table'] === getTableForItemType(Group::class)
             ) {
+                $normalized_value = $toinject[$key];
                 $group_type = null;
                 if (isset($option['joinparams']['beforejoin']['joinparams']['condition']['NEWTABLE.type'])) {
                     $group_type = $option['joinparams']['beforejoin']['joinparams']['condition']['NEWTABLE.type'];
@@ -1704,9 +1705,9 @@ class PluginDatainjectionCommonInjectionLib
 
                 // Keep explicit technical group semantics from key or metadata.
                 if ($key === 'groups_id_tech' || $group_type == Group_Item::GROUP_TYPE_TECH) {
-                    $toinject['_groups_id_tech'] = [$value];
+                    $toinject['_groups_id_tech'] = [$normalized_value];
                 } else {
-                    $toinject['_groups_id'] = [$value];
+                    $toinject['_groups_id'] = [$normalized_value];
                 }
                 unset($toinject[$key]);
             }
