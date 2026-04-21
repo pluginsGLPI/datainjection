@@ -129,7 +129,7 @@ class PluginDatainjectionMapping extends CommonDBTM
         foreach ($model->getMappings() as $mapping) {
             $mappings_id     = $mapping->getID();
             echo "<tr class='tab_bg_1'>";
-            echo "<td class='center'>" . $mapping->fields['name'] . "</td>";
+            echo "<td class='center'>" . htmlescape($mapping->fields['name']) . "</td>";
             echo "<td class='center'>";
             $options = ['primary_type' => $model->fields['itemtype']];
             PluginDatainjectionInjectionType::dropdownLinkedTypes($mapping, $options);
