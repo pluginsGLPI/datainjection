@@ -1706,6 +1706,10 @@ class PluginDatainjectionCommonInjectionLib
             if (!$add && $key === 'id') {
                 $toinject[$key] = $value;
             }
+
+            if ($key === 'entities_id') {
+                $toinject[$key] = $value;
+            }
         }
 
         $newID = null;
