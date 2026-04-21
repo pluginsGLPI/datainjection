@@ -126,14 +126,13 @@ class PluginDatainjectionProfile extends Profile
     {
 
         include_once Plugin::getPhpDir('datainjection') . "/inc/profile.class.php";
-        foreach (self::getAllRights() as $right) {
-            self::addDefaultProfileInfos(
-                $profiles_id,
-                ['plugin_datainjection_model' => ALLSTANDARDRIGHT,
-                    'plugin_datainjection_use' => READ,
-                ],
-            );
-        }
+        self::addDefaultProfileInfos(
+            $profiles_id,
+            [
+                'plugin_datainjection_model' => ALLSTANDARDRIGHT,
+                'plugin_datainjection_use' => READ,
+            ],
+        );
     }
 
     public static function migrateProfiles()
