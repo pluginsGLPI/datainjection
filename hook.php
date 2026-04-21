@@ -119,10 +119,7 @@ function plugin_datainjection_install()
             PluginDatainjectionProfile::createFirstAccess($_SESSION["glpiactiveprofile"]["id"]);
 
             // Force reload of session profile rights
-            $_SESSION['glpiactiveprofile'] = array_merge(
-                $_SESSION['glpiactiveprofile'],
-                ProfileRight::getProfileRights($_SESSION["glpiactiveprofile"]["id"])
-            );
+            Session::reloadCurrentProfile();
             break;
 
         case 1:
@@ -206,7 +203,10 @@ function plugin_datainjection_uninstall()
     }
 
     // Remove plugin rights from all profiles
-    $DB->doQuery("DELETE FROM `glpi_profilerights` WHERE `name` IN ('plugin_datainjection_model', 'plugin_datainjection_use')");
+    $profileRight = new ProfileRight();
+    foreach (PluginDatainjectionProfile::getAllRights() as $right) {
+        $profileRight->deleteByCriteria(['name' => $right['field']]);
+    }
 
     if (is_dir(PLUGIN_DATAINJECTION_UPLOAD_DIR)) {
         Toolbox::deleteDir(PLUGIN_DATAINJECTION_UPLOAD_DIR);
