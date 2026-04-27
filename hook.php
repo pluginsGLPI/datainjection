@@ -114,9 +114,12 @@ function plugin_datainjection_install()
 
             if (!is_dir(PLUGIN_DATAINJECTION_UPLOAD_DIR)) {
                 @ mkdir(PLUGIN_DATAINJECTION_UPLOAD_DIR);
-
-                PluginDatainjectionProfile::createFirstAccess($_SESSION["glpiactiveprofile"]["id"]);
             }
+
+            PluginDatainjectionProfile::createFirstAccess($_SESSION["glpiactiveprofile"]["id"]);
+
+            // Force reload of session profile rights
+            Session::reloadCurrentProfile();
             break;
 
         case 1:
@@ -197,6 +200,12 @@ function plugin_datainjection_uninstall()
         if ($DB->tableExists($table)) {
             $DB->doQuery("DROP TABLE IF EXISTS `" . $table . "`");
         }
+    }
+
+    // Remove plugin rights from all profiles
+    $profileRight = new ProfileRight();
+    foreach (PluginDatainjectionProfile::getAllRights() as $right) {
+        $profileRight->deleteByCriteria(['name' => $right['field']]);
     }
 
     if (is_dir(PLUGIN_DATAINJECTION_UPLOAD_DIR)) {

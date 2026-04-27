@@ -13,6 +13,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Fix models created on parent entities can't be used on child entites
 - Fix responsible group injection payload normalization so group remains visible in GLPI after import
 - Fix incorrect escaping of apostrophes and accents
+- Fix plugin rights initialization and cleanup
+
 
 ## [2.15.4] - 2026-03-16
 
