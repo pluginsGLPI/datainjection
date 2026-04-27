@@ -14,6 +14,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Restored group selection in mappings
 - Fix special caracters malformed in translations
 - Fix error when displaying the additional information form
+- Fix injection loading bar
 
 ## [2.15.3] - 2025-12-22
 
