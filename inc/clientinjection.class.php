@@ -42,34 +42,6 @@ use function Safe\json_encode;
 use function Safe\readfile;
 use function Safe\unlink;
 
-/**
- * -------------------------------------------------------------------------
- * DataInjection plugin for GLPI
- * -------------------------------------------------------------------------
- *
- * LICENSE
- *
- * This file is part of DataInjection.
- *
- * DataInjection is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- *
- * DataInjection is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with DataInjection. If not, see <http://www.gnu.org/licenses/>.
- * -------------------------------------------------------------------------
- * @copyright Copyright (C) 2007-2023 by DataInjection plugin team.
- * @license   GPLv2 https://www.gnu.org/licenses/gpl-2.0.html
- * @link      https://github.com/pluginsGLPI/datainjection
- * -------------------------------------------------------------------------
- */
-
 class PluginDatainjectionClientInjection
 {
     public static $rightname = "plugin_datainjection_use";
@@ -77,9 +49,6 @@ class PluginDatainjectionClientInjection
     public const STEP_UPLOAD  = 0;
     public const STEP_PROCESS = 1;
     public const STEP_RESULT  = 2;
-
-    //Injection results
-    private $results = [];
 
     /**
     * Print a good title for group pages
@@ -158,117 +127,133 @@ class PluginDatainjectionClientInjection
    **/
     public static function showInjectionForm(PluginDatainjectionModel $model, $entities_id)
     {
+        /** @var array $CFG_GLPI */
+        global $CFG_GLPI;
+
         if (!PluginDatainjectionSession::getParam('infos')) {
             PluginDatainjectionSession::setParam('infos', []);
         }
 
+        $nblines = PluginDatainjectionSession::getParam('nblines');
+
+        //Read all CSV lines into session for batch processing
+        $backend = $model->getBackend();
+        $model->loadSpecificModel();
+        $backend->openFile();
+
+        $lines = [];
+        $line  = $backend->getNextLine();
+
+        //If header is present, skip it
+        if ($model->getSpecificModel()->isHeaderPresent()) {
+            $line = $backend->getNextLine();
+        }
+
+        while ($line != null) {
+            $lines[] = $line;
+            $line    = $backend->getNextLine();
+        }
+        $backend->closeFile();
+
+        //Store lines in session for batch processing
+        PluginDatainjectionSession::setParam('injection_lines', json_encode($lines));
+        PluginDatainjectionSession::setParam('injection_results', json_encode([]));
+        PluginDatainjectionSession::setParam('injection_error_lines', json_encode([]));
+
+        $batch_url  = $CFG_GLPI['root_doc'] . "/plugins/datainjection/ajax/inject_batch.php";
+        $result_url = $CFG_GLPI['root_doc'] . "/plugins/datainjection/ajax/results.php";
+
         TemplateRenderer::getInstance()->display('@datainjection/clientinjection_injection.html.twig', [
             'model_name' => $model->fields['name'],
+            'nblines'    => $nblines,
+            'model_id'   => $model->fields['id'],
+            'batch_url'  => $batch_url,
+            'result_url' => $result_url,
+            'plugin_url' => plugin_datainjection_geturl(),
         ]);
 
-        // L'injection réelle reste côté PHP, mais tu peux déclencher l'appel Ajax ici si besoin
         echo "<span id='span_injection' name='span_injection'></span>";
-        self::processInjection($model, $entities_id);
     }
 
 
     /**
-    * @param PluginDatainjectionModel $model
-    * @param integer $entities_id
+    * Process a batch of injection lines.
+    *
+    * @param int $offset     Starting line offset
+    * @param int $batch_size Number of lines to process in this batch
+    *
+    * @return array JSON-serializable result with progress info
    **/
-    public static function processInjection(PluginDatainjectionModel $model, $entities_id)
+    public static function processBatch(int $offset, int $batch_size): array
     {
-        /** @var array $CFG_GLPI */
-        global $CFG_GLPI;
-
         try {
             ini_set("max_execution_time", "0");
         } catch (InfoException $e) {
-            //empty catch -- but keep trace of issue
             ErrorHandler::logCaughtException($e);
         }
 
-        // Disable recording each SQL request in $_SESSION
         Profile::getCurrent()->disable();
 
-        $nblines         = PluginDatainjectionSession::getParam('nblines');
-        $clientinjection = new PluginDatainjectionClientInjection();
+        $model = unserialize($_SESSION['datainjection']['currentmodel']);
+        $model->loadSpecificModel();
+        $entities_id = $_SESSION['glpiactive_entity'];
+        $lines_json  = PluginDatainjectionSession::getParam('injection_lines');
+        $lines       = json_decode($lines_json, true);
 
-        //New injection engine
+        $results_json     = PluginDatainjectionSession::getParam('injection_results');
+        $results          = json_decode($results_json, true) ?: [];
+        $error_lines_json = PluginDatainjectionSession::getParam('injection_error_lines');
+        $error_lines      = json_decode($error_lines_json, true) ?: [];
+
         $engine = new PluginDatainjectionEngine(
             $model,
             PluginDatainjectionSession::getParam('infos'),
             $entities_id,
         );
-        $backend = $model->getBackend();
-        $model->loadSpecificModel();
 
-        //Open CSV file
-        $backend->openFile();
+        $header_offset = $model->getSpecificModel()->isHeaderPresent() ? 2 : 1;
+        $total         = count($lines);
+        $end           = min($offset + $batch_size, $total);
 
-        $index = 0;
+        for ($i = $offset; $i < $end; $i++) {
+            $injectionline = $i + $header_offset;
+            $result        = $engine->injectLine($lines[$i][0], $injectionline);
+            $results[]     = $result;
 
-        //Read CSV file
-        $line = $backend->getNextLine();
-
-        //If header is present, then get the second line
-        if ($model->getSpecificModel()->isHeaderPresent()) {
-            $line = $backend->getNextLine();
-        }
-
-        //While CSV file is not EOF
-        $prev = '';
-        $deb  = time();
-        while ($line != null) {
-            //Inject line
-            $injectionline              = $index + ($model->getSpecificModel()->isHeaderPresent() ? 2 : 1);
-            $clientinjection->results[] = $engine->injectLine($line[0], $injectionline);
-
-            $pos = number_format($index * 100 / $nblines, 1);
-            if ($pos != $prev) {
-                $prev = $pos;
-                $fin  = time() - $deb;
+            if ($result['status'] != PluginDatainjectionCommonInjectionLib::SUCCESS) {
+                $error_lines[] = $lines[$i][0];
             }
-            $line = $backend->getNextLine();
-            $index++;
         }
 
-        $js = <<<JAVASCRIPT
-            $(function() {
-                const progress = document.querySelector('.progress');
-                const progressBar = document.querySelector('.progress-bar');
-                if (progressBar && progress) {
-                    progressBar.style.width = '100%';
-                    progress.setAttribute('aria-valuenow', '100');
-                }
-            });
-        JAVASCRIPT;
+        //Store updated results
+        PluginDatainjectionSession::setParam('injection_results', json_encode($results));
+        PluginDatainjectionSession::setParam('injection_error_lines', json_encode($error_lines));
 
-        //EOF : change progressbar to 100% !
-        echo Html::scriptBlock($js);
+        $done     = ($end >= $total);
+        $progress = $total > 0 ? round(($end / $total) * 100, 1) : 100;
 
-        // Restore
+        if ($done) {
+            //Finalize: move results to the standard session params, clean up
+            PluginDatainjectionSession::setParam('results', json_encode($results));
+            PluginDatainjectionSession::setParam('error_lines', json_encode($error_lines));
+
+            $_SESSION['datainjection']['step'] = self::STEP_RESULT;
+            unset($_SESSION['datainjection']['go']);
+
+            //Delete CSV file
+            $backend = $model->getBackend();
+            $backend->deleteFile();
+        }
+
         Profile::getCurrent()->enable();
 
-        //Close CSV file
-        $backend->closeFile();
-
-        //Delete CSV file
-        $backend->deleteFile();
-
-        //Change step
-        $_SESSION['datainjection']['step'] = self::STEP_RESULT;
-
-        //Display results form
-        PluginDatainjectionSession::setParam('results', json_encode($clientinjection->results));
-        PluginDatainjectionSession::setParam('error_lines', json_encode($engine->getLinesInError()));
-        $p['models_id'] = $model->fields['id'];
-        $p['nblines']   = $nblines;
-
-        unset($_SESSION['datainjection']['go']);
-
-        $url = $CFG_GLPI['root_doc'] . "/plugins/datainjection/ajax/results.php";
-        Ajax::updateItem("span_injection", $url, $p);
+        return [
+            'progress'  => $progress,
+            'done'      => $done,
+            'offset'    => $end,
+            'total'     => $total,
+            'processed' => $end,
+        ];
     }
 
 
