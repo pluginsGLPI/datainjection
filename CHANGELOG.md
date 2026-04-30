@@ -11,6 +11,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 - Fix crash when injection model has no mandatory fields defined
 - Fix models created on parent entities can't be used on child entites
+- Fix association of imported data with non-existing groups when the group column is empty in the import file
 - Fix responsible group injection payload normalization so group remains visible in GLPI after import
 - Fix incorrect escaping of apostrophes and accents
 - Fix plugin rights initialization and cleanup

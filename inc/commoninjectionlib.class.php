@@ -28,6 +28,7 @@
  * -------------------------------------------------------------------------
  */
 use Glpi\Exception\Http\HttpException;
+use Glpi\Features\AssignableItem;
 
 use function Safe\preg_match;
 use function Safe\preg_replace;
@@ -963,8 +964,14 @@ class PluginDatainjectionCommonInjectionLib
             ];
             if (empty($value) && $value !== 0 && $value !== '0') {
                 if (isForeignKeyField($field) || (str_contains($field, 'is_')) || (method_exists($injectionClass, 'isNullable') && !$injectionClass->isNullable($field))) {
-                    // If the field is an id, we set it to 0
-                    $this->values[$itemtype][$field] = self::DROPDOWN_EMPTY_VALUE;
+                    //If the field concernes groupds, unseting it instead of setting it to 0 in order to avoid associating the item to a non existing group (id 0)
+                    $group_fields = ['groups_id_tech', 'groups_id', 'groups_id_normal'];
+                    if (in_array($field, $group_fields) && Toolbox::hasTrait($itemtype, AssignableItem::class)) {
+                        unset($this->values[$itemtype][$field]);
+                    } else {
+                        // If the field is an id, we set it to 0
+                        $this->values[$itemtype][$field] = self::DROPDOWN_EMPTY_VALUE;
+                    }
                 } else {
                     // Else we set it to NULL
                     $this->values[$itemtype][$field] = self::EMPTY_VALUE;
