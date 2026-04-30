@@ -5,7 +5,18 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-## [unreleased] -
+## [Unreleased]
+
+### Fixed
+
+- Fix crash when injection model has no mandatory fields defined
+- Fix models created on parent entities can't be used on child entites
+- Fix responsible group injection payload normalization so group remains visible in GLPI after import
+- Fix incorrect escaping of apostrophes and accents
+- Fix plugin rights initialization and cleanup
+
+
+## [2.15.4] - 2026-03-16
 
 ### Fixed
 
@@ -15,6 +26,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Fix special caracters malformed in translations
 - Fix error when displaying the additional information form
 - Fix injection loading bar
+- Fix the `computer contact` injection when the corresponding value in the CSV file is empty
 
 ## [2.15.3] - 2025-12-22
 

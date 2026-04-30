@@ -236,8 +236,9 @@ class PluginDatainjectionCommonInjectionLib
         }
 
         $status_check = true;
-        if (count($this->mandatory_fields[$itemtype]) > 0) {
-            foreach ($this->mandatory_fields[$itemtype] as $field => $value) {
+        $mandatory_fields = $this->mandatory_fields[$itemtype] ?? [];
+        if ($mandatory_fields !== []) {
+            foreach ($mandatory_fields as $field => $value) {
                 //Get value associated with the mandatory field
                 $value = $this->getValueByItemtypeAndName($itemtype, $field);
 
@@ -256,6 +257,12 @@ class PluginDatainjectionCommonInjectionLib
                     $this->results[self::ACTION_CHECK][] = [self::MANDATORY, $option['name']];
                 }
             }
+        } else {
+            $status_check = false;
+            $this->results[self::ACTION_CHECK][] = [
+                self::FAILED,
+                __('No mandatory field is defined for this model', 'datainjection'),
+            ];
         }
         return $status_check;
     }
@@ -680,12 +687,20 @@ class PluginDatainjectionCommonInjectionLib
                 break;
 
             case 'contact':
-                $id = $value != Dropdown::EMPTY_VALUE ? self::findContact($value, $this->entity) : Dropdown::EMPTY_VALUE;
+                if ($value === self::EMPTY_VALUE || $value == self::DROPDOWN_EMPTY_VALUE || $value === Dropdown::EMPTY_VALUE) {
+                    $id = self::DROPDOWN_EMPTY_VALUE;
+                } else {
+                    $id = self::findContact($value, $this->entity);
+                }
                 $this->setValueForItemtype($itemtype, $linkfield, $id);
                 break;
 
             case 'user':
-                $id = $value != Dropdown::EMPTY_VALUE ? self::findUser($value, $this->entity) : Dropdown::EMPTY_VALUE;
+                if ($value === self::EMPTY_VALUE || $value == self::DROPDOWN_EMPTY_VALUE || $value === Dropdown::EMPTY_VALUE) {
+                    $id = self::DROPDOWN_EMPTY_VALUE;
+                } else {
+                    $id = self::findUser($value, $this->entity);
+                }
                 $this->setValueForItemtype($itemtype, $linkfield, $id);
                 break;
 
@@ -1673,16 +1688,26 @@ class PluginDatainjectionCommonInjectionLib
                 $toinject[$key] = $value;
             }
 
-            // handle new format for group type specification
-            // restricting to group_item relations only
-            if (($key === "groups_id_tech" || $key === "groups_id" || $key === "groups_id_normal") && $option['table'] == getTableForItemType(Group::class) && !empty($option) && isset($option['joinparams']['beforejoin']['table']) && $option['joinparams']['beforejoin']['table'] === getTableForItemType(Group_Item::class) && isset($option['joinparams']['beforejoin']['joinparams']['condition']['NEWTABLE.type'])) {
-                $group_type = $option['joinparams']['beforejoin']['joinparams']['condition']['NEWTABLE.type'];
-                // depending on the type, set the correct field (_groups_id_tech => array or _groups_id => array)
-                // and unset the old one (groups_id_tech => int or groups_id => int or groups_id_normal => int)
-                if ($group_type == Group_Item::GROUP_TYPE_TECH) {
-                    $toinject["_groups_id_tech"] = [$value];
+            // Normalize group assignment fields to GLPI relation payload keys.
+            // Some search options do not expose a stable joinparams shape, but GLPI
+            // still expects _groups_id/_groups_id_tech arrays when saving equipment groups.
+            if (
+                in_array($key, ['groups_id_tech', 'groups_id', 'groups_id_normal'], true)
+                && !empty($option)
+                && isset($option['table'])
+                && $option['table'] === getTableForItemType(Group::class)
+            ) {
+                $normalized_value = $toinject[$key];
+                $group_type = null;
+                if (isset($option['joinparams']['beforejoin']['joinparams']['condition']['NEWTABLE.type'])) {
+                    $group_type = $option['joinparams']['beforejoin']['joinparams']['condition']['NEWTABLE.type'];
+                }
+
+                // Keep explicit technical group semantics from key or metadata.
+                if ($key === 'groups_id_tech' || $group_type == Group_Item::GROUP_TYPE_TECH) {
+                    $toinject['_groups_id_tech'] = [$normalized_value];
                 } else {
-                    $toinject["_groups_id"] = [$value];
+                    $toinject['_groups_id'] = [$normalized_value];
                 }
                 unset($toinject[$key]);
             }

@@ -19,7 +19,7 @@
    <homepage>http://plugins.glpi-project.org/#/plugin/datainjection</homepage>
    <download>https://github.com/pluginsGLPI/datainjection/releases</download>
    <issues>https://github.com/pluginsGLPI/datainjection/issues</issues>
-   <readme>https://glpi-plugins.readthedocs.io/en/latest/datainjection/index.html</readme>
+   <readme>https://help.glpi-project.org/doc-plugins/datainjection</readme>
    <authors>
       <author>Walid Nouh</author>
       <author>Dévi Balpe</author>
@@ -28,6 +28,11 @@
       <author>Xavier Caillaud</author>
    </authors>
    <versions>
+      <version>
+          <num>2.15.4</num>
+          <compatibility>~11.0.5</compatibility>
+          <download_url>https://github.com/pluginsGLPI/datainjection/releases/download/2.15.4/glpi-datainjection-2.15.4.tar.bz2</download_url>
+      </version>
       <version>
           <num>2.15.3</num>
           <compatibility>~11.0.0</compatibility>

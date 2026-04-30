@@ -382,29 +382,52 @@ class PluginDatainjectionModel extends CommonDBTM
         global $DB;
 
         $models =  [];
-        $query = "SELECT `id`, `name`, `is_private`, `entities_id`, `is_recursive`, `itemtype`,
-                       `step`, `comment`
-                FROM `glpi_plugin_datainjection_models` ";
 
+        $where = [];
         if (!$all) {
-            $query .= " WHERE `step` = '" . self::READY_TO_USE_STEP . "' AND (";
-        } else {
-            $query .= " WHERE (";
+            $where['step'] = self::READY_TO_USE_STEP;
         }
 
-        $query .= "(`is_private` = '" . self::MODEL_PUBLIC . "'" .
-                getEntitiesRestrictRequest(
-                    " AND",
-                    "glpi_plugin_datainjection_models",
-                    "entities_id",
-                    $entity,
-                    false,
-                ) . ")
-                  OR (`is_private` = '" . self::MODEL_PRIVATE . "' AND `users_id` = '$user_id'))
-                 ORDER BY `is_private` DESC,
-                          `entities_id`, " . ($order == "`name`" ? "`name`" : $order);
+        $restrict = getEntitiesRestrictCriteria(
+            'glpi_plugin_datainjection_models',
+            'entities_id',
+            $entity,
+            true,
+        );
 
-        foreach ($DB->doQuery($query) as $data) {
+        $where[] = [
+            'OR' => [
+                [
+                    'is_private' => self::MODEL_PUBLIC,
+                ] + $restrict,
+                [
+                    'is_private' => self::MODEL_PRIVATE,
+                    'users_id'   => $user_id,
+                ],
+            ],
+        ];
+
+        $query = [
+            'SELECT' => [
+                'id',
+                'name',
+                'is_private',
+                'entities_id',
+                'is_recursive',
+                'itemtype',
+                'step',
+                'comment',
+            ],
+            'FROM'   => 'glpi_plugin_datainjection_models',
+            'WHERE' => $where,
+            'ORDER' => [
+                'is_private DESC',
+                'entities_id',
+                $order == "`name`" ? "name" : $order,
+            ],
+        ];
+
+        foreach ($DB->request($query) as $data) {
             if (
                 self::checkRightOnModel($data['id'])
                 && class_exists($data['itemtype'])
@@ -935,6 +958,7 @@ class PluginDatainjectionModel extends CommonDBTM
         $model->getFromDB($models_id);
         $specific = self::getInstance($model->getFiletype());
         $specific->getFromDBByModelID($models_id);
+        $model->specific_model = $specific;
         return $model;
     }
 
@@ -1157,11 +1181,11 @@ class PluginDatainjectionModel extends CommonDBTM
                 //If name of the mapping is not equal in the csv file header and in the DB
                 $name_from_file = trim(
                     mb_strtoupper(
-                        stripslashes($header[$mapping->getRank()]),
+                        $header[$mapping->getRank()],
                         'UTF-8',
                     ),
                 );
-                $name_from_db   = trim(mb_strtoupper(stripslashes($mapping->getName()), 'UTF-8'));
+                $name_from_db   = trim(mb_strtoupper($mapping->getName(), 'UTF-8'));
 
                 if ($name_from_db != $name_from_file) {
                     if ($error['error_message'] == '') {
@@ -1308,7 +1332,7 @@ class PluginDatainjectionModel extends CommonDBTM
                 echo "<tr class='tab_bg_1'>";
 
                 foreach ($mappings as $mapping) {
-                    echo"<th style='height:40px'>" . stripslashes($mapping->getMappingName()) . "</th>";
+                    echo"<th style='height:40px'>" . htmlescape($mapping->getMappingName()) . "</th>";
                 }
                 echo "</tr>";
                 unset($lines[0]);
@@ -1317,7 +1341,7 @@ class PluginDatainjectionModel extends CommonDBTM
             foreach ($lines as $line) {
                 echo "<tr class='tab_bg_2'>";
                 foreach ($line[0] as $value) {
-                    echo "<td>" . $value . "</td>";
+                    echo "<td>" . htmlescape($value) . "</td>";
                 }
                 echo "</tr>";
             }

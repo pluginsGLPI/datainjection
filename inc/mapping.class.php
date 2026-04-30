@@ -28,6 +28,11 @@
  * -------------------------------------------------------------------------
  */
 
+use Glpi\Application\View\TemplateRenderer;
+
+use function Safe\ob_get_clean;
+use function Safe\ob_start;
+
 class PluginDatainjectionMapping extends CommonDBTM
 {
     public static $rightname = "plugin_datainjection_model";
@@ -93,60 +98,39 @@ class PluginDatainjectionMapping extends CommonDBTM
    **/
     public static function showFormMappings(PluginDatainjectionModel $model)
     {
-        /** @var array $CFG_GLPI */
-        global $CFG_GLPI;
-
         $canedit = $model->can($model->fields['id'], UPDATE);
-
         $lines = isset($_SESSION['datainjection']['lines']) ? unserialize($_SESSION['datainjection']['lines']) : [];
 
-        echo "<form method='post' name=form action='" . Toolbox::getItemTypeFormURL(self::class) . "'>";
-
-        //Display link to the preview popup
-        if (isset($_SESSION['datainjection']['lines']) && !empty($lines)) {
-            $nblines = $_SESSION['datainjection']['nblines'];
-            echo "<table class='tab_cadre_fixe'>";
-            echo "<tr class='tab_bg_1'><td class='center'>";
-            $url = plugin_datainjection_geturl() .
-             "front/popup.php?popup=preview&amp;models_id=" .
-             $model->getID();
-            echo "<a href=#  onClick=\"var w = window.open('$url' , 'glpipopup', " .
-             "'height=400, width=600, top=100, left=100, scrollbars=yes' );w.focus();\"/>";
-            echo __s('See the file', 'datainjection') . "</a>";
-            echo "</td></tr>";
+        $show_preview = isset($_SESSION['datainjection']['lines']) && !empty($lines);
+        $preview_url = '';
+        if ($show_preview) {
+            $preview_url = plugin_datainjection_geturl() . "front/popup.php?popup=preview&models_id=" . $model->getID();
         }
-
-        echo "<table class='tab_cadre_fixe'>";
-        echo "<tr>";
-        echo "<th>" . __s('Header of the file', 'datainjection') . "</th>";
-        echo "<th>" . __s('Tables', 'datainjection') . "</th>";
-        echo "<th>" . _sn('Field', 'Fields', 2) . "</th>";
-        echo "<th>" . __s('Link field', 'datainjection') . "</th>";
-        echo "</tr>";
 
         $model->loadMappings();
+        $mappings = [];
 
         foreach ($model->getMappings() as $mapping) {
-            $mappings_id     = $mapping->getID();
-            echo "<tr class='tab_bg_1'>";
-            echo "<td class='center'>" . $mapping->fields['name'] . "</td>";
-            echo "<td class='center'>";
+            ob_start();
             $options = ['primary_type' => $model->fields['itemtype']];
             PluginDatainjectionInjectionType::dropdownLinkedTypes($mapping, $options);
-            echo "</td>";
-            echo "<td class='center'><span id='span_field_$mappings_id'>";
-            echo "</span></td>";
-            echo "<td class='center'><span id='span_mandatory_$mappings_id'></span></td>";
+            $dropdown_html = ob_get_clean();
+
+            $mappings[] = [
+                'id'            => $mapping->getID(),
+                'name'          => $mapping->fields['name'],
+                'dropdown_html' => $dropdown_html,
+            ];
         }
 
-        if ($canedit) {
-            echo "<tr> <td class='tab_bg_2 center' colspan='4'>";
-            echo "<input type='hidden' name='models_id' value='" . $model->fields['id'] . "'>";
-            echo "<input type='submit' name='update' value='" . _sx('button', 'Save') . "' class='submit'>";
-            echo "</td></tr>";
-        }
-        echo "</table>";
-        Html::closeForm();
+        TemplateRenderer::getInstance()->display('@datainjection/mappings_form.html.twig', [
+            'form_action'  => Toolbox::getItemTypeFormURL(self::class),
+            'show_preview' => $show_preview,
+            'preview_url'  => $preview_url,
+            'mappings'     => $mappings,
+            'canedit'      => $canedit,
+            'model_id'     => $model->fields['id'],
+        ]);
     }
 
 
