@@ -11,7 +11,7 @@
          <fr><![CDATA[Cette extension permet l'import de données dans GLPI à l'aide de fichiers CSV.]]></fr>
       </short>
       <long>
-         <cs><![CDATA[Umožňuje vytváření modelů importu pro budoucí opětovné využití. Byl vytvořen pro:<br /> - import dat pocházejících z jiných softwarů pro správu majetku<br /> - import formulářů elektronického doručení<br />Data k importu pomocí tohoto zásuvného modulu jsou:<br /> - data inventáře (s výjimkou software a licencí)<br /> - správní data (smlouvy, kontakty, dodavatelé)<br /> - data nastavení (uživatel, skupina, entita)]]></cs>         
+         <cs><![CDATA[Umožňuje vytváření modelů importu pro budoucí opětovné využití. Byl vytvořen pro:<br /> - import dat pocházejících z jiných softwarů pro správu majetku<br /> - import formulářů elektronického doručení<br />Data k importu pomocí tohoto zásuvného modulu jsou:<br /> - data inventáře (s výjimkou software a licencí)<br /> - správní data (smlouvy, kontakty, dodavatelé)<br /> - data nastavení (uživatel, skupina, entita)]]></cs>
          <en><![CDATA[It allows to create models of injection for a future re-use. It's been created in order to:<br /> - import data coming from others asset management softwares<br /> - inject electronic delivery forms<br />Data to be imported using the plugin are:<br /> - inventory data (except softwares and licenses)<br /> - management data (contract, contact, supplier)<br /> - configuration data (user, group, entity)]]></en>
          <fr><![CDATA[Elle permet de créer des modèles d’injection pour une réutilisation future et a été créée afin de répondre aux besoins suivants :<br /> - reprise des données d'autres outils d'inventaires<br /> - injection de bons de livraisons électroniques<br />Les données pouvant-être injectées sont :<br /> - données d'inventaires (sauf logiciels et licences)<br /> - données de gestion (contrat, contact, fournisseur)<br /> - données de configuration (utilisateur, groupe, entité)]]></fr>
       </long>
@@ -28,6 +28,11 @@
       <author>Xavier Caillaud</author>
    </authors>
    <versions>
+      <version>
+          <num>2.15.5</num>
+          <compatibility>~11.0.5</compatibility>
+          <download_url>https://github.com/pluginsGLPI/datainjection/releases/download/2.15.5/glpi-datainjection-2.15.5.tar.bz2</download_url>
+      </version>
       <version>
           <num>2.15.4</num>
           <compatibility>~11.0.5</compatibility>
