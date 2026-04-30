@@ -91,14 +91,11 @@ class PluginDatainjectionBackendcsv extends PluginDatainjectionBackend implement
    **/
     public static function parseLine($fic, $data, $encoding = 1)
     {
-        /** @var DBmysql $DB */
-        global $DB;
-
         $csv = [];
         $num = count($data);
 
         for ($c = 0; $c < $num; $c++) {
-            $tmp = trim($DB->escape($data[$c]));
+            $tmp = trim($data[$c]);
             switch ($encoding) {
                 case PluginDatainjectionBackend::ENCODING_ISO8859_1:
                     $csv[0][] = $tmp === '' || $tmp === '0' ? Toolbox::encodeInUtf8($tmp) : $tmp;
