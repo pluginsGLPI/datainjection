@@ -14,6 +14,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Fix responsible group injection payload normalization so group remains visible in GLPI after import
 - Fix incorrect escaping of apostrophes and accents
 - Fix plugin rights initialization and cleanup
+- Fix injection loading bar
 
 
 ## [2.15.4] - 2026-03-16
@@ -25,7 +26,6 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Restored group selection in mappings
 - Fix special caracters malformed in translations
 - Fix error when displaying the additional information form
-- Fix injection loading bar
 - Fix the `computer contact` injection when the corresponding value in the CSV file is empty
 
 ## [2.15.3] - 2025-12-22
