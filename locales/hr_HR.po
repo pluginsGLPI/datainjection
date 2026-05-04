@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-04-22 02:06+0000\n"
+"POT-Creation-Date: 2026-05-01 02:40+0000\n"
 "PO-Revision-Date: 2018-06-21 12:57+0000\n"
 "Last-Translator: Milo Ivir <mail@milotype.de>, 2023\n"
 "Language-Team: Croatian (Croatia) (https://app.transifex.com/teclib/teams/28042/hr_HR/)\n"
@@ -21,8 +21,39 @@ msgstr ""
 "Language: hr_HR\n"
 "Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
 
-#: templates/clientinjection_upload_file.html.twig inc/dropdown.class.php:85
-#: inc/model.class.php:781
+#: templates/model_validation_form.html.twig
+msgid "Validation"
+msgstr ""
+
+#: templates/model_validation_form.html.twig
+msgctxt "button"
+msgid "Validate the model"
+msgstr "Provjeri model"
+
+#: templates/clientinjection_injection.html.twig
+#: templates/clientinjection.html.twig
+msgid "Model"
+msgstr ""
+
+#: templates/clientinjection_injection.html.twig inc/menu.class.php:56
+#: inc/menu.class.php:57 inc/menu.class.php:61 inc/profile.class.php:44
+msgid "Injection of the file"
+msgstr "Umetanje datoteke"
+
+#: templates/clientinjection_injection.html.twig
+msgid " lines"
+msgstr ""
+
+#: templates/clientinjection_injection.html.twig
+msgid "Error"
+msgstr ""
+
+#: templates/clientinjection_injection.html.twig
+msgid "Import progress"
+msgstr "Tijek uvoza"
+
+#: templates/clientinjection_upload_file.html.twig inc/model.class.php:781
+#: inc/dropdown.class.php:85
 msgid "File to inject"
 msgstr "Datoteka za umetanje"
 
@@ -45,17 +76,13 @@ msgid ""
 "do it ?"
 msgstr "Oprez, umetnut ćeš podatke u GLPI. Zaista to želiš učiniti?"
 
-#: templates/modelcsv_additional_form.html.twig
-msgid "Specific file format options"
-msgstr "Opcije za određeni datotečni format"
+#: templates/infoadditionnalinfo.html.twig
+msgid "Complementary information"
+msgstr "Dodatne informacije"
 
-#: templates/modelcsv_additional_form.html.twig
-msgid "Header's presence"
-msgstr "Postojanje zaglavlja"
-
-#: templates/modelcsv_additional_form.html.twig
-msgid "File delimitor"
-msgstr "Znak rastavljanja"
+#: templates/infoadditionnalinfo.html.twig
+msgid "Download file sample"
+msgstr "Preuzmi uzorak datoteke"
 
 #: templates/clientinjection_result.html.twig
 msgid "Injection's results"
@@ -85,27 +112,68 @@ msgstr "Izvezi log-zapis"
 msgid "Finish"
 msgstr "Završi"
 
-#: templates/log_results.html.twig inc/model.class.php:1493
+#: templates/modelcsv_additional_form.html.twig
+msgid "Specific file format options"
+msgstr "Opcije za određeni datotečni format"
+
+#: templates/modelcsv_additional_form.html.twig
+msgid "Header's presence"
+msgstr "Postojanje zaglavlja"
+
+#: templates/modelcsv_additional_form.html.twig
+msgid "File delimitor"
+msgstr "Znak rastavljanja"
+
+#: templates/mappings_form.html.twig front/popup.php:35
+msgid "See the file"
+msgstr "Pogledaj datoteku"
+
+#: templates/mappings_form.html.twig
+msgid "Header of the file"
+msgstr "Zaglavlje datoteke"
+
+#: templates/mappings_form.html.twig inc/info.class.php:87
+#: inc/info.class.php:145
+msgid "Tables"
+msgstr "Tablice"
+
+#: templates/mappings_form.html.twig
+msgid "Link field"
+msgstr "Poveži polje"
+
+#: templates/clientinjection.html.twig
+msgid "Client Injection Configuration"
+msgstr ""
+
+#: templates/clientinjection.html.twig
+msgid "No model currently available"
+msgstr "Trenutačno nema dostupnih modela"
+
+#: templates/clientinjection.html.twig
+msgid "You can start the model creation by hitting the button"
+msgstr "Počni stvarati model pritiskom gumba"
+
+#: templates/log_results.html.twig inc/model.class.php:1494
 msgid "Array of successful injections"
 msgstr "Niz uspješnih umetanja"
 
-#: templates/log_results.html.twig inc/model.class.php:1496
-#: inc/model.class.php:1518
+#: templates/log_results.html.twig inc/model.class.php:1497
+#: inc/model.class.php:1519
 msgid "Line"
 msgstr "Redak"
 
-#: templates/log_results.html.twig inc/model.class.php:1497
-#: inc/model.class.php:1520
+#: templates/log_results.html.twig inc/model.class.php:1498
+#: inc/model.class.php:1521
 msgid "Data Import"
 msgstr "Uvoz podataka"
 
-#: templates/log_results.html.twig inc/model.class.php:1498
-#: inc/model.class.php:1521
+#: templates/log_results.html.twig inc/model.class.php:1499
+#: inc/model.class.php:1522
 msgid "Injection type"
 msgstr "Vrsta umetanja"
 
-#: templates/log_results.html.twig inc/model.class.php:1499
-#: inc/model.class.php:1522
+#: templates/log_results.html.twig inc/model.class.php:1500
+#: inc/model.class.php:1523
 msgid "Object Identifier"
 msgstr "Identifikator objekta"
 
@@ -113,8 +181,8 @@ msgstr "Identifikator objekta"
 msgid "Array of failed injections"
 msgstr ""
 
-#: templates/log_results.html.twig inc/model.class.php:1519
-#: inc/model.class.php:1539
+#: templates/log_results.html.twig inc/model.class.php:1520
+#: inc/model.class.php:1540
 msgid "Data check"
 msgstr "Provjera podataka"
 
@@ -129,40 +197,6 @@ msgstr "Broj obrađenih redaka"
 #: templates/log_results.html.twig
 msgid "Counter"
 msgstr "Brojač"
-
-#: templates/model_validation_form.html.twig
-msgid "Validation"
-msgstr ""
-
-#: templates/model_validation_form.html.twig
-msgctxt "button"
-msgid "Validate the model"
-msgstr "Provjeri model"
-
-#: templates/clientinjection.html.twig
-msgid "Client Injection Configuration"
-msgstr ""
-
-#: templates/clientinjection.html.twig
-#: templates/clientinjection_injection.html.twig
-msgid "Model"
-msgstr ""
-
-#: templates/clientinjection.html.twig
-msgid "No model currently available"
-msgstr "Trenutačno nema dostupnih modela"
-
-#: templates/clientinjection.html.twig
-msgid "You can start the model creation by hitting the button"
-msgstr "Počni stvarati model pritiskom gumba"
-
-#: templates/infoadditionnalinfo.html.twig
-msgid "Complementary information"
-msgstr "Dodatne informacije"
-
-#: templates/infoadditionnalinfo.html.twig
-msgid "Download file sample"
-msgstr "Preuzmi uzorak datoteke"
 
 #: templates/model_advanced_form.html.twig
 msgid "Model status"
@@ -208,20 +242,12 @@ msgstr "Kriterij jedinstvenosti priključka"
 msgid "Replacing the value of multiline text fields"
 msgstr ""
 
-#: templates/clientinjection_injection.html.twig
-msgid "Import progress"
-msgstr "Tijek uvoza"
+#: setup.php:95 front/clientinjection.form.php:34 inc/menu.class.php:38
+#: inc/profile.class.php:72
+msgid "Data injection"
+msgstr "Umetanje podataka"
 
-#: templates/clientinjection_injection.html.twig inc/menu.class.php:56
-#: inc/menu.class.php:57 inc/menu.class.php:61 inc/profile.class.php:44
-msgid "Injection of the file"
-msgstr "Umetanje datoteke"
-
-#: front/popup.php:35 inc/mapping.class.php:115
-msgid "See the file"
-msgstr "Pogledaj datoteku"
-
-#: front/popup.php:41 inc/model.class.php:1484
+#: front/popup.php:41 inc/model.class.php:1485
 msgid "Data injection report"
 msgstr "Izvještaj o umetanju podataka"
 
@@ -230,78 +256,97 @@ msgid ""
 "The file could not be found (Maybe it exceeds the maximum size allowed)"
 msgstr ""
 
-#: front/clientinjection.form.php:34 inc/menu.class.php:38
-#: inc/profile.class.php:72 setup.php:95
-msgid "Data injection"
-msgstr "Umetanje podataka"
-
 #: front/clientinjection.form.php:52
 msgid "One mandatory field is not filled"
 msgstr "Jedno obavezno polje nije ispunjeno"
 
-#: inc/commoninjectionlib.class.php:264
+#: inc/info.class.php:89 inc/info.class.php:147
+msgid "Mandatory information"
+msgstr "Obavezne informacije"
+
+#: inc/info.class.php:146
+msgid "Fields"
+msgstr "Polja"
+
+#: inc/clientinjection.class.php:116
+msgid "Launch the import"
+msgstr "Pokreni uvoz"
+
+#: inc/injectiontype.class.php:145
+msgid "-------Choose a table-------"
+msgstr "------ Odaberi tablicu ------"
+
+#: inc/injectiontype.class.php:215
+msgid "-------Choose a field-------"
+msgstr "------ Odaberi polje ------"
+
+#: inc/commoninjectionlib.class.php:265
 msgid "No mandatory field is defined for this model"
 msgstr ""
 
-#: inc/commoninjectionlib.class.php:2085
+#: inc/commoninjectionlib.class.php:2092
 msgid "Add from CSV file"
 msgstr "Dodaj iz CDV datoteke"
 
-#: inc/commoninjectionlib.class.php:2085
+#: inc/commoninjectionlib.class.php:2092
 msgid "Update from CSV file"
 msgstr "Aktualiziraj iz CDV datoteke"
 
-#: inc/commoninjectionlib.class.php:2124
+#: inc/commoninjectionlib.class.php:2131
 msgid "No right to import data"
 msgstr "Nedostaje pravo za uvoz podataka"
 
-#: inc/commoninjectionlib.class.php:2128
+#: inc/commoninjectionlib.class.php:2135
 msgid "No right to update data"
 msgstr "Nedostaje pravo za aktualiziranje podataka"
 
-#: inc/commoninjectionlib.class.php:2132
+#: inc/commoninjectionlib.class.php:2139
 msgid "Size of the inserted value is to expansive"
 msgstr "Umetnute vrijednosti su predugačke"
 
-#: inc/commoninjectionlib.class.php:2136
+#: inc/commoninjectionlib.class.php:2143
 msgid "Import not allowed"
 msgstr "Uvoz nije dozvoljen"
 
-#: inc/commoninjectionlib.class.php:2140
+#: inc/commoninjectionlib.class.php:2147
 msgid "Import failed"
 msgstr "Uvoz neuspio"
 
-#: inc/commoninjectionlib.class.php:2144
+#: inc/commoninjectionlib.class.php:2151
 msgid "At least one mandatory field is not present"
 msgstr "Barem jedno obavezno polje nedostaje"
 
-#: inc/commoninjectionlib.class.php:2148
+#: inc/commoninjectionlib.class.php:2155
 msgid "Data to insert are correct"
 msgstr "Podaci za umetanje su ispravni"
 
-#: inc/commoninjectionlib.class.php:2152
+#: inc/commoninjectionlib.class.php:2159
 msgid "One data is not the good type"
 msgstr "Jedan podatak nije dobre vrste"
 
-#: inc/commoninjectionlib.class.php:2156
+#: inc/commoninjectionlib.class.php:2163
 msgid "Warning"
 msgstr "Upozorenje"
 
-#: inc/commoninjectionlib.class.php:2160
+#: inc/commoninjectionlib.class.php:2167
 msgid "Data not found"
 msgstr "Podaci nisu pronađeni"
 
-#: inc/commoninjectionlib.class.php:2164 inc/model.class.php:1377
+#: inc/commoninjectionlib.class.php:2171 inc/model.class.php:1378
 msgid "Undetermined"
 msgstr "Neodređeno"
 
-#: inc/networkportinjection.class.php:94
-msgid "Port MAC address"
-msgstr "MAC adresa priključka"
+#: inc/computerinjection.class.php:78
+msgid "Antivirus name"
+msgstr "Ime antivirusa"
 
 #: inc/networkequipmentinjection.class.php:76
 msgid "Number of ports"
 msgstr "Broj priključaka"
+
+#: inc/phoneinjection.class.php:71
+msgid "Domain name"
+msgstr "Ime domene"
 
 #: inc/contractinjection.class.php:154 inc/contractinjection.class.php:162
 #: inc/contractinjection.class.php:170 inc/contractinjection.class.php:178
@@ -312,25 +357,70 @@ msgstr[0] ""
 msgstr[1] ""
 msgstr[2] ""
 
-#: inc/injectiontype.class.php:145
-msgid "-------Choose a table-------"
-msgstr "------ Odaberi tablicu ------"
+#: inc/profile.class.php:40
+msgid "Model management"
+msgstr "Upravljanje modelima"
 
-#: inc/injectiontype.class.php:215
-msgid "-------Choose a field-------"
-msgstr "------ Odaberi polje ------"
+#: inc/model.class.php:783 inc/dropdown.class.php:86
+msgid "Mappings"
+msgstr "Mapiranja"
 
-#: inc/mapping.class.php:121
-msgid "Header of the file"
-msgstr "Zaglavlje datoteke"
+#: inc/model.class.php:785
+msgid "Additional Information"
+msgstr "Dodatne informacije"
 
-#: inc/mapping.class.php:122 inc/info.class.php:87 inc/info.class.php:145
-msgid "Tables"
-msgstr "Tablice"
+#: inc/model.class.php:811
+msgid "Load this file"
+msgstr "Učitaj ovu datoteku"
 
-#: inc/mapping.class.php:124
-msgid "Link field"
-msgstr "Poveži polje"
+#: inc/model.class.php:892
+msgid "Please enter a name for the model"
+msgstr "Upiši ime za ovaj model"
+
+#: inc/model.class.php:991
+#, php-format
+msgid "Impossible to copy the file in %s"
+msgstr "Nije moguće kopirati datoteku u %s"
+
+#: inc/model.class.php:1000
+msgid "File format is wrong"
+msgstr "Nepodržani format datoteke"
+
+#: inc/model.class.php:1001
+msgid "Extension csv required"
+msgstr "Potreban je csv nastavak"
+
+#: inc/model.class.php:1117
+msgid "The file is ok."
+msgstr "Datoteka je u redu."
+
+#: inc/model.class.php:1141
+msgid "The number of columns of the file is incorrect."
+msgstr "Broj stupaca u datoteci nije ispravan."
+
+#: inc/model.class.php:1143
+#, php-format
+msgid "%d awaited column"
+msgid_plural "%d awaited columns"
+msgstr[0] "očekuje se %d stupac"
+msgstr[1] "očekuju se %d stupca"
+msgstr[2] "očekuju se %d stupaca"
+
+#: inc/model.class.php:1192
+msgid "At least one column is incorrect"
+msgstr "Barem jedan stupac je neispravan"
+
+#: inc/model.class.php:1200
+msgid "Into the file"
+msgstr "U datoteku"
+
+#: inc/model.class.php:1205
+msgid "From the model"
+msgstr "Od modela"
+
+#: inc/model.class.php:1516
+msgid "Array of unsuccessful injections"
+msgstr "Niz neuspješnih umetanja"
 
 #: inc/dropdown.class.php:37
 msgid "dd-mm-yyyy"
@@ -356,10 +446,6 @@ msgstr "1 234,56"
 msgid "1,234.56"
 msgstr "1,234.56"
 
-#: inc/dropdown.class.php:86 inc/model.class.php:783
-msgid "Mappings"
-msgstr "Mapiranja"
-
 #: inc/dropdown.class.php:128
 msgid "Automatic detection"
 msgstr "Automatsko prepoznavanje"
@@ -372,83 +458,6 @@ msgstr "UTF-8"
 msgid "ISO8859-1"
 msgstr "ISO8859-1"
 
-#: inc/profile.class.php:40
-msgid "Model management"
-msgstr "Upravljanje modelima"
-
-#: inc/model.class.php:785
-msgid "Additional Information"
-msgstr "Dodatne informacije"
-
-#: inc/model.class.php:811
-msgid "Load this file"
-msgstr "Učitaj ovu datoteku"
-
-#: inc/model.class.php:892
-msgid "Please enter a name for the model"
-msgstr "Upiši ime za ovaj model"
-
-#: inc/model.class.php:990
-#, php-format
-msgid "Impossible to copy the file in %s"
-msgstr "Nije moguće kopirati datoteku u %s"
-
-#: inc/model.class.php:999
-msgid "File format is wrong"
-msgstr "Nepodržani format datoteke"
-
-#: inc/model.class.php:1000
-msgid "Extension csv required"
-msgstr "Potreban je csv nastavak"
-
-#: inc/model.class.php:1116
-msgid "The file is ok."
-msgstr "Datoteka je u redu."
-
-#: inc/model.class.php:1140
-msgid "The number of columns of the file is incorrect."
-msgstr "Broj stupaca u datoteci nije ispravan."
-
-#: inc/model.class.php:1142
-#, php-format
-msgid "%d awaited column"
-msgid_plural "%d awaited columns"
-msgstr[0] "očekuje se %d stupac"
-msgstr[1] "očekuju se %d stupca"
-msgstr[2] "očekuju se %d stupaca"
-
-#: inc/model.class.php:1191
-msgid "At least one column is incorrect"
-msgstr "Barem jedan stupac je neispravan"
-
-#: inc/model.class.php:1199
-msgid "Into the file"
-msgstr "U datoteku"
-
-#: inc/model.class.php:1204
-msgid "From the model"
-msgstr "Od modela"
-
-#: inc/model.class.php:1515
-msgid "Array of unsuccessful injections"
-msgstr "Niz neuspješnih umetanja"
-
-#: inc/clientinjection.class.php:147
-msgid "Launch the import"
-msgstr "Pokreni uvoz"
-
-#: inc/phoneinjection.class.php:71
-msgid "Domain name"
-msgstr "Ime domene"
-
-#: inc/info.class.php:89 inc/info.class.php:147
-msgid "Mandatory information"
-msgstr "Obavezne informacije"
-
-#: inc/info.class.php:146
-msgid "Fields"
-msgstr "Polja"
-
-#: inc/computerinjection.class.php:78
-msgid "Antivirus name"
-msgstr "Ime antivirusa"
+#: inc/networkportinjection.class.php:94
+msgid "Port MAC address"
+msgstr "MAC adresa priključka"
