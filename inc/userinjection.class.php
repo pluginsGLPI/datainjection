@@ -169,6 +169,21 @@ class PluginDatainjectionUserInjection extends User implements PluginDatainjecti
         return $fields;
     }
 
+    /**
+     * @param array $values
+     *
+     * @return void
+     */
+    public function reformat(&$values)
+    {
+        // Avoid re-encrypting already encrypted tokens during user updates.
+        $tokens = ['password_forget_token', 'personal_token', 'api_token', 'cookie_token'];
+        foreach ($tokens as $token) {
+            if (isset($values['User'][$token])) {
+                unset($values['User'][$token]);
+            }
+        }
+    }
 
     /**
     * @param array $values
