@@ -27,6 +27,7 @@
  * @link      https://github.com/pluginsGLPI/datainjection
  * -------------------------------------------------------------------------
  */
+use Glpi\Asset\Asset;
 use Glpi\Exception\Http\HttpException;
 use Glpi\Features\AssignableItem;
 
@@ -334,6 +335,9 @@ class PluginDatainjectionCommonInjectionLib
     public static function getItemtypeByInjectionClass($injectionClass)
     {
 
+        if (is_a($injectionClass, Asset::class, true)) {
+            return Toolbox::ucfirst(getItemTypeForTable($injectionClass->getVirtualTable()));
+        }
         return Toolbox::ucfirst(getItemTypeForTable($injectionClass->getTable()));
     }
 
@@ -354,6 +358,11 @@ class PluginDatainjectionCommonInjectionLib
         } else {
             $injectionClass = ucfirst($itemtype) . 'Injection';
         }
+
+        if (!class_exists($injectionClass)) {
+            plugin_datainjection_creationInjectableAssets();
+        }
+
 
         if (!is_a($injectionClass, PluginDatainjectionInjectionInterface::class, true)) {
             throw new HttpException(500, 'Class ' . $injectionClass . ' is not a valid class');
@@ -1991,6 +2000,13 @@ class PluginDatainjectionCommonInjectionLib
                                 $itemtype,
                                 'items_id',
                             ) . "'";
+                        }
+                    }
+
+                    if (is_a($injectionClass, Asset::class, true)) {
+                        if (method_exists($injectionClass, 'getAssetDefinitionID')) {
+                            $assets_assetdefinitions_id = $injectionClass->getAssetDefinitionID();
+                            $where .= " AND `assets_assetdefinitions_id` = '" . $assets_assetdefinitions_id . "'";
                         }
                     }
 
