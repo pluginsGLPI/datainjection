@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Fixed
 
 - Fix retrieval of dropdown and multiline values containing special characters
+- Fix repeated User updates failing with `Data too long for column cookie_token` by excluding token fields from update payloads (backport of PR #566 from GLPI 11-compatible line)
 
 ## [2.14.4] - 2025-11-25
 
