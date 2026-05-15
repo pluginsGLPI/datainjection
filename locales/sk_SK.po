@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-05-01 02:40+0000\n"
+"POT-Creation-Date: 2026-05-15 02:44+0000\n"
 "PO-Revision-Date: 2018-06-21 12:57+0000\n"
 "Last-Translator: feonsu <feonsu@gmail.com>, 2026\n"
 "Language-Team: Slovak (Slovakia) (https://app.transifex.com/teclib/teams/28042/sk_SK/)\n"
@@ -21,22 +21,25 @@ msgstr ""
 "Language: sk_SK\n"
 "Plural-Forms: nplurals=4; plural=(n % 1 == 0 && n == 1 ? 0 : n % 1 == 0 && n >= 2 && n <= 4 ? 1 : n % 1 != 0 ? 2: 3);\n"
 
-#: templates/model_validation_form.html.twig
-msgid "Validation"
-msgstr "Overenie"
+#: templates/modelcsv_additional_form.html.twig
+msgid "Specific file format options"
+msgstr "Možnosti formátovania konkrétneho súboru"
 
-#: templates/model_validation_form.html.twig
-msgctxt "button"
-msgid "Validate the model"
-msgstr "Overiť model"
+#: templates/modelcsv_additional_form.html.twig
+msgid "Header's presence"
+msgstr "Prítomnosť hlavičky"
+
+#: templates/modelcsv_additional_form.html.twig
+msgid "File delimitor"
+msgstr "Oddeľovač súboru"
 
 #: templates/clientinjection_injection.html.twig
 #: templates/clientinjection.html.twig
 msgid "Model"
 msgstr "Model"
 
-#: templates/clientinjection_injection.html.twig inc/menu.class.php:56
-#: inc/menu.class.php:57 inc/menu.class.php:61 inc/profile.class.php:44
+#: templates/clientinjection_injection.html.twig inc/profile.class.php:44
+#: inc/menu.class.php:56 inc/menu.class.php:57 inc/menu.class.php:61
 msgid "Injection of the file"
 msgstr "Import súboru"
 
@@ -52,94 +55,27 @@ msgstr ""
 msgid "Import progress"
 msgstr "Priebeh importu"
 
-#: templates/clientinjection_upload_file.html.twig inc/model.class.php:781
-#: inc/dropdown.class.php:85
-msgid "File to inject"
-msgstr "Súbor na import"
-
-#: templates/clientinjection_upload_file.html.twig
-#: templates/infoadditionnalinfo.html.twig
-msgid "Choose a file"
-msgstr "Vyberte súbor"
-
-#: templates/clientinjection_upload_file.html.twig
-msgid "File encoding"
-msgstr "Kódovanie súboru"
-
-#: templates/clientinjection_upload_file.html.twig
-msgid "Warning : existing mapped column will be overridden"
-msgstr "Upozornenie: existujúce mapované stĺpce budú prepísané"
-
-#: templates/clientinjection_upload_file.html.twig
-msgid ""
-"Watch out, you're about to inject data into GLPI. Are you sure you want to "
-"do it ?"
-msgstr "Pozor, chystáte sa importovať dáta do GLPI. Naozaj to chcete urobiť?"
-
 #: templates/infoadditionnalinfo.html.twig
 msgid "Complementary information"
 msgstr "Doplňujúce informácie"
 
 #: templates/infoadditionnalinfo.html.twig
+#: templates/clientinjection_upload_file.html.twig
+msgid "Choose a file"
+msgstr "Vyberte súbor"
+
+#: templates/infoadditionnalinfo.html.twig
 msgid "Download file sample"
 msgstr "Stiahnuť vzorový súbor"
 
-#: templates/clientinjection_result.html.twig
-msgid "Injection's results"
-msgstr "Výsledky importu"
+#: templates/model_validation_form.html.twig
+msgid "Validation"
+msgstr "Overenie"
 
-#: templates/clientinjection_result.html.twig
-msgid "Injection successful"
-msgstr "Import bol úspešný"
-
-#: templates/clientinjection_result.html.twig
-msgid "Injection encounters errors"
-msgstr "Pri importe sa vyskytli chyby"
-
-#: templates/clientinjection_result.html.twig
-msgid "See the log"
-msgstr "Zobraziť log"
-
-#: templates/clientinjection_result.html.twig
-msgid "Export rapport in PDF"
-msgstr "Exportovať report do PDF"
-
-#: templates/clientinjection_result.html.twig
-msgid "Export the log"
-msgstr "Exportovať log"
-
-#: templates/clientinjection_result.html.twig
-msgid "Finish"
-msgstr "Dokončiť"
-
-#: templates/modelcsv_additional_form.html.twig
-msgid "Specific file format options"
-msgstr "Možnosti formátovania konkrétneho súboru"
-
-#: templates/modelcsv_additional_form.html.twig
-msgid "Header's presence"
-msgstr "Prítomnosť hlavičky"
-
-#: templates/modelcsv_additional_form.html.twig
-msgid "File delimitor"
-msgstr "Oddeľovač súboru"
-
-#: templates/mappings_form.html.twig front/popup.php:35
-msgid "See the file"
-msgstr "Zobraziť súbor"
-
-#: templates/mappings_form.html.twig
-msgid "Header of the file"
-msgstr "Hlavička súboru"
-
-#: templates/mappings_form.html.twig inc/info.class.php:87
-#: inc/info.class.php:145
-msgid "Tables"
-msgstr "Tabuľky"
-
-#: templates/mappings_form.html.twig
-msgid "Link field"
-msgstr "Prepojené pole"
+#: templates/model_validation_form.html.twig
+msgctxt "button"
+msgid "Validate the model"
+msgstr "Overiť model"
 
 #: templates/clientinjection.html.twig
 msgid "Client Injection Configuration"
@@ -242,8 +178,72 @@ msgstr "Kritérium jedinečnosti portu"
 msgid "Replacing the value of multiline text fields"
 msgstr "Nahradenie hodnoty viacriadkových textových polí"
 
-#: setup.php:95 front/clientinjection.form.php:34 inc/menu.class.php:38
-#: inc/profile.class.php:72
+#: templates/clientinjection_upload_file.html.twig inc/dropdown.class.php:85
+#: inc/model.class.php:781
+msgid "File to inject"
+msgstr "Súbor na import"
+
+#: templates/clientinjection_upload_file.html.twig
+msgid "File encoding"
+msgstr "Kódovanie súboru"
+
+#: templates/clientinjection_upload_file.html.twig
+msgid "Warning : existing mapped column will be overridden"
+msgstr "Upozornenie: existujúce mapované stĺpce budú prepísané"
+
+#: templates/clientinjection_upload_file.html.twig
+msgid ""
+"Watch out, you're about to inject data into GLPI. Are you sure you want to "
+"do it ?"
+msgstr "Pozor, chystáte sa importovať dáta do GLPI. Naozaj to chcete urobiť?"
+
+#: templates/clientinjection_result.html.twig
+msgid "Injection's results"
+msgstr "Výsledky importu"
+
+#: templates/clientinjection_result.html.twig
+msgid "Injection successful"
+msgstr "Import bol úspešný"
+
+#: templates/clientinjection_result.html.twig
+msgid "Injection encounters errors"
+msgstr "Pri importe sa vyskytli chyby"
+
+#: templates/clientinjection_result.html.twig
+msgid "See the log"
+msgstr "Zobraziť log"
+
+#: templates/clientinjection_result.html.twig
+msgid "Export rapport in PDF"
+msgstr "Exportovať report do PDF"
+
+#: templates/clientinjection_result.html.twig
+msgid "Export the log"
+msgstr "Exportovať log"
+
+#: templates/clientinjection_result.html.twig
+msgid "Finish"
+msgstr "Dokončiť"
+
+#: templates/mappings_form.html.twig front/popup.php:35
+msgid "See the file"
+msgstr "Zobraziť súbor"
+
+#: templates/mappings_form.html.twig
+msgid "Header of the file"
+msgstr "Hlavička súboru"
+
+#: templates/mappings_form.html.twig inc/info.class.php:87
+#: inc/info.class.php:145
+msgid "Tables"
+msgstr "Tabuľky"
+
+#: templates/mappings_form.html.twig
+msgid "Link field"
+msgstr "Prepojené pole"
+
+#: setup.php:95 front/clientinjection.form.php:34 inc/profile.class.php:72
+#: inc/menu.class.php:38
 msgid "Data injection"
 msgstr "Import dát"
 
@@ -251,15 +251,15 @@ msgstr "Import dát"
 msgid "Data injection report"
 msgstr "Report o importe dát"
 
-#: front/model.form.php:91 front/clientinjection.form.php:86
+#: front/clientinjection.form.php:52
+msgid "One mandatory field is not filled"
+msgstr "Jedno povinné pole nie je vyplnené"
+
+#: front/clientinjection.form.php:86 front/model.form.php:91
 msgid ""
 "The file could not be found (Maybe it exceeds the maximum size allowed)"
 msgstr ""
 "Súbor sa nepodarilo nájsť (Možno prekračuje maximálnu povolenú veľkosť)"
-
-#: front/clientinjection.form.php:52
-msgid "One mandatory field is not filled"
-msgstr "Jedno povinné pole nie je vyplnené"
 
 #: inc/info.class.php:89 inc/info.class.php:147
 msgid "Mandatory information"
@@ -269,17 +269,13 @@ msgstr "Povinné informácie"
 msgid "Fields"
 msgstr "Polia"
 
-#: inc/clientinjection.class.php:116
-msgid "Launch the import"
-msgstr "Spustiť import"
+#: inc/profile.class.php:40
+msgid "Model management"
+msgstr "Správa modelov"
 
-#: inc/injectiontype.class.php:145
-msgid "-------Choose a table-------"
-msgstr "-------Vyberte tabuľku-------"
-
-#: inc/injectiontype.class.php:215
-msgid "-------Choose a field-------"
-msgstr "-------Vyberte pole-------"
+#: inc/computerinjection.class.php:78
+msgid "Antivirus name"
+msgstr "Názov antivírusu"
 
 #: inc/commoninjectionlib.class.php:265
 msgid "No mandatory field is defined for this model"
@@ -337,14 +333,6 @@ msgstr "Dáta neboli nájdené"
 msgid "Undetermined"
 msgstr "Neurčené"
 
-#: inc/computerinjection.class.php:78
-msgid "Antivirus name"
-msgstr "Názov antivírusu"
-
-#: inc/networkequipmentinjection.class.php:76
-msgid "Number of ports"
-msgstr "Počet portov"
-
 #: inc/phoneinjection.class.php:71
 msgid "Domain name"
 msgstr "Názov domény"
@@ -359,13 +347,57 @@ msgstr[1] "%d mesiace"
 msgstr[2] "%d mesiacov"
 msgstr[3] "%d mesiacov"
 
-#: inc/profile.class.php:40
-msgid "Model management"
-msgstr "Správa modelov"
+#: inc/networkportinjection.class.php:94
+msgid "Port MAC address"
+msgstr "MAC adresa portu"
 
-#: inc/model.class.php:783 inc/dropdown.class.php:86
+#: inc/networkequipmentinjection.class.php:76
+msgid "Number of ports"
+msgstr "Počet portov"
+
+#: inc/clientinjection.class.php:116
+msgid "Launch the import"
+msgstr "Spustiť import"
+
+#: inc/dropdown.class.php:37
+msgid "dd-mm-yyyy"
+msgstr "dd-mm-yyyy"
+
+#: inc/dropdown.class.php:39
+msgid "mm-dd-yyyy"
+msgstr "mm-dd-yyyy"
+
+#: inc/dropdown.class.php:41
+msgid "yyyy-mm-dd"
+msgstr "yyyy-mm-dd"
+
+#: inc/dropdown.class.php:59
+msgid "1 234.56"
+msgstr "1 234.56"
+
+#: inc/dropdown.class.php:61
+msgid "1 234,56"
+msgstr "1 234,56"
+
+#: inc/dropdown.class.php:63
+msgid "1,234.56"
+msgstr "1,234.56"
+
+#: inc/dropdown.class.php:86 inc/model.class.php:783
 msgid "Mappings"
 msgstr "Mapovanie"
+
+#: inc/dropdown.class.php:128
+msgid "Automatic detection"
+msgstr "Automatická detekcia"
+
+#: inc/dropdown.class.php:129
+msgid "UTF-8"
+msgstr "UTF-8"
+
+#: inc/dropdown.class.php:130
+msgid "ISO8859-1"
+msgstr "ISO8859-1"
 
 #: inc/model.class.php:785
 msgid "Additional Information"
@@ -425,42 +457,10 @@ msgstr "Z modelu"
 msgid "Array of unsuccessful injections"
 msgstr "Zoznam neúspešným importov"
 
-#: inc/dropdown.class.php:37
-msgid "dd-mm-yyyy"
-msgstr "dd-mm-yyyy"
+#: inc/injectiontype.class.php:145
+msgid "-------Choose a table-------"
+msgstr "-------Vyberte tabuľku-------"
 
-#: inc/dropdown.class.php:39
-msgid "mm-dd-yyyy"
-msgstr "mm-dd-yyyy"
-
-#: inc/dropdown.class.php:41
-msgid "yyyy-mm-dd"
-msgstr "yyyy-mm-dd"
-
-#: inc/dropdown.class.php:59
-msgid "1 234.56"
-msgstr "1 234.56"
-
-#: inc/dropdown.class.php:61
-msgid "1 234,56"
-msgstr "1 234,56"
-
-#: inc/dropdown.class.php:63
-msgid "1,234.56"
-msgstr "1,234.56"
-
-#: inc/dropdown.class.php:128
-msgid "Automatic detection"
-msgstr "Automatická detekcia"
-
-#: inc/dropdown.class.php:129
-msgid "UTF-8"
-msgstr "UTF-8"
-
-#: inc/dropdown.class.php:130
-msgid "ISO8859-1"
-msgstr "ISO8859-1"
-
-#: inc/networkportinjection.class.php:94
-msgid "Port MAC address"
-msgstr "MAC adresa portu"
+#: inc/injectiontype.class.php:215
+msgid "-------Choose a field-------"
+msgstr "-------Vyberte pole-------"

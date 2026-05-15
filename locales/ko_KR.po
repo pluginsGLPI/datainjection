@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-05-01 02:40+0000\n"
+"POT-Creation-Date: 2026-05-15 02:44+0000\n"
 "PO-Revision-Date: 2018-06-21 12:57+0000\n"
 "Last-Translator: 조성현 (jaymz9634) <jaymz9634@gmail.com>, 2024\n"
 "Language-Team: Korean (Korea) (https://app.transifex.com/teclib/teams/28042/ko_KR/)\n"
@@ -21,22 +21,25 @@ msgstr ""
 "Language: ko_KR\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
-#: templates/model_validation_form.html.twig
-msgid "Validation"
-msgstr ""
+#: templates/modelcsv_additional_form.html.twig
+msgid "Specific file format options"
+msgstr "특정 파일 형식 옵션"
 
-#: templates/model_validation_form.html.twig
-msgctxt "button"
-msgid "Validate the model"
-msgstr "모델 검증"
+#: templates/modelcsv_additional_form.html.twig
+msgid "Header's presence"
+msgstr "헤더의 존재"
+
+#: templates/modelcsv_additional_form.html.twig
+msgid "File delimitor"
+msgstr "파일 구분자"
 
 #: templates/clientinjection_injection.html.twig
 #: templates/clientinjection.html.twig
 msgid "Model"
 msgstr ""
 
-#: templates/clientinjection_injection.html.twig inc/menu.class.php:56
-#: inc/menu.class.php:57 inc/menu.class.php:61 inc/profile.class.php:44
+#: templates/clientinjection_injection.html.twig inc/profile.class.php:44
+#: inc/menu.class.php:56 inc/menu.class.php:57 inc/menu.class.php:61
 msgid "Injection of the file"
 msgstr "파일 삽입"
 
@@ -52,94 +55,27 @@ msgstr ""
 msgid "Import progress"
 msgstr "불러오기 진행"
 
-#: templates/clientinjection_upload_file.html.twig inc/model.class.php:781
-#: inc/dropdown.class.php:85
-msgid "File to inject"
-msgstr "삽입 할 파일"
-
-#: templates/clientinjection_upload_file.html.twig
-#: templates/infoadditionnalinfo.html.twig
-msgid "Choose a file"
-msgstr "파일 선택"
-
-#: templates/clientinjection_upload_file.html.twig
-msgid "File encoding"
-msgstr "파일 인코딩"
-
-#: templates/clientinjection_upload_file.html.twig
-msgid "Warning : existing mapped column will be overridden"
-msgstr "경고 : 기존 매핑된 열을 덮어쓰게 됩니다"
-
-#: templates/clientinjection_upload_file.html.twig
-msgid ""
-"Watch out, you're about to inject data into GLPI. Are you sure you want to "
-"do it ?"
-msgstr "주의하세요, GLPI에 데이터를 삽입하려고 합니다. 정말로 하시겠습니까?"
-
 #: templates/infoadditionnalinfo.html.twig
 msgid "Complementary information"
 msgstr "보완 정보"
 
 #: templates/infoadditionnalinfo.html.twig
+#: templates/clientinjection_upload_file.html.twig
+msgid "Choose a file"
+msgstr "파일 선택"
+
+#: templates/infoadditionnalinfo.html.twig
 msgid "Download file sample"
 msgstr "파일 예제 다운로드"
 
-#: templates/clientinjection_result.html.twig
-msgid "Injection's results"
-msgstr "삽입 결과"
+#: templates/model_validation_form.html.twig
+msgid "Validation"
+msgstr ""
 
-#: templates/clientinjection_result.html.twig
-msgid "Injection successful"
-msgstr "삽입 성공함"
-
-#: templates/clientinjection_result.html.twig
-msgid "Injection encounters errors"
-msgstr "삽입 오류 발생"
-
-#: templates/clientinjection_result.html.twig
-msgid "See the log"
-msgstr "기록 보기"
-
-#: templates/clientinjection_result.html.twig
-msgid "Export rapport in PDF"
-msgstr "PDF로 보고서 내보내기"
-
-#: templates/clientinjection_result.html.twig
-msgid "Export the log"
-msgstr "기록 내보내기"
-
-#: templates/clientinjection_result.html.twig
-msgid "Finish"
-msgstr "마치기"
-
-#: templates/modelcsv_additional_form.html.twig
-msgid "Specific file format options"
-msgstr "특정 파일 형식 옵션"
-
-#: templates/modelcsv_additional_form.html.twig
-msgid "Header's presence"
-msgstr "헤더의 존재"
-
-#: templates/modelcsv_additional_form.html.twig
-msgid "File delimitor"
-msgstr "파일 구분자"
-
-#: templates/mappings_form.html.twig front/popup.php:35
-msgid "See the file"
-msgstr "파일 보기"
-
-#: templates/mappings_form.html.twig
-msgid "Header of the file"
-msgstr "파일 헤더"
-
-#: templates/mappings_form.html.twig inc/info.class.php:87
-#: inc/info.class.php:145
-msgid "Tables"
-msgstr "테이블"
-
-#: templates/mappings_form.html.twig
-msgid "Link field"
-msgstr "링크 항목"
+#: templates/model_validation_form.html.twig
+msgctxt "button"
+msgid "Validate the model"
+msgstr "모델 검증"
 
 #: templates/clientinjection.html.twig
 msgid "Client Injection Configuration"
@@ -242,8 +178,72 @@ msgstr "포트 단일성 기준"
 msgid "Replacing the value of multiline text fields"
 msgstr ""
 
-#: setup.php:95 front/clientinjection.form.php:34 inc/menu.class.php:38
-#: inc/profile.class.php:72
+#: templates/clientinjection_upload_file.html.twig inc/dropdown.class.php:85
+#: inc/model.class.php:781
+msgid "File to inject"
+msgstr "삽입 할 파일"
+
+#: templates/clientinjection_upload_file.html.twig
+msgid "File encoding"
+msgstr "파일 인코딩"
+
+#: templates/clientinjection_upload_file.html.twig
+msgid "Warning : existing mapped column will be overridden"
+msgstr "경고 : 기존 매핑된 열을 덮어쓰게 됩니다"
+
+#: templates/clientinjection_upload_file.html.twig
+msgid ""
+"Watch out, you're about to inject data into GLPI. Are you sure you want to "
+"do it ?"
+msgstr "주의하세요, GLPI에 데이터를 삽입하려고 합니다. 정말로 하시겠습니까?"
+
+#: templates/clientinjection_result.html.twig
+msgid "Injection's results"
+msgstr "삽입 결과"
+
+#: templates/clientinjection_result.html.twig
+msgid "Injection successful"
+msgstr "삽입 성공함"
+
+#: templates/clientinjection_result.html.twig
+msgid "Injection encounters errors"
+msgstr "삽입 오류 발생"
+
+#: templates/clientinjection_result.html.twig
+msgid "See the log"
+msgstr "기록 보기"
+
+#: templates/clientinjection_result.html.twig
+msgid "Export rapport in PDF"
+msgstr "PDF로 보고서 내보내기"
+
+#: templates/clientinjection_result.html.twig
+msgid "Export the log"
+msgstr "기록 내보내기"
+
+#: templates/clientinjection_result.html.twig
+msgid "Finish"
+msgstr "마치기"
+
+#: templates/mappings_form.html.twig front/popup.php:35
+msgid "See the file"
+msgstr "파일 보기"
+
+#: templates/mappings_form.html.twig
+msgid "Header of the file"
+msgstr "파일 헤더"
+
+#: templates/mappings_form.html.twig inc/info.class.php:87
+#: inc/info.class.php:145
+msgid "Tables"
+msgstr "테이블"
+
+#: templates/mappings_form.html.twig
+msgid "Link field"
+msgstr "링크 항목"
+
+#: setup.php:95 front/clientinjection.form.php:34 inc/profile.class.php:72
+#: inc/menu.class.php:38
 msgid "Data injection"
 msgstr "데이터 삽입"
 
@@ -251,14 +251,14 @@ msgstr "데이터 삽입"
 msgid "Data injection report"
 msgstr "데이터 삽입 보고서"
 
-#: front/model.form.php:91 front/clientinjection.form.php:86
-msgid ""
-"The file could not be found (Maybe it exceeds the maximum size allowed)"
-msgstr ""
-
 #: front/clientinjection.form.php:52
 msgid "One mandatory field is not filled"
 msgstr "하나의 필수 항목이 비었습니다"
+
+#: front/clientinjection.form.php:86 front/model.form.php:91
+msgid ""
+"The file could not be found (Maybe it exceeds the maximum size allowed)"
+msgstr ""
 
 #: inc/info.class.php:89 inc/info.class.php:147
 msgid "Mandatory information"
@@ -268,17 +268,13 @@ msgstr "필수 정보"
 msgid "Fields"
 msgstr "항목"
 
-#: inc/clientinjection.class.php:116
-msgid "Launch the import"
-msgstr "불러오기 시작"
+#: inc/profile.class.php:40
+msgid "Model management"
+msgstr "모델 관리"
 
-#: inc/injectiontype.class.php:145
-msgid "-------Choose a table-------"
-msgstr "-------테이블 선택-------"
-
-#: inc/injectiontype.class.php:215
-msgid "-------Choose a field-------"
-msgstr "-------항목 선택-------"
+#: inc/computerinjection.class.php:78
+msgid "Antivirus name"
+msgstr "안티바이러스 이름"
 
 #: inc/commoninjectionlib.class.php:265
 msgid "No mandatory field is defined for this model"
@@ -336,14 +332,6 @@ msgstr "데이터 없음"
 msgid "Undetermined"
 msgstr "미결됨"
 
-#: inc/computerinjection.class.php:78
-msgid "Antivirus name"
-msgstr "안티바이러스 이름"
-
-#: inc/networkequipmentinjection.class.php:76
-msgid "Number of ports"
-msgstr "포트 숫자"
-
 #: inc/phoneinjection.class.php:71
 msgid "Domain name"
 msgstr "도메인 이름"
@@ -355,13 +343,57 @@ msgid "%d month"
 msgid_plural "%d months"
 msgstr[0] ""
 
-#: inc/profile.class.php:40
-msgid "Model management"
-msgstr "모델 관리"
+#: inc/networkportinjection.class.php:94
+msgid "Port MAC address"
+msgstr "포트 MAC 주소"
 
-#: inc/model.class.php:783 inc/dropdown.class.php:86
+#: inc/networkequipmentinjection.class.php:76
+msgid "Number of ports"
+msgstr "포트 숫자"
+
+#: inc/clientinjection.class.php:116
+msgid "Launch the import"
+msgstr "불러오기 시작"
+
+#: inc/dropdown.class.php:37
+msgid "dd-mm-yyyy"
+msgstr "dd-mm-yyyy"
+
+#: inc/dropdown.class.php:39
+msgid "mm-dd-yyyy"
+msgstr "mm-dd-yyyy"
+
+#: inc/dropdown.class.php:41
+msgid "yyyy-mm-dd"
+msgstr "yyyy-mm-dd"
+
+#: inc/dropdown.class.php:59
+msgid "1 234.56"
+msgstr "1 234.56"
+
+#: inc/dropdown.class.php:61
+msgid "1 234,56"
+msgstr "1 234,56"
+
+#: inc/dropdown.class.php:63
+msgid "1,234.56"
+msgstr "1,234.56"
+
+#: inc/dropdown.class.php:86 inc/model.class.php:783
 msgid "Mappings"
 msgstr "매핑"
+
+#: inc/dropdown.class.php:128
+msgid "Automatic detection"
+msgstr "자동 감지"
+
+#: inc/dropdown.class.php:129
+msgid "UTF-8"
+msgstr "UTF-8"
+
+#: inc/dropdown.class.php:130
+msgid "ISO8859-1"
+msgstr "ISO8859-1"
 
 #: inc/model.class.php:785
 msgid "Additional Information"
@@ -418,42 +450,10 @@ msgstr "모델에서"
 msgid "Array of unsuccessful injections"
 msgstr "실패한 삽입의 배열"
 
-#: inc/dropdown.class.php:37
-msgid "dd-mm-yyyy"
-msgstr "dd-mm-yyyy"
+#: inc/injectiontype.class.php:145
+msgid "-------Choose a table-------"
+msgstr "-------테이블 선택-------"
 
-#: inc/dropdown.class.php:39
-msgid "mm-dd-yyyy"
-msgstr "mm-dd-yyyy"
-
-#: inc/dropdown.class.php:41
-msgid "yyyy-mm-dd"
-msgstr "yyyy-mm-dd"
-
-#: inc/dropdown.class.php:59
-msgid "1 234.56"
-msgstr "1 234.56"
-
-#: inc/dropdown.class.php:61
-msgid "1 234,56"
-msgstr "1 234,56"
-
-#: inc/dropdown.class.php:63
-msgid "1,234.56"
-msgstr "1,234.56"
-
-#: inc/dropdown.class.php:128
-msgid "Automatic detection"
-msgstr "자동 감지"
-
-#: inc/dropdown.class.php:129
-msgid "UTF-8"
-msgstr "UTF-8"
-
-#: inc/dropdown.class.php:130
-msgid "ISO8859-1"
-msgstr "ISO8859-1"
-
-#: inc/networkportinjection.class.php:94
-msgid "Port MAC address"
-msgstr "포트 MAC 주소"
+#: inc/injectiontype.class.php:215
+msgid "-------Choose a field-------"
+msgstr "-------항목 선택-------"

@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-05-07 02:30+0000\n"
+"POT-Creation-Date: 2026-05-15 02:44+0000\n"
 "PO-Revision-Date: 2018-06-21 12:57+0000\n"
 "Last-Translator: Kaya Zeren <kayazeren@gmail.com>, 2026\n"
 "Language-Team: Turkish (Turkey) (https://app.transifex.com/teclib/teams/28042/tr_TR/)\n"
@@ -22,22 +22,25 @@ msgstr ""
 "Language: tr_TR\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
-#: templates/model_validation_form.html.twig
-msgid "Validation"
-msgstr "Doğrulama"
+#: templates/modelcsv_additional_form.html.twig
+msgid "Specific file format options"
+msgstr "Belirli dosya biçimi ayarları"
 
-#: templates/model_validation_form.html.twig
-msgctxt "button"
-msgid "Validate the model"
-msgstr "Modeli doğrula"
+#: templates/modelcsv_additional_form.html.twig
+msgid "Header's presence"
+msgstr "Başlığın varlığı"
+
+#: templates/modelcsv_additional_form.html.twig
+msgid "File delimitor"
+msgstr "Dosya ayracı"
 
 #: templates/clientinjection_injection.html.twig
 #: templates/clientinjection.html.twig
 msgid "Model"
 msgstr "Model"
 
-#: templates/clientinjection_injection.html.twig inc/menu.class.php:56
-#: inc/menu.class.php:57 inc/menu.class.php:61 inc/profile.class.php:44
+#: templates/clientinjection_injection.html.twig inc/profile.class.php:44
+#: inc/menu.class.php:56 inc/menu.class.php:57 inc/menu.class.php:61
 msgid "Injection of the file"
 msgstr "Dosya aktarımı"
 
@@ -53,96 +56,27 @@ msgstr "Hata"
 msgid "Import progress"
 msgstr "İçe aktarılıyor"
 
-#: templates/clientinjection_upload_file.html.twig inc/model.class.php:781
-#: inc/dropdown.class.php:85
-msgid "File to inject"
-msgstr "Aktarılacak dosya"
-
-#: templates/clientinjection_upload_file.html.twig
-#: templates/infoadditionnalinfo.html.twig
-msgid "Choose a file"
-msgstr "Bir dosya seçin"
-
-#: templates/clientinjection_upload_file.html.twig
-msgid "File encoding"
-msgstr "Dosya kodlaması"
-
-#: templates/clientinjection_upload_file.html.twig
-msgid "Warning : existing mapped column will be overridden"
-msgstr "Uyarı : Eşlenmiş sütunda var olan bilgilerin üzerine yazılacak"
-
-#: templates/clientinjection_upload_file.html.twig
-msgid ""
-"Watch out, you're about to inject data into GLPI. Are you sure you want to "
-"do it ?"
-msgstr ""
-"Dikkatli olun. GLPI üzerine veri aktarmak üzeresiniz. Bu işlemi yapmak "
-"istediğinize emin misiniz?"
-
 #: templates/infoadditionnalinfo.html.twig
 msgid "Complementary information"
 msgstr "Tamamlayıcı bilgiler"
 
 #: templates/infoadditionnalinfo.html.twig
+#: templates/clientinjection_upload_file.html.twig
+msgid "Choose a file"
+msgstr "Bir dosya seçin"
+
+#: templates/infoadditionnalinfo.html.twig
 msgid "Download file sample"
 msgstr "Örnek dosyayı indir"
 
-#: templates/clientinjection_result.html.twig
-msgid "Injection's results"
-msgstr "Aktarım sonuçları"
+#: templates/model_validation_form.html.twig
+msgid "Validation"
+msgstr "Doğrulama"
 
-#: templates/clientinjection_result.html.twig
-msgid "Injection successful"
-msgstr "Aktarım tamamlandı"
-
-#: templates/clientinjection_result.html.twig
-msgid "Injection encounters errors"
-msgstr "Aktarım sırasında sorun çıktı"
-
-#: templates/clientinjection_result.html.twig
-msgid "See the log"
-msgstr "Günlüğe bakın"
-
-#: templates/clientinjection_result.html.twig
-msgid "Export rapport in PDF"
-msgstr "Raporu PDF olarak dışa aktar"
-
-#: templates/clientinjection_result.html.twig
-msgid "Export the log"
-msgstr "Günlüğü dış aktar"
-
-#: templates/clientinjection_result.html.twig
-msgid "Finish"
-msgstr "Bitti"
-
-#: templates/modelcsv_additional_form.html.twig
-msgid "Specific file format options"
-msgstr "Belirli dosya biçimi ayarları"
-
-#: templates/modelcsv_additional_form.html.twig
-msgid "Header's presence"
-msgstr "Başlığın varlığı"
-
-#: templates/modelcsv_additional_form.html.twig
-msgid "File delimitor"
-msgstr "Dosya ayracı"
-
-#: templates/mappings_form.html.twig front/popup.php:35
-msgid "See the file"
-msgstr "Dosyaya bakın"
-
-#: templates/mappings_form.html.twig
-msgid "Header of the file"
-msgstr "Dosyanın başlığı"
-
-#: templates/mappings_form.html.twig inc/info.class.php:87
-#: inc/info.class.php:145
-msgid "Tables"
-msgstr "Tablolar"
-
-#: templates/mappings_form.html.twig
-msgid "Link field"
-msgstr "Bağlantı alanı"
+#: templates/model_validation_form.html.twig
+msgctxt "button"
+msgid "Validate the model"
+msgstr "Modeli doğrula"
 
 #: templates/clientinjection.html.twig
 msgid "Client Injection Configuration"
@@ -245,8 +179,74 @@ msgstr "Bağlantı noktası eşsizlik ölçütü"
 msgid "Replacing the value of multiline text fields"
 msgstr "Çok satırlı metin alanlarının değeri değiştiriliyor"
 
-#: setup.php:95 front/clientinjection.form.php:34 inc/menu.class.php:38
-#: inc/profile.class.php:72
+#: templates/clientinjection_upload_file.html.twig inc/dropdown.class.php:85
+#: inc/model.class.php:781
+msgid "File to inject"
+msgstr "Aktarılacak dosya"
+
+#: templates/clientinjection_upload_file.html.twig
+msgid "File encoding"
+msgstr "Dosya kodlaması"
+
+#: templates/clientinjection_upload_file.html.twig
+msgid "Warning : existing mapped column will be overridden"
+msgstr "Uyarı : Eşlenmiş sütunda var olan bilgilerin üzerine yazılacak"
+
+#: templates/clientinjection_upload_file.html.twig
+msgid ""
+"Watch out, you're about to inject data into GLPI. Are you sure you want to "
+"do it ?"
+msgstr ""
+"Dikkatli olun. GLPI üzerine veri aktarmak üzeresiniz. Bu işlemi yapmak "
+"istediğinize emin misiniz?"
+
+#: templates/clientinjection_result.html.twig
+msgid "Injection's results"
+msgstr "Aktarım sonuçları"
+
+#: templates/clientinjection_result.html.twig
+msgid "Injection successful"
+msgstr "Aktarım tamamlandı"
+
+#: templates/clientinjection_result.html.twig
+msgid "Injection encounters errors"
+msgstr "Aktarım sırasında sorun çıktı"
+
+#: templates/clientinjection_result.html.twig
+msgid "See the log"
+msgstr "Günlüğe bakın"
+
+#: templates/clientinjection_result.html.twig
+msgid "Export rapport in PDF"
+msgstr "Raporu PDF olarak dışa aktar"
+
+#: templates/clientinjection_result.html.twig
+msgid "Export the log"
+msgstr "Günlüğü dış aktar"
+
+#: templates/clientinjection_result.html.twig
+msgid "Finish"
+msgstr "Bitti"
+
+#: templates/mappings_form.html.twig front/popup.php:35
+msgid "See the file"
+msgstr "Dosyaya bakın"
+
+#: templates/mappings_form.html.twig
+msgid "Header of the file"
+msgstr "Dosyanın başlığı"
+
+#: templates/mappings_form.html.twig inc/info.class.php:87
+#: inc/info.class.php:145
+msgid "Tables"
+msgstr "Tablolar"
+
+#: templates/mappings_form.html.twig
+msgid "Link field"
+msgstr "Bağlantı alanı"
+
+#: setup.php:95 front/clientinjection.form.php:34 inc/profile.class.php:72
+#: inc/menu.class.php:38
 msgid "Data injection"
 msgstr "Veri aktarımı"
 
@@ -254,14 +254,14 @@ msgstr "Veri aktarımı"
 msgid "Data injection report"
 msgstr "Veri aktarımı raporu"
 
-#: front/model.form.php:91 front/clientinjection.form.php:86
-msgid ""
-"The file could not be found (Maybe it exceeds the maximum size allowed)"
-msgstr "Dosya bulunamadı (izin verilen en büyük boyutu aşıyor olabilir)"
-
 #: front/clientinjection.form.php:52
 msgid "One mandatory field is not filled"
 msgstr "Zorunlu alanlardan biri doldurulmamış"
+
+#: front/clientinjection.form.php:86 front/model.form.php:91
+msgid ""
+"The file could not be found (Maybe it exceeds the maximum size allowed)"
+msgstr "Dosya bulunamadı (izin verilen en büyük boyutu aşıyor olabilir)"
 
 #: inc/info.class.php:89 inc/info.class.php:147
 msgid "Mandatory information"
@@ -271,17 +271,13 @@ msgstr "Zorunlu bilgiler"
 msgid "Fields"
 msgstr "Alanlar"
 
-#: inc/clientinjection.class.php:116
-msgid "Launch the import"
-msgstr "İçe aktarımı başlat"
+#: inc/profile.class.php:40
+msgid "Model management"
+msgstr "Model yönetimi"
 
-#: inc/injectiontype.class.php:145
-msgid "-------Choose a table-------"
-msgstr "-------Bir tablo seçin-------"
-
-#: inc/injectiontype.class.php:215
-msgid "-------Choose a field-------"
-msgstr "-------Bir alan seçin-------"
+#: inc/computerinjection.class.php:78
+msgid "Antivirus name"
+msgstr "Antivirus adı"
 
 #: inc/commoninjectionlib.class.php:265
 msgid "No mandatory field is defined for this model"
@@ -339,14 +335,6 @@ msgstr "Veri bulunamadı"
 msgid "Undetermined"
 msgstr "Belirlenmemiş"
 
-#: inc/computerinjection.class.php:78
-msgid "Antivirus name"
-msgstr "Antivirus adı"
-
-#: inc/networkequipmentinjection.class.php:76
-msgid "Number of ports"
-msgstr "Bağlantı noktası sayısı"
-
 #: inc/phoneinjection.class.php:71
 msgid "Domain name"
 msgstr "Etki alanı adı"
@@ -359,13 +347,57 @@ msgid_plural "%d months"
 msgstr[0] "%d ay"
 msgstr[1] "%d ay"
 
-#: inc/profile.class.php:40
-msgid "Model management"
-msgstr "Model yönetimi"
+#: inc/networkportinjection.class.php:94
+msgid "Port MAC address"
+msgstr "Bağlantı noktası MAC adresi"
 
-#: inc/model.class.php:783 inc/dropdown.class.php:86
+#: inc/networkequipmentinjection.class.php:76
+msgid "Number of ports"
+msgstr "Bağlantı noktası sayısı"
+
+#: inc/clientinjection.class.php:116
+msgid "Launch the import"
+msgstr "İçe aktarımı başlat"
+
+#: inc/dropdown.class.php:37
+msgid "dd-mm-yyyy"
+msgstr "gg-aa-yyyy"
+
+#: inc/dropdown.class.php:39
+msgid "mm-dd-yyyy"
+msgstr "aa-gg-yyyy"
+
+#: inc/dropdown.class.php:41
+msgid "yyyy-mm-dd"
+msgstr "yyyy-aa-gg"
+
+#: inc/dropdown.class.php:59
+msgid "1 234.56"
+msgstr "1 234.56"
+
+#: inc/dropdown.class.php:61
+msgid "1 234,56"
+msgstr "1 234,56"
+
+#: inc/dropdown.class.php:63
+msgid "1,234.56"
+msgstr "1,234.56"
+
+#: inc/dropdown.class.php:86 inc/model.class.php:783
 msgid "Mappings"
 msgstr "Eşleştirmeler"
+
+#: inc/dropdown.class.php:128
+msgid "Automatic detection"
+msgstr "Otomatik algılama"
+
+#: inc/dropdown.class.php:129
+msgid "UTF-8"
+msgstr "UTF-8"
+
+#: inc/dropdown.class.php:130
+msgid "ISO8859-1"
+msgstr "ISO8859-1"
 
 #: inc/model.class.php:785
 msgid "Additional Information"
@@ -423,42 +455,10 @@ msgstr "Modelden"
 msgid "Array of unsuccessful injections"
 msgstr "Başarısız aktarımlar dizisi"
 
-#: inc/dropdown.class.php:37
-msgid "dd-mm-yyyy"
-msgstr "gg-aa-yyyy"
+#: inc/injectiontype.class.php:145
+msgid "-------Choose a table-------"
+msgstr "-------Bir tablo seçin-------"
 
-#: inc/dropdown.class.php:39
-msgid "mm-dd-yyyy"
-msgstr "aa-gg-yyyy"
-
-#: inc/dropdown.class.php:41
-msgid "yyyy-mm-dd"
-msgstr "yyyy-aa-gg"
-
-#: inc/dropdown.class.php:59
-msgid "1 234.56"
-msgstr "1 234.56"
-
-#: inc/dropdown.class.php:61
-msgid "1 234,56"
-msgstr "1 234,56"
-
-#: inc/dropdown.class.php:63
-msgid "1,234.56"
-msgstr "1,234.56"
-
-#: inc/dropdown.class.php:128
-msgid "Automatic detection"
-msgstr "Otomatik algılama"
-
-#: inc/dropdown.class.php:129
-msgid "UTF-8"
-msgstr "UTF-8"
-
-#: inc/dropdown.class.php:130
-msgid "ISO8859-1"
-msgstr "ISO8859-1"
-
-#: inc/networkportinjection.class.php:94
-msgid "Port MAC address"
-msgstr "Bağlantı noktası MAC adresi"
+#: inc/injectiontype.class.php:215
+msgid "-------Choose a field-------"
+msgstr "-------Bir alan seçin-------"
