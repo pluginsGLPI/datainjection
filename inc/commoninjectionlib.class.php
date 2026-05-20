@@ -1903,7 +1903,7 @@ class PluginDatainjectionCommonInjectionLib
                 //If it's a computer device
                 if ($item instanceof CommonDevice) {
                     $sql .= " WHERE `designation` = '" .
-                    $this->getValueByItemtypeAndName($itemtype, 'designation') . "'";
+                    $DB->escape($this->getValueByItemtypeAndName($itemtype, 'designation')) . "'";
                 } elseif ($item instanceof CommonDBRelation) {
                     //Type is a relation : check it this relation still exists
                     //Define the side of the relation to use
@@ -1920,13 +1920,13 @@ class PluginDatainjectionCommonInjectionLib
                         $destination_itemtype = $item::$itemtype_2;
                     }
                     $where .= " AND `$source_id`='" .
-                    $this->getValueByItemtypeAndName($itemtype, $source_id) . "'";
+                    $DB->escape($this->getValueByItemtypeAndName($itemtype, $source_id)) . "'";
                     if ($item->isField('itemtype')) {
                         $where .= " AND `$source_itemtype`='" .
-                        $this->getValueByItemtypeAndName($itemtype, $source_itemtype) . "'";
+                        $DB->escape($this->getValueByItemtypeAndName($itemtype, $source_itemtype)) . "'";
                     }
                     $where .= " AND `" . $destination_id . "`='" .
-                    $this->getValueByItemtypeAndName($itemtype, $destination_id) . "'";
+                    $DB->escape($this->getValueByItemtypeAndName($itemtype, $destination_id)) . "'";
                     $sql   .= " WHERE 1 " . $where;
                 } else {
                     //Type is not a relation
@@ -1958,7 +1958,7 @@ class PluginDatainjectionCommonInjectionLib
                         } else {
                             //Type cannot be recursive
                             $where_entity = " AND `entities_id` = '" .
-                            $this->getValueByItemtypeAndName($itemtype, 'entities_id') . "'";
+                            $DB->escape($this->getValueByItemtypeAndName($itemtype, 'entities_id')) . "'";
                         }
                     } else { //If no entity assignment for this itemtype
                         $where_entity = "";
@@ -1972,25 +1972,25 @@ class PluginDatainjectionCommonInjectionLib
                                     $email = $DB->escape($this->getValueByItemtypeAndName($itemtype, $field));
                                     $where .= " AND `id` IN (SELECT `users_id` FROM glpi_useremails WHERE `email` = '$email') ";
                                 } else {
-                                    $where .= " AND `" . $field . "`='" . (string) $this->getValueByItemtypeAndName($itemtype, $field) . "'";
+                                    $where .= " AND `" . $field . "`='" . $DB->escape((string) $this->getValueByItemtypeAndName($itemtype, $field)) . "'";
                                 }
                             }
                         }
                     } else {
                         //Table contains an itemtype field
                         if ($injectionClass->isField('itemtype')) {
-                            $where .= " AND `itemtype` = '" . $this->getValueByItemtypeAndName(
+                            $where .= " AND `itemtype` = '" . $DB->escape($this->getValueByItemtypeAndName(
                                 $itemtype,
                                 'itemtype',
-                            ) . "'";
+                            )) . "'";
                         }
 
                         //Table contains an items_id field
                         if ($injectionClass->isField('items_id')) {
-                            $where .= " AND `items_id` = '" . $this->getValueByItemtypeAndName(
+                            $where .= " AND `items_id` = '" . $DB->escape($this->getValueByItemtypeAndName(
                                 $itemtype,
                                 'items_id',
-                            ) . "'";
+                            )) . "'";
                         }
                     }
 
