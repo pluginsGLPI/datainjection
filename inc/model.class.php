@@ -993,6 +993,7 @@ class PluginDatainjectionModel extends CommonDBTM
                     ),
                 ];
             }
+            unset($_FILES['filename']);
         }
 
         //If file has not the right extension, reject it and delete if
