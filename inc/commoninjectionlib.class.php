@@ -27,7 +27,7 @@
  * @link      https://github.com/pluginsGLPI/datainjection
  * -------------------------------------------------------------------------
  */
-use Glpi\DBAL\QueryExpression;
+
 use Glpi\DBAL\QuerySubQuery;
 use Glpi\Exception\Http\HttpException;
 use Glpi\Features\AssignableItem;
