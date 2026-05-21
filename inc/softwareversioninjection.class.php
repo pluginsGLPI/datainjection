@@ -195,14 +195,16 @@ class PluginDatainjectionSoftwareVersionInjection extends SoftwareVersion implem
     /**
     * @param array $fields_toinject    array
     * @param array $options            array
+    * @return array
    **/
-    public function checkPresent($fields_toinject = [], $options = [])
+    public function checkPresent($fields_toinject = [], $options = []): array
     {
-
         if ($options['itemtype'] != 'SoftwareVersion') {
-            return (" AND `softwares_id` = '" . $fields_toinject['Software']['id'] . "'
-                   AND `name` = '" . $fields_toinject['SoftwareVersion']['name'] . "'");
+            return [
+                'softwares_id' => $fields_toinject['Software']['id'],
+                'name'         => $fields_toinject['SoftwareVersion']['name'],
+            ];
         }
-        return "";
+        return [];
     }
 }

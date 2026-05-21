@@ -1984,10 +1984,9 @@ class PluginDatainjectionCommonInjectionLib
 
                     //Add additional parameters specific to this itemtype (or function checkPresent exists)
                     if (method_exists($injectionClass, 'checkPresent')) {
-                        $extra = trim((string) $injectionClass->checkPresent($this->values, $options));
-                        $extra = trim(preg_replace('/^\s*AND\s+/i', '', $extra));
-                        if ($extra !== '') {
-                            $where[] = new QueryExpression($extra);
+                        $extra = $injectionClass->checkPresent($this->values, $options);
+                        if (is_array($extra) && count($extra) > 0) {
+                            $where = array_merge($where, $extra);
                         }
                     }
                 }
