@@ -28,6 +28,10 @@
  * -------------------------------------------------------------------------
  */
 
+use Glpi\Asset\AssetDefinition;
+use Glpi\Asset\AssetDefinitionManager;
+use GlpiPlugin\Datainjection\Glpi\Asset\Capacity\IsInjectableCapacity;
+
 use function Safe\define;
 use function Safe\mkdir;
 
@@ -48,6 +52,12 @@ function plugin_init_datainjection()
     /** @var array $CFG_GLPI */
     /** @var array $INJECTABLE_TYPES */
     global $PLUGIN_HOOKS, $CFG_GLPI, $INJECTABLE_TYPES;
+
+    if (!isset($CFG_GLPI['injectable_types'])) {
+        $CFG_GLPI['injectable_types'] = [];
+    }
+    $asset_definition_manager = AssetDefinitionManager::getInstance();
+    $asset_definition_manager->registerCapacity(new IsInjectableCapacity());
 
     $PLUGIN_HOOKS['csrf_compliant']['datainjection'] = true;
     $PLUGIN_HOOKS['migratetypes']['datainjection'] = 'plugin_datainjection_migratetypes_datainjection';
@@ -84,6 +94,8 @@ function plugin_init_datainjection()
         $PLUGIN_HOOKS['add_javascript']['datainjection'] = 'js/datainjection.js';
 
         $INJECTABLE_TYPES = [];
+
+//        plugin_datainjection_creationInjectableAssets();
     }
 }
 
@@ -116,7 +128,7 @@ function getTypesToInject(): void
 {
     /** @var array $INJECTABLE_TYPES */
     /** @var array $PLUGIN_HOOKS */
-    global $INJECTABLE_TYPES,$PLUGIN_HOOKS;
+    global $INJECTABLE_TYPES,$CFG_GLPI;
 
     if (count($INJECTABLE_TYPES)) {
         // already populated
@@ -220,6 +232,101 @@ function getTypesToInject(): void
     ];
     //Add plugins
     Plugin::doHook('plugin_datainjection_populate');
+
+    // Register injectable assets dynamically
+    plugin_datainjection_registerInjectableAssets();
+
+    plugin_datainjection_creationInjectableAssets();
+}
+
+
+/**
+ * Register injection classes for each injectable asset definition
+ */
+function plugin_datainjection_registerInjectableAssets(): void
+{
+    /** @var array $INJECTABLE_TYPES */
+    /** @var array $CFG_GLPI */
+    global $INJECTABLE_TYPES, $CFG_GLPI;
+
+    if (!isset($CFG_GLPI['injectable_types']) || empty($CFG_GLPI['injectable_types'])) {
+        return;
+    }
+
+    // For each injectable asset definition, create and register a distinct class
+    foreach ($CFG_GLPI['injectable_types'] as $definition_id => $itemtype) {
+        // Get the asset definition to extract the system name
+
+        $definition = AssetDefinition::getById($definition_id);
+        if ($definition->getAssetClassName() === $itemtype) {
+            // Use the system name to create a nice class name
+            $system_name = ucfirst($definition->fields['system_name']);//strtolower()
+            $injection_class = 'PluginDatainjection' . $system_name . 'AssetInjection';
+
+            // Only create if not already registered
+            if (!isset($INJECTABLE_TYPES[$injection_class])) {
+                $INJECTABLE_TYPES[$injection_class] = 'datainjection';
+            }
+        }
+    }
+}
+
+/**
+ * Register injection classes for each injectable asset definition
+ */
+function plugin_datainjection_creationInjectableAssets(): void
+{
+    /** @var array $CFG_GLPI */
+    global $CFG_GLPI;
+
+    if (!isset($CFG_GLPI['injectable_types']) || empty($CFG_GLPI['injectable_types'])) {
+        return;
+    }
+
+
+    // For each injectable asset definition, create and register a distinct class
+    foreach ($CFG_GLPI['injectable_types'] as $definition_id => $itemtype) {
+        $definition = AssetDefinition::getById($definition_id);
+        // Get the asset definition to extract the system name
+        if ($definition->getAssetClassName() === $itemtype) {
+            // Use the system name to create a nice class name
+            $system_name = ucfirst($definition->fields['system_name']);//strtolower()
+            $injection_class = 'PluginDatainjection' . $system_name . 'AssetInjection';
+
+            plugin_datainjection_createAssetInjectionClass($injection_class, $definition_id);
+        }
+    }
+}
+
+/**
+ * Dynamically create an asset injection class
+ */
+function plugin_datainjection_createAssetInjectionClass(string $class_name, int $definition_id): void
+{
+
+    // Check if class already exists
+    if (class_exists($class_name)) {
+        return;
+    }
+
+    // Create the class dynamically (not final, so it can be extended)
+    $code = <<<PHP
+
+use GlpiPlugin\\Datainjection\\Glpi\\Asset\\AssetInjection;
+
+final class $class_name extends AssetInjection implements PluginDatainjectionInjectionInterface
+{
+    protected static int \$fixed_asset_definition_id = $definition_id;
+
+    public static function getAssetDefinitionID(): int
+    {
+        return self::\$fixed_asset_definition_id;
+    }
+}
+PHP;
+
+    eval($code);
+
 }
 
 
