@@ -1985,8 +1985,19 @@ class PluginDatainjectionCommonInjectionLib
                     //Add additional parameters specific to this itemtype (or function checkPresent exists)
                     if (method_exists($injectionClass, 'checkPresent')) {
                         $extra = $injectionClass->checkPresent($this->values, $options);
-                        if (is_array($extra) && count($extra) > 0) {
-                            $where = array_merge($where, $extra);
+                        if (is_array($extra)) {
+                            if (count($extra) > 0) {
+                                $where = array_merge($where, $extra);
+                            }
+                        } elseif (!empty($extra)) {
+                            trigger_error(
+                                sprintf(
+                                    '%s::checkPresent() must return an array, %s returned instead.',
+                                    get_class($injectionClass),
+                                    gettype($extra),
+                                ),
+                                E_USER_WARNING,
+                            );
                         }
                     }
                 }
