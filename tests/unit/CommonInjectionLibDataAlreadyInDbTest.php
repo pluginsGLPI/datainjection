@@ -51,6 +51,3 @@ final class CommonInjectionLibDataAlreadyInDbTest extends DbTestCase
         self::assertSame($manufacturer->getID(), $values['id']);
     }
 }
-
-
-
