@@ -28,7 +28,6 @@
  * -------------------------------------------------------------------------
  */
 
-
 namespace GlpiPlugin\Datainjection\Tests\Unit;
 
 use Glpi\Tests\DbTestCase;
