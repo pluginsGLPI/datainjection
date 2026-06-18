@@ -30,6 +30,8 @@
 
 namespace GlpiPlugin\Datainjection\Tests\Unit;
 
+use PluginDatainjectionManufacturerInjection;
+use Closure;
 use Glpi\Tests\DbTestCase;
 use Manufacturer;
 use PluginDatainjectionCommonInjectionLib;
@@ -47,7 +49,7 @@ final class CommonInjectionLibDataAlreadyInDbTest extends DbTestCase
             'name' => $manufacturer_name,
         ]);
 
-        $injection_class = new \PluginDatainjectionManufacturerInjection();
+        $injection_class = new PluginDatainjectionManufacturerInjection();
         $common_injection_lib = new PluginDatainjectionCommonInjectionLib(
             $injection_class,
             [
@@ -64,7 +66,7 @@ final class CommonInjectionLibDataAlreadyInDbTest extends DbTestCase
             ],
         );
 
-        $invoke_data_already_in_db = \Closure::bind(
+        $invoke_data_already_in_db = Closure::bind(
             function ($injection_class, string $itemtype): void {
                 $this->dataAlreadyInDB($injection_class, $itemtype);
             },
