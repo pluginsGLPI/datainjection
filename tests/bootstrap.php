@@ -28,8 +28,6 @@
  * -------------------------------------------------------------------------
  */
 
-use function Safe\realpath;
-
 $current_plugin_folder = basename(realpath(__DIR__ . '/../'));
 
 require __DIR__ . '/../../../tests/bootstrap.php';

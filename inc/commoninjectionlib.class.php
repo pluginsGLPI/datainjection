@@ -1701,6 +1701,7 @@ class PluginDatainjectionCommonInjectionLib
             // Some search options do not expose a stable joinparams shape, but GLPI
             // still expects _groups_id/_groups_id_tech arrays when saving equipment groups.
             // Only apply to items using the AssignableItem trait.
+            // Non-AssignableItem types store groups_id as a plain FK; skip array normalisation for them.
             if (
                 in_array($key, ['groups_id_tech', 'groups_id', 'groups_id_normal'], true)
                 && !empty($option)

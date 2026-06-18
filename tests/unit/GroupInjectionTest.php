@@ -40,7 +40,7 @@ use PluginDatainjectionCommonInjectionLib;
 
 final class GroupInjectionTest extends DbTestCase
 {
-    public static function AssigneGroupToInjectedAssignableItemProvider(): array
+    public static function assignGroupToInjectedAssignableItemProvider(): array
     {
         return [
             'with_groups_id' => [
@@ -80,7 +80,7 @@ final class GroupInjectionTest extends DbTestCase
 
     /**
      *
-     * @dataProvider assigneGroupToInjectedAssignableItemProvider
+     * @dataProvider assignGroupToInjectedAssignableItemProvider
      */
     public function testAssigneGroupToInjectedAssignableItem(
         string $group_field,
@@ -300,7 +300,7 @@ final class GroupInjectionTest extends DbTestCase
     /**
      * Updating an existing non assignable item via injection must also persist groups_id.
      */
-    public function testGroupIsUpdatedOnExistingNonAssugnableItem(): void
+    public function testGroupIsUpdatedOnExistingNonAssignableItem(): void
     {
         $group = $this->createItem(Group::class, [
             'name'        => 'GG_ADC_DRN_EDL',
