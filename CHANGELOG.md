@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Fixed
 
 - fix escape SQL values
+- normalize group assignment fields for assignable items only
 
 ## [2.15.6] - 2026-05-05
 
