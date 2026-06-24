@@ -28,6 +28,7 @@
  * -------------------------------------------------------------------------
  */
 
+use Glpi\DBAL\QueryExpression;
 use Glpi\DBAL\QuerySubQuery;
 use Glpi\Exception\Http\HttpException;
 use Glpi\Features\AssignableItem;
@@ -779,15 +780,20 @@ class PluginDatainjectionCommonInjectionLib
         /** @var DBmysql $DB */
         global $DB;
 
-        $sql = "SELECT `id`
-              FROM `glpi_users`
-              WHERE LOWER(`name`) = '" . strtolower($value) . "'
-                 OR (CONCAT(LOWER(`realname`),' ',LOWER(`firstname`)) = '" . strtolower($value) . "'
-                    OR CONCAT(LOWER(`firstname`),' ',LOWER(`realname`)) = '" . strtolower($value) . "')";
-        $result = $DB->doQuery($sql);
-        if ($DB->numrows($result) > 0) {
-            //check if user has right on the current entity
-            $ID       = $DB->result($result, 0, "id");
+        $safe_lower = "'" . $DB->escape(strtolower($value)) . "'";
+        $result = $DB->request([
+            'SELECT' => ['id'],
+            'FROM'   => 'glpi_users',
+            'WHERE'  => [
+                'OR' => [
+                    new QueryExpression("LOWER(`name`) = $safe_lower"),
+                    new QueryExpression("CONCAT(LOWER(`realname`),' ',LOWER(`firstname`)) = $safe_lower"),
+                    new QueryExpression("CONCAT(LOWER(`firstname`),' ',LOWER(`realname`)) = $safe_lower"),
+                ],
+            ],
+        ]);
+        if (count($result) > 0) {
+            $ID       = $result->current()['id'];
             $entities = Profile_User::getUserEntities($ID, true);
 
             if (in_array($entity, $entities)) {
@@ -812,17 +818,22 @@ class PluginDatainjectionCommonInjectionLib
         /** @var DBmysql $DB */
         global $DB;
 
-        $sql = "SELECT `id`
-              FROM `glpi_contacts`
-              WHERE `entities_id` = '" . $entity . "'
-                 AND (LOWER(`name`) = '" . strtolower($value) . "'
-                    OR (CONCAT(LOWER(`name`),' ',LOWER(`firstname`)) = '" . strtolower($value) . "'
-                       OR CONCAT(LOWER(`firstname`),' ',LOWER(`name`)) = '" . strtolower($value) . "'))";
-        $result = $DB->doQuery($sql);
+        $safe_lower = "'" . $DB->escape(strtolower($value)) . "'";
+        $result = $DB->request([
+            'SELECT' => ['id'],
+            'FROM'   => 'glpi_contacts',
+            'WHERE'  => [
+                'entities_id' => $entity,
+                'OR'          => [
+                    new QueryExpression("LOWER(`name`) = $safe_lower"),
+                    new QueryExpression("CONCAT(LOWER(`name`),' ',LOWER(`firstname`)) = $safe_lower"),
+                    new QueryExpression("CONCAT(LOWER(`firstname`),' ',LOWER(`name`)) = $safe_lower"),
+                ],
+            ],
+        ]);
 
-        if ($DB->numrows($result) > 0) {
-            //check if user has right on the current entity
-            return $DB->result($result, 0, "id");
+        if (count($result) > 0) {
+            return $result->current()['id'];
         }
         return self::DROPDOWN_EMPTY_VALUE;
     }
@@ -843,17 +854,14 @@ class PluginDatainjectionCommonInjectionLib
         /** @var DBmysql $DB */
         global $DB;
 
-        $query = "SELECT `id`
-                FROM `" . $item->getTable() . "`
-                WHERE 1";
+        $where = [];
 
         if ($item->maybeTemplate()) {
-            $query .= " AND `is_template` = '0'";
+            $where['is_template'] = 0;
         }
 
         if ($item->isEntityAssign()) {
-            $query .= getEntitiesRestrictRequest(
-                " AND",
+            $where += getEntitiesRestrictCriteria(
                 $item->getTable(),
                 'entities_id',
                 $entity,
@@ -861,15 +869,18 @@ class PluginDatainjectionCommonInjectionLib
             );
         }
 
-        $query .= " AND `" . $searchOption['field'] . "` = '$value'";
-        $result = $DB->doQuery($query);
+        $where[$searchOption['field']] = $value;
 
-        if ($DB->numrows($result) > 0) {
-            //check if user has right on the current entity
-            return $DB->result($result, 0, "id");
-        } else {
-            return self::DROPDOWN_EMPTY_VALUE;
+        $result = $DB->request([
+            'SELECT' => ['id'],
+            'FROM'   => $item->getTable(),
+            'WHERE'  => $where,
+        ]);
+
+        if (count($result) > 0) {
+            return $result->current()['id'];
         }
+        return self::DROPDOWN_EMPTY_VALUE;
     }
 
     /**
@@ -1001,14 +1012,17 @@ class PluginDatainjectionCommonInjectionLib
             throw new HttpException(500, 'Class ' . $itemtype . ' is not a valid class');
         }
         new $itemtype();
-        $query = "SELECT `id`
-                FROM `" . getTableForItemType($itemtype) . "`
-                WHERE `is_template` = '1'
-                      AND `template_name` = '$name'";
-        $result = $DB->doQuery($query);
+        $result = $DB->request([
+            'SELECT' => ['id'],
+            'FROM'   => getTableForItemType($itemtype),
+            'WHERE'  => [
+                'is_template'   => 1,
+                'template_name' => $name,
+            ],
+        ]);
 
-        if ($DB->numrows($result) > 0) {
-            return $DB->result($result, 0, 'id');
+        if (count($result) > 0) {
+            return $result->current()['id'];
         }
         return false;
     }
