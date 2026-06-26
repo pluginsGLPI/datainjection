@@ -5,16 +5,16 @@
 # 
 # Translators:
 # 青海K, 2020
-# INOUE Daisuke, 2024
+# INOUE Daisuke, 2026
 # 
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-05-15 02:44+0000\n"
+"POT-Creation-Date: 2026-06-26 02:53+0000\n"
 "PO-Revision-Date: 2018-06-21 12:57+0000\n"
-"Last-Translator: INOUE Daisuke, 2024\n"
+"Last-Translator: INOUE Daisuke, 2026\n"
 "Language-Team: Japanese (Japan) (https://app.transifex.com/teclib/teams/28042/ja_JP/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -22,65 +22,31 @@ msgstr ""
 "Language: ja_JP\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
-#: templates/modelcsv_additional_form.html.twig
-msgid "Specific file format options"
-msgstr "特定のファイル形式のオプション"
+#: templates/mappings_form.html.twig front/popup.php:35
+msgid "See the file"
+msgstr "ファイルを表示する"
 
-#: templates/modelcsv_additional_form.html.twig
-msgid "Header's presence"
-msgstr "ヘッダー付き"
+#: templates/mappings_form.html.twig
+msgid "Header of the file"
+msgstr "ファイルのヘッダー"
 
-#: templates/modelcsv_additional_form.html.twig
-msgid "File delimitor"
-msgstr "列の区切り文字"
+#: templates/mappings_form.html.twig inc/info.class.php:87
+#: inc/info.class.php:145
+msgid "Tables"
+msgstr "テーブル"
 
-#: templates/clientinjection_injection.html.twig
-#: templates/clientinjection.html.twig
-msgid "Model"
-msgstr ""
-
-#: templates/clientinjection_injection.html.twig inc/profile.class.php:44
-#: inc/menu.class.php:56 inc/menu.class.php:57 inc/menu.class.php:61
-msgid "Injection of the file"
-msgstr "ファイルをインジェクション"
-
-#: templates/clientinjection_injection.html.twig
-msgid " lines"
-msgstr ""
-
-#: templates/clientinjection_injection.html.twig
-msgid "Error"
-msgstr ""
-
-#: templates/clientinjection_injection.html.twig
-msgid "Import progress"
-msgstr "インポート状況"
-
-#: templates/infoadditionnalinfo.html.twig
-msgid "Complementary information"
-msgstr "補足情報"
-
-#: templates/infoadditionnalinfo.html.twig
-#: templates/clientinjection_upload_file.html.twig
-msgid "Choose a file"
-msgstr "ファイルを選択"
-
-#: templates/infoadditionnalinfo.html.twig
-msgid "Download file sample"
-msgstr "サンプルファイルをダウンロード"
-
-#: templates/model_validation_form.html.twig
-msgid "Validation"
-msgstr ""
-
-#: templates/model_validation_form.html.twig
-msgctxt "button"
-msgid "Validate the model"
-msgstr "モデルを検証する"
+#: templates/mappings_form.html.twig
+msgid "Link field"
+msgstr "リンク フィールド"
 
 #: templates/clientinjection.html.twig
 msgid "Client Injection Configuration"
-msgstr ""
+msgstr "クライアント インジェクション構成"
+
+#: templates/clientinjection.html.twig
+#: templates/clientinjection_injection.html.twig
+msgid "Model"
+msgstr "モデル"
 
 #: templates/clientinjection.html.twig
 msgid "No model currently available"
@@ -90,36 +56,36 @@ msgstr "利用可能なモデルなし"
 msgid "You can start the model creation by hitting the button"
 msgstr "ボタンを押してモデルの作成を開始します"
 
-#: templates/log_results.html.twig inc/model.class.php:1494
+#: templates/log_results.html.twig inc/model.class.php:1495
 msgid "Array of successful injections"
 msgstr "インジェクション成功データ"
 
-#: templates/log_results.html.twig inc/model.class.php:1497
-#: inc/model.class.php:1519
+#: templates/log_results.html.twig inc/model.class.php:1498
+#: inc/model.class.php:1520
 msgid "Line"
 msgstr "行"
 
-#: templates/log_results.html.twig inc/model.class.php:1498
-#: inc/model.class.php:1521
+#: templates/log_results.html.twig inc/model.class.php:1499
+#: inc/model.class.php:1522
 msgid "Data Import"
 msgstr "データ インポート"
 
-#: templates/log_results.html.twig inc/model.class.php:1499
-#: inc/model.class.php:1522
+#: templates/log_results.html.twig inc/model.class.php:1500
+#: inc/model.class.php:1523
 msgid "Injection type"
 msgstr "インジェクションの型"
 
-#: templates/log_results.html.twig inc/model.class.php:1500
-#: inc/model.class.php:1523
+#: templates/log_results.html.twig inc/model.class.php:1501
+#: inc/model.class.php:1524
 msgid "Object Identifier"
 msgstr "オブジェクト識別子"
 
 #: templates/log_results.html.twig
 msgid "Array of failed injections"
-msgstr ""
+msgstr "失敗インジェクション配列"
 
-#: templates/log_results.html.twig inc/model.class.php:1520
-#: inc/model.class.php:1540
+#: templates/log_results.html.twig inc/model.class.php:1521
+#: inc/model.class.php:1541
 msgid "Data check"
 msgstr "データ チェック"
 
@@ -135,9 +101,62 @@ msgstr "処理した行数"
 msgid "Counter"
 msgstr "数"
 
+#: templates/modelcsv_additional_form.html.twig
+msgid "Specific file format options"
+msgstr "特定のファイル形式のオプション"
+
+#: templates/modelcsv_additional_form.html.twig
+msgid "Header's presence"
+msgstr "ヘッダー付き"
+
+#: templates/modelcsv_additional_form.html.twig
+msgid "File delimitor"
+msgstr "列の区切り文字"
+
+#: templates/clientinjection_injection.html.twig inc/profile.class.php:44
+#: inc/menu.class.php:56 inc/menu.class.php:57 inc/menu.class.php:61
+msgid "Injection of the file"
+msgstr "ファイルをインジェクション"
+
+#: templates/clientinjection_injection.html.twig
+msgid " lines"
+msgstr "行"
+
+#: templates/clientinjection_injection.html.twig
+msgid "Error"
+msgstr "エラー"
+
+#: templates/clientinjection_injection.html.twig
+msgid "Import progress"
+msgstr "インポート状況"
+
+#: templates/clientinjection_upload_file.html.twig inc/dropdown.class.php:85
+#: inc/model.class.php:781
+msgid "File to inject"
+msgstr "インジェクションするファイル"
+
+#: templates/clientinjection_upload_file.html.twig
+#: templates/infoadditionnalinfo.html.twig
+msgid "Choose a file"
+msgstr "ファイルを選択"
+
+#: templates/clientinjection_upload_file.html.twig
+msgid "File encoding"
+msgstr "ファイルの文字コード"
+
+#: templates/clientinjection_upload_file.html.twig
+msgid "Warning : existing mapped column will be overridden"
+msgstr "警告 : マップ済みの既存の列は上書きします"
+
+#: templates/clientinjection_upload_file.html.twig
+msgid ""
+"Watch out, you're about to inject data into GLPI. Are you sure you want to "
+"do it ?"
+msgstr "注意 : GLPI にデータをインジェクションします。よろしいですか？"
+
 #: templates/model_advanced_form.html.twig
 msgid "Model status"
-msgstr ""
+msgstr "モデル状態"
 
 #: templates/model_advanced_form.html.twig inc/model.class.php:493
 msgid "Type of data to import"
@@ -177,26 +196,7 @@ msgstr "ポートユニティ基準"
 
 #: templates/model_advanced_form.html.twig inc/model.class.php:581
 msgid "Replacing the value of multiline text fields"
-msgstr ""
-
-#: templates/clientinjection_upload_file.html.twig inc/dropdown.class.php:85
-#: inc/model.class.php:781
-msgid "File to inject"
-msgstr "インジェクションするファイル"
-
-#: templates/clientinjection_upload_file.html.twig
-msgid "File encoding"
-msgstr "ファイルの文字コード"
-
-#: templates/clientinjection_upload_file.html.twig
-msgid "Warning : existing mapped column will be overridden"
-msgstr "警告 : マップ済みの既存の列は上書きします"
-
-#: templates/clientinjection_upload_file.html.twig
-msgid ""
-"Watch out, you're about to inject data into GLPI. Are you sure you want to "
-"do it ?"
-msgstr "注意 : GLPI にデータをインジェクションします。よろしいですか？"
+msgstr "複数テキスト項目の値を置き換え"
 
 #: templates/clientinjection_result.html.twig
 msgid "Injection's results"
@@ -226,135 +226,116 @@ msgstr "ログをエクスポート"
 msgid "Finish"
 msgstr "完了"
 
-#: templates/mappings_form.html.twig front/popup.php:35
-msgid "See the file"
-msgstr "ファイルを表示する"
+#: templates/infoadditionnalinfo.html.twig
+msgid "Complementary information"
+msgstr "補足情報"
 
-#: templates/mappings_form.html.twig
-msgid "Header of the file"
-msgstr "ファイルのヘッダー"
+#: templates/infoadditionnalinfo.html.twig
+msgid "Download file sample"
+msgstr "サンプルファイルをダウンロード"
 
-#: templates/mappings_form.html.twig inc/info.class.php:87
-#: inc/info.class.php:145
-msgid "Tables"
-msgstr "テーブル"
+#: templates/model_validation_form.html.twig
+msgid "Validation"
+msgstr "検証"
 
-#: templates/mappings_form.html.twig
-msgid "Link field"
-msgstr "リンク フィールド"
+#: templates/model_validation_form.html.twig
+msgctxt "button"
+msgid "Validate the model"
+msgstr "モデルを検証する"
 
-#: setup.php:95 front/clientinjection.form.php:34 inc/profile.class.php:72
-#: inc/menu.class.php:38
-msgid "Data injection"
-msgstr "インジェクション"
+#: front/model.form.php:91 front/clientinjection.form.php:86
+msgid ""
+"The file could not be found (Maybe it exceeds the maximum size allowed)"
+msgstr "ファイルが見つかりません ( 許可されている最大ファイルサイズを超えていると思われます )"
 
-#: front/popup.php:41 inc/model.class.php:1485
+#: front/popup.php:41 inc/model.class.php:1486
 msgid "Data injection report"
 msgstr "インジェクション レポート"
+
+#: front/clientinjection.form.php:34 inc/profile.class.php:72
+#: inc/menu.class.php:38 setup.php:95
+msgid "Data injection"
+msgstr "インジェクション"
 
 #: front/clientinjection.form.php:52
 msgid "One mandatory field is not filled"
 msgstr "1 つの必須フィールドが未入力です"
 
-#: front/clientinjection.form.php:86 front/model.form.php:91
-msgid ""
-"The file could not be found (Maybe it exceeds the maximum size allowed)"
-msgstr "ファイルが見つかりません ( 許可されている最大ファイルサイズを超えていると思われます )"
+#: inc/networkequipmentinjection.class.php:76
+msgid "Number of ports"
+msgstr "ポート数"
 
-#: inc/info.class.php:89 inc/info.class.php:147
-msgid "Mandatory information"
-msgstr "必須情報"
+#: inc/commoninjectionlib.class.php:268
+msgid "No mandatory field is defined for this model"
+msgstr "このモデルには必須項目を定義していません"
 
-#: inc/info.class.php:146
-msgid "Fields"
-msgstr "フィールド"
+#: inc/commoninjectionlib.class.php:2115
+msgid "Add from CSV file"
+msgstr "CSVファイルから追加"
+
+#: inc/commoninjectionlib.class.php:2115
+msgid "Update from CSV file"
+msgstr "CSV ファイルから更新"
+
+#: inc/commoninjectionlib.class.php:2154
+msgid "No right to import data"
+msgstr "インポートの権限がありません"
+
+#: inc/commoninjectionlib.class.php:2158
+msgid "No right to update data"
+msgstr "データ更新の権限がありません"
+
+#: inc/commoninjectionlib.class.php:2162
+msgid "Size of the inserted value is to expansive"
+msgstr "挿入した値のサイズを拡張する"
+
+#: inc/commoninjectionlib.class.php:2166
+msgid "Import not allowed"
+msgstr "インポートが許可されていません"
+
+#: inc/commoninjectionlib.class.php:2170
+msgid "Import failed"
+msgstr "インポートに失敗しました"
+
+#: inc/commoninjectionlib.class.php:2174
+msgid "At least one mandatory field is not present"
+msgstr "存在していない必須フィールドがあります"
+
+#: inc/commoninjectionlib.class.php:2178
+msgid "Data to insert are correct"
+msgstr "挿入するデータは適切"
+
+#: inc/commoninjectionlib.class.php:2182
+msgid "One data is not the good type"
+msgstr "1つのデータは適切なタイプではありません"
+
+#: inc/commoninjectionlib.class.php:2186
+msgid "Warning"
+msgstr "警告"
+
+#: inc/commoninjectionlib.class.php:2190
+msgid "Data not found"
+msgstr "データが見つかりません"
+
+#: inc/commoninjectionlib.class.php:2194 inc/model.class.php:1379
+msgid "Undetermined"
+msgstr "未定"
+
+#: inc/injectiontype.class.php:145
+msgid "-------Choose a table-------"
+msgstr "------- テーブルを選択 ---------"
+
+#: inc/injectiontype.class.php:215
+msgid "-------Choose a field-------"
+msgstr "------- フィールドを選択 ---------"
 
 #: inc/profile.class.php:40
 msgid "Model management"
 msgstr "モデル管理"
 
-#: inc/computerinjection.class.php:78
-msgid "Antivirus name"
-msgstr "ウイルス対策ソフト名"
-
-#: inc/commoninjectionlib.class.php:265
-msgid "No mandatory field is defined for this model"
-msgstr ""
-
-#: inc/commoninjectionlib.class.php:2092
-msgid "Add from CSV file"
-msgstr "CSVファイルから追加"
-
-#: inc/commoninjectionlib.class.php:2092
-msgid "Update from CSV file"
-msgstr "CSV ファイルから更新"
-
-#: inc/commoninjectionlib.class.php:2131
-msgid "No right to import data"
-msgstr "インポートの権限がありません"
-
-#: inc/commoninjectionlib.class.php:2135
-msgid "No right to update data"
-msgstr "データ更新の権限がありません"
-
-#: inc/commoninjectionlib.class.php:2139
-msgid "Size of the inserted value is to expansive"
-msgstr "挿入した値のサイズを拡張する"
-
-#: inc/commoninjectionlib.class.php:2143
-msgid "Import not allowed"
-msgstr "インポートが許可されていません"
-
-#: inc/commoninjectionlib.class.php:2147
-msgid "Import failed"
-msgstr "インポートに失敗しました"
-
-#: inc/commoninjectionlib.class.php:2151
-msgid "At least one mandatory field is not present"
-msgstr "存在していない必須フィールドがあります"
-
-#: inc/commoninjectionlib.class.php:2155
-msgid "Data to insert are correct"
-msgstr "挿入するデータは適切"
-
-#: inc/commoninjectionlib.class.php:2159
-msgid "One data is not the good type"
-msgstr "1つのデータは適切なタイプではありません"
-
-#: inc/commoninjectionlib.class.php:2163
-msgid "Warning"
-msgstr "警告"
-
-#: inc/commoninjectionlib.class.php:2167
-msgid "Data not found"
-msgstr "データが見つかりません"
-
-#: inc/commoninjectionlib.class.php:2171 inc/model.class.php:1378
-msgid "Undetermined"
-msgstr "未定"
-
-#: inc/phoneinjection.class.php:71
-msgid "Domain name"
-msgstr "ドメイン名"
-
-#: inc/contractinjection.class.php:154 inc/contractinjection.class.php:162
-#: inc/contractinjection.class.php:170 inc/contractinjection.class.php:178
-#, php-format
-msgid "%d month"
-msgid_plural "%d months"
-msgstr[0] ""
-
 #: inc/networkportinjection.class.php:94
 msgid "Port MAC address"
 msgstr "ポート MAC アドレス"
-
-#: inc/networkequipmentinjection.class.php:76
-msgid "Number of ports"
-msgstr "ポート数"
-
-#: inc/clientinjection.class.php:116
-msgid "Launch the import"
-msgstr "インジェクションの実行"
 
 #: inc/dropdown.class.php:37
 msgid "dd-mm-yyyy"
@@ -413,48 +394,67 @@ msgstr "モデルの名前を入力してください"
 msgid "Impossible to copy the file in %s"
 msgstr "%s でファイルのコピー不可"
 
-#: inc/model.class.php:1000
+#: inc/model.class.php:1001
 msgid "File format is wrong"
 msgstr "ファイル形式が不正"
 
-#: inc/model.class.php:1001
+#: inc/model.class.php:1002
 msgid "Extension csv required"
 msgstr "csv 拡張が必要"
 
-#: inc/model.class.php:1117
+#: inc/model.class.php:1118
 msgid "The file is ok."
 msgstr "ファイルに問題ありません。"
 
-#: inc/model.class.php:1141
+#: inc/model.class.php:1142
 msgid "The number of columns of the file is incorrect."
 msgstr "ファイルの列数が不正です。"
 
-#: inc/model.class.php:1143
+#: inc/model.class.php:1144
 #, php-format
 msgid "%d awaited column"
 msgid_plural "%d awaited columns"
 msgstr[0] "%d 列必要です"
 
-#: inc/model.class.php:1192
+#: inc/model.class.php:1193
 msgid "At least one column is incorrect"
 msgstr "正しくない列があります"
 
-#: inc/model.class.php:1200
+#: inc/model.class.php:1201
 msgid "Into the file"
 msgstr "ファイルへ"
 
-#: inc/model.class.php:1205
+#: inc/model.class.php:1206
 msgid "From the model"
 msgstr "モデルから"
 
-#: inc/model.class.php:1516
+#: inc/model.class.php:1517
 msgid "Array of unsuccessful injections"
 msgstr "インジェクション失敗データ"
 
-#: inc/injectiontype.class.php:145
-msgid "-------Choose a table-------"
-msgstr "------- テーブルを選択 ---------"
+#: inc/computerinjection.class.php:78
+msgid "Antivirus name"
+msgstr "ウイルス対策ソフト名"
 
-#: inc/injectiontype.class.php:215
-msgid "-------Choose a field-------"
-msgstr "------- フィールドを選択 ---------"
+#: inc/phoneinjection.class.php:71
+msgid "Domain name"
+msgstr "ドメイン名"
+
+#: inc/contractinjection.class.php:154 inc/contractinjection.class.php:162
+#: inc/contractinjection.class.php:170 inc/contractinjection.class.php:178
+#, php-format
+msgid "%d month"
+msgid_plural "%d months"
+msgstr[0] "%d カ月"
+
+#: inc/clientinjection.class.php:116
+msgid "Launch the import"
+msgstr "インジェクションの実行"
+
+#: inc/info.class.php:89 inc/info.class.php:147
+msgid "Mandatory information"
+msgstr "必須情報"
+
+#: inc/info.class.php:146
+msgid "Fields"
+msgstr "フィールド"
