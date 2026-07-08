@@ -28,6 +28,8 @@
  * -------------------------------------------------------------------------
  */
 
+use function Safe\unserialize;
+
 Session::checkRight("plugin_datainjection_use", READ);
 
 Html::header(

@@ -28,6 +28,8 @@
  * -------------------------------------------------------------------------
  */
 
+use function Safe\unserialize;
+
 // Direct access to file
 if (strpos($_SERVER['PHP_SELF'], "injection.php")) {
     header("Content-Type: text/html; charset=UTF-8");

@@ -33,6 +33,7 @@ use Glpi\Application\View\TemplateRenderer;
 use function Safe\json_decode;
 use function Safe\realpath;
 use function Safe\tempnam;
+use function Safe\unserialize;
 
 /**
  * -------------------------------------------------------------------------
