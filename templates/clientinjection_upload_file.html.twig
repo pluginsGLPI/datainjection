@@ -69,7 +69,7 @@
             {% else %}
                 {% set message = __("Watch out, you're about to inject data into GLPI. Are you sure you want to do it ?", 'datainjection') %}
             {% endif %}
-            <input type="submit" class="btn btn-primary" name="upload" value="{{ submit_label }}" onclick="return window.confirm('{{ message }}');">
+            <input type="submit" class="btn btn-primary" name="upload" value="{{ submit_label }}" onclick="return window.confirm('{{ message|e('js') }}');">
         {% else %}
             <input type="submit" class="btn btn-primary" name="upload" value="{{ submit_label }}">
         {% endif %}
