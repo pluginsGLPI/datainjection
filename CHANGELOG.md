@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Fixed
 
 - Fix crash when importing an ISO8601 datetime value with microseconds/timezone
+- Fix : confirm dialog js escaping
 
 ## [2.15.8] - 2026-06-24
 
