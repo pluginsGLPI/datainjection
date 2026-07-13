@@ -66,6 +66,16 @@ final class CommonInjectionLibDateTimeTest extends DbTestCase
                 'date_format' => PluginDatainjectionCommonInjectionLib::DATE_TYPE_DDMMYYYY,
                 'expected'    => '2026-04-15 13:51:30',
             ],
+            'mm-dd-yyyy format with time' => [
+                'original'    => '04-15-2026 13:51:30',
+                'date_format' => PluginDatainjectionCommonInjectionLib::DATE_TYPE_MMDDYYYY,
+                'expected'    => '2026-04-15 13:51:30',
+            ],
+            'iso8601 with negative utc offset' => [
+                'original'    => '2026-04-15T13:51:30.000000-05:00',
+                'date_format' => PluginDatainjectionCommonInjectionLib::DATE_TYPE_YYYYMMDD,
+                'expected'    => '2026-04-15 13:51:30',
+            ],
             'empty value' => [
                 'original'    => '',
                 'date_format' => PluginDatainjectionCommonInjectionLib::DATE_TYPE_YYYYMMDD,
