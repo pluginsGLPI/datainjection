@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-06-25 02:48+0000\n"
+"POT-Creation-Date: 2026-07-10 02:34+0000\n"
 "PO-Revision-Date: 2018-06-21 12:57+0000\n"
 "Last-Translator: feonsu <feonsu@gmail.com>, 2026\n"
 "Language-Team: Slovak (Slovakia) (https://app.transifex.com/teclib/teams/28042/sk_SK/)\n"
@@ -55,27 +55,27 @@ msgstr "Momentálne nie je dostupný žiadny model"
 msgid "You can start the model creation by hitting the button"
 msgstr "Vytvorenie modelu môžete začať kliknutím na tlačidlo"
 
-#: templates/log_results.html.twig inc/model.class.php:1495
+#: templates/log_results.html.twig inc/model.class.php:1496
 msgid "Array of successful injections"
 msgstr "Zoznam úspešným importov"
 
-#: templates/log_results.html.twig inc/model.class.php:1498
-#: inc/model.class.php:1520
+#: templates/log_results.html.twig inc/model.class.php:1499
+#: inc/model.class.php:1521
 msgid "Line"
 msgstr "Riadok"
 
-#: templates/log_results.html.twig inc/model.class.php:1499
-#: inc/model.class.php:1522
+#: templates/log_results.html.twig inc/model.class.php:1500
+#: inc/model.class.php:1523
 msgid "Data Import"
 msgstr "Import dát"
 
-#: templates/log_results.html.twig inc/model.class.php:1500
-#: inc/model.class.php:1523
+#: templates/log_results.html.twig inc/model.class.php:1501
+#: inc/model.class.php:1524
 msgid "Injection type"
 msgstr "Typ importu"
 
-#: templates/log_results.html.twig inc/model.class.php:1501
-#: inc/model.class.php:1524
+#: templates/log_results.html.twig inc/model.class.php:1502
+#: inc/model.class.php:1525
 msgid "Object Identifier"
 msgstr "Identifikátor objektu"
 
@@ -83,8 +83,8 @@ msgstr "Identifikátor objektu"
 msgid "Array of failed injections"
 msgstr "Zoznam zlyhaných importov"
 
-#: templates/log_results.html.twig inc/model.class.php:1521
-#: inc/model.class.php:1541
+#: templates/log_results.html.twig inc/model.class.php:1522
+#: inc/model.class.php:1542
 msgid "Data check"
 msgstr "Kontrola dát"
 
@@ -130,7 +130,7 @@ msgid "Import progress"
 msgstr "Priebeh importu"
 
 #: templates/clientinjection_upload_file.html.twig inc/dropdown.class.php:85
-#: inc/model.class.php:781
+#: inc/model.class.php:782
 msgid "File to inject"
 msgstr "Súbor na import"
 
@@ -157,15 +157,15 @@ msgstr "Pozor, chystáte sa importovať dáta do GLPI. Naozaj to chcete urobiť?
 msgid "Model status"
 msgstr "Stav modelu"
 
-#: templates/model_advanced_form.html.twig inc/model.class.php:493
+#: templates/model_advanced_form.html.twig inc/model.class.php:494
 msgid "Type of data to import"
 msgstr "Typ dát na import"
 
-#: templates/model_advanced_form.html.twig inc/model.class.php:475
+#: templates/model_advanced_form.html.twig inc/model.class.php:476
 msgid "Allow lines creation"
 msgstr "Povoliť vytváranie riadkov"
 
-#: templates/model_advanced_form.html.twig inc/model.class.php:484
+#: templates/model_advanced_form.html.twig inc/model.class.php:485
 msgid "Allow lines update"
 msgstr "Povoliť aktualizáciu riadkov"
 
@@ -173,11 +173,11 @@ msgstr "Povoliť aktualizáciu riadkov"
 msgid "Advanced options"
 msgstr "Rozšírené možnosti"
 
-#: templates/model_advanced_form.html.twig inc/model.class.php:503
+#: templates/model_advanced_form.html.twig inc/model.class.php:504
 msgid "Allow creation of dropdowns (Except Entity)"
 msgstr "Povoliť vytváranie rozbaľovacích ponúk (okrem entity)"
 
-#: templates/model_advanced_form.html.twig inc/model.class.php:511
+#: templates/model_advanced_form.html.twig inc/model.class.php:512
 msgid "Dates format"
 msgstr "Formát dátumov"
 
@@ -185,15 +185,15 @@ msgstr "Formát dátumov"
 msgid "Allow update of existing fields"
 msgstr "Povoliť aktualizáciu existujúcich polí"
 
-#: templates/model_advanced_form.html.twig inc/model.class.php:520
+#: templates/model_advanced_form.html.twig inc/model.class.php:521
 msgid "Float format"
 msgstr "Formát čísel s pohyblivou desatinnou čiarkou"
 
-#: templates/model_advanced_form.html.twig inc/model.class.php:529
+#: templates/model_advanced_form.html.twig inc/model.class.php:530
 msgid "Port unicity criteria"
 msgstr "Kritérium jedinečnosti portu"
 
-#: templates/model_advanced_form.html.twig inc/model.class.php:581
+#: templates/model_advanced_form.html.twig inc/model.class.php:582
 msgid "Replacing the value of multiline text fields"
 msgstr "Nahradenie hodnoty viacriadkových textových polí"
 
@@ -242,22 +242,22 @@ msgctxt "button"
 msgid "Validate the model"
 msgstr "Overiť model"
 
-#: front/model.form.php:91 front/clientinjection.form.php:86
+#: front/model.form.php:91 front/clientinjection.form.php:88
 msgid ""
 "The file could not be found (Maybe it exceeds the maximum size allowed)"
 msgstr ""
 "Súbor sa nepodarilo nájsť (Možno prekračuje maximálnu povolenú veľkosť)"
 
-#: front/popup.php:41 inc/model.class.php:1486
+#: front/popup.php:41 inc/model.class.php:1487
 msgid "Data injection report"
 msgstr "Report o importe dát"
 
-#: front/clientinjection.form.php:34 inc/profile.class.php:72
+#: front/clientinjection.form.php:36 inc/profile.class.php:72
 #: inc/menu.class.php:38 setup.php:95
 msgid "Data injection"
 msgstr "Import dát"
 
-#: front/clientinjection.form.php:52
+#: front/clientinjection.form.php:54
 msgid "One mandatory field is not filled"
 msgstr "Jedno povinné pole nie je vyplnené"
 
@@ -317,7 +317,7 @@ msgstr "Upozornenie"
 msgid "Data not found"
 msgstr "Dáta neboli nájdené"
 
-#: inc/commoninjectionlib.class.php:2194 inc/model.class.php:1379
+#: inc/commoninjectionlib.class.php:2194 inc/model.class.php:1380
 msgid "Undetermined"
 msgstr "Neurčené"
 
@@ -361,7 +361,7 @@ msgstr "1 234,56"
 msgid "1,234.56"
 msgstr "1,234.56"
 
-#: inc/dropdown.class.php:86 inc/model.class.php:783
+#: inc/dropdown.class.php:86 inc/model.class.php:784
 msgid "Mappings"
 msgstr "Mapovanie"
 
@@ -377,40 +377,40 @@ msgstr "UTF-8"
 msgid "ISO8859-1"
 msgstr "ISO8859-1"
 
-#: inc/model.class.php:785
+#: inc/model.class.php:786
 msgid "Additional Information"
 msgstr "Ďalšie informácie"
 
-#: inc/model.class.php:811
+#: inc/model.class.php:812
 msgid "Load this file"
 msgstr "Načítať tento súbor"
 
-#: inc/model.class.php:892
+#: inc/model.class.php:893
 msgid "Please enter a name for the model"
 msgstr "Zadajte názov pre model"
 
-#: inc/model.class.php:991
+#: inc/model.class.php:992
 #, php-format
 msgid "Impossible to copy the file in %s"
 msgstr "Nepodarilo sa skopírovať súbor v %s"
 
-#: inc/model.class.php:1001
+#: inc/model.class.php:1002
 msgid "File format is wrong"
 msgstr "Formát súboru je nesprávny"
 
-#: inc/model.class.php:1002
+#: inc/model.class.php:1003
 msgid "Extension csv required"
 msgstr "Rozšírenie csv je požadované"
 
-#: inc/model.class.php:1118
+#: inc/model.class.php:1119
 msgid "The file is ok."
 msgstr "Súbor je v poriadku."
 
-#: inc/model.class.php:1142
+#: inc/model.class.php:1143
 msgid "The number of columns of the file is incorrect."
 msgstr "Počet stĺpcov súboru je nesprávny."
 
-#: inc/model.class.php:1144
+#: inc/model.class.php:1145
 #, php-format
 msgid "%d awaited column"
 msgid_plural "%d awaited columns"
@@ -419,19 +419,19 @@ msgstr[1] "%d očakávané stĺpce"
 msgstr[2] "%d očakávaných stĺpcov"
 msgstr[3] "%d očakávaných stĺpcov"
 
-#: inc/model.class.php:1193
+#: inc/model.class.php:1194
 msgid "At least one column is incorrect"
 msgstr "Najmenej jeden stĺpec je nesprávny"
 
-#: inc/model.class.php:1201
+#: inc/model.class.php:1202
 msgid "Into the file"
 msgstr "Do súboru"
 
-#: inc/model.class.php:1206
+#: inc/model.class.php:1207
 msgid "From the model"
 msgstr "Z modelu"
 
-#: inc/model.class.php:1517
+#: inc/model.class.php:1518
 msgid "Array of unsuccessful injections"
 msgstr "Zoznam neúspešným importov"
 
@@ -453,7 +453,7 @@ msgstr[1] "%d mesiace"
 msgstr[2] "%d mesiacov"
 msgstr[3] "%d mesiacov"
 
-#: inc/clientinjection.class.php:116
+#: inc/clientinjection.class.php:117
 msgid "Launch the import"
 msgstr "Spustiť import"
 
