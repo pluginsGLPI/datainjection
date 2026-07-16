@@ -13,7 +13,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-07-14 02:01+0000\n"
+"POT-Creation-Date: 2026-07-16 02:08+0000\n"
 "PO-Revision-Date: 2018-06-21 12:57+0000\n"
 "Last-Translator: DWXXX, 2026\n"
 "Language-Team: Chinese (China) (https://app.transifex.com/teclib/teams/28042/zh_CN/)\n"
@@ -108,7 +108,7 @@ msgstr "特殊格式选项"
 
 #: templates/modelcsv_additional_form.html.twig
 msgid "Header's presence"
-msgstr ""
+msgstr "显示页眉"
 
 #: templates/modelcsv_additional_form.html.twig
 msgid "File delimitor"
@@ -121,7 +121,7 @@ msgstr "文件注入"
 
 #: templates/clientinjection_injection.html.twig
 msgid " lines"
-msgstr ""
+msgstr "行数"
 
 #: templates/clientinjection_injection.html.twig
 msgid "Error"
@@ -193,7 +193,7 @@ msgstr "浮点格式"
 
 #: templates/model_advanced_form.html.twig inc/model.class.php:530
 msgid "Port unicity criteria"
-msgstr ""
+msgstr "端口唯一标准"
 
 #: templates/model_advanced_form.html.twig inc/model.class.php:582
 msgid "Replacing the value of multiline text fields"
@@ -415,7 +415,7 @@ msgstr "文件列数错误"
 #, php-format
 msgid "%d awaited column"
 msgid_plural "%d awaited columns"
-msgstr[0] ""
+msgstr[0] "%d 等待的列"
 
 #: inc/model.class.php:1194
 msgid "At least one column is incorrect"
@@ -423,7 +423,7 @@ msgstr "至少有一栏数据不正确"
 
 #: inc/model.class.php:1202
 msgid "Into the file"
-msgstr ""
+msgstr "到文件"
 
 #: inc/model.class.php:1207
 msgid "From the model"
