@@ -28,6 +28,7 @@
  * -------------------------------------------------------------------------
  */
 use Glpi\Exception\Http\HttpException;
+use GlpiPlugin\Datainjection\Glpi\Asset\AssetInjection;
 
 use function Safe\json_decode;
 use function Safe\json_encode;
@@ -79,7 +80,7 @@ class PluginDatainjectionInjectionType
                     }
                     $name .= call_user_func([$type, 'getTypeName']);
 
-                    if ($typename == "GlpiPlugin\Datainjection\Glpi\Asset\AssetInjection") {
+                    if ($instance instanceof AssetInjection) {
                         $typename = $instance->getVirtualType();
                     }
                     $values[$typename] = $name;

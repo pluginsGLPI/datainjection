@@ -95,7 +95,7 @@ function plugin_init_datainjection()
 
         $INJECTABLE_TYPES = [];
 
-//        plugin_datainjection_creationInjectableAssets();
+        //        plugin_datainjection_creationInjectableAssets();
     }
 }
 
@@ -127,7 +127,7 @@ function plugin_version_datainjection()
 function getTypesToInject(): void
 {
     /** @var array $INJECTABLE_TYPES */
-    /** @var array $PLUGIN_HOOKS */
+    /** @var array $CFG_GLPI */
     global $INJECTABLE_TYPES,$CFG_GLPI;
 
     if (count($INJECTABLE_TYPES)) {

@@ -30,6 +30,7 @@
 use Glpi\Asset\Asset;
 use Glpi\Exception\Http\HttpException;
 use Glpi\Features\AssignableItem;
+use GlpiPlugin\Datainjection\Glpi\Asset\AssetInjection;
 
 use function Safe\preg_match;
 use function Safe\preg_replace;
@@ -335,7 +336,7 @@ class PluginDatainjectionCommonInjectionLib
     public static function getItemtypeByInjectionClass($injectionClass)
     {
 
-        if (is_a($injectionClass, Asset::class, true)) {
+        if ($injectionClass instanceof AssetInjection) {
             return Toolbox::ucfirst(getItemTypeForTable($injectionClass->getVirtualTable()));
         }
         return Toolbox::ucfirst(getItemTypeForTable($injectionClass->getTable()));
@@ -347,7 +348,10 @@ class PluginDatainjectionCommonInjectionLib
     *
     * @param string $itemtype  the itemtype
     *
-    * @return PluginDatainjectionInjectionInterface the injection class instance
+    * Every injection class both implements the interface and extends CommonDBTM,
+    * so the returned instance exposes the CommonDBTM API (getTable(), ...) too.
+    *
+    * @return PluginDatainjectionInjectionInterface&CommonDBTM the injection class instance
     */
     public static function getInjectionClassInstance($itemtype)
     {
@@ -364,7 +368,10 @@ class PluginDatainjectionCommonInjectionLib
         }
 
 
-        if (!is_a($injectionClass, PluginDatainjectionInjectionInterface::class, true)) {
+        if (
+            !is_a($injectionClass, PluginDatainjectionInjectionInterface::class, true)
+            || !is_a($injectionClass, CommonDBTM::class, true)
+        ) {
             throw new HttpException(500, 'Class ' . $injectionClass . ' is not a valid class');
         }
         return new $injectionClass();
@@ -2003,11 +2010,9 @@ class PluginDatainjectionCommonInjectionLib
                         }
                     }
 
-                    if (is_a($injectionClass, Asset::class, true)) {
-                        if (method_exists($injectionClass, 'getAssetDefinitionID')) {
-                            $assets_assetdefinitions_id = $injectionClass->getAssetDefinitionID();
-                            $where .= " AND `assets_assetdefinitions_id` = '" . $assets_assetdefinitions_id . "'";
-                        }
+                    if (is_a($injectionClass, Asset::class, true) && method_exists($injectionClass, 'getAssetDefinitionID')) {
+                        $assets_assetdefinitions_id = $injectionClass->getAssetDefinitionID();
+                        $where .= " AND `assets_assetdefinitions_id` = '" . $assets_assetdefinitions_id . "'";
                     }
 
                     //Add additional parameters specific to this itemtype (or function checkPresent exists)
