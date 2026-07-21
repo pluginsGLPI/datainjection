@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [UNRELEASED]
 
+### Added
+
+- Permit to Inject GlpiAsset
+
 ### Fixed
 
 - Fix : confirm dialog js escaping

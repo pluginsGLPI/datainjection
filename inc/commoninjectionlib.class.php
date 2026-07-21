@@ -28,7 +28,6 @@
  * -------------------------------------------------------------------------
  */
 use Glpi\Asset\Asset;
-
 use Glpi\DBAL\QueryExpression;
 use Glpi\DBAL\QuerySubQuery;
 use Glpi\Exception\Http\HttpException;
