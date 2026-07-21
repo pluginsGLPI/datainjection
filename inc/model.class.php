@@ -33,6 +33,7 @@ use Glpi\Application\View\TemplateRenderer;
 use function Safe\json_decode;
 use function Safe\realpath;
 use function Safe\tempnam;
+use function Safe\unserialize;
 
 /**
  * -------------------------------------------------------------------------
@@ -993,6 +994,7 @@ class PluginDatainjectionModel extends CommonDBTM
                     ),
                 ];
             }
+            unset($_FILES['filename']);
         }
 
         //If file has not the right extension, reject it and delete if

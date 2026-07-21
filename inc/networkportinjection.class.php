@@ -184,11 +184,11 @@ class PluginDatainjectionNetworkportInjection extends NetworkPort implements Plu
     * @param array $fields_toinject    array
     * @param array $options            array
    **/
-    public function checkPresent($fields_toinject = [], $options = [])
+    public function checkPresent($fields_toinject = [], $options = []): array
     {
-
         return $this->getUnicityRequest($fields_toinject['NetworkPort'], $options['checks']);
     }
+
 
 
     /**
@@ -245,40 +245,38 @@ class PluginDatainjectionNetworkportInjection extends NetworkPort implements Plu
     * @param array $fields_toinject    array    the fields to insert into DB
     * @param array $options            array
     *
-    * @return string the sql where clause
+    * @return array
    **/
-    public function getUnicityRequest($fields_toinject = [], $options = [])
+    public function getUnicityRequest($fields_toinject = [], $options = []): array
     {
-
-        $where = "";
-
+        $where = [];
         switch ($options['port_unicity']) {
             case PluginDatainjectionCommonInjectionLib::UNICITY_NETPORT_LOGICAL_NUMBER:
-                $where .= " AND `logical_number` = '" . ($fields_toinject["logical_number"] ?? '') . "'";
+                $where['logical_number'] = $fields_toinject['logical_number'] ?? '';
                 break;
 
             case PluginDatainjectionCommonInjectionLib::UNICITY_NETPORT_LOGICAL_NUMBER_MAC:
-                $where .= " AND `logical_number` = '" . ($fields_toinject["logical_number"] ?? '') . "'
-                        AND `mac` = '" . ($fields_toinject["mac"] ?? '') . "'";
+                $where['logical_number'] = $fields_toinject['logical_number'] ?? '';
+                $where['mac']            = $fields_toinject['mac'] ?? '';
                 break;
 
             case PluginDatainjectionCommonInjectionLib::UNICITY_NETPORT_LOGICAL_NUMBER_NAME:
-                $where .= " AND `logical_number` = '" . ($fields_toinject["logical_number"] ?? '') . "'
-                        AND `name` = '" . ($fields_toinject["name"] ?? '') . "'";
+                $where['logical_number'] = $fields_toinject['logical_number'] ?? '';
+                $where['name']           = $fields_toinject['name'] ?? '';
                 break;
 
             case PluginDatainjectionCommonInjectionLib::UNICITY_NETPORT_LOGICAL_NUMBER_NAME_MAC:
-                $where .= " AND `logical_number` = '" . ($fields_toinject["logical_number"] ?? '') . "'
-                        AND `name` = '" . ($fields_toinject["name"] ?? '') . "'
-                        AND `mac` = '" . ($fields_toinject["mac"] ?? '') . "'";
+                $where['logical_number'] = $fields_toinject['logical_number'] ?? '';
+                $where['name']           = $fields_toinject['name'] ?? '';
+                $where['mac']            = $fields_toinject['mac'] ?? '';
                 break;
 
             case PluginDatainjectionCommonInjectionLib::UNICITY_NETPORT_MACADDRESS:
-                $where .= " AND `mac` = '" . ($fields_toinject["mac"] ?? '') . "'";
+                $where['mac'] = $fields_toinject['mac'] ?? '';
                 break;
 
             case PluginDatainjectionCommonInjectionLib::UNICITY_NETPORT_NAME:
-                $where .= " AND `name` = '" . ($fields_toinject["name"] ?? '') . "'";
+                $where['name'] = $fields_toinject['name'] ?? '';
                 break;
         }
 

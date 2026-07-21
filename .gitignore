@@ -2,4 +2,4 @@ dist/
 vendor/
 .gh_token
 *.min.*
-
+var/

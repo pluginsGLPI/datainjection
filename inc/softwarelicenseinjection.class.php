@@ -200,14 +200,16 @@ class PluginDatainjectionSoftwareLicenseInjection extends SoftwareLicense implem
     /**
     * @param array $fields_toinject    array
     * @param array $options            array
+    * @retrun array
    **/
-    public function checkPresent($fields_toinject = [], $options = [])
+    public function checkPresent($fields_toinject = [], $options = []): array
     {
-
         if ($options['itemtype'] != 'SoftwareLicense') {
-            return (" AND `softwares_id` = '" . $fields_toinject['Software']['id'] . "'
-                   AND `name` = '" . $fields_toinject['SoftwareLicense']['name'] . "'");
+            return [
+                'softwares_id' => $fields_toinject['Software']['id'],
+                'name'         => $fields_toinject['SoftwareLicense']['name'],
+            ];
         }
-        return "";
+        return [];
     }
 }
