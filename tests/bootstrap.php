@@ -28,14 +28,19 @@
  * -------------------------------------------------------------------------
  */
 
-use function Safe\unserialize;
+$current_plugin_folder = basename(realpath(__DIR__ . '/../'));
 
-// Direct access to file
-if (strpos($_SERVER['PHP_SELF'], "injection.php")) {
-    header("Content-Type: text/html; charset=UTF-8");
-    Html::header_nocache();
+require __DIR__ . '/../../../tests/bootstrap.php';
+require dirname(__DIR__) . '/vendor/autoload.php';
+
+$plugin = new Plugin();
+$plugin->checkPluginState('datainjection');
+$plugin->getFromDBbyDir('datainjection');
+
+if (!$plugin->isInstalled('datainjection')) {
+    $plugin->install($plugin->getID());
 }
 
-Session::checkCentralAccess();
-$model = unserialize($_SESSION['datainjection']['currentmodel']);
-PluginDatainjectionClientInjection::showInjectionForm($model, $_SESSION['glpiactive_entity']);
+if (!$plugin->isActivated('datainjection')) {
+    $plugin->activate($plugin->getID());
+}

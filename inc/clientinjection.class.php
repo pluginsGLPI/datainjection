@@ -41,6 +41,7 @@ use function Safe\json_decode;
 use function Safe\json_encode;
 use function Safe\readfile;
 use function Safe\unlink;
+use function Safe\unserialize;
 
 class PluginDatainjectionClientInjection
 {

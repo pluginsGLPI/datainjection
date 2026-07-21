@@ -5,6 +5,25 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [UNRELEASED]
+
+### Fixed
+
+- Fix : confirm dialog js escaping
+
+## [2.15.8] - 2026-06-24
+
+### Fixed
+
+- Fix query and move to GLPI DBAL
+
+## [2.15.7] - 2026-05-29
+
+### Fixed
+
+- fix escape SQL values
+- normalize group assignment fields for assignable items only
+
 ## [2.15.6] - 2026-05-05
 
 ### Fixed
