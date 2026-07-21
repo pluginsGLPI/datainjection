@@ -2015,7 +2015,7 @@ class PluginDatainjectionCommonInjectionLib
                         }
                     }
 
-                    if (is_a($injectionClass, Asset::class, true) && method_exists($injectionClass, 'getAssetDefinitionID')) {
+                    if ($injectionClass instanceof Asset && method_exists($injectionClass, 'getAssetDefinitionID')) {
                         $assets_assetdefinitions_id = $injectionClass->getAssetDefinitionID();
                         $where .= " AND `assets_assetdefinitions_id` = '" . $assets_assetdefinitions_id . "'";
                     }
