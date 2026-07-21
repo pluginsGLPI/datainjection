@@ -2016,8 +2016,7 @@ class PluginDatainjectionCommonInjectionLib
                     }
 
                     if ($injectionClass instanceof Asset && method_exists($injectionClass, 'getAssetDefinitionID')) {
-                        $assets_assetdefinitions_id = $injectionClass->getAssetDefinitionID();
-                        $where .= " AND `assets_assetdefinitions_id` = '" . $assets_assetdefinitions_id . "'";
+                        $where['assets_assetdefinitions_id'] = $injectionClass->getAssetDefinitionID();
                     }
 
                     //Add additional parameters specific to this itemtype (or function checkPresent exists)
