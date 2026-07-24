@@ -218,7 +218,15 @@ class PluginDatainjectionClientInjection
 
         for ($i = $offset; $i < $end; $i++) {
             $injectionline = $i + $header_offset;
-            $result        = $engine->injectLine($lines[$i][0], $injectionline);
+            try {
+                $result = $engine->injectLine($lines[$i][0], $injectionline);
+            } catch (Throwable $e) {
+                ErrorHandler::logCaughtException($e);
+                $result = [
+                    'status' => PluginDatainjectionCommonInjectionLib::FAILED,
+                    'line'   => $injectionline,
+                ];
+            }
             $results[]     = $result;
 
             if ($result['status'] != PluginDatainjectionCommonInjectionLib::SUCCESS) {
