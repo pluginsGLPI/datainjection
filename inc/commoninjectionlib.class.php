@@ -339,7 +339,12 @@ class PluginDatainjectionCommonInjectionLib
     {
 
         if ($injectionClass instanceof AssetInjection) {
-            return Toolbox::ucfirst(getItemTypeForTable($injectionClass->getVirtualTable()));
+            // Custom assets all share the "glpi_assets_assets" table, whose canonical
+            // itemtype is the *abstract* Glpi\Asset\Asset. Resolving through the table
+            // (getItemTypeForTable) is therefore unreliable and can return that abstract
+            // class, which is not instantiable. The injection class already knows its
+            // concrete custom-asset itemtype, so use it directly.
+            return $injectionClass::getVirtualType();
         }
         return Toolbox::ucfirst(getItemTypeForTable($injectionClass->getTable()));
     }
