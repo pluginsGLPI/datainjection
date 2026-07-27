@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Fixed
 
 - Fix : confirm dialog js escaping
+- Fix negative default value (`-1`) on `glpi_plugin_datainjection_models.entities_id`
 
 ## [2.15.8] - 2026-06-24
 
