@@ -252,7 +252,6 @@ function plugin_datainjection_migration_2158_2159(Migration $migration)
         "int {$default_key_sign} NOT NULL default '0'",
     );
 
-    $migration->migrationOneTable('glpi_plugin_datainjection_models');
     $migration->executeMigration();
 }
 
