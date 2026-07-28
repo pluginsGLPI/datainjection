@@ -234,8 +234,10 @@ function plugin_datainjection_migration_2158_2159(Migration $migration)
     $default_key_sign = DBConnection::getDefaultPrimaryKeySignOption();
 
     // Fix remaining legacy data (old schema stored private models with `entities_id = -1`).
+    // Must run *before* the changeField() below: the column is converted to
+    // `unsigned`, which would mangle the `-1` values before this cleanup could match them.
     if (countElementsInTable("glpi_plugin_datainjection_models", ['entities_id' => -1])) {
-        $migration->addPostQuery(
+        $migration->addPreQuery(
             "UPDATE `glpi_plugin_datainjection_models`
                 SET `is_private` = '1', `entities_id` = '0', `is_recursive` = '1'
               WHERE `entities_id` = '-1'",
