@@ -28,8 +28,6 @@
  * -------------------------------------------------------------------------
  */
 
-use function Safe\unserialize;
-
 // Direct access to file
 if (strpos($_SERVER['PHP_SELF'], "results.php")) {
     header("Content-Type: text/html; charset=UTF-8");
@@ -37,5 +35,5 @@ if (strpos($_SERVER['PHP_SELF'], "results.php")) {
 }
 
 Session::checkCentralAccess();
-$model = unserialize($_SESSION['datainjection']['currentmodel']);
+$model = PluginDatainjectionSession::unserialize($_SESSION['datainjection']['currentmodel']);
 PluginDatainjectionClientInjection::showResultsForm($model);

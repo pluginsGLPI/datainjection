@@ -32,7 +32,6 @@ use Glpi\Application\View\TemplateRenderer;
 
 use function Safe\ob_get_clean;
 use function Safe\ob_start;
-use function Safe\unserialize;
 
 class PluginDatainjectionMapping extends CommonDBTM
 {
@@ -100,7 +99,7 @@ class PluginDatainjectionMapping extends CommonDBTM
     public static function showFormMappings(PluginDatainjectionModel $model)
     {
         $canedit = $model->can($model->fields['id'], UPDATE);
-        $lines = isset($_SESSION['datainjection']['lines']) ? unserialize($_SESSION['datainjection']['lines']) : [];
+        $lines = isset($_SESSION['datainjection']['lines']) ? PluginDatainjectionSession::unserialize($_SESSION['datainjection']['lines']) : [];
 
         $show_preview = isset($_SESSION['datainjection']['lines']) && !empty($lines);
         $preview_url = '';

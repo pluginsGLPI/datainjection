@@ -33,7 +33,6 @@ use Glpi\Application\View\TemplateRenderer;
 use function Safe\json_decode;
 use function Safe\realpath;
 use function Safe\tempnam;
-use function Safe\unserialize;
 
 /**
  * -------------------------------------------------------------------------
@@ -1321,7 +1320,7 @@ class PluginDatainjectionModel extends CommonDBTM
 
         echo "<table class='tab_cadre_fixe'>";
         if (isset($_SESSION['datainjection']['lines'])) {
-            $injectionData = unserialize($_SESSION['datainjection']['lines']);
+            $injectionData = PluginDatainjectionSession::unserialize($_SESSION['datainjection']['lines']);
             $lines         = $injectionData->getData();
             $nblines       = $_SESSION['datainjection']['nblines'];
             $model         = self::getInstanceByModelID($models_id);
