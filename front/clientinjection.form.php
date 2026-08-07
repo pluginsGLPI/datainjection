@@ -28,8 +28,6 @@
  * -------------------------------------------------------------------------
  */
 
-use function Safe\unserialize;
-
 Session::checkRight("plugin_datainjection_use", READ);
 
 Html::header(
@@ -41,7 +39,7 @@ Html::header(
 );
 
 if (isset($_SESSION['datainjection']['go'])) {
-    $model = unserialize($_SESSION['datainjection']['currentmodel']);
+    $model = PluginDatainjectionSession::unserialize($_SESSION['datainjection']['currentmodel']);
     PluginDatainjectionClientInjection::showInjectionForm($model, $_SESSION['glpiactive_entity']);
 } elseif (isset($_POST['upload'])) {
     $model = new PluginDatainjectionModel();
