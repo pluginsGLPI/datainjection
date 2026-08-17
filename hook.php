@@ -53,6 +53,7 @@ function plugin_datainjection_install()
             plugin_datainjection_migration_264_270($migration);
             plugin_datainjection_migration_2121_2122($migration);
             plugin_datainjection_migration_2141_2150($migration);
+            plugin_datainjection_migration_2158_2159($migration);
             break;
 
         case 0:
@@ -173,6 +174,7 @@ function plugin_datainjection_install()
             plugin_datainjection_migration_290_2100($migration);
             plugin_datainjection_migration_2121_2122($migration);
             plugin_datainjection_migration_2141_2150($migration);
+            plugin_datainjection_migration_2158_2159($migration);
             break;
 
         default:
@@ -222,6 +224,34 @@ function plugin_datainjection_migration_2141_2150(Migration $migration)
         'glpi_plugin_datainjection_models',
         'replace_multiline_value',
         'bool',
+    );
+
+    $migration->executeMigration();
+}
+
+function plugin_datainjection_migration_2158_2159(Migration $migration)
+{
+    $default_key_sign = DBConnection::getDefaultPrimaryKeySignOption();
+
+    // Fix remaining legacy data (old schema stored private models with `entities_id = -1`).
+    // Must run *before* the changeField() below: the column is converted to
+    // `unsigned`, which would mangle the `-1` values before this cleanup could match them.
+    if (countElementsInTable("glpi_plugin_datainjection_models", ['entities_id' => -1])) {
+        $migration->addPreQuery(
+            "UPDATE `glpi_plugin_datainjection_models`
+                SET `is_private` = '1', `entities_id` = '0', `is_recursive` = '1'
+              WHERE `entities_id` = '-1'",
+        );
+    }
+
+    // Fix the negative column default inherited from the old schema. Databases installed
+    // before `plugin_datainjection_update170_20()` kept `entities_id ... default '-1'`,
+    // which prevents GLPI 11 `migration:unsigned_keys` from converting the column to unsigned.
+    $migration->changeField(
+        'glpi_plugin_datainjection_models',
+        'entities_id',
+        'entities_id',
+        "int {$default_key_sign} NOT NULL default '0'",
     );
 
     $migration->executeMigration();

@@ -1127,6 +1127,12 @@ class PluginDatainjectionCommonInjectionLib
                         $this->setValueForItemtype($itemtype, $field, $date);
                         break;
 
+                    case "datetime":
+                        //Normalize to "Y-m-d H:i:s", stripping ISO8601 microseconds/timezone if present
+                        $datetime = self::reformatDateTime($value, $this->getDateFormat());
+                        $this->setValueForItemtype($itemtype, $field, $datetime);
+                        break;
+
                     case "mac":
                         $this->setValueForItemtype($itemtype, $field, self::reformatMacAddress($value));
                         break;
@@ -1245,6 +1251,44 @@ class PluginDatainjectionCommonInjectionLib
             return $new_date;
         }
         return $original_date;
+    }
+
+
+    /**
+    * Reformat a datetime value to the MySQL "Y-m-d H:i:s" format expected by the DB.
+    * Accepts ISO8601 values (with a "T" separator, microseconds and/or a timezone offset)
+    * as well as the same date formats supported by reformatDate().
+    *
+    * @param string $original_datetime the original datetime
+    * @param string $date_format the configured date format (dd-mm-yyyy, mm-dd-yyyy, yyyy-mm-dd)
+    *
+    * @return string the datetime reformated, if needed
+   **/
+    private static function reformatDateTime($original_datetime, $date_format)
+    {
+
+        if (empty($original_datetime)) {
+            return "NULL"; // required to avoid "0000-00-00 00:00:00" in the DB
+        }
+
+        $original_datetime = trim($original_datetime);
+        $separator          = (str_contains($original_datetime, 'T')) ? 'T' : ' ';
+        [$date_part, $time_part] = array_pad(explode($separator, $original_datetime, 2), 2, '00:00:00');
+
+        // Strip timezone offset (+00:00, -0500, Z) and microseconds from the time part
+        $time_part = preg_replace('/(Z|[+-]\d{2}:?\d{2})$/', '', $time_part);
+        $time_part = preg_replace('/\.\d+/', '', $time_part);
+        $time_part = trim($time_part);
+        if ($time_part === '') {
+            $time_part = '00:00:00';
+        }
+
+        $new_date = self::reformatDate($date_part, $date_format);
+        if ($new_date === "NULL") {
+            return "NULL";
+        }
+
+        return $new_date . ' ' . $time_part;
     }
 
 
@@ -1404,6 +1448,12 @@ class PluginDatainjectionCommonInjectionLib
                 case 'date':
                     // Date is already "reformat" according to getDateFormat()
                     $pat = '/^([0-9]{4})-([0-9]{1,2})-([0-9]{1,2})$/';
+                    $res = preg_match($pat, $data, $regs);
+                    return ($res !== 0 ? self::SUCCESS : self::TYPE_MISMATCH);
+
+                case 'datetime':
+                    // Datetime is already reformated to "Y-m-d H:i:s" by reformatThirdPass()
+                    $pat = '/^([0-9]{4})-([0-9]{1,2})-([0-9]{1,2}) ([0-9]{1,2}):([0-9]{1,2}):([0-9]{1,2})$/';
                     $res = preg_match($pat, $data, $regs);
                     return ($res !== 0 ? self::SUCCESS : self::TYPE_MISMATCH);
 
@@ -2254,6 +2304,12 @@ class PluginDatainjectionCommonInjectionLib
                     if ((isset($tmp['datatype']) && $tmp['datatype'] == 'dropdown') && !isset($tmp['displaytype'])) {
                         $type_searchOptions[$id]['displaytype'] = 'dropdown';
                         $tmp['displaytype'] = 'dropdown';
+                    }
+                    //Some injection.class files are missing checktype for datetime fields.
+                    //Without it, the value is never reformated/validated before being sent to the DB.
+                    if ((isset($tmp['datatype']) && $tmp['datatype'] == 'datetime') && !isset($tmp['checktype'])) {
+                        $type_searchOptions[$id]['checktype'] = 'datetime';
+                        $tmp['checktype'] = 'datetime';
                     }
                     if (isset($tmp['linkfield']) && !isset($tmp['displaytype'])) {
                         $type_searchOptions[$id]['displaytype'] = 'text';

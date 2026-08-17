@@ -41,7 +41,6 @@ use function Safe\json_decode;
 use function Safe\json_encode;
 use function Safe\readfile;
 use function Safe\unlink;
-use function Safe\unserialize;
 
 class PluginDatainjectionClientInjection
 {
@@ -195,7 +194,7 @@ class PluginDatainjectionClientInjection
 
         Profile::getCurrent()->disable();
 
-        $model = unserialize($_SESSION['datainjection']['currentmodel']);
+        $model = PluginDatainjectionSession::unserialize($_SESSION['datainjection']['currentmodel']);
         $model->loadSpecificModel();
         $entities_id = $_SESSION['glpiactive_entity'];
         $lines_json  = PluginDatainjectionSession::getParam('injection_lines');
@@ -218,7 +217,15 @@ class PluginDatainjectionClientInjection
 
         for ($i = $offset; $i < $end; $i++) {
             $injectionline = $i + $header_offset;
-            $result        = $engine->injectLine($lines[$i][0], $injectionline);
+            try {
+                $result = $engine->injectLine($lines[$i][0], $injectionline);
+            } catch (Throwable $e) {
+                ErrorHandler::logCaughtException($e);
+                $result = [
+                    'status' => PluginDatainjectionCommonInjectionLib::FAILED,
+                    'line'   => $injectionline,
+                ];
+            }
             $results[]     = $result;
 
             if ($result['status'] != PluginDatainjectionCommonInjectionLib::SUCCESS) {
@@ -320,7 +327,7 @@ class PluginDatainjectionClientInjection
         self::stripslashes_array($error_lines);
 
         if (!empty($error_lines)) {
-            $model = unserialize(PluginDatainjectionSession::getParam('currentmodel'));
+            $model = PluginDatainjectionSession::unserialize(PluginDatainjectionSession::getParam('currentmodel'));
             $file  = PLUGIN_DATAINJECTION_UPLOAD_DIR . PluginDatainjectionSession::getParam('file_name');
 
             $mappings = $model->getMappings();

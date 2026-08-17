@@ -35,6 +35,24 @@ use function Safe\unlink;
 class PluginDatainjectionSession
 {
     /**
+    * Unserialize a value, using Safe\unserialize() when available
+    * (not shipped by GLPI core yet, see thecodingmachine/safe >= 3.4.0)
+    *
+    * @param string $data  the serialized value
+    *
+    * @return mixed the unserialized value
+   **/
+    public static function unserialize(string $data)
+    {
+        if (function_exists('Safe\unserialize')) {
+            return \Safe\unserialize($data);
+        }
+        // @phpstan-ignore theCodingMachineSafe.function
+        return unserialize($data);
+    }
+
+
+    /**
     * Get a parameter from the HTTP session
     *
     * @param string $param  the parameter to get

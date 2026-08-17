@@ -5,7 +5,7 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-## [UNRELEASED]
+## [2.15.10] - 2026-08-07
 
 ### Added
 
@@ -13,7 +13,15 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Fixed
 
+- Fix crash on mapping/injection screens (`Safe\unserialize` not shipped by GLPI core yet)
+
+## [2.15.9] - 2026-08-04
+
+### Fixed
+
+- Fix crash when importing an ISO8601 datetime value with microseconds/timezone
 - Fix : confirm dialog js escaping
+- Fix negative default value (`-1`) on `glpi_plugin_datainjection_models.entities_id`
 
 ## [2.15.8] - 2026-06-24
 
