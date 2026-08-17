@@ -137,10 +137,8 @@ abstract class AssetInjection extends Asset implements PluginDatainjectionInject
         foreach ($data as $key => $value) {
             if (is_array($value)) {
                 $data[$key] = self::replaceTableName($value); // récursif
-            } else {
-                if ($value === self::getTable()) {
-                    $data[$key] = self::getVirtualTable();
-                }
+            } elseif ($value === self::getTable()) {
+                $data[$key] = self::getVirtualTable();
             }
         }
         return $data;
