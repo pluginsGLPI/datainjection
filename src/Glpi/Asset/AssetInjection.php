@@ -112,7 +112,8 @@ abstract class AssetInjection extends Asset implements PluginDatainjectionInject
 
     public static function canCreate(): bool
     {
-        return true;
+        $virtual_type = static::getVirtualType();
+        return $virtual_type::canCreate();
     }
 
     public function isPrimaryType()
