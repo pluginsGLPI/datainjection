@@ -170,10 +170,11 @@ abstract class AssetInjection extends Asset implements PluginDatainjectionInject
             ],
         ];
 
-        $tab = array_merge($tab, $tab2);
+        foreach ($tab2 as $entry) {
+            $tab[(int) $entry['id']] = $entry;
+        }
         //Remove some options because some fields cannot be imported
         $blacklist = PluginDatainjectionCommonInjectionLib::getBlacklistedOptions(static::class);
-        $blacklist = [];
         $notimportable            = ['300', '301'];
         $options['ignore_fields'] = array_merge($blacklist, $notimportable);
 
