@@ -159,24 +159,6 @@ abstract class AssetInjection extends Asset implements PluginDatainjectionInject
         unset($tab[40]);
 
         $tab2 = [
-            //            [
-            //                'id' => '4',
-            //                'table' => 'glpi_assets_assettypes',
-            //                'field' => 'name',
-            //                'linkfield' => 'assets_assettypes_id',
-            //                'name' => __('Type'),
-            //                'datatype' => 'dropdown',
-            //                'injectable' => true,
-            //            ],
-            //            [
-            //                'id' => '40',
-            //                'table' => 'glpi_assets_assetmodels',
-            //                'field' => 'name',
-            //                'linkfield' => 'assets_assetmodels_id',
-            //                'name' => __('Model'),
-            //                'datatype' => 'dropdown',
-            //                'injectable' => true,
-            //            ],
             [
                 'id' => '200',
                 'table' => $this->getTable(),
