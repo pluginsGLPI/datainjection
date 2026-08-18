@@ -32,7 +32,6 @@
 {% set rand = random() %}
 <div class="firstbloc">
     <form name="clientinjection_form{{ rand }}" id="clientinjection_form{{ rand }}" method="post" action="{{ form_action }}" enctype="multipart/form-data">
-        <input type="hidden" name="_glpi_csrf_token" value="{{ csrf_token() }}" />
         <div class="card p-3 m-5">
             <div class="row">
                 <div class="hr-text mt-2 mb-5">
