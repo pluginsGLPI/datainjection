@@ -28,7 +28,7 @@
  * -------------------------------------------------------------------------
  */
 
-Session::checkRight("plugin_datainjection_use", READ);
+Session::checkRight(PluginDatainjectionClientInjection::$rightname, READ);
 
 Html::header(
     __('Data injection', 'datainjection'),

@@ -30,7 +30,7 @@
 
 class PluginDatainjectionProfile extends Profile
 {
-    public static $rightname = "profile";
+    public static string $rightname = "profile";
 
     public static function getAllRights()
     {
@@ -103,10 +103,10 @@ class PluginDatainjectionProfile extends Profile
         $profileRight = new ProfileRight();
         foreach ($rights as $right => $value) {
             if (
-                !countElementsInTable(
+                countElementsInTable(
                     'glpi_profilerights',
                     ['profiles_id' => $profiles_id, 'name' => $right],
-                )
+                ) === 0
             ) {
                 $myright['profiles_id'] = $profiles_id;
                 $myright['name']        = $right;

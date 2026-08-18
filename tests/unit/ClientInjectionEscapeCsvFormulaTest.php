@@ -31,6 +31,7 @@
 namespace GlpiPlugin\Datainjection\Tests\Unit;
 
 use Glpi\Tests\DbTestCase;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PluginDatainjectionClientInjection;
 use ReflectionMethod;
 
@@ -56,9 +57,7 @@ final class ClientInjectionEscapeCsvFormulaTest extends DbTestCase
         ];
     }
 
-    /**
-     * @dataProvider escapeCsvFormulaProvider
-     */
+    #[DataProvider('escapeCsvFormulaProvider')]
     public function testEscapeCsvFormula(mixed $value, mixed $expected): void
     {
         $escape_csv_formula = new ReflectionMethod(

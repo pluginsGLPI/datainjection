@@ -31,6 +31,7 @@
 namespace GlpiPlugin\Datainjection\Tests\Unit;
 
 use Glpi\Tests\DbTestCase;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PluginDatainjectionCommonInjectionLib;
 use PluginDatainjectionComputerInjection;
 
@@ -88,9 +89,7 @@ final class CommonInjectionLibFloatDetectionTest extends DbTestCase
         ];
     }
 
-    /**
-     * @dataProvider floatDetectionProvider
-     */
+    #[DataProvider('floatDetectionProvider')]
     public function testFloatDetectionRegex(string $value, bool $expected_match): void
     {
         $regex = self::getFloatDetectionRegex();

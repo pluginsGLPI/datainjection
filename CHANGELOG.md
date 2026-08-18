@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+### Added
+
+- GLPI 12 compatibility
+
 ### Fixed
 
 - Fix various minor bugs in the import/export workflow

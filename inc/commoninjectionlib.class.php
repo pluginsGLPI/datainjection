@@ -638,7 +638,7 @@ class PluginDatainjectionCommonInjectionLib
                             $input['entities_id'] = $entity->fields['id'];
                         }
                         $sons = getSonsOf('glpi_entities', $input['entities_id']);
-                        if ($result === false && !empty($sons)) {
+                        if ($result === false && $sons !== []) {
                             foreach ($sons as $son_id) {
                                 $result = $entity->getFromDBByCrit(
                                     [

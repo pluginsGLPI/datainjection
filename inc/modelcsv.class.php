@@ -60,13 +60,13 @@ use Glpi\Application\View\TemplateRenderer;
 
 class PluginDatainjectionModelcsv extends CommonDBChild
 {
-    public static $rightname = "plugin_datainjection_model";
+    public static string $rightname = "plugin_datainjection_model";
     public $specific_fields;
 
     // From CommonDBChild
-    public static $itemtype  = 'PluginDatainjectionModel';
-    public static $items_id  = 'models_id';
-    public $dohistory        = true;
+    public static string $itemtype  = 'PluginDatainjectionModel';
+    public static string $items_id  = 'models_id';
+    public bool $dohistory        = true;
 
 
     public function getEmpty()

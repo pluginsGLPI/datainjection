@@ -32,6 +32,7 @@ namespace GlpiPlugin\Datainjection\Tests\Unit;
 
 use Glpi\Tests\DbTestCase;
 use Computer;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PluginDatainjectionComputerInjection;
 use PluginDatainjectionCommonInjectionLib;
 use ReflectionMethod;
@@ -84,9 +85,7 @@ final class CommonInjectionLibDateTimeTest extends DbTestCase
         ];
     }
 
-    /**
-     * @dataProvider reformatDateTimeProvider
-     */
+    #[DataProvider('reformatDateTimeProvider')]
     public function testReformatDateTime(string $original, string $date_format, string $expected): void
     {
         $reformat_datetime = new ReflectionMethod(

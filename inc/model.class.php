@@ -64,7 +64,7 @@ use function Safe\tempnam;
 
 class PluginDatainjectionModel extends CommonDBTM
 {
-    public static $rightname = "plugin_datainjection_model";
+    public static string $rightname = "plugin_datainjection_model";
 
     //Store mappings informations
     private $mappings;
@@ -76,7 +76,7 @@ class PluginDatainjectionModel extends CommonDBTM
     protected $infos;
 
     //Do history (CommonDBTM)
-    public $dohistory = true;
+    public bool $dohistory = true;
 
     //Store specific backend parameters
     public $specific_model;
@@ -772,7 +772,7 @@ class PluginDatainjectionModel extends CommonDBTM
     public function getTabNameForItem(CommonGLPI $item, $withtemplate = 0)
     {
 
-        $canedit = Session::haveRight('plugin_datainjection_model', UPDATE);
+        $canedit = Session::haveRight(self::$rightname, UPDATE);
 
         if (!$withtemplate && $item instanceof self) {
             $tabs[1] = self::createTabEntry(__('Model'), 0, $item::getType(), self::getIcon());

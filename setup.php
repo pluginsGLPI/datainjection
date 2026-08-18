@@ -34,9 +34,9 @@ use function Safe\mkdir;
 define('PLUGIN_DATAINJECTION_VERSION', '2.15.10');
 
 // Minimal GLPI version, inclusive
-define("PLUGIN_DATAINJECTION_MIN_GLPI", "11.0.5");
+define("PLUGIN_DATAINJECTION_MIN_GLPI", "12.0.0");
 // Maximum GLPI version, exclusive
-define("PLUGIN_DATAINJECTION_MAX_GLPI", "11.0.99");
+define("PLUGIN_DATAINJECTION_MAX_GLPI", "12.0.99");
 
 if (!defined("PLUGIN_DATAINJECTION_UPLOAD_DIR")) {
     define("PLUGIN_DATAINJECTION_UPLOAD_DIR", GLPI_PLUGIN_DOC_DIR . "/datainjection/");
@@ -68,7 +68,7 @@ function plugin_init_datainjection()
 
 
 
-        if (Session::haveRight('plugin_datainjection_use', READ)) {
+        if (Session::haveRight(PluginDatainjectionClientInjection::$rightname, READ)) {
             $PLUGIN_HOOKS["menu_toadd"]['datainjection'] = ['tools'  => 'PluginDatainjectionMenu'];
         }
 
@@ -161,7 +161,6 @@ function getTypesToInject(): void
         'PluginDatainjectionNetworkport_VlanInjection'            => 'datainjection',
         'PluginDatainjectionNetworkNameInjection'                 => 'datainjection',
         'PluginDatainjectionNetpointInjection'                    => 'datainjection',
-        'PluginDatainjectionKnowbaseItemCategoryInjection'        => 'datainjection',
         'PluginDatainjectionKnowbaseItemInjection'                => 'datainjection',
         'PluginDatainjectionITILFollowupTemplateInjection'        => 'datainjection',
         'PluginDatainjectionITILCategoryInjection'                => 'datainjection',
