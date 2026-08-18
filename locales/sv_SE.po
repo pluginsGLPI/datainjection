@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-08-10 01:20+0000\n"
+"POT-Creation-Date: 2026-08-14 01:27+0000\n"
 "PO-Revision-Date: 2018-06-21 12:57+0000\n"
 "Last-Translator: Peter Rundqvist, 2026\n"
 "Language-Team: Swedish (Sweden) (https://app.transifex.com/teclib/teams/28042/sv_SE/)\n"
@@ -21,22 +21,98 @@ msgstr ""
 "Language: sv_SE\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: templates/mappings_form.html.twig front/popup.php:35
-msgid "See the file"
-msgstr "Visa filinnehåll"
+#: templates/model_advanced_form.html.twig
+msgid "Model status"
+msgstr "Modellstatus"
 
-#: templates/mappings_form.html.twig
-msgid "Header of the file"
-msgstr "Filkolumn"
+#: templates/model_advanced_form.html.twig inc/model.class.php:493
+msgid "Type of data to import"
+msgstr "Typ av data att importera"
 
-#: templates/mappings_form.html.twig inc/info.class.php:87
-#: inc/info.class.php:145
-msgid "Tables"
-msgstr "Tabeller"
+#: templates/model_advanced_form.html.twig inc/model.class.php:475
+msgid "Allow lines creation"
+msgstr "Tillåt att rader skapas"
 
-#: templates/mappings_form.html.twig
-msgid "Link field"
-msgstr "Länka fält"
+#: templates/model_advanced_form.html.twig inc/model.class.php:484
+msgid "Allow lines update"
+msgstr "Tillåt att rader uppdateras"
+
+#: templates/model_advanced_form.html.twig
+msgid "Advanced options"
+msgstr "Avancerade alternativ"
+
+#: templates/model_advanced_form.html.twig inc/model.class.php:503
+msgid "Allow creation of dropdowns (Except Entity)"
+msgstr "Tillåt att menyalternativ skapas (förutom Enhet)"
+
+#: templates/model_advanced_form.html.twig inc/model.class.php:511
+msgid "Dates format"
+msgstr "Datumformat"
+
+#: templates/model_advanced_form.html.twig
+msgid "Allow update of existing fields"
+msgstr "Tillåt uppdatering av befintliga fält"
+
+#: templates/model_advanced_form.html.twig inc/model.class.php:520
+msgid "Float format"
+msgstr "Flyttalsformat"
+
+#: templates/model_advanced_form.html.twig inc/model.class.php:529
+msgid "Port unicity criteria"
+msgstr "Bestäm unik port via"
+
+#: templates/model_advanced_form.html.twig inc/model.class.php:581
+msgid "Replacing the value of multiline text fields"
+msgstr "Ersätter värde för textområdesfält"
+
+#: templates/model_validation_form.html.twig
+msgid "Validation"
+msgstr "Validering"
+
+#: templates/model_validation_form.html.twig
+msgctxt "button"
+msgid "Validate the model"
+msgstr "Validera modell"
+
+#: templates/modelcsv_additional_form.html.twig
+msgid "Specific file format options"
+msgstr "Alternativ för filformat"
+
+#: templates/modelcsv_additional_form.html.twig
+msgid "Header's presence"
+msgstr "Första raden innehåller kolumnrubriker"
+
+#: templates/modelcsv_additional_form.html.twig
+msgid "File delimitor"
+msgstr "Kolumnavgränsare"
+
+#: templates/clientinjection_result.html.twig
+msgid "Injection's results"
+msgstr "Importresultat"
+
+#: templates/clientinjection_result.html.twig
+msgid "Injection successful"
+msgstr "Importen slutfördes"
+
+#: templates/clientinjection_result.html.twig
+msgid "Injection encounters errors"
+msgstr "Fel vid import"
+
+#: templates/clientinjection_result.html.twig
+msgid "See the log"
+msgstr "Se loggen"
+
+#: templates/clientinjection_result.html.twig
+msgid "Export rapport in PDF"
+msgstr "Exportera rapport till PDF"
+
+#: templates/clientinjection_result.html.twig
+msgid "Export the log"
+msgstr "Exportera loggen"
+
+#: templates/clientinjection_result.html.twig
+msgid "Finish"
+msgstr "Slutför"
 
 #: templates/clientinjection_upload_file.html.twig inc/dropdown.class.php:85
 #: inc/model.class.php:781
@@ -64,22 +140,52 @@ msgstr ""
 "Var försiktig, du är på väg att injicera data i GLPI. Är du säker på att du "
 "vill göra det?"
 
-#: templates/clientinjection.html.twig
-msgid "Client Injection Configuration"
-msgstr "Konfigurerade importklienter"
+#: templates/mappings_form.html.twig front/popup.php:35
+msgid "See the file"
+msgstr "Visa filinnehåll"
 
-#: templates/clientinjection.html.twig
+#: templates/mappings_form.html.twig
+msgid "Header of the file"
+msgstr "Filkolumn"
+
+#: templates/mappings_form.html.twig inc/info.class.php:87
+#: inc/info.class.php:145
+msgid "Tables"
+msgstr "Tabeller"
+
+#: templates/mappings_form.html.twig
+msgid "Link field"
+msgstr "Länka fält"
+
+#: templates/infoadditionnalinfo.html.twig
+msgid "Complementary information"
+msgstr "Kompletterande information"
+
+#: templates/infoadditionnalinfo.html.twig
+msgid "Download file sample"
+msgstr "Ladda ned exempelfil"
+
 #: templates/clientinjection_injection.html.twig
+#: templates/clientinjection.html.twig
 msgid "Model"
 msgstr "Modell"
 
-#: templates/clientinjection.html.twig
-msgid "No model currently available"
-msgstr "Det finns för närvarande ingen modell definierad"
+#: templates/clientinjection_injection.html.twig inc/profile.class.php:44
+#: inc/menu.class.php:56 inc/menu.class.php:57 inc/menu.class.php:61
+msgid "Injection of the file"
+msgstr "Inläsning av fil"
 
-#: templates/clientinjection.html.twig
-msgid "You can start the model creation by hitting the button"
-msgstr "Du kan börja konfigurera en modell genom att klicka på knappen"
+#: templates/clientinjection_injection.html.twig
+msgid " lines"
+msgstr ""
+
+#: templates/clientinjection_injection.html.twig
+msgid "Error"
+msgstr ""
+
+#: templates/clientinjection_injection.html.twig
+msgid "Import progress"
+msgstr "Importstatus"
 
 #: templates/log_results.html.twig inc/model.class.php:1495
 msgid "Array of successful injections"
@@ -126,126 +232,29 @@ msgstr "Antal bearbetade rader"
 msgid "Counter"
 msgstr "Räknare"
 
-#: templates/model_advanced_form.html.twig
-msgid "Model status"
-msgstr "Modellstatus"
+#: templates/clientinjection.html.twig
+msgid "Client Injection Configuration"
+msgstr "Konfigurerade importklienter"
 
-#: templates/model_advanced_form.html.twig inc/model.class.php:493
-msgid "Type of data to import"
-msgstr "Typ av data att importera"
+#: templates/clientinjection.html.twig
+msgid "No model currently available"
+msgstr "Det finns för närvarande ingen modell definierad"
 
-#: templates/model_advanced_form.html.twig inc/model.class.php:475
-msgid "Allow lines creation"
-msgstr "Tillåt att rader skapas"
+#: templates/clientinjection.html.twig
+msgid "You can start the model creation by hitting the button"
+msgstr "Du kan börja konfigurera en modell genom att klicka på knappen"
 
-#: templates/model_advanced_form.html.twig inc/model.class.php:484
-msgid "Allow lines update"
-msgstr "Tillåt att rader uppdateras"
+#: front/popup.php:41 inc/model.class.php:1486
+msgid "Data injection report"
+msgstr "Importrapport"
 
-#: templates/model_advanced_form.html.twig
-msgid "Advanced options"
-msgstr "Avancerade alternativ"
+#: front/model.form.php:91 front/clientinjection.form.php:86
+msgid ""
+"The file could not be found (Maybe it exceeds the maximum size allowed)"
+msgstr "Hittade inte filen (den kanske är för stor)"
 
-#: templates/model_advanced_form.html.twig inc/model.class.php:503
-msgid "Allow creation of dropdowns (Except Entity)"
-msgstr "Tillåt att menyalternativ skapas (förutom Enhet)"
-
-#: templates/model_advanced_form.html.twig inc/model.class.php:511
-msgid "Dates format"
-msgstr "Datumformat"
-
-#: templates/model_advanced_form.html.twig
-msgid "Allow update of existing fields"
-msgstr "Tillåt uppdatering av befintliga fält"
-
-#: templates/model_advanced_form.html.twig inc/model.class.php:520
-msgid "Float format"
-msgstr "Flyttalsformat"
-
-#: templates/model_advanced_form.html.twig inc/model.class.php:529
-msgid "Port unicity criteria"
-msgstr "Bestäm unik port via"
-
-#: templates/model_advanced_form.html.twig inc/model.class.php:581
-msgid "Replacing the value of multiline text fields"
-msgstr "Ersätter värde för textområdesfält"
-
-#: templates/infoadditionnalinfo.html.twig
-msgid "Complementary information"
-msgstr "Kompletterande information"
-
-#: templates/infoadditionnalinfo.html.twig
-msgid "Download file sample"
-msgstr "Ladda ned exempelfil"
-
-#: templates/modelcsv_additional_form.html.twig
-msgid "Specific file format options"
-msgstr "Alternativ för filformat"
-
-#: templates/modelcsv_additional_form.html.twig
-msgid "Header's presence"
-msgstr "Första raden innehåller kolumnrubriker"
-
-#: templates/modelcsv_additional_form.html.twig
-msgid "File delimitor"
-msgstr "Kolumnavgränsare"
-
-#: templates/model_validation_form.html.twig
-msgid "Validation"
-msgstr "Validering"
-
-#: templates/model_validation_form.html.twig
-msgctxt "button"
-msgid "Validate the model"
-msgstr "Validera modell"
-
-#: templates/clientinjection_result.html.twig
-msgid "Injection's results"
-msgstr "Importresultat"
-
-#: templates/clientinjection_result.html.twig
-msgid "Injection successful"
-msgstr "Importen slutfördes"
-
-#: templates/clientinjection_result.html.twig
-msgid "Injection encounters errors"
-msgstr "Fel vid import"
-
-#: templates/clientinjection_result.html.twig
-msgid "See the log"
-msgstr "Se loggen"
-
-#: templates/clientinjection_result.html.twig
-msgid "Export rapport in PDF"
-msgstr "Exportera rapport till PDF"
-
-#: templates/clientinjection_result.html.twig
-msgid "Export the log"
-msgstr "Exportera loggen"
-
-#: templates/clientinjection_result.html.twig
-msgid "Finish"
-msgstr "Slutför"
-
-#: templates/clientinjection_injection.html.twig inc/menu.class.php:56
-#: inc/menu.class.php:57 inc/menu.class.php:61 inc/profile.class.php:44
-msgid "Injection of the file"
-msgstr "Inläsning av fil"
-
-#: templates/clientinjection_injection.html.twig
-msgid " lines"
-msgstr ""
-
-#: templates/clientinjection_injection.html.twig
-msgid "Error"
-msgstr ""
-
-#: templates/clientinjection_injection.html.twig
-msgid "Import progress"
-msgstr "Importstatus"
-
-#: front/clientinjection.form.php:34 inc/menu.class.php:38
-#: inc/profile.class.php:72 setup.php:95
+#: front/clientinjection.form.php:34 setup.php:95 inc/profile.class.php:72
+#: inc/menu.class.php:38
 msgid "Data injection"
 msgstr "Dataimport"
 
@@ -253,22 +262,9 @@ msgstr "Dataimport"
 msgid "One mandatory field is not filled"
 msgstr "Ett obligatoriskt fält är ej ifyllt"
 
-#: front/clientinjection.form.php:86 front/model.form.php:91
-msgid ""
-"The file could not be found (Maybe it exceeds the maximum size allowed)"
-msgstr "Hittade inte filen (den kanske är för stor)"
-
-#: front/popup.php:41 inc/model.class.php:1486
-msgid "Data injection report"
-msgstr "Importrapport"
-
 #: inc/networkequipmentinjection.class.php:76
 msgid "Number of ports"
 msgstr "Antal portar"
-
-#: inc/clientinjection.class.php:116
-msgid "Launch the import"
-msgstr "Starta importen"
 
 #: inc/injectiontype.class.php:145
 msgid "-------Choose a table-------"
@@ -278,73 +274,9 @@ msgstr "-------Välj tabell-------"
 msgid "-------Choose a field-------"
 msgstr "-------Välj fält-------"
 
-#: inc/phoneinjection.class.php:71
-msgid "Domain name"
-msgstr "Domännamn"
-
-#: inc/contractinjection.class.php:154 inc/contractinjection.class.php:162
-#: inc/contractinjection.class.php:170 inc/contractinjection.class.php:178
-#, php-format
-msgid "%d month"
-msgid_plural "%d months"
-msgstr[0] "%d månad"
-msgstr[1] "%d månader"
-
-#: inc/info.class.php:89 inc/info.class.php:147
-msgid "Mandatory information"
-msgstr "Obligatorisk information"
-
-#: inc/info.class.php:146
-msgid "Fields"
-msgstr "Fält"
-
 #: inc/profile.class.php:40
 msgid "Model management"
 msgstr "Modellhantering"
-
-#: inc/dropdown.class.php:37
-msgid "dd-mm-yyyy"
-msgstr "dd-mm-yyyy"
-
-#: inc/dropdown.class.php:39
-msgid "mm-dd-yyyy"
-msgstr "mm-dd-yyyy"
-
-#: inc/dropdown.class.php:41
-msgid "yyyy-mm-dd"
-msgstr "yyyy-mm-dd"
-
-#: inc/dropdown.class.php:59
-msgid "1 234.56"
-msgstr "1 234.56"
-
-#: inc/dropdown.class.php:61
-msgid "1 234,56"
-msgstr "1 234,56"
-
-#: inc/dropdown.class.php:63
-msgid "1,234.56"
-msgstr "1,234.56"
-
-#: inc/dropdown.class.php:86 inc/model.class.php:783
-msgid "Mappings"
-msgstr "Mappningar"
-
-#: inc/dropdown.class.php:128
-msgid "Automatic detection"
-msgstr "Automatisk"
-
-#: inc/dropdown.class.php:129
-msgid "UTF-8"
-msgstr "UTF-8"
-
-#: inc/dropdown.class.php:130
-msgid "ISO8859-1"
-msgstr "ISO8859-1"
-
-#: inc/networkportinjection.class.php:94
-msgid "Port MAC address"
-msgstr "MAC-adress för port"
 
 #: inc/commoninjectionlib.class.php:268
 msgid "No mandatory field is defined for this model"
@@ -402,6 +334,70 @@ msgstr "Hittade inga data"
 msgid "Undetermined"
 msgstr "Ej bestämd"
 
+#: inc/dropdown.class.php:37
+msgid "dd-mm-yyyy"
+msgstr "dd-mm-yyyy"
+
+#: inc/dropdown.class.php:39
+msgid "mm-dd-yyyy"
+msgstr "mm-dd-yyyy"
+
+#: inc/dropdown.class.php:41
+msgid "yyyy-mm-dd"
+msgstr "yyyy-mm-dd"
+
+#: inc/dropdown.class.php:59
+msgid "1 234.56"
+msgstr "1 234.56"
+
+#: inc/dropdown.class.php:61
+msgid "1 234,56"
+msgstr "1 234,56"
+
+#: inc/dropdown.class.php:63
+msgid "1,234.56"
+msgstr "1,234.56"
+
+#: inc/dropdown.class.php:86 inc/model.class.php:783
+msgid "Mappings"
+msgstr "Mappningar"
+
+#: inc/dropdown.class.php:128
+msgid "Automatic detection"
+msgstr "Automatisk"
+
+#: inc/dropdown.class.php:129
+msgid "UTF-8"
+msgstr "UTF-8"
+
+#: inc/dropdown.class.php:130
+msgid "ISO8859-1"
+msgstr "ISO8859-1"
+
+#: inc/computerinjection.class.php:78
+msgid "Antivirus name"
+msgstr "AV-programvara"
+
+#: inc/networkportinjection.class.php:94
+msgid "Port MAC address"
+msgstr "MAC-adress för port"
+
+#: inc/phoneinjection.class.php:71
+msgid "Domain name"
+msgstr "Domännamn"
+
+#: inc/contractinjection.class.php:154 inc/contractinjection.class.php:162
+#: inc/contractinjection.class.php:170 inc/contractinjection.class.php:178
+#, php-format
+msgid "%d month"
+msgid_plural "%d months"
+msgstr[0] "%d månad"
+msgstr[1] "%d månader"
+
+#: inc/clientinjection.class.php:116
+msgid "Launch the import"
+msgstr "Starta importen"
+
 #: inc/model.class.php:785
 msgid "Additional Information"
 msgstr "Övrig information"
@@ -458,6 +454,10 @@ msgstr "Från modellen"
 msgid "Array of unsuccessful injections"
 msgstr "Misslyckade importer"
 
-#: inc/computerinjection.class.php:78
-msgid "Antivirus name"
-msgstr "AV-programvara"
+#: inc/info.class.php:89 inc/info.class.php:147
+msgid "Mandatory information"
+msgstr "Obligatorisk information"
+
+#: inc/info.class.php:146
+msgid "Fields"
+msgstr "Fält"
