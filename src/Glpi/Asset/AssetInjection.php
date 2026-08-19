@@ -173,6 +173,7 @@ abstract class AssetInjection extends Asset implements PluginDatainjectionInject
         //Remove some options because some fields cannot be imported
         $blacklist = PluginDatainjectionCommonInjectionLib::getBlacklistedOptions(static::class);
         $notimportable            = ['300', '301'];
+        $options = [];
         $options['ignore_fields'] = array_merge($blacklist, $notimportable);
 
         return PluginDatainjectionCommonInjectionLib::addToSearchOptions($tab, $options, $this);

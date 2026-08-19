@@ -78,4 +78,8 @@ final class IsInjectableCapacity extends AbstractCapacity
         //        CommonGLPI::registerStandardTab($classname, Infocom::class, 50);
     }
 
+    public function getCapacityUsageDescription(string $classname): string
+    {
+        // TODO: Implement getCapacityUsageDescription() method.
+    }
 }
