@@ -95,7 +95,6 @@ function plugin_init_datainjection()
 
         $INJECTABLE_TYPES = [];
 
-        //        plugin_datainjection_creationInjectableAssets();
     }
 }
 
