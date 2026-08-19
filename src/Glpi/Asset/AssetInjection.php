@@ -150,7 +150,6 @@ abstract class AssetInjection extends Asset implements PluginDatainjectionInject
     {
 
         // Build search options manually to avoid registration checks
-        //        $tab = Search::getOptions(static::class);
         $tab = Search::getOptions(self::getVirtualType());
 
         $tab = self::replaceTableName($tab);
