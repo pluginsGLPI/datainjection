@@ -81,5 +81,6 @@ final class IsInjectableCapacity extends AbstractCapacity
     public function getCapacityUsageDescription(string $classname): string
     {
         // TODO: Implement getCapacityUsageDescription() method.
+        return '';
     }
 }

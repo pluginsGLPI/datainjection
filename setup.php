@@ -34,6 +34,7 @@ use GlpiPlugin\Datainjection\Glpi\Asset\Capacity\IsInjectableCapacity;
 
 use function Safe\define;
 use function Safe\mkdir;
+use function Safe\preg_match;
 
 define('PLUGIN_DATAINJECTION_VERSION', '2.15.10');
 
