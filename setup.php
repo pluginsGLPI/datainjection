@@ -258,6 +258,9 @@ function plugin_datainjection_registerInjectableAssets(): void
         // Get the asset definition to extract the system name
 
         $definition = AssetDefinition::getById($definition_id);
+        if ($definition === false || $definition === null) {
+            continue;
+        }
         if ($definition->getAssetClassName() === $itemtype) {
             // Use the system name to create a nice class name
             $system_name = ucfirst($definition->fields['system_name']);//strtolower()
