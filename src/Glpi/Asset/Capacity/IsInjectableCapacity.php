@@ -52,32 +52,9 @@ final class IsInjectableCapacity extends AbstractCapacity
     #[Override]
     public function getDescription(): string
     {
-        return __("Inject objects list");
+        return __("Inject objects list", 'datainjection');
     }
 
-    //    public function getCloneRelations(): array
-    //    {
-    //        return [
-    //            Infocom::class,
-    //        ];
-    //    }
-    //
-    //    public function isUsed(string $classname): bool
-    //    {
-    //        return parent::isUsed($classname)
-    //            && $this->countAssetsLinkedToPeerItem($classname, Infocom::class) > 0;
-    //    }
-
-    #[Override]
-    public function getCapacityUsageDescription(string $classname): string
-    {
-        //        return sprintf(
-        //            __('Used by %1$s of %2$s assets'),
-        //            $this->countAssetsLinkedToPeerItem($classname, Infocom::class),
-        //            $this->countAssets($classname)
-        //        );
-        return '';
-    }
 
     public function onClassBootstrap(string $classname, CapacityConfig $config): void
     {
@@ -101,27 +78,4 @@ final class IsInjectableCapacity extends AbstractCapacity
         //        CommonGLPI::registerStandardTab($classname, Infocom::class, 50);
     }
 
-    public function onCapacityDisabled(string $classname, CapacityConfig $config): void
-    {
-        // Unregister from infocom types
-        //        $this->unregisterFromTypeConfig('injectable_types', $classname);
-        //
-        //        // Delete related infocom data
-        //        $infocom = new Infocom();
-        //        $infocom->deleteByCriteria(['itemtype' => $classname], force: true, history: false);
-        //
-        //        $infocom_search_options = Infocom::rawSearchOptionsToAdd($classname);
-        //
-        //        // Clean history related to infocoms
-        //        $this->deleteFieldsLogs($classname, $infocom_search_options);
-        //
-        //        // Clean display preferences
-        //        $this->deleteDisplayPreferences($classname, $infocom_search_options);
-    }
-
-    //    #[Override]
-    //    public function onObjectInstanciation(Asset $object, CapacityConfig $config): void
-    //    {
-    //        $object->fields['_added_by_hasinjectablecapacity'] = 'abc';
-    //    }
 }

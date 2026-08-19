@@ -37,8 +37,6 @@ use PluginDatainjectionCommonInjectionLib;
 use PluginDatainjectionInjectionInterface;
 use Search;
 
-use function Safe\preg_replace;
-
 abstract class AssetInjection extends Asset implements PluginDatainjectionInjectionInterface
 {
     protected static string $definition_system_name = '';
