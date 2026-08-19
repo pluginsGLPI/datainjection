@@ -328,6 +328,9 @@ final class $class_name extends AssetInjection implements PluginDatainjectionInj
 }
 PHP;
 
+    if (!preg_match('/^[A-Za-z][A-Za-z0-9_]*$/', $class_name)) {
+        return;
+    }
     eval($code);
 
 }
