@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-08-14 01:27+0000\n"
+"POT-Creation-Date: 2026-08-20 00:56+0000\n"
 "PO-Revision-Date: 2018-06-21 12:57+0000\n"
 "Last-Translator: Alan Lehoux, 2026\n"
 "Language-Team: Spanish (Argentina) (https://app.transifex.com/teclib/teams/28042/es_AR/)\n"
@@ -178,11 +178,11 @@ msgstr "Inyección del archivo"
 
 #: templates/clientinjection_injection.html.twig
 msgid " lines"
-msgstr ""
+msgstr " líneas"
 
 #: templates/clientinjection_injection.html.twig
 msgid "Error"
-msgstr ""
+msgstr "Error"
 
 #: templates/clientinjection_injection.html.twig
 msgid "Import progress"
