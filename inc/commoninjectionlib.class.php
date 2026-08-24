@@ -1098,6 +1098,10 @@ class PluginDatainjectionCommonInjectionLib
                 //Get search option associated with the field
                 $option = self::findSearchOption($searchOptions, $field);
 
+                if ($option && !isset($option['checktype'])) {
+                    $option['checktype'] = $option['datatype'];
+                }
+
                 // Check some types
                 switch ($option['checktype'] ?? 'text') {
                     case "date":
