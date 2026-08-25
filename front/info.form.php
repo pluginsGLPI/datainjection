@@ -32,6 +32,8 @@ Session::checkLoginUser();
 
 /* Update mappings */
 if (isset($_POST["update"])) {
+    $model = new PluginDatainjectionModel();
+    $model->check($_POST['models_id'], UPDATE);
     PluginDatainjectionInfo::manageInfos($_POST['models_id'], $_POST);
 } elseif (isset($_POST["delete"])) {
     $info = new PluginDatainjectionInfo();

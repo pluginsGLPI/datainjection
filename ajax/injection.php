@@ -34,6 +34,6 @@ if (strpos($_SERVER['PHP_SELF'], "injection.php")) {
     Html::header_nocache();
 }
 
-Session::checkCentralAccess();
+Session::checkRight(PluginDatainjectionClientInjection::$rightname, READ);
 $model = PluginDatainjectionSession::unserialize($_SESSION['datainjection']['currentmodel']);
 PluginDatainjectionClientInjection::showInjectionForm($model, $_SESSION['glpiactive_entity']);

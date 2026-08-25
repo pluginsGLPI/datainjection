@@ -226,7 +226,10 @@ class PluginDatainjectionInfo extends CommonDBTM
                 }
 
                 if ($id > 0) {
-                    $info->update($info_infos);
+                    $existing = new self();
+                    if ($existing->getFromDB($id) && $existing->fields['models_id'] == $models_id) {
+                        $info->update($info_infos);
+                    }
                 } else {
                     $info_infos['models_id'] = $models_id;
                     unset($info_infos['id']);
