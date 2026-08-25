@@ -1099,7 +1099,10 @@ class PluginDatainjectionCommonInjectionLib
                 $option = self::findSearchOption($searchOptions, $field);
 
                 if ($option && !isset($option['checktype'])) {
-                    $option['checktype'] = $option['datatype'];
+                    // In some cases, float datatype is wrongly detected as string, decimal or number, so we check that first.
+                    $option['checktype'] = (preg_match('/^\d+(\.|\,)\d+$/', $value) !== 0)
+                        ? "float"
+                        : $option['datatype'];
                 }
 
                 // Check some types
