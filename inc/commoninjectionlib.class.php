@@ -1101,7 +1101,7 @@ class PluginDatainjectionCommonInjectionLib
                 if ($option && !isset($option['checktype'])) {
                     // In some cases, float datatype is wrongly detected as string, decimal or number, so we check that first.
                     //Regex matches all decimal formats accepted by glpi
-                    $option['checktype'] = (preg_match('/^(?:(?:\d{1,3}(?: \d{3})+|\d+)[.,]|\d{1,3}(?:,\d{3})+\.)\d+$/', $value) !== 0)
+                    $option['checktype'] = (preg_match($this->getFloatDetectionRegex(), $value) !== 0)
                         ? "float"
                         : $option['datatype'];
                 }
@@ -1307,6 +1307,13 @@ class PluginDatainjectionCommonInjectionLib
         return $mac;
     }
 
+    //--------------------------------------------------//
+    //----------- Utility methods -----------------------//
+    //------------------------------------------------//
+    public function getFloatDetectionRegex(): string
+    {
+        return '/^(?:(?:\d{1,3}(?: \d{3})+|\d+)[.,]|\d{1,3}(?:,\d{3})+\.)\d+$/';
+    }
 
     //--------------------------------------------------//
     //----------- Check methods -----------------------//
