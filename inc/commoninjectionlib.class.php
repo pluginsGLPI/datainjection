@@ -1405,7 +1405,7 @@ class PluginDatainjectionCommonInjectionLib
     {
 
         if (!empty($option)) {
-            $field_type = ($option['checktype'] ?? 'text');
+            $field_type = ($option['checktype'] ?? $option['datatype'] ?? 'text');
 
             //If no data provided AND this mapping is not mandatory
             if (
