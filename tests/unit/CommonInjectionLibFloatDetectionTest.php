@@ -80,6 +80,11 @@ final class CommonInjectionLibFloatDetectionTest extends DbTestCase
             'space-grouped integer, no decimal part'  => ['1 234', false],
             'leading dot, no integer part'            => ['.56', false],
             'negative float (unsupported by regex)'   => ['-1234.56', false],
+            'malformed space grouping (2nd group not 3 digits)' => ['12 34.56', false],
+            'malformed comma grouping (1st group over 3 digits)' => ['1234,567.89', false],
+            'leading whitespace' => [' 1234.56', false],
+            'trailing whitespace' => ['1234.56 ', false],
+            'scientific notation (unsupported by regex)' => ['1.5e10', false],
         ];
     }
 
