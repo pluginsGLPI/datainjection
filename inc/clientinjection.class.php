@@ -320,9 +320,9 @@ class PluginDatainjectionClientInjection
         TemplateRenderer::getInstance()->display('@datainjection/clientinjection_result.html.twig', $data);
     }
 
-    private static function escapeCsvFormula($value)
+    private static function escapeCsvFormula(mixed $value): mixed
     {
-        if (is_string($value) && isset($value[0]) && str_contains('=+-@', $value[0])) {
+        if (is_string($value) && isset($value[0]) && in_array($value[0], ['=', '+', '-', '@'], true)) {
             return "'" . $value;
         }
         return $value;
