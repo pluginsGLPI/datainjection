@@ -354,7 +354,9 @@ class PluginDatainjectionNetworkportInjection extends NetworkPort implements Plu
                 $tmp['networkports_id_2'] = $netport['id'];
                 $netport_netport->add($tmp);
             }
-        } //TODO add injection warning if no port found or more than one
+        }
+
+        //TODO add injection warning if no port found or more than one
         return null;
     }
 }

@@ -460,6 +460,7 @@ class PluginDatainjectionInfo extends CommonDBTM
                     return $value != PluginDatainjectionCommonInjectionLib::DROPDOWN_EMPTY_VALUE;
             }
         }
+
         return null;
     }
 

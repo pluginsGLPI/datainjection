@@ -572,21 +572,13 @@ class PluginDatainjectionModel extends CommonDBTM
             $values = [$field => $values];
         }
 
-        switch ($field) {
-            case "port_unicity":
-                return PluginDatainjectionDropdown::getPortUnicityValues($values['port_unicity']);
-
-            case "float_format":
-                return PluginDatainjectionDropdown::getFloatFormat($values['float_format']);
-
-            case "date_format":
-                return PluginDatainjectionDropdown::getDateFormat($values['date_format']);
-
-            case "step":
-                return PluginDatainjectionDropdown::getStatusLabel($values['step']);
-        }
-
-        return parent::getSpecificValueToDisplay($field, $values, $options);
+        return match ($field) {
+            "port_unicity" => PluginDatainjectionDropdown::getPortUnicityValues($values['port_unicity']),
+            "float_format" => PluginDatainjectionDropdown::getFloatFormat($values['float_format']),
+            "date_format" => PluginDatainjectionDropdown::getDateFormat($values['date_format']),
+            "step" => PluginDatainjectionDropdown::getStatusLabel($values['step']),
+            default => parent::getSpecificValueToDisplay($field, $values, $options),
+        };
     }
 
 

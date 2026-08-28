@@ -172,6 +172,7 @@ class PluginDatainjectionProfile extends Profile
                 }
             }
         }
+
         return null;
     }
 
