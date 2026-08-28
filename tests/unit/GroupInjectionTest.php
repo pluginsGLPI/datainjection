@@ -114,6 +114,7 @@ final class GroupInjectionTest extends DbTestCase
         );
 
         $lib->processAddOrUpdate();
+
         $results = $lib->getInjectionResults();
 
         self::assertSame(PluginDatainjectionCommonInjectionLib::SUCCESS, $results['status']);
@@ -197,6 +198,7 @@ final class GroupInjectionTest extends DbTestCase
         );
 
         $lib->processAddOrUpdate();
+
         $results = $lib->getInjectionResults();
 
         self::assertSame(PluginDatainjectionCommonInjectionLib::SUCCESS, $results['status']);
@@ -283,6 +285,7 @@ final class GroupInjectionTest extends DbTestCase
         );
 
         $lib->processAddOrUpdate();
+
         $results = $lib->getInjectionResults();
 
         self::assertSame(PluginDatainjectionCommonInjectionLib::SUCCESS, $results['status']);
@@ -294,6 +297,7 @@ final class GroupInjectionTest extends DbTestCase
         if (!is_array($field_value)) {
             $field_value = [$field_value];
         }
+
         self::assertContains($group->getID(), $field_value);
     }
 
@@ -340,6 +344,7 @@ final class GroupInjectionTest extends DbTestCase
         );
 
         $lib->processAddOrUpdate();
+
         $results = $lib->getInjectionResults();
 
         self::assertSame(

@@ -50,7 +50,7 @@ require_once dirname(__DIR__, 2) . '/inc/computerinjection.class.php';
  */
 final class CommonInjectionLibFloatDetectionTest extends DbTestCase
 {
-    private static function getFloatDetectionRegex(): string
+    private function getFloatDetectionRegex(): string
     {
         $lib = new PluginDatainjectionCommonInjectionLib(new PluginDatainjectionComputerInjection());
 
@@ -93,7 +93,7 @@ final class CommonInjectionLibFloatDetectionTest extends DbTestCase
      */
     public function testFloatDetectionRegex(string $value, bool $expected_match): void
     {
-        $regex = self::getFloatDetectionRegex();
+        $regex = $this->getFloatDetectionRegex();
 
         self::assertSame($expected_match, preg_match($regex, $value) !== 0);
     }

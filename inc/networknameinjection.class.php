@@ -101,11 +101,7 @@ class PluginDatainjectionNetworkNameInjection extends NetworkName implements Plu
    **/
     public function addSpecificNeededFields($primary_type, $values)
     {
-
-        $fields['items_id']  = $values['NetworkPort']['id'];
-        $fields['itemtype']      = "NetworkPort";
-
-        return $fields;
+        return ['items_id' => $values['NetworkPort']['id'], 'itemtype' => "NetworkPort"];
     }
 
 

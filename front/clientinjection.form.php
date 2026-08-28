@@ -98,6 +98,7 @@ if (isset($_SESSION['datainjection']['go'])) {
     if (isset($_GET['id'])) { // Allow link to a model
         PluginDatainjectionSession::setParam('models_id', $_GET['id']);
     }
+
     $clientInjection = new PluginDatainjectionClientInjection();
     $clientInjection->title();
     $clientInjection->showForm(0);

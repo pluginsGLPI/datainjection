@@ -61,11 +61,14 @@ use Glpi\Application\View\TemplateRenderer;
 class PluginDatainjectionModelcsv extends CommonDBChild
 {
     public static $rightname = "plugin_datainjection_model";
+
     public $specific_fields;
 
     // From CommonDBChild
     public static $itemtype  = 'PluginDatainjectionModel';
+
     public static $items_id  = 'models_id';
+
     public $dohistory        = true;
 
 

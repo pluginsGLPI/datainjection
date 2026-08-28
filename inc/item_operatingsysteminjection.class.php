@@ -65,6 +65,7 @@ class PluginDatainjectionItem_OperatingsystemInjection extends Item_OperatingSys
                 } else {
                     $option['linkfield'] = $option['field'];
                 }
+
                 $searchoptions[$option['id']] = $option;
             }
         }
@@ -133,9 +134,6 @@ class PluginDatainjectionItem_OperatingsystemInjection extends Item_OperatingSys
     **/
     public function addSpecificNeededFields($primary_type, $values)
     {
-        $fields['items_id'] = $values[$primary_type]['id'];
-        $fields['itemtype'] = $primary_type;
-
-        return $fields;
+        return ['items_id' => $values[$primary_type]['id'], 'itemtype' => $primary_type];
     }
 }

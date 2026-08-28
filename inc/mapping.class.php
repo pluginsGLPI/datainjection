@@ -47,6 +47,7 @@ class PluginDatainjectionMapping extends CommonDBTM
         if (!isset($this->fields[$field])) {
             return false;
         }
+
         return $this->fields[$field] == $value;
     }
 
@@ -158,6 +159,7 @@ class PluginDatainjectionMapping extends CommonDBTM
         foreach ($DB->doQuery($query) as $mapping) {
             $several[] = $mapping['value'];
         }
+
         return $several;
     }
 
@@ -178,6 +180,7 @@ class PluginDatainjectionMapping extends CommonDBTM
         foreach ($DB->doQuery($query) as $data) {
             $mappings[] = $data['name'];
         }
+
         return $mappings;
     }
 }

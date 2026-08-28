@@ -76,6 +76,7 @@ class PluginDatainjectionNotepadInjection extends Notepad implements PluginDatai
                 } else {
                     $option['linkfield'] = $option['field'];
                 }
+
                 $searchoptions[$option['id']] = $option;
             }
         }
@@ -109,9 +110,6 @@ class PluginDatainjectionNotepadInjection extends Notepad implements PluginDatai
     **/
     public function addSpecificNeededFields($primary_type, $values)
     {
-
-        $fields['items_id'] = $values[$primary_type]['id'];
-        $fields['itemtype'] = $primary_type;
-        return $fields;
+        return ['items_id' => $values[$primary_type]['id'], 'itemtype' => $primary_type];
     }
 }

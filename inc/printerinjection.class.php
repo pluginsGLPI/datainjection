@@ -111,6 +111,7 @@ class PluginDatainjectionPrinterInjection extends Printer implements PluginDatai
         if (isset($values[$primary_type]['is_global'])) {
             $fields['is_global'] = empty($values[$primary_type]['is_global']) ? 0 : $values[$primary_type]['is_global'];
         }
+
         return $fields;
     }
 
@@ -139,6 +140,7 @@ class PluginDatainjectionPrinterInjection extends Printer implements PluginDatai
             if (isset($res_rule['_ignore_import']) && $res_rule['_ignore_import']) {
                 return false;
             }
+
             if (isset($res_rule['is_global'])) {
                 $values['Printer']['is_global'] = $res_rule['is_global'];
             }
@@ -152,6 +154,7 @@ class PluginDatainjectionPrinterInjection extends Printer implements PluginDatai
                 = Dropdown::getDropdownName('glpi_suppliers', $res_rule['supplier']);
             }
         }
+
         return true;
     }
 }

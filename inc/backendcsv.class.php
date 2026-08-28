@@ -37,7 +37,8 @@ use function Safe\unlink;
 class PluginDatainjectionBackendcsv extends PluginDatainjectionBackend implements PluginDatainjectionBackendInterface
 {
     private $isHeaderPresent = true;
-    private $file_handler    = null;
+
+    private $file_handler;
 
 
     public function __construct()
@@ -95,20 +96,14 @@ class PluginDatainjectionBackendcsv extends PluginDatainjectionBackend implement
         $num = count($data);
 
         for ($c = 0; $c < $num; $c++) {
-            $tmp = trim($data[$c]);
-            switch ($encoding) {
-                case PluginDatainjectionBackend::ENCODING_ISO8859_1:
-                    $csv[0][] = $tmp === '' || $tmp === '0' ? Toolbox::encodeInUtf8($tmp) : $tmp;
-                    break;
-
-                case PluginDatainjectionBackend::ENCODING_UFT8:
-                    $csv[0][] = $tmp;
-                    break;
-
-                default:
-                    $csv[0][] = PluginDatainjectionBackend::toUTF8($tmp);
-            }
+            $tmp = trim((string) $data[$c]);
+            $csv[0][] = match ($encoding) {
+                PluginDatainjectionBackend::ENCODING_ISO8859_1 => $tmp === '' || $tmp === '0' ? Toolbox::encodeInUtf8($tmp) : $tmp,
+                PluginDatainjectionBackend::ENCODING_UFT8 => $tmp,
+                default => PluginDatainjectionBackend::toUTF8($tmp),
+            };
         }
+
         return $csv;
     }
 
@@ -175,6 +170,7 @@ class PluginDatainjectionBackendcsv extends PluginDatainjectionBackend implement
                 }
             }
         }
+
         fclose($fic);
 
         if ($this->isHeaderPresent) {
@@ -229,6 +225,7 @@ class PluginDatainjectionBackendcsv extends PluginDatainjectionBackend implement
         if ($data === false) {
             return false;
         }
+
         $line = [];
         if (
             (count($data) > 1)
@@ -236,6 +233,7 @@ class PluginDatainjectionBackendcsv extends PluginDatainjectionBackend implement
         ) {
             $line = self::parseLine($this->file_handler, $data, $this->encoding);
         }
+
         return $line;
     }
 

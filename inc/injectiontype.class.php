@@ -71,17 +71,20 @@ class PluginDatainjectionInjectionType
                     if (!$instance->canCreate()) {
                         continue;
                     }
+
                     $typename = get_parent_class($type);
                     $name     = '';
                     if ($from != 'datainjection') {
                         $plugin->getFromDBbyDir($from);
                         $name = $plugin->getName() . ': ';
                     }
+
                     $name .= call_user_func([$type, 'getTypeName']);
                     $values[$typename] = $name;
                 }
             }
         }
+
         asort($values);
         return $values;
     }
@@ -125,7 +128,7 @@ class PluginDatainjectionInjectionType
             $mapping_or_info->fields,
             JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP,
         );
-        $p['called_by']       = get_class($mapping_or_info);
+        $p['called_by']       = $mapping_or_info::class;
         $p['fields_update']   = true;
         foreach ($options as $key => $value) {
             $p[$key] = $value;
@@ -148,6 +151,7 @@ class PluginDatainjectionInjectionType
         if (!is_a($p['primary_type'], CommonDBTM::class, true)) {
             throw new HttpException(500, 'Class ' . $p['primary_type'] . ' is not a valid class');
         }
+
         $type                       = new $p['primary_type']();
         $values[$p['primary_type']] = $type->getTypeName();
 
@@ -163,6 +167,7 @@ class PluginDatainjectionInjectionType
                 }
             }
         }
+
         asort($values);
 
         $rand = Dropdown::showFromArray(
@@ -174,7 +179,7 @@ class PluginDatainjectionInjectionType
         $p['itemtype'] = '__VALUE__';
         $di_base_url   = plugin_datainjection_geturl();
         $url_field     = $di_base_url . "ajax/dropdownChooseField.php";
-        $toobserve     = "dropdown_data[" . $mapping_or_info->getID() . "][itemtype]$rand";
+        $toobserve     = "dropdown_data[" . $mapping_or_info->getID() . ('][itemtype]' . $rand);
         $toupdate      = "span_field_" . $mappings_id;
         Ajax::updateItem($toupdate, $url_field, $p, $toobserve);
         Ajax::updateItemOnSelectEvent($toobserve, $toupdate, $url_field, $p);
@@ -222,6 +227,7 @@ class PluginDatainjectionInjectionType
             if ($mapping_or_info['value'] != self::NO_VALUE) {
                 $mapping_value = $mapping_or_info['value'];
             }
+
             $injectionClass = PluginDatainjectionCommonInjectionLib::getInjectionClassInstance($p['itemtype']);
 
             foreach ($injectionClass->getOptions($p['primary_type']) as $option) {
@@ -243,8 +249,10 @@ class PluginDatainjectionInjectionType
                     }
                 }
             }
+
             $used = self::getUsedMappingsOrInfos($p);
         }
+
         asort($fields);
 
         $rand = Dropdown::showFromArray(
@@ -261,10 +269,10 @@ class PluginDatainjectionInjectionType
             "span_mandatory_" . $mapping_or_info['id'],
             $url,
             $p,
-            "dropdown_data[" . $mapping_or_info['id'] . "][value]$rand",
+            "dropdown_data[" . $mapping_or_info['id'] . ('][value]' . $rand),
         );
         Ajax::updateItemOnSelectEvent(
-            "dropdown_data[" . $mapping_or_info['id'] . "][value]$rand",
+            "dropdown_data[" . $mapping_or_info['id'] . ('][value]' . $rand),
             "span_mandatory_" . $mapping_or_info['id'],
             $url,
             $p,
@@ -283,8 +291,8 @@ class PluginDatainjectionInjectionType
     public static function isEqual($option, $mapping)
     {
 
-        $name = strtolower($mapping['name']);
-        if (self::testBasicEqual(strtolower($mapping['name']), $option)) {
+        $name = strtolower((string) $mapping['name']);
+        if (self::testBasicEqual(strtolower((string) $mapping['name']), $option)) {
             return true;
         }
 
@@ -307,9 +315,9 @@ class PluginDatainjectionInjectionType
     public static function testBasicEqual($name, $option = [])
     {
         //Basic tests
-        return (strtolower($option['field']) == $name)
-        || (strtolower($option['name']) == $name)
-        || (strtolower($option['linkfield']) == $name);
+        return (strtolower((string) $option['field']) == $name)
+        || (strtolower((string) $option['name']) == $name)
+        || (strtolower((string) $option['linkfield']) == $name);
     }
 
     /**
@@ -342,7 +350,7 @@ class PluginDatainjectionInjectionType
                 && !in_array($options['value'], self::NON_MANDATORY_FIELDS)
             )
         ) {
-            echo "<input type='checkbox' name='data[" . htmlspecialchars($mapping_or_info['id']) . "][is_mandatory]' $checked>";
+            echo "<input type='checkbox' name='data[" . htmlspecialchars((string) $mapping_or_info['id']) . sprintf("][is_mandatory]' %s>", $checked);
         }
     }
 

@@ -135,6 +135,7 @@ class PluginDatainjectionNetworkportInjection extends NetworkPort implements Plu
         } else {
             $fields['instantiation_type'] = "NetworkPortEthernet";
         }
+
         return $fields;
     }
 
@@ -155,6 +156,7 @@ class PluginDatainjectionNetworkportInjection extends NetworkPort implements Plu
                         $instantiations[$inst_type] = call_user_func([$inst_type, 'getTypeName']);
                     }
                 }
+
                 Dropdown::showFromArray(
                     'instantiation_type',
                     $instantiations,
@@ -240,13 +242,11 @@ class PluginDatainjectionNetworkportInjection extends NetworkPort implements Plu
 
 
     /**
-    * Build where sql request to look for a network port
-    *
-    * @param array $fields_toinject    array    the fields to insert into DB
-    * @param array $options            array
-    *
-    * @return array
-   **/
+     * Build where sql request to look for a network port
+     *
+     * @param array $fields_toinject    array    the fields to insert into DB
+     * @param array $options            array
+     **/
     public function getUnicityRequest($fields_toinject = [], $options = []): array
     {
         $where = [];
@@ -330,12 +330,15 @@ class PluginDatainjectionNetworkportInjection extends NetworkPort implements Plu
         if ($use_name) {
             $sql .= " AND `glpi_networkequipments`.`name` = '" . $values['NetworkPort']["netname"] . "'";
         }
+
         if ($use_logical_number) {
             $sql .= " AND `glpi_networkports`.`logical_number` = '" . $values['NetworkPort']["netport"] . "'";
         }
+
         if ($use_mac) {
             $sql .= " AND `glpi_networkports`.`mac` = '" . $values['NetworkPort']["netmac"] . "'";
         }
+
         $res = $DB->doQuery($sql);
 
         //if at least one parameter is given
@@ -351,6 +354,9 @@ class PluginDatainjectionNetworkportInjection extends NetworkPort implements Plu
                 $tmp['networkports_id_2'] = $netport['id'];
                 $netport_netport->add($tmp);
             }
-        } //TODO add injection warning if no port found or more than one
+        }
+
+        //TODO add injection warning if no port found or more than one
+        return null;
     }
 }
