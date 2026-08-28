@@ -64,6 +64,7 @@ function plugin_init_datainjection()
         if (!plugin_datainjection_checkDirectories()) {
             @ mkdir(PLUGIN_DATAINJECTION_UPLOAD_DIR);
         }
+
         $PLUGIN_HOOKS["config_page"]['datainjection'] = "front/clientinjection.form.php";
 
 
@@ -109,8 +110,6 @@ function plugin_version_datainjection()
 
 /**
  * Return all types that can be injected using datainjection
- *
- * @return void
  */
 function getTypesToInject(): void
 {
@@ -234,7 +233,7 @@ function plugin_datainjection_migratetypes_datainjection($types)
 
 function plugin_datainjection_checkDirectories()
 {
-    return !(!file_exists(PLUGIN_DATAINJECTION_UPLOAD_DIR) || !is_writable(PLUGIN_DATAINJECTION_UPLOAD_DIR));
+    return file_exists(PLUGIN_DATAINJECTION_UPLOAD_DIR) && is_writable(PLUGIN_DATAINJECTION_UPLOAD_DIR);
 }
 
 function plugin_datainjection_geturl(): string

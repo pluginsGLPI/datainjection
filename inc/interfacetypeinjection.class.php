@@ -52,6 +52,7 @@ class PluginDatainjectionInterfaceTypeInjection extends InterfaceType implements
 
         return [];
     }
+
     public function isNullable($field)
     {
         return true; // By default, all fields can be null

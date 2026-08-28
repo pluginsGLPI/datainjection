@@ -35,7 +35,7 @@ class PluginDatainjectionProfile extends Profile
     public static function getAllRights()
     {
 
-        $rights = [
+        return [
             ['itemtype'  => 'PluginDatainjectionModel',
                 'label'     => __('Model management', 'datainjection'),
                 'field'     => 'plugin_datainjection_model',
@@ -46,7 +46,6 @@ class PluginDatainjectionProfile extends Profile
                 'rights'    => [READ => __('Read')],
             ],
         ];
-        return $rights;
     }
 
     /**
@@ -59,7 +58,7 @@ class PluginDatainjectionProfile extends Profile
         /** @var DBmysql $DB */
         global $DB;
         $query = "DELETE FROM `glpi_profiles`
-                WHERE `profiles_id`='$ID'
+                WHERE `profiles_id`='{$ID}'
                    AND `name` LIKE '%plugin_datainjection%'";
         $DB->doQuery($query);
     }
@@ -71,8 +70,10 @@ class PluginDatainjectionProfile extends Profile
             if ($item->fields['interface'] == 'central') {
                 return self::createTabEntry(__('Data injection', 'datainjection'), 0, $item::getType(), 'ti ti-download');
             }
+
             return '';
         }
+
         return '';
     }
 
@@ -90,6 +91,7 @@ class PluginDatainjectionProfile extends Profile
             );
             $profile->showForm($ID);
         }
+
         return true;
     }
 
@@ -161,6 +163,7 @@ class PluginDatainjectionProfile extends Profile
                         $value = 0;
                         break;
                 }
+
                 self::addDefaultProfileInfos($id, ['plugin_datainjection_model' => $value]);
                 if ($value > 0) {
                     self::addDefaultProfileInfos($id, ['plugin_datainjection_use' => READ]);
@@ -169,6 +172,7 @@ class PluginDatainjectionProfile extends Profile
                 }
             }
         }
+        return null;
     }
 
     public function showForm($ID, $options = [])
@@ -199,6 +203,7 @@ class PluginDatainjectionProfile extends Profile
             echo "</div>\n";
             Html::closeForm();
         }
+
         echo "</div>";
 
         return true;

@@ -71,28 +71,7 @@ class PluginDatainjectionContract_ItemInjection extends Contract_Item implements
    **/
     public function getOptions($primary_type = '')
     {
-
-        $tab[100]['table']         = 'glpi_contracts';
-        $tab[100]['field']         = 'name';
-        $tab[100]['linkfield']     = 'name';
-        $tab[100]['name']          = __('Name');
-        $tab[100]['injectable']    = true;
-        $tab[100]['checktype']     = 'text';
-        $tab[100]['displaytype']   = 'relation';
-        $tab[100]['relationclass'] = 'Contract_Item';
-        $tab[100]['storevaluein']  = 'contracts_id';
-
-        $tab[101]['table']         = 'glpi_contracts';
-        $tab[101]['field']         = 'num';
-        $tab[101]['linkfield']     = 'num';
-        $tab[101]['name']          = __('Serial number');
-        $tab[101]['injectable']    = true;
-        $tab[101]['checktype']     = 'text';
-        $tab[101]['displaytype']   = 'relation';
-        $tab[101]['relationclass'] = 'Contract_Item';
-        $tab[101]['storevaluein']  = 'contracts_id';
-
-        return $tab;
+        return [100 => ['table' => 'glpi_contracts', 'field' => 'name', 'linkfield' => 'name', 'name' => __('Name'), 'injectable' => true, 'checktype' => 'text', 'displaytype' => 'relation', 'relationclass' => 'Contract_Item', 'storevaluein' => 'contracts_id'], 101 => ['table' => 'glpi_contracts', 'field' => 'num', 'linkfield' => 'num', 'name' => __('Serial number'), 'injectable' => true, 'checktype' => 'text', 'displaytype' => 'relation', 'relationclass' => 'Contract_Item', 'storevaluein' => 'contracts_id']];
     }
 
 
@@ -114,9 +93,6 @@ class PluginDatainjectionContract_ItemInjection extends Contract_Item implements
    **/
     public function addSpecificNeededFields($primary_type, $values)
     {
-
-        $fields['items_id'] = $values[$primary_type]['id'];
-        $fields['itemtype'] = $primary_type;
-        return $fields;
+        return ['items_id' => $values[$primary_type]['id'], 'itemtype' => $primary_type];
     }
 }

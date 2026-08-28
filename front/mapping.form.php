@@ -80,6 +80,7 @@ if (isset($_POST["update"])) {
                 ),
             );
         }
+
         unset($_SESSION['datainjection']['lines']);
     }
 }

@@ -77,28 +77,19 @@ class PluginDatainjectionProfileInjection extends Profile implements PluginDatai
     public function checkType($field_name, $data, $mandatory)
     {
 
-        switch ($field_name) {
-            case 'right_rw':
-                return (in_array($data, ['r', 'w'])
-                 ? PluginDatainjectionCommonInjectionLib::SUCCESS
-                 : PluginDatainjectionCommonInjectionLib::TYPE_MISMATCH);
-
-            case 'right_r':
-                return (($data == 'r') ? PluginDatainjectionCommonInjectionLib::SUCCESS
-                             : PluginDatainjectionCommonInjectionLib::TYPE_MISMATCH);
-
-            case 'right_w':
-                return (($data == 'w') ? PluginDatainjectionCommonInjectionLib::SUCCESS
-                             : PluginDatainjectionCommonInjectionLib::TYPE_MISMATCH);
-
-            case 'interface':
-                return (in_array($data, ['helpdesk', 'central'])
-                 ? PluginDatainjectionCommonInjectionLib::SUCCESS
-                 : PluginDatainjectionCommonInjectionLib::TYPE_MISMATCH);
-
-            default:
-                return PluginDatainjectionCommonInjectionLib::SUCCESS;
-        }
+        return match ($field_name) {
+            'right_rw' => in_array($data, ['r', 'w'])
+             ? PluginDatainjectionCommonInjectionLib::SUCCESS
+             : PluginDatainjectionCommonInjectionLib::TYPE_MISMATCH,
+            'right_r' => ($data == 'r') ? PluginDatainjectionCommonInjectionLib::SUCCESS
+                         : PluginDatainjectionCommonInjectionLib::TYPE_MISMATCH,
+            'right_w' => ($data == 'w') ? PluginDatainjectionCommonInjectionLib::SUCCESS
+                         : PluginDatainjectionCommonInjectionLib::TYPE_MISMATCH,
+            'interface' => in_array($data, ['helpdesk', 'central'])
+             ? PluginDatainjectionCommonInjectionLib::SUCCESS
+             : PluginDatainjectionCommonInjectionLib::TYPE_MISMATCH,
+            default => PluginDatainjectionCommonInjectionLib::SUCCESS,
+        };
     }
 
 

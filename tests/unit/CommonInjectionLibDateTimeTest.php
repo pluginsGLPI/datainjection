@@ -132,6 +132,7 @@ final class CommonInjectionLibDateTimeTest extends DbTestCase
         );
 
         $lib->processAddOrUpdate();
+
         $results = $lib->getInjectionResults();
 
         self::assertSame(PluginDatainjectionCommonInjectionLib::SUCCESS, $results['status']);

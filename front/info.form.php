@@ -44,7 +44,9 @@ if (isset($_POST["update"])) {
             $info->delete($input);
         }
     }
+
     Html::back();
 }
+
 Session::setActiveTab('PluginDatainjectionModel', 'PluginDatainjectionModel$5');
 Html::back();

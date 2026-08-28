@@ -30,15 +30,6 @@
 
 class PluginDatainjectionEngine
 {
-    //Model informations
-    private $model;
-
-    //Current entity
-    private $entity;
-
-    //Additional infos to be added
-    private $infos = [];
-
     //Lines in error
     private $error_lines = [];
 
@@ -48,18 +39,13 @@ class PluginDatainjectionEngine
     * @param array $infos     array
     * @param int|string $entity             (default 0)
     */
-    public function __construct($model, $infos = [], $entity = 0)
+    public function __construct(private $model, private $infos = [], private $entity = 0)
     {
-
-        //Instanciate model
-        $this->model = $model;
 
         //Load model and mappings informations
         $this->getModel()->loadMappings();
         $this->getModel()->populateSeveraltimesMappedFields();
         $this->getModel()->loadInfos();
-        $this->infos  = $infos;
-        $this->entity = $entity;
     }
 
 
@@ -160,6 +146,7 @@ class PluginDatainjectionEngine
         if ($results['status'] != PluginDatainjectionCommonInjectionLib::SUCCESS) {
             $this->error_lines[] = $line;
         }
+
         return $results;
     }
 
@@ -217,8 +204,10 @@ class PluginDatainjectionEngine
             if (isset($fields_toinject[$mapping->getItemtype()][$mapping->getValue()])) {
                 $return_value .= $fields_toinject[$mapping->getItemtype()][$mapping->getValue()];
             }
+
             $return_value .= $mapping->getMappingName() . "=" . $value . "\n";
         }
+
         $fields_toinject[$mapping->getItemtype()][$mapping->getValue()] = $return_value;
     }
 
@@ -241,6 +230,7 @@ class PluginDatainjectionEngine
                           = $this->infos[$info->getValue()];
             }
         }
+
         return $additional_infos;
     }
 
