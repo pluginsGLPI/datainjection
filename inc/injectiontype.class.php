@@ -28,6 +28,7 @@
  * -------------------------------------------------------------------------
  */
 use Glpi\Exception\Http\HttpException;
+use GlpiPlugin\Datainjection\Glpi\Asset\AssetInjection;
 
 use function Safe\json_decode;
 use function Safe\json_encode;
@@ -78,6 +79,10 @@ class PluginDatainjectionInjectionType
                         $name = $plugin->getName() . ': ';
                     }
                     $name .= call_user_func([$type, 'getTypeName']);
+
+                    if ($instance instanceof AssetInjection) {
+                        $typename = $instance->getVirtualType();
+                    }
                     $values[$typename] = $name;
                 }
             }
@@ -388,7 +393,7 @@ class PluginDatainjectionInjectionType
                 foreach ($options as $option) {
                     if (
                         isset($option['table'])
-                        && ($option['table'] == getItemTypeForTable($data['itemtype']))
+                        && ($option['table'] == $injectionClass->getTable())
                         && ($option['linkfield'] == $data['value'])
                         && ($option['displaytype'] != 'multiline_text')
                         && ($mapping_or_info['value'] != $data['value'])

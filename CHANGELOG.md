@@ -14,6 +14,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [2.15.10] - 2026-08-07
 
+### Added
+
+- Permit to Inject GlpiAsset
+
 ### Fixed
 
 - Fix crash on mapping/injection screens (`Safe\unserialize` not shipped by GLPI core yet)
