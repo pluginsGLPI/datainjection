@@ -320,6 +320,14 @@ class PluginDatainjectionClientInjection
         TemplateRenderer::getInstance()->display('@datainjection/clientinjection_result.html.twig', $data);
     }
 
+    private static function escapeCsvFormula(mixed $value): mixed
+    {
+        if (is_string($value) && isset($value[0]) && in_array($value[0], ['=', '+', '-', '@'], true)) {
+            return "'" . $value;
+        }
+        return $value;
+    }
+
     public static function exportErrorsInCSV()
     {
 
@@ -328,7 +336,7 @@ class PluginDatainjectionClientInjection
 
         if (!empty($error_lines)) {
             $model = PluginDatainjectionSession::unserialize(PluginDatainjectionSession::getParam('currentmodel'));
-            $file  = PLUGIN_DATAINJECTION_UPLOAD_DIR . PluginDatainjectionSession::getParam('file_name');
+            $file  = PLUGIN_DATAINJECTION_UPLOAD_DIR . basename(PluginDatainjectionSession::getParam('file_name'));
 
             $mappings = $model->getMappings();
             $tmpfile  = fopen($file, 'w');
@@ -341,11 +349,11 @@ class PluginDatainjectionClientInjection
 
             //Write lines
             foreach ($error_lines as $line) {
-                fputcsv($tmpfile, $line, $model->getBackend()->getDelimiter());
+                fputcsv($tmpfile, array_map([self::class, 'escapeCsvFormula'], $line), $model->getBackend()->getDelimiter());
             }
             fclose($tmpfile);
 
-            $name = "Error-" . PluginDatainjectionSession::getParam('file_name');
+            $name = "Error-" . basename(PluginDatainjectionSession::getParam('file_name'));
             $name = str_replace(' ', '', $name);
             header('Content-disposition: attachment; filename=' . $name);
             header('Content-Type: application/octet-stream');

@@ -32,6 +32,8 @@ Session::checkLoginUser();
 
 switch ($_GET["popup"]) {
     case "preview":
+        $model = new PluginDatainjectionModel();
+        $model->check($_GET['models_id'], READ);
         Html::popHeader(__('See the file', 'datainjection'), $_SERVER['PHP_SELF']);
         PluginDatainjectionModel::showPreviewMappings($_GET['models_id']);
         Html::popFooter();
