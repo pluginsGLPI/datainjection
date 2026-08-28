@@ -1149,7 +1149,7 @@ class PluginDatainjectionCommonInjectionLib
                     case "date":
                         //If the value is a date, try to reformat it if it's not the good type
                         //(dd-mm-yyyy instead of yyyy-mm-dd)
-                        $date = self::reformatDate($value, $this->getDateFormat());
+                        $date = $this->reformatDate($value, $this->getDateFormat());
                         $this->setValueForItemtype($itemtype, $field, $date);
                         break;
 
@@ -1234,7 +1234,7 @@ class PluginDatainjectionCommonInjectionLib
     *
     * @return string the date reformated, if needed
    **/
-    private static function reformatDate($original_date, $date_format)
+    private function reformatDate($original_date, $date_format)
     {
 
         if (empty($original_date)) {
@@ -1305,7 +1305,7 @@ class PluginDatainjectionCommonInjectionLib
             $time_part = '00:00:00';
         }
 
-        $new_date = self::reformatDate($date_part, $date_format);
+        $new_date = $this->reformatDate($date_part, $date_format);
         if ($new_date === "NULL") {
             return "NULL";
         }

@@ -89,12 +89,18 @@ final class CommonInjectionLibDateTimeTest extends DbTestCase
      */
     public function testReformatDateTime(string $original, string $date_format, string $expected): void
     {
+        $lib = new PluginDatainjectionCommonInjectionLib(
+            new PluginDatainjectionComputerInjection(),
+            [],
+            [],
+        );
+
         $reformat_datetime = new ReflectionMethod(
             PluginDatainjectionCommonInjectionLib::class,
             'reformatDateTime',
         );
 
-        self::assertSame($expected, $reformat_datetime->invoke(null, $original, $date_format));
+        self::assertSame($expected, $reformat_datetime->invoke($lib, $original, $date_format));
     }
 
     /**

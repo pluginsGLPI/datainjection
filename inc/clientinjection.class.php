@@ -342,7 +342,7 @@ class PluginDatainjectionClientInjection
 
         if (!in_array($error_lines, ['', '0', []], true)) {
             $model = PluginDatainjectionSession::unserialize(PluginDatainjectionSession::getParam('currentmodel'));
-            $file  = PLUGIN_DATAINJECTION_UPLOAD_DIR . basename(PluginDatainjectionSession::getParam('file_name'));
+            $file  = PLUGIN_DATAINJECTION_UPLOAD_DIR . basename((string) PluginDatainjectionSession::getParam('file_name'));
 
             $mappings = $model->getMappings();
             $tmpfile  = fopen($file, 'w');
@@ -360,7 +360,7 @@ class PluginDatainjectionClientInjection
 
             fclose($tmpfile);
 
-            $name = "Error-" . basename(PluginDatainjectionSession::getParam('file_name'));
+            $name = "Error-" . basename((string) PluginDatainjectionSession::getParam('file_name'));
             $name = str_replace(' ', '', $name);
             header('Content-disposition: attachment; filename=' . $name);
             header('Content-Type: application/octet-stream');
