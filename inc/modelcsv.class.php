@@ -62,7 +62,7 @@ class PluginDatainjectionModelcsv extends CommonDBChild
 {
     public static string $rightname = "plugin_datainjection_model";
 
-    public $specific_fields;
+    public array $specific_fields;
 
     // From CommonDBChild
     public static string $itemtype  = 'PluginDatainjectionModel';
@@ -70,7 +70,6 @@ class PluginDatainjectionModelcsv extends CommonDBChild
     public static string $items_id  = 'models_id';
 
     public bool $dohistory        = true;
-
 
     public function getEmpty()
     {

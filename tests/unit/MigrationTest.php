@@ -30,6 +30,7 @@
 
 namespace GlpiPlugin\Datainjection\Tests\Unit;
 
+use DBmysql;
 use GlpiPlugin\Datainjection\Tests\AbstractDataInjectionTestCase;
 use Migration;
 use Psr\Log\LogLevel;
@@ -39,7 +40,7 @@ final class MigrationTest extends AbstractDataInjectionTestCase
 {
     public function testMigration2158To2159FixesLegacyNegativeEntityId(): void
     {
-        /** @var \DBmysql $DB */
+        /** @var DBmysql $DB */
         global $DB;
 
         $table = 'glpi_plugin_datainjection_models';
@@ -47,7 +48,7 @@ final class MigrationTest extends AbstractDataInjectionTestCase
         // Recreate the pre-2158 column shape: signed, defaulting to -1,
         // exactly as described in the migration's own comments.
         $this->withoutTransaction(static function () use ($DB, $table): void {
-            $DB->doQuery("ALTER TABLE `$table` CHANGE `entities_id` `entities_id` int NOT NULL default '-1'");
+            $DB->doQuery(sprintf("ALTER TABLE `%s` CHANGE `entities_id` `entities_id` int NOT NULL default '-1'", $table));
         });
         // GLPI itself warns on signed keys; expected here since we are
         // deliberately recreating the legacy (pre-migration) column shape.
@@ -86,17 +87,19 @@ final class MigrationTest extends AbstractDataInjectionTestCase
                     $column = $field;
                 }
             }
+
             self::assertNotNull($column);
             self::assertStringContainsString('unsigned', $column['Type']);
         } finally {
             if ($id !== null) {
                 $DB->delete($table, ['id' => $id]);
             }
+
             // Guarantee the column ends up unsigned regardless of whether the
             // assertions above passed, matching the schema every other test
             // in this suite relies on.
             $this->withoutTransaction(static function () use ($DB, $table): void {
-                $DB->doQuery("ALTER TABLE `$table` CHANGE `entities_id` `entities_id` int unsigned NOT NULL default '0'");
+                $DB->doQuery(sprintf("ALTER TABLE `%s` CHANGE `entities_id` `entities_id` int unsigned NOT NULL default '0'", $table));
             });
         }
     }
