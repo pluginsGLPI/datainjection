@@ -86,7 +86,7 @@ class PluginDatainjectionSoftwareLicenseInjection extends SoftwareLicense implem
 
         $options['ignore_fields'] = array_merge($blacklist, $notimportable);
 
-        $key = array_search(2, $options['ignore_fields']);
+        $key = array_search(2, $options['ignore_fields'], true);
         unset($options['ignore_fields'][$key]);
 
         $options['displaytype']   = ["dropdown"       => [5, 6, 7, 110],
@@ -194,6 +194,7 @@ class PluginDatainjectionSoftwareLicenseInjection extends SoftwareLicense implem
         if ($primary_type == 'Software') {
             $fields['softwares_id'] = $values[$primary_type]['id'];
         }
+
         return $fields;
     }
 
@@ -211,6 +212,7 @@ class PluginDatainjectionSoftwareLicenseInjection extends SoftwareLicense implem
                 'name'         => $fields_toinject['SoftwareLicense']['name'],
             ];
         }
+
         return [];
     }
 }

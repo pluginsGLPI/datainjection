@@ -189,7 +189,7 @@ class PluginDatainjectionUserInjection extends User implements PluginDatainjecti
         if (isset($values['User']['useremails_id']) && $rights['add_dropdown'] && Session::haveRight(User::$rightname, UPDATE)) {
             $emails = preg_split('/[\s,;]+/', $values['User']['useremails_id'], -1, PREG_SPLIT_NO_EMPTY);
             foreach ($emails as $email) {
-                $email = trim($email);
+                $email = trim((string) $email);
                 if (filter_var($email, FILTER_VALIDATE_EMAIL) && !countElementsInTable(
                     "glpi_useremails",
                     [
@@ -207,6 +207,7 @@ class PluginDatainjectionUserInjection extends User implements PluginDatainjecti
                     if (countElementsInTable("glpi_useremails", ['users_id' => $values['User']['id']]) === 0) {
                         $tmp['is_default'] = 1;
                     }
+
                     $useremail->add($tmp);
                 }
             }

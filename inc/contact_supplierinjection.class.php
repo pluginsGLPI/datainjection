@@ -64,16 +64,7 @@ class PluginDatainjectionContact_SupplierInjection extends Contact_Supplier impl
    **/
     public function getOptions($primary_type = '')
     {
-
-        $tab[100]['table']         = 'glpi_suppliers';
-        $tab[100]['field']         = 'name';
-        $tab[100]['linkfield']     = 'suppliers_id';
-        $tab[100]['name']          = __('Associated suppliers');
-        $tab[100]['displaytype']   = 'relation';
-        $tab[100]['relationclass'] = 'Contact_Supplier';
-        $tab[100]['injectable']    = true;
-
-        return $tab;
+        return [100 => ['table' => 'glpi_suppliers', 'field' => 'name', 'linkfield' => 'suppliers_id', 'name' => __('Associated suppliers'), 'displaytype' => 'relation', 'relationclass' => 'Contact_Supplier', 'injectable' => true]];
     }
 
 

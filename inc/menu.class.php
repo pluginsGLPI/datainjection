@@ -71,7 +71,7 @@ class PluginDatainjectionMenu extends CommonGLPI
             ];
 
             $model_name  = PluginDatainjectionModel::getTypeName(Session::getPluralNumber());
-            $image_model = "<i class='" . PluginDatainjectionModel::getIcon() . "' title='$model_name' alt='$model_name'></i>";
+            $image_model = "<i class='" . PluginDatainjectionModel::getIcon() . sprintf("' title='%s' alt='%s'></i>", $model_name, $model_name);
 
             if (Session::haveRight(PluginDatainjectionModel::$rightname, READ)) {
                 $menu['options']['model']['title'] = $model_name;

@@ -29,7 +29,7 @@
  */
 
 // Direct access to file
-if (strpos($_SERVER['PHP_SELF'], "injection.php")) {
+if (strpos((string) $_SERVER['PHP_SELF'], "injection.php")) {
     header("Content-Type: text/html; charset=UTF-8");
     Html::header_nocache();
 }

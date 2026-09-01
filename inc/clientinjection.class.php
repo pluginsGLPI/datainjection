@@ -47,7 +47,9 @@ class PluginDatainjectionClientInjection
     public static string $rightname = "plugin_datainjection_use";
 
     public const STEP_UPLOAD  = 0;
+
     public const STEP_PROCESS = 1;
+
     public const STEP_RESULT  = 2;
 
     /**
@@ -153,6 +155,7 @@ class PluginDatainjectionClientInjection
             $lines[] = $line;
             $line    = $backend->getNextLine();
         }
+
         $backend->closeFile();
 
         //Store lines in session for batch processing
@@ -188,14 +191,15 @@ class PluginDatainjectionClientInjection
     {
         try {
             ini_set("max_execution_time", "0");
-        } catch (InfoException $e) {
-            ErrorHandler::logCaughtException($e);
+        } catch (InfoException $infoException) {
+            ErrorHandler::logCaughtException($infoException);
         }
 
         Profile::getCurrent()->disable();
 
         $model = PluginDatainjectionSession::unserialize($_SESSION['datainjection']['currentmodel']);
         $model->loadSpecificModel();
+
         $entities_id = $_SESSION['glpiactive_entity'];
         $lines_json  = PluginDatainjectionSession::getParam('injection_lines');
         $lines       = json_decode($lines_json, true);
@@ -226,6 +230,7 @@ class PluginDatainjectionClientInjection
                     'line'   => $injectionline,
                 ];
             }
+
             $results[]     = $result;
 
             if ($result['status'] != PluginDatainjectionCommonInjectionLib::SUCCESS) {
@@ -314,7 +319,7 @@ class PluginDatainjectionClientInjection
             'popup_url'     => plugin_datainjection_geturl() . "front/popup.php?popup=log&models_id=" . $model->fields['id'],
             'model_id'      => $model->fields['id'],
             'has_pdf'       => $plugin->isActivated('pdf'),
-            'has_errors'    => !empty($error_lines),
+            'has_errors'    => !in_array($error_lines, ['', '0', []], true),
         ];
 
         TemplateRenderer::getInstance()->display('@datainjection/clientinjection_result.html.twig', $data);
@@ -325,6 +330,7 @@ class PluginDatainjectionClientInjection
         if (is_string($value) && isset($value[0]) && in_array($value[0], ['=', '+', '-', '@'], true)) {
             return "'" . $value;
         }
+
         return $value;
     }
 
@@ -334,9 +340,9 @@ class PluginDatainjectionClientInjection
         $error_lines = json_decode(PluginDatainjectionSession::getParam('error_lines'), true);
         self::stripslashes_array($error_lines);
 
-        if (!empty($error_lines)) {
+        if (!in_array($error_lines, ['', '0', []], true)) {
             $model = PluginDatainjectionSession::unserialize(PluginDatainjectionSession::getParam('currentmodel'));
-            $file  = PLUGIN_DATAINJECTION_UPLOAD_DIR . basename(PluginDatainjectionSession::getParam('file_name'));
+            $file  = PLUGIN_DATAINJECTION_UPLOAD_DIR . basename((string) PluginDatainjectionSession::getParam('file_name'));
 
             $mappings = $model->getMappings();
             $tmpfile  = fopen($file, 'w');
@@ -349,11 +355,12 @@ class PluginDatainjectionClientInjection
 
             //Write lines
             foreach ($error_lines as $line) {
-                fputcsv($tmpfile, array_map([self::class, 'escapeCsvFormula'], $line), $model->getBackend()->getDelimiter());
+                fputcsv($tmpfile, array_map(self::escapeCsvFormula(...), $line), $model->getBackend()->getDelimiter());
             }
+
             fclose($tmpfile);
 
-            $name = "Error-" . basename(PluginDatainjectionSession::getParam('file_name'));
+            $name = "Error-" . basename((string) PluginDatainjectionSession::getParam('file_name'));
             $name = str_replace(' ', '', $name);
             header('Content-disposition: attachment; filename=' . $name);
             header('Content-Type: application/octet-stream');

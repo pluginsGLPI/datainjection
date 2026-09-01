@@ -94,6 +94,7 @@ class PluginDatainjectionDeviceDriveInjection extends DeviceDrive implements Plu
             if (!is_a($class, CommonDBTM::class, true)) {
                 throw new HttpException(500, 'Class ' . $class . ' is not a valid class');
             }
+
             $item    = new $class();
             $foreign = getForeignKeyFieldForTable(getTableForItemType(get_parent_class($this)));
 
