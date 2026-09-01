@@ -27,6 +27,7 @@
  #}
 
 {% import 'components/form/fields_macros.html.twig' as fields %}
+{% import 'components/form/basic_inputs_macros.html.twig' as inputs %}
 
 {% if add_form %}
     <form method="post" name="form" action="{{ url }}" enctype="multipart/form-data">
@@ -36,15 +37,14 @@
         <span>{{ __('File to inject', 'datainjection') }}</span>
     </div>
 
-    <input type="hidden" name="id" value="{{ models_id }}">
+    {{ inputs.hidden('id', models_id) }}
 
-    {{ fields.htmlField(
+    {{ fields.fileField(
         'filename',
-        '<input type="file" name="filename">',
+        '',
         __('Choose a file', 'datainjection'),
         {
-            'add_field_class'   : 'col-sm-12',
-            'label_class'       : 'col-5 col-sm-5',
+            'simple'            : true,
             'input_class'       : 'col-6 col-sm-6',
         }
     ) }}
@@ -54,10 +54,7 @@
         file_encoding_values,
         __('File encoding', 'datainjection'),
         {
-            'add_field_class'   : 'col-sm-12',
-            'label_class'       : 'col-5 col-sm-5',
             'input_class'       : 'col-6 col-sm-6',
-            'width': '325px',
         }
     ) }}
 
@@ -68,12 +65,12 @@
             {% else %}
                 {% set message = __("Watch out, you're about to inject data into GLPI. Are you sure you want to do it ?", 'datainjection') %}
             {% endif %}
-            <input type="submit" class="btn btn-primary" name="upload" value="{{ submit_label }}" onclick="return window.confirm('{{ message|e('js') }}');">
+            {{ inputs.submit('upload', submit_label, submit_label, {'additional_attributes': {'onclick': "return window.confirm('" ~ message|e('js') ~ "');"}}) }}
         {% else %}
-            <input type="submit" class="btn btn-primary" name="upload" value="{{ submit_label }}">
+            {{ inputs.submit('upload', submit_label, submit_label) }}
         {% endif %}
         &nbsp;&nbsp;
-        <input type="submit" class="btn btn-outline-danger" name="cancel" value="{{ _x('button', 'Cancel') }}">
+        {{ inputs.submit('cancel', _x('button', 'Cancel'), _x('button', 'Cancel'), {'class': 'btn btn-outline-danger'}) }}
     </div>
 {% if add_form %}
     </form>

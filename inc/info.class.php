@@ -156,7 +156,7 @@ class PluginDatainjectionInfo extends CommonDBTM
                     if (isset($_GET["select"]) && ($_GET["select"] == "all")) {
                         $sel = "checked";
                     }
-                    echo "<input type='checkbox' name='item[" . $infos_id . "]' value='1' $sel>";
+                    echo "<input type='checkbox' class='form-check-input' name='item[" . $infos_id . "]' value='1' $sel>";
                     echo "</td>";
                 }
                 echo "<td class='center'>";

@@ -342,7 +342,7 @@ class PluginDatainjectionInjectionType
                 && !in_array($options['value'], self::NON_MANDATORY_FIELDS)
             )
         ) {
-            echo "<input type='checkbox' name='data[" . htmlspecialchars($mapping_or_info['id']) . "][is_mandatory]' $checked>";
+            echo "<input type='checkbox' class='form-check-input' name='data[" . htmlspecialchars($mapping_or_info['id']) . "][is_mandatory]' $checked>";
         }
     }
 
