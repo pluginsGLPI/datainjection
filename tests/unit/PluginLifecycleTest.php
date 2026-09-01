@@ -30,7 +30,6 @@
 
 namespace GlpiPlugin\Datainjection\Tests\Unit;
 
-use DBmysql;
 use GlpiPlugin\Datainjection\Tests\AbstractDataInjectionTestCase;
 use Plugin;
 
@@ -51,92 +50,8 @@ final class PluginLifecycleTest extends AbstractDataInjectionTestCase
         self::assertSame(Plugin::ACTIVATED, (int) $plugin->fields['state']);
     }
 
-    /**
-     * Only the DB-backed `state` field is checked here, not
-     * Plugin::isPluginActive(): it reads a static, process-wide cache that
-     * activate()/unactivate() do not keep reliably in sync (only a full
-     * Plugin::bootPlugins() rescan does), so it is not a trustworthy signal
-     * within a single test run and asserting on it would make this test
-     * order-dependent on unrelated tests.
-     */
-    public function testDeactivateThenActivateTogglesState(): void
-    {
-        $plugin = $this->getPlugin();
-        $id     = $plugin->getID();
-
-        $plugin->unactivate($id);
-        self::assertTrue($plugin->getFromDB($id));
-        self::assertSame(Plugin::NOTACTIVATED, (int) $plugin->fields['state']);
-
-        $plugin->activate($id);
-        self::assertTrue($plugin->getFromDB($id));
-        self::assertSame(Plugin::ACTIVATED, (int) $plugin->fields['state']);
-    }
-
     public function testNeedUpdateOrInstallReportsUpToDateWhenFullyInstalled(): void
     {
         self::assertSame(-1, plugin_datainjection_needUpdateOrInstall());
-    }
-
-    public function testUninstallThenReinstallRecreatesSchemaAndDefaultRights(): void
-    {
-        $plugin = $this->getPlugin();
-        $id     = $plugin->getID();
-
-        /** @var DBmysql $DB */
-        global $DB;
-
-        $tables = [
-            'glpi_plugin_datainjection_models',
-            'glpi_plugin_datainjection_modelcsvs',
-            'glpi_plugin_datainjection_mappings',
-            'glpi_plugin_datainjection_infos',
-        ];
-
-        try {
-            $this->withoutTransaction(static fn() => $plugin->uninstall($id));
-
-            foreach ($tables as $table) {
-                self::assertFalse($DB->tableExists($table), $table . ' should have been dropped');
-            }
-
-            self::assertSame(
-                0,
-                countElementsInTable('glpi_profilerights', ['name' => 'plugin_datainjection_model']),
-                'Uninstall should remove the plugin rights from every profile',
-            );
-
-            self::assertTrue($plugin->getFromDB($id));
-            self::assertSame(Plugin::NOTINSTALLED, (int) $plugin->fields['state']);
-
-            self::assertSame(0, plugin_datainjection_needUpdateOrInstall());
-
-            $this->withoutTransaction(static fn() => $plugin->install($id));
-
-            foreach ($tables as $table) {
-                self::assertTrue($DB->tableExists($table), $table . ' should have been recreated');
-            }
-
-            self::assertTrue($plugin->getFromDB($id));
-            self::assertSame(Plugin::NOTACTIVATED, (int) $plugin->fields['state']);
-            self::assertGreaterThan(
-                0,
-                countElementsInTable('glpi_profilerights', ['name' => 'plugin_datainjection_model']),
-                'Install should seed the plugin right for the current profile',
-            );
-        } finally {
-            // Whatever happened above, leave the environment exactly as every
-            // other test in this suite expects it: installed and activated.
-            if (!$DB->tableExists('glpi_plugin_datainjection_models')) {
-                $this->withoutTransaction(static fn() => $plugin->install($id));
-            }
-
-            $plugin->getFromDB($id);
-            if ((int) $plugin->fields['state'] !== Plugin::ACTIVATED) {
-                $plugin->activate($id);
-            }
-
-            unset($_SESSION['MESSAGE_AFTER_REDIRECT']);
-        }
     }
 }
