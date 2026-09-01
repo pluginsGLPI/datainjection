@@ -156,7 +156,7 @@ class PluginDatainjectionInfo extends CommonDBTM
                         $sel = "checked";
                     }
 
-                    echo "<input type='checkbox' name='item[" . $infos_id . sprintf("]' value='1' %s>", $sel);
+                    echo "<input type='checkbox' class='form-check-input' name='item[" . $infos_id . sprintf("]' value='1' %s>", $sel);
                     echo "</td>";
                 }
 

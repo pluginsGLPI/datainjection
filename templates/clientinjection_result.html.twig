@@ -26,12 +26,14 @@
  # -------------------------------------------------------------------------
  #}
 
-  <form method="post" action={{ from_url }}>
+{% import 'components/form/basic_inputs_macros.html.twig' as inputs %}
+
+  <form method="post" action="{{ from_url }}">
     <div class="hr-text mt-5 mb-5">
         <i class="fa-2x ti ti-chart-bar"></i>
         <span>{{ __("Injection's results", 'datainjection') }}</span>
     </div>
-    <div class="center">
+    <div class="text-center">
       {% if ok %}
         <i class="ti ti-check" style="color: #28a745;"></i>
         {{ __('Injection successful', 'datainjection') }}
@@ -41,7 +43,7 @@
       {% endif %}
     </div>
 
-    <div class="center mt-2">
+    <div class="text-center mt-2">
       <div class="d-flex justify-content-center gap-3">
         <a href="#" onclick="var w = window.open('{{ popup_url }}', 'glpipopup', 'height=400, width=1000, top=100, left=100, scrollbars=yes');w.focus();" title="{{ __('See the log', 'datainjection') }}">
           <h2><i class="fa-2x ti ti-file-search"></i></h2>
@@ -62,7 +64,6 @@
     </div>
 
     <div class="d-flex justify-content-end">
-      <input class="btn btn-primary" type="submit" name="finish" value="{{ __('Finish', 'datainjection') }}">
+      {{ inputs.submit('finish', __('Finish', 'datainjection'), __('Finish', 'datainjection')) }}
     </div>
-  </div>
 </form>

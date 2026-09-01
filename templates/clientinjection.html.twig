@@ -27,7 +27,6 @@
  #}
 
 {% import 'components/form/fields_macros.html.twig' as fields %}
-{% import 'components/alerts_macros.html.twig' as alerts %}
 
 {% set rand = random() %}
 <div class="firstbloc">
@@ -56,7 +55,12 @@
                         {% if can_create_model %}
                             {% set text = text ~ '. ' ~ __('You can start the model creation by hitting the button', 'datainjection') ~ ': ' ~ model_type_name %}
                         {% endif %}
-                        {{ alerts.alert_info(text) }}
+                        {{ component('Alert', {
+                            color: 'info',
+                            heading: __('No model available', 'datainjection'),
+                            content: text,
+                            icon: 'ti ti-info-circle',
+                        }) }}
                     {% endif %}
                 </div>
             </div>
