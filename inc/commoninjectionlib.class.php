@@ -642,7 +642,7 @@ class PluginDatainjectionCommonInjectionLib
                         'entities_id'  => $this->entity,
                     ];
 
-                    if ($item->getType() == 'Entity') {
+                    if ($item::class == 'Entity') {
                         // Blocks entity creation. The findID method only searches for direct sub-entities of the root, not deeper levels.
                         $crit = 'name';
                         if (strpos($input['completename'], '>')) {
@@ -1831,7 +1831,7 @@ class PluginDatainjectionCommonInjectionLib
                 && !empty($option)
                 && isset($option['table'])
                 && $option['table'] === getTableForItemType(Group::class)
-                && Toolbox::hasTrait($item->getType(), AssignableItem::class)
+                && Toolbox::hasTrait($item::class, AssignableItem::class)
             ) {
                 $normalized_value = $toinject[$key];
                 $group_type = null;

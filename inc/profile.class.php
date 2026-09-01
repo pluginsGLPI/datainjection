@@ -68,7 +68,7 @@ class PluginDatainjectionProfile extends Profile
 
         if ($item instanceof Profile) {
             if ($item->fields['interface'] == 'central') {
-                return self::createTabEntry(__('Data injection', 'datainjection'), 0, $item::getType(), 'ti ti-download');
+                return self::createTabEntry(__('Data injection', 'datainjection'), 0, $item::class, 'ti ti-download');
             }
 
             return '';

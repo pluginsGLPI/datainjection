@@ -30,6 +30,7 @@
 
 namespace GlpiPlugin\Datainjection\Tests\Unit;
 
+use DBmysql;
 use GlpiPlugin\Datainjection\Tests\AbstractDataInjectionTestCase;
 use Plugin;
 
@@ -82,7 +83,7 @@ final class PluginLifecycleTest extends AbstractDataInjectionTestCase
         $plugin = $this->getPlugin();
         $id     = $plugin->getID();
 
-        /** @var \DBmysql $DB */
+        /** @var DBmysql $DB */
         global $DB;
 
         $tables = [
@@ -96,8 +97,9 @@ final class PluginLifecycleTest extends AbstractDataInjectionTestCase
             $this->withoutTransaction(static fn() => $plugin->uninstall($id));
 
             foreach ($tables as $table) {
-                self::assertFalse($DB->tableExists($table), "$table should have been dropped");
+                self::assertFalse($DB->tableExists($table), $table . ' should have been dropped');
             }
+
             self::assertSame(
                 0,
                 countElementsInTable('glpi_profilerights', ['name' => 'plugin_datainjection_model']),
@@ -112,8 +114,9 @@ final class PluginLifecycleTest extends AbstractDataInjectionTestCase
             $this->withoutTransaction(static fn() => $plugin->install($id));
 
             foreach ($tables as $table) {
-                self::assertTrue($DB->tableExists($table), "$table should have been recreated");
+                self::assertTrue($DB->tableExists($table), $table . ' should have been recreated');
             }
+
             self::assertTrue($plugin->getFromDB($id));
             self::assertSame(Plugin::NOTACTIVATED, (int) $plugin->fields['state']);
             self::assertGreaterThan(
@@ -127,10 +130,12 @@ final class PluginLifecycleTest extends AbstractDataInjectionTestCase
             if (!$DB->tableExists('glpi_plugin_datainjection_models')) {
                 $this->withoutTransaction(static fn() => $plugin->install($id));
             }
+
             $plugin->getFromDB($id);
             if ((int) $plugin->fields['state'] !== Plugin::ACTIVATED) {
                 $plugin->activate($id);
             }
+
             unset($_SESSION['MESSAGE_AFTER_REDIRECT']);
         }
     }
