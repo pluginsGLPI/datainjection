@@ -98,14 +98,14 @@ class PluginDatainjectionDeviceNetworkCardInjection extends DeviceNetworkCard im
             $foreign = getForeignKeyFieldForTable(getTableForItemType(get_parent_class($this)));
 
             if (
-                !countElementsInTable(
+                countElementsInTable(
                     $item->getTable(),
                     [
                         $foreign   => $values[get_parent_class($this)]['id'],
                         'itemtype' => 'Computer',
                         'items_id' => $values['Computer']['id'],
                     ],
-                )
+                ) === 0
             ) {
                 $tmp[$foreign]   = $values[get_parent_class($this)]['id'];
                 $tmp['items_id'] = $values['Computer']['id'];

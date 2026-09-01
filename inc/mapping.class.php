@@ -35,7 +35,7 @@ use function Safe\ob_start;
 
 class PluginDatainjectionMapping extends CommonDBTM
 {
-    public static $rightname = "plugin_datainjection_model";
+    public static string $rightname = "plugin_datainjection_model";
 
     /**
     * @param string $field

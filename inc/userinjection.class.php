@@ -186,7 +186,7 @@ class PluginDatainjectionUserInjection extends User implements PluginDatainjecti
         global $DB;
 
         //Manage user emails
-        if (isset($values['User']['useremails_id']) && $rights['add_dropdown'] && Session::haveRight('user', UPDATE)) {
+        if (isset($values['User']['useremails_id']) && $rights['add_dropdown'] && Session::haveRight(User::$rightname, UPDATE)) {
             $emails = preg_split('/[\s,;]+/', $values['User']['useremails_id'], -1, PREG_SPLIT_NO_EMPTY);
             foreach ($emails as $email) {
                 $email = trim((string) $email);
@@ -204,7 +204,7 @@ class PluginDatainjectionUserInjection extends User implements PluginDatainjecti
                         'is_default' => 0,
                     ];
                     // If user has no emails, set this one as default
-                    if (!countElementsInTable("glpi_useremails", ['users_id' => $values['User']['id']])) {
+                    if (countElementsInTable("glpi_useremails", ['users_id' => $values['User']['id']]) === 0) {
                         $tmp['is_default'] = 1;
                     }
 

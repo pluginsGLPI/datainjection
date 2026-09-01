@@ -64,7 +64,7 @@ use function Safe\tempnam;
 
 class PluginDatainjectionModel extends CommonDBTM
 {
-    public static $rightname = "plugin_datainjection_model";
+    public static string $rightname = "plugin_datainjection_model";
 
     //Store mappings informations
     private $mappings;
@@ -76,7 +76,7 @@ class PluginDatainjectionModel extends CommonDBTM
     protected $infos;
 
     //Do history (CommonDBTM)
-    public $dohistory = true;
+    public bool $dohistory = true;
 
     //Store specific backend parameters
     public $specific_model;
@@ -459,7 +459,7 @@ class PluginDatainjectionModel extends CommonDBTM
             'field'         => 'name',
             'name'          => __('Name'),
             'datatype'      => 'itemlink',
-            'itemlink_type' => $this->getType(),
+            'itemlink_type' => static::class,
             'autocomplete'  => true,
         ], [
             'id'            => 2,
@@ -740,20 +740,20 @@ class PluginDatainjectionModel extends CommonDBTM
     public function getTabNameForItem(CommonGLPI $item, $withtemplate = 0)
     {
 
-        $canedit = Session::haveRight('plugin_datainjection_model', UPDATE);
+        $canedit = Session::haveRight(self::$rightname, UPDATE);
 
         if (!$withtemplate && $item instanceof self) {
-            $tabs[1] = self::createTabEntry(__('Model'), 0, $item::getType(), self::getIcon());
+            $tabs[1] = self::createTabEntry(__('Model'), 0, $item::class, self::getIcon());
             if (!$this->isNewID($item->fields['id'])) {
                 if ($canedit) {
-                    $tabs[3] = self::createTabEntry(__('File to inject', 'datainjection'), 0, $item::getType(), 'ti ti-file-download');
+                    $tabs[3] = self::createTabEntry(__('File to inject', 'datainjection'), 0, $item::class, 'ti ti-file-download');
                 }
 
-                $tabs[4] = self::createTabEntry(__('Mappings', 'datainjection'), 0, $item::getType(), 'ti ti-columns');
+                $tabs[4] = self::createTabEntry(__('Mappings', 'datainjection'), 0, $item::class, 'ti ti-columns');
                 if ($item->fields['step'] > self::MAPPING_STEP) {
-                    $tabs[5] = self::createTabEntry(__('Additional Information', 'datainjection'), 0, $item::getType(), 'ti ti-code-variable-plus');
+                    $tabs[5] = self::createTabEntry(__('Additional Information', 'datainjection'), 0, $item::class, 'ti ti-code-variable-plus');
                     if ($canedit && $item->fields['step'] != self::READY_TO_USE_STEP) {
-                        $tabs[6] = self::createTabEntry(__('Validation'), 0, $item::getType(), 'ti ti-checklist');
+                        $tabs[6] = self::createTabEntry(__('Validation'), 0, $item::class, 'ti ti-checklist');
                     }
                 }
             }
