@@ -9,6 +9,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Fixed
 
+- Move to iterator
 - Fix various minor bugs in the import/export workflow
 - Fix an issue where data are not formatted when coming from a field plugin's custom field.
 
