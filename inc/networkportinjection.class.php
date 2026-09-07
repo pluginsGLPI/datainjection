@@ -344,30 +344,40 @@ class PluginDatainjectionNetworkportInjection extends NetworkPort implements Plu
             return false;
         }
 
-       // Find port in database
-        $sql = "SELECT `glpi_networkports`.`id`
-              FROM `glpi_networkports`, `glpi_networkequipments`
-              WHERE `glpi_networkports`.`itemtype`='NetworkEquipment'
-                    AND `glpi_networkports`.`items_id` = `glpi_networkequipments`.`id`
-                    AND `glpi_networkequipments`.`is_template` = '0'
-                    AND `glpi_networkequipments`.`entities_id`
-                           = '" . $values['NetworkPort']["entities_id"] . "'";
+        // Find port in database
+        $criteria = [
+            'glpi_networkports.itemtype'            => 'NetworkEquipment',
+            'glpi_networkequipments.is_template'    => 0,
+            'glpi_networkequipments.entities_id'    => $values['NetworkPort']["entities_id"],
+        ];
         if ($use_name) {
-            $sql .= " AND `glpi_networkequipments`.`name` = '" . $values['NetworkPort']["netname"] . "'";
+            $criteria['glpi_networkequipments.name'] = $values['NetworkPort']["netname"];
         }
         if ($use_logical_number) {
-            $sql .= " AND `glpi_networkports`.`logical_number` = '" . $values['NetworkPort']["netport"] . "'";
+            $criteria['glpi_networkports.logical_number'] = $values['NetworkPort']["netport"];
         }
         if ($use_mac) {
-            $sql .= " AND `glpi_networkports`.`mac` = '" . $values['NetworkPort']["netmac"] . "'";
+            $criteria['glpi_networkports.mac'] = $values['NetworkPort']["netmac"];
         }
-        $res = $DB->doQuery($sql);
 
-       //if at least one parameter is given
-        $nb = $DB->numrows($res);
-        if ($nb == 1) {
-           //Get data for this port
-            $netport         = $DB->fetchArray($res);
+        $result = $DB->request([
+            'SELECT'     => 'glpi_networkports.id',
+            'FROM'       => 'glpi_networkports',
+            'INNER JOIN' => [
+                'glpi_networkequipments' => [
+                    'ON' => [
+                        'glpi_networkports'      => 'items_id',
+                        'glpi_networkequipments' => 'id',
+                    ],
+                ],
+            ],
+            'WHERE'      => $criteria,
+        ]);
+
+        //if at least one parameter is given
+        if (count($result) === 1) {
+            //Get data for this port
+            $netport         = $result->current();
             $netport_netport = new NetworkPort_NetworkPort();
            //If this port already connected to another one ?
             if (!$netport_netport->getOppositeContact((int) $netport['id'])) {
