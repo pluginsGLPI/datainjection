@@ -34,16 +34,20 @@ Session::checkLoginUser();
 
 switch ($_GET["popup"]) {
     case "preview":
+        $models_id = (int) ($_GET['models_id'] ?? 0);
         $model = new PluginDatainjectionModel();
-        $model->check($_GET['models_id'], READ);
+        $model->check($models_id, READ);
         Html::popHeader(__('See the file', 'datainjection'), $_SERVER['PHP_SELF']);
-        PluginDatainjectionModel::showPreviewMappings($_GET['models_id']);
+        PluginDatainjectionModel::showPreviewMappings($models_id);
         Html::popFooter();
         break;
 
     case "log":
+        $models_id = (int) ($_GET['models_id'] ?? 0);
+        $model = new PluginDatainjectionModel();
+        $model->check($models_id, READ);
         Html::popHeader(__('Data injection report', 'datainjection'), $_SERVER['PHP_SELF']);
-        PluginDatainjectionModel::showLogResults($_GET['models_id']);
+        PluginDatainjectionModel::showLogResults($models_id);
         Html::popFooter();
         break;
 }
