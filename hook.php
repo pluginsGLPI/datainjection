@@ -210,6 +210,12 @@ function plugin_datainjection_uninstall()
         }
     }
 
+    // Remove plugin rights from all profiles
+    $profileRight = new ProfileRight();
+    foreach (PluginDatainjectionProfile::getAllRights() as $right) {
+        $profileRight->deleteByCriteria(['name' => $right['field']]);
+    }
+
     if (is_dir(PLUGIN_DATAINJECTION_UPLOAD_DIR)) {
         Toolbox::deleteDir(PLUGIN_DATAINJECTION_UPLOAD_DIR);
     }
