@@ -28,6 +28,8 @@
  * -------------------------------------------------------------------------
  */
 
+use Glpi\Toolbox\Sanitizer;
+
 class PluginDatainjectionModel extends CommonDBTM
 {
     public static $rightname = "plugin_datainjection_model";
@@ -1317,7 +1319,7 @@ class PluginDatainjectionModel extends CommonDBTM
 
         $tmp         = $this->fields;
         $tmp['step'] = self::READY_TO_USE_STEP;
-        $tmp = Toolbox::addslashes_deep($tmp);
+        $tmp = Sanitizer::dbEscapeRecursive($tmp);
         $this->update($tmp);
     }
 

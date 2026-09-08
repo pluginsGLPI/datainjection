@@ -28,13 +28,21 @@
  * -------------------------------------------------------------------------
  */
 
-// Direct access to file
-if (strpos($_SERVER['PHP_SELF'], "results.php")) {
-    include '../../../inc/includes.php';
-    header("Content-Type: text/html; charset=UTF-8");
-    Html::header_nocache();
-}
+global $CFG_GLPI, $PLUGIN_HOOKS;
 
-Session::checkRight(PluginDatainjectionClientInjection::$rightname, READ);
-$model = unserialize($_SESSION['datainjection']['currentmodel']);
-PluginDatainjectionClientInjection::showResultsForm($model);
+define('GLPI_ROOT', dirname(__DIR__, 3));
+define('GLPI_LOG_DIR', GLPI_ROOT . '/files/_logs');
+define('TU_USER', 'glpi');
+define('TU_PASS', 'glpi');
+define('GLPI_LOG_LVL', 'DEBUG');
+
+require GLPI_ROOT . '/inc/includes.php';
+
+include_once GLPI_ROOT . '/phpunit/GLPITestCase.php';
+include_once GLPI_ROOT . '/phpunit/DbTestCase.php';
+
+require_once __DIR__ . '/../setup.php';
+
+if (!Plugin::isPluginActive('datainjection')) {
+    throw new RuntimeException('Plugin datainjection is not active in the test database');
+}
