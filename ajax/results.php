@@ -35,6 +35,6 @@ if (strpos($_SERVER['PHP_SELF'], "results.php")) {
     Html::header_nocache();
 }
 
-Session::checkCentralAccess();
+Session::checkRight(PluginDatainjectionClientInjection::$rightname, READ);
 $model = unserialize($_SESSION['datainjection']['currentmodel']);
 PluginDatainjectionClientInjection::showResultsForm($model);
