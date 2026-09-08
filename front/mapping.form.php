@@ -34,9 +34,21 @@ Session::checkRight('plugin_datainjection_model', UPDATE);
 if (isset($_POST["update"])) {
     $at_least_one_mandatory = false;
     $mapping                = new PluginDatainjectionMapping();
+    $existing               = new PluginDatainjectionMapping();
+
+    $models_id = (int) ($_POST['models_id'] ?? 0);
+    $model     = new PluginDatainjectionModel();
+    $model->check($models_id, UPDATE);
 
     foreach ($_POST['data'] as $id => $mapping_infos) {
-        $mapping_infos['id'] = $id;
+        if (
+            !$existing->getFromDB((int) $id)
+            || (int) $existing->fields['models_id'] !== $models_id
+        ) {
+            continue;
+        }
+
+        $mapping_infos['id'] = (int) $id;
 
         //If no field selected, reset other values
         if ($mapping_infos['value'] == PluginDatainjectionInjectionType::NO_VALUE) {
@@ -64,12 +76,9 @@ if (isset($_POST["update"])) {
             true,
         );
     } else {
-        $model = new PluginDatainjectionModel();
-        $model->getFromDB($_POST['models_id']);
-
         if ($model->fields['step'] != PluginDatainjectionModel::READY_TO_USE_STEP) {
             PluginDatainjectionModel::changeStep(
-                $_POST['models_id'],
+                $models_id,
                 PluginDatainjectionModel::OTHERS_STEP,
             );
             Session::setActiveTab('PluginDatainjectionModel', 'PluginDatainjectionModel$5');

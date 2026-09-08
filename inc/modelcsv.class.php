@@ -160,26 +160,26 @@ class PluginDatainjectionModelcsv extends CommonDBChild
     *
     * @return int the ID of the row in glpi_plugin_datainjection_modelcsv
    **/
-    public function getFromDBByModelID($models_id)
+    public function getFromDBByModelID(int $models_id): int
     {
         /** @var DBmysql $DB */
         global $DB;
 
-        $query = "SELECT `id`
-                FROM `" . $this->getTable() . "`
-                WHERE `models_id` = '" . $models_id . "'";
+        $iterator = $DB->request([
+            'SELECT' => 'id',
+            'FROM'   => $this->getTable(),
+            'WHERE'  => ['models_id' => $models_id],
+            'LIMIT'  => 1,
+        ]);
 
-        $results = $DB->doQuery($query);
-        $id = 0;
-
-        if ($DB->numrows($results) > 0) {
-            $id = $DB->result($results, 0, 'id');
+        if (count($iterator) > 0) {
+            $id = (int) $iterator->current()['id'];
             $this->getFromDB($id);
         } else {
             $this->getEmpty();
             $tmp = $this->fields;
             $tmp['models_id'] = $models_id;
-            $id  = $this->add($tmp);
+            $id  = (int) $this->add($tmp);
             $this->getFromDB($id);
         }
 

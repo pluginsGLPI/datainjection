@@ -137,7 +137,7 @@ class PluginDatainjectionModel extends CommonDBTM
             return false;
         }
 
-        return self::checkRightOnModel($this->fields['id']);
+        return self::checkRightOnModel((int) ($this->fields['id'] ?? 0));
     }
 
 
@@ -158,7 +158,7 @@ class PluginDatainjectionModel extends CommonDBTM
             return false;
         }
 
-        return self::checkRightOnModel($this->fields['id']);
+        return self::checkRightOnModel((int) ($this->fields['id'] ?? 0));
     }
 
 
@@ -351,10 +351,10 @@ class PluginDatainjectionModel extends CommonDBTM
                 if ($model['entities_id'] == -1) {
                     echo "\n<optgroup label='" . __s('Private') . "'>";
                 } else {
-                    echo "\n<optgroup label=\"" . Dropdown::getDropdownName(
+                    echo "\n<optgroup label=\"" . htmlescape(Dropdown::getDropdownName(
                         "glpi_entities",
                         $model['entities_id'],
-                    ) . '">';
+                    )) . '">';
                 }
 
                 $prev = $model['entities_id'];
@@ -362,8 +362,8 @@ class PluginDatainjectionModel extends CommonDBTM
 
             $selected = $model['id'] == $value ? "selected" : "";
 
-            $comment = $model['comment'] ? "title='" . htmlentities((string) $model['comment'], ENT_QUOTES, 'UTF-8') . "'" : "";
-            echo "\n<option value='" . $model['id'] . sprintf("' %s %s>", $selected, $comment) . $model['name'] . "</option>";
+            $comment = $model['comment'] ? "title='" . htmlescape((string) $model['comment']) . "'" : "";
+            echo "\n<option value='" . $model['id'] . sprintf("' %s %s>", $selected, $comment) . htmlescape($model['name']) . "</option>";
         }
 
         if ($prev >= -1) {
@@ -436,7 +436,7 @@ class PluginDatainjectionModel extends CommonDBTM
 
         foreach ($DB->request($query) as $data) {
             if (
-                self::checkRightOnModel($data['id'])
+                self::checkRightOnModel((int) $data['id'])
                 && class_exists($data['itemtype'])
             ) {
                 $models[] = $data;
@@ -870,7 +870,7 @@ class PluginDatainjectionModel extends CommonDBTM
             return false;
         }
 
-        if (!$input['behavior_add'] && !$input['behavior_update']) {
+        if (!($input['behavior_add'] ?? 0) && !($input['behavior_update'] ?? 0)) {
             Session::addMessageAfterRedirect(
                 __s(
                     'Your model should allow import and/or update of data',
@@ -1251,40 +1251,44 @@ class PluginDatainjectionModel extends CommonDBTM
     }
 
 
-    /**
-    * @param int $models_id
-   **/
-    public static function checkRightOnModel($models_id)
+    public static function checkRightOnModel(int $models_id): bool
     {
         /** @var DBmysql $DB */
         global $DB;
 
-        $continue = true;
-
         $model = new self();
-        if ($model->getFromDB($models_id)) {
-            $query = "(SELECT `itemtype`
-                    FROM `glpi_plugin_datainjection_models`
-                    WHERE `id` = '" . $models_id . "')
-                    UNION (SELECT DISTINCT `itemtype`
-                        FROM `glpi_plugin_datainjection_mappings`
-                        WHERE `models_id` = '" . $models_id . "')
-                    UNION (SELECT DISTINCT `itemtype`
-                        FROM `glpi_plugin_datainjection_infos`
-                        WHERE `models_id` = '" . $models_id . "')";
-            foreach ($DB->doQuery($query) as $data) {
-                if ($data['itemtype'] != PluginDatainjectionInjectionType::NO_VALUE && is_a($data['itemtype'], CommonDBTM::class, true)) {
-                    $item                     = new $data['itemtype']();
-                    $item->fields['itemtype'] = $model->fields['itemtype'];
-                    if (!($item instanceof CommonDBRelation) && !$item->canCreate()) {
-                        $continue = false;
-                        break;
-                    }
-                }
+        if (!$model->getFromDB($models_id)) {
+            //New model being created: no injected itemtype to check yet
+            return true;
+        }
+
+        $itemtypes = [$model->fields['itemtype']];
+
+        foreach (['glpi_plugin_datainjection_mappings', 'glpi_plugin_datainjection_infos'] as $table) {
+            $iterator = $DB->request([
+                'SELECT'   => 'itemtype',
+                'DISTINCT' => true,
+                'FROM'     => $table,
+                'WHERE'    => ['models_id' => $models_id],
+            ]);
+
+            foreach ($iterator as $data) {
+                $itemtypes[] = $data['itemtype'];
             }
         }
 
-        return $continue;
+        foreach (array_unique($itemtypes) as $itemtype) {
+            if ($itemtype == PluginDatainjectionInjectionType::NO_VALUE || !is_a($itemtype, CommonDBTM::class, true)) {
+                continue;
+            }
+
+            $item = new $itemtype();
+            if (!$item->canCreate()) {
+                return false;
+            }
+        }
+
+        return true;
     }
 
 
