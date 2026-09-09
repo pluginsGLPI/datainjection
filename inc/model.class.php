@@ -1277,13 +1277,25 @@ class PluginDatainjectionModel extends CommonDBTM
             }
         }
 
+        $check_add    = (bool) ($model->fields['behavior_add'] ?? 0);
+        $check_update = (bool) ($model->fields['behavior_update'] ?? 0);
+
+        //A model doing nothing still requires the creation right to be listed
+        if (!$check_add && !$check_update) {
+            $check_add = true;
+        }
+
         foreach (array_unique($itemtypes) as $itemtype) {
             if ($itemtype == PluginDatainjectionInjectionType::NO_VALUE || !is_a($itemtype, CommonDBTM::class, true)) {
                 continue;
             }
 
             $item = new $itemtype();
-            if (!$item->canCreate()) {
+            if ($check_add && !$item->canCreate()) {
+                return false;
+            }
+
+            if ($check_update && !$item->canUpdate()) {
                 return false;
             }
         }

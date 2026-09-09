@@ -12,7 +12,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Move to iterator
 - Fix various minor bugs in the import/export workflow
 - Fix an issue where data are not formatted when coming from a field plugin's custom field.
-- Fix model selector validation and access control
+- Improve import/export workflow
+- Fix validation, permissions and entity handling during imports
+- Improve partial import error reporting
+- Correct user password import and creation handling (policy, history, expiration and confirmation)
 
 ## [2.15.10] - 2026-08-07
 
