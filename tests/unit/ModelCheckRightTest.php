@@ -50,6 +50,9 @@ final class ModelCheckRightTest extends DbTestCase
 
     public function testUnknownModelIsAllowed(): void
     {
+        global $CFG_GLPI;
+        $CFG_GLPI["event_loglevel"] = 0;
+
         $this->login();
 
         $this->assertTrue(PluginDatainjectionModel::checkRightOnModel(999999));
@@ -57,6 +60,9 @@ final class ModelCheckRightTest extends DbTestCase
 
     public function testCreationPathReturnsBooleanOnEmptyModel(): void
     {
+        global $CFG_GLPI;
+        $CFG_GLPI["event_loglevel"] = 0;
+
         $this->login();
 
         $model = new PluginDatainjectionModel();
@@ -67,6 +73,9 @@ final class ModelCheckRightTest extends DbTestCase
 
     public function testMappedRelationItemtypeWithoutRightsIsDenied(): void
     {
+        global $CFG_GLPI;
+        $CFG_GLPI["event_loglevel"] = 0;
+
         $this->login();
 
         $models_id  = $this->createModel();
