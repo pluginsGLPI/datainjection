@@ -32,15 +32,18 @@ final class ModelCheckRightTest extends DbTestCase
 {
     private function createModel(string $itemtype = Computer::class): int
     {
+        return $this->createModelWithBehaviors($itemtype, ['behavior_add' => 1, 'behavior_update' => 0]);
+    }
+
+    private function createModelWithBehaviors(string $itemtype, array $behaviors): int
+    {
         $model = new PluginDatainjectionModel();
-        $models_id = $model->add([
+        $models_id = $model->add($behaviors + [
             'name'            => 'Test_Model_CheckRight_' . $itemtype . '_' . random_int(1, PHP_INT_MAX),
             'itemtype'        => $itemtype,
             'filetype'        => 'csv',
             'entities_id'     => 0,
             'is_private'      => 0,
-            'behavior_add'    => 1,
-            'behavior_update' => 0,
             'users_id'        => Session::getLoginUserID(),
         ]);
         $this->assertGreaterThan(0, $models_id);
@@ -99,5 +102,43 @@ final class ModelCheckRightTest extends DbTestCase
         //Control model keeps its own granted itemtype: only the mapped relation may deny
         $this->assertTrue(PluginDatainjectionModel::checkRightOnModel($control_id));
         $this->assertFalse(PluginDatainjectionModel::checkRightOnModel($models_id));
+    }
+
+    public function testUpdateEnabledModelIsDeniedWithCreateRightOnly(): void
+    {
+        global $CFG_GLPI;
+        $CFG_GLPI["event_loglevel"] = 0;
+
+        $this->login();
+
+        $models_id = $this->createModelWithBehaviors(
+            Computer::class,
+            ['behavior_add' => 0, 'behavior_update' => 1],
+        );
+
+        $_SESSION['glpiactiveprofile'][Computer::$rightname] = CREATE;
+        $this->assertFalse(PluginDatainjectionModel::checkRightOnModel($models_id));
+
+        $_SESSION['glpiactiveprofile'][Computer::$rightname] = CREATE | UPDATE;
+        $this->assertTrue(PluginDatainjectionModel::checkRightOnModel($models_id));
+    }
+
+    public function testAddOnlyModelIsDeniedWithUpdateRightOnly(): void
+    {
+        global $CFG_GLPI;
+        $CFG_GLPI["event_loglevel"] = 0;
+
+        $this->login();
+
+        $models_id = $this->createModelWithBehaviors(
+            Computer::class,
+            ['behavior_add' => 1, 'behavior_update' => 0],
+        );
+
+        $_SESSION['glpiactiveprofile'][Computer::$rightname] = UPDATE;
+        $this->assertFalse(PluginDatainjectionModel::checkRightOnModel($models_id));
+
+        $_SESSION['glpiactiveprofile'][Computer::$rightname] = CREATE;
+        $this->assertTrue(PluginDatainjectionModel::checkRightOnModel($models_id));
     }
 }

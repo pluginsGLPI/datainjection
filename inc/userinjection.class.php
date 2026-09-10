@@ -189,12 +189,11 @@ class PluginDatainjectionUserInjection extends User implements PluginDatainjecti
     * @param array $values
     * @param boolean $add                (true by default)
     * @param array|null $rights    array
+    *
+    * @return bool false if a post-processing step was rejected
     */
     public function processAfterInsertOrUpdate($values, $add = true, $rights = [])
     {
-        /** @var DBmysql $DB */
-        global $DB;
-
        //Manage user emails (both for add and update)
         if (
             isset($values['User']['useremails_id'])
@@ -234,13 +233,7 @@ class PluginDatainjectionUserInjection extends User implements PluginDatainjecti
             }
         }
 
-        if (isset($values['User']['password']) && ($values['User']['password'] != '')) {
-            $DB->update(
-                'glpi_users',
-                ['password' => Auth::getPasswordHash(Sanitizer::unsanitize($values['User']['password']))],
-                ['id' => $values['User']['id']],
-            );
-        }
+        return true;
     }
 
 

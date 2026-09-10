@@ -547,24 +547,22 @@ class PluginDatainjectionCommonInjectionLib
 
 
     /**
-    * Get the ID associated with a value from the CSV file
-    *
-    * @param PluginDatainjectionInjectionInterface|null $injectionClass
-    * @param string $itemtype               itemtype of the values to inject
-    * @param array $searchOption           option associated with the field to check
-    * @param string $field                  the field to check
-    * @param string $value                  the value coming from the CSV file
-    * @param boolean $add                    is insertion (true) or update (false) (true by default)
-    *
-    * @return void nothing
-   **/
+     * Get the ID associated with a value from the CSV file
+     *
+     * @param PluginDatainjectionInjectionInterface|null $injectionClass
+     * @param string $itemtype               itemtype of the values to inject
+     * @param array $searchOption           option associated with the field to check
+     * @param string $field                  the field to check
+     * @param string $value                  the value coming from the CSV file
+     *
+     * @return void nothing
+     **/
     private function getFieldValue(
         $injectionClass,
         $itemtype,
         $searchOption,
         $field,
-        $value,
-        $add = true
+        $value
     ) {
         if (isset($searchOption['storevaluein'])) {
             $linkfield = $searchOption['storevaluein'];
@@ -583,13 +581,12 @@ class PluginDatainjectionCommonInjectionLib
                 break;
 
             case 'password':
-               //To add a user password, it's mandatory is give a password and it's confirmation
-               //Here we cannot detect if it's an add or update. We'll handle updates later in the process
-                if ($add && $itemtype == 'User') {
+                //Core needs both the password and its confirmation to validate and hash it, on add as well as on update
+                if ($itemtype == 'User') {
                     $this->setValueForItemtype($itemtype, $linkfield, $value);
-                    //Add field password2 is not already present
+                    //Add field password2 if not already present
                     //(can be present if password was an addtional information)
-                    if (!isset($this->values[$itemtype][$field])) {
+                    if (!isset($this->values[$itemtype][$linkfield . "2"])) {
                         $this->setValueForItemtype($itemtype, $linkfield . "2", $value);
                     }
                 }
@@ -927,7 +924,8 @@ class PluginDatainjectionCommonInjectionLib
      **/
     private function setValueForItemtype($itemtype, $field, $value, $fromdb = false)
     {
-        if ($itemtype === User::class && $field === "pdffont" && $fromdb) {
+        //The stored password is a hash: taking it back from the DB would overwrite the imported one
+        if ($itemtype === User::class && in_array($field, ['pdffont', 'password'], true) && $fromdb) {
             return;
         }
         $injectionClass = self::getInjectionClassInstance($itemtype);
@@ -1577,14 +1575,17 @@ class PluginDatainjectionCommonInjectionLib
                 $newID  = $this->effectiveAddOrUpdate($this->injectionClass, $item, $values, $add);
 
                 if (!$newID) {
-                    $this->results['status'] = self::WARNING;
+                    $this->addCheckWarning(self::WARNING, get_class($item));
                 } else {
                   //Store id of the injected item
                     $this->setValueForItemtype($this->primary_type, 'id', $newID);
 
-                  //If type needs it : process more data after type import
-                    $this->processAfterInsertOrUpdate($this->injectionClass, $add);
-                  //$this->results['status'] = self::SUCCESS;
+                    //If type needs it : process more data after type import
+                    if ($this->processAfterInsertOrUpdate($this->injectionClass, $add) === false) {
+                        $this->addCheckWarning(self::WARNING, get_class($item));
+                    }
+
+                    //$this->results['status'] = self::SUCCESS;
                     $this->results[get_class($item)] = $newID;
 
                   //Process other types
@@ -1619,7 +1620,11 @@ class PluginDatainjectionCommonInjectionLib
                             $values = $this->getValuesForItemtype($itemtype);
                             if ($this->lastCheckBeforeProcess($injectionClass, $values)) {
                                 $tmpID  = $this->effectiveAddOrUpdate($injectionClass, $item, $values, $add);
-                                $this->processAfterInsertOrUpdate($injectionClass, $add);
+                                if (!$tmpID) {
+                                    $this->addCheckWarning(self::WARNING, $itemtype);
+                                } elseif ($this->processAfterInsertOrUpdate($injectionClass, $add) === false) {
+                                    $this->addCheckWarning(self::WARNING, $itemtype);
+                                }
                             }
                         }
                     }
@@ -1627,6 +1632,20 @@ class PluginDatainjectionCommonInjectionLib
             }
         }
         return $this->results;
+    }
+
+
+    /**
+     * Flag the current line as partially injected and log the reason
+     *
+     * @param integer $code     log label describing the reason
+     * @param string  $itemtype itemtype that could not be written
+     **/
+    private function addCheckWarning(int $code, string $itemtype): void
+    {
+        $this->results['status']                     = self::WARNING;
+        $this->results[self::ACTION_CHECK]['status'] = self::WARNING;
+        $this->results[self::ACTION_CHECK][]         = [$code, $itemtype];
     }
 
 
@@ -1643,7 +1662,25 @@ class PluginDatainjectionCommonInjectionLib
     private function effectiveAddOrUpdate($injectionClass, $item, $values, $add = true)
     {
 
-       //Insert data using the standard add() method
+        //The plugin acts as the front controller here: rights must be checked before writing.
+        //Skipped without a session, as the lib is also a programmatic entry point for scripts.
+        if (Session::getLoginUserID() !== false) {
+            $input = is_array($values) ? $values : [];
+            if ($add) {
+                //Passing the input to can() makes the check cover the target entity
+                if (!$item->can(-1, CREATE, $input)) {
+                    $this->addCheckWarning(self::ERROR_CANNOT_IMPORT, get_class($item));
+                    return 0;
+                }
+
+                //On the update path the target id is known, so the per-item check also covers the entity scope
+            } elseif (!isset($values['id']) || !$item->can($values['id'], UPDATE)) {
+                $this->addCheckWarning(self::ERROR_CANNOT_UPDATE, get_class($item));
+                return 0;
+            }
+        }
+
+        //Insert data using the standard add() method
         $toinject = [];
         $options  = $injectionClass->getOptions();
 
@@ -1816,7 +1853,6 @@ class PluginDatainjectionCommonInjectionLib
                         $option,
                         $option['linkfield'],
                         $value,
-                        true
                     );
                 }
             }
@@ -2317,15 +2353,17 @@ class PluginDatainjectionCommonInjectionLib
     * @param PluginDatainjectionInjectionInterface $injectionClass the injection class to use
     * @param  $add true if an item is created, false if it's an update
     *
-    * @return void nothing
+    * @return bool false if the injection class rejected a post-processing step
    **/
     private function processAfterInsertOrUpdate($injectionClass, $add = true)
     {
 
        //If itemtype implements special process after type injection
         if (method_exists($injectionClass, 'processAfterInsertOrUpdate')) {
-           //Invoke it
-            $injectionClass->processAfterInsertOrUpdate($this->values, $add, $this->rights);
+            //Invoke it
+            return $injectionClass->processAfterInsertOrUpdate($this->values, $add, $this->rights) !== false;
         }
+
+        return true;
     }
 }
