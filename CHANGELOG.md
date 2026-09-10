@@ -14,6 +14,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Fix various minor bugs in the import/export workflow (backport of PR #656 from GLPI 11-compatible line)
 - Move network port lookup query to the GLPI DBAL iterator (backport of PR #659 from GLPI 11-compatible line)
 - Fix model selector validation and access control (backport of PR #660 from GLPI 11-compatible line)
+- Fix validation, permissions and entity handling during imports (backport of PR #664 from GLPI 11-compatible line)
+- Improve partial import error reporting (backport of PR #664 from GLPI 11-compatible line)
+- Correct user password import and creation handling (policy, history, expiration and confirmation) (backport of PR #664 from GLPI 11-compatible line)
 
 ## [2.14.4] - 2025-11-25
 
