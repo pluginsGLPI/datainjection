@@ -13,6 +13,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Fix repeated User updates failing with `Data too long for column cookie_token` by excluding token fields from update payloads (backport of PR #566 from GLPI 11-compatible line)
 - Fix various minor bugs in the import/export workflow (backport of PR #656 from GLPI 11-compatible line)
 - Move network port lookup query to the GLPI DBAL iterator (backport of PR #659 from GLPI 11-compatible line)
+- Fix model selector validation and access control (backport of PR #660 from GLPI 11-compatible line)
 
 ## [2.14.4] - 2025-11-25
 
