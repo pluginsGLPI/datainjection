@@ -152,16 +152,17 @@ class PluginDatainjectionSoftwareVersionInjection extends SoftwareVersion implem
             return $fields_toinject;
         }
 
-        $where = ['name' => $fields_toinject['SoftwareVersion']['softwares_id']] + getEntitiesRestrictCriteria(
-            "glpi_softwares",
-            "entities_id",
-            $fields_toinject['SoftwareVersion']['entities_id'],
-            true,
-        );
         $result = $DB->request([
-            'SELECT' => 'id',
+            'SELECT' => ['id'],
             'FROM'   => 'glpi_softwares',
-            'WHERE'  => $where,
+            'WHERE'  => [
+                'name' => $fields_toinject['SoftwareVersion']['softwares_id'],
+            ] + getEntitiesRestrictCriteria(
+                'glpi_softwares',
+                'entities_id',
+                $fields_toinject['SoftwareVersion']['entities_id'],
+                true,
+            ),
         ]);
 
         if (count($result) > 0) {

@@ -105,7 +105,7 @@ class PluginDatainjectionDeviceMemoryInjection extends DeviceMemory implements P
                 'items_id' => $values['Computer']['id'],
             ];
 
-            if (!countElementsInTable($item->getTable(), $where)) {
+            if (countElementsInTable($item->getTable(), $where) === 0) {
                 if (
                     isset($values[get_parent_class($this)]['size_default'])
                     && ($values[get_parent_class($this)]['size_default'] > 0)

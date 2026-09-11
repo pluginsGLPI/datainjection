@@ -35,7 +35,7 @@ use function Safe\ob_get_clean;
 
 class PluginDatainjectionInfo extends CommonDBTM
 {
-    public static $rightname = "plugin_datainjection_model";
+    public static string $rightname = "plugin_datainjection_model";
 
     public function getEmpty()
     {
@@ -156,7 +156,7 @@ class PluginDatainjectionInfo extends CommonDBTM
                         $sel = "checked";
                     }
 
-                    echo "<input type='checkbox' name='item[" . $infos_id . sprintf("]' value='1' %s>", $sel);
+                    echo "<input type='checkbox' class='form-check-input'  name='item[" . $infos_id . sprintf("]' value='1' %s>", $sel);
                     echo "</td>";
                 }
 
@@ -476,13 +476,16 @@ class PluginDatainjectionInfo extends CommonDBTM
 
         $values    = [0 => Dropdown::EMPTY_VALUE];
 
-        $sql = "SELECT `id`, `template_name`
-              FROM `" . $table . "`
-              WHERE `is_template`=1 " .
-                  getEntitiesRestrictRequest(' AND ', $table) .
-           "ORDER BY `template_name`";
+        $result = $DB->request([
+            'SELECT' => ['id', 'template_name'],
+            'FROM'   => $table,
+            'WHERE'  => [
+                'is_template' => 1,
+            ] + getEntitiesRestrictCriteria($table),
+            'ORDER'  => 'template_name',
+        ]);
 
-        foreach ($DB->doQuery($sql) as $data) {
+        foreach ($result as $data) {
             $values[$data['id']] = $data['template_name'];
         }
 

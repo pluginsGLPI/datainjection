@@ -30,7 +30,7 @@
 
 class PluginDatainjectionMenu extends CommonGLPI
 {
-    public static $rightname = 'plugin_datainjection_use';
+    public static string $rightname = 'plugin_datainjection_use';
 
     public static function getMenuName()
     {
@@ -73,14 +73,14 @@ class PluginDatainjectionMenu extends CommonGLPI
             $model_name  = PluginDatainjectionModel::getTypeName(Session::getPluralNumber());
             $image_model = "<i class='" . PluginDatainjectionModel::getIcon() . sprintf("' title='%s' alt='%s'></i>", $model_name, $model_name);
 
-            if (Session::haveRight('plugin_datainjection_model', READ)) {
+            if (Session::haveRight(PluginDatainjectionModel::$rightname, READ)) {
                 $menu['options']['model']['title'] = $model_name;
                 $menu['options']['model']['page'] = Toolbox::getItemTypeSearchUrl('PluginDatainjectionModel', false);
                 $menu['options']['model']['links']['search'] = Toolbox::getItemTypeSearchUrl('PluginDatainjectionModel', false);
                 $menu['options']['client']['links'][$image_model]  = Toolbox::getItemTypeSearchUrl('PluginDatainjectionModel', false);
             }
 
-            if (Session::haveRight('plugin_datainjection_model', UPDATE) || Session::haveRight('plugin_datainjection_model', CREATE)) {
+            if (Session::haveRight(PluginDatainjectionModel::$rightname, UPDATE) || Session::haveRight(PluginDatainjectionModel::$rightname, CREATE)) {
                 $menu['options']['model']['links']['add'] = Toolbox::getItemTypeFormUrl('PluginDatainjectionModel', false);
                 $menu['options']['client']['links'][$image_model]  = Toolbox::getItemTypeSearchUrl('PluginDatainjectionModel', false);
             }
