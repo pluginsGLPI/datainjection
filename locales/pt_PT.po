@@ -6,15 +6,16 @@
 # Translators:
 # Rui Melo <viper5000pt@gmail.com>, 2019
 # Pedro B., 2023
+# Pedro Rocha <jpnr79@gmail.com>, 2026
 # 
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-11 02:41+0000\n"
+"POT-Creation-Date: 2026-09-16 03:02+0000\n"
 "PO-Revision-Date: 2018-06-21 12:57+0000\n"
-"Last-Translator: Pedro B., 2023\n"
+"Last-Translator: Pedro Rocha <jpnr79@gmail.com>, 2026\n"
 "Language-Team: Portuguese (Portugal) (https://app.transifex.com/teclib/teams/28042/pt_PT/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -63,7 +64,7 @@ msgstr "Delimitador ficheiro"
 #: templates/clientinjection_injection.html.twig
 #: templates/clientinjection.html.twig
 msgid "Model"
-msgstr ""
+msgstr "Model"
 
 #: templates/clientinjection_injection.html.twig inc/profile.class.php:44
 #: inc/menu.class.php:56 inc/menu.class.php:57 inc/menu.class.php:61
@@ -72,11 +73,11 @@ msgstr "Importação do ficheiro"
 
 #: templates/clientinjection_injection.html.twig
 msgid " lines"
-msgstr ""
+msgstr " lines"
 
 #: templates/clientinjection_injection.html.twig
 msgid "Error"
-msgstr ""
+msgstr "Error"
 
 #: templates/clientinjection_injection.html.twig
 msgid "Import progress"
@@ -108,7 +109,7 @@ msgstr "Identificador de objeto"
 
 #: templates/log_results.html.twig
 msgid "Array of failed injections"
-msgstr ""
+msgstr "Injeção"
 
 #: templates/log_results.html.twig inc/model.class.php:1527
 #: inc/model.class.php:1547
@@ -129,7 +130,7 @@ msgstr "Contador"
 
 #: templates/model_advanced_form.html.twig
 msgid "Model status"
-msgstr ""
+msgstr "Model status"
 
 #: templates/model_advanced_form.html.twig inc/model.class.php:487
 msgid "Type of data to import"
@@ -149,7 +150,7 @@ msgstr "Opções avançadas"
 
 #: templates/model_advanced_form.html.twig inc/model.class.php:495
 msgid "Allow creation of dropdowns (Except Entity)"
-msgstr ""
+msgstr "Allow creation of dropdowns (Except Entity)"
 
 #: templates/model_advanced_form.html.twig inc/model.class.php:501
 msgid "Dates format"
@@ -169,7 +170,7 @@ msgstr "Critérios de unicidade de porta"
 
 #: templates/model_advanced_form.html.twig inc/model.class.php:555
 msgid "Replacing the value of multiline text fields"
-msgstr ""
+msgstr "Replacing the value of multiline text fields"
 
 #: templates/infoadditionnalinfo.html.twig
 msgid "Complementary information"
@@ -198,7 +199,7 @@ msgstr "Campo de ligação"
 
 #: templates/model_validation_form.html.twig
 msgid "Validation"
-msgstr ""
+msgstr "Validation"
 
 #: templates/model_validation_form.html.twig
 msgctxt "button"
@@ -207,7 +208,7 @@ msgstr "Validar o modelo"
 
 #: templates/clientinjection.html.twig
 msgid "Client Injection Configuration"
-msgstr ""
+msgstr "Injeção"
 
 #: templates/clientinjection.html.twig
 msgid "No model currently available"
@@ -258,6 +259,7 @@ msgstr "Relatório de importação de dados"
 msgid ""
 "The file could not be found (Maybe it exceeds the maximum size allowed)"
 msgstr ""
+"The file could not be found (Maybe it exceeds the maximum size allowed)"
 
 #: front/clientinjection.form.php:52
 msgid "One mandatory field is not filled"
@@ -276,9 +278,9 @@ msgstr "Campos"
 #, php-format
 msgid "%d month"
 msgid_plural "%d months"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
+msgstr[0] "%d mês"
+msgstr[1] "%d meses"
+msgstr[2] "%d meses"
 
 #: inc/injectiontype.class.php:148
 msgid "-------Choose a table-------"
@@ -342,7 +344,7 @@ msgstr "Nome do antivírus"
 
 #: inc/commoninjectionlib.class.php:283
 msgid "No mandatory field is defined for this model"
-msgstr ""
+msgstr "No mandatory field is defined for this model"
 
 #: inc/commoninjectionlib.class.php:2266
 msgid "Add from CSV file"
