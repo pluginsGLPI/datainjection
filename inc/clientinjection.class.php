@@ -44,7 +44,7 @@ use function Safe\unlink;
 
 class PluginDatainjectionClientInjection
 {
-    public static $rightname = "plugin_datainjection_use";
+    public static string $rightname = "plugin_datainjection_use";
 
     public const STEP_UPLOAD  = 0;
 
@@ -87,7 +87,7 @@ class PluginDatainjectionClientInjection
         TemplateRenderer::getInstance()->display('@datainjection/clientinjection.html.twig', [
             'form_action' => Toolbox::getItemTypeFormURL(self::class),
             'models' => PluginDatainjectionModel::getModels(Session::getLoginUserID(), 'name', $_SESSION['glpiactive_entity'], false),
-            'can_create_model' => Session::haveRight('plugin_datainjection_model', CREATE),
+            'can_create_model' => Session::haveRight(PluginDatainjectionModel::$rightname, CREATE),
             'model_type_name' => PluginDatainjectionModel::getTypeName(),
             'models_id' => PluginDatainjectionSession::getParam('models_id'),
             'step' => PluginDatainjectionSession::getParam('step'),
