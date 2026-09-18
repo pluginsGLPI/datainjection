@@ -175,6 +175,7 @@ abstract class AssetInjection extends Asset implements PluginDatainjectionInject
         $notimportable            = ['300', '301'];
         $options = [];
         $options['ignore_fields'] = array_merge($blacklist, $notimportable);
+        $options['displaytype'] = ['multiline_text' => [16]];
 
         return PluginDatainjectionCommonInjectionLib::addToSearchOptions($tab, $options, $this);
     }
