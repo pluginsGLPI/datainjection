@@ -140,6 +140,7 @@ class PluginDatainjectionEntityInjection extends Entity implements PluginDatainj
             $ent = array_pop($results);
             return $this->updateExistingEntity($ent['id'], $input);
         }
+
         return $this->importEntity($input);
     }
 

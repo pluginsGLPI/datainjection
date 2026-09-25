@@ -123,6 +123,7 @@ class PluginDatainjectionItem_OperatingsystemInjection extends Item_OperatingSys
             $item_operatingsystem->getFromResultSet($matching_os->current());
             return $item_operatingsystem->fields['id'];
         }
+
         return false;
     }
 

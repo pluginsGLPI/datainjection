@@ -1507,9 +1507,9 @@ class PluginDatainjectionCommonInjectionLib
                     if ($data == 0 || $data == 1) {
                         return self::SUCCESS;
                     }
+
                     return self::TYPE_MISMATCH;
 
-                    // no break
                 default:
                     //Not a standard check ? Try checks specific to the injection class
                     //Will return SUCCESS if it's not a specific check
@@ -1606,6 +1606,7 @@ class PluginDatainjectionCommonInjectionLib
         if (method_exists($injectionClass, 'lastCheck')) {
             return $injectionClass->lastCheck($this->values);
         }
+
         return true;
     }
 
@@ -1974,6 +1975,7 @@ class PluginDatainjectionCommonInjectionLib
             //Invoke it
             return $this->injectionClass->processDictionnariesIfNeeded($this->values);
         }
+
         return true;
     }
 

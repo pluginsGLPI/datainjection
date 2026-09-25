@@ -45,7 +45,7 @@ final class EngineInjectLineTest extends AbstractDataInjectionTestCase
         $model = $this->createItem(PluginDatainjectionModel::class, array_merge([
             'name'            => 'Test_Engine_Model_' . uniqid(),
             'itemtype'        => Computer::class,
-            'entities_id'     => 0,
+            'entities_id'     => $this->getTestRootEntity(true),
             'is_private'      => 0,
             'users_id'        => Session::getLoginUserID(),
             'behavior_add'    => 1,
@@ -96,7 +96,7 @@ final class EngineInjectLineTest extends AbstractDataInjectionTestCase
 
         $computer = $this->createItem(Computer::class, [
             'name'        => 'Test_Engine_Computer_Update',
-            'entities_id' => 0,
+            'entities_id' => $this->getTestRootEntity(true),
             'serial'      => 'OLD_SERIAL',
         ]);
 
@@ -130,7 +130,7 @@ final class EngineInjectLineTest extends AbstractDataInjectionTestCase
 
         $computer = $this->createItem(Computer::class, [
             'name'        => 'Test_Engine_Computer_NoUpdate',
-            'entities_id' => 0,
+            'entities_id' => $this->getTestRootEntity(true),
             'serial'      => 'ORIGINAL',
         ]);
 
