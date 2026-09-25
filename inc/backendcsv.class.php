@@ -225,6 +225,7 @@ class PluginDatainjectionBackendcsv extends PluginDatainjectionBackend implement
         if ($data === false) {
             return false;
         }
+
         if (
             (count($data) > 1)
             || ($data[0] != PluginDatainjectionCommonInjectionLib::EMPTY_VALUE)

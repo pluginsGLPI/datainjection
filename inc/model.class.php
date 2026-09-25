@@ -987,6 +987,7 @@ class PluginDatainjectionModel extends CommonDBTM
                 'message' => $message,
             ];
         }
+
         //Initialise a new backend
         $backend = PluginDatainjectionBackend::getInstance($this->fields['filetype']);
         //Init backend with needed values
@@ -1000,6 +1001,7 @@ class PluginDatainjectionModel extends CommonDBTM
             //Read the whole file
             $injectionData = $backend->read(-1);
         }
+
         //Read the whole file and store the number of lines found
         $backend->storeNumberOfLines();
         $_SESSION['datainjection']['lines']   = serialize($injectionData);
@@ -1007,6 +1009,7 @@ class PluginDatainjectionModel extends CommonDBTM
         if ($delete_file) {
             $backend->deleteFile();
         }
+
         $this->backend = $backend;
 
         $this->injectionData = $injectionData;
