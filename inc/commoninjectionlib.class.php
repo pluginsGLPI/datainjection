@@ -1506,9 +1506,8 @@ class PluginDatainjectionCommonInjectionLib
 
                     if ($data == 0 || $data == 1) {
                         return self::SUCCESS;
-                    } else {
-                        return self::TYPE_MISMATCH;
                     }
+                    return self::TYPE_MISMATCH;
 
                     // no break
                 default:
@@ -1606,9 +1605,8 @@ class PluginDatainjectionCommonInjectionLib
         //Specific reformat action is itemtype needs it
         if (method_exists($injectionClass, 'lastCheck')) {
             return $injectionClass->lastCheck($this->values);
-        } else {
-            return true;
         }
+        return true;
     }
 
     //--------------------------------------------------//
@@ -1975,9 +1973,8 @@ class PluginDatainjectionCommonInjectionLib
         if (method_exists($this->injectionClass, 'processDictionnariesIfNeeded')) {
             //Invoke it
             return $this->injectionClass->processDictionnariesIfNeeded($this->values);
-        } else {
-            return true;
         }
+        return true;
     }
 
     /**

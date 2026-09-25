@@ -986,33 +986,28 @@ class PluginDatainjectionModel extends CommonDBTM
             return ['status'  => ERROR,
                 'message' => $message,
             ];
-        } else {
-            //Initialise a new backend
-            $backend = PluginDatainjectionBackend::getInstance($this->fields['filetype']);
-            //Init backend with needed values
-            $backend->init($unique_filename, $file_encoding);
-            $backend->setHeaderPresent($this->specific_model->fields['is_header_present']);
-            $backend->setDelimiter($this->specific_model->fields['delimiter']);
-
-            if (!$webservice) {
-                //Read n line from the CSV file if not webservice
-                $injectionData = $backend->read(20);
-            } else {
-                //Read the whole file
-                $injectionData = $backend->read(-1);
-            }
-
-            //Read the whole file and store the number of lines found
-            $backend->storeNumberOfLines();
-            $_SESSION['datainjection']['lines']   = serialize($injectionData);
-            $_SESSION['datainjection']['nblines'] = $backend->getNumberOfLines();
-
-            if ($delete_file) {
-                $backend->deleteFile();
-            }
-
-            $this->backend = $backend;
         }
+        //Initialise a new backend
+        $backend = PluginDatainjectionBackend::getInstance($this->fields['filetype']);
+        //Init backend with needed values
+        $backend->init($unique_filename, $file_encoding);
+        $backend->setHeaderPresent($this->specific_model->fields['is_header_present']);
+        $backend->setDelimiter($this->specific_model->fields['delimiter']);
+        if (!$webservice) {
+            //Read n line from the CSV file if not webservice
+            $injectionData = $backend->read(20);
+        } else {
+            //Read the whole file
+            $injectionData = $backend->read(-1);
+        }
+        //Read the whole file and store the number of lines found
+        $backend->storeNumberOfLines();
+        $_SESSION['datainjection']['lines']   = serialize($injectionData);
+        $_SESSION['datainjection']['nblines'] = $backend->getNumberOfLines();
+        if ($delete_file) {
+            $backend->deleteFile();
+        }
+        $this->backend = $backend;
 
         $this->injectionData = $injectionData;
         return true;
@@ -1457,9 +1452,7 @@ class PluginDatainjectionModel extends CommonDBTM
         // Prépare le résumé
         foreach ($logresults as $results) {
             foreach ($results as $result) {
-                if (!isset($resume[$result['status']][$result['type']])) {
-                    $resume[$result['status']][$result['type']] = 0;
-                }
+                $resume[$result['status']][$result['type']] ??= 0;
 
                 $resume[$result['status']][$result['type']]++;
                 $nblines++;
