@@ -105,7 +105,7 @@ class PluginDatainjectionDeviceProcessorInjection extends DeviceProcessor implem
                 'items_id' => $values['Computer']['id'],
             ];
 
-            if (!countElementsInTable($item->getTable(), $where)) {
+            if (countElementsInTable($item->getTable(), $where) === 0) {
                 //try first frequency, then default_frequency
                 if (
                     isset($values[get_parent_class($this)]['frequency'])

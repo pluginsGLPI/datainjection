@@ -226,15 +226,14 @@ class PluginDatainjectionBackendcsv extends PluginDatainjectionBackend implement
             return false;
         }
 
-        $line = [];
         if (
             (count($data) > 1)
             || ($data[0] != PluginDatainjectionCommonInjectionLib::EMPTY_VALUE)
         ) {
-            $line = self::parseLine($this->file_handler, $data, $this->encoding);
+            return self::parseLine($this->file_handler, $data, $this->encoding);
         }
 
-        return $line;
+        return [];
     }
 
 

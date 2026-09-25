@@ -639,7 +639,7 @@ class PluginDatainjectionCommonInjectionLib
                         'entities_id'  => $this->entity,
                     ];
 
-                    if ($item->getType() == 'Entity') {
+                    if ($item::class == 'Entity') {
                         // Blocks entity creation. The findID method only searches for direct sub-entities of the root, not deeper levels.
                         $crit = 'name';
                         if (strpos($input['completename'], '>')) {
@@ -658,7 +658,7 @@ class PluginDatainjectionCommonInjectionLib
                         }
 
                         $sons = getSonsOf('glpi_entities', $input['entities_id']);
-                        if ($result === false && !empty($sons)) {
+                        if ($result === false && $sons !== []) {
                             foreach ($sons as $son_id) {
                                 $result = $entity->getFromDBByCrit(
                                     [
@@ -1506,11 +1506,10 @@ class PluginDatainjectionCommonInjectionLib
 
                     if ($data == 0 || $data == 1) {
                         return self::SUCCESS;
-                    } else {
-                        return self::TYPE_MISMATCH;
                     }
 
-                    // no break
+                    return self::TYPE_MISMATCH;
+
                 default:
                     //Not a standard check ? Try checks specific to the injection class
                     //Will return SUCCESS if it's not a specific check
@@ -1606,9 +1605,9 @@ class PluginDatainjectionCommonInjectionLib
         //Specific reformat action is itemtype needs it
         if (method_exists($injectionClass, 'lastCheck')) {
             return $injectionClass->lastCheck($this->values);
-        } else {
-            return true;
         }
+
+        return true;
     }
 
     //--------------------------------------------------//
@@ -1868,7 +1867,7 @@ class PluginDatainjectionCommonInjectionLib
                 && !empty($option)
                 && isset($option['table'])
                 && $option['table'] === getTableForItemType(Group::class)
-                && Toolbox::hasTrait($item->getType(), AssignableItem::class)
+                && Toolbox::hasTrait($item::class, AssignableItem::class)
             ) {
                 $normalized_value = $toinject[$key];
                 $group_type = null;
@@ -1975,9 +1974,9 @@ class PluginDatainjectionCommonInjectionLib
         if (method_exists($this->injectionClass, 'processDictionnariesIfNeeded')) {
             //Invoke it
             return $this->injectionClass->processDictionnariesIfNeeded($this->values);
-        } else {
-            return true;
         }
+
+        return true;
     }
 
     /**
