@@ -425,6 +425,60 @@ class PluginDatainjectionClientInjection
         return $value;
     }
 
+    private static function writeErrorsCsv(string $dir, array $error_lines, array $headers, string $delimiter): string
+    {
+        $upload_dir = realpath($dir);
+        // tempnam() silently falls back to the system temp dir when the target dir is unusable
+        if ($upload_dir === false || !is_writable($upload_dir)) {
+            throw new RuntimeException(sprintf('Upload directory "%s" is not writable.', $dir));
+        }
+
+        $file = tempnam($upload_dir, 'ERR');
+        if ($file === false) {
+            throw new RuntimeException(sprintf('Unable to create a temporary file in "%s".', $dir));
+        }
+
+        $tmpfile = fopen($file, 'w');
+        if ($tmpfile === false) {
+            self::discardErrorsCsv(null, $file);
+            throw new RuntimeException(sprintf('Unable to open "%s" for writing.', $file));
+        }
+
+        $rows = $headers !== [] ? [$headers] : [];
+        foreach ($error_lines as $line) {
+            $rows[] = array_map([self::class, 'escapeCsvFormula'], $line);
+        }
+
+        foreach ($rows as $row) {
+            if (fputcsv($tmpfile, $row, $delimiter, '"', '\\') === false) {
+                self::discardErrorsCsv($tmpfile, $file);
+                throw new RuntimeException(sprintf('Unable to write to "%s".', $file));
+            }
+        }
+
+        if (!fclose($tmpfile)) {
+            self::discardErrorsCsv(null, $file);
+            throw new RuntimeException(sprintf('Unable to close "%s".', $file));
+        }
+
+        return $file;
+    }
+
+    /**
+     * @param resource|null $handle
+     */
+    private static function discardErrorsCsv($handle, string $file): void
+    {
+        // Cleanup failures are ignored so they never mask the original write error
+        if (is_resource($handle)) {
+            @fclose($handle);
+        }
+
+        if (file_exists($file)) {
+            @unlink($file);
+        }
+    }
+
     public static function exportErrorsInCSV()
     {
 
@@ -432,27 +486,26 @@ class PluginDatainjectionClientInjection
         self::stripslashes_array($error_lines);
 
         if (!empty($error_lines)) {
-            $model = unserialize(PluginDatainjectionSession::getParam('currentmodel'));
-            $file  = PLUGIN_DATAINJECTION_UPLOAD_DIR . basename(PluginDatainjectionSession::getParam('file_name'));
+            $model   = unserialize(PluginDatainjectionSession::getParam('currentmodel'));
+            $backend = $model->getBackend();
+            $headers = $backend->isHeaderPresent()
+                ? PluginDatainjectionMapping::getMappingsSortedByRank($model->fields['id'])
+                : [];
 
-            $mappings = $model->getMappings();
-            $tmpfile  = fopen($file, 'w');
-
-           //If headers present
-            if ($model->getBackend()->isHeaderPresent()) {
-                $headers = PluginDatainjectionMapping::getMappingsSortedByRank($model->fields['id']);
-                fputcsv($tmpfile, $headers, $model->getBackend()->getDelimiter());
+            try {
+                $file = self::writeErrorsCsv(PLUGIN_DATAINJECTION_UPLOAD_DIR, $error_lines, $headers, $backend->getDelimiter());
+            } catch (RuntimeException $e) {
+                Toolbox::logError($e->getMessage());
+                Session::addMessageAfterRedirect(
+                    __('Unable to generate the error file', 'datainjection'),
+                    false,
+                    ERROR
+                );
+                Html::back();
+                return;
             }
 
-           //Write lines
-            foreach ($error_lines as $line) {
-                fputcsv($tmpfile, array_map([self::class, 'escapeCsvFormula'], $line), $model->getBackend()->getDelimiter());
-            }
-            fclose($tmpfile);
-
-            $name = "Error-" . basename(PluginDatainjectionSession::getParam('file_name'));
-            $name = str_replace(' ', '', $name);
-            header('Content-disposition: attachment; filename=' . $name);
+            header('Content-disposition: attachment; filename=Errors.csv');
             header('Content-Type: application/octet-stream');
             header('Content-Transfer-Encoding: fichier');
             header('Content-Length: ' . filesize($file));

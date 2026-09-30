@@ -5,6 +5,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [Unreleased]
+
+### Fixed
+
+- Use a unique temporary file when exporting import errors to CSV (backport of PR #675 from GLPI 11-compatible line)
+
 ## [2.14.5] 2026-09-11
 
 ### Fixed
