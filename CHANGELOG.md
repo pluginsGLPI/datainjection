@@ -5,6 +5,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [Unreleased]
+
+### Fixed
+
+- Use a unique temporary file when exporting import errors to CSV
+
 ## [2.15.11] - 2026-09-11
 
 ### Fixed
