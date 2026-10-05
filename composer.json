@@ -2,15 +2,13 @@
     "require": {
         "php": ">=8.2"
     },
-    "require-dev": {
-        "glpi-project/tools": "^0.8"
-    },
     "config": {
         "optimize-autoloader": true,
         "platform": {
             "php": "8.2.99"
         },
-        "sort-packages": true
+        "sort-packages": true,
+        "autoloader-suffix": "PluginDatainjection"
     },
     "autoload-dev": {
         "psr-4": {
