@@ -1,6 +1,7 @@
 <?xml version="1.0"?>
 <psalm
     runTaintAnalysis="true"
+    cacheDirectory="var/psalm"
 >
     <projectFiles>
         <directory name="ajax" />
