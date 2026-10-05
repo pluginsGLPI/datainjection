@@ -31,7 +31,7 @@
 use function Safe\define;
 use function Safe\mkdir;
 
-define('PLUGIN_DATAINJECTION_VERSION', '2.15.11');
+define('PLUGIN_DATAINJECTION_VERSION', '2.16.0');
 
 // Minimal GLPI version, inclusive
 define("PLUGIN_DATAINJECTION_MIN_GLPI", "12.0.0");
