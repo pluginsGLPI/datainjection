@@ -3,6 +3,7 @@
         "php": ">=8.2"
     },
     "config": {
+        "autoloader-suffix": "PluginDatainjection",
         "optimize-autoloader": true,
         "platform": {
             "php": "8.2.99"
