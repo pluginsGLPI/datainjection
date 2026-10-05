@@ -31,6 +31,7 @@
 namespace GlpiPlugin\Datainjection\Tests\Unit;
 
 use Glpi\Tests\DbTestCase;
+use org\bovigo\vfs\vfsStream;
 use PluginDatainjectionClientInjection;
 use ReflectionMethod;
 use Safe\Exceptions\FilesystemException;
@@ -107,11 +108,13 @@ final class ClientInjectionWriteErrorsCsvTest extends DbTestCase
 
     public function testDiscardIgnoresCleanupFailures(): void
     {
-        $missing_file = PLUGIN_DATAINJECTION_UPLOAD_DIR . '/missing_file.csv';
+        $root = vfsStream::setup('datainjection', 0500);
+        vfsStream::newFile('errors.csv', 0400)->at($root);
+        $file = vfsStream::url('datainjection/errors.csv');
 
-        $this->discardErrorsCsv(null, $missing_file);
+        $this->discardErrorsCsv(null, $file);
 
-        $this->assertFileDoesNotExist($missing_file);
+        $this->assertTrue($root->hasChild('errors.csv'));
     }
 
     private function discardErrorsCsv($handle, string $file): void
