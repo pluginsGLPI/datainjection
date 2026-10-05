@@ -5,18 +5,19 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-## [Unreleased]
+## [2.16.0] - 2026-10-05
 
 ### Fixed
 
 - CI: fix Psalm cache directory, drop the stray `glpi-project/tools` composer dependency, declare a unique composer autoloader suffix
 - Use a unique temporary file when exporting import errors to CSV
 
-## [2.15.11] - 2026-09-11
 
 ### Added
 
 - GLPI 12 compatibility
+
+## [2.15.11] - 2026-09-11
 
 ### Fixed
 
