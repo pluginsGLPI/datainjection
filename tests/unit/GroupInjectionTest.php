@@ -30,6 +30,7 @@
 
 namespace GlpiPlugin\Datainjection\Tests\Unit;
 
+use PHPUnit\Framework\Attributes\DataProvider;
 use PluginDatainjectionComputerInjection;
 use PluginDatainjectionITILCategoryInjection;
 use Glpi\Tests\DbTestCase;
@@ -78,10 +79,7 @@ final class GroupInjectionTest extends DbTestCase
         ];
     }
 
-    /**
-     *
-     * @dataProvider assignGroupToInjectedAssignableItemProvider
-     */
+    #[DataProvider('assignGroupToInjectedAssignableItemProvider')]
     public function testAssigneGroupToInjectedAssignableItem(
         string $group_field,
         array $injected_data,
@@ -163,10 +161,7 @@ final class GroupInjectionTest extends DbTestCase
         ];
     }
 
-    /**
-     *
-     * @dataProvider groupIsAssignedToInjectedNonAssignableItemProvider
-     */
+    #[DataProvider('groupIsAssignedToInjectedNonAssignableItemProvider')]
     public function testGroupIsAssignedToInjectedNonAssignableItem(
         array $injected_data,
         array $mandatory_fields,
@@ -250,8 +245,8 @@ final class GroupInjectionTest extends DbTestCase
      * Updating an existing AssignableItem (Computer) via injection must route the group through
      * the AssignableItem normalisation path and persist it in Group_Item.
      *
-     * @dataProvider groupIsUpdatedOnExistingAssignableItemProvider
      */
+    #[DataProvider('groupIsUpdatedOnExistingAssignableItemProvider')]
     public function testGroupIsUpdatedOnExistingAssignableItem(
         string $group_field,
         array $injected_data,

@@ -30,7 +30,7 @@
 
 class PluginDatainjectionProfile extends Profile
 {
-    public static $rightname = "profile";
+    public static string $rightname = "profile";
 
     public static function getAllRights()
     {
@@ -68,7 +68,7 @@ class PluginDatainjectionProfile extends Profile
 
         if ($item instanceof Profile) {
             if ($item->fields['interface'] == 'central') {
-                return self::createTabEntry(__('Data injection', 'datainjection'), 0, $item::getType(), 'ti ti-download');
+                return self::createTabEntry(__('Data injection', 'datainjection'), 0, $item::class, 'ti ti-download');
             }
 
             return '';
@@ -105,10 +105,10 @@ class PluginDatainjectionProfile extends Profile
         $profileRight = new ProfileRight();
         foreach ($rights as $right => $value) {
             if (
-                !countElementsInTable(
+                countElementsInTable(
                     'glpi_profilerights',
                     ['profiles_id' => $profiles_id, 'name' => $right],
-                )
+                ) === 0
             ) {
                 $myright['profiles_id'] = $profiles_id;
                 $myright['name']        = $right;

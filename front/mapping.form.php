@@ -28,7 +28,7 @@
  * -------------------------------------------------------------------------
  */
 
-Session::checkRight('plugin_datainjection_model', UPDATE);
+Session::checkRight(PluginDatainjectionModel::$rightname, UPDATE);
 
 /* Update mappings */
 if (isset($_POST["update"])) {

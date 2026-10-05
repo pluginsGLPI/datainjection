@@ -139,9 +139,9 @@ class PluginDatainjectionEntityInjection extends Entity implements PluginDatainj
         if (count($results)) {
             $ent = array_pop($results);
             return $this->updateExistingEntity($ent['id'], $input);
-        } else {
-            return $this->importEntity($input);
         }
+
+        return $this->importEntity($input);
     }
 
     public function importEntity($input)
@@ -190,7 +190,7 @@ class PluginDatainjectionEntityInjection extends Entity implements PluginDatainj
             );
 
             // Entity doesn't exists => create it
-            if (empty($results)) {
+            if ($results === []) {
                 $parent = $em->import($tmp);
             } else {
                 // Entity already exists, use the ID as parent
@@ -233,7 +233,7 @@ class PluginDatainjectionEntityInjection extends Entity implements PluginDatainj
             ['completename' => $values['completename']],
         );
 
-        if (empty($results)) {
+        if ($results === []) {
             return false;
         }
 

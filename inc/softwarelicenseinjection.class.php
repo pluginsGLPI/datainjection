@@ -157,16 +157,17 @@ class PluginDatainjectionSoftwareLicenseInjection extends SoftwareLicense implem
             return $fields_toinject;
         }
 
-        $where = ['name' => $fields_toinject['SoftwareLicense']['softwares_id']] + getEntitiesRestrictCriteria(
-            "glpi_softwares",
-            "entities_id",
-            $fields_toinject['SoftwareLicense']['entities_id'],
-            true,
-        );
         $result = $DB->request([
-            'SELECT' => 'id',
+            'SELECT' => ['id'],
             'FROM'   => 'glpi_softwares',
-            'WHERE'  => $where,
+            'WHERE'  => [
+                'name' => $fields_toinject['SoftwareLicense']['softwares_id'],
+            ] + getEntitiesRestrictCriteria(
+                'glpi_softwares',
+                'entities_id',
+                $fields_toinject['SoftwareLicense']['entities_id'],
+                true,
+            ),
         ]);
 
         if (count($result) > 0) {

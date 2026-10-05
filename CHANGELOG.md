@@ -14,6 +14,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [2.15.11] - 2026-09-11
 
+### Added
+
+- GLPI 12 compatibility
+
 ### Fixed
 
 - Move to iterator
