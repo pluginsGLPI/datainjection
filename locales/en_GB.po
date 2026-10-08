@@ -7,25 +7,118 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-16 03:02+0000\n"
-"PO-Revision-Date: 2026-09-16 03:02+0000\n"
+"POT-Creation-Date: 2026-10-08 04:12+0000\n"
+"PO-Revision-Date: 2026-10-08 04:12+0000\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
 "Language: en_GB\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=ASCII\n"
+"Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: templates/log_results.html.twig inc/model.class.php:1497
+msgid "Array of successful injections"
+msgstr "Array of successful injections"
+
+#: templates/log_results.html.twig inc/model.class.php:1500
+#: inc/model.class.php:1522
+msgid "Line"
+msgstr "Line"
+
+#: templates/log_results.html.twig inc/model.class.php:1501
+#: inc/model.class.php:1524
+msgid "Data Import"
+msgstr "Data Import"
+
+#: templates/log_results.html.twig inc/model.class.php:1502
+#: inc/model.class.php:1525
+msgid "Injection type"
+msgstr "Injection type"
+
+#: templates/log_results.html.twig inc/model.class.php:1503
+#: inc/model.class.php:1526
+msgid "Object Identifier"
+msgstr "Object Identifier"
+
+#: templates/log_results.html.twig
+msgid "Array of failed injections"
+msgstr "Array of failed injections"
+
+#: templates/log_results.html.twig inc/model.class.php:1523
+#: inc/model.class.php:1543
+msgid "Data check"
+msgstr "Data check"
+
+#: templates/log_results.html.twig
+msgid "Global report"
+msgstr "Global report"
+
+#: templates/log_results.html.twig
+msgid "Number of lines processed"
+msgstr "Number of lines processed"
+
+#: templates/log_results.html.twig
+msgid "Counter"
+msgstr "Counter"
+
+#: templates/modelcsv_additional_form.html.twig
+msgid "Specific file format options"
+msgstr "Specific file format options"
+
+#: templates/modelcsv_additional_form.html.twig
+msgid "Header's presence"
+msgstr "Header's presence"
+
+#: templates/modelcsv_additional_form.html.twig
+msgid "File delimitor"
+msgstr "File delimitor"
+
+#: templates/clientinjection_result.html.twig
+msgid "Injection's results"
+msgstr "Injection's results"
+
+#: templates/clientinjection_result.html.twig
+msgid "Injection successful"
+msgstr "Injection successful"
+
+#: templates/clientinjection_result.html.twig
+msgid "Injection encounters errors"
+msgstr "Injection encounters errors"
+
+#: templates/clientinjection_result.html.twig
+msgid "See the log"
+msgstr "See the log"
+
+#: templates/clientinjection_result.html.twig
+msgid "Export rapport in PDF"
+msgstr "Export rapport in PDF"
+
+#: templates/clientinjection_result.html.twig
+msgid "Export the log"
+msgstr "Export the log"
+
+#: templates/clientinjection_result.html.twig
+msgid "Finish"
+msgstr "Finish"
+
+#: templates/infoadditionnalinfo.html.twig
+msgid "Complementary information"
+msgstr "Complementary information"
+
+#: templates/infoadditionnalinfo.html.twig
+#: templates/clientinjection_upload_file.html.twig
+msgid "Choose a file"
+msgstr "Choose a file"
+
+#: templates/infoadditionnalinfo.html.twig
+msgid "Download file sample"
+msgstr "Download file sample"
 
 #: templates/clientinjection_upload_file.html.twig inc/dropdown.class.php:66
 #: inc/model.class.php:749
 msgid "File to inject"
 msgstr "File to inject"
-
-#: templates/clientinjection_upload_file.html.twig
-#: templates/infoadditionnalinfo.html.twig
-msgid "Choose a file"
-msgstr "Choose a file"
 
 #: templates/clientinjection_upload_file.html.twig
 msgid "File encoding"
@@ -43,22 +136,26 @@ msgstr ""
 "Watch out, you're about to inject data into GLPI. Are you sure you want to "
 "do it ?"
 
-#: templates/modelcsv_additional_form.html.twig
-msgid "Specific file format options"
-msgstr "Specific file format options"
-
-#: templates/modelcsv_additional_form.html.twig
-msgid "Header's presence"
-msgstr "Header's presence"
-
-#: templates/modelcsv_additional_form.html.twig
-msgid "File delimitor"
-msgstr "File delimitor"
-
-#: templates/clientinjection_injection.html.twig
 #: templates/clientinjection.html.twig
+msgid "Client Injection Configuration"
+msgstr "Client Injection Configuration"
+
+#: templates/clientinjection.html.twig
+#: templates/clientinjection_injection.html.twig
 msgid "Model"
 msgstr "Model"
+
+#: templates/clientinjection.html.twig
+msgid "No model currently available"
+msgstr "No model currently available"
+
+#: templates/clientinjection.html.twig
+msgid "You can start the model creation by hitting the button"
+msgstr "You can start the model creation by hitting the button"
+
+#: templates/clientinjection.html.twig
+msgid "No model available"
+msgstr "No model available"
 
 #: templates/clientinjection_injection.html.twig inc/profile.class.php:44
 #: inc/menu.class.php:56 inc/menu.class.php:57 inc/menu.class.php:61
@@ -77,50 +174,31 @@ msgstr "Error"
 msgid "Import progress"
 msgstr "Import progress"
 
-#: templates/log_results.html.twig inc/model.class.php:1501
-msgid "Array of successful injections"
-msgstr "Array of successful injections"
+#: templates/model_validation_form.html.twig
+msgid "Validation"
+msgstr "Validation"
 
-#: templates/log_results.html.twig inc/model.class.php:1504
-#: inc/model.class.php:1526
-msgid "Line"
-msgstr "Line"
+#: templates/model_validation_form.html.twig
+msgctxt "button"
+msgid "Validate the model"
+msgstr "Validate the model"
 
-#: templates/log_results.html.twig inc/model.class.php:1505
-#: inc/model.class.php:1528
-msgid "Data Import"
-msgstr "Data Import"
+#: templates/mappings_form.html.twig front/popup.php:38
+msgid "See the file"
+msgstr "See the file"
 
-#: templates/log_results.html.twig inc/model.class.php:1506
-#: inc/model.class.php:1529
-msgid "Injection type"
-msgstr "Injection type"
+#: templates/mappings_form.html.twig
+msgid "Header of the file"
+msgstr "Header of the file"
 
-#: templates/log_results.html.twig inc/model.class.php:1507
-#: inc/model.class.php:1530
-msgid "Object Identifier"
-msgstr "Object Identifier"
+#: templates/mappings_form.html.twig inc/info.class.php:87
+#: inc/info.class.php:144
+msgid "Tables"
+msgstr "Tables"
 
-#: templates/log_results.html.twig
-msgid "Array of failed injections"
-msgstr "Array of failed injections"
-
-#: templates/log_results.html.twig inc/model.class.php:1527
-#: inc/model.class.php:1547
-msgid "Data check"
-msgstr "Data check"
-
-#: templates/log_results.html.twig
-msgid "Global report"
-msgstr "Global report"
-
-#: templates/log_results.html.twig
-msgid "Number of lines processed"
-msgstr "Number of lines processed"
-
-#: templates/log_results.html.twig
-msgid "Counter"
-msgstr "Counter"
+#: templates/mappings_form.html.twig
+msgid "Link field"
+msgstr "Link field"
 
 #: templates/model_advanced_form.html.twig
 msgid "Model status"
@@ -166,125 +244,27 @@ msgstr "Port unicity criteria"
 msgid "Replacing the value of multiline text fields"
 msgstr "Replacing the value of multiline text fields"
 
-#: templates/infoadditionnalinfo.html.twig
-msgid "Complementary information"
-msgstr "Complementary information"
-
-#: templates/infoadditionnalinfo.html.twig
-msgid "Download file sample"
-msgstr "Download file sample"
-
-#: templates/mappings_form.html.twig front/popup.php:38
-msgid "See the file"
-msgstr "See the file"
-
-#: templates/mappings_form.html.twig
-msgid "Header of the file"
-msgstr "Header of the file"
-
-#: templates/mappings_form.html.twig inc/info.class.php:87
-#: inc/info.class.php:144
-msgid "Tables"
-msgstr "Tables"
-
-#: templates/mappings_form.html.twig
-msgid "Link field"
-msgstr "Link field"
-
-#: templates/model_validation_form.html.twig
-msgid "Validation"
-msgstr "Validation"
-
-#: templates/model_validation_form.html.twig
-msgctxt "button"
-msgid "Validate the model"
-msgstr "Validate the model"
-
-#: templates/clientinjection.html.twig
-msgid "Client Injection Configuration"
-msgstr "Client Injection Configuration"
-
-#: templates/clientinjection.html.twig
-msgid "No model currently available"
-msgstr "No model currently available"
-
-#: templates/clientinjection.html.twig
-msgid "You can start the model creation by hitting the button"
-msgstr "You can start the model creation by hitting the button"
-
-#: templates/clientinjection_result.html.twig
-msgid "Injection's results"
-msgstr "Injection's results"
-
-#: templates/clientinjection_result.html.twig
-msgid "Injection successful"
-msgstr "Injection successful"
-
-#: templates/clientinjection_result.html.twig
-msgid "Injection encounters errors"
-msgstr "Injection encounters errors"
-
-#: templates/clientinjection_result.html.twig
-msgid "See the log"
-msgstr "See the log"
-
-#: templates/clientinjection_result.html.twig
-msgid "Export rapport in PDF"
-msgstr "Export rapport in PDF"
-
-#: templates/clientinjection_result.html.twig
-msgid "Export the log"
-msgstr "Export the log"
-
-#: templates/clientinjection_result.html.twig
-msgid "Finish"
-msgstr "Finish"
-
-#: setup.php:96 front/clientinjection.form.php:34 inc/profile.class.php:71
-#: inc/menu.class.php:38
-msgid "Data injection"
-msgstr "Data injection"
-
-#: front/popup.php:47 inc/model.class.php:1492
+#: front/popup.php:47 inc/model.class.php:1488
 msgid "Data injection report"
 msgstr "Data injection report"
 
-#: front/model.form.php:91 front/clientinjection.form.php:86
-msgid "The file could not be found (Maybe it exceeds the maximum size allowed)"
-msgstr ""
-"The file could not be found (Maybe it exceeds the maximum size allowed)"
+#: front/clientinjection.form.php:34 inc/profile.class.php:71
+#: inc/menu.class.php:38 setup.php:96
+msgid "Data injection"
+msgstr "Data injection"
 
 #: front/clientinjection.form.php:52
 msgid "One mandatory field is not filled"
 msgstr "One mandatory field is not filled"
 
-#: inc/info.class.php:89 inc/info.class.php:146
-msgid "Mandatory information"
-msgstr "Mandatory information"
+#: front/clientinjection.form.php:88 front/model.form.php:87
+msgid "The file could not be found (Maybe it exceeds the maximum size allowed)"
+msgstr ""
+"The file could not be found (Maybe it exceeds the maximum size allowed)"
 
-#: inc/info.class.php:145
-msgid "Fields"
-msgstr "Fields"
-
-#: inc/contractinjection.class.php:154 inc/contractinjection.class.php:162
-#: inc/contractinjection.class.php:170 inc/contractinjection.class.php:178
-#, php-format
-msgid "%d month"
-msgid_plural "%d months"
-msgstr[0] "%d month"
-msgstr[1] "%d months"
-
-#: inc/injectiontype.class.php:148
-msgid "-------Choose a table-------"
-msgstr "-------Choose a table-------"
-
-#: inc/injectiontype.class.php:220
-msgid "-------Choose a field-------"
-msgstr "-------Choose a field-------"
-
-#: inc/clientinjection.class.php:118
-msgid "Launch the import"
-msgstr "Launch the import"
+#: inc/computerinjection.class.php:78
+msgid "Antivirus name"
+msgstr "Antivirus name"
 
 #: inc/dropdown.class.php:35
 msgid "dd-mm-yyyy"
@@ -326,77 +306,13 @@ msgstr "UTF-8"
 msgid "ISO8859-1"
 msgstr "ISO8859-1"
 
-#: inc/phoneinjection.class.php:71
-msgid "Domain name"
-msgstr "Domain name"
+#: inc/injectiontype.class.php:148
+msgid "-------Choose a table-------"
+msgstr "-------Choose a table-------"
 
-#: inc/computerinjection.class.php:78
-msgid "Antivirus name"
-msgstr "Antivirus name"
-
-#: inc/commoninjectionlib.class.php:283
-msgid "No mandatory field is defined for this model"
-msgstr "No mandatory field is defined for this model"
-
-#: inc/commoninjectionlib.class.php:2266
-msgid "Add from CSV file"
-msgstr "Add from CSV file"
-
-#: inc/commoninjectionlib.class.php:2266
-msgid "Update from CSV file"
-msgstr "Update from CSV file"
-
-#: inc/commoninjectionlib.class.php:2305
-msgid "No right to import data"
-msgstr "No right to import data"
-
-#: inc/commoninjectionlib.class.php:2309
-msgid "No right to update data"
-msgstr "No right to update data"
-
-#: inc/commoninjectionlib.class.php:2313
-msgid "Size of the inserted value is to expansive"
-msgstr "Size of the inserted value is to expansive"
-
-#: inc/commoninjectionlib.class.php:2317
-msgid "Import not allowed"
-msgstr "Import not allowed"
-
-#: inc/commoninjectionlib.class.php:2321
-msgid "Import failed"
-msgstr "Import failed"
-
-#: inc/commoninjectionlib.class.php:2325
-msgid "At least one mandatory field is not present"
-msgstr "At least one mandatory field is not present"
-
-#: inc/commoninjectionlib.class.php:2329
-msgid "Data to insert are correct"
-msgstr "Data to insert are correct"
-
-#: inc/commoninjectionlib.class.php:2333
-msgid "One data is not the good type"
-msgstr "One data is not the good type"
-
-#: inc/commoninjectionlib.class.php:2337
-msgid "Warning"
-msgstr "Warning"
-
-#: inc/commoninjectionlib.class.php:2341
-msgid "Data not found"
-msgstr "Data not found"
-
-#: inc/commoninjectionlib.class.php:2345 inc/model.class.php:1383
-msgid "Undetermined"
-msgstr "Undetermined"
-
-#: inc/networkportinjection.class.php:94
-msgid "Port MAC address"
-msgstr "Port MAC address"
-
-#: inc/networkequipmentinjection.class.php:76
-msgid "Number of ports"
-msgstr "Number of ports"
+#: inc/injectiontype.class.php:220
+msgid "-------Choose a field-------"
+msgstr "-------Choose a field-------"
 
 #: inc/model.class.php:754
 msgid "Additional Information"
@@ -423,36 +339,128 @@ msgstr "File format is wrong"
 msgid "Extension csv required"
 msgstr "Extension csv required"
 
-#: inc/model.class.php:1100
+#: inc/model.class.php:1098
 msgid "The file is ok."
 msgstr "The file is ok."
 
-#: inc/model.class.php:1124
+#: inc/model.class.php:1122
 msgid "The number of columns of the file is incorrect."
 msgstr "The number of columns of the file is incorrect."
 
-#: inc/model.class.php:1126
+#: inc/model.class.php:1124
 #, php-format
 msgid "%d awaited column"
 msgid_plural "%d awaited columns"
 msgstr[0] "%d awaited column"
 msgstr[1] "%d awaited columns"
 
-#: inc/model.class.php:1175
+#: inc/model.class.php:1173
 msgid "At least one column is incorrect"
 msgstr "At least one column is incorrect"
 
-#: inc/model.class.php:1183
+#: inc/model.class.php:1181
 msgid "Into the file"
 msgstr "Into the file"
 
-#: inc/model.class.php:1188
+#: inc/model.class.php:1186
 msgid "From the model"
 msgstr "From the model"
 
-#: inc/model.class.php:1523
+#: inc/model.class.php:1381 inc/commoninjectionlib.class.php:2344
+msgid "Undetermined"
+msgstr "Undetermined"
+
+#: inc/model.class.php:1519
 msgid "Array of unsuccessful injections"
 msgstr "Array of unsuccessful injections"
+
+#: inc/info.class.php:89 inc/info.class.php:146
+msgid "Mandatory information"
+msgstr "Mandatory information"
+
+#: inc/info.class.php:145
+msgid "Fields"
+msgstr "Fields"
+
+#: inc/networkportinjection.class.php:94
+msgid "Port MAC address"
+msgstr "Port MAC address"
+
+#: inc/phoneinjection.class.php:71
+msgid "Domain name"
+msgstr "Domain name"
+
+#: inc/contractinjection.class.php:154 inc/contractinjection.class.php:162
+#: inc/contractinjection.class.php:170 inc/contractinjection.class.php:178
+#, php-format
+msgid "%d month"
+msgid_plural "%d months"
+msgstr[0] "%d month"
+msgstr[1] "%d months"
+
+#: inc/networkequipmentinjection.class.php:76
+msgid "Number of ports"
+msgstr "Number of ports"
+
+#: inc/commoninjectionlib.class.php:283
+msgid "No mandatory field is defined for this model"
+msgstr "No mandatory field is defined for this model"
+
+#: inc/commoninjectionlib.class.php:2265
+msgid "Add from CSV file"
+msgstr "Add from CSV file"
+
+#: inc/commoninjectionlib.class.php:2265
+msgid "Update from CSV file"
+msgstr "Update from CSV file"
+
+#: inc/commoninjectionlib.class.php:2304
+msgid "No right to import data"
+msgstr "No right to import data"
+
+#: inc/commoninjectionlib.class.php:2308
+msgid "No right to update data"
+msgstr "No right to update data"
+
+#: inc/commoninjectionlib.class.php:2312
+msgid "Size of the inserted value is to expansive"
+msgstr "Size of the inserted value is to expansive"
+
+#: inc/commoninjectionlib.class.php:2316
+msgid "Import not allowed"
+msgstr "Import not allowed"
+
+#: inc/commoninjectionlib.class.php:2320
+msgid "Import failed"
+msgstr "Import failed"
+
+#: inc/commoninjectionlib.class.php:2324
+msgid "At least one mandatory field is not present"
+msgstr "At least one mandatory field is not present"
+
+#: inc/commoninjectionlib.class.php:2328
+msgid "Data to insert are correct"
+msgstr "Data to insert are correct"
+
+#: inc/commoninjectionlib.class.php:2332
+msgid "One data is not the good type"
+msgstr "One data is not the good type"
+
+#: inc/commoninjectionlib.class.php:2336
+msgid "Warning"
+msgstr "Warning"
+
+#: inc/commoninjectionlib.class.php:2340
+msgid "Data not found"
+msgstr "Data not found"
+
+#: inc/clientinjection.class.php:121
+msgid "Launch the import"
+msgstr "Launch the import"
+
+#: inc/clientinjection.class.php:411
+msgid "Unable to generate the error file"
+msgstr "Unable to generate the error file"
 
 #: inc/profile.class.php:40
 msgid "Model management"
