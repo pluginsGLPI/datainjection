@@ -61,6 +61,8 @@ if (isset($_SESSION['datainjection']['go'])) {
             && !$_FILES['filename']['error']
                && $_FILES['filename']['size']
     ) {
+        $uploaded_filename = $_FILES['filename']['name'];
+
         //Read file using automatic encoding detection, and do not delete file once readed
         $options = [
             'file_encoding' => $_POST['file_encoding'],
@@ -72,7 +74,7 @@ if (isset($_SESSION['datainjection']['go'])) {
 
         if ($response) {
             //File uploaded successfully and matches the given model : switch to the import tab
-            $_SESSION['datainjection']['file_name']    = $_FILES['filename']['name'];
+            $_SESSION['datainjection']['file_name']    = $uploaded_filename;
             $_SESSION['datainjection']['step']         = PluginDatainjectionClientInjection::STEP_PROCESS;
             //Store model in session for injection
             $_SESSION['datainjection']['currentmodel'] = serialize($model);
