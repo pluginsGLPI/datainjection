@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-08 04:12+0000\n"
+"POT-Creation-Date: 2026-10-12 04:01+0000\n"
 "PO-Revision-Date: 2018-06-21 12:57+0000\n"
 "Last-Translator: Edwin Elias Alvarez <elias986@yahoo.com>, 2026\n"
 "Language-Team: Spanish (Mexico) (https://app.transifex.com/teclib/teams/28042/es_MX/)\n"
@@ -159,7 +159,7 @@ msgstr "Podés iniciar la creación del modelo presionando el botón"
 
 #: templates/clientinjection.html.twig
 msgid "No model available"
-msgstr ""
+msgstr "Ningún modelo disponible"
 
 #: templates/clientinjection_injection.html.twig inc/profile.class.php:44
 #: inc/menu.class.php:56 inc/menu.class.php:57 inc/menu.class.php:61
@@ -467,7 +467,7 @@ msgstr "Iniciar la importación"
 
 #: inc/clientinjection.class.php:411
 msgid "Unable to generate the error file"
-msgstr ""
+msgstr "No se pudo generar el archivo de error"
 
 #: inc/profile.class.php:40
 msgid "Model management"
