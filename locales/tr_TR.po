@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-08 04:12+0000\n"
+"POT-Creation-Date: 2026-10-12 04:01+0000\n"
 "PO-Revision-Date: 2018-06-21 12:57+0000\n"
 "Last-Translator: Kaya Zeren <kayazeren@gmail.com>, 2026\n"
 "Language-Team: Turkish (Turkey) (https://app.transifex.com/teclib/teams/28042/tr_TR/)\n"
@@ -160,7 +160,7 @@ msgstr "Düğmeye tıklayarak model oluşturmaya başlayabilirsiniz"
 
 #: templates/clientinjection.html.twig
 msgid "No model available"
-msgstr ""
+msgstr "Kullanılabilecek bir model yok"
 
 #: templates/clientinjection_injection.html.twig inc/profile.class.php:44
 #: inc/menu.class.php:56 inc/menu.class.php:57 inc/menu.class.php:61
@@ -465,7 +465,7 @@ msgstr "İçe aktarımı başlat"
 
 #: inc/clientinjection.class.php:411
 msgid "Unable to generate the error file"
-msgstr ""
+msgstr "Hata dosyası oluşturulamadı"
 
 #: inc/profile.class.php:40
 msgid "Model management"
