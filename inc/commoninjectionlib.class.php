@@ -365,6 +365,7 @@ class PluginDatainjectionCommonInjectionLib
             // concrete custom-asset itemtype, so use it directly.
             return $injectionClass::getVirtualType();
         }
+
         return Toolbox::ucfirst(getItemTypeForTable($injectionClass->getTable()));
     }
 
@@ -2471,8 +2472,13 @@ class PluginDatainjectionCommonInjectionLib
         );
 
         $main_itemtype = self::getItemtypeByInjectionClass($injectionClass);
+        $main_table    = getTableForItemType($main_itemtype);
         foreach ($type_searchOptions as &$value) {
-            $value_itemtype = getItemTypeForTable($value['table']);
+            $value_itemtype = $value['table'] === $main_table
+                // Custom assets share a table resolved to the abstract Glpi\Asset\Asset,
+                // whose getTypeName() needs a concrete definition
+                ? $main_itemtype
+                : getItemTypeForTable($value['table']);
             $value_itemtype_name_singular = $value_itemtype::getTypeName(1);
             $value_itemtype_name_plural   = $value_itemtype::getTypeName(Session::getPluralNumber());
             if (

@@ -85,6 +85,7 @@ class PluginDatainjectionInjectionType
                     if ($instance instanceof AssetInjection) {
                         $typename = $instance->getVirtualType();
                     }
+
                     $values[$typename] = $name;
                 }
             }

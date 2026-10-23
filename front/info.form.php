@@ -28,8 +28,6 @@
  * -------------------------------------------------------------------------
  */
 
-Session::checkLoginUser();
-
 /* Update mappings */
 if (isset($_POST["update"])) {
     $model = new PluginDatainjectionModel();

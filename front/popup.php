@@ -28,8 +28,6 @@
  * -------------------------------------------------------------------------
  */
 
-Session::checkLoginUser();
-
 switch ($_GET["popup"]) {
     case "preview":
         $models_id = (int) ($_GET['models_id'] ?? 0);

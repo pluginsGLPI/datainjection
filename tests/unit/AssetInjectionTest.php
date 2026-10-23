@@ -46,8 +46,6 @@ final class AssetInjectionTest extends DbTestCase
      */
     public function testRowIsInjectedIntoInjectableCustomAssetDefinition(): void
     {
-        $this->login();
-
         // The AssetDefinitionManager singleton is rebuilt between tests and only
         // carries core capacities; the plugin capacity is registered from
         // plugin_init_datainjection() at runtime, so re-register it explicitly here.
@@ -60,6 +58,9 @@ final class AssetInjectionTest extends DbTestCase
             $system_name,
             [new Capacity(name: IsInjectableCapacity::class)],
         );
+        // Log in once the definition exists: the session then loads the rights it grants
+        // to the profile, which the injection checks before creating the asset
+        $this->login();
 
         $asset_itemtype = $definition->getAssetClassName();
 
@@ -114,7 +115,9 @@ final class AssetInjectionTest extends DbTestCase
                 'mandatory_fields' => [
                     $primary_type => ['name' => true],
                 ],
-                'entities_id' => 0,
+                // The session of login() only sees the test entities: the injection
+                // checks the CREATE right on the target entity
+                'entities_id' => $this->getTestRootEntity(true),
             ],
         );
 
