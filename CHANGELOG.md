@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Added
 
 - Add Transifex translations link to README
+- Permit to Inject GlpiAsset
 
 ## [2.16.0] - 2026-10-05
 
@@ -36,10 +37,6 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Correct user password import and creation handling (policy, history, expiration and confirmation)
 
 ## [2.15.10] - 2026-08-07
-
-### Added
-
-- Permit to Inject GlpiAsset
 
 ### Fixed
 
