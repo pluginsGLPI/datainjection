@@ -32,8 +32,16 @@ namespace GlpiPlugin\Datainjection\Tests\Unit;
 
 use Glpi\Asset\AssetDefinitionManager;
 use Glpi\Asset\Capacity;
+use Glpi\Asset\CustomFieldDefinition;
+use Glpi\Asset\CustomFieldType\BooleanType;
+use Glpi\Asset\CustomFieldType\DateType;
+use Glpi\Asset\CustomFieldType\DropdownType;
+use Glpi\Asset\CustomFieldType\NumberType;
+use Glpi\Asset\CustomFieldType\StringType;
+use Glpi\Asset\CustomFieldType\TextType;
 use Glpi\Tests\DbTestCase;
 use GlpiPlugin\Datainjection\Glpi\Asset\Capacity\IsInjectableCapacity;
+use Location;
 use PluginDatainjectionCommonInjectionLib;
 
 final class AssetInjectionTest extends DbTestCase
@@ -136,5 +144,114 @@ final class AssetInjectionTest extends DbTestCase
             $definition->getID(),
             (int) $asset->fields['assets_assetdefinitions_id'],
         );
+    }
+
+    /**
+     * Custom fields are stored in a JSON column shared by all of them: each one must be
+     * offered as its own injectable field and saved through "custom_<system_name>".
+     */
+    public function testCustomFieldsAreInjected(): void
+    {
+        $manager = AssetDefinitionManager::getInstance();
+        $manager->registerCapacity(new IsInjectableCapacity());
+
+        $definition = $this->initAssetDefinition(
+            'Injectablecustomfields',
+            [new Capacity(name: IsInjectableCapacity::class)],
+        );
+        $fields = [
+            'serial_ref' => StringType::class,
+            'notes'      => TextType::class,
+            'quantity'   => NumberType::class,
+            'delivery'   => DateType::class,
+            'is_spare'   => BooleanType::class,
+        ];
+        foreach ($fields as $system_name => $type) {
+            $this->createItem(CustomFieldDefinition::class, [
+                'assets_assetdefinitions_id' => $definition->getID(),
+                'system_name'                => $system_name,
+                'label'                      => ucfirst($system_name),
+                'type'                       => $type,
+            ]);
+        }
+
+        $this->createItem(CustomFieldDefinition::class, [
+            'assets_assetdefinitions_id' => $definition->getID(),
+            'system_name'                => 'room',
+            'label'                      => 'Room',
+            'type'                       => DropdownType::class,
+            'itemtype'                   => Location::class,
+        ]);
+        $this->createItem(CustomFieldDefinition::class, [
+            'assets_assetdefinitions_id' => $definition->getID(),
+            'system_name'                => 'tags',
+            'label'                      => 'Tags',
+            'type'                       => DropdownType::class,
+            'itemtype'                   => Location::class,
+            'field_options'              => ['multiple' => true],
+        ], ['field_options']);
+        $definition->getFromDB($definition->getID());
+        $this->login();
+
+        /** @var array $CFG_GLPI */
+        global $CFG_GLPI;
+        $CFG_GLPI['injectable_types'] = [];
+        $manager->bootDefinitions();
+        plugin_datainjection_registerInjectableAssets();
+        plugin_datainjection_creationInjectableAssets();
+
+        $injection_classname = 'PluginDatainjectionInjectablecustomfieldsAssetInjection';
+        $injection    = new $injection_classname();
+        $primary_type = PluginDatainjectionCommonInjectionLib::getItemtypeByInjectionClass($injection);
+
+        // Every custom field but the multiple dropdown is offered, under its own linkfield
+        $linkfields = array_column($injection->getOptions($primary_type), 'linkfield');
+        foreach (['serial_ref', 'notes', 'quantity', 'delivery', 'is_spare', 'room'] as $system_name) {
+            self::assertContains('custom_' . $system_name, $linkfields);
+        }
+
+        self::assertNotContains('custom_tags', $linkfields);
+        self::assertNotContains('custom_fields', $linkfields);
+
+        $results = $injection->addOrUpdateObject(
+            [
+                $primary_type => [
+                    'name'              => 'Asset with custom fields',
+                    'custom_serial_ref' => 'REF-42',
+                    'custom_notes'      => "first line\nsecond line",
+                    'custom_quantity'   => '7',
+                    'custom_delivery'   => '2026-10-23',
+                    'custom_is_spare'   => '1',
+                    'custom_room'       => 'Injected room',
+                ],
+            ],
+            [
+                'rights' => [
+                    'can_add'      => true,
+                    'can_update'   => true,
+                    'add_dropdown' => true,
+                ],
+                'mandatory_fields' => [
+                    $primary_type => ['name' => true],
+                ],
+                'entities_id' => $this->getTestRootEntity(true),
+            ],
+        );
+
+        self::assertSame(PluginDatainjectionCommonInjectionLib::SUCCESS, $results['status']);
+
+        $asset = new ($definition->getAssetClassName())();
+        self::assertTrue($asset->getFromDB((int) $results[$primary_type]));
+
+        // The room did not exist: add_dropdown allowed to create it
+        $location = new Location();
+        self::assertTrue($location->getFromDBByCrit(['name' => 'Injected room']));
+
+        self::assertSame('REF-42', $asset->fields['custom_serial_ref']);
+        self::assertSame("first line\nsecond line", $asset->fields['custom_notes']);
+        self::assertEquals(7, $asset->fields['custom_quantity']);
+        self::assertSame('2026-10-23', $asset->fields['custom_delivery']);
+        self::assertTrue((bool) $asset->fields['custom_is_spare']);
+        self::assertEquals($location->getID(), $asset->fields['custom_room']);
     }
 }

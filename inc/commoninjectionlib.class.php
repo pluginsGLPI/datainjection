@@ -647,7 +647,8 @@ class PluginDatainjectionCommonInjectionLib
 
             case 'dropdown':
             case 'relation':
-                $tmptype = getItemTypeForTable($searchOption['table']);
+                // Custom dropdowns share one table: their itemtype cannot be resolved from it
+                $tmptype = $searchOption['dropdown_itemtype'] ?? getItemTypeForTable($searchOption['table']);
                 if (!is_a($tmptype, CommonDBTM::class, true)) {
                     return;
                 }

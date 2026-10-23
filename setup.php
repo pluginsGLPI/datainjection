@@ -53,10 +53,8 @@ function plugin_init_datainjection()
     /** @var array $CFG_GLPI */
     /** @var array $INJECTABLE_TYPES */
     global $PLUGIN_HOOKS, $CFG_GLPI, $INJECTABLE_TYPES;
+    $CFG_GLPI['injectable_types'] ??= [];
 
-    if (!isset($CFG_GLPI['injectable_types'])) {
-        $CFG_GLPI['injectable_types'] = [];
-    }
     $asset_definition_manager = AssetDefinitionManager::getInstance();
     $asset_definition_manager->registerCapacity(new IsInjectableCapacity());
 
@@ -259,15 +257,13 @@ function plugin_datainjection_registerInjectableAssets(): void
         if ($definition === false || $definition === null) {
             continue;
         }
+
         if ($definition->getAssetClassName() === $itemtype) {
             // Use the system name to create a nice class name
-            $system_name = ucfirst($definition->fields['system_name']);//strtolower()
+            $system_name = ucfirst($definition->fields['system_name']);
             $injection_class = 'PluginDatainjection' . $system_name . 'AssetInjection';
-
             // Only create if not already registered
-            if (!isset($INJECTABLE_TYPES[$injection_class])) {
-                $INJECTABLE_TYPES[$injection_class] = 'datainjection';
-            }
+            $INJECTABLE_TYPES[$injection_class] ??= 'datainjection';
         }
     }
 }
@@ -317,6 +313,8 @@ use GlpiPlugin\\Datainjection\\Glpi\\Asset\\AssetInjection;
 
 final class $class_name extends AssetInjection implements PluginDatainjectionInjectionInterface
 {
+    // Redeclared: a static property of the parent class would be shared by every definition
+    protected static string \$definition_system_name = '';
     protected static int \$fixed_asset_definition_id = $definition_id;
 
     public static function getAssetDefinitionID(): int
@@ -329,6 +327,7 @@ PHP;
     if (preg_match('/^[A-Za-z][A-Za-z0-9_]*$/', $class_name) === 0) {
         return;
     }
+
     eval($code);
 
 }

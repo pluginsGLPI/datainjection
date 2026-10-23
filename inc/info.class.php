@@ -359,7 +359,7 @@ class PluginDatainjectionInfo extends CommonDBTM
                 }
 
                 Dropdown::show(
-                    getItemTypeForTable($option['table']),
+                    $option['dropdown_itemtype'] ?? getItemTypeForTable($option['table']),
                     ['name'  => $name,
                         'value' => $value,
                     ],
