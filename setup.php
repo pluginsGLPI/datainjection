@@ -284,6 +284,10 @@ function plugin_datainjection_creationInjectableAssets(): void
     // For each injectable asset definition, create and register a distinct class
     foreach ($CFG_GLPI['injectable_types'] as $definition_id => $itemtype) {
         $definition = AssetDefinition::getById($definition_id);
+        if ($definition === false) {
+            continue;
+        }
+
         // Get the asset definition to extract the system name
         if ($definition->getAssetClassName() === $itemtype) {
             // Use the system name to create a nice class name
