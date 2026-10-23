@@ -27,11 +27,12 @@
  * @link      https://github.com/pluginsGLPI/datainjection
  * -------------------------------------------------------------------------
  */
-
+use Glpi\Asset\Asset;
 use Glpi\DBAL\QueryExpression;
 use Glpi\DBAL\QuerySubQuery;
 use Glpi\Exception\Http\HttpException;
 use Glpi\Features\AssignableItem;
+use GlpiPlugin\Datainjection\Glpi\Asset\AssetInjection;
 
 use function Safe\preg_match;
 use function Safe\preg_replace;
@@ -356,6 +357,15 @@ class PluginDatainjectionCommonInjectionLib
     public static function getItemtypeByInjectionClass($injectionClass)
     {
 
+        if ($injectionClass instanceof AssetInjection) {
+            // Custom assets all share the "glpi_assets_assets" table, whose canonical
+            // itemtype is the *abstract* Glpi\Asset\Asset. Resolving through the table
+            // (getItemTypeForTable) is therefore unreliable and can return that abstract
+            // class, which is not instantiable. The injection class already knows its
+            // concrete custom-asset itemtype, so use it directly.
+            return $injectionClass::getVirtualType();
+        }
+
         return Toolbox::ucfirst(getItemTypeForTable($injectionClass->getTable()));
     }
 
@@ -365,7 +375,10 @@ class PluginDatainjectionCommonInjectionLib
     *
     * @param string $itemtype  the itemtype
     *
-    * @return PluginDatainjectionInjectionInterface the injection class instance
+    * Every injection class both implements the interface and extends CommonDBTM,
+    * so the returned instance exposes the CommonDBTM API (getTable(), ...) too.
+    *
+    * @return PluginDatainjectionInjectionInterface&CommonDBTM the injection class instance
     */
     public static function getInjectionClassInstance($itemtype)
     {
@@ -377,7 +390,15 @@ class PluginDatainjectionCommonInjectionLib
             $injectionClass = ucfirst($itemtype) . 'Injection';
         }
 
-        if (!is_a($injectionClass, PluginDatainjectionInjectionInterface::class, true)) {
+        if (!class_exists($injectionClass)) {
+            plugin_datainjection_creationInjectableAssets();
+        }
+
+
+        if (
+            !is_a($injectionClass, PluginDatainjectionInjectionInterface::class, true)
+            || !is_a($injectionClass, CommonDBTM::class, true)
+        ) {
             throw new HttpException(500, 'Class ' . $injectionClass . ' is not a valid class');
         }
 
@@ -626,7 +647,8 @@ class PluginDatainjectionCommonInjectionLib
 
             case 'dropdown':
             case 'relation':
-                $tmptype = getItemTypeForTable($searchOption['table']);
+                // Custom dropdowns share one table: their itemtype cannot be resolved from it
+                $tmptype = $searchOption['dropdown_itemtype'] ?? getItemTypeForTable($searchOption['table']);
                 if (!is_a($tmptype, CommonDBTM::class, true)) {
                     return;
                 }
@@ -2145,6 +2167,10 @@ class PluginDatainjectionCommonInjectionLib
                         }
                     }
 
+                    if ($injectionClass instanceof Asset && method_exists($injectionClass, 'getAssetDefinitionID')) {
+                        $where['assets_assetdefinitions_id'] = $injectionClass->getAssetDefinitionID();
+                    }
+
                     //Add additional parameters specific to this itemtype (or function checkPresent exists)
                     if (method_exists($injectionClass, 'checkPresent')) {
                         $extra = $injectionClass->checkPresent($this->values, $options);
@@ -2447,8 +2473,13 @@ class PluginDatainjectionCommonInjectionLib
         );
 
         $main_itemtype = self::getItemtypeByInjectionClass($injectionClass);
+        $main_table    = getTableForItemType($main_itemtype);
         foreach ($type_searchOptions as &$value) {
-            $value_itemtype = getItemTypeForTable($value['table']);
+            $value_itemtype = $value['table'] === $main_table
+                // Custom assets share a table resolved to the abstract Glpi\Asset\Asset,
+                // whose getTypeName() needs a concrete definition
+                ? $main_itemtype
+                : getItemTypeForTable($value['table']);
             $value_itemtype_name_singular = $value_itemtype::getTypeName(1);
             $value_itemtype_name_plural   = $value_itemtype::getTypeName(Session::getPluralNumber());
             if (

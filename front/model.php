@@ -28,7 +28,6 @@
  * -------------------------------------------------------------------------
  */
 
-Session::checkLoginUser();
 
 Html::header(
     PluginDatainjectionModel::getTypeName(),
