@@ -83,7 +83,7 @@ class PluginDatainjectionSoftwareVersionInjection extends SoftwareVersion implem
 
         $options['ignore_fields'] = array_merge($blacklist, $notimportable);
 
-        $key = array_search(2, $options['ignore_fields']);
+        $key = array_search(2, $options['ignore_fields'], true);
         unset($options['ignore_fields'][$key]);
 
         $options['displaytype']   = ["dropdown"       => [4,31],
@@ -152,20 +152,21 @@ class PluginDatainjectionSoftwareVersionInjection extends SoftwareVersion implem
             return $fields_toinject;
         }
 
-        $query = "SELECT `id`
-                FROM `glpi_softwares`
-                WHERE `name` = '" . $fields_toinject['SoftwareVersion']['softwares_id'] . "'" .
-                    getEntitiesRestrictRequest(
-                        " AND",
-                        "glpi_softwares",
-                        "entities_id",
-                        $fields_toinject['SoftwareVersion']['entities_id'],
-                        true,
-                    );
-        $result = $DB->doQuery($query);
+        $result = $DB->request([
+            'SELECT' => ['id'],
+            'FROM'   => 'glpi_softwares',
+            'WHERE'  => [
+                'name' => $fields_toinject['SoftwareVersion']['softwares_id'],
+            ] + getEntitiesRestrictCriteria(
+                'glpi_softwares',
+                'entities_id',
+                $fields_toinject['SoftwareVersion']['entities_id'],
+                true,
+            ),
+        ]);
 
-        if ($DB->numrows($result) > 0) {
-            $id = $DB->result($result, 0, 'id');
+        if (count($result) > 0) {
+            $id = $result->current()['id'];
             //Add softwares_id to the array
             $fields_toinject['SoftwareVersion']['softwares_id'] = $id;
         } else {
@@ -188,15 +189,15 @@ class PluginDatainjectionSoftwareVersionInjection extends SoftwareVersion implem
         if ($primary_type == 'Software') {
             $fields['softwares_id'] = $values[$primary_type]['id'];
         }
+
         return $fields;
     }
 
 
     /**
-    * @param array $fields_toinject    array
-    * @param array $options            array
-    * @return array
-   **/
+     * @param array $fields_toinject    array
+     * @param array $options            array
+     **/
     public function checkPresent($fields_toinject = [], $options = []): array
     {
         if ($options['itemtype'] != 'SoftwareVersion') {
@@ -205,6 +206,7 @@ class PluginDatainjectionSoftwareVersionInjection extends SoftwareVersion implem
                 'name'         => $fields_toinject['SoftwareVersion']['name'],
             ];
         }
+
         return [];
     }
 }

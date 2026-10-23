@@ -95,6 +95,7 @@ class PluginDatainjectionDeviceProcessorInjection extends DeviceProcessor implem
             if (!is_a($class, CommonDBTM::class, true)) {
                 throw new HttpException(500, 'Class ' . $class . ' is not a valid class');
             }
+
             $item    = new $class();
             $foreign = getForeignKeyFieldForTable(getTableForItemType(get_parent_class($this)));
 
@@ -104,7 +105,7 @@ class PluginDatainjectionDeviceProcessorInjection extends DeviceProcessor implem
                 'items_id' => $values['Computer']['id'],
             ];
 
-            if (!countElementsInTable($item->getTable(), $where)) {
+            if (countElementsInTable($item->getTable(), $where) === 0) {
                 //try first frequency, then default_frequency
                 if (
                     isset($values[get_parent_class($this)]['frequency'])

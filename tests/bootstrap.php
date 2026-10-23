@@ -28,19 +28,12 @@
  * -------------------------------------------------------------------------
  */
 
-$current_plugin_folder = basename(realpath(__DIR__ . '/../'));
-
 require __DIR__ . '/../../../tests/bootstrap.php';
-require dirname(__DIR__) . '/vendor/autoload.php';
 
-$plugin = new Plugin();
-$plugin->checkPluginState('datainjection');
-$plugin->getFromDBbyDir('datainjection');
-
-if (!$plugin->isInstalled('datainjection')) {
-    $plugin->install($plugin->getID());
+if (file_exists(__DIR__ . '/../vendor/autoload.php')) {
+    require __DIR__ . '/../vendor/autoload.php';
 }
 
-if (!$plugin->isActivated('datainjection')) {
-    $plugin->activate($plugin->getID());
+if (!Plugin::isPluginActive('datainjection')) {
+    throw new RuntimeException('Plugin datainjection is not active in the test database');
 }

@@ -64,20 +64,7 @@ class PluginDatainjectionContract_SupplierInjection extends Contract_Supplier im
    **/
     public function getOptions($primary_type = '')
     {
-
-        $tab[4]['table']        = 'glpi_contracts';
-        $tab[4]['field']        = 'name';
-        $tab[4]['name']         = __('Contract');
-        $tab[4]['checktype']    = 'text';
-        $tab[4]['displaytype']  = 'dropdown';
-
-        $tab[5]['table']        = 'glpi_suppliers';
-        $tab[5]['field']        = 'name';
-        $tab[5]['name']         = __('Supplier');
-        $tab[5]['checktype']    = 'text';
-        $tab[5]['displaytype']  = 'dropdown';
-
-        return $tab;
+        return [4 => ['table' => 'glpi_contracts', 'field' => 'name', 'name' => __('Contract'), 'checktype' => 'text', 'displaytype' => 'dropdown'], 5 => ['table' => 'glpi_suppliers', 'field' => 'name', 'name' => __('Supplier'), 'checktype' => 'text', 'displaytype' => 'dropdown']];
     }
 
 

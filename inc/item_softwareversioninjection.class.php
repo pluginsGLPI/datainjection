@@ -72,43 +72,15 @@ class PluginDatainjectionItem_SoftwareVersionInjection extends Item_SoftwareVers
    **/
     public function getOptions($primary_type = '')
     {
-
-        $tab[110]['table']        = 'glpi_computers';
-        $tab[110]['field']        = 'name';
-        $tab[110]['linkfield']    = 'name';
-        $tab[110]['name']         = sprintf(__('%1$s - %2$s'), self::getTypeName(), __('Name'));
-        $tab[110]['injectable']   = true;
-        $tab[110]['displaytype']  = 'dropdown';
-        $tab[110]['checktype']    = 'text';
-        $tab[110]['storevaluein'] = 'computers_id';
-
-        $tab[111]['table']        = 'glpi_computers';
-        $tab[111]['field']        = 'serial';
-        $tab[111]['linkfield']    = 'serial';
-        $tab[111]['name']         = sprintf(
+        return [110 => ['table' => 'glpi_computers', 'field' => 'name', 'linkfield' => 'name', 'name' => sprintf(__('%1$s - %2$s'), self::getTypeName(), __('Name')), 'injectable' => true, 'displaytype' => 'dropdown', 'checktype' => 'text', 'storevaluein' => 'computers_id'], 111 => ['table' => 'glpi_computers', 'field' => 'serial', 'linkfield' => 'serial', 'name' => sprintf(
             __('%1$s - %2$s'),
             self::getTypeName(),
             __('Serial number'),
-        );
-        $tab[111]['injectable']   = true;
-        $tab[111]['displaytype']  = 'dropdown';
-        $tab[111]['checktype']    = 'text';
-        $tab[112]['storevaluein'] = 'computers_id';
-
-        $tab[112]['table']        = 'glpi_computers';
-        $tab[112]['field']        = 'otherserial';
-        $tab[112]['linkfield']    = 'otherserial';
-        $tab[112]['name']         = sprintf(
+        ), 'injectable' => true, 'displaytype' => 'dropdown', 'checktype' => 'text'], 112 => ['storevaluein' => 'computers_id', 'table' => 'glpi_computers', 'field' => 'otherserial', 'linkfield' => 'otherserial', 'name' => sprintf(
             __('%1$s - %2$s'),
             self::getTypeName(),
             __('Inventory number'),
-        );
-        $tab[112]['injectable']   = true;
-        $tab[112]['displaytype']  = 'dropdown';
-        $tab[112]['checktype']    = 'text';
-        $tab[112]['storevaluein'] = 'computers_id';
-
-        return $tab;
+        ), 'injectable' => true, 'displaytype' => 'dropdown', 'checktype' => 'text']];
     }
 
 

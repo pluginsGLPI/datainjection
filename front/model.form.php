@@ -30,13 +30,9 @@
 
 Session::checkLoginUser();
 
-if (!isset($_GET["id"])) {
-    $_GET["id"] = "";
-}
+$_GET["id"] ??= "";
 
-if (!isset($_GET["withtemplate"])) {
-    $_GET["withtemplate"] = "";
-}
+$_GET["withtemplate"] ??= "";
 
 $model = new PluginDatainjectionModel();
 $model->checkGlobal(READ);
@@ -48,7 +44,7 @@ if (isset($_POST["add"])) {
 
     //Set display to the advanced options tab
     Session::setActiveTab('PluginDatainjectionModel', 'PluginDatainjectionModel$3');
-    Html::redirect(Toolbox::getItemTypeFormURL('PluginDatainjectionModel') . "?id=$newID");
+    Html::redirect(Toolbox::getItemTypeFormURL('PluginDatainjectionModel') . ('?id=' . $newID));
 } elseif (isset($_POST["delete"])) {
     /* delete */
     $model->check($_POST['id'], DELETE);
@@ -74,7 +70,7 @@ if (isset($_POST["add"])) {
     $model->switchReadyToUse();
     Html::back();
 } elseif (isset($_POST['upload'])) {
-    if (!empty($_FILES)) {
+    if ($_FILES !== []) {
         $model->check($_POST['id'], UPDATE);
 
         if (
@@ -95,6 +91,7 @@ if (isset($_POST["add"])) {
             );
         }
     }
+
     Html::back();
 } elseif (isset($_GET['sample'])) {
     $model->check($_GET['sample'], READ);

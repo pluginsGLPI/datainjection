@@ -2,19 +2,20 @@
     "require": {
         "php": ">=8.2"
     },
-    "require-dev": {
-        "glpi-project/tools": "^0.8"
-    },
     "config": {
+        "autoloader-suffix": "PluginDatainjection",
         "optimize-autoloader": true,
         "platform": {
             "php": "8.2.99"
         },
-        "sort-packages": true
+        "sort-packages": true,
+        "autoloader-suffix": "PluginDatainjection"
     },
     "autoload-dev": {
         "psr-4": {
-            "Glpi\\Tools\\": "../../tools/src/"
+            "Glpi\\Tools\\": "../../tools/src/",
+            "GlpiPlugin\\Datainjection\\Tests\\": "tests/",
+            "GlpiPlugin\\Datainjection\\Tests\\Unit\\": "tests/unit/"
         }
     }
 }

@@ -108,6 +108,7 @@ class PluginDatainjectionPeripheralInjection extends Peripheral implements Plugi
         if (isset($values[$primary_type]['is_global'])) {
             $fields['is_global'] = empty($values[$primary_type]['is_global']) ? 0 : $values[$primary_type]['is_global'];
         }
+
         return $fields;
     }
 }

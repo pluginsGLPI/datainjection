@@ -37,13 +37,19 @@ use function Safe\preg_match;
 abstract class PluginDatainjectionBackend
 {
     protected $file = "";
+
     protected $delimiter = "";
+
     protected $encoding;
+
     protected $errmsg;
+
     protected $numberOfLines = 0;
 
     public const ENCODING_ISO8859_1 = 0;
+
     public const ENCODING_UFT8      = 1;
+
     public const ENCODING_AUTO      = 2;
 
 
@@ -67,6 +73,7 @@ abstract class PluginDatainjectionBackend
         for ($i = 0; $i < $nb; $i++) {
             $header[] = $i;
         }
+
         return $header;
     }
 
@@ -83,7 +90,7 @@ abstract class PluginDatainjectionBackend
         ];
 
         if (!isset($allowedBackends[$type])) {
-            throw new InvalidArgumentException("Unknown backend type: $type");
+            throw new InvalidArgumentException('Unknown backend type: ' . $type);
         }
 
         return new $allowedBackends[$type]();
@@ -118,6 +125,7 @@ abstract class PluginDatainjectionBackend
         if (!self::is_utf8($string)) {
             return Toolbox::encodeInUtf8($string);
         }
+
         return $string;
     }
 }

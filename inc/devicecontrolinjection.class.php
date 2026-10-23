@@ -94,18 +94,19 @@ class PluginDatainjectionDeviceControlInjection extends DeviceControl implements
             if (!is_a($class, CommonDBTM::class, true)) {
                 throw new HttpException(500, 'Class ' . $class . ' is not a valid class');
             }
+
             $item    = new $class();
             $foreign = getForeignKeyFieldForTable(getTableForItemType(get_parent_class($this)));
 
             if (
-                !countElementsInTable(
+                countElementsInTable(
                     $item->getTable(),
                     [
                         $foreign   => $values[get_parent_class($this)]['id'],
                         'itemtype' => 'Computer',
                         'items_id' => $values['Computer']['id'],
                     ],
-                )
+                ) === 0
             ) {
                 $tmp[$foreign]   = $values[get_parent_class($this)]['id'];
                 $tmp['items_id'] = $values['Computer']['id'];

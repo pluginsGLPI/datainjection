@@ -35,7 +35,7 @@ use function Safe\ob_start;
 
 class PluginDatainjectionMapping extends CommonDBTM
 {
-    public static $rightname = "plugin_datainjection_model";
+    public static string $rightname = "plugin_datainjection_model";
 
     /**
     * @param string $field
@@ -47,6 +47,7 @@ class PluginDatainjectionMapping extends CommonDBTM
         if (!isset($this->fields[$field])) {
             return false;
         }
+
         return $this->fields[$field] == $value;
     }
 
@@ -158,6 +159,7 @@ class PluginDatainjectionMapping extends CommonDBTM
         foreach ($DB->doQuery($query) as $mapping) {
             $several[] = $mapping['value'];
         }
+
         return $several;
     }
 
@@ -178,6 +180,7 @@ class PluginDatainjectionMapping extends CommonDBTM
         foreach ($DB->doQuery($query) as $data) {
             $mappings[] = $data['name'];
         }
+
         return $mappings;
     }
 }

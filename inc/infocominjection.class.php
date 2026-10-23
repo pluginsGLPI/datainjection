@@ -108,7 +108,7 @@ class PluginDatainjectionInfocomInjection extends Infocom implements PluginDatai
 
         $options['ignore_fields'] = array_merge($blacklist, $notimportable);
 
-        $key                      = array_search(19, $options['ignore_fields']);
+        $key                      = array_search(19, $options['ignore_fields'], true);
         unset($options['ignore_fields'][$key]);
 
         $options['displaytype']   = ["date"           => [4, 5, 23, 24, 25, 27, 28, 159],

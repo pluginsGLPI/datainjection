@@ -65,6 +65,7 @@ class PluginDatainjectionItem_OperatingsystemInjection extends Item_OperatingSys
                 } else {
                     $option['linkfield'] = $option['field'];
                 }
+
                 $searchoptions[$option['id']] = $option;
             }
         }
@@ -121,9 +122,9 @@ class PluginDatainjectionItem_OperatingsystemInjection extends Item_OperatingSys
         if ($matching_os->count() > 0) {
             $item_operatingsystem->getFromResultSet($matching_os->current());
             return $item_operatingsystem->fields['id'];
-        } else {
-            return false;
         }
+
+        return false;
     }
 
 
@@ -133,9 +134,6 @@ class PluginDatainjectionItem_OperatingsystemInjection extends Item_OperatingSys
     **/
     public function addSpecificNeededFields($primary_type, $values)
     {
-        $fields['items_id'] = $values[$primary_type]['id'];
-        $fields['itemtype'] = $primary_type;
-
-        return $fields;
+        return ['items_id' => $values[$primary_type]['id'], 'itemtype' => $primary_type];
     }
 }

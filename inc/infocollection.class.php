@@ -30,14 +30,7 @@
 
 class PluginDatainjectionInfoCollection
 {
-    public $infosCollection;
-
-
-    public function __construct()
-    {
-
-        $this->infosCollection = [];
-    }
+    public $infosCollection = [];
 
 
     //---- Getter ----//

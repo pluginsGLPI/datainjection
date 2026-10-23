@@ -47,6 +47,7 @@ class PluginDatainjectionSession
         if (function_exists('Safe\unserialize')) {
             return \Safe\unserialize($data);
         }
+
         // @phpstan-ignore theCodingMachineSafe.function
         return unserialize($data);
     }
@@ -65,22 +66,22 @@ class PluginDatainjectionSession
         if (!isset($_SESSION['datainjection'][$param])) {
             return false;
         }
+
         if (in_array($param, ['results', 'error_lines', 'injection_lines', 'injection_results', 'injection_error_lines'])) {
             $fic = $_SESSION['datainjection'][$param];
             return file_get_contents(GLPI_TMP_DIR . '/' . $fic);
         }
+
         return $_SESSION['datainjection'][$param];
     }
 
 
     /**
-    * Set a parameter in the HTTP session
-    *
-    * @param string $param     the parameter
-    * @param array|string|false $results   the value to store
-    *
-    * @return void
-   **/
+     * Set a parameter in the HTTP session
+     *
+     * @param string $param     the parameter
+     * @param array|string|false $results   the value to store
+     **/
     public static function setParam($param, $results): void
     {
 
@@ -91,6 +92,7 @@ class PluginDatainjectionSession
                     unlink($old_fic);
                 }
             }
+
             $fic = Session::getLoginUserID() . '_' . $param . '_' . microtime(true);
             file_put_contents(GLPI_TMP_DIR . '/' . $fic, $results);
             $_SESSION['datainjection'][$param] = $fic;
@@ -101,10 +103,8 @@ class PluginDatainjectionSession
 
 
     /**
-    * Remove all parameters from the HTTP session
-    *
-    * @return void
-    */
+     * Remove all parameters from the HTTP session
+     */
     public static function removeParams(): void
     {
 
@@ -117,6 +117,7 @@ class PluginDatainjectionSession
                 }
             }
         }
+
         unset($_SESSION['datainjection']);
     }
 }

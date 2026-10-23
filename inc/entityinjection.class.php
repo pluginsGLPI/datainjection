@@ -93,11 +93,12 @@ class PluginDatainjectionEntityInjection extends Entity implements PluginDatainj
         // Only the `name`, `entities_id`, and `comment` fields are taken into account when creating an entity.
         // The IF forces an update of the entity to insert the other fields.
         if (
-            count(array_diff_key($values, array_flip(['name', 'entities_id', 'comment']))) > 0
+            array_diff_key($values, array_flip(['name', 'entities_id', 'comment'])) !== []
             && $data['type'] === PluginDatainjectionCommonInjectionLib::IMPORT_ADD
         ) {
             $lib->processAddOrUpdate();
         }
+
         return $lib->getInjectionResults();
     }
 
@@ -129,8 +130,8 @@ class PluginDatainjectionEntityInjection extends Entity implements PluginDatainj
 
         // Check if search start by root entity
         $root = self::getRootEntityName();
-        if (!str_starts_with($search, $root)) {
-            $search = "$root > $search";
+        if (!str_starts_with((string) $search, (string) $root)) {
+            $search = sprintf('%s > %s', $root, $search);
         }
 
         $results = $em->find(['completename' => $search]);
@@ -138,9 +139,9 @@ class PluginDatainjectionEntityInjection extends Entity implements PluginDatainj
         if (count($results)) {
             $ent = array_pop($results);
             return $this->updateExistingEntity($ent['id'], $input);
-        } else {
-            return $this->importEntity($input);
         }
+
+        return $this->importEntity($input);
     }
 
     public function importEntity($input)
@@ -148,13 +149,13 @@ class PluginDatainjectionEntityInjection extends Entity implements PluginDatainj
         $em = new Entity();
 
         // Import a full tree from completename
-        $names  = explode('>', $input['completename']);
+        $names  = explode('>', (string) $input['completename']);
         $i      = count($names);
         $parent = 0;
         $level  = 0;
 
         // Remove root entity if specified
-        if (strcmp(trim($names[0]), trim(self::getRootEntityName())) === 0) {
+        if (strcmp(trim($names[0]), trim((string) self::getRootEntityName())) === 0) {
             unset($names[0]);
         }
 
@@ -163,10 +164,11 @@ class PluginDatainjectionEntityInjection extends Entity implements PluginDatainj
 
             $i--;
             $level++;
-            if (empty($name)) {
+            if ($name === '' || $name === '0') {
                 // Skip empty name (completename starting/endind with >, double >, ...)
                 continue;
             }
+
             $tmp['name'] = $name;
 
             if ($i === 0) {
@@ -177,6 +179,7 @@ class PluginDatainjectionEntityInjection extends Entity implements PluginDatainj
                     }
                 }
             }
+
             $tmp['level']       = $level;
             $tmp['entities_id'] = $parent;
 
@@ -187,7 +190,7 @@ class PluginDatainjectionEntityInjection extends Entity implements PluginDatainj
             );
 
             // Entity doesn't exists => create it
-            if (empty($results)) {
+            if ($results === []) {
                 $parent = $em->import($tmp);
             } else {
                 // Entity already exists, use the ID as parent
@@ -224,12 +227,13 @@ class PluginDatainjectionEntityInjection extends Entity implements PluginDatainj
         if (!isset($values['completename'])) {
             return false;
         }
+
         $results = getAllDataFromTable(
             'glpi_entities',
             ['completename' => $values['completename']],
         );
 
-        if (empty($results)) {
+        if ($results === []) {
             return false;
         }
 

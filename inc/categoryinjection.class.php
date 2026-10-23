@@ -50,7 +50,7 @@ class PluginDatainjectionCategoryInjection extends Category implements PluginDat
 
     public function isNullable($field)
     {
-        return !in_array($field, ['illustration']);
+        return $field != 'illustration';
     }
 
     /**

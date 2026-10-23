@@ -30,13 +30,7 @@
 
 class PluginDatainjectionMappingCollection
 {
-    private $mappingCollection;
-
-    public function __construct()
-    {
-
-        $this->mappingCollection = [];
-    }
+    private $mappingCollection = [];
 
     //---- Getter ----//
 
@@ -52,7 +46,7 @@ class PluginDatainjectionMappingCollection
 
         $sql = "SELECT *
               FROM `glpi_plugin_datainjection_mappings`
-              WHERE `models_id` = '$models_id'
+              WHERE `models_id` = '{$models_id}'
               ORDER BY `rank` ASC";
 
         $this->mappingCollection = [];
@@ -121,6 +115,7 @@ class PluginDatainjectionMappingCollection
                 return $mapping;
             }
         }
+
         return null;
     }
 
@@ -194,6 +189,7 @@ class PluginDatainjectionMappingCollection
                 $mandatories[] = $mapping;
             }
         }
+
         return $mandatories;
     }
 

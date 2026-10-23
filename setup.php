@@ -36,12 +36,12 @@ use function Safe\define;
 use function Safe\mkdir;
 use function Safe\preg_match;
 
-define('PLUGIN_DATAINJECTION_VERSION', '2.15.10');
+define('PLUGIN_DATAINJECTION_VERSION', '2.16.0');
 
 // Minimal GLPI version, inclusive
-define("PLUGIN_DATAINJECTION_MIN_GLPI", "11.0.5");
+define("PLUGIN_DATAINJECTION_MIN_GLPI", "12.0.0");
 // Maximum GLPI version, exclusive
-define("PLUGIN_DATAINJECTION_MAX_GLPI", "11.0.99");
+define("PLUGIN_DATAINJECTION_MAX_GLPI", "12.0.99");
 
 if (!defined("PLUGIN_DATAINJECTION_UPLOAD_DIR")) {
     define("PLUGIN_DATAINJECTION_UPLOAD_DIR", GLPI_PLUGIN_DOC_DIR . "/datainjection/");
@@ -75,11 +75,12 @@ function plugin_init_datainjection()
         if (!plugin_datainjection_checkDirectories()) {
             @ mkdir(PLUGIN_DATAINJECTION_UPLOAD_DIR);
         }
+
         $PLUGIN_HOOKS["config_page"]['datainjection'] = "front/clientinjection.form.php";
 
 
 
-        if (Session::haveRight('plugin_datainjection_use', READ)) {
+        if (Session::haveRight(PluginDatainjectionClientInjection::$rightname, READ)) {
             $PLUGIN_HOOKS["menu_toadd"]['datainjection'] = ['tools'  => 'PluginDatainjectionMenu'];
         }
 
@@ -121,8 +122,6 @@ function plugin_version_datainjection()
 
 /**
  * Return all types that can be injected using datainjection
- *
- * @return void
  */
 function getTypesToInject(): void
 {
@@ -173,7 +172,6 @@ function getTypesToInject(): void
         'PluginDatainjectionNetworkport_VlanInjection'            => 'datainjection',
         'PluginDatainjectionNetworkNameInjection'                 => 'datainjection',
         'PluginDatainjectionNetpointInjection'                    => 'datainjection',
-        'PluginDatainjectionKnowbaseItemCategoryInjection'        => 'datainjection',
         'PluginDatainjectionKnowbaseItemInjection'                => 'datainjection',
         'PluginDatainjectionITILFollowupTemplateInjection'        => 'datainjection',
         'PluginDatainjectionITILCategoryInjection'                => 'datainjection',
@@ -347,7 +345,7 @@ function plugin_datainjection_migratetypes_datainjection($types)
 
 function plugin_datainjection_checkDirectories()
 {
-    return !(!file_exists(PLUGIN_DATAINJECTION_UPLOAD_DIR) || !is_writable(PLUGIN_DATAINJECTION_UPLOAD_DIR));
+    return file_exists(PLUGIN_DATAINJECTION_UPLOAD_DIR) && is_writable(PLUGIN_DATAINJECTION_UPLOAD_DIR);
 }
 
 function plugin_datainjection_geturl(): string

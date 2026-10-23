@@ -105,20 +105,25 @@ class PluginDatainjectionSoftwareInjection extends Software implements PluginDat
             if (isset($res_rule['_ignore_import']) && $res_rule['_ignore_import']) {
                 return false;
             }
+
             if (isset($res_rule['is_helpdesk_visible'])) {
                 $values['Software']['is_helpdesk_visible'] = $res_rule['is_helpdesk_visible'];
             }
+
             if (isset($res_rule['version'])) {
                 $values['SoftwareVersion']['name'] = $res_rule['version'];
             }
+
             if (isset($res_rule['name'])) {
                 $values['Software']['name'] = $res_rule['name'];
             }
+
             if (isset($res_rule['supplier']) && isset($values['supplier'])) {
                 $values['Software']['manufacturers_id']
                 = Dropdown::getDropdownName('glpi_suppliers', $res_rule['supplier']);
             }
         }
+
         return true;
     }
 

@@ -236,7 +236,7 @@ function plugin_datainjection_migration_2158_2159(Migration $migration)
     // Fix remaining legacy data (old schema stored private models with `entities_id = -1`).
     // Must run *before* the changeField() below: the column is converted to
     // `unsigned`, which would mangle the `-1` values before this cleanup could match them.
-    if (countElementsInTable("glpi_plugin_datainjection_models", ['entities_id' => -1])) {
+    if (countElementsInTable("glpi_plugin_datainjection_models", ['entities_id' => -1]) !== 0) {
         $migration->addPreQuery(
             "UPDATE `glpi_plugin_datainjection_models`
                 SET `is_private` = '1', `entities_id` = '0', `is_recursive` = '1'
@@ -251,7 +251,7 @@ function plugin_datainjection_migration_2158_2159(Migration $migration)
         'glpi_plugin_datainjection_models',
         'entities_id',
         'entities_id',
-        "int {$default_key_sign} NOT NULL default '0'",
+        sprintf("int %s NOT NULL default '0'", $default_key_sign),
     );
 
     $migration->executeMigration();
@@ -404,7 +404,7 @@ function plugin_datainjection_update131_14()
         'glpi_plugin_data_injection_models',
         'user_id',
         'FK_users',
-        "int {$default_key_sign} NOT NULL default '0'",
+        sprintf("int %s NOT NULL default '0'", $default_key_sign),
     );
     $migration->changeField(
         'glpi_plugin_data_injection_models',
@@ -510,7 +510,7 @@ function plugin_datainjection_update170_20()
         'glpi_plugin_datainjection_models',
         'FK_entities',
         'entities_id',
-        "int {$default_key_sign} NOT NULL default '0'",
+        sprintf("int %s NOT NULL default '0'", $default_key_sign),
     );
     $migration->changeField(
         'glpi_plugin_datainjection_models',
@@ -522,7 +522,7 @@ function plugin_datainjection_update170_20()
         'glpi_plugin_datainjection_models',
         'FK_users',
         'users_id',
-        "int {$default_key_sign} NOT NULL default '0'",
+        sprintf("int %s NOT NULL default '0'", $default_key_sign),
     );
     $migration->changeField(
         'glpi_plugin_datainjection_models',
@@ -532,6 +532,7 @@ function plugin_datainjection_update170_20()
     );
 
     $migration->migrationOneTable('glpi_plugin_datainjection_models');
+
     $query = "UPDATE `glpi_plugin_datainjection_models`
               SET `step` = '5'";
     $DB->doQuery($query);
@@ -551,7 +552,7 @@ function plugin_datainjection_update170_20()
         'glpi_plugin_datainjection_modelcsvs',
         'model_id',
         'models_id',
-        "int {$default_key_sign} NOT NULL default '0'",
+        sprintf("int %s NOT NULL default '0'", $default_key_sign),
     );
     $migration->changeField(
         'glpi_plugin_datainjection_modelcsvs',
@@ -585,7 +586,7 @@ function plugin_datainjection_update170_20()
         'glpi_plugin_datainjection_mappings',
         'model_id',
         'models_id',
-        "int {$default_key_sign} NOT NULL default '0'",
+        sprintf("int %s NOT NULL default '0'", $default_key_sign),
     );
 
     $migration->changeField(
@@ -599,7 +600,7 @@ function plugin_datainjection_update170_20()
         'glpi_plugin_datainjection_infos',
         'model_id',
         'models_id',
-        "int {$default_key_sign} NOT NULL default '0'",
+        sprintf("int %s NOT NULL default '0'", $default_key_sign),
     );
     $migration->changeField(
         'glpi_plugin_datainjection_infos',
@@ -1854,6 +1855,7 @@ function plugin_datainjection_update170_20()
     ];
 
     $foreignkeys = Plugin::doHookFunction("plugin_datainjection_migratefields", $foreignkeys);
+
     $query = "SELECT `itemtype`, `value`
             FROM `glpi_plugin_datainjection_mappings`
             WHERE `itemtype` NOT IN ('none')
@@ -1908,12 +1910,13 @@ function plugin_datainjection_update210_220()
         $DB->doQuery($query);
     }
 }
+
 function plugin_datainjection_update220_230()
 {
     /** @var DBmysql $DB */
     global $DB;
 
-    if (countElementsInTable("glpi_plugin_datainjection_models", ['entities_id' => -1])) {
+    if (countElementsInTable("glpi_plugin_datainjection_models", ['entities_id' => -1]) !== 0) {
         $query = "UPDATE `glpi_plugin_datainjection_models`
                 SET `is_private` = '1',
                     `entities_id` = '0',
@@ -1942,7 +1945,7 @@ function plugin_datainjection_loadHook($hook_name, $params = [])
         );
     } elseif (isset($PLUGIN_HOOKS['plugin_types'])) {
         //Browse all plugins
-        foreach ($PLUGIN_HOOKS['plugin_types'] as $type => $name) {
+        foreach ($PLUGIN_HOOKS['plugin_types'] as $name) {
             Plugin::doOneHook($name, 'datainjection_' . $hook_name);
         }
     }
@@ -1988,12 +1991,16 @@ function plugin_datainjection_addDefaultWhere($itemtype)
                 foreach ($models as $model) {
                     $tab[] = $model['id'];
                 }
+
                 return "`glpi_plugin_datainjection_models`.`id` IN ('" . implode("','", $tab) . "')";
-            } else {
-                return "1 = 0"; //no model available -> force WHERE clause to get no result
             }
-            // no break
+
+            return "1 = 0";
+            //no model available -> force WHERE clause to get no result
+
         default:
             break;
     }
+
+    return null;
 }

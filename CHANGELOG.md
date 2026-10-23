@@ -5,6 +5,32 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [UNRELEASED]
+
+## [2.16.0] - 2026-10-05
+
+### Fixed
+
+- CI: fix Psalm cache directory, drop the stray `glpi-project/tools` composer dependency, declare a unique composer autoloader suffix
+- Use a unique temporary file when exporting import errors to CSV
+
+
+### Added
+
+- GLPI 12 compatibility
+
+## [2.15.11] - 2026-09-11
+
+### Fixed
+
+- Move to iterator
+- Fix various minor bugs in the import/export workflow
+- Fix an issue where data are not formatted when coming from a field plugin's custom field.
+- Improve import/export workflow
+- Fix validation, permissions and entity handling during imports
+- Improve partial import error reporting
+- Correct user password import and creation handling (policy, history, expiration and confirmation)
+
 ## [2.15.10] - 2026-08-07
 
 ### Added
@@ -41,6 +67,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Fixed
 
 - Fix injection loading bar crash
+- Fix missing `Group` field in mappable fields for `Printer` injection
 
 ## [2.15.5] - 2026-04-30
 

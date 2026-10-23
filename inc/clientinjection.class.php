@@ -30,6 +30,7 @@
 use Glpi\Application\View\TemplateRenderer;
 use Glpi\Debug\Profile;
 use Glpi\Error\ErrorHandler;
+use Safe\Exceptions\FilesystemException;
 use Safe\Exceptions\InfoException;
 
 use function Safe\fclose;
@@ -40,14 +41,18 @@ use function Safe\ini_set;
 use function Safe\json_decode;
 use function Safe\json_encode;
 use function Safe\readfile;
+use function Safe\realpath;
+use function Safe\tempnam;
 use function Safe\unlink;
 
 class PluginDatainjectionClientInjection
 {
-    public static $rightname = "plugin_datainjection_use";
+    public static string $rightname = "plugin_datainjection_use";
 
     public const STEP_UPLOAD  = 0;
+
     public const STEP_PROCESS = 1;
+
     public const STEP_RESULT  = 2;
 
     /**
@@ -85,7 +90,7 @@ class PluginDatainjectionClientInjection
         TemplateRenderer::getInstance()->display('@datainjection/clientinjection.html.twig', [
             'form_action' => Toolbox::getItemTypeFormURL(self::class),
             'models' => PluginDatainjectionModel::getModels(Session::getLoginUserID(), 'name', $_SESSION['glpiactive_entity'], false),
-            'can_create_model' => Session::haveRight('plugin_datainjection_model', CREATE),
+            'can_create_model' => Session::haveRight(PluginDatainjectionModel::$rightname, CREATE),
             'model_type_name' => PluginDatainjectionModel::getTypeName(),
             'models_id' => PluginDatainjectionSession::getParam('models_id'),
             'step' => PluginDatainjectionSession::getParam('step'),
@@ -153,6 +158,7 @@ class PluginDatainjectionClientInjection
             $lines[] = $line;
             $line    = $backend->getNextLine();
         }
+
         $backend->closeFile();
 
         //Store lines in session for batch processing
@@ -188,14 +194,15 @@ class PluginDatainjectionClientInjection
     {
         try {
             ini_set("max_execution_time", "0");
-        } catch (InfoException $e) {
-            ErrorHandler::logCaughtException($e);
+        } catch (InfoException $infoException) {
+            ErrorHandler::logCaughtException($infoException);
         }
 
         Profile::getCurrent()->disable();
 
         $model = PluginDatainjectionSession::unserialize($_SESSION['datainjection']['currentmodel']);
         $model->loadSpecificModel();
+
         $entities_id = $_SESSION['glpiactive_entity'];
         $lines_json  = PluginDatainjectionSession::getParam('injection_lines');
         $lines       = json_decode($lines_json, true);
@@ -226,6 +233,7 @@ class PluginDatainjectionClientInjection
                     'line'   => $injectionline,
                 ];
             }
+
             $results[]     = $result;
 
             if ($result['status'] != PluginDatainjectionCommonInjectionLib::SUCCESS) {
@@ -314,10 +322,72 @@ class PluginDatainjectionClientInjection
             'popup_url'     => plugin_datainjection_geturl() . "front/popup.php?popup=log&models_id=" . $model->fields['id'],
             'model_id'      => $model->fields['id'],
             'has_pdf'       => $plugin->isActivated('pdf'),
-            'has_errors'    => !empty($error_lines),
+            'has_errors'    => !in_array($error_lines, ['', '0', []], true),
         ];
 
         TemplateRenderer::getInstance()->display('@datainjection/clientinjection_result.html.twig', $data);
+    }
+
+    private static function escapeCsvFormula(mixed $value): mixed
+    {
+        if (is_string($value) && isset($value[0]) && in_array($value[0], ['=', '+', '-', '@'], true)) {
+            return "'" . $value;
+        }
+
+        return $value;
+    }
+
+    private static function writeErrorsCsv(string $dir, array $error_lines, array $headers, string $delimiter): string
+    {
+        $upload_dir = realpath($dir);
+        // tempnam() silently falls back to the system temp dir when the target dir is unusable
+        if (!is_writable($upload_dir)) {
+            throw new FilesystemException(sprintf('Upload directory "%s" is not writable.', $dir));
+        }
+
+        $file = tempnam($upload_dir, 'ERR');
+        $tmpfile = null;
+        try {
+            $tmpfile = fopen($file, 'w');
+
+            if ($headers !== []) {
+                fputcsv($tmpfile, $headers, $delimiter);
+            }
+
+            foreach ($error_lines as $line) {
+                fputcsv($tmpfile, array_map(self::escapeCsvFormula(...), $line), $delimiter);
+            }
+
+            fclose($tmpfile);
+        } catch (FilesystemException $filesystemException) {
+            self::discardErrorsCsv($tmpfile, $file);
+            throw $filesystemException;
+        }
+
+        return $file;
+    }
+
+    /**
+     * @param resource|null $handle
+     */
+    private static function discardErrorsCsv($handle, string $file): void
+    {
+        // Cleanup failures are swallowed so they never mask the original write error
+        try {
+            if (is_resource($handle)) {
+                fclose($handle);
+            }
+        } catch (FilesystemException) {
+        }
+
+        if (!file_exists($file)) {
+            return;
+        }
+
+        try {
+            unlink($file);
+        } catch (FilesystemException) {
+        }
     }
 
     public static function exportErrorsInCSV()
@@ -326,28 +396,26 @@ class PluginDatainjectionClientInjection
         $error_lines = json_decode(PluginDatainjectionSession::getParam('error_lines'), true);
         self::stripslashes_array($error_lines);
 
-        if (!empty($error_lines)) {
-            $model = PluginDatainjectionSession::unserialize(PluginDatainjectionSession::getParam('currentmodel'));
-            $file  = PLUGIN_DATAINJECTION_UPLOAD_DIR . PluginDatainjectionSession::getParam('file_name');
+        if (!in_array($error_lines, ['', '0', []], true)) {
+            $model   = PluginDatainjectionSession::unserialize(PluginDatainjectionSession::getParam('currentmodel'));
+            $backend = $model->getBackend();
+            $headers = $backend->isHeaderPresent()
+                ? PluginDatainjectionMapping::getMappingsSortedByRank($model->fields['id'])
+                : [];
 
-            $mappings = $model->getMappings();
-            $tmpfile  = fopen($file, 'w');
-
-            //If headers present
-            if ($model->getBackend()->isHeaderPresent()) {
-                $headers = PluginDatainjectionMapping::getMappingsSortedByRank($model->fields['id']);
-                fputcsv($tmpfile, $headers, $model->getBackend()->getDelimiter());
+            try {
+                $file = self::writeErrorsCsv(PLUGIN_DATAINJECTION_UPLOAD_DIR, $error_lines, $headers, $backend->getDelimiter());
+            } catch (FilesystemException $e) {
+                ErrorHandler::logCaughtException($e);
+                Session::addMessageAfterRedirect(
+                    __s('Unable to generate the error file', 'datainjection'),
+                    false,
+                    ERROR,
+                );
+                Html::back();
             }
 
-            //Write lines
-            foreach ($error_lines as $line) {
-                fputcsv($tmpfile, $line, $model->getBackend()->getDelimiter());
-            }
-            fclose($tmpfile);
-
-            $name = "Error-" . PluginDatainjectionSession::getParam('file_name');
-            $name = str_replace(' ', '', $name);
-            header('Content-disposition: attachment; filename=' . $name);
+            header('Content-disposition: attachment; filename=Errors.csv');
             header('Content-Type: application/octet-stream');
             header('Content-Transfer-Encoding: fichier');
             header('Content-Length: ' . filesize($file));

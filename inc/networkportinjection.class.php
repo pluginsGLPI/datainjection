@@ -135,6 +135,7 @@ class PluginDatainjectionNetworkportInjection extends NetworkPort implements Plu
         } else {
             $fields['instantiation_type'] = "NetworkPortEthernet";
         }
+
         return $fields;
     }
 
@@ -155,6 +156,7 @@ class PluginDatainjectionNetworkportInjection extends NetworkPort implements Plu
                         $instantiations[$inst_type] = call_user_func([$inst_type, 'getTypeName']);
                     }
                 }
+
                 Dropdown::showFromArray(
                     'instantiation_type',
                     $instantiations,
@@ -240,13 +242,11 @@ class PluginDatainjectionNetworkportInjection extends NetworkPort implements Plu
 
 
     /**
-    * Build where sql request to look for a network port
-    *
-    * @param array $fields_toinject    array    the fields to insert into DB
-    * @param array $options            array
-    *
-    * @return array
-   **/
+     * Build where sql request to look for a network port
+     *
+     * @param array $fields_toinject    array    the fields to insert into DB
+     * @param array $options            array
+     **/
     public function getUnicityRequest($fields_toinject = [], $options = []): array
     {
         $where = [];
@@ -320,29 +320,41 @@ class PluginDatainjectionNetworkportInjection extends NetworkPort implements Plu
         }
 
         // Find port in database
-        $sql = "SELECT `glpi_networkports`.`id`
-              FROM `glpi_networkports`, `glpi_networkequipments`
-              WHERE `glpi_networkports`.`itemtype`='NetworkEquipment'
-                    AND `glpi_networkports`.`items_id` = `glpi_networkequipments`.`id`
-                    AND `glpi_networkequipments`.`is_template` = '0'
-                    AND `glpi_networkequipments`.`entities_id`
-                           = '" . $values['NetworkPort']["entities_id"] . "'";
+        $criteria = [
+            'glpi_networkports.itemtype'            => 'NetworkEquipment',
+            'glpi_networkequipments.is_template'    => 0,
+            'glpi_networkequipments.entities_id'    => $values['NetworkPort']["entities_id"],
+        ];
         if ($use_name) {
-            $sql .= " AND `glpi_networkequipments`.`name` = '" . $values['NetworkPort']["netname"] . "'";
+            $criteria['glpi_networkequipments.name'] = $values['NetworkPort']["netname"];
         }
+
         if ($use_logical_number) {
-            $sql .= " AND `glpi_networkports`.`logical_number` = '" . $values['NetworkPort']["netport"] . "'";
+            $criteria['glpi_networkports.logical_number'] = $values['NetworkPort']["netport"];
         }
+
         if ($use_mac) {
-            $sql .= " AND `glpi_networkports`.`mac` = '" . $values['NetworkPort']["netmac"] . "'";
+            $criteria['glpi_networkports.mac'] = $values['NetworkPort']["netmac"];
         }
-        $res = $DB->doQuery($sql);
+
+        $result = $DB->request([
+            'SELECT'     => 'glpi_networkports.id',
+            'FROM'       => 'glpi_networkports',
+            'INNER JOIN' => [
+                'glpi_networkequipments' => [
+                    'ON' => [
+                        'glpi_networkports'      => 'items_id',
+                        'glpi_networkequipments' => 'id',
+                    ],
+                ],
+            ],
+            'WHERE'      => $criteria,
+        ]);
 
         //if at least one parameter is given
-        $nb = $DB->numrows($res);
-        if ($nb == 1) {
+        if (count($result) === 1) {
             //Get data for this port
-            $netport         = $DB->fetchArray($res);
+            $netport         = $result->current();
             $netport_netport = new NetworkPort_NetworkPort();
             //If this port already connected to another one ?
             if (!$netport_netport->getOppositeContact((int) $netport['id'])) {
@@ -351,6 +363,9 @@ class PluginDatainjectionNetworkportInjection extends NetworkPort implements Plu
                 $tmp['networkports_id_2'] = $netport['id'];
                 $netport_netport->add($tmp);
             }
-        } //TODO add injection warning if no port found or more than one
+        }
+
+        //TODO add injection warning if no port found or more than one
+        return null;
     }
 }

@@ -32,7 +32,7 @@ use function Safe\json_encode;
 header("Content-Type: application/json; charset=UTF-8");
 Html::header_nocache();
 
-Session::checkCentralAccess();
+Session::checkRight(PluginDatainjectionClientInjection::$rightname, READ);
 
 $offset     = (int) ($_POST['offset'] ?? 0);
 $batch_size = (int) ($_POST['batch_size'] ?? 10);
