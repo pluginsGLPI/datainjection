@@ -32,6 +32,8 @@ use Glpi\DBAL\QueryExpression;
 use Glpi\DBAL\QuerySubQuery;
 use Glpi\Exception\Http\HttpException;
 use Glpi\Features\AssignableItem;
+use Glpi\Asset\Asset;
+use GlpiPlugin\Datainjection\AssetInjection;
 
 use function Safe\preg_match;
 use function Safe\preg_replace;
@@ -316,7 +318,10 @@ class PluginDatainjectionCommonInjectionLib
     public static function getItemtypeInstanceByInjection($injectionClassName)
     {
 
-        if (!is_a($injectionClassName, PluginDatainjectionInjectionInterface::class, true)) {
+        if (
+            !is_a($injectionClassName, PluginDatainjectionInjectionInterface::class, true)
+            || is_a($injectionClassName, AssetInjection::class, true)
+        ) {
             throw new HttpException(500, 'Class ' . $injectionClassName . ' is not a valid class');
         }
 
@@ -338,7 +343,8 @@ class PluginDatainjectionCommonInjectionLib
     */
     public static function getItemtypeByInjection($injectionClassName)
     {
-        if (!is_a($injectionClassName, CommonDBTM::class, true)) {
+        // A generic asset injection class needs its itemtype: it cannot be instanciated from its name
+        if (!is_a($injectionClassName, CommonDBTM::class, true) || is_a($injectionClassName, AssetInjection::class, true)) {
             throw new HttpException(500, 'Class ' . $injectionClassName . ' is not a valid class');
         }
 
@@ -355,6 +361,10 @@ class PluginDatainjectionCommonInjectionLib
     */
     public static function getItemtypeByInjectionClass($injectionClass)
     {
+        // All generic assets share the same table
+        if ($injectionClass instanceof AssetInjection) {
+            return $injectionClass->itemtype;
+        }
 
         return Toolbox::ucfirst(getItemTypeForTable($injectionClass->getTable()));
     }
@@ -369,6 +379,9 @@ class PluginDatainjectionCommonInjectionLib
     */
     public static function getInjectionClassInstance($itemtype)
     {
+        if (is_a($itemtype, Asset::class, true)) {
+            return AssetInjection::forItemtype($itemtype);
+        }
 
         if (!isPluginItemType($itemtype)) {
             $itemtype = (new ReflectionClass($itemtype))->getShortName(); // get shortname of class when full namespaced class given (from GLPI)
@@ -527,8 +540,12 @@ class PluginDatainjectionCommonInjectionLib
     private function getItemInstance()
     {
 
-        $classname = $this->injectionClass::class;
-        return self::getItemtypeInstanceByInjection($classname);
+        $itemtype = $this->primary_type;
+        if (!is_a($itemtype, CommonDBTM::class, true)) {
+            throw new HttpException(500, 'Class ' . $itemtype . ' is not a valid class');
+        }
+
+        return new $itemtype();
     }
 
 
@@ -626,7 +643,8 @@ class PluginDatainjectionCommonInjectionLib
 
             case 'dropdown':
             case 'relation':
-                $tmptype = getItemTypeForTable($searchOption['table']);
+                // Generic assets types and models, or custom dropdowns, share their table with other itemtypes
+                $tmptype = $searchOption['itemtype'] ?? getItemTypeForTable($searchOption['table']);
                 if (!is_a($tmptype, CommonDBTM::class, true)) {
                     return;
                 }
@@ -900,6 +918,7 @@ class PluginDatainjectionCommonInjectionLib
         }
 
         $where[$searchOption['field']] = $value;
+        $where += $item::getSystemSQLCriteria();
 
         $result = $DB->request([
             'SELECT' => ['id'],
@@ -1010,7 +1029,7 @@ class PluginDatainjectionCommonInjectionLib
                 'is_active',
             ];
             if (empty($value) && $value !== 0 && $value !== '0') {
-                if (isForeignKeyField($field) || (str_contains($field, 'is_')) || (method_exists($injectionClass, 'isNullable') && !$injectionClass->isNullable($field))) {
+                if (isForeignKeyField($field) || (str_starts_with($field, 'is_')) || (method_exists($injectionClass, 'isNullable') && !$injectionClass->isNullable($field))) {
                     //If the field concernes groupds, unseting it instead of setting it to 0 in order to avoid associating the item to a non existing group (id 0)
                     $group_fields = ['groups_id_tech', 'groups_id', 'groups_id_normal'];
                     if (in_array($field, $group_fields) && Toolbox::hasTrait($itemtype, AssignableItem::class)) {
@@ -1053,7 +1072,7 @@ class PluginDatainjectionCommonInjectionLib
             'WHERE'  => [
                 'is_template'   => 1,
                 'template_name' => $name,
-            ],
+            ] + $itemtype::getSystemSQLCriteria(),
         ]);
 
         if (count($result) > 0) {
@@ -2128,6 +2147,11 @@ class PluginDatainjectionCommonInjectionLib
                                         'FROM'   => 'glpi_useremails',
                                         'WHERE'  => ['email' => $this->getValueByItemtypeAndName($itemtype, $field)],
                                     ]);
+                                } elseif (
+                                    $injectionClass instanceof AssetInjection
+                                    && ($criterion = $injectionClass->getCustomFieldCriterion($field, $this->getValueByItemtypeAndName($itemtype, $field))) instanceof QueryExpression
+                                ) {
+                                    $where[] = $criterion;
                                 } else {
                                     $where[$field] = $this->getValueByItemtypeAndName($itemtype, $field);
                                 }
@@ -2164,6 +2188,9 @@ class PluginDatainjectionCommonInjectionLib
                         }
                     }
                 }
+
+                // Restrict to the items of the itemtype when its table is shared (generic assets)
+                $where += $item::getSystemSQLCriteria();
 
                 $result = $DB->request([
                     'FROM'  => $injectionClass->getTable(),
@@ -2447,8 +2474,11 @@ class PluginDatainjectionCommonInjectionLib
         );
 
         $main_itemtype = self::getItemtypeByInjectionClass($injectionClass);
+        $main_table    = getTableForItemType($main_itemtype);
         foreach ($type_searchOptions as &$value) {
-            $value_itemtype = getItemTypeForTable($value['table']);
+            $value_itemtype = $value['table'] === $main_table
+                ? $main_itemtype
+                : $value['itemtype'] ?? getItemTypeForTable($value['table']);
             $value_itemtype_name_singular = $value_itemtype::getTypeName(1);
             $value_itemtype_name_plural   = $value_itemtype::getTypeName(Session::getPluralNumber());
             if (
