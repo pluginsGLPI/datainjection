@@ -36,9 +36,12 @@ use Glpi\Asset\CustomFieldDefinition;
 use Glpi\DBAL\QueryExpression;
 use Glpi\DBAL\QueryFunction;
 use Glpi\DBAL\QueryIdentifier;
+use InvalidArgumentException;
 use PluginDatainjectionCommonInjectionLib;
 use PluginDatainjectionInjectionInterface;
 use Search;
+
+use function Safe\json_encode;
 
 /**
  * Injection of the generic assets (GLPI custom assets).
@@ -185,11 +188,19 @@ final class AssetInjection extends CommonDBTM implements PluginDatainjectionInje
 
         foreach ($this->itemtype::getDefinition()->getCustomFieldDefinitions() as $custom_field) {
             if ('custom_' . $custom_field->fields['system_name'] === $field) {
+                // Stored the same way as the asset does (e.g. "1" becomes true for a yes/no field)
+                try {
+                    $value = $custom_field->getFieldType()->formatValueForDB($value);
+                } catch (InvalidArgumentException) {
+                    // Not a valid value for this field: it matches no asset
+                }
+
+                // Numbers and booleans are stored as JSON values, e.g. 7.0 or true
                 return new QueryExpression(
                     QueryFunction::jsonUnquote(QueryFunction::jsonExtract([
                         new QueryIdentifier('custom_fields'),
                         new QueryExpression($DB::quoteValue('$."' . $custom_field->getID() . '"')),
-                    ])) . ' = ' . $DB::quoteValue((string) $value),
+                    ])) . ' = ' . $DB::quoteValue(is_string($value) ? $value : json_encode($value)),
                 );
             }
         }

@@ -55,6 +55,7 @@ use Item_OperatingSystem;
 use Location;
 use Manufacturer;
 use OperatingSystem;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PluginDatainjectionCommonInjectionLib;
 use PluginDatainjectionInjectionType;
 
@@ -214,17 +215,67 @@ final class AssetInjectionTest extends DbTestCase
         self::assertSame('OTHER', $other->fields['serial']);
     }
 
-    public function testUpdateMatchesACustomField(): void
+    public function testDropdownsOfAnotherDefinitionAreNotReused(): void
     {
-        $definition = $this->initAssetDefinition();
-        $this->createCustomField($definition, 'reference', StringType::class);
+        $definition_a = $this->initAssetDefinition();
+        $definition_b = $this->initAssetDefinition();
+        $colors_a     = $this->initDropdownDefinition()->getDropdownClassName();
+        $colors_b     = $this->initDropdownDefinition()->getDropdownClassName();
+        $this->createCustomField($definition_a, 'color', DropdownType::class, $colors_a);
+        $this->createCustomField($definition_b, 'color', DropdownType::class, $colors_b);
+
+        // Definition A already has the same names
+        $type_a  = $this->createItem($definition_a->getAssetTypeClassName(), ['name' => 'Server']);
+        $model_a = $this->createItem($definition_a->getAssetModelClassName(), ['name' => 'X42']);
+        $color_a = $this->createItem($colors_a, ['name' => 'Blue']);
         $this->login();
 
-        $mandatory = ['custom_reference' => true];
-        $added     = $this->inject($definition, ['custom_reference' => 'REF-1', 'name' => 'Before'], mandatory_fields: $mandatory);
-        $this->inject($definition, ['custom_reference' => 'REF-2', 'name' => 'Other'], mandatory_fields: $mandatory);
+        $results = $this->inject($definition_b, [
+            'name'                  => 'Asset of B',
+            'assets_assettypes_id'  => 'Server',
+            'assets_assetmodels_id' => 'X42',
+            'custom_color'          => 'Blue',
+        ]);
+        self::assertSame(PluginDatainjectionCommonInjectionLib::SUCCESS, $results['status']);
 
-        $updated = $this->inject($definition, ['custom_reference' => 'REF-1', 'name' => 'After'], mandatory_fields: $mandatory);
+        $asset = $this->getItem($definition_b, $results);
+        self::assertNotEquals($type_a->getID(), $asset->fields['assets_assettypes_id']);
+        self::assertNotEquals($model_a->getID(), $asset->fields['assets_assetmodels_id']);
+        self::assertNotEquals($color_a->getID(), $asset->fields['custom_color']);
+
+        // The items are created for definition B
+        $type_b = $definition_b->getAssetTypeClassName();
+        self::assertSame('Server', $type_b::getById($asset->fields['assets_assettypes_id'])->fields['name']);
+        $model_b = $definition_b->getAssetModelClassName();
+        self::assertSame('X42', $model_b::getById($asset->fields['assets_assetmodels_id'])->fields['name']);
+        self::assertSame('Blue', $colors_b::getById($asset->fields['custom_color'])->fields['name']);
+    }
+
+    public static function customFieldMatchProvider(): iterable
+    {
+        yield 'string' => [StringType::class, [], 'Réf/1', 'Réf/1', 'Réf/2'];
+        yield 'integer written differently' => [NumberType::class, [], '7', '07', '8'];
+        yield 'decimal written differently' => [NumberType::class, ['step' => 0.01], '7', '7.00', '7.5'];
+        yield 'yes/no stored as a boolean' => [BooleanType::class, [], '1', '1', '0'];
+    }
+
+    #[DataProvider('customFieldMatchProvider')]
+    public function testUpdateMatchesACustomField(
+        string $type,
+        array $field_options,
+        string $stored_value,
+        string $matching_value,
+        string $other_value,
+    ): void {
+        $definition = $this->initAssetDefinition();
+        $this->createCustomField($definition, 'key', $type, field_options: $field_options);
+        $this->login();
+
+        $mandatory = ['custom_key' => true];
+        $added     = $this->inject($definition, ['custom_key' => $stored_value, 'name' => 'Before'], mandatory_fields: $mandatory);
+        $this->inject($definition, ['custom_key' => $other_value, 'name' => 'Other'], mandatory_fields: $mandatory);
+
+        $updated = $this->inject($definition, ['custom_key' => $matching_value, 'name' => 'After'], mandatory_fields: $mandatory);
         self::assertSame(PluginDatainjectionCommonInjectionLib::SUCCESS, $updated['status']);
         self::assertSame(PluginDatainjectionCommonInjectionLib::IMPORT_UPDATE, $updated['type']);
         self::assertSame($this->getItem($definition, $added)->getID(), $this->getItem($definition, $updated)->getID());
