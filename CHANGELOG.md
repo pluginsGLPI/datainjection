@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Added
 
 - Add Transifex translations link to README
+- Inject generic assets, including their type, model, comment and custom fields
 
 ## [2.16.0] - 2026-10-05
 
