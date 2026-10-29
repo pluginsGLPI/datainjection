@@ -41,6 +41,7 @@ use PluginDatainjectionCommonInjectionLib;
 use PluginDatainjectionInjectionInterface;
 use Search;
 
+use function Safe\json_decode;
 use function Safe\json_encode;
 
 /**
@@ -206,6 +207,27 @@ final class AssetInjection extends CommonDBTM implements PluginDatainjectionInje
         }
 
         return null;
+    }
+
+    /**
+     * Stored values of the custom fields of an asset, by injected field ("custom_<system_name>"),
+     * so that they are handled like the other values of the asset (e.g. not overwritten)
+     *
+     * @param array $db_fields asset row
+     */
+    public function getCustomFieldValues(array $db_fields): array
+    {
+        $stored = json_decode($db_fields['custom_fields'] ?? '[]', true);
+        $values = [];
+        foreach ($this->itemtype::getDefinition()->getCustomFieldDefinitions() as $custom_field) {
+            $value = $stored[$custom_field->getID()] ?? null;
+            if ($value !== null && $this->getCustomFieldOption($custom_field) !== null) {
+                // As the other DB values, e.g. "1" for true, to be checked like the CSV values
+                $values['custom_' . $custom_field->fields['system_name']] = is_bool($value) ? (string) (int) $value : (string) $value;
+            }
+        }
+
+        return $values;
     }
 
     /**

@@ -294,6 +294,28 @@ final class AssetInjectionTest extends DbTestCase
         self::assertSame('', $this->getItem($definition, $results)->fields['custom_basis_note']);
     }
 
+    public function testNotEmptyCustomFieldIsNotOverwritten(): void
+    {
+        $definition = $this->initAssetDefinition();
+        $this->createCustomField($definition, 'reference', StringType::class);
+        $this->createCustomField($definition, 'notes', StringType::class);
+        $this->login();
+
+        $added = $this->inject($definition, ['name' => 'Asset', 'custom_reference' => 'REF-1']);
+
+        $updated = $this->inject(
+            $definition,
+            ['name' => 'Asset', 'custom_reference' => 'REF-2', 'custom_notes' => 'Some notes'],
+            overwrite: false,
+        );
+        self::assertSame(PluginDatainjectionCommonInjectionLib::IMPORT_UPDATE, $updated['type']);
+
+        $asset = $this->getItem($definition, $added);
+        self::assertSame('REF-1', $asset->fields['custom_reference']);
+        // An empty field is still filled
+        self::assertSame('Some notes', $asset->fields['custom_notes']);
+    }
+
     public function testInjectionClassCannotBeResolvedFromItsName(): void
     {
         $this->expectException(HttpException::class);
@@ -356,6 +378,7 @@ final class AssetInjectionTest extends DbTestCase
         array $values,
         array $linked_values = [],
         array $mandatory_fields = ['name' => true],
+        bool $overwrite = true,
     ): array {
         $itemtype = $definition->getAssetClassName();
 
@@ -367,7 +390,7 @@ final class AssetInjectionTest extends DbTestCase
                     'can_add'      => true,
                     'can_update'   => true,
                     'add_dropdown' => true,
-                    'overwrite_notempty_fields' => true,
+                    'overwrite_notempty_fields' => $overwrite,
                 ],
                 'mandatory_fields' => [$itemtype => $mandatory_fields],
                 'entities_id'      => $this->getTestRootEntity(true),

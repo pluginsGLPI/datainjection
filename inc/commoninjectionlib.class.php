@@ -2199,6 +2199,10 @@ class PluginDatainjectionCommonInjectionLib
 
                 if (count($result) > 0) {
                     $db_fields = $result->current();
+                    if ($injectionClass instanceof AssetInjection) {
+                        $db_fields += $injectionClass->getCustomFieldValues($db_fields);
+                    }
+
                     foreach ($db_fields as $key => $value) {
                         $this->setValueForItemtype($itemtype, $key, $value, true);
                     }
