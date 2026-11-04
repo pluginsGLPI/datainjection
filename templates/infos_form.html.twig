@@ -1,0 +1,69 @@
+{#
+ # -------------------------------------------------------------------------
+ # DataInjection plugin for GLPI
+ # -------------------------------------------------------------------------
+ #
+ # LICENSE
+ #
+ # This file is part of DataInjection.
+ #
+ # DataInjection is free software; you can redistribute it and/or modify
+ # it under the terms of the GNU General Public License as published by
+ # the Free Software Foundation; either version 2 of the License, or
+ # (at your option) any later version.
+ #
+ # DataInjection is distributed in the hope that it will be useful,
+ # but WITHOUT ANY WARRANTY; without even the implied warranty of
+ # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ # GNU General Public License for more details.
+ #
+ # You should have received a copy of the GNU General Public License
+ # along with DataInjection. If not, see <http://www.gnu.org/licenses/>.
+ # -------------------------------------------------------------------------
+ # @copyright Copyright (C) 2007-2023 by DataInjection plugin team.
+ # @license   GPLv2 https://www.gnu.org/licenses/gpl-2.0.html
+ # @link      https://github.com/pluginsGLPI/datainjection
+ # -------------------------------------------------------------------------
+ #}
+
+{% embed '@datainjection/components/mapping_table.html.twig' with {
+   form_action: form_action,
+   fields_url: fields_url,
+   rows: infos,
+   title: __('Additional information', 'datainjection'),
+   icon: 'ti ti-list-details',
+   selectable: canedit,
+   select_all: select_all,
+   switch_label: __('Mandatory information', 'datainjection'),
+   badges: [
+      {
+         class: 'bg-secondary-lt',
+         labels: [_n('%d additional information', '%d additional information', 1, 'datainjection'), _n('%d additional information', '%d additional information', 2, 'datainjection')],
+         count: infos|length,
+      },
+      {
+         class: 'bg-blue-lt',
+         labels: [_n('%d mandatory information', '%d mandatory information', 1, 'datainjection'), _n('%d mandatory information', '%d mandatory information', 2, 'datainjection')],
+         count: nb_mandatory,
+         counter: 'link',
+      },
+   ],
+} %}
+   {% block selection_actions %}
+      {% if canedit %}
+         <button type="submit" name="delete" value="1" class="btn btn-outline-danger datainjection-selection-btn" {{ select_all ? '' : 'disabled' }}>
+            <i class="ti ti-trash me-1"></i>
+            <span>{{ _x('button', 'Delete permanently') }}</span>
+         </button>
+      {% endif %}
+   {% endblock %}
+   {% block footer %}
+      {% if canedit %}
+         <input type="hidden" name="models_id" value="{{ model_id }}">
+         <button type="submit" name="update" value="1" class="btn btn-primary">
+            <i class="ti ti-device-floppy me-1"></i>
+            <span>{{ _x('button', 'Save') }}</span>
+         </button>
+      {% endif %}
+   {% endblock %}
+{% endembed %}

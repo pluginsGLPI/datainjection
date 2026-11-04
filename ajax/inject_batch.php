@@ -27,9 +27,8 @@
  * @link      https://github.com/pluginsGLPI/datainjection
  * -------------------------------------------------------------------------
  */
-use function Safe\json_encode;
+use Symfony\Component\HttpFoundation\JsonResponse;
 
-header("Content-Type: application/json; charset=UTF-8");
 Html::header_nocache();
 
 Session::checkRight(PluginDatainjectionClientInjection::$rightname, READ);
@@ -37,6 +36,6 @@ Session::checkRight(PluginDatainjectionClientInjection::$rightname, READ);
 $offset     = (int) ($_POST['offset'] ?? 0);
 $batch_size = (int) ($_POST['batch_size'] ?? 10);
 
-echo json_encode(
+return new JsonResponse(
     PluginDatainjectionClientInjection::processBatch($offset, $batch_size),
 );
