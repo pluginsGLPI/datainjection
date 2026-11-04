@@ -43,20 +43,26 @@ function startBatchInjection(container) {
 
     let offset = 0;
 
+    // GLPI progress bar (Html::getProgressBar())
+    const progressContainer = container.querySelector('.progress');
+    const progressBar = container.querySelector('.progress-bar');
+
     function updateProgressBar(progress) {
-        const progressBar = container.querySelector('.progress-bar');
-        const progressContainer = container.querySelector('.progress');
         if (progressBar && progressContainer) {
+            const label = Math.floor(progress) + ' %';
             progressBar.style.width = progress + '%';
-            progressBar.textContent = progress + '%';
-            progressContainer.setAttribute('aria-valuenow', progress);
+            progressBar.textContent = label;
+            progressBar.setAttribute('aria-valuenow', progress);
+            // Bootstrap reads the tooltip text from this attribute once initialized
+            progressContainer.setAttribute('title', label);
+            progressContainer.setAttribute('data-bs-original-title', label);
         }
     }
 
     function updateStatus(processed, total) {
         const status = container.querySelector('#injection_status');
         if (status) {
-            status.textContent = statusLabel + ' — ' + processed + ' / ' + total + ' ' + linesLabel;
+            status.textContent = statusLabel + ' - ' + processed + ' / ' + total + ' ' + linesLabel;
         }
     }
 
@@ -75,11 +81,7 @@ function startBatchInjection(container) {
                 offset = response.offset;
 
                 if (response.done) {
-                    const progressBar = container.querySelector('.progress-bar');
-                    if (progressBar) {
-                        progressBar.classList.remove('progress-bar-animated');
-                    }
-                    $('#span_injection').load(resultUrl, {
+                    $(container).find('#span_injection').load(resultUrl, {
                         models_id: modelId,
                         nblines: nblines
                     });
@@ -88,10 +90,10 @@ function startBatchInjection(container) {
                 }
             },
             error: function() {
-                const progressBar = container.querySelector('.progress-bar');
+                // Same failure display as the GLPI ProgressIndicator
                 if (progressBar) {
-                    progressBar.classList.remove('progress-bar-animated');
                     progressBar.textContent = errorLabel;
+                    progressBar.classList.replace('bg-info', 'bg-danger');
                 }
             }
         });

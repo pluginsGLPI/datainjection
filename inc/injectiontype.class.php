@@ -110,57 +110,30 @@ class PluginDatainjectionInjectionType
     /**
     * Get all types linked with a primary type
     *
-    * @param mixed $mapping_or_info
-    * @param array $options            array
+    * @param string $primary_type
+    *
+    * @return array itemtype => name, with the empty value on top
    **/
-    public static function dropdownLinkedTypes($mapping_or_info, $options = [])
+    public static function getLinkedTypes($primary_type)
     {
         /** @var array[mixed] $INJECTABLE_TYPES */
-        /** @var array $CFG_GLPI */
-        global $INJECTABLE_TYPES, $CFG_GLPI;
+        global $INJECTABLE_TYPES;
 
         getTypesToInject(); // populate $INJECTABLE_TYPES
 
-        $p['primary_type']    = '';
-        $p['itemtype']        = self::NO_VALUE;
-        // Use hex code for all special chars to prevent problems when adding/stripping slashes
-        $p['mapping_or_info'] = json_encode(
-            $mapping_or_info->fields,
-            JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP,
-        );
-        $p['called_by']       = $mapping_or_info::class;
-        $p['fields_update']   = true;
-        foreach ($options as $key => $value) {
-            $p[$key] = $value;
-        }
-
-        $mappings_id = $mapping_or_info->fields['id'];
-        $values      = [];
-
-        if (
-            ($p['itemtype'] == self::NO_VALUE)
-            && ($mapping_or_info->fields['itemtype'] != self::NO_VALUE)
-        ) {
-            $p['itemtype'] = $mapping_or_info->fields['itemtype'];
-        }
-
-        //Add null value
-        $values[self::NO_VALUE] = __('-------Choose a table-------', 'datainjection');
-
         //Add primary_type to the list of availables types
-        if (!is_a($p['primary_type'], CommonDBTM::class, true)) {
-            throw new HttpException(500, 'Class ' . $p['primary_type'] . ' is not a valid class');
+        if (!is_a($primary_type, CommonDBTM::class, true)) {
+            throw new HttpException(500, 'Class ' . $primary_type . ' is not a valid class');
         }
 
-        $type                       = new $p['primary_type']();
-        $values[$p['primary_type']] = $type->getTypeName();
+        $values = [$primary_type => $primary_type::getTypeName()];
 
         foreach ($INJECTABLE_TYPES as $type => $plugin) {
             if (is_a($type, CommonDBTM::class, true)) {
                 $injectionClass = new $type();
                 if (method_exists($injectionClass, 'connectedTo')) {
                     $connected_to   = $injectionClass->connectedTo();
-                    if (in_array($p['primary_type'], $connected_to)) {
+                    if (in_array($primary_type, $connected_to)) {
                         $typename          = getItemTypeForTable($injectionClass->getTable());
                         $values[$typename] = call_user_func([$type, 'getTypeName']);
                     }
@@ -169,39 +142,25 @@ class PluginDatainjectionInjectionType
         }
 
         asort($values);
-
-        $rand = Dropdown::showFromArray(
-            "data[" . $mappings_id . "][itemtype]",
-            $values,
-            ['value' => $p['itemtype']],
-        );
-
-        $p['itemtype'] = '__VALUE__';
-        $di_base_url   = plugin_datainjection_geturl();
-        $url_field     = $di_base_url . "ajax/dropdownChooseField.php";
-        $toobserve     = "dropdown_data[" . $mapping_or_info->getID() . ('][itemtype]' . $rand);
-        $toupdate      = "span_field_" . $mappings_id;
-        Ajax::updateItem($toupdate, $url_field, $p, $toobserve);
-        Ajax::updateItemOnSelectEvent($toobserve, $toupdate, $url_field, $p);
-        return $rand;
+        //Add null value on top of the list
+        return [self::NO_VALUE => Dropdown::EMPTY_VALUE] + $values;
     }
 
 
     /**
-    * @param array $options   array
+    * Get the fields that can be mapped for an itemtype, and the value to select
+    *
+    * @param array $options   itemtype, primary_type, called_by and mapping_or_info (array, or JSON if need_decode)
+    *
+    * @return array{fields: array, value: string}
    **/
-    public static function dropdownFields($options = [])
+    public static function getFieldsChoices($options = [])
     {
-        /** @var array $CFG_GLPI */
-        global $CFG_GLPI;
-
-        $used                 = [];
         $p['itemtype']        = self::NO_VALUE;
         $p['primary_type']    = '';
         $p['mapping_or_info'] = [];
         $p['called_by']       = '';
         $p['need_decode']     = true;
-        $p['fields_update']   = true;
 
         foreach ($options as $key => $value) {
             $p[$key] = $value;
@@ -217,7 +176,7 @@ class PluginDatainjectionInjectionType
         }
 
         $fields = [];
-        $fields[self::NO_VALUE] = __('-------Choose a field-------', 'datainjection');
+        $used   = [];
 
         //By default field has no default value
         $mapping_value = self::NO_VALUE;
@@ -253,30 +212,130 @@ class PluginDatainjectionInjectionType
             $used = self::getUsedMappingsOrInfos($p);
         }
 
+        $fields = array_diff_key($fields, $used);
         asort($fields);
 
-        $rand = Dropdown::showFromArray(
-            "data[" . $mapping_or_info['id'] . "][value]",
-            $fields,
-            ['value' => $mapping_value,
-                'used'  => $used,
-            ],
-        );
+        if (!isset($fields[$mapping_value])) {
+            $mapping_value = self::NO_VALUE;
+        }
 
-        $p['value'] = '__VALUE__';
-        $url = plugin_datainjection_geturl() . "ajax/dropdownMandatory.php";
-        Ajax::updateItem(
-            "span_mandatory_" . $mapping_or_info['id'],
-            $url,
-            $p,
-            "dropdown_data[" . $mapping_or_info['id'] . ('][value]' . $rand),
+        return [
+            //Add null value on top of the list
+            'fields' => [self::NO_VALUE => Dropdown::EMPTY_VALUE] + $fields,
+            'value'  => $mapping_value,
+        ];
+    }
+
+
+    /**
+    * Indicates if the link field / mandatory checkbox is available for a mapping or an info
+    *
+    * @param string $called_by     class of the mapping or info
+    * @param string $primary_type  primary type of the model
+    * @param string $itemtype      selected table
+    * @param string $value         selected field
+   **/
+    public static function canBeMandatory($called_by, $primary_type, $itemtype, $value)
+    {
+        return $called_by == PluginDatainjectionInfo::class || (
+            $primary_type == $itemtype
+            && !in_array($value, self::NON_MANDATORY_FIELDS)
         );
-        Ajax::updateItemOnSelectEvent(
-            "dropdown_data[" . $mapping_or_info['id'] . ('][value]' . $rand),
-            "span_mandatory_" . $mapping_or_info['id'],
-            $url,
-            $p,
-        );
+    }
+
+
+    /**
+    * Get the fields targeted by the other kind of rows of a model: the infos ones for a mapping,
+    * the mappings ones for an info. A field should not be both mapped from the file and asked as info.
+    *
+    * @param string $called_by  class of the mapping or info
+    * @param int    $models_id
+    *
+    * @return string[] "itemtype|field" keys
+   **/
+    public static function getOtherTargetedFields($called_by, $models_id)
+    {
+        /** @var array<string, string[]> $cache */
+        static $cache = [];
+
+        $table = $called_by == PluginDatainjectionInfo::class
+            ? PluginDatainjectionMapping::getTable()
+            : PluginDatainjectionInfo::getTable();
+        $key = $table . '_' . $models_id;
+
+        if (!isset($cache[$key])) {
+            $cache[$key] = [];
+            $rows = getAllDataFromTable($table, [
+                'models_id' => $models_id,
+                'NOT'       => ['value' => self::NO_VALUE],
+            ]);
+            foreach ($rows as $row) {
+                $cache[$key][] = $row['itemtype'] . '|' . $row['value'];
+            }
+        }
+
+        return $cache[$key];
+    }
+
+
+    /**
+    * Get the data needed to display a mapping or info row: table and field dropdowns,
+    * mandatory checkbox, and the parameters used to refresh the fields client side
+    *
+    * @param PluginDatainjectionMapping|PluginDatainjectionInfo $mapping_or_info
+    * @param string $primary_type
+    *
+    * @return array
+   **/
+    public static function getRow($mapping_or_info, $primary_type)
+    {
+        $id       = $mapping_or_info->fields['id'];
+        $itemtype = $mapping_or_info->fields['itemtype'] ?: self::NO_VALUE;
+
+        $choices = self::getFieldsChoices([
+            'itemtype'        => $itemtype,
+            'primary_type'    => $primary_type,
+            'mapping_or_info' => $mapping_or_info->fields,
+            'called_by'       => $mapping_or_info::class,
+            'need_decode'     => false,
+        ]);
+
+        $other_targets = self::getOtherTargetedFields($mapping_or_info::class, $mapping_or_info->fields['models_id']);
+
+        return [
+            'has_conflict'   => in_array($itemtype . '|' . $choices['value'], $other_targets, true),
+            'conflict_label' => sprintf(
+                __('This field is also used in %s', 'datainjection'),
+                $mapping_or_info::class == PluginDatainjectionInfo::class
+                    ? __('Mappings', 'datainjection')
+                    : __('Additional Information', 'datainjection'),
+            ),
+            'id'            => $id,
+            'itemtype_html' => Dropdown::showFromArray(
+                "data[" . $id . "][itemtype]",
+                self::getLinkedTypes($primary_type),
+                ['value' => $itemtype, 'width' => '100%', 'display' => false],
+            ),
+            'field_html'    => Dropdown::showFromArray(
+                "data[" . $id . "][value]",
+                $choices['fields'],
+                ['value' => $choices['value'], 'width' => '100%', 'display' => false],
+            ),
+            'is_mapped'        => $choices['value'] != self::NO_VALUE,
+            'is_mandatory'     => (bool) $mapping_or_info->fields['is_mandatory'],
+            'can_be_mandatory' => self::canBeMandatory($mapping_or_info::class, $primary_type, $itemtype, $choices['value']),
+            'params'           => [
+                'primary_type'    => $primary_type,
+                'called_by'       => $mapping_or_info::class,
+                // Use hex code for all special chars to prevent problems when adding/stripping slashes
+                'mapping_or_info' => json_encode(
+                    $mapping_or_info->fields,
+                    JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP,
+                ),
+                'non_mandatory'   => self::NON_MANDATORY_FIELDS,
+                'other_targets'   => $other_targets,
+            ],
+        ];
     }
 
 
@@ -318,40 +377,6 @@ class PluginDatainjectionInjectionType
         return (strtolower((string) $option['field']) == $name)
         || (strtolower((string) $option['name']) == $name)
         || (strtolower((string) $option['linkfield']) == $name);
-    }
-
-    /**
-    * @param array $options   array
-    **/
-    public static function showMandatoryCheckbox($options = [])
-    {
-
-        // Received data has been slashed.
-
-        if ($options['need_decode']) {
-            // JSON data has been slashed twice, stripslashes has to be done a second time.
-            $mapping_or_info = json_decode(
-                $options['mapping_or_info'],
-                true,
-            );
-        } else {
-            $mapping_or_info = $options['mapping_or_info'];
-        }
-
-        //TODO : to improve
-        $checked = '';
-        if ($mapping_or_info['is_mandatory']) {
-            $checked = 'checked';
-        }
-
-        if (
-            $options['called_by'] == 'PluginDatainjectionInfo' || (
-                $options['primary_type'] == $options['itemtype']
-                && !in_array($options['value'], self::NON_MANDATORY_FIELDS)
-            )
-        ) {
-            echo "<input type='checkbox' name='data[" . htmlspecialchars((string) $mapping_or_info['id']) . sprintf("][is_mandatory]' %s>", $checked);
-        }
     }
 
 

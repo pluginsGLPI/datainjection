@@ -28,6 +28,8 @@
  * -------------------------------------------------------------------------
  */
 
+use Glpi\Application\View\TemplateRenderer;
+
 class PluginDatainjectionProfile extends Profile
 {
     public static $rightname = "profile";
@@ -178,34 +180,14 @@ class PluginDatainjectionProfile extends Profile
 
     public function showForm($ID, $options = [])
     {
-
-        echo "<div class='firstbloc'>";
-        if ($canedit = Session::haveRightsOr(self::$rightname, [CREATE, UPDATE, PURGE])) {
-            $profile = new Profile();
-            echo "<form method='post' action='" . $profile->getFormURL() . "'>";
-        }
-
         $profile = new Profile();
         $profile->getFromDB($ID);
 
-        $rights = self::getAllRights();
-        $profile->displayRightsChoiceMatrix(
-            $rights,
-            [
-                'canedit'       => $canedit,
-                'default_class' => 'tab_bg_2',
-                'title'         => __('General'),
-            ],
-        );
-        if ($canedit) {
-            echo "<div class='center'>";
-            echo Html::hidden('id', ['value' => $ID]);
-            echo Html::submit(_sx('button', 'Save'), ['name' => 'update']);
-            echo "</div>\n";
-            Html::closeForm();
-        }
-
-        echo "</div>";
+        TemplateRenderer::getInstance()->display('@datainjection/profile_form.html.twig', [
+            'profile' => $profile,
+            'rights'  => self::getAllRights(),
+            'canedit' => Session::haveRightsOr(self::$rightname, [CREATE, UPDATE, PURGE]),
+        ]);
 
         return true;
     }

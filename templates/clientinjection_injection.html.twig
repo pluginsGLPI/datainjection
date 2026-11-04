@@ -49,14 +49,14 @@
         <i class="fa-2x ti ti-chart-bar"></i>
         <span>{{ __('Import progress', 'datainjection') }}</span>
     </div>
-    <div class="progress" role="progressbar" aria-label="{{ __('Injection of the file', 'datainjection') }}" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="height: 20px;">
-        <div class="progress-bar progress-bar-striped progress-bar-animated bg-info" style="width: 0%; height: 20px;">
-            0%
-        </div>
-    </div>
+    {# GLPI progress bar, updated by injection_progress.js #}
+    {{ call('Html::getProgressBar', [0])|raw }}
     <div class="text-muted text-center mt-2" id="injection_status">
-        {{ __('Injection of the file', 'datainjection') }} — 0 / {{ nblines }} {{ __(' lines', 'datainjection') }}
+        {{ __('Injection of the file', 'datainjection') }} - 0 / {{ nblines }} {{ __(' lines', 'datainjection') }}
     </div>
+
+    <span id="span_injection" name="span_injection"></span>
+</div>
 
 <script src="{{ plugin_url }}js/injection_progress.js"></script>
 <script>

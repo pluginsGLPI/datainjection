@@ -27,12 +27,39 @@
  * @link      https://github.com/pluginsGLPI/datainjection
  * -------------------------------------------------------------------------
  */
+use Glpi\Exception\Http\BadRequestHttpException;
+use Symfony\Component\HttpFoundation\JsonResponse;
 
-// Direct access to file
-if (strpos((string) $_SERVER['PHP_SELF'], "dropdownMandatory.php")) {
-    header("Content-Type: text/html; charset=UTF-8");
-    Html::header_nocache();
+Html::header_nocache();
+
+Session::checkRight('plugin_datainjection_model', READ);
+
+$itemtype     = (string) ($_POST['itemtype'] ?? PluginDatainjectionInjectionType::NO_VALUE);
+$primary_type = (string) ($_POST['primary_type'] ?? '');
+$called_by    = (string) ($_POST['called_by'] ?? '');
+
+if (
+    !is_a($primary_type, CommonDBTM::class, true)
+    || ($itemtype !== PluginDatainjectionInjectionType::NO_VALUE && !is_a($itemtype, CommonDBTM::class, true))
+    || !in_array($called_by, [PluginDatainjectionMapping::class, PluginDatainjectionInfo::class], true)
+) {
+    throw new BadRequestHttpException();
 }
 
-Session::checkCentralAccess();
-PluginDatainjectionInjectionType::showMandatoryCheckbox($_POST);
+$choices = PluginDatainjectionInjectionType::getFieldsChoices([
+    'itemtype'        => $itemtype,
+    'primary_type'    => $primary_type,
+    'called_by'       => $called_by,
+    'mapping_or_info' => (string) ($_POST['mapping_or_info'] ?? '{}'),
+]);
+
+// Use a list of pairs to keep the options order on client side
+$fields = [];
+foreach ($choices['fields'] as $key => $label) {
+    $fields[] = [$key, $label];
+}
+
+return new JsonResponse([
+    'fields' => $fields,
+    'value'  => $choices['value'],
+]);

@@ -80,43 +80,17 @@ class PluginDatainjectionInfo extends CommonDBTM
     {
 
         if ($canedit) {
-            echo "<form method='post' name='form' id='form' action='" .
-             Toolbox::getItemTypeFormURL(self::class) . "'>";
-            echo "<table class='tab_cadre_fixe'>";
-            echo "<tr>";
-            echo "<th>" . __s('Tables', 'datainjection') . "</th>";
-            echo "<th>" . _sn('Field', 'Fields', 2) . "</th>";
-            echo "<th>" . __s('Mandatory information', 'datainjection') . "</th>";
-            echo "</tr>";
-
-            echo "<tr class='tab_bg_1'>";
-            echo "<td class='center'>";
-            $infos_id                  = -1;
-            $info                      = new PluginDatainjectionInfo();
+            $info = new PluginDatainjectionInfo();
+            $info->getEmpty();
             $info->fields['id']        = -1;
             $info->fields['models_id'] = $model->fields['id'];
-            $info->getEmpty();
 
-            $rand = PluginDatainjectionInjectionType::dropdownLinkedTypes(
-                $info,
-                ['primary_type'
-                                                                        => $model->fields['itemtype'],
-                ],
-            );
-            echo "</td>";
-            echo sprintf("<td class='center'><span id='span_field_%d'></span></td>", $infos_id);
-            echo sprintf("<td class='center'><span id='span_mandatory_%d'></span></td>", $infos_id);
-            echo "</tr>";
-
-            echo "<tr>";
-            echo "<td class='tab_bg_2 center' colspan='4'>";
-            echo "<input type='hidden' name='models_id' value='" . $model->fields['id'] . "'>";
-            echo "<input type='submit' name='update' value='" . _sx('button', 'Add') . "' class='submit' >";
-            echo "</td></tr>";
-
-            echo "</table>";
-            Html::closeForm();
-            echo "<br/>";
+            TemplateRenderer::getInstance()->display('@datainjection/info_add_form.html.twig', [
+                'form_action' => Toolbox::getItemTypeFormURL(self::class),
+                'fields_url'  => plugin_datainjection_geturl() . "ajax/fieldsChoices.php",
+                'info'        => PluginDatainjectionInjectionType::getRow($info, $model->fields['itemtype']),
+                'model_id'    => $model->fields['id'],
+            ]);
         }
     }
 
@@ -131,76 +105,24 @@ class PluginDatainjectionInfo extends CommonDBTM
         self::showAddInfo($model, $canedit);
 
         $model->loadInfos();
-        $nb = count($model->getInfos());
-        $rand = mt_rand();
-        if ($nb > 0) {
-            echo sprintf("<form method='post' name='info_form%d' id='info_form%d' action='", $rand, $rand) . Toolbox::getItemTypeFormURL(self::class) . "'>";
-            echo "<table class='tab_cadre_fixe'>";
-            echo "<tr>";
-            if ($canedit) {
-                echo "<th>&nbsp;</th>";
-            }
-
-            echo "<th>" . __s('Tables', 'datainjection') . "</th>";
-            echo "<th>" . __s('Fields', 'datainjection') . "</th>";
-            echo "<th>" . __s('Mandatory information', 'datainjection') . "</th>";
-            echo "</tr>";
-
-            foreach ($model->getInfos() as $info) {
-                $infos_id     = $info->fields['id'];
-                echo "<tr class='tab_bg_1'>";
-                if ($canedit) {
-                    echo "<td width='10'>";
-                    $sel = "";
-                    if (isset($_GET["select"]) && ($_GET["select"] == "all")) {
-                        $sel = "checked";
-                    }
-
-                    echo "<input type='checkbox' name='item[" . $infos_id . sprintf("]' value='1' %s>", $sel);
-                    echo "</td>";
-                }
-
-                echo "<td class='center'>";
-                $rand = PluginDatainjectionInjectionType::dropdownLinkedTypes(
-                    $info,
-                    ['primary_type'
-                                                                          => $model->fields['itemtype'],
-                    ],
-                );
-                echo "</td>";
-                echo sprintf("<td class='center'><span id='span_field_%s'></span></td>", $infos_id);
-                echo sprintf("<td class='center'><span id='span_mandatory_%s'></span></td></tr>", $infos_id);
-            }
-
-            if ($canedit) {
-                echo "<tr>";
-                echo "<td class='tab_bg_2 center' colspan='4'>";
-                echo "<input type='hidden' name='models_id' value='" . $model->fields['id'] . "'>";
-                echo "<input type='submit' name='update' value='" . _sx('button', 'Save') . "' class='submit'>";
-                echo "</td></tr>";
-
-                $formname = 'info_form' . $rand;
-                echo "<table width='950px'>";
-                $arrow = "fas fa-level-up-alt";
-
-                echo "<tr>";
-                echo sprintf("<td><i class='%s fa-flip-horizontal fa-lg mx-2'></i></td>", $arrow);
-                echo "<td class='center' style='white-space:nowrap;'>";
-                echo sprintf("<a onclick= \"if ( markCheckboxes('%s') ) return false;\" href='#'>", $formname) . __s('Check all') . "</a></td>";
-                echo "<td>/</td>";
-                echo "<td class='center' style='white-space:nowrap;'>";
-                echo sprintf("<a onclick= \"if ( unMarkCheckboxes('%s') ) return false;\" href='#'>", $formname) . __s('Uncheck all') . "</a></td>";
-                echo "<td class='left' width='80%'>";
-
-                echo "<input type='submit' name='delete' ";
-                echo 'value="' . addslashes(_sx('button', 'Delete permanently')) . "\" class='btn btn-primary'>&nbsp;";
-                echo "</td></tr>";
-                echo "</table>";
-            }
-
-            echo "</table>";
-            Html::closeForm();
+        if (count($model->getInfos()) === 0) {
+            return;
         }
+
+        $infos = [];
+        foreach ($model->getInfos() as $info) {
+            $infos[] = PluginDatainjectionInjectionType::getRow($info, $model->fields['itemtype']);
+        }
+
+        TemplateRenderer::getInstance()->display('@datainjection/infos_form.html.twig', [
+            'form_action' => Toolbox::getItemTypeFormURL(self::class),
+            'fields_url'  => plugin_datainjection_geturl() . "ajax/fieldsChoices.php",
+            'infos'       => $infos,
+            'nb_mandatory' => count(array_filter(array_column($infos, 'is_mandatory'))),
+            'canedit'     => $canedit,
+            'select_all'  => ($_GET['select'] ?? '') === 'all',
+            'model_id'    => $model->fields['id'],
+        ]);
     }
 
 
@@ -309,9 +231,16 @@ class PluginDatainjectionInfo extends CommonDBTM
             $info->fields['value'],
         );
         if ($option) {
-            echo "<td>" . $option['name'] . "</td><td>";
+            ob_start();
             self::showAdditionalInformation($info, $option, $injectionClass, $values);
-            echo "</td>";
+            $field_html = ob_get_clean();
+
+            TemplateRenderer::getInstance()->display('@datainjection/info_additional_information.html.twig', [
+                'name'         => 'info[' . $option['linkfield'] . ']',
+                'label'        => $option['name'],
+                'field_html'   => $field_html,
+                'is_mandatory' => $info->isMandatory(),
+            ]);
         }
     }
 
@@ -345,12 +274,11 @@ class PluginDatainjectionInfo extends CommonDBTM
                     $value = ($option['default'] ?? '');
                 }
 
-                echo sprintf("<input type='text' name='%s' value='%s'", $name, $value);
-                if (isset($option['size'])) {
-                    echo " size='" . $option['size'] . "'";
-                }
-
-                echo ">";
+                TemplateRenderer::getInstance()->display('@datainjection/info_additional_input.html.twig', [
+                    'type'  => 'text',
+                    'name'  => $name,
+                    'value' => $value,
+                ]);
                 break;
 
             case 'dropdown':
@@ -391,7 +319,11 @@ class PluginDatainjectionInfo extends CommonDBTM
                 break;
 
             case 'multiline_text':
-                echo sprintf("<textarea cols='45' rows='5' name='%s'>%s</textarea>", $name, $value);
+                TemplateRenderer::getInstance()->display('@datainjection/info_additional_input.html.twig', [
+                    'type'  => 'textarea',
+                    'name'  => $name,
+                    'value' => $value,
+                ]);
                 break;
 
             case 'dropdown_integer':
@@ -416,7 +348,10 @@ class PluginDatainjectionInfo extends CommonDBTM
                 break;
 
             case 'password':
-                echo sprintf("<input type='password' name='%s' value='' size='20' autocomplete='off'>", $name);
+                TemplateRenderer::getInstance()->display('@datainjection/info_additional_input.html.twig', [
+                    'type' => 'password',
+                    'name' => $name,
+                ]);
                 break;
 
             default:
@@ -424,10 +359,6 @@ class PluginDatainjectionInfo extends CommonDBTM
                     //If type is not a standard type, must be treated by specific injection class
                     $injectionClass->showAdditionalInformation($info, $option);
                 }
-        }
-
-        if ($info->isMandatory()) {
-            echo "&nbsp;*";
         }
     }
 

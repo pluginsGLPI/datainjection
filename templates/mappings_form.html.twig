@@ -26,45 +26,51 @@
  # -------------------------------------------------------------------------
  #}
 
-<form method="post" name="form" action="{{ form_action }}">
-   <input type="hidden" name="_glpi_csrf_token" value="{{ csrf_token() }}">
-   {% if show_preview %}
-      <table class="tab_cadre_fixe">
-         <tr class="tab_bg_1">
-            <td class="center">
-               <a href="#" onclick="var w = window.open('{{ preview_url }}', 'glpipopup', 'height=400, width=600, top=100, left=100, scrollbars=yes'); w.focus(); return false;">
-                  {{ __('See the file', 'datainjection') }}
-               </a>
-            </td>
-         </tr>
-      </table>
-   {% endif %}
-
-   <table class="tab_cadre_fixe">
-      <tr>
-         <th>{{ __('Header of the file', 'datainjection') }}</th>
-         <th>{{ __('Tables', 'datainjection') }}</th>
-         <th>{{ _n('Field', 'Fields', 2) }}</th>
-         <th>{{ __('Link field', 'datainjection') }}</th>
-      </tr>
-
-      {% for mapping in mappings %}
-         <tr class="tab_bg_1">
-            <td class="center">{{ mapping.name }}</td>
-            <td class="center">{{ mapping.dropdown_html|raw }}</td>
-            <td class="center"><span id="span_field_{{ mapping.id }}"></span></td>
-            <td class="center"><span id="span_mandatory_{{ mapping.id }}"></span></td>
-         </tr>
-      {% endfor %}
-
-      {% if canedit %}
-         <tr>
-            <td class="tab_bg_2 center" colspan="4">
-               <input type="hidden" name="models_id" value="{{ model_id }}">
-               <input type="submit" name="update" value="{{ __('Save') }}" class="btn btn-primary">
-            </td>
-         </tr>
+{% embed '@datainjection/components/mapping_table.html.twig' with {
+   form_action: form_action,
+   fields_url: fields_url,
+   rows: mappings,
+   title: __('Mappings', 'datainjection'),
+   icon: 'ti ti-arrows-shuffle',
+   name_label: __('Header of the file', 'datainjection'),
+   switch_label: __('Link field', 'datainjection'),
+   badges: [
+      {
+         class: 'bg-secondary-lt',
+         labels: [_n('%d column', '%d columns', 1, 'datainjection'), _n('%d column', '%d columns', 2, 'datainjection')],
+         count: mappings|length,
+      },
+      {
+         class: 'bg-green-lt',
+         labels: [_n('%d mapped field', '%d mapped fields', 1, 'datainjection'), _n('%d mapped field', '%d mapped fields', 2, 'datainjection')],
+         count: nb_mapped,
+         counter: 'mapped',
+      },
+      {
+         class: 'bg-blue-lt',
+         labels: [_n('%d link field', '%d link fields', 1, 'datainjection'), _n('%d link field', '%d link fields', 2, 'datainjection')],
+         count: nb_link,
+         counter: 'link',
+      },
+   ],
+} %}
+   {% block toolbar_actions %}
+      {% if show_preview %}
+         <button type="button" class="btn btn-outline-secondary"
+                 onclick="window.open('{{ preview_url|e('js') }}', 'glpipopup', 'height=700, width=1100, top=100, left=100, scrollbars=yes').focus();">
+            <i class="ti ti-file-text me-1"></i>
+            <span>{{ __('See original file', 'datainjection') }}</span>
+         </button>
       {% endif %}
-   </table>
-</form>
+   {% endblock %}
 
+   {% block footer %}
+      {% if canedit %}
+         <input type="hidden" name="models_id" value="{{ model_id }}">
+         <button type="submit" name="update" value="1" class="btn btn-primary">
+            <i class="ti ti-device-floppy me-1"></i>
+            <span>{{ _x('button', 'Save') }}</span>
+         </button>
+      {% endif %}
+   {% endblock %}
+{% endembed %}

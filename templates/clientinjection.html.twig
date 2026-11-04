@@ -41,17 +41,19 @@
                 </div>
                 <div class="col-12">
                     {% if models|length > 0 %}
-                        {{ fields.dropdownField(
-                            'PluginDatainjectionModel',
-                            'dropdown_models',
-                            0,
-                            __('Model', 'datainjection'),
-                            {
-                                'add_field_class'   : 'col-sm-12',
-                                'input_class'       : 'col-6 col-sm-6',
-                                'label_class'       : 'col-6 col-sm-6',
-                            }
-                        ) }}
+                        <div class="datainjection-centered-fields mx-auto">
+                            {{ fields.dropdownField(
+                                'PluginDatainjectionModel',
+                                'dropdown_models',
+                                0,
+                                __('Model', 'datainjection'),
+                                {
+                                    'field_class': 'col-12',
+                                    'label_class': 'col-sm-4',
+                                    'input_class': 'col-sm-8',
+                                }
+                            ) }}
+                        </div>
                     {% else %}
                         {% set text = __('No model currently available', 'datainjection') %}
                         {% if can_create_model %}
@@ -71,11 +73,11 @@
             <script>
                 $(function() {
                     const rand = '{{ rand }}';
-                    const uploadUrl = "{{ upload_url }}";
-                    const resultUrl = "{{ result_url }}";
-                    const modelId = {{ models_id }};
-                    const step = {{ step }};
-                    const resultStep = {{ result_step }};
+                    const uploadUrl = {{ upload_url|json_encode|raw }};
+                    const resultUrl = {{ result_url|json_encode|raw }};
+                    const modelId = {{ (models_id ?: 0)|json_encode|raw }};
+                    const step = {{ (step ?: 0)|json_encode|raw }};
+                    const resultStep = {{ result_step|json_encode|raw }};
 
                     function loadFormForModel(modelId) {
                         if (modelId > 0) {
@@ -85,7 +87,7 @@
                     }
 
                     // On model change
-                    $('#clientinjection_form' + rand + ' select[name="dropdown_models"]').on('change select2:select', function() {
+                    $('#clientinjection_form' + rand + ' select[name="dropdown_models"]').on('change', function() {
                         loadFormForModel($(this).val());
                     });
 

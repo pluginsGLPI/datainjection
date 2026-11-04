@@ -37,7 +37,7 @@ if (isset($_POST["update"])) {
     PluginDatainjectionInfo::manageInfos($_POST['models_id'], $_POST);
 } elseif (isset($_POST["delete"])) {
     $info = new PluginDatainjectionInfo();
-    foreach ($_POST["item"] as $key => $val) {
+    foreach ($_POST["item"] ?? [] as $key => $val) {
         $input = ['id' => $key];
         if ($val == 1) {
             $info->check($key, UPDATE);

@@ -320,60 +320,38 @@ class PluginDatainjectionModel extends CommonDBTM
     /**
     * @param array $options   array
     *
-    * @return void
+    * @return int|string random part of the dropdown id, or HTML code if `display` option is false
    **/
     public static function dropdown($options = [])
     {
-        /** @var array $CFG_GLPI */
-        global $CFG_GLPI;
-
         $models = self::getModels(
             Session::getLoginUserID(),
             'name',
             $_SESSION['glpiactive_entity'],
             false,
         );
-        $p      = ['models_id' => '__VALUE__'];
 
-        $value = $_SESSION['datainjection']['models_id'] ?? 0;
-
-        $rand = mt_rand();
-        echo "\n<select name='dropdown_models' id='dropdown_models{$rand}'>";
-        $prev = -2;
-        echo "\n<option value='0'>" . Dropdown::EMPTY_VALUE . "</option>";
-
+        $elements = [0 => Dropdown::EMPTY_VALUE];
+        $tooltips = [];
         foreach ($models as $model) {
-            if ($model['entities_id'] != $prev) {
-                if ($prev >= -1) {
-                    echo "</optgroup>\n";
-                }
+            $group = $model['entities_id'] == -1
+                ? __('Private')
+                : Dropdown::getDropdownName('glpi_entities', $model['entities_id']);
 
-                if ($model['entities_id'] == -1) {
-                    echo "\n<optgroup label='" . __s('Private') . "'>";
-                } else {
-                    echo "\n<optgroup label=\"" . htmlescape(Dropdown::getDropdownName(
-                        "glpi_entities",
-                        $model['entities_id'],
-                    )) . '">';
-                }
-
-                $prev = $model['entities_id'];
+            $elements[$group][$model['id']] = $model['name'];
+            if ($model['comment']) {
+                $tooltips[$group][$model['id']] = $model['comment'];
             }
-
-            $selected = $model['id'] == $value ? "selected" : "";
-
-            $comment = $model['comment'] ? "title='" . htmlescape((string) $model['comment']) . "'" : "";
-            echo "\n<option value='" . $model['id'] . sprintf("' %s %s>", $selected, $comment) . htmlescape($model['name']) . "</option>";
         }
 
-        if ($prev >= -1) {
-            echo "</optgroup>";
-        }
-
-        echo "</select>";
-
-        $url = $CFG_GLPI['root_doc'] . "/plugins/datainjection/ajax/dropdownSelectModel.php";
-        Ajax::updateItemOnSelectEvent('dropdown_models' . $rand, "span_injection", $url, $p);
+        // The model change is handled by the client injection form script
+        return Dropdown::showFromArray('dropdown_models', $elements, [
+            'value'           => $_SESSION['datainjection']['models_id'] ?? 0,
+            'option_tooltips' => $tooltips,
+            'rand'            => $options['rand'] ?? mt_rand(),
+            'width'           => $options['width'] ?? '',
+            'display'         => $options['display'] ?? true,
+        ]);
     }
 
 
@@ -703,7 +681,6 @@ class PluginDatainjectionModel extends CommonDBTM
         }
 
         $this->showFormButtons($options);
-        echo "</form>";
         return true;
     }
 
@@ -777,6 +754,11 @@ class PluginDatainjectionModel extends CommonDBTM
                 case 3:
                     $options['confirm']   = 'creation';
                     $options['models_id'] = $item->fields['id'];
+                    // Only warn when there are existing mappings to override
+                    $options['warn_override'] = countElementsInTable(
+                        PluginDatainjectionMapping::getTable(),
+                        ['models_id' => $item->fields['id']],
+                    ) > 0;
                     $options['add_form']  = true;
                     $options['submit']    = __('Load this file', 'datainjection');
                     PluginDatainjectionClientInjection::showUploadFileForm($options);
@@ -1318,43 +1300,33 @@ class PluginDatainjectionModel extends CommonDBTM
    **/
     public static function showPreviewMappings($models_id)
     {
+        $headers = [];
+        $rows    = [];
 
-        echo "<table class='tab_cadre_fixe'>";
         if (isset($_SESSION['datainjection']['lines'])) {
             $injectionData = PluginDatainjectionSession::unserialize($_SESSION['datainjection']['lines']);
             $lines         = $injectionData->getData();
-            $nblines       = $_SESSION['datainjection']['nblines'];
             $model         = self::getInstanceByModelID($models_id);
 
             $model->loadMappings();
-            $mappings = $model->getMappings();
 
             if ($model->getSpecificModel()->isHeaderPresent()) {
-                $nbmappings = count($mappings);
-                echo "<tr class='tab_bg_1'>";
-
-                foreach ($mappings as $mapping) {
-                    echo"<th style='height:40px'>" . htmlescape($mapping->getMappingName()) . "</th>";
+                foreach ($model->getMappings() as $mapping) {
+                    $headers[] = $mapping->getMappingName();
                 }
 
-                echo "</tr>";
                 unset($lines[0]);
             }
 
             foreach ($lines as $line) {
-                echo "<tr class='tab_bg_2'>";
-                foreach ($line[0] as $value) {
-                    echo "<td>" . htmlescape($value) . "</td>";
-                }
-
-                echo "</tr>";
+                $rows[] = $line[0];
             }
         }
 
-        Html::closeForm();
-        echo "<div style='margin-top:15px;text-align:center'>";
-        echo "<a href='javascript:window.close()'>" . __s('Close') . "</a>";
-        echo "</div>";
+        TemplateRenderer::getInstance()->display('@datainjection/preview_mappings.html.twig', [
+            'headers' => $headers,
+            'rows'    => $rows,
+        ]);
     }
 
 
