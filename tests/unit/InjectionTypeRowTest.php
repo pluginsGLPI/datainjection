@@ -223,6 +223,7 @@ final class InjectionTypeRowTest extends DbTestCase
 
         $csv = new PluginDatainjectionModelcsv();
         $csv->getFromDBByModelID($model->getID());
+
         $delimiter = $csv->getDelimiter();
 
         $response = $csv->showSample($model);
