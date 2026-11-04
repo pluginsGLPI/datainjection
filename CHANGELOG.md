@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+### Changed
+
+- Redesign the mappings, additional information, file preview, injection log and profile rights screens
+- Show the mapped and link fields counters, and warn when a field is used both by a mapping and an additional information
+
 ### Fixed
 
 - Fix the uploaded file name being lost after the client injection upload step
