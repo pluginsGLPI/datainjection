@@ -1289,7 +1289,11 @@ class PluginDatainjectionModel extends CommonDBTM
             if ($itemtype == PluginDatainjectionInjectionType::NO_VALUE || !is_a($itemtype, CommonDBTM::class, true)) {
                 continue;
             }
-
+            // Fields >= 1.24.7: container classes always deny canCreate()/canUpdate(),
+            // their values are written through the parent item, whose rights are checked instead
+            if (is_a($itemtype, 'PluginFieldsAbstractContainerInstance', true)) {
+                continue;
+            }
             $item = new $itemtype();
             if ($check_add && !$item->canCreate()) {
                 return false;

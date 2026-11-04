@@ -1799,7 +1799,9 @@ class PluginDatainjectionCommonInjectionLib
 
         //The plugin acts as the front controller here: rights must be checked before writing.
         //Skipped without a session, as the lib is also a programmatic entry point for scripts.
-        if (Session::getLoginUserID() !== false) {
+        //Fields >= 1.24.7 containers always deny rights: their values are written
+        //as part of the parent item, whose rights have already been checked
+        if (Session::getLoginUserID() !== false && !is_a($item, 'PluginFieldsAbstractContainerInstance')) {
             $input = is_array($values) ? $values : [];
             if ($add) {
                 //Passing the input to can() makes the check cover the target entity
