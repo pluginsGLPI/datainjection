@@ -27,12 +27,14 @@
  */
 
 /************************ Card tables ***************************/
+
 /* The card already draws the bottom border: avoid a double line under the last row */
 .datainjection-card-table > .table > tbody > tr:last-child > td {
     border-bottom-width: 0;
 }
 
 /************************ Mappings form *************************/
+
 /* Field targeted both by a mapping and an additional information */
 .table > tbody > tr.datainjection-row-conflict > td {
     --tblr-table-bg-state: var(--tblr-orange-lt);
