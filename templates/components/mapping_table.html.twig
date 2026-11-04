@@ -1,0 +1,196 @@
+{#
+ # -------------------------------------------------------------------------
+ # DataInjection plugin for GLPI
+ # -------------------------------------------------------------------------
+ #
+ # LICENSE
+ #
+ # This file is part of DataInjection.
+ #
+ # DataInjection is free software; you can redistribute it and/or modify
+ # it under the terms of the GNU General Public License as published by
+ # the Free Software Foundation; either version 2 of the License, or
+ # (at your option) any later version.
+ #
+ # DataInjection is distributed in the hope that it will be useful,
+ # but WITHOUT ANY WARRANTY; without even the implied warranty of
+ # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ # GNU General Public License for more details.
+ #
+ # You should have received a copy of the GNU General Public License
+ # along with DataInjection. If not, see <http://www.gnu.org/licenses/>.
+ # -------------------------------------------------------------------------
+ # @copyright Copyright (C) 2007-2023 by DataInjection plugin team.
+ # @license   GPLv2 https://www.gnu.org/licenses/gpl-2.0.html
+ # @link      https://github.com/pluginsGLPI/datainjection
+ # -------------------------------------------------------------------------
+ #}
+
+{#
+ # Table of mappings or infos: table / field dropdowns and link field switch,
+ # refreshed client side without rebuilding the rows.
+ #
+ # Use it with `embed`:
+ #
+ #   {% embed '@datainjection/components/mapping_table.html.twig' with {
+ #      form_action: ..., fields_url: ..., rows: ...,
+ #   } %}
+ #      {% block selection_actions %}...buttons under the table, enabled only when rows are selected...{% endblock %}
+ #      {% block toolbar_actions %}...buttons on the right of the badges...{% endblock %}
+ #      {% block footer %}...hidden inputs and submit buttons...{% endblock %}
+ #   {% endembed %}
+ #
+ # Parameters:
+ #   form_action   form URL
+ #   fields_url    URL of the fields choices endpoint
+ #   rows          rows from PluginDatainjectionInjectionType::getRow(), with an optional `name`
+ #   title, icon   section title and its icon (optional)
+ #   name_label    label of the name column; no name column when null (default)
+ #   selectable    adds a selection checkbox column, posted as item[id] (default false)
+ #   select_all    selection checkboxes are checked (default false)
+ #   switch_label  label of the switch column
+ #   badges        list of {class, labels: [singular, plural] with "%d", count, counter, hide_empty}
+ #                 `counter` (mapped, link or conflict) keeps the badge up to date,
+ #                 `hide_empty` hides it when the count is 0
+ #
+ # A conflicts badge is always added: it counts the fields targeted both by a mapping and an info.
+ #}
+
+{% set form_id = 'datainjection_rows' ~ random() %}
+{% set name_label = name_label ?? null %}
+{% set selectable = selectable ?? false %}
+{% set select_all = select_all ?? false %}
+{% set badges = (badges ?? [])|merge([{
+   class: 'bg-yellow-lt',
+   labels: [_n('%d conflict', '%d conflicts', 1, 'datainjection'), _n('%d conflict', '%d conflicts', 2, 'datainjection')],
+   count: rows|filter(row => row.has_conflict)|length,
+   counter: 'conflict',
+   hide_empty: true,
+}]) %}
+{% set counters = {} %}
+{% for badge in badges|filter(badge => badge.counter ?? false) %}
+   {% set counters = counters|merge({(badge.counter): badge.labels}) %}
+{% endfor %}
+
+{% if title ?? false %}
+   <div class="hr-text mt-5 mb-5">
+      <i class="fa-2x {{ icon ?? 'ti ti-table' }}"></i>
+      <span>{{ title }}</span>
+   </div>
+{% endif %}
+
+<form method="post" name="form" id="{{ form_id }}" action="{{ form_action }}">
+   <input type="hidden" name="_glpi_csrf_token" value="{{ csrf_token() }}">
+
+   {% set selection_actions %}{% block selection_actions %}{% endblock %}{% endset %}
+   {% set toolbar_actions %}{% block toolbar_actions %}{% endblock %}{% endset %}
+   {# Always rendered: badges hidden when empty may be shown client side #}
+   <div class="d-flex align-items-center flex-wrap gap-2 mb-3">
+      {% for badge in badges %}
+         {% set counter = badge.counter ?? null %}
+         {% set hide_empty = badge.hide_empty ?? false %}
+         <span class="badge {{ badge.class }} {{ hide_empty and badge.count == 0 ? 'd-none' : '' }}"
+               {% if counter is not null %}data-mappings-counter="{{ counter }}"{% endif %}
+               {% if hide_empty %}data-hide-empty{% endif %}>
+            {% if counter == 'conflict' %}<i class="ti ti-alert-triangle me-1"></i>{% endif %}
+            <span data-counter-text>{{ badge.labels[badge.count == 1 ? 0 : 1]|format(badge.count) }}</span>
+         </span>
+      {% endfor %}
+      <div class="ms-auto d-flex gap-2">
+         {{ toolbar_actions }}
+      </div>
+   </div>
+
+   {# rounded-3 + overflow-hidden clip the cells backgrounds to the card rounded corners #}
+   <div class="card mb-3 rounded-3 overflow-hidden">
+      <div class="table-responsive datainjection-card-table">
+         {# Fixed layout: the switch column has no width and takes the remaining space #}
+         {% set dropdown_width = name_label is null ? '40%' : '25%' %}
+         <table class="table table-vcenter card-table mb-0" style="table-layout: fixed; min-width: {{ name_label is null ? '560px' : '720px' }};">
+            <colgroup>
+               {% if selectable %}
+                  <col style="width: 3rem;">
+               {% endif %}
+               {% if name_label is not null %}
+                  <col style="width: 30%;">
+                  <col style="width: 3rem;">
+               {% endif %}
+               <col style="width: {{ dropdown_width }};">
+               <col style="width: {{ dropdown_width }};">
+               <col>
+            </colgroup>
+            <thead>
+               <tr>
+                  {% if selectable %}
+                     <th>
+                        <input type="checkbox" class="form-check-input" title="{{ __('Check all') }}" {{ select_all ? 'checked' : '' }}
+                               onchange="$(this).closest('table').find('input[name^=&quot;item[&quot;]').prop('checked', this.checked).trigger('change');">
+                     </th>
+                  {% endif %}
+                  {% if name_label is not null %}
+                     <th>{{ name_label }}</th>
+                     <th></th>
+                  {% endif %}
+                  <th>{{ __('Tables', 'datainjection') }}</th>
+                  <th>{{ _n('Field', 'Fields', 2) }}</th>
+                  <th class="text-center">{{ switch_label }}</th>
+               </tr>
+            </thead>
+            <tbody>
+               {% for row in rows %}
+                  <tr data-field-params="{{ row.params|json_encode }}" class="{{ row.has_conflict ? 'datainjection-row-conflict' : '' }}">
+                     {% if selectable %}
+                        <td>
+                           <input type="checkbox" class="form-check-input" name="item[{{ row.id }}]" value="1" {{ select_all ? 'checked' : '' }}>
+                        </td>
+                     {% endif %}
+                     {% if name_label is not null %}
+                        <td class="font-monospace fw-bold text-truncate" title="{{ row.name }}">{{ row.name }}</td>
+                        <td class="text-muted text-center"><i class="ti ti-arrow-right"></i></td>
+                     {% endif %}
+                     <td>{{ row.itemtype_html|raw }}</td>
+                     <td>
+                        <div class="d-flex align-items-center gap-2">
+                           <div class="flex-grow-1 min-w-0">{{ row.field_html|raw }}</div>
+                           {# Always rendered to keep the row layout stable #}
+                           <i class="ti ti-alert-triangle text-warning {{ row.has_conflict ? '' : 'invisible' }}"
+                              title="{{ row.conflict_label }}" data-field-conflict></i>
+                        </div>
+                     </td>
+                     <td class="text-center">
+                        {# Always rendered to keep the row layout stable, hidden when the field cannot be a link field #}
+                        <label class="form-check form-switch d-inline-block mb-0 {{ row.can_be_mandatory ? '' : 'invisible' }}" data-mandatory-switch>
+                           <input type="checkbox" class="form-check-input" name="data[{{ row.id }}][is_mandatory]"
+                                  {{ row.is_mandatory and row.can_be_mandatory ? 'checked' : '' }} {{ row.can_be_mandatory ? '' : 'disabled' }}>
+                        </label>
+                     </td>
+                  </tr>
+               {% endfor %}
+            </tbody>
+         </table>
+      </div>
+   </div>
+
+   {% if selectable and selection_actions|trim is not empty %}
+      {# Buttons enabled client side as soon as a row is selected #}
+      <div class="d-flex align-items-center gap-2 mb-3" data-selection-actions>
+         {{ selection_actions }}
+      </div>
+   {% endif %}
+
+   {% set footer %}{% block footer %}{% endblock %}{% endset %}
+   {% if footer|trim is not empty %}
+      <div class="border-top pt-3 d-flex justify-content-end gap-2">
+         {{ footer }}
+      </div>
+   {% endif %}
+</form>
+
+<script>
+   $(function () {
+      const form = document.getElementById('{{ form_id }}');
+      initMappingRows(form, '{{ fields_url|e('js') }}');
+      initMappingsCounters(form, {{ counters|json_encode|raw }});
+      initSelectionActions(form);
+   });
+</script>

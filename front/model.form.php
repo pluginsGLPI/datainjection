@@ -101,8 +101,7 @@ if (isset($_POST["add"])) {
     $model->check($_GET['sample'], READ);
     $modeltype = PluginDatainjectionModel::getInstance($model->getField('filetype'));
     $modeltype->getFromDBByModelID($model->getField('id'));
-    $modeltype->showSample($model);
-    return;
+    return $modeltype->showSample($model);
 }
 
 Html::header(

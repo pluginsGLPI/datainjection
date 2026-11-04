@@ -30,9 +30,6 @@
 
 use Glpi\Application\View\TemplateRenderer;
 
-use function Safe\ob_get_clean;
-use function Safe\ob_start;
-
 class PluginDatainjectionMapping extends CommonDBTM
 {
     public static $rightname = "plugin_datainjection_model";
@@ -112,23 +109,18 @@ class PluginDatainjectionMapping extends CommonDBTM
         $mappings = [];
 
         foreach ($model->getMappings() as $mapping) {
-            ob_start();
-            $options = ['primary_type' => $model->fields['itemtype']];
-            PluginDatainjectionInjectionType::dropdownLinkedTypes($mapping, $options);
-            $dropdown_html = ob_get_clean();
-
-            $mappings[] = [
-                'id'            => $mapping->getID(),
-                'name'          => $mapping->fields['name'],
-                'dropdown_html' => $dropdown_html,
-            ];
+            $mappings[] = PluginDatainjectionInjectionType::getRow($mapping, $model->fields['itemtype'])
+                + ['name' => $mapping->fields['name']];
         }
 
         TemplateRenderer::getInstance()->display('@datainjection/mappings_form.html.twig', [
             'form_action'  => Toolbox::getItemTypeFormURL(self::class),
+            'fields_url'   => plugin_datainjection_geturl() . "ajax/fieldsChoices.php",
             'show_preview' => $show_preview,
             'preview_url'  => $preview_url,
             'mappings'     => $mappings,
+            'nb_mapped'    => count(array_filter(array_column($mappings, 'is_mapped'))),
+            'nb_link'      => count(array_filter($mappings, fn($mapping) => $mapping['is_mandatory'] && $mapping['can_be_mandatory'])),
             'canedit'      => $canedit,
             'model_id'     => $model->fields['id'],
         ]);

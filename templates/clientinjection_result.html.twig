@@ -26,7 +26,7 @@
  # -------------------------------------------------------------------------
  #}
 
-  <form method="post" action={{ from_url }}>
+  <form method="post" action="{{ from_url }}">
     <input type="hidden" name="_glpi_csrf_token" value="{{ csrf_token() }}" />
     <div class="hr-text mt-5 mb-5">
         <i class="fa-2x ti ti-chart-bar"></i>
@@ -62,8 +62,7 @@
       </div>
     </div>
 
-    <div class="d-flex justify-content-end">
+    <div class="border-top pt-3 mt-3 d-flex justify-content-end gap-2">
       <input class="btn btn-primary" type="submit" name="finish" value="{{ __('Finish', 'datainjection') }}">
     </div>
-  </div>
 </form>

@@ -27,6 +27,7 @@
  #}
 
 {% import 'components/form/fields_macros.html.twig' as fields %}
+{% import 'components/form/basic_inputs_macros.html.twig' as inputs %}
 
 {% if add_form %}
     <form method="post" name="form" action="{{ url }}" enctype="multipart/form-data">
@@ -37,44 +38,49 @@
         <span>{{ __('File to inject', 'datainjection') }}</span>
     </div>
 
-    <input type="hidden" name="id" value="{{ models_id }}">
+    {{ inputs.hidden('id', models_id) }}
 
-    {{ fields.htmlField(
-        'filename',
-        '<input type="file" name="filename">',
-        __('Choose a file', 'datainjection'),
-        {
-            'add_field_class'   : 'col-sm-12',
-            'label_class'       : 'col-5 col-sm-5',
-            'input_class'       : 'col-6 col-sm-6',
-        }
-    ) }}
-    {{ fields.dropdownArrayField(
-        'file_encoding',
-        2,
-        file_encoding_values,
-        __('File encoding', 'datainjection'),
-        {
-            'add_field_class'   : 'col-sm-12',
-            'label_class'       : 'col-5 col-sm-5',
-            'input_class'       : 'col-6 col-sm-6',
-            'width': '325px',
-        }
-    ) }}
+    {% set field_options = {
+        'field_class': 'col-12',
+        'label_class': 'col-sm-4',
+        'input_class': 'col-sm-8',
+    } %}
+    <div class="datainjection-centered-fields mx-auto">
+        {{ fields.fileField(
+            'filename',
+            '',
+            __('Choose a file', 'datainjection'),
+            field_options|merge({'simple': true})
+        ) }}
+        {{ fields.dropdownArrayField(
+            'file_encoding',
+            2,
+            file_encoding_values,
+            __('File encoding', 'datainjection'),
+            field_options
+        ) }}
+    </div>
 
-    <div class="center pt-2">
-        {% if confirm %}
-            {% if confirm == 'creation' %}
-                {% set message = __('Warning : existing mapped column will be overridden', 'datainjection') %}
-            {% else %}
-                {% set message = __("Watch out, you're about to inject data into GLPI. Are you sure you want to do it ?", 'datainjection') %}
-            {% endif %}
-            <input type="submit" class="btn btn-primary" name="upload" value="{{ submit_label }}" onclick="return window.confirm('{{ message|e('js') }}');">
+    {% set upload_attributes = {} %}
+    {% if confirm and (confirm != 'creation' or warn_override) %}
+        {% if confirm == 'creation' %}
+            {% set message = __('Warning : existing mapped column will be overridden', 'datainjection') %}
         {% else %}
-            <input type="submit" class="btn btn-primary" name="upload" value="{{ submit_label }}">
+            {% set message = __("Watch out, you're about to inject data into GLPI. Are you sure you want to do it ?", 'datainjection') %}
         {% endif %}
-        &nbsp;&nbsp;
-        <input type="submit" class="btn btn-outline-danger" name="cancel" value="{{ _x('button', 'Cancel') }}">
+        {% set upload_attributes = {'onclick': "return window.confirm('" ~ message|e('js') ~ "');"} %}
+    {% endif %}
+
+    {# In the client injection page, the parent card padding already provides the bottom space #}
+    <div class="border-top {{ add_form ? 'py-3' : 'pt-3' }} mt-3 d-flex justify-content-end gap-2">
+        <button type="submit" class="btn btn-outline-danger" name="cancel" value="1">
+            <i class="ti ti-x me-1"></i>
+            <span>{{ _x('button', 'Cancel') }}</span>
+        </button>
+        <button type="submit" class="btn btn-primary" name="upload" value="1" {{ call('Html::parseAttributes', [upload_attributes])|raw }}>
+            <i class="ti ti-upload me-1"></i>
+            <span>{{ submit_label }}</span>
+        </button>
     </div>
 {% if add_form %}
     </form>
