@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Fixed
 
 - Fix the uploaded file name being lost after the client injection upload step
+- Fix models using `Fields` plugin containers being hidden and their values not injected with `Fields` >= 1.24.7
 
 ## [2.15.12] - 2026-10-05
 
