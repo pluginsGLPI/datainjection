@@ -96,13 +96,12 @@ class PluginDatainjectionSoftwareVersionInjection extends SoftwareVersion implem
 
 
     /**
-    * @param array $info      array
-    * @param array $option    array
-   **/
-    public function showAdditionalInformation($info = [], $option = [])
+     * @param array $option    array
+     **/
+    public function showAdditionalInformation(PluginDatainjectionInfo $info, $option = [])
     {
 
-        $name = "info[" . $option['linkfield'] . "]";
+        $name = $info->getInputName();
         switch ($option['displaytype']) {
             case 'computer':
                 Computer::dropdown(
