@@ -98,7 +98,7 @@ class PluginDatainjectionCommonInjectionLib
 
     public const ERROR_IMPORT_REFUSED             = 39; //Dictionnary explicitly refuse import
 
-    public const ERROR_NAME_NOT_MAPPED            = 40; //Dropdown/device not created: its name field has no value
+    public const ERROR_NAME_NOT_MAPPED            = 40; //Dropdown/device not created: its name field is not mapped or empty in the row
 
     public const WARNING_NETPORT_NOT_FOUND         = 41; //Network port not connected: no matching network equipment port
 
@@ -1902,7 +1902,7 @@ class PluginDatainjectionCommonInjectionLib
         } elseif ($item instanceof CommonDropdown && $add && !($item instanceof SoftwareLicense)) {
             $newID = $item->import($toinject);
 
-            // import() silently rejects items without a name (designation for devices): tell the user which field to map
+            // import() silently rejects items without a name (designation for devices): tell the user which field to map or fill
             $name_field = $item instanceof CommonDevice ? 'designation' : 'name';
             if ($newID <= 0 && empty($toinject[$name_field]) && empty($toinject['completename'])) {
                 $option = self::findSearchOption($options, $name_field);
@@ -2342,7 +2342,7 @@ class PluginDatainjectionCommonInjectionLib
                 break;
 
             case self::ERROR_NAME_NOT_MAPPED:
-                $message = __('Item not created: a mapping is needed on the following field', 'datainjection');
+                $message = __('Item not created: the following field is not mapped or is empty', 'datainjection');
                 break;
 
             case self::WARNING_NETPORT_NOT_FOUND:

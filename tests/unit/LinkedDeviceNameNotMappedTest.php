@@ -93,7 +93,7 @@ final class LinkedDeviceNameNotMappedTest extends DbTestCase
         PluginDatainjectionSession::setParam('results', json_encode([$results + ['line' => 2]]));
         $logs = PluginDatainjectionModel::prepareLogResults($model->getID());
         self::assertStringContainsString(
-            'Item not created: a mapping is needed on the following field (' . DeviceProcessor::getTypeName(1) . ' - ' . __('Name') . ')',
+            'Item not created: the following field is not mapped or is empty (' . DeviceProcessor::getTypeName(1) . ' - ' . __('Name') . ')',
             $logs[PluginDatainjectionCommonInjectionLib::FAILED][0]['check_message'],
         );
     }
