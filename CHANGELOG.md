@@ -11,6 +11,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 - Add Transifex translations link to README
 
+## [2.15.13] - 2026-11-05
+
+### Fixed
+
+- Fix the uploaded file name being lost after the client injection upload step
+
 ## [2.16.0] - 2026-10-05
 
 ### Fixed
