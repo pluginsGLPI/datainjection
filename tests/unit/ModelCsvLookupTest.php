@@ -30,10 +30,10 @@
 
 namespace GlpiPlugin\Datainjection\Tests\Unit;
 
-use Session;
 use Glpi\Tests\DbTestCase;
 use PluginDatainjectionModel;
 use PluginDatainjectionModelCsv;
+use Session;
 use TypeError;
 
 final class ModelCsvLookupTest extends DbTestCase

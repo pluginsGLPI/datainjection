@@ -103,8 +103,8 @@ class PluginDatainjectionDropdown
 
     public static function portUnicityValues()
     {
-        return [__('Port number'), __('Name'), __('Mac address'), __('Port number') . "+" . __('Name'), __('Port number') . "+" . __('Mac address'), __('Port number') . "+" . __('Name') . "+" .
-          __('Mac address')];
+        return [__('Port number'), __('Name'), __('Mac address'), __('Port number') . "+" . __('Name'), __('Port number') . "+" . __('Mac address'), __('Port number') . "+" . __('Name') . "+"
+          . __('Mac address')];
     }
 
 

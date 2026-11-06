@@ -30,11 +30,11 @@
 
 namespace GlpiPlugin\Datainjection\Tests\Unit;
 
-use Glpi\Tests\DbTestCase;
 use Computer;
+use Glpi\Tests\DbTestCase;
 use PHPUnit\Framework\Attributes\DataProvider;
-use PluginDatainjectionComputerInjection;
 use PluginDatainjectionCommonInjectionLib;
+use PluginDatainjectionComputerInjection;
 use ReflectionMethod;
 
 final class CommonInjectionLibDateTimeTest extends DbTestCase

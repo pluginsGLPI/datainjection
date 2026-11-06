@@ -114,7 +114,7 @@ class PluginDatainjectionEntityInjection extends Entity implements PluginDatainj
 
     /**
     * @param array $input     array
-    * @param boolean $add                (true by default)
+    * @param bool $add                (true by default)
     * @param array|null $rights    array
    **/
     public function customimport($input = [], $add = true, $rights = [])

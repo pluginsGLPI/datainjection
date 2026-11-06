@@ -28,7 +28,6 @@
  * -------------------------------------------------------------------------
  */
 
-
 use function Safe\preg_match;
 
 /*
@@ -57,7 +56,7 @@ abstract class PluginDatainjectionBackend
     * Get header of the file
     *
     * @param PluginDatainjectionData|null $injectionData
-    * @param boolean $header_present
+    * @param bool $header_present
     *
     * @return array with the data from the header
    **/

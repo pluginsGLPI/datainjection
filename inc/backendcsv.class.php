@@ -74,7 +74,7 @@ class PluginDatainjectionBackendcsv extends PluginDatainjectionBackend implement
 
 
     /**
-    * @param boolean $present (true by default)
+    * @param bool $present (true by default)
    **/
     public function setHeaderPresent($present = true)
     {
@@ -88,7 +88,7 @@ class PluginDatainjectionBackendcsv extends PluginDatainjectionBackend implement
     *
     * @param mixed $fic
     * @param array $data
-    * @param integer $encoding  (default 1)
+    * @param int $encoding  (default 1)
    **/
     public static function parseLine($fic, $data, $encoding = 1)
     {
@@ -123,7 +123,7 @@ class PluginDatainjectionBackendcsv extends PluginDatainjectionBackend implement
     /**
     * Read a CSV file and store data in an array
     *
-    * @param integer $numberOfLines inumber of lines to be read (-1 means all file) (default 1)
+    * @param int $numberOfLines inumber of lines to be read (-1 means all file) (default 1)
    **/
     public function read($numberOfLines = 1)
     {

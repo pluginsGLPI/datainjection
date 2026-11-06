@@ -289,7 +289,7 @@ class PluginDatainjectionNetworkportInjection extends NetworkPort implements Plu
     *
     * @param array $values    array    the values to inject
     *
-    * @return boolean true if check ok, false if not ok
+    * @return bool true if check ok, false if not ok
    **/
     public function lastCheck($values = [])
     {
@@ -299,7 +299,7 @@ class PluginDatainjectionNetworkportInjection extends NetworkPort implements Plu
 
     /**
     * @param array $values
-    * @param boolean $add                (true by default)
+    * @param bool $add                (true by default)
     * @param array|null $rights    array
    **/
     public function processAfterInsertOrUpdate($values, $add = true, $rights = [])

@@ -84,7 +84,7 @@ class PluginDatainjectionDeviceProcessorInjection extends DeviceProcessor implem
 
     /**
     * @param array $values
-    * @param boolean $add                (true by default)
+    * @param bool $add                (true by default)
     * @param array|null $rights    array
    **/
     public function processAfterInsertOrUpdate($values, $add = true, $rights = [])

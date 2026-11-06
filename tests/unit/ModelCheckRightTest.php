@@ -31,13 +31,13 @@
 namespace GlpiPlugin\Datainjection\Tests\Unit;
 
 use Computer;
+use Glpi\Tests\DbTestCase;
 use Group;
 use Group_User;
 use PluginDatainjectionMapping;
 use PluginDatainjectionModel;
 use Session;
 use User;
-use Glpi\Tests\DbTestCase;
 
 final class ModelCheckRightTest extends DbTestCase
 {
