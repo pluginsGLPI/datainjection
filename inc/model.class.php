@@ -1290,6 +1290,15 @@ class PluginDatainjectionModel extends CommonDBTM
                 continue;
             }
 
+            //Fields denies direct writes by design: its values follow the model itemtype rights, checked in this loop
+            if (PluginDatainjectionCommonInjectionLib::isFieldsContainerItemtype($itemtype)) {
+                if (!PluginDatainjectionCommonInjectionLib::canWriteFieldsContainer($itemtype)) {
+                    return false;
+                }
+
+                continue;
+            }
+
             $item = new $itemtype();
             if ($check_add && !$item->canCreate()) {
                 return false;
