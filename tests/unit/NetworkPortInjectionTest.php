@@ -52,7 +52,7 @@ final class NetworkPortInjectionTest extends DbTestCase
         $lib = new PluginDatainjectionCommonInjectionLib(
             new PluginDatainjectionComputerInjection(),
             [
-                'Computer'    => ['name' => $computer_name],
+                'Computer'    => ['name' => $computer_name, 'entities_id' => $entities_id],
                 'NetworkPort' => $port,
             ],
             [
