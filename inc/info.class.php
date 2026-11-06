@@ -73,6 +73,26 @@ class PluginDatainjectionInfo extends CommonDBTM
     }
 
     /**
+     * Name of the form input: keyed by itemtype too, as several itemtypes may share a field name
+     */
+    public function getInputName(): string
+    {
+        return 'info[' . $this->getInfosType() . '][' . $this->getValue() . ']';
+    }
+
+    /**
+     * Value filled by the user for this info, as posted by the form built with getInputName()
+     *
+     * @param array $values infos posted by the user
+     *
+     * @return mixed|null
+     */
+    public function getPostedValue(array $values)
+    {
+        return $values[$this->getInfosType()][$this->getValue()] ?? null;
+    }
+
+    /**
     * @param PluginDatainjectionModel $model     PluginDatainjectionModel object
     * @param boolean $canedit   (false by default)
    **/
@@ -309,7 +329,7 @@ class PluginDatainjectionInfo extends CommonDBTM
             $info->fields['value'],
         );
         if ($option) {
-            echo "<td>" . $option['name'] . "</td><td>";
+            echo "<td>" . htmlescape(sprintf(__('%1$s - %2$s'), $info->fields['itemtype']::getTypeName(1), $option['name'])) . "</td><td>";
             self::showAdditionalInformation($info, $option, $injectionClass, $values);
             echo "</td>";
         }
@@ -330,13 +350,8 @@ class PluginDatainjectionInfo extends CommonDBTM
         $values = []
     ) {
 
-        $name = "info[" . $option['linkfield'] . "]";
-
-        if (isset($_SESSION['datainjection']['infos'][$option['linkfield']])) {
-            $value = $_SESSION['datainjection']['infos'][$option['linkfield']];
-        } else {
-            $value = '';
-        }
+        $name  = $info->getInputName();
+        $value = $info->getPostedValue($_SESSION['datainjection']['infos'] ?? []) ?? '';
 
         switch ($option['displaytype']) {
             case 'text':
