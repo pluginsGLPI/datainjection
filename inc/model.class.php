@@ -1025,6 +1025,7 @@ class PluginDatainjectionModel extends CommonDBTM
 
         $specific_model = self::getInstance($this->getFiletype());
         $specific_model->getFromDBByModelID($this->fields['id']);
+
         $this->specific_model = $specific_model;
     }
 
