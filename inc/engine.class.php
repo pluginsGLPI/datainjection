@@ -219,12 +219,9 @@ class PluginDatainjectionEngine
 
         $additional_infos = [];
         foreach ($this->model->getInfos() as $info) {
-            if (
-                isset($this->infos[$info->getValue()])
-                && PluginDatainjectionInfo::keepInfo($info, $this->infos[$info->getValue()])
-            ) {
-                $additional_infos[$info->getInfosType()][$info->getValue()]
-                          = $this->infos[$info->getValue()];
+            $value = $info->getPostedValue($this->infos);
+            if ($value !== null && PluginDatainjectionInfo::keepInfo($info, $value)) {
+                $additional_infos[$info->getInfosType()][$info->getValue()] = $value;
             }
         }
 
