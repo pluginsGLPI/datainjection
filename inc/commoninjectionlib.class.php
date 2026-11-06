@@ -293,7 +293,7 @@ class PluginDatainjectionCommonInjectionLib
     *
     * @param string $field_type the type of field
     *
-    * @return boolean true if it's a dropdown type, false if not
+    * @return bool true if it's a dropdown type, false if not
    **/
     public static function isFieldADropdown($field_type)
     {
@@ -599,7 +599,7 @@ class PluginDatainjectionCommonInjectionLib
         $itemtype,
         $searchOption,
         $field,
-        $value
+        $value,
     ) {
         $linkfield = $searchOption['storevaluein'] ?? $searchOption['linkfield'];
 
@@ -969,7 +969,7 @@ class PluginDatainjectionCommonInjectionLib
      * @param string $itemtype
      * @param string $field name
      * @param string|int $value of the field
-     * @param boolean $fromdb boolean
+     * @param bool $fromdb boolean
      **/
     private function setValueForItemtype($itemtype, $field, $value, $fromdb = false)
     {
@@ -1409,7 +1409,7 @@ class PluginDatainjectionCommonInjectionLib
     *
     * @param mixed $val the value to check
     *
-    * @return boolean true if it's a float, false otherwise
+    * @return bool true if it's a float, false otherwise
     */
     private function isFloat($val)
     {
@@ -1422,7 +1422,7 @@ class PluginDatainjectionCommonInjectionLib
     *
     * @param mixed $val the value to check
     *
-    * @return boolean true if it's an integer, false otherwise
+    * @return bool true if it's an integer, false otherwise
     */
     private function isInteger($val)
     {
@@ -1437,7 +1437,7 @@ class PluginDatainjectionCommonInjectionLib
     * @param array $option the option associated with the field
     * @param string $field_name the field name
     * @param mixed $data the data to check
-    * @param boolean $mandatory is the field mandatory
+    * @param bool $mandatory is the field mandatory
     *
     * @return int the result of the check
    **/
@@ -1772,7 +1772,7 @@ class PluginDatainjectionCommonInjectionLib
     /**
      * Flag the current line as partially injected and log the reason
      *
-     * @param integer $code     log label describing the reason
+     * @param int $code     log label describing the reason
      * @param string  $itemtype itemtype that could not be written
      **/
     private function addCheckWarning(int $code, string $itemtype): void
@@ -1789,7 +1789,7 @@ class PluginDatainjectionCommonInjectionLib
     * @param PluginDatainjectionInjectionInterface $injectionClass class which represents the object to inject
     * @param CommonDBTM $item the CommonDBTM object representing the itemtype to inject
     * @param array|string|false $values the values to inject
-    * @param boolean $add true to insert an object, false to update an existing object
+    * @param bool $add true to insert an object, false to update an existing object
     *
     * @return int|string the id of the object added or updated
    **/
@@ -2252,7 +2252,7 @@ class PluginDatainjectionCommonInjectionLib
     * Log event into the history
     *
     * @param object $item the item to log
-    * @param boolean $add true if it's an add, false if it's an update
+    * @param bool $add true if it's an add, false if it's an update
     *
     * @return void nothing
    **/
@@ -2354,7 +2354,7 @@ class PluginDatainjectionCommonInjectionLib
     public static function addToSearchOptions(
         array $type_searchOptions,
         array $options,
-        PluginDatainjectionInjectionInterface $injectionClass
+        PluginDatainjectionInjectionInterface $injectionClass,
     ) {
 
         self::addTemplateSearchOptions($injectionClass, $type_searchOptions);

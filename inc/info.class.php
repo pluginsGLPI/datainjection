@@ -30,8 +30,8 @@
 
 use Glpi\Application\View\TemplateRenderer;
 
-use function Safe\ob_start;
 use function Safe\ob_get_clean;
+use function Safe\ob_start;
 
 class PluginDatainjectionInfo extends CommonDBTM
 {
@@ -74,14 +74,14 @@ class PluginDatainjectionInfo extends CommonDBTM
 
     /**
     * @param PluginDatainjectionModel $model     PluginDatainjectionModel object
-    * @param boolean $canedit   (false by default)
+    * @param bool $canedit   (false by default)
    **/
     public static function showAddInfo(PluginDatainjectionModel $model, $canedit = false)
     {
 
         if ($canedit) {
-            echo "<form method='post' name='form' id='form' action='" .
-             Toolbox::getItemTypeFormURL(self::class) . "'>";
+            echo "<form method='post' name='form' id='form' action='"
+             . Toolbox::getItemTypeFormURL(self::class) . "'>";
             echo "<table class='tab_cadre_fixe'>";
             echo "<tr>";
             echo "<th>" . __s('Tables', 'datainjection') . "</th>";
@@ -327,7 +327,7 @@ class PluginDatainjectionInfo extends CommonDBTM
         PluginDatainjectionInfo $info,
         $option,
         $injectionClass,
-        $values = []
+        $values = [],
     ) {
 
         $name = "info[" . $option['linkfield'] . "]";

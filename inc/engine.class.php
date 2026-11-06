@@ -181,7 +181,7 @@ class PluginDatainjectionEngine
         $searchOptions,
         $mapping,
         $value,
-        $several = []
+        $several = [],
     ): void {
 
         // Option will be found only for "main" type.

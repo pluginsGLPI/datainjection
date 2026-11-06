@@ -107,7 +107,7 @@ class PluginDatainjectionNetworkNameInjection extends NetworkName implements Plu
 
     /**
     * @param array $values
-    * @param boolean $add                   (true by default)
+    * @param bool $add                   (true by default)
     * @param array|null $rights    array
     */
     public function processAfterInsertOrUpdate($values, $add = true, $rights = [])

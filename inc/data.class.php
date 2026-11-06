@@ -51,7 +51,7 @@ class PluginDatainjectionData
 
 
     /**
-    * @param integer $line_id
+    * @param int $line_id
    **/
     public function getDataAtLine($line_id)
     {

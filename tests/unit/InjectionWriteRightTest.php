@@ -43,7 +43,7 @@ final class InjectionWriteRightTest extends DbTestCase
     private function injectData(
         object $injection_class,
         array $injected_data,
-        array $mandatory_fields
+        array $mandatory_fields,
     ): array {
         $lib = new PluginDatainjectionCommonInjectionLib(
             $injection_class,

@@ -177,7 +177,7 @@ class PluginDatainjectionUserInjection extends User implements PluginDatainjecti
 
     /**
     * @param array $values
-    * @param boolean $add                (true by default)
+    * @param bool $add                (true by default)
     * @param array|null $rights    array
     *
     * @return bool false if a post-processing step was rejected

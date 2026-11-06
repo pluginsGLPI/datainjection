@@ -128,7 +128,7 @@ class PluginDatainjectionClientInjection
 
     /**
     * @param PluginDatainjectionModel $model PluginDatainjectionModel object
-    * @param integer $entities_id
+    * @param int $entities_id
    **/
     public static function showInjectionForm(PluginDatainjectionModel $model, $entities_id)
     {

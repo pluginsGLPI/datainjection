@@ -30,11 +30,11 @@
 
 namespace GlpiPlugin\Datainjection\Tests\Unit;
 
-use PluginDatainjectionManufacturerInjection;
 use Closure;
 use Glpi\Tests\DbTestCase;
 use Manufacturer;
 use PluginDatainjectionCommonInjectionLib;
+use PluginDatainjectionManufacturerInjection;
 
 require_once dirname(__DIR__, 2) . '/inc/injectioninterface.class.php';
 require_once dirname(__DIR__, 2) . '/inc/commoninjectionlib.class.php';

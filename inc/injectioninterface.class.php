@@ -38,7 +38,7 @@ interface PluginDatainjectionInjectionInterface
     /**
     * Tells datainjection is the type is a primary type or not
     *
-    * @return boolean a boolean
+    * @return bool a boolean
    **/
     public function isPrimaryType();
 

@@ -11,6 +11,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 - Add Transifex translations link to README
 
+### Fixed
+
+- CI: use the GLPI shared php-cs-fixer configuration and apply its coding style
+
 ## [2.16.0] - 2026-10-05
 
 ### Fixed
