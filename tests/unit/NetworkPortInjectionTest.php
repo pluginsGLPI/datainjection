@@ -52,7 +52,11 @@ final class NetworkPortInjectionTest extends DbTestCase
         $lib = new PluginDatainjectionCommonInjectionLib(
             new PluginDatainjectionComputerInjection(),
             [
+<<<<<<< HEAD
                 'Computer'    => ['name' => $computer_name, 'entities_id' => $entities_id],
+=======
+                'Computer'    => ['name' => $computer_name],
+>>>>>>> 499e38f ([Fix]: unclear and false positive warnings + an issue with additional informations targetting same field name over differents items (Glpi 11) (#695))
                 'NetworkPort' => $port,
             ],
             [

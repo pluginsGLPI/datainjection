@@ -17,7 +17,15 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Fixed
 
+<<<<<<< HEAD
 - CI: use the GLPI shared php-cs-fixer configuration and apply its coding style
+=======
+- Fix the uploaded file name being lost after the client injection upload step
+- Fix additional information sharing a field name across itemtypes (e.g. two device designations) overwriting each other, and show the itemtype next to each field
+- Stop flagging a network port injection as partial when no connection to a network equipment port is requested
+- Made several generic warnings more explicit. They explain why the mapping failed.
+- Stop requesting a network port connection when its connection columns are empty
+>>>>>>> 499e38f ([Fix]: unclear and false positive warnings + an issue with additional informations targetting same field name over differents items (Glpi 11) (#695))
 
 ## [2.16.0] - 2026-10-05
 
