@@ -1213,11 +1213,12 @@ class PluginDatainjectionModel extends CommonDBTM
                     $item     = new $itemtype();
                     $option   = $item->getSearchOptionByField('field', $info->getValue());
                     $tocheck  = (!isset($option['datatype']) || ($option['datatype'] != 'bool'));
+                    $value    = $info->getPostedValue($fields);
                     if (
-                        !isset($fields[$info->getValue()])
+                        $value === null
                         //Check if no value defined only when it's not a yes/no
-                        || ($tocheck && !$fields[$info->getValue()])
-                        || ($fields[$info->getValue()] == 'NULL')
+                        || ($tocheck && !$value)
+                        || ($value == 'NULL')
                     ) {
                         $check = false;
                         break;

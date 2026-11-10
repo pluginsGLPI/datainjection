@@ -301,22 +301,20 @@ class PluginDatainjectionNetworkportInjection extends NetworkPort implements Plu
     * @param array $values
     * @param bool $add                (true by default)
     * @param array|null $rights    array
+    * @return bool|int|null true or null if ok, a PluginDatainjectionCommonInjectionLib log code if the connection failed
    **/
     public function processAfterInsertOrUpdate($values, $add = true, $rights = [])
     {
         /** @var DBmysql $DB */
         global $DB;
 
-        //Should the port be connected to another one ?
-        $use_name            = (isset($values['NetworkPort']["netname"])
-                            || !empty($values['NetworkPort']["netname"]));
-        $use_logical_number  = (isset($values['NetworkPort']["netport"])
-                            || !empty($values['NetworkPort']["netport"]));
-        $use_mac             = (isset($values['NetworkPort']["netmac"])
-                            || !empty($values['NetworkPort']["netmac"]));
+        //Should the port be connected to another one ? (an empty mapped cell is not a request)
+        $use_name            = (string) ($values['NetworkPort']["netname"] ?? '') !== '';
+        $use_logical_number  = (string) ($values['NetworkPort']["netport"] ?? '') !== '';
+        $use_mac             = (string) ($values['NetworkPort']["netmac"] ?? '') !== '';
 
         if (!$use_name && !$use_logical_number && !$use_mac) {
-            return false;
+            return true; // nothing to connect is not a failure
         }
 
         // Find port in database
@@ -351,21 +349,27 @@ class PluginDatainjectionNetworkportInjection extends NetworkPort implements Plu
             'WHERE'      => $criteria,
         ]);
 
-        //if at least one parameter is given
-        if (count($result) === 1) {
-            //Get data for this port
-            $netport         = $result->current();
-            $netport_netport = new NetworkPort_NetworkPort();
-            //If this port already connected to another one ?
-            if (!$netport_netport->getOppositeContact((int) $netport['id'])) {
-                //No, add a new port to port connection
-                $tmp['networkports_id_1'] = $values['NetworkPort']['id'];
-                $tmp['networkports_id_2'] = $netport['id'];
-                $netport_netport->add($tmp);
-            }
+        if (count($result) === 0) {
+            return PluginDatainjectionCommonInjectionLib::WARNING_NETPORT_NOT_FOUND;
         }
 
-        //TODO add injection warning if no port found or more than one
+        if (count($result) > 1) {
+            return PluginDatainjectionCommonInjectionLib::WARNING_NETPORT_AMBIGUOUS;
+        }
+
+        $netport         = $result->current();
+        $netport_netport = new NetworkPort_NetworkPort();
+        $opposite        = $netport_netport->getOppositeContact((int) $netport['id']);
+        if (!$opposite) {
+            //Not connected yet: add a new port to port connection
+            $tmp['networkports_id_1'] = $values['NetworkPort']['id'];
+            $tmp['networkports_id_2'] = $netport['id'];
+            $netport_netport->add($tmp);
+        } elseif ((int) $opposite !== (int) $values['NetworkPort']['id']) {
+            // Connected to another port; already connected to this one (re-import) is fine
+            return PluginDatainjectionCommonInjectionLib::WARNING_NETPORT_ALREADY_CONNECTED;
+        }
+
         return null;
     }
 }
