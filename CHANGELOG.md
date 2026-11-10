@@ -10,6 +10,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Fixed
 
 - Fix the uploaded file name being lost after the client injection upload step
+- Fix additional information sharing a field name across itemtypes (e.g. two device designations) overwriting each other, and show the itemtype next to each field
+- Stop flagging a network port injection as partial when no connection to a network equipment port is requested
+- Made several generic warnings more explicit. They explain why the mapping failed.
+- Stop requesting a network port connection when its connection columns are empty
 
 ## [2.15.12] - 2026-10-05
 
