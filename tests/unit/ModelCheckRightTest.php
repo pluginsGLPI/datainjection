@@ -33,6 +33,10 @@ namespace GlpiPlugin\Datainjection\Tests\Unit;
 use Computer;
 use Group;
 use Group_User;
+use PluginDatainjectionCommonInjectionLib;
+use PluginDatainjectionInfo;
+use PluginDatainjectionLockedFixture;
+use PluginDatainjectionLockedFixtureInjection;
 use PluginDatainjectionMapping;
 use PluginDatainjectionModel;
 use Session;
@@ -136,5 +140,35 @@ final class ModelCheckRightTest extends DbTestCase
 
         $_SESSION['glpiactiveprofile'][Computer::$rightname] = CREATE;
         $this->assertTrue(PluginDatainjectionModel::checkRightOnModel($models_id));
+    }
+
+    public function testPluginItemtypeRightsAreCheckedOnItsInjectionClass(): void
+    {
+        require_once __DIR__ . '/../fixtures/LockedFixture.php';
+
+        $this->login();
+
+        $models_id = $this->createModel();
+        $this->createItem(PluginDatainjectionInfo::class, [
+            'models_id'    => $models_id,
+            'itemtype'     => PluginDatainjectionLockedFixture::class,
+            'value'        => 'name',
+            'is_mandatory' => 0,
+        ]);
+
+        $this->assertInstanceOf(
+            PluginDatainjectionLockedFixtureInjection::class,
+            PluginDatainjectionCommonInjectionLib::getItemForRightCheck(PluginDatainjectionLockedFixture::class),
+        );
+        $this->assertInstanceOf(
+            Computer::class,
+            PluginDatainjectionCommonInjectionLib::getItemForRightCheck(Computer::class),
+        );
+
+        PluginDatainjectionLockedFixtureInjection::$can_write = true;
+        $this->assertTrue(PluginDatainjectionModel::checkRightOnModel($models_id));
+
+        PluginDatainjectionLockedFixtureInjection::$can_write = false;
+        $this->assertFalse(PluginDatainjectionModel::checkRightOnModel($models_id));
     }
 }

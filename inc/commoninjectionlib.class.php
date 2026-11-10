@@ -394,6 +394,29 @@ class PluginDatainjectionCommonInjectionLib
 
 
     /**
+    * Get the item on which the write rights for an itemtype are checked
+    *
+    * Plugin itemtypes may define the rights that apply to injection in their injection class
+    * (e.g. fields containers values, which cannot be written directly)
+    *
+    * @param string $itemtype  the itemtype
+    */
+    public static function getItemForRightCheck(string $itemtype): CommonDBTM
+    {
+        $injectionClass = ucfirst($itemtype) . 'Injection';
+        if (isPluginItemType($itemtype) && is_a($injectionClass, CommonDBTM::class, true)) {
+            return new $injectionClass();
+        }
+
+        if (!is_a($itemtype, CommonDBTM::class, true)) {
+            throw new HttpException(500, 'Class ' . $itemtype . ' is not a valid class');
+        }
+
+        return new $itemtype();
+    }
+
+
+    /**
     * Add blacklisted fields for an itemtype
     *
     * @param string $itemtype the itemtype
@@ -1805,15 +1828,16 @@ class PluginDatainjectionCommonInjectionLib
         //Skipped without a session, as the lib is also a programmatic entry point for scripts.
         if (Session::getLoginUserID() !== false) {
             $input = is_array($values) ? $values : [];
+            $right_item = self::getItemForRightCheck($item::class);
             if ($add) {
                 //Passing the input to can() makes the check cover the target entity
-                if (!$item->can(-1, CREATE, $input)) {
+                if (!$right_item->can(-1, CREATE, $input)) {
                     $this->addCheckWarning(self::ERROR_CANNOT_IMPORT, $item::class);
                     return 0;
                 }
 
                 //On the update path the target id is known, so the per-item check also covers the entity scope
-            } elseif (!isset($values['id']) || !$item->can($values['id'], UPDATE)) {
+            } elseif (!isset($values['id']) || !$right_item->can($values['id'], UPDATE)) {
                 $this->addCheckWarning(self::ERROR_CANNOT_UPDATE, $item::class);
                 return 0;
             }
