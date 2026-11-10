@@ -1291,7 +1291,7 @@ class PluginDatainjectionModel extends CommonDBTM
                 continue;
             }
 
-            $item = new $itemtype();
+            $item = PluginDatainjectionCommonInjectionLib::getItemForRightCheck($itemtype);
             if ($check_add && !$item->canCreate()) {
                 return false;
             }
