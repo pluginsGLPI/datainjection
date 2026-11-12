@@ -40,7 +40,9 @@ use PluginDatainjectionCommonInjectionLib;
 use PluginDatainjectionComputerInjection;
 use PluginDatainjectionMapping;
 use PluginDatainjectionModel;
+use PluginDatainjectionEntityInjection;
 use PluginFieldsComputerstub;
+use PluginFieldsEntitystub;
 use PluginFieldsProfile;
 use Session;
 
@@ -59,8 +61,15 @@ final class FieldsContainerRightTest extends DbTestCase
 
         require_once __DIR__ . '/../fixtures/fields_stubs.php';
 
+        self::createContainerTable(PluginFieldsComputerstub::getTable(), Computer::class, PluginFieldsComputerstub::CONTAINER_ID);
+        self::createContainerTable(PluginFieldsEntitystub::getTable(), Entity::class, PluginFieldsEntitystub::CONTAINER_ID);
+    }
+
+    private static function createContainerTable(string $table, string $itemtype, int $container_id): void
+    {
         /** @var DBmysql $DB */
         global $DB;
+        //Same unique key as the tables Fields generates
         $DB->doQuery(sprintf(
             'CREATE TABLE IF NOT EXISTS %s (
                 `id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
@@ -68,12 +77,14 @@ final class FieldsContainerRightTest extends DbTestCase
                 `itemtype` VARCHAR(255) DEFAULT %s,
                 `plugin_fields_containers_id` INT UNSIGNED NOT NULL DEFAULT %d,
                 `entities_id` INT UNSIGNED NOT NULL DEFAULT 0,
+                `is_recursive` TINYINT NOT NULL DEFAULT 0,
                 `%s` VARCHAR(255) DEFAULT NULL,
-                PRIMARY KEY (`id`)
+                PRIMARY KEY (`id`),
+                UNIQUE KEY `itemtype_item_container` (`itemtype`, `items_id`, `plugin_fields_containers_id`)
             ) ENGINE=InnoDB DEFAULT CHARSET=%s COLLATE=%s ROW_FORMAT=DYNAMIC',
-            $DB->quoteName(PluginFieldsComputerstub::getTable()),
-            $DB->quoteValue(Computer::class),
-            PluginFieldsComputerstub::CONTAINER_ID,
+            $DB->quoteName($table),
+            $DB->quoteValue($itemtype),
+            $container_id,
             PluginFieldsComputerstub::VALUE_FIELD,
             DBConnection::getDefaultCharset(),
             DBConnection::getDefaultCollation(),
@@ -86,6 +97,7 @@ final class FieldsContainerRightTest extends DbTestCase
         /** @var DBmysql $DB */
         global $DB;
         $DB->dropTable(PluginFieldsComputerstub::getTable(), true);
+        $DB->dropTable(PluginFieldsEntitystub::getTable(), true);
         $DB->clearSchemaCache();
 
         parent::tearDownAfterClass();
@@ -234,5 +246,61 @@ final class FieldsContainerRightTest extends DbTestCase
             'items_id' => $results[Computer::class],
         ]));
         $this->assertSame('Injected value', $container_item->fields[PluginFieldsComputerstub::VALUE_FIELD]);
+    }
+
+    private function injectEntityWithFieldValue(string $name, string $value): array
+    {
+        $injection = new PluginDatainjectionEntityInjection();
+        //Entities are imported from their complete name, created under _test_root_entity
+        $completename = PluginDatainjectionEntityInjection::getRootEntityName() . ' > _test_root_entity > ' . $name;
+
+        return $injection->addOrUpdateObject(
+            [
+                Entity::class                 => ['completename' => $completename],
+                PluginFieldsEntitystub::class => [PluginFieldsEntitystub::VALUE_FIELD => $value],
+            ],
+            [
+                'rights' => [
+                    'can_add'      => true,
+                    'can_update'   => true,
+                    'add_dropdown' => true,
+                    'overwrite_notempty_fields' => true,
+                ],
+                'mandatory_fields' => [Entity::class => ['completename' => true]],
+                'entities_id'      => $this->entities_id,
+            ],
+        );
+    }
+
+    private function assertEntityFieldValue(int $entities_id, string $expected): void
+    {
+        $rows = getAllDataFromTable(PluginFieldsEntitystub::getTable(), [
+            'itemtype' => Entity::class,
+            'items_id' => $entities_id,
+        ]);
+        $this->assertCount(1, $rows);
+        $this->assertSame($expected, current($rows)[PluginFieldsEntitystub::VALUE_FIELD]);
+    }
+
+    public function testFieldsValueIsInjectedOnNewEntity(): void
+    {
+        $name = 'Test_Entity_fields_' . random_int(1, PHP_INT_MAX);
+
+        $results = $this->injectEntityWithFieldValue($name, 'Injected value');
+
+        $this->assertSame(PluginDatainjectionCommonInjectionLib::SUCCESS, $results['status']);
+        $this->assertEntityFieldValue($results[Entity::class], 'Injected value');
+    }
+
+    public function testFieldsValueIsUpdatedOnExistingEntity(): void
+    {
+        $name = 'Test_Entity_fields_' . random_int(1, PHP_INT_MAX);
+        $this->injectEntityWithFieldValue($name, 'Injected value');
+
+        $results = $this->injectEntityWithFieldValue($name, 'Updated value');
+
+        $this->assertSame(PluginDatainjectionCommonInjectionLib::IMPORT_UPDATE, $results['type']);
+        $this->assertSame(PluginDatainjectionCommonInjectionLib::SUCCESS, $results['status']);
+        $this->assertEntityFieldValue($results[Entity::class], 'Updated value');
     }
 }

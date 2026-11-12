@@ -30,59 +30,17 @@
 
 //Minimal stand-ins for the Fields plugin classes the rights checks rely on, loaded only when Fields is absent
 
-abstract class PluginFieldsAbstractContainerInstance extends CommonDBChild
+//Mirrors the injection class Fields generates for each container
+trait PluginFieldsStubInjectionTrait
 {
-    public static $itemtype = 'itemtype';
-
-    public static $items_id = 'items_id';
-
-    public static function canCreate(): bool
-    {
-        return false;
-    }
-
-    public static function canUpdate(): bool
-    {
-        return false;
-    }
-}
-
-class PluginFieldsProfile
-{
-    public static int $right = 0;
-
-    public static function getRightOnContainer(int $profile_id, int $container_id): int
-    {
-        return $container_id === PluginFieldsComputerstub::CONTAINER_ID ? self::$right : 0;
-    }
-}
-
-class PluginFieldsComputerstub extends PluginFieldsAbstractContainerInstance
-{
-    public const CONTAINER_ID = 42;
-
-    public const VALUE_FIELD = 'stubvaluefield';
-
-    public static $rightname = 'computer';
-}
-
-class PluginFieldsComputerstubInjection extends PluginFieldsComputerstub implements PluginDatainjectionInjectionInterface
-{
-    public static $rightname = 'plugin_datainjection_model';
-
     public static function getTable($classname = null): string
     {
-        return getTableForItemType(PluginFieldsComputerstub::class);
+        return getTableForItemType(get_parent_class(self::class));
     }
 
     public function isPrimaryType(): bool
     {
         return false;
-    }
-
-    public function connectedTo(): array
-    {
-        return [Computer::class];
     }
 
     public function getOptions($primary_type = ''): array
@@ -106,5 +64,90 @@ class PluginFieldsComputerstubInjection extends PluginFieldsComputerstub impleme
         $lib->processAddOrUpdate();
 
         return $lib->getInjectionResults();
+    }
+}
+
+abstract class PluginFieldsAbstractContainerInstance extends CommonDBChild
+{
+    public static $itemtype = 'itemtype';
+
+    public static $items_id = 'items_id';
+
+    public static function canCreate(): bool
+    {
+        return false;
+    }
+
+    public static function canUpdate(): bool
+    {
+        return false;
+    }
+
+    //Like Fields, the stored entity always follows the parent item, overriding any given one
+    public function addNeededInfoToInput($input)
+    {
+        $parent = static::getItemFromArray(static::$itemtype, static::$items_id, array_merge($this->fields, $input));
+        if ($parent) {
+            $input['entities_id'] = $parent->getEntityID();
+            if ($parent->maybeRecursive()) {
+                $input['is_recursive'] = (int) $parent->isRecursive();
+            }
+        }
+
+        return $input;
+    }
+}
+
+class PluginFieldsProfile
+{
+    public static int $right = 0;
+
+    public static function getRightOnContainer(int $profile_id, int $container_id): int
+    {
+        return in_array($container_id, [PluginFieldsComputerstub::CONTAINER_ID, PluginFieldsEntitystub::CONTAINER_ID], true)
+            ? self::$right
+            : 0;
+    }
+}
+
+class PluginFieldsComputerstub extends PluginFieldsAbstractContainerInstance
+{
+    public const CONTAINER_ID = 42;
+
+    public const VALUE_FIELD = 'stubvaluefield';
+
+    public static $rightname = 'computer';
+}
+
+class PluginFieldsComputerstubInjection extends PluginFieldsComputerstub implements PluginDatainjectionInjectionInterface
+{
+    use PluginFieldsStubInjectionTrait;
+
+    public static $rightname = 'plugin_datainjection_model';
+
+    public function connectedTo(): array
+    {
+        return [Computer::class];
+    }
+}
+
+class PluginFieldsEntitystub extends PluginFieldsAbstractContainerInstance
+{
+    public const CONTAINER_ID = 43;
+
+    public const VALUE_FIELD = 'stubvaluefield';
+
+    public static $rightname = 'entity';
+}
+
+class PluginFieldsEntitystubInjection extends PluginFieldsEntitystub implements PluginDatainjectionInjectionInterface
+{
+    use PluginFieldsStubInjectionTrait;
+
+    public static $rightname = 'plugin_datainjection_model';
+
+    public function connectedTo(): array
+    {
+        return [Entity::class];
     }
 }

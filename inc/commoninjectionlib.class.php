@@ -1581,7 +1581,10 @@ class PluginDatainjectionCommonInjectionLib
 
         //Add entities_id if itemtype can be assigned to an entity
         if ($injectionClass->isEntityAssign()) {
-            $entities_id = $this->getValueByItemtypeAndName($this->primary_type, 'entities_id');
+            //An entity belongs to itself: its entities_id field holds its parent
+            $entities_id = $this->primary_type === Entity::class
+                ? $id
+                : $this->getValueByItemtypeAndName($this->primary_type, 'entities_id');
             $this->setValueForItemtype($itemtype, 'entities_id', $entities_id);
         }
 
