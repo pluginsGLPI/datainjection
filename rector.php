@@ -49,6 +49,7 @@ $config = $baseline([
     __DIR__ . '/ajax',
     __DIR__ . '/front',
     __DIR__ . '/inc',
+    __DIR__ . '/src',
     __DIR__ . '/tests',
 ]);
 

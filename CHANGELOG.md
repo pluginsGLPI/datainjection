@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Added
 
 - Add Transifex translations link to README
+- Inject generic assets, including their type, model, comment and custom fields
 - Fix additional information sharing a field name across itemtypes (e.g. two device designations) overwriting each other, and show the itemtype next to each field
 - Stop flagging a network port injection as partial when no connection to a network equipment port is requested
 - Made several generic warnings more explicit. They explain why the mapping failed.

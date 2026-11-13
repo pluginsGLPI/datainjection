@@ -27,6 +27,7 @@
  * @link      https://github.com/pluginsGLPI/datainjection
  * -------------------------------------------------------------------------
  */
+use Glpi\Asset\AssetDefinitionManager;
 use Glpi\Exception\Http\HttpException;
 
 use function Safe\json_decode;
@@ -82,6 +83,13 @@ class PluginDatainjectionInjectionType
                     $name .= call_user_func([$type, 'getTypeName']);
                     $values[$typename] = $name;
                 }
+            }
+        }
+
+        foreach (AssetDefinitionManager::getInstance()->getDefinitions(true) as $definition) {
+            $itemtype = $definition->getAssetClassName();
+            if ($itemtype::canCreate()) {
+                $values[$itemtype] = $definition->getTranslatedName();
             }
         }
 
