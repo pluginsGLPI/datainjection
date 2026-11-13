@@ -31,10 +31,10 @@
 use function Safe\define;
 use function Safe\mkdir;
 
-define('PLUGIN_DATAINJECTION_VERSION', '2.16.0');
+define('PLUGIN_DATAINJECTION_VERSION', '2.17.0');
 
 // Minimal GLPI version, inclusive
-define("PLUGIN_DATAINJECTION_MIN_GLPI", "12.0.0");
+define("PLUGIN_DATAINJECTION_MIN_GLPI", "12.0.2");
 // Maximum GLPI version, exclusive
 define("PLUGIN_DATAINJECTION_MAX_GLPI", "12.0.99");
 
