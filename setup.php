@@ -98,6 +98,7 @@ function plugin_version_datainjection()
         'homepage'     => 'https://github.com/pluginsGLPI/datainjection',
         'license'      => 'GPLv2+',
         'version'      => PLUGIN_DATAINJECTION_VERSION,
+        'csp_compliant' => true,
         'requirements' => [
             'glpi' => [
                 'min' => PLUGIN_DATAINJECTION_MIN_GLPI,

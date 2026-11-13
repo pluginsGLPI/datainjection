@@ -39,3 +39,44 @@ function show_log(num) {
       document.getElementById('log'+num+'_table').style.display = 'none';
    }
 }
+
+document.addEventListener('click', (e) => {
+   const markLink = e.target.closest('[data-datainjection-mark-checkboxes]');
+   if (markLink !== null) {
+      if (markCheckboxes(markLink.dataset.datainjectionMarkCheckboxes)) {
+         e.preventDefault();
+      }
+      return;
+   }
+
+   const unmarkLink = e.target.closest('[data-datainjection-unmark-checkboxes]');
+   if (unmarkLink !== null) {
+      if (unMarkCheckboxes(unmarkLink.dataset.datainjectionUnmarkCheckboxes)) {
+         e.preventDefault();
+      }
+      return;
+   }
+
+   const popupLink = e.target.closest('[data-datainjection-popup]');
+   if (popupLink !== null) {
+      const popup = window.open(
+         popupLink.dataset.datainjectionPopup,
+         'glpipopup',
+         popupLink.dataset.datainjectionPopupFeatures
+      );
+      popup.focus();
+      e.preventDefault();
+      return;
+   }
+
+   const locationLink = e.target.closest('[data-datainjection-location]');
+   if (locationLink !== null) {
+      location.href = locationLink.dataset.datainjectionLocation;
+      return;
+   }
+
+   if (e.target.closest('[data-datainjection-close-window]') !== null) {
+      e.preventDefault();
+      window.close();
+   }
+});

@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+### Added
+
+- Make the plugin compatible with the Content Security Policy
+
 ### Fixed
 
 - Fix the uploaded file name being lost after the client injection upload step
