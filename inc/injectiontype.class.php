@@ -27,8 +27,8 @@
  * @link      https://github.com/pluginsGLPI/datainjection
  * -------------------------------------------------------------------------
  */
-use Glpi\Exception\Http\HttpException;
 use Glpi\Asset\AssetDefinitionManager;
+use Glpi\Exception\Http\HttpException;
 
 use function Safe\json_decode;
 use function Safe\json_encode;

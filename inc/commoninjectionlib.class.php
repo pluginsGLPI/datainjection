@@ -28,11 +28,11 @@
  * -------------------------------------------------------------------------
  */
 
+use Glpi\Asset\Asset;
 use Glpi\DBAL\QueryExpression;
 use Glpi\DBAL\QuerySubQuery;
 use Glpi\Exception\Http\HttpException;
 use Glpi\Features\AssignableItem;
-use Glpi\Asset\Asset;
 use GlpiPlugin\Datainjection\AssetInjection;
 
 use function Safe\preg_match;
