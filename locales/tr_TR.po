@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-11 04:24+0000\n"
+"POT-Creation-Date: 2026-11-13 04:47+0000\n"
 "PO-Revision-Date: 2018-06-21 12:57+0000\n"
 "Last-Translator: Kaya Zeren <kayazeren@gmail.com>, 2026\n"
 "Language-Team: Turkish (Turkey) (https://app.transifex.com/teclib/teams/28042/tr_TR/)\n"
@@ -325,21 +325,26 @@ msgstr "İçe aktarıma izin verilmiyor"
 
 #: inc/commoninjectionlib.class.php:2344
 msgid "Item not created: the following field is not mapped or is empty"
-msgstr ""
+msgstr "Öge oluşturulmadı: Aşağıdaki alan eşleştirilmemiş ya da boş"
 
 #: inc/commoninjectionlib.class.php:2348
 msgid "Network port not connected: no matching network equipment port found"
 msgstr ""
+"Ağ bağlantı noktası bağlanmadı: Eşleşen bir ağ aygıtı bağlantı noktası "
+"bulunamadı"
 
 #: inc/commoninjectionlib.class.php:2352
 msgid "Network port not connected: several network equipment ports match"
 msgstr ""
+"Ağ bağlantı noktası bağlanmadı: Birkaç ağ aygıtı bağlantı noktası eşleşiyor"
 
 #: inc/commoninjectionlib.class.php:2356
 msgid ""
 "Network port not connected: the network equipment port is already connected "
 "to another port"
 msgstr ""
+"Ağ bağlantı noktası bağlanmadı: Ağ aygıtı bağlantı noktası zaten başka bir "
+"bağlantı noktasına bağlı"
 
 #: inc/commoninjectionlib.class.php:2360
 msgid "Import failed"
