@@ -46,7 +46,7 @@ class PluginDatainjectionInjectionType
     /**
     * Return all injectable types
     *
-    * @param boolean $only_primary    return only primary types (false by default)
+    * @param bool $only_primary    return only primary types (false by default)
     *
     * @return array which contains array(itemtype => itemtype name)
    **/
@@ -102,7 +102,7 @@ class PluginDatainjectionInjectionType
     * Display a list of all importable types using datainjection plugin
     *
     * @param string $value           the selected value (default '')
-    * @param boolean $only_primary    (false by default)
+    * @param bool $only_primary    (false by default)
    **/
     public static function dropdown($value = '', $only_primary = false)
     {
@@ -294,7 +294,7 @@ class PluginDatainjectionInjectionType
     * @param array $option    array the current searchOption (field definition)
     * @param array $mapping
     *
-    * @return boolean the value matches the searchOption or not
+    * @return bool the value matches the searchOption or not
    **/
     public static function isEqual($option, $mapping)
     {

@@ -142,7 +142,7 @@ class PluginDatainjectionModelcsv extends CommonDBChild
     *
     * @param string $filename  the filename
     *
-    * @return boolean true if name is correct, false is not
+    * @return bool true if name is correct, false is not
    **/
     public function checkFileName($filename)
     {

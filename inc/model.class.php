@@ -381,7 +381,7 @@ class PluginDatainjectionModel extends CommonDBTM
     * @param int $user_id
     * @param string $order        (default 'name')
     * @param int|string $entity       (default -1)
-    * @param boolean $all          (false by default)
+    * @param bool $all          (false by default)
    **/
     public static function getModels($user_id, $order = "name", $entity = -1, $all = false)
     {
@@ -1037,7 +1037,7 @@ class PluginDatainjectionModel extends CommonDBTM
     *   - file_encoding
     *   - mode
     *
-    * @return boolean
+    * @return bool
    **/
     public function processUploadedFile($options = [])
     {
@@ -1213,11 +1213,12 @@ class PluginDatainjectionModel extends CommonDBTM
                     $item     = new $itemtype();
                     $option   = $item->getSearchOptionByField('field', $info->getValue());
                     $tocheck  = (!isset($option['datatype']) || ($option['datatype'] != 'bool'));
+                    $value    = $info->getPostedValue($fields);
                     if (
-                        !isset($fields[$info->getValue()])
+                        $value === null
                         //Check if no value defined only when it's not a yes/no
-                        || ($tocheck && !$fields[$info->getValue()])
-                        || ($fields[$info->getValue()] == 'NULL')
+                        || ($tocheck && !$value)
+                        || ($value == 'NULL')
                     ) {
                         $check = false;
                         break;
@@ -1398,8 +1399,8 @@ class PluginDatainjectionModel extends CommonDBTM
                             ($key !== 'status')
                             && ($val[0] != PluginDatainjectionCommonInjectionLib::SUCCESS)
                         ) {
-                            $tmp['check_message'] .= ($first ? '' : "\n") .
-                                      sprintf(
+                            $tmp['check_message'] .= ($first ? '' : "\n")
+                                      . sprintf(
                                           __('%1$s (%2$s)'),
                                           PluginDatainjectionCommonInjectionLib::getLogLabel($val[0]),
                                           $val[1],
@@ -1416,8 +1417,8 @@ class PluginDatainjectionModel extends CommonDBTM
 
                 if (isset($result[$model->fields['itemtype']])) {
                     $tmp['item'] = $result[$model->fields['itemtype']];
-                    $url         = Toolbox::getItemTypeFormURL($model->fields['itemtype']) . "?id=" .
-                                                  $result[$model->fields['itemtype']];
+                    $url         = Toolbox::getItemTypeFormURL($model->fields['itemtype']) . "?id="
+                                                  . $result[$model->fields['itemtype']];
                     //redefine genericobject url of needed
                     $plugin = new Plugin();
                     if (
@@ -1425,8 +1426,8 @@ class PluginDatainjectionModel extends CommonDBTM
                         && $plugin->isActivated('genericobject')
                         && array_key_exists($model->fields['itemtype'], PluginGenericobjectType::getTypes())
                     ) {
-                        $url = $CFG_GLPI['root_doc'] . "/plugins/datainjection/front/object.form.php" .
-                        "?itemtype=" . $model->fields['itemtype'] . "&id=" . $result[$model->fields['itemtype']];
+                        $url = $CFG_GLPI['root_doc'] . "/plugins/datainjection/front/object.form.php"
+                        . "?itemtype=" . $model->fields['itemtype'] . "&id=" . $result[$model->fields['itemtype']];
                     }
 
                     $tmp['url']  = "<a href='" . $url . "'>" . $result[$model->fields['itemtype']] . "</a>";
@@ -1486,8 +1487,8 @@ class PluginDatainjectionModel extends CommonDBTM
             $pdf->setHeader(
                 sprintf(
                     __('%1$s (%2$s)'),
-                    __('Data injection report', 'datainjection') . ' - <b>' .
-                                 PluginDatainjectionSession::getParam('file_name') . '</b>',
+                    __('Data injection report', 'datainjection') . ' - <b>'
+                                 . PluginDatainjectionSession::getParam('file_name') . '</b>',
                     $model->getName(),
                 ),
             );

@@ -100,6 +100,14 @@ class PluginDatainjectionCommonInjectionLib
 
     public const ERROR_IMPORT_REFUSED             = 39; //Dictionnary explicitly refuse import
 
+    public const ERROR_NAME_NOT_MAPPED            = 40; //Dropdown/device not created: its name field is not mapped or empty in the row
+
+    public const WARNING_NETPORT_NOT_FOUND         = 41; //Network port not connected: no matching network equipment port
+
+    public const WARNING_NETPORT_AMBIGUOUS         = 42; //Network port not connected: several network equipment ports match
+
+    public const WARNING_NETPORT_ALREADY_CONNECTED = 43; //Network port not connected: the network equipment port is used
+
     //Empty values
     public const EMPTY_VALUE          = '';
 
@@ -295,7 +303,7 @@ class PluginDatainjectionCommonInjectionLib
     *
     * @param string $field_type the type of field
     *
-    * @return boolean true if it's a dropdown type, false if not
+    * @return bool true if it's a dropdown type, false if not
    **/
     public static function isFieldADropdown($field_type)
     {
@@ -616,7 +624,7 @@ class PluginDatainjectionCommonInjectionLib
         $itemtype,
         $searchOption,
         $field,
-        $value
+        $value,
     ) {
         $linkfield = $searchOption['storevaluein'] ?? $searchOption['linkfield'];
 
@@ -988,7 +996,7 @@ class PluginDatainjectionCommonInjectionLib
      * @param string $itemtype
      * @param string $field name
      * @param string|int $value of the field
-     * @param boolean $fromdb boolean
+     * @param bool $fromdb boolean
      **/
     private function setValueForItemtype($itemtype, $field, $value, $fromdb = false)
     {
@@ -1428,7 +1436,7 @@ class PluginDatainjectionCommonInjectionLib
     *
     * @param mixed $val the value to check
     *
-    * @return boolean true if it's a float, false otherwise
+    * @return bool true if it's a float, false otherwise
     */
     private function isFloat($val)
     {
@@ -1441,7 +1449,7 @@ class PluginDatainjectionCommonInjectionLib
     *
     * @param mixed $val the value to check
     *
-    * @return boolean true if it's an integer, false otherwise
+    * @return bool true if it's an integer, false otherwise
     */
     private function isInteger($val)
     {
@@ -1456,7 +1464,7 @@ class PluginDatainjectionCommonInjectionLib
     * @param array $option the option associated with the field
     * @param string $field_name the field name
     * @param mixed $data the data to check
-    * @param boolean $mandatory is the field mandatory
+    * @param bool $mandatory is the field mandatory
     *
     * @return int the result of the check
    **/
@@ -1723,15 +1731,13 @@ class PluginDatainjectionCommonInjectionLib
                 $values = $this->getValuesForItemtype($this->primary_type);
                 $newID  = $this->effectiveAddOrUpdate($this->injectionClass, $item, $values, $add);
 
-                if (!$newID) {
-                    $this->addCheckWarning(self::WARNING, $item::class);
-                } else {
+                if ($newID) {
                     //Store id of the injected item
                     $this->setValueForItemtype($this->primary_type, 'id', $newID);
 
                     //If type needs it : process more data after type import
-                    if ($this->processAfterInsertOrUpdate($this->injectionClass, $add) === false) {
-                        $this->addCheckWarning(self::WARNING, $item::class);
+                    if (($code = $this->processAfterInsertOrUpdate($this->injectionClass, $add)) !== null) {
+                        $this->addCheckWarning($code, $item::class);
                     }
 
                     //$this->results['status'] = self::SUCCESS;
@@ -1771,10 +1777,8 @@ class PluginDatainjectionCommonInjectionLib
                                 $values = $this->getValuesForItemtype($itemtype);
                                 if ($this->lastCheckBeforeProcess($injectionClass)) {
                                     $tmpID = $this->effectiveAddOrUpdate($injectionClass, $item, $values, $add);
-                                    if (!$tmpID) {
-                                        $this->addCheckWarning(self::WARNING, $itemtype);
-                                    } elseif ($this->processAfterInsertOrUpdate($injectionClass, $add) === false) {
-                                        $this->addCheckWarning(self::WARNING, $itemtype);
+                                    if ($tmpID && ($code = $this->processAfterInsertOrUpdate($injectionClass, $add)) !== null) {
+                                        $this->addCheckWarning($code, $itemtype);
                                     }
                                 }
                             }
@@ -1791,7 +1795,7 @@ class PluginDatainjectionCommonInjectionLib
     /**
      * Flag the current line as partially injected and log the reason
      *
-     * @param integer $code     log label describing the reason
+     * @param int $code     log label describing the reason
      * @param string  $itemtype itemtype that could not be written
      **/
     private function addCheckWarning(int $code, string $itemtype): void
@@ -1808,7 +1812,7 @@ class PluginDatainjectionCommonInjectionLib
     * @param PluginDatainjectionInjectionInterface $injectionClass class which represents the object to inject
     * @param CommonDBTM $item the CommonDBTM object representing the itemtype to inject
     * @param array|string|false $values the values to inject
-    * @param boolean $add true to insert an object, false to update an existing object
+    * @param bool $add true to insert an object, false to update an existing object
     *
     * @return int|string the id of the object added or updated
    **/
@@ -1915,6 +1919,22 @@ class PluginDatainjectionCommonInjectionLib
             $newID = $injectionClass->customimport($toinject, $add, $this->rights);
         } elseif ($item instanceof CommonDropdown && $add && !($item instanceof SoftwareLicense)) {
             $newID = $item->import($toinject);
+
+            // import() silently rejects items without a name (designation for devices): tell the user which field to map or fill
+            $name_field = $item instanceof CommonDevice ? 'designation' : 'name';
+            if ($newID <= 0 && empty($toinject[$name_field]) && empty($toinject['completename'])) {
+                $option = self::findSearchOption($options, $name_field);
+                $this->addCheckWarning(
+                    self::ERROR_NAME_NOT_MAPPED,
+                    sprintf(
+                        __('%1$s - %2$s'),
+                        $item::getTypeName(1),
+                        $option['name'] ?? $name_field,
+                    ),
+                );
+                $this->setValueForItemtype($item::class, 'id', 0);
+                return 0; // reason already logged: no generic warning
+            }
         } elseif ($add) {
             if ($newID = $item->add($toinject)) {
                 self::logAddOrUpdate($item, $add);
@@ -1930,6 +1950,10 @@ class PluginDatainjectionCommonInjectionLib
                 $newID = $toinject['id'];
                 self::logAddOrUpdate($item, $add);
             }
+        }
+
+        if (!$newID) {
+            $this->addCheckWarning(self::WARNING, $item::class);
         }
 
         $this->setValueForItemtype($item::class, 'id', $newID);
@@ -2283,7 +2307,7 @@ class PluginDatainjectionCommonInjectionLib
     * Log event into the history
     *
     * @param object $item the item to log
-    * @param boolean $add true if it's an add, false if it's an update
+    * @param bool $add true if it's an add, false if it's an update
     *
     * @return void nothing
    **/
@@ -2347,6 +2371,22 @@ class PluginDatainjectionCommonInjectionLib
                 $message = __('Import not allowed', 'datainjection');
                 break;
 
+            case self::ERROR_NAME_NOT_MAPPED:
+                $message = __('Item not created: the following field is not mapped or is empty', 'datainjection');
+                break;
+
+            case self::WARNING_NETPORT_NOT_FOUND:
+                $message = __('Network port not connected: no matching network equipment port found', 'datainjection');
+                break;
+
+            case self::WARNING_NETPORT_AMBIGUOUS:
+                $message = __('Network port not connected: several network equipment ports match', 'datainjection');
+                break;
+
+            case self::WARNING_NETPORT_ALREADY_CONNECTED:
+                $message = __('Network port not connected: the network equipment port is already connected to another port', 'datainjection');
+                break;
+
             case self::FAILED:
                 $message = __('Import failed', 'datainjection');
                 break;
@@ -2385,7 +2425,7 @@ class PluginDatainjectionCommonInjectionLib
     public static function addToSearchOptions(
         array $type_searchOptions,
         array $options,
-        PluginDatainjectionInjectionInterface $injectionClass
+        PluginDatainjectionInjectionInterface $injectionClass,
     ) {
 
         self::addTemplateSearchOptions($injectionClass, $type_searchOptions);
@@ -2545,17 +2585,22 @@ class PluginDatainjectionCommonInjectionLib
     * @param PluginDatainjectionInjectionInterface $injectionClass the injection class to use
     * @param  $add true if an item is created, false if it's an update
     *
-    * @return bool false if the injection class rejected a post-processing step
+    * @return int|null log code of the rejected post-processing step, null if none
    **/
-    private function processAfterInsertOrUpdate($injectionClass, $add = true)
+    private function processAfterInsertOrUpdate($injectionClass, $add = true): ?int
     {
 
         //If itemtype implements special process after type injection
         if (method_exists($injectionClass, 'processAfterInsertOrUpdate')) {
-            //Invoke it
-            return $injectionClass->processAfterInsertOrUpdate($this->values, $add, $this->rights) !== false;
+            //Invoke it: false is a generic failure, an int is the log code explaining it
+            $result = $injectionClass->processAfterInsertOrUpdate($this->values, $add, $this->rights);
+            if (is_int($result)) {
+                return $result;
+            }
+
+            return $result === false ? self::WARNING : null;
         }
 
-        return true;
+        return null;
     }
 }

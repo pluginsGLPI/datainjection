@@ -30,14 +30,14 @@
 
 namespace GlpiPlugin\Datainjection\Tests\Unit;
 
-use PHPUnit\Framework\Attributes\DataProvider;
-use PluginDatainjectionComputerInjection;
-use PluginDatainjectionITILCategoryInjection;
+use Computer;
 use Glpi\Tests\DbTestCase;
 use Group;
 use ITILCategory;
-use Computer;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PluginDatainjectionCommonInjectionLib;
+use PluginDatainjectionComputerInjection;
+use PluginDatainjectionITILCategoryInjection;
 
 final class GroupInjectionTest extends DbTestCase
 {
@@ -84,7 +84,7 @@ final class GroupInjectionTest extends DbTestCase
         string $group_field,
         array $injected_data,
         array $mandatory_fields,
-        bool $expect_group
+        bool $expect_group,
     ): void {
         $group = null;
         if ($expect_group) {
@@ -165,7 +165,7 @@ final class GroupInjectionTest extends DbTestCase
     public function testGroupIsAssignedToInjectedNonAssignableItem(
         array $injected_data,
         array $mandatory_fields,
-        bool $expect_group
+        bool $expect_group,
     ): void {
         $group = null;
         if ($expect_group) {
@@ -250,7 +250,7 @@ final class GroupInjectionTest extends DbTestCase
     public function testGroupIsUpdatedOnExistingAssignableItem(
         string $group_field,
         array $injected_data,
-        array $mandatory_fields
+        array $mandatory_fields,
     ): void {
         $group = $this->createItem(Group::class, [
             'name'         => 'GG_ADC_DRN_EDL',

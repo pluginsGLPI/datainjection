@@ -30,8 +30,8 @@
 
 use Glpi\Application\View\TemplateRenderer;
 
-use function Safe\ob_start;
 use function Safe\ob_get_clean;
+use function Safe\ob_start;
 
 class PluginDatainjectionInfo extends CommonDBTM
 {
@@ -73,15 +73,35 @@ class PluginDatainjectionInfo extends CommonDBTM
     }
 
     /**
+     * Name of the form input: keyed by itemtype too, as several itemtypes may share a field name
+     */
+    public function getInputName(): string
+    {
+        return 'info[' . $this->getInfosType() . '][' . $this->getValue() . ']';
+    }
+
+    /**
+     * Value filled by the user for this info, as posted by the form built with getInputName()
+     *
+     * @param array $values infos posted by the user
+     *
+     * @return mixed|null
+     */
+    public function getPostedValue(array $values)
+    {
+        return $values[$this->getInfosType()][$this->getValue()] ?? null;
+    }
+
+    /**
     * @param PluginDatainjectionModel $model     PluginDatainjectionModel object
-    * @param boolean $canedit   (false by default)
+    * @param bool $canedit   (false by default)
    **/
     public static function showAddInfo(PluginDatainjectionModel $model, $canedit = false)
     {
 
         if ($canedit) {
-            echo "<form method='post' name='form' id='form' action='" .
-             Toolbox::getItemTypeFormURL(self::class) . "'>";
+            echo "<form method='post' name='form' id='form' action='"
+             . Toolbox::getItemTypeFormURL(self::class) . "'>";
             echo "<table class='tab_cadre_fixe'>";
             echo "<tr>";
             echo "<th>" . __s('Tables', 'datainjection') . "</th>";
@@ -309,7 +329,7 @@ class PluginDatainjectionInfo extends CommonDBTM
             $info->fields['value'],
         );
         if ($option) {
-            echo "<td>" . $option['name'] . "</td><td>";
+            echo "<td>" . htmlescape(sprintf(__('%1$s - %2$s'), $info->fields['itemtype']::getTypeName(1), $option['name'])) . "</td><td>";
             self::showAdditionalInformation($info, $option, $injectionClass, $values);
             echo "</td>";
         }
@@ -327,16 +347,11 @@ class PluginDatainjectionInfo extends CommonDBTM
         PluginDatainjectionInfo $info,
         $option,
         $injectionClass,
-        $values = []
+        $values = [],
     ) {
 
-        $name = "info[" . $option['linkfield'] . "]";
-
-        if (isset($_SESSION['datainjection']['infos'][$option['linkfield']])) {
-            $value = $_SESSION['datainjection']['infos'][$option['linkfield']];
-        } else {
-            $value = '';
-        }
+        $name  = $info->getInputName();
+        $value = $info->getPostedValue($_SESSION['datainjection']['infos'] ?? []) ?? '';
 
         switch ($option['displaytype']) {
             case 'text':
