@@ -1599,7 +1599,10 @@ class PluginDatainjectionCommonInjectionLib
 
         //Add entities_id if itemtype can be assigned to an entity
         if ($injectionClass->isEntityAssign()) {
-            $entities_id = $this->getValueByItemtypeAndName($this->primary_type, 'entities_id');
+            //An entity belongs to itself: its entities_id field holds its parent
+            $entities_id = $this->primary_type === Entity::class
+                ? $id
+                : $this->getValueByItemtypeAndName($this->primary_type, 'entities_id');
             $this->setValueForItemtype($itemtype, 'entities_id', $entities_id);
         }
 
@@ -1806,6 +1809,27 @@ class PluginDatainjectionCommonInjectionLib
     }
 
 
+    public static function isFieldsContainerItemtype(string $itemtype): bool
+    {
+        return is_a($itemtype, 'PluginFieldsAbstractContainerInstance', true);
+    }
+
+
+    public static function canWriteFieldsContainer(string $itemtype): bool
+    {
+        /** @var DBmysql $DB */
+        global $DB;
+
+        //The generated table stores its container id as the column default
+        $columns = $DB->listFields(getTableForItemType($itemtype));
+
+        return class_exists('PluginFieldsProfile') && PluginFieldsProfile::getRightOnContainer(
+            (int) $_SESSION['glpiactiveprofile']['id'],
+            (int) ($columns['plugin_fields_containers_id']['Default'] ?? 0),
+        ) > READ;
+    }
+
+
     /**
     * Perform data injection into GLPI DB
     *
@@ -1823,7 +1847,13 @@ class PluginDatainjectionCommonInjectionLib
         //Skipped without a session, as the lib is also a programmatic entry point for scripts.
         if (Session::getLoginUserID() !== false) {
             $input = is_array($values) ? $values : [];
-            if ($add) {
+            //Fields values are only written once the parent item passed its own check
+            if (self::isFieldsContainerItemtype($item::class)) {
+                if (!self::canWriteFieldsContainer($item::class)) {
+                    $this->addCheckWarning($add ? self::ERROR_CANNOT_IMPORT : self::ERROR_CANNOT_UPDATE, $item::class);
+                    return 0;
+                }
+            } elseif ($add) {
                 //Passing the input to can() makes the check cover the target entity
                 if (!$item->can(-1, CREATE, $input)) {
                     $this->addCheckWarning(self::ERROR_CANNOT_IMPORT, $item::class);
