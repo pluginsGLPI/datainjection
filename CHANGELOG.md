@@ -19,6 +19,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Fixed
 
 - Fix models mapped to additional fields (Fields plugin) becoming inaccessible and their values being rejected on injection
+- Fix entity injection failing when additional fields (Fields plugin) are mapped
 - CI: use the GLPI shared php-cs-fixer configuration and apply its coding style
 
 ## [2.16.0] - 2026-10-05
