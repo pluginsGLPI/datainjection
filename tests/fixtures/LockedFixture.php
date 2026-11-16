@@ -75,3 +75,34 @@ class PluginDatainjectionLockedFixtureInjection extends PluginDatainjectionLocke
         return [];
     }
 }
+
+class PluginDatainjectionLegacyFixture extends CommonDBTM
+{
+    public static $rightname = 'computer';
+}
+
+// Injection class not declaring its own rights, as in Fields <= 1.24.6
+class PluginDatainjectionLegacyFixtureInjection extends PluginDatainjectionLegacyFixture implements PluginDatainjectionInjectionInterface
+{
+    public static $rightname = 'plugin_datainjection_model';
+
+    public function isPrimaryType()
+    {
+        return false;
+    }
+
+    public function connectedTo()
+    {
+        return [Computer::class];
+    }
+
+    public function getOptions($primary_type = '')
+    {
+        return [];
+    }
+
+    public function addOrUpdateObject($values = [], $options = [])
+    {
+        return [];
+    }
+}

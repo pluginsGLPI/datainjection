@@ -398,13 +398,20 @@ class PluginDatainjectionCommonInjectionLib
     *
     * Plugin itemtypes may define the rights that apply to injection in their injection class
     * (e.g. fields containers values, which cannot be written directly)
+    * Injection classes that do not declare their own rights (e.g. Fields <= 1.24.6, whose rightname
+    * is plugin_datainjection_model) fall back on the itemtype rights
     *
     * @param string $itemtype  the itemtype
     */
     public static function getItemForRightCheck(string $itemtype): CommonDBTM
     {
         $injectionClass = ucfirst($itemtype) . 'Injection';
-        if (isPluginItemType($itemtype) && is_a($injectionClass, CommonDBTM::class, true)) {
+        if (
+            isPluginItemType($itemtype)
+            && is_a($injectionClass, CommonDBTM::class, true)
+            && strcasecmp((new ReflectionMethod($injectionClass, 'canCreate'))->getDeclaringClass()->getName(), $injectionClass) === 0
+            && strcasecmp((new ReflectionMethod($injectionClass, 'canUpdate'))->getDeclaringClass()->getName(), $injectionClass) === 0
+        ) {
             return new $injectionClass();
         }
 

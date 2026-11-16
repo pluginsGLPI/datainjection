@@ -35,6 +35,8 @@ use Group;
 use Group_User;
 use PluginDatainjectionCommonInjectionLib;
 use PluginDatainjectionInfo;
+use PluginDatainjectionLegacyFixture;
+use PluginDatainjectionLegacyFixtureInjection;
 use PluginDatainjectionLockedFixture;
 use PluginDatainjectionLockedFixtureInjection;
 use PluginDatainjectionMapping;
@@ -169,6 +171,38 @@ final class ModelCheckRightTest extends DbTestCase
         $this->assertTrue(PluginDatainjectionModel::checkRightOnModel($models_id));
 
         PluginDatainjectionLockedFixtureInjection::$can_write = false;
+        $this->assertFalse(PluginDatainjectionModel::checkRightOnModel($models_id));
+    }
+
+    public function testPluginInjectionClassWithoutOwnRightsFallsBackOnItemtype(): void
+    {
+        require_once __DIR__ . '/../fixtures/LockedFixture.php';
+
+        $this->login();
+
+        $models_id = $this->createModel();
+        $this->createItem(PluginDatainjectionInfo::class, [
+            'models_id'    => $models_id,
+            'itemtype'     => PluginDatainjectionLegacyFixture::class,
+            'value'        => 'name',
+            'is_mandatory' => 0,
+        ]);
+
+        $this->assertInstanceOf(
+            PluginDatainjectionLegacyFixture::class,
+            PluginDatainjectionCommonInjectionLib::getItemForRightCheck(PluginDatainjectionLegacyFixture::class),
+        );
+        $this->assertNotInstanceOf(
+            PluginDatainjectionLegacyFixtureInjection::class,
+            PluginDatainjectionCommonInjectionLib::getItemForRightCheck(PluginDatainjectionLegacyFixture::class),
+        );
+
+        //No right on the model itself, as for non-admin profiles
+        $_SESSION['glpiactiveprofile']['plugin_datainjection_model'] = READ;
+        $_SESSION['glpiactiveprofile'][Computer::$rightname] = ALLSTANDARDRIGHT;
+        $this->assertTrue(PluginDatainjectionModel::checkRightOnModel($models_id));
+
+        $_SESSION['glpiactiveprofile'][Computer::$rightname] = READ;
         $this->assertFalse(PluginDatainjectionModel::checkRightOnModel($models_id));
     }
 }
