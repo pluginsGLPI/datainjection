@@ -69,9 +69,9 @@ trait PluginFieldsStubInjectionTrait
 
 abstract class PluginFieldsAbstractContainerInstance extends CommonDBChild
 {
-    public static $itemtype = 'itemtype';
+    public static string $itemtype = 'itemtype';
 
-    public static $items_id = 'items_id';
+    public static string $items_id = 'items_id';
 
     public static function canCreate(): bool
     {
@@ -116,14 +116,14 @@ class PluginFieldsComputerstub extends PluginFieldsAbstractContainerInstance
 
     public const VALUE_FIELD = 'stubvaluefield';
 
-    public static $rightname = 'computer';
+    public static string $rightname = 'computer';
 }
 
 class PluginFieldsComputerstubInjection extends PluginFieldsComputerstub implements PluginDatainjectionInjectionInterface
 {
     use PluginFieldsStubInjectionTrait;
 
-    public static $rightname = 'plugin_datainjection_model';
+    public static string $rightname = 'plugin_datainjection_model';
 
     public function connectedTo(): array
     {
@@ -137,14 +137,14 @@ class PluginFieldsEntitystub extends PluginFieldsAbstractContainerInstance
 
     public const VALUE_FIELD = 'stubvaluefield';
 
-    public static $rightname = 'entity';
+    public static string $rightname = 'entity';
 }
 
 class PluginFieldsEntitystubInjection extends PluginFieldsEntitystub implements PluginDatainjectionInjectionInterface
 {
     use PluginFieldsStubInjectionTrait;
 
-    public static $rightname = 'plugin_datainjection_model';
+    public static string $rightname = 'plugin_datainjection_model';
 
     public function connectedTo(): array
     {
