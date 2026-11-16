@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-13 04:47+0000\n"
+"POT-Creation-Date: 2026-11-16 04:29+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -288,77 +288,77 @@ msgstr ""
 msgid "Domain name"
 msgstr ""
 
-#: inc/commoninjectionlib.class.php:291
+#: inc/commoninjectionlib.class.php:293
 msgid "No mandatory field is defined for this model"
 msgstr ""
 
-#: inc/commoninjectionlib.class.php:2289
+#: inc/commoninjectionlib.class.php:2320
 msgid "Add from CSV file"
 msgstr ""
 
-#: inc/commoninjectionlib.class.php:2289
+#: inc/commoninjectionlib.class.php:2320
 msgid "Update from CSV file"
 msgstr ""
 
-#: inc/commoninjectionlib.class.php:2328
+#: inc/commoninjectionlib.class.php:2359
 msgid "No right to import data"
 msgstr ""
 
-#: inc/commoninjectionlib.class.php:2332
+#: inc/commoninjectionlib.class.php:2363
 msgid "No right to update data"
 msgstr ""
 
-#: inc/commoninjectionlib.class.php:2336
+#: inc/commoninjectionlib.class.php:2367
 msgid "Size of the inserted value is to expansive"
 msgstr ""
 
-#: inc/commoninjectionlib.class.php:2340
+#: inc/commoninjectionlib.class.php:2371
 msgid "Import not allowed"
 msgstr ""
 
-#: inc/commoninjectionlib.class.php:2344
+#: inc/commoninjectionlib.class.php:2375
 msgid "Item not created: the following field is not mapped or is empty"
 msgstr ""
 
-#: inc/commoninjectionlib.class.php:2348
+#: inc/commoninjectionlib.class.php:2379
 msgid "Network port not connected: no matching network equipment port found"
 msgstr ""
 
-#: inc/commoninjectionlib.class.php:2352
+#: inc/commoninjectionlib.class.php:2383
 msgid "Network port not connected: several network equipment ports match"
 msgstr ""
 
-#: inc/commoninjectionlib.class.php:2356
+#: inc/commoninjectionlib.class.php:2387
 msgid ""
 "Network port not connected: the network equipment port is already connected "
 "to another port"
 msgstr ""
 
-#: inc/commoninjectionlib.class.php:2360
+#: inc/commoninjectionlib.class.php:2391
 msgid "Import failed"
 msgstr ""
 
-#: inc/commoninjectionlib.class.php:2364
+#: inc/commoninjectionlib.class.php:2395
 msgid "At least one mandatory field is not present"
 msgstr ""
 
-#: inc/commoninjectionlib.class.php:2368
+#: inc/commoninjectionlib.class.php:2399
 msgid "Data to insert are correct"
 msgstr ""
 
-#: inc/commoninjectionlib.class.php:2372
+#: inc/commoninjectionlib.class.php:2403
 msgid "One data is not the good type"
 msgstr ""
 
-#: inc/commoninjectionlib.class.php:2376
+#: inc/commoninjectionlib.class.php:2407
 msgid "Warning"
 msgstr ""
 
-#: inc/commoninjectionlib.class.php:2380
+#: inc/commoninjectionlib.class.php:2411
 msgid "Data not found"
 msgstr ""
 
-#: inc/commoninjectionlib.class.php:2384 inc/model.class.php:1383
+#: inc/commoninjectionlib.class.php:2415 inc/model.class.php:1383
 msgid "Undetermined"
 msgstr ""
 
@@ -422,11 +422,11 @@ msgstr ""
 msgid "Array of unsuccessful injections"
 msgstr ""
 
-#: inc/injectiontype.class.php:148
+#: inc/injectiontype.class.php:156
 msgid "-------Choose a table-------"
 msgstr ""
 
-#: inc/injectiontype.class.php:220
+#: inc/injectiontype.class.php:228
 msgid "-------Choose a field-------"
 msgstr ""
 
