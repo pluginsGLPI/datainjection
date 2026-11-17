@@ -29,6 +29,7 @@
  */
 
 use Glpi\Application\View\TemplateRenderer;
+use Glpi\DBAL\QueryExpression;
 
 use function Safe\ob_get_clean;
 use function Safe\ob_start;
@@ -148,15 +149,18 @@ class PluginDatainjectionMapping extends CommonDBTM
         global $DB;
 
         $several = [];
-        $query  = "SELECT `value`,
-                        COUNT(*) AS counter
-                 FROM `glpi_plugin_datainjection_mappings`
-                 WHERE `models_id` = '" . $models_id . "'
-                       AND `value` NOT IN ('none')
-                 GROUP BY `value`
-                 HAVING `counter` > 1";
+        $iterator = $DB->request([
+            'SELECT'  => ['value', new QueryExpression('COUNT(*) AS counter')],
+            'FROM'    => 'glpi_plugin_datainjection_mappings',
+            'WHERE'   => [
+                'models_id' => (int) $models_id,
+                'NOT'       => ['value' => 'none'],
+            ],
+            'GROUPBY' => 'value',
+            'HAVING'  => ['counter' => ['>', 1]],
+        ]);
 
-        foreach ($DB->doQuery($query) as $mapping) {
+        foreach ($iterator as $mapping) {
             $several[] = $mapping['value'];
         }
 
@@ -173,11 +177,13 @@ class PluginDatainjectionMapping extends CommonDBTM
         global $DB;
 
         $mappings = [];
-        $query    = "SELECT `name`
-                   FROM `glpi_plugin_datainjection_mappings`
-                   WHERE `models_id` = '" . $models_id . "'
-                   ORDER BY `rank` ASC";
-        foreach ($DB->doQuery($query) as $data) {
+        $iterator = $DB->request([
+            'SELECT' => 'name',
+            'FROM'   => 'glpi_plugin_datainjection_mappings',
+            'WHERE'  => ['models_id' => (int) $models_id],
+            'ORDER'  => 'rank ASC',
+        ]);
+        foreach ($iterator as $data) {
             $mappings[] = $data['name'];
         }
 

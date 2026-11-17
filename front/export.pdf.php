@@ -30,4 +30,7 @@
 
 Session::checkRight(PluginDatainjectionClientInjection::$rightname, READ);
 
-PluginDatainjectionModel::exportAsPDF($_GET['models_id']);
+$models_id = (int) $_GET['models_id'];
+(new PluginDatainjectionModel())->check($models_id, READ);
+
+PluginDatainjectionModel::exportAsPDF($models_id);

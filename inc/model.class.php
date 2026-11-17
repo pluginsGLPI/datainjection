@@ -1500,8 +1500,8 @@ class PluginDatainjectionModel extends CommonDBTM
                 sprintf(
                     __('%1$s (%2$s)'),
                     __('Data injection report', 'datainjection') . ' - <b>' .
-                                 PluginDatainjectionSession::getParam('file_name') . '</b>',
-                    $model->getName(),
+                                 htmlescape((string) PluginDatainjectionSession::getParam('file_name')) . '</b>',
+                    htmlescape($model->getName()),
                 ),
             );
             $pdf->newPage();

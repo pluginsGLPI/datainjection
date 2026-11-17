@@ -360,9 +360,9 @@ class PluginDatainjectionInfo extends CommonDBTM
                     $value = ($option['default'] ?? '');
                 }
 
-                echo sprintf("<input type='text' name='%s' value='%s'", $name, $value);
+                echo sprintf("<input type='text' name='%s' value='%s'", htmlescape($name), htmlescape((string) $value));
                 if (isset($option['size'])) {
-                    echo " size='" . $option['size'] . "'";
+                    echo " size='" . (int) $option['size'] . "'";
                 }
 
                 echo ">";
@@ -406,7 +406,7 @@ class PluginDatainjectionInfo extends CommonDBTM
                 break;
 
             case 'multiline_text':
-                echo sprintf("<textarea cols='45' rows='5' name='%s'>%s</textarea>", $name, $value);
+                echo sprintf("<textarea cols='45' rows='5' name='%s'>%s</textarea>", htmlescape($name), htmlescape((string) $value));
                 break;
 
             case 'dropdown_integer':
@@ -491,13 +491,14 @@ class PluginDatainjectionInfo extends CommonDBTM
 
         $values    = [0 => Dropdown::EMPTY_VALUE];
 
-        $sql = "SELECT `id`, `template_name`
-              FROM `" . $table . "`
-              WHERE `is_template`=1 " .
-                  getEntitiesRestrictRequest(' AND ', $table) .
-           "ORDER BY `template_name`";
+        $iterator = $DB->request([
+            'SELECT' => ['id', 'template_name'],
+            'FROM'   => $table,
+            'WHERE'  => ['is_template' => 1] + getEntitiesRestrictCriteria($table),
+            'ORDER'  => 'template_name',
+        ]);
 
-        foreach ($DB->doQuery($sql) as $data) {
+        foreach ($iterator as $data) {
             $values[$data['id']] = $data['template_name'];
         }
 

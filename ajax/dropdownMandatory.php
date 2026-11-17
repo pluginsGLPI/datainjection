@@ -34,5 +34,5 @@ if (strpos((string) $_SERVER['PHP_SELF'], "dropdownMandatory.php")) {
     Html::header_nocache();
 }
 
-Session::checkCentralAccess();
+Session::checkRight(PluginDatainjectionModel::$rightname, READ);
 PluginDatainjectionInjectionType::showMandatoryCheckbox($_POST);

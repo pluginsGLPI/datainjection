@@ -131,4 +131,23 @@ final class AdditionalInformationTest extends DbTestCase
         self::assertStringContainsString("name='info[DeviceProcessor][designation]'", $html);
         self::assertStringContainsString(DeviceProcessor::getTypeName(1) . ' - ', $html);
     }
+
+    public function testPostedValueIsEscaped(): void
+    {
+        $this->login();
+
+        $info = new PluginDatainjectionInfo();
+        $info->fields = ['itemtype' => 'DeviceProcessor', 'value' => 'designation', 'is_mandatory' => 0];
+
+        $_SESSION['datainjection']['infos'] = ['DeviceProcessor' => ['designation' => "'><script>alert(1)</script>"]];
+
+        ob_start();
+        PluginDatainjectionInfo::displayAdditionalInformation($info);
+        $html = ob_get_clean();
+
+        unset($_SESSION['datainjection']['infos']);
+
+        self::assertStringNotContainsString('<script>', $html);
+        self::assertStringContainsString("value='&#039;&gt;&lt;script&gt;", $html);
+    }
 }

@@ -5,6 +5,18 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [Unreleased]
+
+### Fixed
+
+- Fix handling of additional information values in the injection form
+- Fix model checks on the injection upload and the PDF report export
+- Fix rights used by the model field dropdowns
+- Fix CSV export of headers and of the model sample file
+- Fix file name display in the PDF report header
+- Fix temporary error file not being removed when its download fails
+- Use the query builder for the remaining queries
+
 ## [2.15.13] - 2026-11-13
 
 ### Fixed

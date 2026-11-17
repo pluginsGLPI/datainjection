@@ -43,7 +43,7 @@ if (isset($_SESSION['datainjection']['go'])) {
     PluginDatainjectionClientInjection::showInjectionForm($model, $_SESSION['glpiactive_entity']);
 } elseif (isset($_POST['upload'])) {
     $model = new PluginDatainjectionModel();
-    $model->can($_POST['id'], READ);
+    $model->check((int) $_POST['id'], READ);
     $_SESSION['datainjection']['infos'] = ($_POST['info'] ?? []);
 
     //If additional informations provided : check if mandatory infos are present
