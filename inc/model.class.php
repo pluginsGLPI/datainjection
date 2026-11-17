@@ -1169,8 +1169,13 @@ class PluginDatainjectionModel extends CommonDBTM
                     ),
                 );
                 $name_from_db   = trim(mb_strtoupper((string) $mapping->getName(), 'UTF-8'));
+                // Sample and error files are exported with formula-escaped headers
+                $escaped_name_from_db = trim(mb_strtoupper(
+                    (string) PluginDatainjectionClientInjection::escapeCsvFormula((string) $mapping->getName()),
+                    'UTF-8',
+                ));
 
-                if ($name_from_db !== $name_from_file) {
+                if ($name_from_db !== $name_from_file && $escaped_name_from_db !== $name_from_file) {
                     if ($error['error_message'] == '') {
                         $error['error_message'] = __('At least one column is incorrect', 'datainjection');
                     }
@@ -1499,9 +1504,9 @@ class PluginDatainjectionModel extends CommonDBTM
             $pdf->setHeader(
                 sprintf(
                     __('%1$s (%2$s)'),
-                    __('Data injection report', 'datainjection') . ' - <b>' .
-                                 htmlescape((string) PluginDatainjectionSession::getParam('file_name')) . '</b>',
-                    htmlescape($model->getName()),
+                    __('Data injection report', 'datainjection') . ' - '
+                        . PluginDatainjectionSession::getParam('file_name'),
+                    $model->getName(),
                 ),
             );
             $pdf->newPage();
