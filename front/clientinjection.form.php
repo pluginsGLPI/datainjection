@@ -28,6 +28,8 @@
  * -------------------------------------------------------------------------
  */
 
+use Glpi\Exception\Http\BadRequestHttpException;
+
 Session::checkRight("plugin_datainjection_use", READ);
 
 Html::header(
@@ -43,7 +45,12 @@ if (isset($_SESSION['datainjection']['go'])) {
     PluginDatainjectionClientInjection::showInjectionForm($model, $_SESSION['glpiactive_entity']);
 } elseif (isset($_POST['upload'])) {
     $model = new PluginDatainjectionModel();
-    $model->check((int) $_POST['id'], READ);
+    $models_id = (int) ($_POST['id'] ?? 0);
+    if ($models_id <= 0) {
+        throw new BadRequestHttpException();
+    }
+
+    $model->check($models_id, READ);
     $_SESSION['datainjection']['infos'] = ($_POST['info'] ?? []);
 
     //If additional informations provided : check if mandatory infos are present

@@ -28,9 +28,15 @@
  * -------------------------------------------------------------------------
  */
 
+use Glpi\Exception\Http\BadRequestHttpException;
+
 Session::checkRight(PluginDatainjectionClientInjection::$rightname, READ);
 
-$models_id = (int) $_GET['models_id'];
+$models_id = (int) ($_GET['models_id'] ?? 0);
+if ($models_id <= 0) {
+    throw new BadRequestHttpException();
+}
+
 (new PluginDatainjectionModel())->check($models_id, READ);
 
 PluginDatainjectionModel::exportAsPDF($models_id);
