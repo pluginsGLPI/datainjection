@@ -28,6 +28,8 @@
  * -------------------------------------------------------------------------
  */
 
+use function Safe\session_write_close;
+
 // Direct access to file
 if (strpos((string) $_SERVER['PHP_SELF'], "dropdownChooseField.php")) {
     header("Content-Type: text/html; charset=UTF-8");
@@ -35,4 +37,6 @@ if (strpos((string) $_SERVER['PHP_SELF'], "dropdownChooseField.php")) {
 }
 
 Session::checkCentralAccess();
+// Reads the session only: release it so that the calls of a tab run in parallel
+session_write_close();
 PluginDatainjectionInjectionType::dropdownFields($_POST);
