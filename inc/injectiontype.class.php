@@ -493,7 +493,7 @@ class PluginDatainjectionInjectionType
                     foreach ($options as $option) {
                         if (
                             isset($option['table'])
-                            && ($option['table'] == getItemTypeForTable($data['itemtype']))
+                            && ($option['table'] == getTableForItemType($data['itemtype']))
                             && ($option['linkfield'] == $data['value'])
                             && ($option['displaytype'] != 'multiline_text')
                         ) {
