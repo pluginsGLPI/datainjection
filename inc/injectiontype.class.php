@@ -31,6 +31,8 @@ use Glpi\Exception\Http\HttpException;
 
 use function Safe\json_decode;
 use function Safe\json_encode;
+use function Safe\ob_get_clean;
+use function Safe\ob_start;
 use function Safe\preg_replace;
 
 class PluginDatainjectionInjectionType
@@ -112,12 +114,89 @@ class PluginDatainjectionInjectionType
     *
     * @param mixed $mapping_or_info
     * @param array $options            array
+    * @param bool  $load_fields        load the fields dropdown through AJAX on page load
    **/
-    public static function dropdownLinkedTypes($mapping_or_info, $options = [])
+    public static function dropdownLinkedTypes($mapping_or_info, $options = [], bool $load_fields = true)
+    {
+        [$p, $values] = self::getLinkedTypesParams($mapping_or_info, $options);
+
+        $mappings_id = $mapping_or_info->fields['id'];
+
+        $rand = Dropdown::showFromArray(
+            "data[" . $mappings_id . "][itemtype]",
+            $values,
+            ['value' => $p['itemtype']],
+        );
+
+        $p['itemtype'] = '__VALUE__';
+        $di_base_url   = plugin_datainjection_geturl();
+        $url_field     = $di_base_url . "ajax/dropdownChooseField.php";
+        $toobserve     = "dropdown_data[" . $mapping_or_info->getID() . ('][itemtype]' . $rand);
+        $toupdate      = "span_field_" . $mappings_id;
+        if ($load_fields) {
+            Ajax::updateItem($toupdate, $url_field, $p, $toobserve);
+        }
+
+        Ajax::updateItemOnSelectEvent($toobserve, $toupdate, $url_field, $p);
+        return $rand;
+    }
+
+
+    /**
+    * Get the HTML of the fields dropdown and of the mandatory checkbox of a mapping or an info,
+    * as the AJAX calls of dropdownLinkedTypes() and dropdownFields() load them
+    *
+    * @param mixed $mapping_or_info
+    * @param array $options            array
+    *
+    * @return array{field: string, mandatory: string}
+   **/
+    public static function getFieldsHtml($mapping_or_info, $options = []): array
+    {
+        [$p, $values] = self::getLinkedTypesParams($mapping_or_info, $options);
+
+        //Value the browser selects in the itemtype dropdown
+        $p['itemtype'] = self::getSelectedValue($values, $p['itemtype']);
+
+        ob_start();
+        $p['value'] = self::dropdownFields($p, false);
+        $field_html = ob_get_clean();
+
+        ob_start();
+        self::showMandatoryCheckbox($p + ['need_decode' => true]);
+        $mandatory_html = ob_get_clean();
+
+        return [
+            'field'     => $field_html,
+            'mandatory' => $mandatory_html,
+        ];
+    }
+
+
+    /**
+     * Value selected by the browser in a dropdown: the given value, or the first one if it is not in the list
+     *
+     * @param int|string $value
+     * @return int|string
+     **/
+    private static function getSelectedValue(array $values, $value)
+    {
+        return isset($values[$value]) ? $value : array_key_first($values);
+    }
+
+
+    /**
+    * Get the parameters and the values of the linked types dropdown
+    *
+    * @param mixed $mapping_or_info
+    * @param array $options            array
+    *
+    * @return array{0: array, 1: array}
+   **/
+    private static function getLinkedTypesParams($mapping_or_info, $options = []): array
     {
         /** @var array[mixed] $INJECTABLE_TYPES */
-        /** @var array $CFG_GLPI */
-        global $INJECTABLE_TYPES, $CFG_GLPI;
+        global $INJECTABLE_TYPES;
 
         getTypesToInject(); // populate $INJECTABLE_TYPES
 
@@ -134,7 +213,6 @@ class PluginDatainjectionInjectionType
             $p[$key] = $value;
         }
 
-        $mappings_id = $mapping_or_info->fields['id'];
         $values      = [];
 
         if (
@@ -150,6 +228,12 @@ class PluginDatainjectionInjectionType
         //Add primary_type to the list of availables types
         if (!is_a($p['primary_type'], CommonDBTM::class, true)) {
             throw new HttpException(500, 'Class ' . $p['primary_type'] . ' is not a valid class');
+        }
+
+        //The linked types are the same for all the rows of a model: computed once per request
+        static $values_by_primary_type = [];
+        if (isset($values_by_primary_type[$p['primary_type']])) {
+            return [$p, $values_by_primary_type[$p['primary_type']]];
         }
 
         $type                       = new $p['primary_type']();
@@ -169,33 +253,24 @@ class PluginDatainjectionInjectionType
         }
 
         asort($values);
+        $values_by_primary_type[$p['primary_type']] = $values;
 
-        $rand = Dropdown::showFromArray(
-            "data[" . $mappings_id . "][itemtype]",
-            $values,
-            ['value' => $p['itemtype']],
-        );
-
-        $p['itemtype'] = '__VALUE__';
-        $di_base_url   = plugin_datainjection_geturl();
-        $url_field     = $di_base_url . "ajax/dropdownChooseField.php";
-        $toobserve     = "dropdown_data[" . $mapping_or_info->getID() . ('][itemtype]' . $rand);
-        $toupdate      = "span_field_" . $mappings_id;
-        Ajax::updateItem($toupdate, $url_field, $p, $toobserve);
-        Ajax::updateItemOnSelectEvent($toobserve, $toupdate, $url_field, $p);
-        return $rand;
+        return [$p, $values];
     }
 
 
     /**
-    * @param array $options   array
+    * @param array $options          array
+    * @param bool  $load_mandatory   load the mandatory checkbox through AJAX on page load
+    *
+    * @return int|string the value selected in the fields dropdown
    **/
-    public static function dropdownFields($options = [])
+    public static function dropdownFields($options = [], bool $load_mandatory = true)
     {
         /** @var array $CFG_GLPI */
         global $CFG_GLPI;
 
-        $used                 = [];
+        $used                = [];
         $p['itemtype']        = self::NO_VALUE;
         $p['primary_type']    = '';
         $p['mapping_or_info'] = [];
@@ -228,9 +303,16 @@ class PluginDatainjectionInjectionType
                 $mapping_value = $mapping_or_info['value'];
             }
 
-            $injectionClass = PluginDatainjectionCommonInjectionLib::getInjectionClassInstance($p['itemtype']);
+            //Search options are the same for all the rows of a model: computed once per request
+            static $search_options_cache = [];
+            $cache_key = $p['itemtype'] . '|' . $p['primary_type'];
+            if (!isset($search_options_cache[$cache_key])) {
+                $injectionClass = PluginDatainjectionCommonInjectionLib::getInjectionClassInstance($p['itemtype']);
+                $search_options_cache[$cache_key] = $injectionClass->getOptions($p['primary_type']);
+            }
 
-            foreach ($injectionClass->getOptions($p['primary_type']) as $option) {
+            $search_options = $search_options_cache[$cache_key];
+            foreach ($search_options as $option) {
                 //If it's a real option (not a group label) and if field is not blacklisted
                 //and if a linkfield is defined (meaning that the field can be updated)
                 if (
@@ -250,7 +332,7 @@ class PluginDatainjectionInjectionType
                 }
             }
 
-            $used = self::getUsedMappingsOrInfos($p);
+            $used = self::getUsedMappingsOrInfos($p, $search_options);
         }
 
         asort($fields);
@@ -265,18 +347,23 @@ class PluginDatainjectionInjectionType
 
         $p['value'] = '__VALUE__';
         $url = plugin_datainjection_geturl() . "ajax/dropdownMandatory.php";
-        Ajax::updateItem(
-            "span_mandatory_" . $mapping_or_info['id'],
-            $url,
-            $p,
-            "dropdown_data[" . $mapping_or_info['id'] . ('][value]' . $rand),
-        );
+        if ($load_mandatory) {
+            Ajax::updateItem(
+                "span_mandatory_" . $mapping_or_info['id'],
+                $url,
+                $p,
+                "dropdown_data[" . $mapping_or_info['id'] . ('][value]' . $rand),
+            );
+        }
+
         Ajax::updateItemOnSelectEvent(
             "dropdown_data[" . $mapping_or_info['id'] . ('][value]' . $rand),
             "span_mandatory_" . $mapping_or_info['id'],
             $url,
             $p,
         );
+
+        return self::getSelectedValue($fields, $mapping_value);
     }
 
 
@@ -356,9 +443,10 @@ class PluginDatainjectionInjectionType
 
 
     /**
-    * @param array $options   array
+    * @param array      $options          array
+    * @param array|null $search_options   search options of the injection class, computed if not given
    **/
-    public static function getUsedMappingsOrInfos($options = [])
+    public static function getUsedMappingsOrInfos($options = [], ?array $search_options = null)
     {
         /** @var DBmysql $DB */
         global $DB;
@@ -382,32 +470,45 @@ class PluginDatainjectionInjectionType
             $mapping_or_info = $options['mapping_or_info'];
         }
 
-        $used  = [];
+        //The fields used by the model are the same for all its rows: computed once per request
+        static $used_by_model = [];
+
         $table = (($p['called_by'] == 'PluginDatainjectionMapping') ? "glpi_plugin_datainjection_mappings"
                                                               : "glpi_plugin_datainjection_infos");
+        $cache_key = implode('|', [$table, $mapping_or_info['models_id'], $p['itemtype'], $p['primary_type'], $search_options === null]);
 
-        $datas = getAllDataFromTable($table, ['models_id' => $mapping_or_info['models_id']]);
+        if (!isset($used_by_model[$cache_key])) {
+            $datas = getAllDataFromTable($table, ['models_id' => $mapping_or_info['models_id']]);
 
-        $injectionClass = PluginDatainjectionCommonInjectionLib::getInjectionClassInstance($p['itemtype']);
-        $options        = $injectionClass->getOptions();
+            if ($search_options === null) {
+                $injectionClass = PluginDatainjectionCommonInjectionLib::getInjectionClassInstance($p['itemtype']);
+                $search_options = $injectionClass->getOptions();
+            }
 
-        foreach ($datas as $data) {
-            if ($data['value'] != self::NO_VALUE) {
-                foreach ($options as $option) {
-                    if (
-                        isset($option['table'])
-                        && ($option['table'] == getItemTypeForTable($data['itemtype']))
-                        && ($option['linkfield'] == $data['value'])
-                        && ($option['displaytype'] != 'multiline_text')
-                        && ($mapping_or_info['value'] != $data['value'])
-                    ) {
-                        $used[$option['linkfield']] = $option['linkfield'];
-                        break;
+            $options = $search_options;
+
+            $used_by_model[$cache_key] = [];
+            foreach ($datas as $data) {
+                if ($data['value'] != self::NO_VALUE) {
+                    foreach ($options as $option) {
+                        if (
+                            isset($option['table'])
+                            && ($option['table'] == getTableForItemType($data['itemtype']))
+                            && ($option['linkfield'] == $data['value'])
+                            && ($option['displaytype'] != 'multiline_text')
+                        ) {
+                            $used_by_model[$cache_key][$option['linkfield']] = $option['linkfield'];
+                            break;
+                        }
                     }
                 }
             }
         }
 
-        return $used;
+        //The field of the current row stays available
+        return array_filter(
+            $used_by_model[$cache_key],
+            fn($linkfield): bool => $mapping_or_info['value'] != $linkfield,
+        );
     }
 }

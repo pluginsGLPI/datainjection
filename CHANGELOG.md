@@ -16,6 +16,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Stop flagging a network port injection as partial when no connection to a network equipment port is requested
 - Made several generic warnings more explicit. They explain why the mapping failed.
 - Stop requesting a network port connection when its connection columns are empty
+- Fix the model list, the injection page and the mapping tabs being very slow with many models or mappings
 
 ## [2.15.12] - 2026-10-05
 

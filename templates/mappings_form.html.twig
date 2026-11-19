@@ -52,8 +52,8 @@
          <tr class="tab_bg_1">
             <td class="center">{{ mapping.name }}</td>
             <td class="center">{{ mapping.dropdown_html|raw }}</td>
-            <td class="center"><span id="span_field_{{ mapping.id }}"></span></td>
-            <td class="center"><span id="span_mandatory_{{ mapping.id }}"></span></td>
+            <td class="center"><span id="span_field_{{ mapping.id }}">{{ mapping.field_html|raw }}</span></td>
+            <td class="center"><span id="span_mandatory_{{ mapping.id }}">{{ mapping.mandatory_html|raw }}</span></td>
          </tr>
       {% endfor %}
 
