@@ -65,7 +65,8 @@ class PluginDatainjectionEngine
         //Get the injectionclass associated to the itemtype
         $itemtype       = $this->getModel()->getItemtype();
         $injectionClass = PluginDatainjectionCommonInjectionLib::getInjectionClassInstance($itemtype);
-        $several        = PluginDatainjectionMapping::getSeveralMappedField($this->getModel()->fields['id']);
+        //Computed once when the engine is built, mappings do not change during the injection
+        $several        = $this->getModel()->severaltimes_mapped;
 
         //First of all : transform $line which is an array of values to inject into another array
         //which looks like this :
