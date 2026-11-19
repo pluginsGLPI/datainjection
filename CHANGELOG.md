@@ -5,12 +5,14 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-## [2.15.13] - 2026-11-13
+## [Unreleased]
 
 ### Changed
 
 - Redesign the mappings, additional information, file preview, injection log and profile rights screens
 - Show the mapped and link fields counters, and warn when a field is used both by a mapping and an additional information
+
+## [2.15.13] - 2026-11-13
 
 ### Fixed
 
