@@ -42,6 +42,7 @@ use PluginDatainjectionInfo;
 use PluginDatainjectionMapping;
 use PluginDatainjectionModel;
 use Session;
+use Symfony\Component\DomCrawler\Crawler;
 
 final class AdditionalInformationTest extends DbTestCase
 {
@@ -128,7 +129,7 @@ final class AdditionalInformationTest extends DbTestCase
         PluginDatainjectionInfo::displayAdditionalInformation($info);
         $html = ob_get_clean();
 
-        self::assertStringContainsString("name='info[DeviceProcessor][designation]'", $html);
+        self::assertCount(1, (new Crawler($html))->filter('input[name="info[DeviceProcessor][designation]"]'));
         self::assertStringContainsString(DeviceProcessor::getTypeName(1) . ' - ', $html);
     }
 }

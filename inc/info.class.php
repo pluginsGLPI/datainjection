@@ -256,7 +256,7 @@ class PluginDatainjectionInfo extends CommonDBTM
             $field_html = ob_get_clean();
 
             TemplateRenderer::getInstance()->display('@datainjection/info_additional_information.html.twig', [
-                'name'         => 'info[' . $option['linkfield'] . ']',
+                'name'         => $info->getInputName(),
                 'label'        => sprintf(__('%1$s - %2$s'), $info->fields['itemtype']::getTypeName(1), $option['name']),
                 'field_html'   => $field_html,
                 'is_mandatory' => $info->isMandatory(),
