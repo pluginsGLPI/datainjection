@@ -36,8 +36,29 @@
       </div>
    {% endif %}
 
+<<<<<<< HEAD
    <table class="table table-striped card-table table-hover">
       <thead>
+=======
+   <table class="tab_cadre_fixe">
+      <tr>
+         <th>{{ __('Header of the file', 'datainjection') }}</th>
+         <th>{{ __('Tables', 'datainjection') }}</th>
+         <th>{{ _n('Field', 'Fields', 2) }}</th>
+         <th>{{ __('Link field', 'datainjection') }}</th>
+      </tr>
+
+      {% for mapping in mappings %}
+         <tr class="tab_bg_1">
+            <td class="center">{{ mapping.name }}</td>
+            <td class="center">{{ mapping.dropdown_html|raw }}</td>
+            <td class="center"><span id="span_field_{{ mapping.id }}">{{ mapping.field_html|raw }}</span></td>
+            <td class="center"><span id="span_mandatory_{{ mapping.id }}">{{ mapping.mandatory_html|raw }}</span></td>
+         </tr>
+      {% endfor %}
+
+      {% if canedit %}
+>>>>>>> 98486d9 (Fix(Perf): index models_id, check model rights in one pass and render mapping rows server-side (#716))
          <tr>
             <th>{{ __('Header of the file', 'datainjection') }}</th>
             <th>{{ __('Tables', 'datainjection') }}</th>

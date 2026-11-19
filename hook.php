@@ -54,6 +54,7 @@ function plugin_datainjection_install()
             plugin_datainjection_migration_2121_2122($migration);
             plugin_datainjection_migration_2141_2150($migration);
             plugin_datainjection_migration_2158_2159($migration);
+            plugin_datainjection_migration_21512_21513($migration);
             break;
 
         case 0:
@@ -89,7 +90,8 @@ function plugin_datainjection_install()
                      `itemtype` varchar(255) NOT NULL default '',
                      `delimiter` varchar(1) NOT NULL default ';',
                      `is_header_present` tinyint NOT NULL default '1',
-                     PRIMARY KEY  (`ID`)
+                     PRIMARY KEY  (`ID`),
+                     KEY `models_id` (`models_id`)
                    ) ENGINE=InnoDB DEFAULT CHARSET={$default_charset} COLLATE={$default_collation} ROW_FORMAT=DYNAMIC;";
             $DB->doQuery($query);
 
@@ -100,7 +102,8 @@ function plugin_datainjection_install()
                      `rank` INT NOT NULL ,
                      `name` VARCHAR( 255 ) NOT NULL ,
                      `value` VARCHAR( 255 ) NOT NULL ,
-                     `is_mandatory` TINYINT NOT NULL DEFAULT '0'
+                     `is_mandatory` TINYINT NOT NULL DEFAULT '0',
+                     KEY `models_id` (`models_id`)
                    ) ENGINE=InnoDB DEFAULT CHARSET={$default_charset} COLLATE={$default_collation} ROW_FORMAT=DYNAMIC;";
             $DB->doQuery($query);
 
@@ -109,7 +112,8 @@ function plugin_datainjection_install()
                      `models_id` INT {$default_key_sign} NOT NULL ,
                      `itemtype` varchar(255) NOT NULL default '',
                      `value` VARCHAR( 255 ) NOT NULL ,
-                     `is_mandatory` TINYINT NOT NULL DEFAULT '0'
+                     `is_mandatory` TINYINT NOT NULL DEFAULT '0',
+                     KEY `models_id` (`models_id`)
                    ) ENGINE=InnoDB DEFAULT CHARSET={$default_charset} COLLATE={$default_collation} ROW_FORMAT=DYNAMIC;";
             $DB->doQuery($query);
 
@@ -175,6 +179,7 @@ function plugin_datainjection_install()
             plugin_datainjection_migration_2121_2122($migration);
             plugin_datainjection_migration_2141_2150($migration);
             plugin_datainjection_migration_2158_2159($migration);
+            plugin_datainjection_migration_21512_21513($migration);
             break;
 
         default:
@@ -216,6 +221,22 @@ function plugin_datainjection_uninstall()
 
     plugin_init_datainjection();
     return true;
+}
+
+function plugin_datainjection_migration_21512_21513(Migration $migration)
+{
+    // Models are always read by `models_id`: without index, every read scans the whole table
+    foreach (
+        [
+            'glpi_plugin_datainjection_modelcsvs',
+            'glpi_plugin_datainjection_mappings',
+            'glpi_plugin_datainjection_infos',
+        ] as $table
+    ) {
+        $migration->addKey($table, 'models_id');
+    }
+
+    $migration->executeMigration();
 }
 
 function plugin_datainjection_migration_2141_2150(Migration $migration)

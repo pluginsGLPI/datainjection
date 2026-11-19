@@ -52,14 +52,13 @@ function plugin_init_datainjection()
     $PLUGIN_HOOKS['csrf_compliant']['datainjection'] = true;
     $PLUGIN_HOOKS['migratetypes']['datainjection'] = 'plugin_datainjection_migratetypes_datainjection';
 
-    $plugin = new Plugin();
-    if ($plugin->isActivated("datainjection")) {
-        Plugin::registerClass(
-            'PluginDatainjectionProfile',
-            ['addtabon' => ['Profile'],
-            ],
-        );
+    Plugin::registerClass(
+        'PluginDatainjectionProfile',
+        ['addtabon' => ['Profile'],
+        ],
+    );
 
+<<<<<<< HEAD
         //If directory doesn't exists, create it
         if (!plugin_datainjection_checkDirectories()) {
             @ mkdir(PLUGIN_DATAINJECTION_UPLOAD_DIR);
@@ -85,7 +84,31 @@ function plugin_init_datainjection()
         $PLUGIN_HOOKS['add_javascript']['datainjection'] = 'js/datainjection.js';
 
         $INJECTABLE_TYPES = [];
+=======
+    //If directory doesn't exists, create it
+    if (!plugin_datainjection_checkDirectories()) {
+        @ mkdir(PLUGIN_DATAINJECTION_UPLOAD_DIR);
+>>>>>>> 98486d9 (Fix(Perf): index models_id, check model rights in one pass and render mapping rows server-side (#716))
     }
+
+    $PLUGIN_HOOKS["config_page"]['datainjection'] = "front/clientinjection.form.php";
+
+
+
+    if (Session::haveRight('plugin_datainjection_use', READ)) {
+        $PLUGIN_HOOKS["menu_toadd"]['datainjection'] = ['tools'  => 'PluginDatainjectionMenu'];
+    }
+
+    $PLUGIN_HOOKS['pre_item_purge']['datainjection']
+      = ['Profile' => ['PluginDatainjectionProfile', 'purgeProfiles']];
+
+    // Css and Javascript files, only needed on the plugin pages
+    if (str_contains($_SERVER['REQUEST_URI'] ?? '', Plugin::getPhpDir('datainjection', false))) {
+        $PLUGIN_HOOKS['add_css']['datainjection'] = 'css/datainjection.css';
+        $PLUGIN_HOOKS['add_javascript']['datainjection'] = 'js/datainjection.js';
+    }
+
+    $INJECTABLE_TYPES = [];
 }
 
 
