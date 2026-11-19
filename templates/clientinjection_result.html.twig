@@ -44,18 +44,18 @@
 
     <div class="center mt-2">
       <div class="d-flex justify-content-center gap-3">
-        <a href="#" onclick="var w = window.open('{{ popup_url }}', 'glpipopup', 'height=400, width=1000, top=100, left=100, scrollbars=yes');w.focus();" title="{{ __('See the log', 'datainjection') }}">
+        <a href="#" data-datainjection-popup="{{ popup_url }}" data-datainjection-popup-features="height=400, width=1000, top=100, left=100, scrollbars=yes" title="{{ __('See the log', 'datainjection') }}">
           <h2><i class="fa-2x ti ti-file-search"></i></h2>
         </a>
 
         {% if has_pdf %}
-          <a href="#" onclick="location.href='export.pdf.php?models_id={{ model_id }}'" title="{{ __('Export rapport in PDF', 'datainjection') }}">
+          <a href="#" data-datainjection-location="export.pdf.php?models_id={{ model_id }}" title="{{ __('Export rapport in PDF', 'datainjection') }}">
             <h2><i class="fa-2x ti ti-file-type-pdf"></i></h2>
           </a>
         {% endif %}
 
         {% if has_errors %}
-          <a href="#" onclick="location.href='export.csv.php'" title="{{ __('Export the log', 'datainjection') }}">
+          <a href="#" data-datainjection-location="export.csv.php" title="{{ __('Export the log', 'datainjection') }}">
             <h2><i class="fa-2x ti ti-file-type-csv" style="color: #dc3545;"></i></h2>
           </a>
         {% endif %}

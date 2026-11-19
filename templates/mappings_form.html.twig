@@ -32,7 +32,7 @@
       <table class="tab_cadre_fixe">
          <tr class="tab_bg_1">
             <td class="center">
-               <a href="#" onclick="var w = window.open('{{ preview_url }}', 'glpipopup', 'height=400, width=600, top=100, left=100, scrollbars=yes'); w.focus(); return false;">
+               <a href="#" data-datainjection-popup="{{ preview_url }}" data-datainjection-popup-features="height=400, width=600, top=100, left=100, scrollbars=yes">
                   {{ __('See the file', 'datainjection') }}
                </a>
             </td>
