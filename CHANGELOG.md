@@ -11,6 +11,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 - Redesign the mappings, additional information, file preview, injection log and profile rights screens
 - Show the mapped and link fields counters, and warn when a field is used both by a mapping and an additional information
+- `PluginDatainjectionInjectionType::dropdownLinkedTypes()`, `dropdownFields()` and `showMandatoryCheckbox()` are removed, and `PluginDatainjectionModelcsv::showSample()` returns a response instead of displaying the file
 
 ## [2.15.13] - 2026-11-13
 

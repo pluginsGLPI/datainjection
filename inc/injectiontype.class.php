@@ -305,7 +305,11 @@ class PluginDatainjectionInjectionType
     public static function getRow($mapping_or_info, $primary_type)
     {
         $id       = $mapping_or_info->fields['id'];
-        $itemtype = $mapping_or_info->fields['itemtype'] ?: self::NO_VALUE;
+        $itemtype = $mapping_or_info->fields['itemtype'];
+        // The stored itemtype may no longer be injectable (e.g. a Fields container of a disabled plugin)
+        if (!isset(self::getLinkedTypes($primary_type)[$itemtype])) {
+            $itemtype = self::NO_VALUE;
+        }
 
         $choices = self::getFieldsChoices([
             'itemtype'        => $itemtype,

@@ -39,6 +39,7 @@ use PluginDatainjectionMapping;
 use PluginDatainjectionModel;
 use PluginDatainjectionModelcsv;
 use Session;
+use Symfony\Component\DomCrawler\Crawler;
 use Symfony\Component\HttpFoundation\Response;
 
 final class InjectionTypeRowTest extends DbTestCase
@@ -191,6 +192,27 @@ final class InjectionTypeRowTest extends DbTestCase
         $this->assertFalse($row['is_mapped']);
         $this->assertFalse($row['is_mandatory']);
         $this->assertFalse($row['can_be_mandatory']);
+    }
+
+    public function testRowWithAnItemtypeThatIsNoLongerInjectable(): void
+    {
+        $model = $this->createModel();
+        // e.g. a container of the Fields plugin, once the plugin is disabled
+        $mapping = $this->createMapping($model->getID(), [
+            'name'     => 'custom field',
+            'itemtype' => 'PluginFieldsComputerdisabledcontainer',
+            'value'    => 'customfieldfield',
+        ]);
+
+        $row = PluginDatainjectionInjectionType::getRow($mapping, Computer::class);
+
+        // The row is displayed without table nor field, to be mapped again
+        $this->assertFalse($row['is_mapped']);
+        $this->assertFalse($row['can_be_mandatory']);
+        $this->assertCount(
+            1,
+            (new Crawler($row['itemtype_html']))->filter(sprintf('option[value="%s"][selected]', PluginDatainjectionInjectionType::NO_VALUE)),
+        );
     }
 
     public function testRowDetectsFieldUsedByMappingAndInfo(): void

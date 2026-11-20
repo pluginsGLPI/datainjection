@@ -29,9 +29,9 @@
 {% import 'components/form/basic_inputs_macros.html.twig' as inputs %}
 
 {% if type == 'textarea' %}
-   {{ inputs.textarea(name, value, {'rows': 5}) }}
+   {{ inputs.textarea(name, value, {'id': '%id%', 'rows': 5}) }}
 {% elseif type == 'password' %}
-   {{ inputs.password(name, '', {'additional_attributes': {'autocomplete': 'off'}}) }}
+   {{ inputs.password(name, '', {'id': '%id%', 'additional_attributes': {'autocomplete': 'off'}}) }}
 {% else %}
-   {{ inputs.text(name, value) }}
+   {{ inputs.text(name, value, {'id': '%id%'}) }}
 {% endif %}

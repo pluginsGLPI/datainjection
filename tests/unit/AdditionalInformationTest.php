@@ -129,7 +129,13 @@ final class AdditionalInformationTest extends DbTestCase
         PluginDatainjectionInfo::displayAdditionalInformation($info);
         $html = ob_get_clean();
 
-        self::assertCount(1, (new Crawler($html))->filter('input[name="info[DeviceProcessor][designation]"]'));
+        $crawler = new Crawler($html);
+        $input   = $crawler->filter('input[name="info[DeviceProcessor][designation]"]');
+        self::assertCount(1, $input);
         self::assertStringContainsString(DeviceProcessor::getTypeName(1) . ' - ', $html);
+
+        // The label targets the input
+        self::assertNotEmpty($input->attr('id'));
+        self::assertSame($input->attr('id'), $crawler->filter('label')->attr('for'));
     }
 }

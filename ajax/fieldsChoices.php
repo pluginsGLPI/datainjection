@@ -30,6 +30,8 @@
 use Glpi\Exception\Http\BadRequestHttpException;
 use Symfony\Component\HttpFoundation\JsonResponse;
 
+use function Safe\json_decode;
+
 Html::header_nocache();
 
 Session::checkRight('plugin_datainjection_model', READ);
@@ -38,10 +40,17 @@ $itemtype     = (string) ($_POST['itemtype'] ?? PluginDatainjectionInjectionType
 $primary_type = (string) ($_POST['primary_type'] ?? '');
 $called_by    = (string) ($_POST['called_by'] ?? '');
 
+try {
+    $mapping_or_info = json_decode((string) ($_POST['mapping_or_info'] ?? ''), true);
+} catch (JsonException) {
+    throw new BadRequestHttpException();
+}
+
 if (
     !is_a($primary_type, CommonDBTM::class, true)
     || ($itemtype !== PluginDatainjectionInjectionType::NO_VALUE && !is_a($itemtype, CommonDBTM::class, true))
     || !in_array($called_by, [PluginDatainjectionMapping::class, PluginDatainjectionInfo::class], true)
+    || !isset($mapping_or_info['models_id'], $mapping_or_info['value'])
 ) {
     throw new BadRequestHttpException();
 }
@@ -53,7 +62,8 @@ $choices = PluginDatainjectionInjectionType::getFieldsChoices([
     'itemtype'        => $itemtype,
     'primary_type'    => $primary_type,
     'called_by'       => $called_by,
-    'mapping_or_info' => (string) ($_POST['mapping_or_info'] ?? '{}'),
+    'mapping_or_info' => $mapping_or_info,
+    'need_decode'     => false,
 ]);
 
 // Use a list of pairs to keep the options order on client side
