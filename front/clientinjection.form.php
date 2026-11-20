@@ -28,6 +28,7 @@
  * -------------------------------------------------------------------------
  */
 
+use Glpi\Exception\Http\AccessDeniedHttpException;
 use Glpi\Exception\Http\BadRequestHttpException;
 
 Session::checkRight("plugin_datainjection_use", READ);
@@ -50,7 +51,10 @@ if (isset($_SESSION['datainjection']['go'])) {
         throw new BadRequestHttpException();
     }
 
-    $model->check($models_id, READ);
+    //Injection users may lack the model management right: only check the model itself is visible
+    if (!$model->getFromDB($models_id) || !$model->canViewItem()) {
+        throw new AccessDeniedHttpException();
+    }
     $_SESSION['datainjection']['infos'] = ($_POST['info'] ?? []);
 
     //If additional informations provided : check if mandatory infos are present

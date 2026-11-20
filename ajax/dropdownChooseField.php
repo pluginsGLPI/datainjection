@@ -34,5 +34,5 @@ if (strpos((string) $_SERVER['PHP_SELF'], "dropdownChooseField.php")) {
     Html::header_nocache();
 }
 
-Session::checkRight(PluginDatainjectionModel::$rightname, READ);
+Session::checkRight(PluginDatainjectionClientInjection::$rightname, READ);
 PluginDatainjectionInjectionType::dropdownFields($_POST);
