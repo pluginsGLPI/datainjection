@@ -424,6 +424,8 @@ class PluginDatainjectionModel extends CommonDBTM
                 'itemtype',
                 'step',
                 'comment',
+                'behavior_add',
+                'behavior_update',
             ],
             'FROM'   => 'glpi_plugin_datainjection_models',
             'WHERE' => $where,
@@ -434,11 +436,45 @@ class PluginDatainjectionModel extends CommonDBTM
             ],
         ];
 
+        $candidates = [];
         foreach ($DB->request($query) as $data) {
+            if (class_exists($data['itemtype'])) {
+                $candidates[$data['id']] = $data;
+            }
+        }
+
+        if ($candidates === []) {
+            return $models;
+        }
+
+        //Itemtypes of all candidate models, read once instead of once per model
+        $itemtypes = [];
+        foreach ($candidates as $models_id => $data) {
+            $itemtypes[$models_id] = [$data['itemtype']];
+        }
+
+        foreach (['glpi_plugin_datainjection_mappings', 'glpi_plugin_datainjection_infos'] as $table) {
+            $iterator = $DB->request([
+                'SELECT'   => ['models_id', 'itemtype'],
+                'DISTINCT' => true,
+                'FROM'     => $table,
+                'WHERE'    => ['models_id' => array_keys($candidates)],
+            ]);
+
+            foreach ($iterator as $row) {
+                $itemtypes[$row['models_id']][] = $row['itemtype'];
+            }
+        }
+
+        foreach ($candidates as $models_id => $data) {
             if (
-                self::checkRightOnModel((int) $data['id'])
-                && class_exists($data['itemtype'])
+                self::checkRightOnItemtypes(
+                    $itemtypes[$models_id],
+                    (bool) $data['behavior_add'],
+                    (bool) $data['behavior_update'],
+                )
             ) {
+                unset($data['behavior_add'], $data['behavior_update']);
                 $models[] = $data;
             }
         }
@@ -1283,9 +1319,23 @@ class PluginDatainjectionModel extends CommonDBTM
             }
         }
 
-        $check_add    = (bool) ($model->fields['behavior_add'] ?? 0);
-        $check_update = (bool) ($model->fields['behavior_update'] ?? 0);
+        return self::checkRightOnItemtypes(
+            $itemtypes,
+            (bool) ($model->fields['behavior_add'] ?? 0),
+            (bool) ($model->fields['behavior_update'] ?? 0),
+        );
+    }
 
+
+    /**
+     * Check that the current user can write the itemtypes injected by a model
+     *
+     * @param array<string> $itemtypes    itemtypes of the model, its mappings and its infos
+     * @param bool          $check_add    the model adds items
+     * @param bool          $check_update the model updates items
+     */
+    private static function checkRightOnItemtypes(array $itemtypes, bool $check_add, bool $check_update): bool
+    {
         //A model doing nothing still requires the creation right to be listed
         if (!$check_add && !$check_update) {
             $check_add = true;

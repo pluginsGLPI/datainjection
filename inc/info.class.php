@@ -186,10 +186,15 @@ class PluginDatainjectionInfo extends CommonDBTM
                     ['primary_type'
                                                                           => $model->fields['itemtype'],
                     ],
+                    false,
                 );
                 echo "</td>";
-                echo sprintf("<td class='center'><span id='span_field_%s'></span></td>", $infos_id);
-                echo sprintf("<td class='center'><span id='span_mandatory_%s'></span></td></tr>", $infos_id);
+                $fields_html = PluginDatainjectionInjectionType::getFieldsHtml(
+                    $info,
+                    ['primary_type' => $model->fields['itemtype']],
+                );
+                echo sprintf("<td class='center'><span id='span_field_%s'>%s</span></td>", $infos_id, $fields_html['field']);
+                echo sprintf("<td class='center'><span id='span_mandatory_%s'>%s</span></td></tr>", $infos_id, $fields_html['mandatory']);
             }
 
             if ($canedit) {
