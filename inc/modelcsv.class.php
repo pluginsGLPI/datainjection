@@ -30,6 +30,12 @@
 
 use Glpi\Application\View\TemplateRenderer;
 
+use function Safe\fclose;
+use function Safe\fopen;
+use function Safe\fputcsv;
+use function Safe\rewind;
+use function Safe\stream_get_contents;
+
 /**
  * -------------------------------------------------------------------------
  * DataInjection plugin for GLPI
@@ -119,7 +125,11 @@ class PluginDatainjectionModelcsv extends CommonDBChild
     {
 
         $headers = PluginDatainjectionMapping::getMappingsSortedByRank($model->fields['id']);
-        $sample = '"' . implode('"' . $this->getDelimiter() . '"', $headers) . "\"\n";
+        $handle  = fopen('php://temp', 'r+');
+        fputcsv($handle, array_map(PluginDatainjectionClientInjection::escapeCsvFormula(...), $headers), $this->getDelimiter());
+        rewind($handle);
+        $sample = stream_get_contents($handle);
+        fclose($handle);
 
         header(
             'Content-disposition: attachment; filename="' . str_replace(

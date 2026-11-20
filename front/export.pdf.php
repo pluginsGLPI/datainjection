@@ -28,6 +28,20 @@
  * -------------------------------------------------------------------------
  */
 
+use Glpi\Exception\Http\AccessDeniedHttpException;
+use Glpi\Exception\Http\BadRequestHttpException;
+
 Session::checkRight(PluginDatainjectionClientInjection::$rightname, READ);
 
-PluginDatainjectionModel::exportAsPDF($_GET['models_id']);
+$models_id = (int) ($_GET['models_id'] ?? 0);
+if ($models_id <= 0) {
+    throw new BadRequestHttpException();
+}
+
+//Injection users may lack the model management right: only check the model itself is visible
+$model = new PluginDatainjectionModel();
+if (!$model->getFromDB($models_id) || !$model->canViewItem()) {
+    throw new AccessDeniedHttpException();
+}
+
+PluginDatainjectionModel::exportAsPDF($models_id);

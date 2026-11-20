@@ -44,14 +44,15 @@ class PluginDatainjectionMappingCollection
         /** @var DBmysql $DB */
         global $DB;
 
-        $sql = "SELECT *
-              FROM `glpi_plugin_datainjection_mappings`
-              WHERE `models_id` = '{$models_id}'
-              ORDER BY `rank` ASC";
+        $iterator = $DB->request([
+            'FROM'  => 'glpi_plugin_datainjection_mappings',
+            'WHERE' => ['models_id' => (int) $models_id],
+            'ORDER' => 'rank ASC',
+        ]);
 
         $this->mappingCollection = [];
 
-        foreach ($data = $DB->doQuery($sql) as $data) {
+        foreach ($iterator as $data) {
             $mapping                   = new PluginDatainjectionMapping();
             $mapping->fields           = $data;
             $this->mappingCollection[] = $mapping;

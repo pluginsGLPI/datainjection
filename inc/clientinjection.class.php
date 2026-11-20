@@ -328,9 +328,9 @@ class PluginDatainjectionClientInjection
         TemplateRenderer::getInstance()->display('@datainjection/clientinjection_result.html.twig', $data);
     }
 
-    private static function escapeCsvFormula(mixed $value): mixed
+    public static function escapeCsvFormula(mixed $value): mixed
     {
-        if (is_string($value) && isset($value[0]) && in_array($value[0], ['=', '+', '-', '@'], true)) {
+        if (is_string($value) && isset($value[0]) && in_array($value[0], ['=', '+', '-', '@', "\t", "\r"], true)) {
             return "'" . $value;
         }
 
@@ -351,7 +351,7 @@ class PluginDatainjectionClientInjection
             $tmpfile = fopen($file, 'w');
 
             if ($headers !== []) {
-                fputcsv($tmpfile, $headers, $delimiter);
+                fputcsv($tmpfile, array_map(self::escapeCsvFormula(...), $headers), $delimiter);
             }
 
             foreach ($error_lines as $line) {
@@ -422,8 +422,11 @@ class PluginDatainjectionClientInjection
             header('Pragma: no-cache');
             header('Cache-Control: no-store, no-cache, must-revalidate, post-check=0, pre-check=0');
             header('Expires: 0');
-            readfile($file);
-            unlink($file);
+            try {
+                readfile($file);
+            } finally {
+                unlink($file);
+            }
         }
     }
 }

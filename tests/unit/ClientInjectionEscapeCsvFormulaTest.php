@@ -51,6 +51,8 @@ final class ClientInjectionEscapeCsvFormulaTest extends DbTestCase
             'plus trigger'                  => ['+1234', "'+1234"],
             'minus trigger'                 => ['-1234', "'-1234"],
             'at trigger'                    => ['@SUM(A1:A2)', "'@SUM(A1:A2)"],
+            'tab trigger'                   => ["\t=1", "'\t=1"],
+            'carriage return trigger'       => ["\r=1", "'\r=1"],
             'safe value passthrough'        => ['normal value', 'normal value'],
             'non-string passthrough'        => [42, 42],
         ];

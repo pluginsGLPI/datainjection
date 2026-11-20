@@ -45,12 +45,13 @@ class PluginDatainjectionInfoCollection
         /** @var DBmysql $DB */
         global $DB;
 
-        $query = "SELECT *
-                FROM `glpi_plugin_datainjection_infos`
-                WHERE `models_id` = '" . $models_id . "'
-                ORDER BY `itemtype` ASC";
+        $iterator = $DB->request([
+            'FROM'  => 'glpi_plugin_datainjection_infos',
+            'WHERE' => ['models_id' => (int) $models_id],
+            'ORDER' => 'itemtype ASC',
+        ]);
 
-        foreach ($DB->doQuery($query) as $data) {
+        foreach ($iterator as $data) {
             $infos = new PluginDatainjectionInfo();
             $infos->fields = $data;
             $this->infosCollection[] = $infos;
