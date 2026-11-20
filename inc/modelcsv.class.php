@@ -29,6 +29,7 @@
  */
 
 use Glpi\Application\View\TemplateRenderer;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * -------------------------------------------------------------------------
@@ -115,26 +116,21 @@ class PluginDatainjectionModelcsv extends CommonDBChild
     *
     * @param PluginDatainjectionModel $model     PluginDatainjectionModel object
    **/
-    public function showSample(PluginDatainjectionModel $model)
+    public function showSample(PluginDatainjectionModel $model): Response
     {
 
         $headers = PluginDatainjectionMapping::getMappingsSortedByRank($model->fields['id']);
         $sample = '"' . implode('"' . $this->getDelimiter() . '"', $headers) . "\"\n";
 
-        header(
-            'Content-disposition: attachment; filename="' . str_replace(
-                ' ',
-                '_',
-                $model->getName(),
-            ) . '.csv"',
-        );
-        header('Content-Type: text/comma-separated-values');
-        header('Content-Transfer-Encoding: UTF-8');
-        header('Content-Length: ' . strlen($sample));
-        header('Pragma: no-cache');
-        header('Cache-Control: no-store, no-cache, must-revalidate, post-check=0, pre-check=0');
-        header('Expires: 0');
-        echo $sample;
+        return new Response($sample, Response::HTTP_OK, [
+            'Content-Disposition'       => 'attachment; filename="' . str_replace(' ', '_', $model->getName()) . '.csv"',
+            'Content-Type'              => 'text/comma-separated-values',
+            'Content-Transfer-Encoding' => 'UTF-8',
+            'Content-Length'            => strlen($sample),
+            'Pragma'                    => 'no-cache',
+            'Cache-Control'             => 'no-store, no-cache, must-revalidate, post-check=0, pre-check=0',
+            'Expires'                   => '0',
+        ]);
     }
 
 

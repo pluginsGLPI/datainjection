@@ -1,0 +1,87 @@
+{#
+ # -------------------------------------------------------------------------
+ # DataInjection plugin for GLPI
+ # -------------------------------------------------------------------------
+ #
+ # LICENSE
+ #
+ # This file is part of DataInjection.
+ #
+ # DataInjection is free software; you can redistribute it and/or modify
+ # it under the terms of the GNU General Public License as published by
+ # the Free Software Foundation; either version 2 of the License, or
+ # (at your option) any later version.
+ #
+ # DataInjection is distributed in the hope that it will be useful,
+ # but WITHOUT ANY WARRANTY; without even the implied warranty of
+ # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ # GNU General Public License for more details.
+ #
+ # You should have received a copy of the GNU General Public License
+ # along with DataInjection. If not, see <http://www.gnu.org/licenses/>.
+ # -------------------------------------------------------------------------
+ # @copyright Copyright (C) 2007-2023 by DataInjection plugin team.
+ # @license   GPLv2 https://www.gnu.org/licenses/gpl-2.0.html
+ # @link      https://github.com/pluginsGLPI/datainjection
+ # -------------------------------------------------------------------------
+ #}
+
+{% set nb_columns = headers|length > 0 ? headers|length : (rows|first ?: [])|length %}
+{% set nb_rows = rows|length %}
+
+<div class="container-fluid p-3">
+   <div class="hr-text mt-2 mb-4">
+      <i class="fa-2x ti ti-file-text"></i>
+      <span>{{ __('See the file', 'datainjection') }}</span>
+   </div>
+
+   <div class="d-flex align-items-center flex-wrap gap-2 mb-3">
+      <span class="badge bg-secondary-lt">
+         {{ _n('%d column', '%d columns', nb_columns, 'datainjection')|format(nb_columns) }}
+      </span>
+      <span class="badge bg-blue-lt">
+         {{ _n('%d line', '%d lines', nb_rows, 'datainjection')|format(nb_rows) }}
+      </span>
+      <button type="button" class="btn btn-outline-secondary ms-auto" onclick="window.close();">
+         <i class="ti ti-x me-1"></i>
+         <span>{{ __('Close') }}</span>
+      </button>
+   </div>
+
+   {% if nb_rows > 0 %}
+      <div class="card rounded-3 overflow-hidden">
+         <div class="table-responsive datainjection-card-table datainjection-preview">
+            <table class="table table-vcenter table-striped card-table mb-0">
+               {% if headers|length > 0 %}
+                  <thead class="sticky-top">
+                     <tr>
+                        <th class="w-1 text-muted">#</th>
+                        {% for header in headers %}
+                           <th class="font-monospace text-nowrap">{{ header }}</th>
+                        {% endfor %}
+                     </tr>
+                  </thead>
+               {% endif %}
+               <tbody>
+                  {% for row in rows %}
+                     <tr>
+                        <td class="w-1 text-muted">{{ loop.index }}</td>
+                        {% for value in row %}
+                           <td class="text-nowrap">
+                              {% if value is same as('') or value is null %}
+                                 <span class="text-muted">-</span>
+                              {% else %}
+                                 {{ value }}
+                              {% endif %}
+                           </td>
+                        {% endfor %}
+                     </tr>
+                  {% endfor %}
+               </tbody>
+            </table>
+         </div>
+      </div>
+   {% else %}
+      <div class="alert alert-info">{{ __('No data to display', 'datainjection') }}</div>
+   {% endif %}
+</div>

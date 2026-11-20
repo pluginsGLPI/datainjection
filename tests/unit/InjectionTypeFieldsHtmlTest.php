@@ -36,6 +36,7 @@ use PluginDatainjectionMapping;
 use PluginDatainjectionModel;
 use Session;
 use Glpi\Tests\DbTestCase;
+use Symfony\Component\DomCrawler\Crawler;
 
 final class InjectionTypeFieldsHtmlTest extends DbTestCase
 {
@@ -68,15 +69,15 @@ final class InjectionTypeFieldsHtmlTest extends DbTestCase
         }
 
         //Rendered in the same request, as the Mappings tab does: the static caches are shared by the rows
-        $options = ['primary_type' => Computer::class];
-        $html    = [];
+        $selects = [];
         foreach ($mappings as $field => $mapping) {
-            $html[$field] = PluginDatainjectionInjectionType::getFieldsHtml($mapping, $options)['field'];
+            $row = PluginDatainjectionInjectionType::getRow($mapping, Computer::class);
+            $selects[$field] = (new Crawler($row['field_html']))->filter('select');
         }
 
         foreach (['name' => 'serial', 'serial' => 'name'] as $field => $other) {
-            $this->assertStringContainsString(sprintf("<option value='%s' selected>", $field), $html[$field]);
-            $this->assertStringNotContainsString(sprintf("value='%s'", $other), $html[$field]);
+            $this->assertCount(1, $selects[$field]->filter(sprintf('option[value="%s"][selected]', $field)));
+            $this->assertCount(0, $selects[$field]->filter(sprintf('option[value="%s"]', $other)));
         }
     }
 }

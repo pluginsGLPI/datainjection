@@ -118,6 +118,7 @@ class PluginDatainjectionClientInjection
             'url' => $url,
             'models_id' => $options['models_id'] ?? null,
             'confirm' => $confirm,
+            'warn_override' => $options['warn_override'] ?? true,
             'submit_label' => $options['submit'] ?? __('Launch the import', 'datainjection'),
             'file_encoding_values' => PluginDatainjectionDropdown::getFileEncodingValue(),
         ];
@@ -177,8 +178,6 @@ class PluginDatainjectionClientInjection
             'result_url' => $result_url,
             'plugin_url' => plugin_datainjection_geturl(),
         ]);
-
-        echo "<span id='span_injection' name='span_injection'></span>";
     }
 
 
