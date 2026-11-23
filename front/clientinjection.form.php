@@ -55,6 +55,7 @@ if (isset($_SESSION['datainjection']['go'])) {
     if (!$model->getFromDB($models_id) || !$model->canViewItem()) {
         throw new AccessDeniedHttpException();
     }
+
     $_SESSION['datainjection']['infos'] = ($_POST['info'] ?? []);
 
     //If additional informations provided : check if mandatory infos are present
