@@ -90,9 +90,9 @@ final class ClientInjectionWriteErrorsCsvTest extends DbTestCase
 
     public function testContentContainsHeadersAndEscapedLines(): void
     {
-        $file = $this->writeErrorsCsv([['=SUM(A1)', 'safe']], ['name', 'serial']);
+        $file = $this->writeErrorsCsv([['=SUM(A1)', 'safe']], ['=name', 'serial']);
 
-        $this->assertSame("name;serial\n'=SUM(A1);safe\n", file_get_contents($file));
+        $this->assertSame("'=name;serial\n'=SUM(A1);safe\n", file_get_contents($file));
     }
 
     public function testDiscardClosesHandleAndRemovesFile(): void

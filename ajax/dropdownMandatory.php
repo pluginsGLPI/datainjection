@@ -34,7 +34,7 @@ if (strpos((string) $_SERVER['PHP_SELF'], "dropdownMandatory.php")) {
     Html::header_nocache();
 }
 
-Session::checkCentralAccess();
+Session::checkRight(PluginDatainjectionClientInjection::$rightname, READ);
 // Reads the session only: release it so that the calls of a tab run in parallel
 Session::writeClose();
 PluginDatainjectionInjectionType::showMandatoryCheckbox($_POST);
