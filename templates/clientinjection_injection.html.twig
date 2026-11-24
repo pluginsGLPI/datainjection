@@ -59,4 +59,4 @@
         {{ __('Injection of the file', 'datainjection') }} — 0 / {{ nblines }} {{ __(' lines', 'datainjection') }}
     </div>
 
-{{ call('Html::script', ['/plugins/datainjection/js/injection_progress.js', {}, false])|raw }}
+{{ call('Html::script', ['/plugins/datainjection/js/injection_progress.js', {'version': constant('PLUGIN_DATAINJECTION_VERSION')}, false])|raw }}

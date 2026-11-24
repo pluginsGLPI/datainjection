@@ -72,7 +72,7 @@
                           data-models-id="{{ models_id }}"
                           data-step="{{ step }}"
                           data-result-step="{{ result_step }}"></span>
-                    {{ call('Html::script', ['/plugins/datainjection/js/clientinjection.js', {}, false])|raw }}
+                    {{ call('Html::script', ['/plugins/datainjection/js/clientinjection.js', {'version': constant('PLUGIN_DATAINJECTION_VERSION')}, false])|raw }}
                 </div>
             </div>
         </div>
