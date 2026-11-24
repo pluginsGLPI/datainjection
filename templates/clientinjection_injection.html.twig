@@ -36,6 +36,7 @@
 </div>
 <div class="card p-3 my-5"
      id="injection_container"
+     data-datainjection-injection
      data-batch-url="{{ batch_url }}"
      data-result-url="{{ result_url }}"
      data-model-id="{{ model_id }}"
@@ -58,9 +59,4 @@
         {{ __('Injection of the file', 'datainjection') }} — 0 / {{ nblines }} {{ __(' lines', 'datainjection') }}
     </div>
 
-<script src="{{ plugin_url }}js/injection_progress.js"></script>
-<script>
-    $(function() {
-        startBatchInjection(document.getElementById('injection_container'));
-    });
-</script>
+{{ call('Html::script', ['/plugins/datainjection/js/injection_progress.js', {}, false])|raw }}

@@ -41,6 +41,14 @@ function show_log(num) {
 }
 
 document.addEventListener('click', (e) => {
+   const confirmButton = e.target.closest('[data-datainjection-confirm]');
+   if (confirmButton !== null && !window.confirm(confirmButton.dataset.datainjectionConfirm)) {
+      e.preventDefault();
+      e.stopImmediatePropagation();
+   }
+}, true);
+
+document.addEventListener('click', (e) => {
    const markLink = e.target.closest('[data-datainjection-mark-checkboxes]');
    if (markLink !== null) {
       if (markCheckboxes(markLink.dataset.datainjectionMarkCheckboxes)) {
@@ -65,7 +73,9 @@ document.addEventListener('click', (e) => {
          popupLink.dataset.datainjectionPopupFeatures
       );
       popup.focus();
-      e.preventDefault();
+      if ('datainjectionPopupPrevent' in popupLink.dataset) {
+         e.preventDefault();
+      }
       return;
    }
 

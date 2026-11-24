@@ -99,3 +99,10 @@ function startBatchInjection(container) {
 
     processBatch();
 }
+
+$(function() {
+    document.querySelectorAll('[data-datainjection-injection]:not([data-datainjection-injection-ready])').forEach((container) => {
+        container.setAttribute('data-datainjection-injection-ready', '');
+        startBatchInjection(container);
+    });
+});
