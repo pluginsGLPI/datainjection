@@ -1413,7 +1413,7 @@ class PluginDatainjectionModel extends CommonDBTM
 
         Html::closeForm();
         echo "<div style='margin-top:15px;text-align:center'>";
-        echo "<a href='javascript:window.close()'>" . __s('Close') . "</a>";
+        echo "<a href='#' data-datainjection-close-window>" . __s('Close') . "</a>";
         echo "</div>";
     }
 

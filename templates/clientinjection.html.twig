@@ -64,37 +64,17 @@
 
             <div class="row mt-3">
                 <div class="col-12">
-                    <span id="span_injection" name="span_injection"></span>
+                    <span id="span_injection" name="span_injection"
+                          data-datainjection-model-form
+                          data-rand="{{ rand }}"
+                          data-upload-url="{{ upload_url }}"
+                          data-result-url="{{ result_url }}"
+                          data-models-id="{{ models_id }}"
+                          data-step="{{ step }}"
+                          data-result-step="{{ result_step }}"></span>
+                    {{ call('Html::script', ['/plugins/datainjection/js/clientinjection.js', {'version': constant('PLUGIN_DATAINJECTION_VERSION')}, false])|raw }}
                 </div>
             </div>
-
-            <script>
-                $(function() {
-                    const rand = '{{ rand }}';
-                    const uploadUrl = "{{ upload_url }}";
-                    const resultUrl = "{{ result_url }}";
-                    const modelId = {{ models_id }};
-                    const step = {{ step }};
-                    const resultStep = {{ result_step }};
-
-                    function loadFormForModel(modelId) {
-                        if (modelId > 0) {
-                            const url = (step === resultStep) ? resultUrl : uploadUrl;
-                            $('#span_injection').load(url, { models_id: modelId });
-                        }
-                    }
-
-                    // On model change
-                    $('#clientinjection_form' + rand + ' select[name="dropdown_models"]').on('change select2:select', function() {
-                        loadFormForModel($(this).val());
-                    });
-
-                    // Initial load
-                    if (modelId > 0) {
-                        loadFormForModel(modelId);
-                    }
-                });
-            </script>
         </div>
     </form>
 </div>
