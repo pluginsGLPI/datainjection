@@ -30,8 +30,10 @@
 
 namespace GlpiPlugin\Datainjection\Tests\Unit;
 
+use DBmysql;
 use Computer;
 use Entity;
+use Migration;
 use Glpi\Tests\DbTestCase;
 use PluginDatainjectionModel;
 use Session;
@@ -63,5 +65,39 @@ final class ModelEntityRelationTest extends DbTestCase
         $this->assertTrue($entity->delete(['id' => $entity->getID(), '_replace_by' => $root_id], true));
         $this->assertTrue($model->getFromDB($model->getID()));
         $this->assertSame($root_id, $model->fields['entities_id']);
+    }
+
+    public function testMigrationMovesOrphanModelsToRootEntity(): void
+    {
+        /** @var DBmysql $DB */
+        global $DB;
+
+        $this->login();
+        $entity_id = getItemByTypeName(Entity::class, '_test_child_1', true);
+
+        $orphan = $this->createItem(PluginDatainjectionModel::class, [
+            'name'         => __FUNCTION__ . '_orphan',
+            'itemtype'     => Computer::class,
+            'filetype'     => 'csv',
+            'behavior_add' => 1,
+            'entities_id'  => $entity_id,
+            'users_id'     => Session::getLoginUserID(),
+        ]);
+        $valid = $this->createItem(PluginDatainjectionModel::class, [
+            'name'         => __FUNCTION__ . '_valid',
+            'itemtype'     => Computer::class,
+            'filetype'     => 'csv',
+            'behavior_add' => 1,
+            'entities_id'  => $entity_id,
+            'users_id'     => Session::getLoginUserID(),
+        ]);
+        $DB->update(PluginDatainjectionModel::getTable(), ['entities_id' => 999999], ['id' => $orphan->getID()]);
+
+        plugin_datainjection_migration_21513_21514(new Migration(PLUGIN_DATAINJECTION_VERSION));
+
+        $this->assertTrue($orphan->getFromDB($orphan->getID()));
+        $this->assertSame(0, $orphan->fields['entities_id']);
+        $this->assertTrue($valid->getFromDB($valid->getID()));
+        $this->assertSame($entity_id, $valid->fields['entities_id']);
     }
 }

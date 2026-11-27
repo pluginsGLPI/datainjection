@@ -9,7 +9,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Fixed
 
-- Fix models left in a deleted entity: declare their entity relation so it is checked and replaced on entity deletion
+- Fix models left in a deleted entity: declare their entity relation so it is checked and replaced on entity deletion, and move models already left in a deleted entity to the root entity
 
 ## [2.15.13] - 2026-11-13
 
