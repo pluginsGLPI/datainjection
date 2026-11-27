@@ -5,6 +5,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [Unreleased]
+
+### Fixed
+
+- Fix models left in a deleted entity: declare their entity relation so it is checked and replaced on entity deletion, and move models already left in a deleted entity to the root entity
+
 ## [2.15.13] - 2026-11-13
 
 ### Fixed

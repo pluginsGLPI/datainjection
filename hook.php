@@ -28,6 +28,8 @@
  * -------------------------------------------------------------------------
  */
 
+use Glpi\DBAL\QuerySubQuery;
+
 use function Safe\mkdir;
 
 function plugin_datainjection_install()
@@ -55,6 +57,7 @@ function plugin_datainjection_install()
             plugin_datainjection_migration_2141_2150($migration);
             plugin_datainjection_migration_2158_2159($migration);
             plugin_datainjection_migration_21512_21513($migration);
+            plugin_datainjection_migration_21513_21514($migration);
             break;
 
         case 0:
@@ -180,6 +183,7 @@ function plugin_datainjection_install()
             plugin_datainjection_migration_2141_2150($migration);
             plugin_datainjection_migration_2158_2159($migration);
             plugin_datainjection_migration_21512_21513($migration);
+            plugin_datainjection_migration_21513_21514($migration);
             break;
 
         default:
@@ -221,6 +225,28 @@ function plugin_datainjection_uninstall()
 
     plugin_init_datainjection();
     return true;
+}
+
+function plugin_datainjection_migration_21513_21514(Migration $migration)
+{
+    /** @var DBmysql $DB */
+    global $DB;
+
+    // Models left in a deleted entity can no longer be opened: move them to the root entity
+    $DB->update(
+        'glpi_plugin_datainjection_models',
+        ['entities_id' => 0],
+        [
+            'NOT' => [
+                'entities_id' => new QuerySubQuery([
+                    'SELECT' => 'id',
+                    'FROM'   => Entity::getTable(),
+                ]),
+            ],
+        ],
+    );
+
+    $migration->executeMigration();
 }
 
 function plugin_datainjection_migration_21512_21513(Migration $migration)
@@ -2023,4 +2049,18 @@ function plugin_datainjection_addDefaultWhere($itemtype)
     }
 
     return null;
+}
+
+/**
+ * Declare foreign keys to core tables, so that core usage checks and replacements take them into account
+ *
+ * @return array
+ */
+function plugin_datainjection_getDatabaseRelations()
+{
+    return [
+        'glpi_entities' => [
+            'glpi_plugin_datainjection_models' => 'entities_id',
+        ],
+    ];
 }
